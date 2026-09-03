@@ -54,6 +54,26 @@ judge 4,096 / 512; short 256 / 64. Artificial Analysis Intelligence Index v4.1.1
    an in-session control.
 7. An NVFP4 MoE checkpoint is **1.1–1.25 bytes per listed parameter**, not 0.55. Sum the file tree.
 8. **TP=7 is impossible** on a 7-GPU node (prime). It runs pipeline-parallel or TP2×PP3 on six cards.
+9. **Check `power.limit` against `power.max_limit` before trusting a host.** The replacement PRO 6000 host
+   runs Workstation Edition cards capped at 400 W (600 W possible); same kernels, same model, same shapes:
+   NVFP4 `b12x` router C1024 3,965 vs 5,161 out tok/s on the 600 W Server Edition box (−23%), FP8 2,071 vs
+   3,146 (−34%). A power profile is worth a quarter of the node, so the Scan quote must name edition and limit.
+10. **A stopped Vast instance loses its GPUs to the next renter** and its restart queues with no ETA; keep a
+    campaign box running or destroy it, never stop it. `vastai destroy instance` prompts for confirmation and
+    silently aborts without a tty: `echo y | vastai destroy instance ID`.
+11. **On consumer cards the container's CUDA must match the host driver.** The cu130 vLLM image ships a
+    cuda-compat shim that only works on datacenter GPUs; on an RTX 5090 host with a 575 driver every launch
+    dies with CUDA error 804. Filter Vast offers on `cuda_max_good>=13.0` and run `torch.cuda.is_available()`
+    before installing anything. Fresh installs also need `flashinfer-cubin` from FlashInfer's root wheel index
+    (`https://flashinfer.ai/whl/`) to match `flashinfer-python`; the image's 0.6.16 cubin breaks the import.
+
+## Hosts
+
+| tag prefix / tree | host | notes |
+|---|---|---|
+| everything else under `results/probe/` | 4× RTX PRO 6000 Blackwell **Server Edition**, 600 W, PCIe Gen5, vLLM 0.28.1rc1.dev332 | the headline numbers; stopped 3 Sept 16:45, GPUs re-rented |
+| `c6_*`, `f2_*`, roster tags | 4× RTX PRO 6000 Blackwell **Workstation Edition, 400 W cap**, Gen5, vLLM dev361 | relative measurements (kernels, speculation, feasibility, quality); rescale absolute rows by the `c6_*` controls |
+| `results/5090/` | 8× RTX 5090 (32 GB), 400 W, PCIe Gen5, dual Xeon 8490H, vLLM dev361 | like-for-like at Scan's price: GB8-32T £1,999.98/month = the 4× PRO 6000 |
 
 ## Reproducing
 
