@@ -125,5 +125,52 @@ tpm minimaxm3_mtp "$MD/MiniMax-M3-MXFP4" 4 1 --moe-backend flashinfer_cutlass --
   --speculative-config '{"method":"minimax_m3_mtp","num_speculative_tokens":2}'
 # Qwen3.8-Flash-Next NVFP4: two TP2 replicas, sm_120 native NVFP4 kernel
 tpm qwen38fn  "$MD/Qwen3.8-Flash-Next-NVFP4" 2 2 --kernel-config.linear_backend b12x
+
+
+log "===== FLEET, drafter arms (speculation on models already measured) ====="
+D=/workspace/models
+# MiniMax-M3 + NVIDIA's DSpark drafter (native MTP is unusable: no checkpoint ships the MTP tensors).
+if [ -f "$D/MiniMax-M3-DSpark/config.json" ]; then
+  tpm minimaxm3_dspark "$MD/MiniMax-M3-MXFP4" 4 1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8 \
+      --block-size 128 --speculative-config "{\"method\":\"dspark\",\"model\":\"$D/MiniMax-M3-DSpark\",\"num_speculative_tokens\":8}"
+else log "SKIP minimaxm3_dspark (drafter absent)"; fi
+# gemma-4-26B-A4B + Google's official MTP assistant (0.4 GB).
+if [ -f "$D/gemma-4-26B-A4B-it-assistant/config.json" ]; then
+  rep gemma26_mtp "$MD/gemma-4-26B-A4B-it" \
+      --speculative-config "{\"method\":\"gemma4_mtp\",\"model\":\"$D/gemma-4-26B-A4B-it-assistant\",\"num_speculative_tokens\":3}"
+else log "SKIP gemma26_mtp (assistant absent)"; fi
+# Nemotron-3.5-Lightning: built-in MTP head (free), then NVIDIA's DSpark drafter.
+rep nemo35_mtp "$MD/Nemotron-3.5-Lightning-30B" --kernel-config.linear_backend b12x \
+    --speculative-config "{\"method\":\"nemotron_h_mtp\",\"num_speculative_tokens\":3}"
+if [ -f "$D/Nemotron-3.5-Lightning-DSpark/config.json" ]; then
+  rep nemo35_dspark "$MD/Nemotron-3.5-Lightning-30B" --kernel-config.linear_backend b12x \
+      --speculative-config "{\"method\":\"dspark\",\"model\":\"$D/Nemotron-3.5-Lightning-DSpark\",\"num_speculative_tokens\":3}"
+else log "SKIP nemo35_dspark (drafter absent)"; fi
+# Muse-Glimmer-30B + Meta's official DFlash assistant.
+if [ -f "$D/Muse-Glimmer-30B-assistant/config.json" ]; then
+  rep muse30_dflash "$MD/Muse-Glimmer-30B" \
+      --speculative-config "{\"method\":\"dflash\",\"model\":\"$D/Muse-Glimmer-30B-assistant\",\"num_speculative_tokens\":15}"
+else log "SKIP muse30_dflash (assistant absent)"; fi
+# Qwen3.8-27B NVFP4 (b12x) + the incoai DFlash2 block-diffusion drafter (vs DSpark measured in nvtier2).
+if [ -f "$D/Qwen3.8-27B-DFlash2/config.json" ]; then
+  rep q27_dflash2 "$MD/Qwen27B-NVFP4-RTX5090" --kernel-config.linear_backend b12x \
+      --speculative-config "{\"method\":\"dflash\",\"model\":\"$D/Qwen3.8-27B-DFlash2\",\"num_speculative_tokens\":7}"
+else log "SKIP q27_dflash2 (drafter absent)"; fi
+
+log "===== FLEET, late additions ====="
+# Inkling-Small (Thinking Machines, Apache-2.0, 266B MoE, multimodal incl. audio). vLLM 0.28.1 has
+# native inkling_mm_model + inkling_mtp support. Runs only if the download finished in time.
+if [ -f "$MD/Inkling-Small-NVFP4/config.json" ]; then
+  tpm inkling     "$MD/Inkling-Small-NVFP4" 4 1 --kernel-config.linear_backend b12x
+  tpm inkling_mtp "$MD/Inkling-Small-NVFP4" 4 1 --kernel-config.linear_backend b12x \
+      --speculative-config '{"method":"inkling_mtp","num_speculative_tokens":2}'
+else
+  log "SKIP inkling (download not finished)"
+fi
+# GLM-5.3-Flash MTP arm. The first attempt lost its JSON quotes in the launcher; glm_vllm.sh now
+# routes the config through SPEC, and ARMS=mtp skips the already-measured base arm.
+kill_all
+ARMS=mtp bash /workspace/bench/glm_vllm.sh >> /workspace/results/glm_vllm_full.log 2>&1
+
 log "FLEET2 DONE"
 kill_all

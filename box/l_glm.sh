@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+export PYTHONPATH="/workspace/glmimg/usr/local/lib/python3.12/dist-packages"
+export VLLM_USE_DEEP_GEMM=0 VLLM_MOE_USE_DEEP_GEMM=0
+export FLASHINFER_CUDA_ARCH_LIST=12.0f TORCH_CUDA_ARCH_LIST=12.0 HF_HUB_OFFLINE=1
+export VLLM_ENGINE_READY_TIMEOUT_S=3600
+export MAX_JOBS=6 NVCC_THREADS=2
+exec python3 -m vllm.entrypoints.openai.api_server \
+  --model /workspace/models/GLM-5.3-Flash-NVFP4 --served-model-name glm53f \
+  --host 0.0.0.0 --port 8000 \
+  --tensor-parallel-size 4 \
+  --kv-cache-dtype auto --max-model-len 40960 --max-num-seqs 256 \
+  --max-num-batched-tokens 8192 --gpu-memory-utilization 0.92 \
+  --speculative-config '{"method":"glm5_next_mtp","num_speculative_tokens":5}' \
+  --reasoning-parser deepseek_r1 --tool-call-parser glm47 \
+  --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \
+  --disable-uvicorn-access-log

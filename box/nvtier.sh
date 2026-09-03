@@ -9,11 +9,7 @@
 B=/workspace/bench; R=/workspace/results; P=$R/probe; S=$R/smoke; MD=/workspace/models
 mkdir -p "$P" "$S"
 log(){ echo "[$(date +%H:%M:%S)] $*"; }
-kill_all(){
-  tmux kill-session -t =srv 2>/dev/null
-  for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null | tr -d ' '); do kill -9 "$pid" 2>/dev/null; done
-  sleep 8
-}
+source /workspace/bench/hardkill.sh
 
 serve_x4(){ # tag dir [extra...]
   local tag="$1" dir="$2"; shift 2

@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "Need answer just number. Compute 17*23 = 391. Final only 391.\n</think>\n\n391",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.923,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "We need answer user's simple math. Need final just number. Compute: 60 km in 45 min = 0.75 h. speed = 60 / 0.75 = 80 km/h. Reply just number: 80.\n</think>\n\n80",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.818,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "We need answer user: \"Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.\" Simple. Need final with code. Need consider indexing: n-th Fibonacci number ambiguous. Usually fib(0)=0, fib(1)=1. Iterative. Could include validation. Provide concise.\n</think>\n\n```python\ndef fib(n):\n    \"\"\"Return the n-th Fibonacci number, where fib(0) = 0 and fib(1) = 1.\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.81,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "We need answer user: \"Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\"\nNeed provide SQL. Need likely include join, group by, order by sum desc limit 3. Maybe handle ties? Top 3 customers by total order value. Could use CTE or subquery. Need maybe include customers with no orders? Top by total order value likely only customers with orders; if include no orders as 0, top 3 could include zero if fewer than 3 with orders. But typical: join orders, group. Could mention if want include customers with no orders use LEFT JOIN and COALESCE. Need final concise. Ensure SQL syntax standard. Maybe:\nSELECT c.id, c.name, SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\nIf ties? \"top 3\" maybe use window function to handle ties? But simple. Could provide alternative with RANK if ties. User asks write a SQL query. Provide one. Maybe include note for SQL Server TOP 3 instead of LIMIT. Need final with code.\n</think>\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON c.id = o.customer_id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC\nLIMIT 3;\n```\n\nIf you are using SQL Server, replace `LIMIT 3` with:\n\n```sql\nSELECT TOP 3\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON c.id = o.customer_id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC;\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.528,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "We need to answer user: \"Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.\"\n\nNeed rate correctness 1-5 and brief explanation. Correct capital is Canberra, not Sydney. So answer is incorrect. Rating likely 1/5. Need maybe say 1/5 because Sydney is a major city but not capital. Keep concise.\n</think>\n\n1/5. The capital of Australia is Canberra, not Sydney.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.722,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "We need to answer user's request: Translate to French: \"The meeting has been moved to Thursday afternoon.\" Need provide translation. Need final concise. French: \"La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" Or \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" In French, \"moved\" for meeting often \"report\u00e9e\" (postponed/rescheduled) rather than d\u00e9plac\u00e9e (physically moved). If time changed, \"report\u00e9e \u00e0 jeudi apr\u00e8s-midi\" is natural. Could also \"La r\u00e9union a \u00e9t\u00e9 avanc\u00e9e/d\u00e9cal\u00e9e \u00e0 jeudi apr\u00e8s-midi\" depending. Since original says moved to Thursday afternoon, likely rescheduled. Best: \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" If \"moved\" as location? But \"to Thursday afternoon\" indicates time. Use report\u00e9e. Final just translation.\n</think>\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.629,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "We need to answer user's request: \"Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\"\n\nNeed produce one sentence summary. Keep concise. Could say: \"Large language models, trained on massive data, can handle many tasks without task-specific training but may occasionally generate false facts.\" Ensure one sentence. Final only that.\n</think>\n\nLarge language models, trained on massive data, can handle many tasks without task-specific training but may occasionally generate false facts.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.644,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "We need answer user: \"List three differences between TCP and UDP.\" Simple. Need final concise. Provide three differences.\n</think>\n\n1. **Connection-oriented vs. connectionless**: TCP establishes a connection before data transfer; UDP does not.\n2. **Reliability**: TCP guarantees ordered, reliable delivery; UDP does not.\n3. **Speed/overhead**: TCP has more overhead and is slower; UDP is faster with less overhead.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.828,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "We need answer user's request: \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\"\n\nNeed produce rewritten sentence where outcome opposite. Original outcome: training converged faster. Opposite outcome: training converged slower (or did not converge faster). Need keep cause? Counterfactual rewrite likely: \"Because the experiment used a larger batch size, training converged slower.\" But is that logically opposite? The outcome opposite is slower convergence. Could also say \"Because the experiment used a larger batch size, training converged more slowly.\" Need concise.\n\nFinal just answer.\n</think>\n\nBecause the experiment used a larger batch size, training converged more slowly.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 4,
+  "distinct": 0.559,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "We need to respond to user: \"Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.\"\nNeed output only JSON. Need likely {\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}. Ensure only JSON no markdown.\n</think>\n\n{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.846,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "We need to answer user: \"Explain why the sky is blue in two sentences.\" Need final exactly two sentences. Need concise. Ensure two sentences. Could say: Sunlight enters atmosphere and scatters off air molecules; shorter blue wavelengths scatter more than longer red ones, so our eyes receive more blue light from the sky. That's one sentence? It's one with semicolon? Better two sentences: \"Sunlight is made of many colors, and when it enters Earth's atmosphere, air molecules scatter the shorter blue wavelengths more strongly than the longer red ones.\" \"As a result, blue light is spread across the sky, making it appear blue to our eyes.\" Count two. Good.\n</think>\n\nSunlight is made of many colors, and when it enters Earth's atmosphere, air molecules scatter the shorter blue wavelengths more strongly than the longer red ones. As a result, blue light is spread across the sky, making it appear blue to our eyes.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.529,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "We need answer user's math question: derivative of x^3 * sin(x). Need provide final concise. Compute product rule: d/dx x^3 sin x = 3x^2 sin x + x^3 cos x. Could factor x^2(3 sin x + x cos x). Ensure clear.\n</think>\n\nThe derivative of \\(x^3 \\sin(x)\\) is:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right) = 3x^2 \\sin x + x^3 \\cos x\n\\]\n\nYou can also factor it as:\n\n\\[\nx^2(3\\sin x + x\\cos x)\n\\]",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.689,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "We need to respond to user: \"Give a regex that matches a UK postcode.\" Need provide regex. Need think carefully. UK postcode formats: outward code: 1-2 letters + 1-2 digits? Actually UK postcode: outward code: AA, AAN, AN, NN, NNN? Inward code: space + NAA. General regex often: ^([A-Z]{1,2}[0-9][A-Z]?)? ?[0-9][A-Z]{2}$? Need robust.\n\nUK postcode official patterns:\n- A9 9AA\n- AA9 9AA\n- A99 9AA\n- AA99 9AA\n- A9A 9AA\n- AA9A 9AA\n- A99A 9AA\n- AA99A 9AA\n- AN 9AA\n- AAN 9AA\n- ANN 9AA\n- NNN 9AA\n- NNNN 9AA? Wait outward code can be 1-2 letters followed by 1-2 digits? Let's recall.\n\nUK postcode structure: outward code: one of:\n- A9\n- AA9\n- A99\n- AA99\n- A9A\n- AA9A\n- A99A\n- AA99A\n- AN\n- AAN\n- ANN\n- NNN\n- NNNN?\nWhere A letter, N number. Inward code: NAA.\nSo full: ^([A-Z]{1,2}[0-9][A-Z]?)? ?[0-9][A-Z]{2}$? That allows optional outward? But postcode must have outward? Some postcodes like GIR 0AA (outward GIR, inward 0AA). G1 1AA. M1 1AA. Also \"B1 1AA\". There are postcodes with outward code just two letters? \"AN 9AA\"? Yes AN 9AA? Actually AN 9AA? There are postcodes like \"AN 9AA\"? Let's check: AN 9AA? Maybe \"AN 9AA\" is not? There are \"AN 9AA\"? The pattern AN 9AA exists? I think \"AN 9AA\" maybe? Wait \"AN 9AA\" is not? There are postcodes like \"AN 9AA\"? Let's recall: \"AN 9AA\" maybe not; \"AN 9AA\"? There is \"AN 9AA\"? Hmm.\n\nCommon regex from Wikipedia:\n^([A-PR-UWYZ][A-HJ-NP-Z]?\\d[A-Z\\d]?)? ?\\d[A-Z]{2}$\nThis excludes letters I, O, Q? Actually UK postcode letters exclude I, O, Q? I think I, O, Q are not used? Let's verify: UK postcode letters: A-Z except I, O, Q? I think I, O, Q are not used in postcodes? I recall: \"The letters I, O, and Q are not used in postcodes.\" Yes. Also C, K, M, N, S, T, V, W are not used in first letter? Wait first letter restrictions: C, K, M, N, S, T, V, W are not used as first letter? Let's recall: \"The letters I, O, Q are not used in postcodes. The letters C, K, M, N, S, T, V, W are not used as the first letter of a postcode.\" But some postcodes start with C? \"C1 1AA\"? Actually \"C1 1AA\" is not? There is \"C1 1AA\"? I think \"C1 1AA\" maybe not? Let's check memory: UK postcode districts: \"C1\" is not? \"C1 1AA\" maybe? Wait \"C1 1AA\" is a real? I know \"C1 1AA\" maybe not; \"C1 1AA\" could be? There are postcodes starting with C? \"C1 1AA\" maybe? Let's recall: \"C1 1AA\" is not? \"C1 1AA\" maybe? I know \"C1 1AA\" is not? Actually \"C1 1AA\" might be a real postcode? Let's think: \"C1 1AA\" maybe? There is \"C1 1AA\" in? I know \"C1 1AA\" maybe not; \"C1 1AA\" could be? There are \"C1 1AA\"? I'm not sure.\n\nLet's recall official: \"The letters I, O, Q are not used in postcodes. The letters C, K, M, N,",
+  "reasoning_chars": 0,
+  "finish": "length",
+  "top6gram": 3,
+  "distinct": 0.371,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "We need answer user's puzzle. Need solve: bat + ball = 1.10. bat = ball + 1.00. Let ball x, bat x+1.00. 2x+1.00=1.10 => 2x=0.10 => x=0.05. Reply just number. Need likely \"0.05\" or \"5 cents\"? User says just the number. So final: 0.05. Ensure no extra.\n</think>\n\n0.05",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.796,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "We need answer user's request: \"Complete the proverb and explain it: A stitch in time\". Need likely complete: \"A stitch in time saves nine.\" Explain meaning: small timely effort prevents bigger problem later. Need maybe mention origin? Keep concise. Final answer.\n</think>\n\n**Complete proverb:**  \n**\u201cA stitch in time saves nine.\u201d**\n\n**Explanation:**  \nThis proverb means that dealing with a small problem early can prevent it from becoming a much bigger problem later. For example, fixing a tiny tear in clothing right away saves the effort of repairing a large tear later. It encourages prompt action, careful maintenance, and not putting off small tasks.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.765,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "We need to answer user: \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?\" Simple. Need final concise. State A correct, B incorrect, capital is Paris. Maybe mention Lyon is a major city but not capital.\n</think>\n\nAnswer A: **Paris** is correct.\n\n**Why:** Paris is the capital of France. Answer B: **Lyon** is incorrect because Lyon is a major French city, but it is not the capital.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.655,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "We need to respond to user: \"Write a haiku about GPUs.\" Simple. Need final haiku. Ensure 5-7-5? \"Green lights hum at night / thousand cores compute dreams / heat escapes the case\" Syllables: Green(1) lights(1) hum(1) at(1) night(1)=5. thousand(2? thou-sand) cores(1) com-pute(2) dreams(1)=? thousand=2, cores=1, compute=2, dreams=1 total 6? Need 7. Maybe \"thou-sand cores com-pute dreams\" 2+1+2+1=6. Add \"and\"? \"thou-sand cores and com-pute dreams\" 2+1+1+2+1=7. Line: \"thousand cores and compute dreams\" maybe 7? thousand(2) cores(1) and(1) compute(2) dreams(1)=7. Third: heat(1) es-capes(2) the(1) case(1)=5. Good. But \"and compute\" awkward. Alternative: \"thousand cores compute dreams\" 6. \"thousand cores compute new dreams\" 2+1+2+1+1=7? thousand(2) cores(1) compute(2) new(1) dreams(1)=7. Good. Haiku:\nGreen lights hum at night\nthousand cores compute new dreams\nheat escapes the case\nCheck syllables: Green(1) lights(1) hum(1) at(1) night(1)=5. thousand(2) cores(1) compute(2) new(1) dreams(1)=7. heat(1) es-capes(2) the(1) case(1)=5. Good. Final just haiku.\n</think>\n\nGreen lights hum at night\nthousand cores compute new dreams\nheat escapes the case",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.564,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "We need answer user: Convert 98.6 Fahrenheit to Celsius, show formula. Simple. Need final with formula and calculation. Formula C = (F - 32) * 5/9. For 98.6: (98.6-32)=66.6; *5/9 = 333/9? 66.6*5=333; /9=37.0. So 37\u00b0C. Need maybe show steps.\n</think>\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nSubstitute \\(F = 98.6\\):\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 37\n\\]\n\nSo, **98.6\u00b0F = 37\u00b0C**.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.65,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "We need answer user: \"Name the process by which plants make food and give its chemical equation.\" Simple biology/chemistry. Need final concise. Process: photosynthesis. Equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Could mention chlorophyll. Ensure balanced. Maybe word equation: carbon dioxide + water -> glucose + oxygen in presence of sunlight/chlorophyll. Final.\n</think>\n\nThe process is **photosynthesis**.\n\n**Chemical equation:**\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{light energy}} C_6H_{12}O_6 + 6O_2\n\\]\n\nIn words: carbon dioxide and water, in the presence of sunlight, form glucose and oxygen.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.807,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "We need answer user's request: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need final only valid JSON. Ensure no extra. JSON object {\"a\":1,\"b\":2,\"c\":3}.\n</think>\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.893,
+  "verdict": "ok"
+ }
+]

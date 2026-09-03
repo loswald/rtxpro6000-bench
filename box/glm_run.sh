@@ -10,11 +10,7 @@ B=/workspace/bench; R=/workspace/results; P=$R/probe; S=$R/smoke
 MD=/workspace/models/GLM-5.3-Flash-NVFP4
 mkdir -p "$P" "$S"
 log(){ echo "[$(date +%H:%M:%S)] $*"; }
-kill_all(){
-  tmux kill-session -t =glm 2>/dev/null
-  for pid in $(nvidia-smi --query-compute-apps=pid --format=csv,noheader 2>/dev/null | tr -d ' '); do kill -9 "$pid" 2>/dev/null; done
-  sleep 8
-}
+source /workspace/bench/hardkill.sh
 
 SP=$(find "$IMG" -maxdepth 6 -type d -name "vllm" -path "*packages*" 2>/dev/null | head -1)
 [ -z "$SP" ] && { log "no vllm found in the extracted image"; exit 1; }
@@ -44,16 +40,16 @@ exec python3 -m vllm.entrypoints.openai.api_server \\
   --model $MD --served-model-name glm53f \\
   --host 0.0.0.0 --port 8000 \\
   --tensor-parallel-size 4 \\
-  --kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 256 \\
+  --kv-cache-dtype auto --max-model-len 40960 --max-num-seqs 256 \\
   --max-num-batched-tokens 8192 --gpu-memory-utilization 0.92 \\
-  --speculative-config '{"method":"mtp","num_speculative_tokens":5}' \\
+  --speculative-config '{"method":"glm5_next_mtp","num_speculative_tokens":5}' \\
   --reasoning-parser deepseek_r1 --tool-call-parser glm47 \\
   --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \\
   --disable-uvicorn-access-log
 L
 chmod +x "$B/l_glm.sh"
 kill_all
-tmux new-session -d -s glm "bash $B/l_glm.sh > $S/glm53f.log 2>&1; echo EXIT=\$? >> $S/glm53f.log"
+tmux new-session -d -s glmsrv "bash $B/l_glm.sh > $S/glm53f.log 2>&1; echo EXIT=\$? >> $S/glm53f.log"
 t=0; ok=0
 while [ "$t" -lt 2700 ]; do
   curl -fsS -m 3 http://127.0.0.1:8000/health >/dev/null 2>&1 && { ok=1; break; }

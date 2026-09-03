@@ -1,0 +1,25 @@
+[09:32:32] === tiles_gb10_dense :: 
+[09:35:51]     tiles_gb10_dense -> healthy in 135s | quality20[chat]: ok=2 degenerate=18 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:35:56] === pdl_off :: EXTRA_ENV=SGLANG_DISABLE_PDL=1
+[09:39:33]     pdl_off -> healthy in 150s | quality20[chat]: ok=0 degenerate=20 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:39:38] === indexer_torch :: EXTRA_ENV=SGLANG_FP8_PAGED_MQA_LOGITS_TORCH=1
+[09:42:59]     indexer_torch -> healthy in 135s | quality20[chat]: ok=1 degenerate=19 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:43:05] === sparse_prefill :: DENSE_THR=0
+[09:46:24]     sparse_prefill -> healthy in 135s | quality20[chat]: ok=2 degenerate=18 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:46:35] === conv_triton :: EXTRA_ENV=SGLANG_FORCE_TRITON_CONV=1
+[09:49:55]     conv_triton -> healthy in 135s | quality20[chat]: ok=2 degenerate=18 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:50:00] === ssm_fp32 :: EXTRA_ARGS=--mamba-ssm-dtype float32
+[09:53:21]     ssm_fp32 -> healthy in 135s | quality20[chat]: ok=0 degenerate=20 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:53:26] === conv_triton_fp32 :: EXTRA_ENV=SGLANG_FORCE_TRITON_CONV=1 EXTRA_ARGS=--mamba-ssm-dtype float32
+[09:56:47]     conv_triton_fp32 -> healthy in 135s | quality20[chat]: ok=0 degenerate=20 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[09:56:52] === dp_attention :: EXTRA_ARGS=--enable-dp-attention --dp-size 4
+[09:59:30]     dp_attention -> FAILED after 135s | no verdict
+          raise _scheduler_died_error(i, scheduler_procs[i])
+      RuntimeError: Rank 0 scheduler died during initialization (exit code: -3). If exit code is -9 (SIGKILL), a common cause is the OS OOM killer. Run `dmesg -T | gr
+[09:59:35] === topk_unfused :: EXTRA_ENV=SGLANG_DSA_FUSE_TOPK=0
+[10:01:58]     topk_unfused -> FAILED after 120s | no verdict
+      [2026-09-03 10:01:45 TP0] Scheduler hit an exception: Traceback (most recent call last):
+      AssertionError
+[10:02:03] === shared_fused :: SHARED_FUSION_FLAG= 
+[10:05:12]     shared_fused -> healthy in 135s | quality20[chat]: ok=0 degenerate=20 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[10:05:12] DISC2 DONE

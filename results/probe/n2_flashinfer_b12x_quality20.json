@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "User asks: What is 17*23? Reply with just the number. Need compute 17*23 = 391. Final only number.\n</think>\n\n391",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.95,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "We need answer user's simple math. Need compute: 60 km in 45 minutes = 0.75 h. speed = 60 / 0.75 = 80 km/h. Reply just number. Final: 80.\n</think>\n\n80",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.839,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "We need answer user: \"Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.\" Simple. Need final with code. Need consider indexing: n-th Fibonacci number. Usually fib(0)=0, fib(1)=1. Iterative. Could include validation. Provide concise.\n</think>\n\n```python\ndef fib(n):\n    \"\"\"Return the n-th Fibonacci number, where fib(0) = 0 and fib(1) = 1.\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.819,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "We need answer user: \"Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\"\nNeed provide SQL. Need likely include join, group by, order by sum desc limit 3. Maybe handle customers with no orders? \"top 3 customers by total order value\" likely only customers with orders. Could use INNER JOIN. If want include zero, LEFT JOIN and COALESCE. But top by total order value likely customers with orders. Provide concise. Maybe mention if ties? Top 3. Use LIMIT 3 (MySQL/Postgres). For SQL Server TOP 3. Could provide standard-ish with LIMIT. Need final only. Ensure no analysis outside? final answer.\n</think>\n\n```sql\nSELECT c.id,\n       c.name,\n       SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nIf you want to include customers with no orders, use:\n\n```sql\nSELECT c.id,\n       c.name,\n       COALESCE(SUM(o.amount), 0) AS total_order_value\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.584,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "We need answer user's request: Rate answer correctness 1-5 and explain briefly. Need produce final. Need likely say 1/5 because capital is Canberra, not Sydney. Brief.\n</think>\n\n1/5. The capital of Australia is Canberra, not Sydney.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.806,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "We need to translate \"The meeting has been moved to Thursday afternoon.\" into French. Need produce final answer likely just translation. Need consider best French: \"La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" Or \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" In French, \"moved\" for meeting rescheduled: \"report\u00e9e\" is more natural. \"The meeting has been moved to Thursday afternoon\" = \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" Could also \"La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi\" but \"report\u00e9e\" better for rescheduling. Need maybe include article? \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e jeudi apr\u00e8s-midi.\" In French, with \"reporter \u00e0\" + time? \"reporter \u00e0 jeudi apr\u00e8s-midi\" okay. Could say \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" If \"moved\" as changed date, \"report\u00e9e\" is perfect. Final concise.\n</think>\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 4,
+  "distinct": 0.515,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "We need answer user's request: \"Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\" Need produce one sentence summary. Keep concise.\n</think>\n\nLarge language models, trained on massive datasets, can handle many tasks without specialized training but may occasionally generate false facts.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.828,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "We need answer user: \"List three differences between TCP and UDP.\" Simple. Need final concise. Ensure accurate: connection-oriented vs connectionless, reliability (ACK, retransmission, ordering) vs best-effort, overhead/latency, use cases maybe. Need list three.\n</think>\n\n1. **Connection-oriented vs. connectionless**: TCP establishes a connection before data transfer; UDP does not.\n2. **Reliability**: TCP guarantees delivery, ordering, and error recovery; UDP is best-effort with no guaranteed delivery.\n3. **Overhead and speed**: TCP has more overhead due to handshakes and acknowledgments; UDP is lighter and faster.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.854,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "We need to answer user: \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\"\n\nNeed produce rewritten sentence with opposite outcome. Likely: \"Because the experiment used a larger batch size, training converged slower.\" Or maybe opposite outcome means if larger batch size caused faster, opposite outcome is slower. Need just answer concise. Ensure final only sentence maybe.\n</think>\n\nBecause the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.59,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "We need to respond to user: \"Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.\"\n\nNeed output only JSON. Need likely {\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}. Ensure age numeric? JSON fields name, age, city. Could be string? Usually age number. Return only JSON no markdown.\n</think>\n\n{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.774,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "We need to respond to user: \"Explain why the sky is blue in two sentences.\" Need final exactly two sentences. Need concise. Ensure two sentences. Could say: Sunlight contains all colors, and air molecules scatter shorter blue wavelengths more than longer red wavelengths, a process called Rayleigh scattering. This scattered blue light reaches our eyes from all directions, making the sky appear blue. Count sentences: 2. Good.\n</think>\n\nSunlight contains all colors, and air molecules scatter shorter blue wavelengths more than longer red wavelengths through Rayleigh scattering. This scattered blue light reaches our eyes from all directions, making the sky appear blue.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.578,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "We need answer user asks derivative of x^3 * sin(x). Need produce final. Compute product rule: d/dx x^3 sin x = 3x^2 sin x + x^3 cos x. Could factor x^2(3 sin x + x cos x). Provide concise.\n</think>\n\nThe derivative of \\(x^3 \\sin(x)\\) is:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= 3x^2 \\sin x + x^3 \\cos x\n\\]\n\nYou can also factor it as:\n\n\\[\nx^2(3\\sin x + x\\cos x)\n\\]",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.681,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "We need answer user: \"Give a regex that matches a UK postcode.\" Need provide regex. Need think carefully. UK postcode formats: outward code: A9 9AA, A9A 9AA, A99 9AA, AA9 9AA, AA99 9AA, AA9A 9AA; inward code: 9AA. No spaces? Usually optional space. Need regex. Could give one that matches standard UK postcodes, maybe with optional space. Need be accurate. Common regex: ^([A-Z]{1,2}[0-9][A-Z]?)?([0-9][A-Z]{2})$? Let's derive.\n\nUK postcode: outward code:\n- A9: e.g. M1\n- A9A: M1 1AB? Actually outward M1? Wait M1 is A9, M1 1AB? Inward 1AB. Outward M1.\n- A99: M10? e.g. M10\n- AA9: B1\n- AA99: B10\n- AA9A: B10? Actually AA9A like B10? Let's list:\nFormats:\nA9 9AA\nA9A 9AA\nA99 9AA\nAA9 9AA\nAA99 9AA\nAA9A 9AA\nWhere A is letter, 9 digit.\nInward: 9AA.\nOutward can be:\n[A-Z][0-9] (A9)\n[A-Z][0-9][A-Z] (A9A)\n[A-Z][0-9]{2} (A99)\n[A-Z]{2}[0-9] (AA9)\n[A-Z]{2}[0-9]{2} (AA99)\n[A-Z]{2}[0-9][A-Z] (AA9A)\nBut some combinations not used? For regex general.\nCombined outward: [A-Z]{1,2}[0-9][A-Z]?[0-9]? Hmm need ensure lengths.\nCould use: ^([A-Z]{1,2}[0-9][A-Z]?|[A-Z][0-9]{2})[ ]?[0-9][A-Z]{2}$? Let's test.\nOutward alternatives:\n- [A-Z]{1,2}[0-9][A-Z]? matches A9, A9A, AA9, AA9A.\n- [A-Z][0-9]{2} matches A99.\nNeed AA99? Not covered. Could add [A-Z]{2}[0-9]{2}. Or use [A-Z]{1,2}[0-9][A-Z]?[0-9]? but that may allow A99? Let's see: [A-Z]{1,2}[0-9][A-Z]?[0-9]? For A99: A + 9 + optional A? no + optional 9? It can match A99? [A-Z]{1,2}=A, [0-9]=9, [A-Z]? empty, [0-9]? 9 => A99. For AA99: AA + 9 + empty + 9 => AA99. For A9A: A + 9 + A + empty => A9A. For AA9A: AA + 9 + A + empty. For A9: A + 9 + empty + empty. For AA9: AA + 9 + empty + empty. But it also allows A99A? A + 9 + A + 9 => A99A, not valid. Also AA99A? AA + 9 + 9? Wait [A-Z]? then [0-9]? cannot have A after second digit? It would match AA99? yes. It may allow A99A invalid. Need avoid.\nAlternative known regex: ^([A-Z]{1,2}\\d[A-Z]?)?(\\d[A-Z]{2})$? This is common but not full? Let's test: outward optional: [A-Z]{1,2}\\d[A-Z]? matches A9, A9A, AA9, AA9A. It does not match A99 or AA99. But many postcodes have A99? e.g. M10? Actually M10 is AA9? Wait M10: M is A, 10 is 99? Format A99? Yes M10 1AB? Is M10 valid? Manchester M10? I think M10 is valid? Outward M10 (A99). Also AA99 like B10",
+  "reasoning_chars": 0,
+  "finish": "length",
+  "top6gram": 2,
+  "distinct": 0.508,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "We need answer user's puzzle. Need solve: bat + ball = 1.10. bat = ball + 1.00. Let ball x, bat x+1.00. 2x+1.00=1.10 => 2x=0.10 => x=0.05. Reply just number. Need likely \"0.05\" or \"5\"? User says just the number. Could be 0.05. Ensure no extra.\n</think>\n\n0.05",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.792,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "We need answer user: \"Complete the proverb and explain it: A stitch in time\". Need provide completion and explanation. Simple. Final concise.\n</think>\n\n**A stitch in time saves nine.**\n\n**Explanation:**  \nThis proverb means that dealing with a small problem early can prevent it from becoming a much bigger problem later. Just as one small stitch can stop a tear from getting worse, taking prompt action saves effort, time, and trouble in the future.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.795,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "We need to answer user: \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?\" Simple. Need final concise. Ensure maybe mention Paris is capital, Lyon is not.\n</think>\n\nAnswer A: **Paris** is correct.\n\n**Why:** Paris is the capital city of France. Lyon is a major French city, but it is not the capital.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.7,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "We need to respond to user: \"Write a haiku about GPUs.\" Simple. Need final only haiku likely 5-7-5. Need ensure about GPUs. Could be:\n\"Green lights blink in rows\" (5? Green(1) lights(1) blink(1) in(1) rows(1)=5)\n\"thousands of cores hum in sync\" (thou-sands? Let's count: thousands (2? thou-sands =2) of(1) cores(1) hum(1) in(1) sync(1)=7? 2+1+1+1+1+1=7)\n\"rendering dreams fast\" (ren-der-ing? 3? dreams 1 fast 1 =5? rendering =3? re-der-ing? Actually rendering: ren-der-ing =3, dreams=1, fast=1 total5). Good.\nNeed final just haiku.\n</think>\n\nGreen lights blink in rows\nthousands of cores hum in sync\nrendering dreams fast",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.777,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "We need answer user: \"Convert 98.6 Fahrenheit to Celsius, show the formula.\" Simple. Need final with formula and calculation. Formula C = (F - 32) * 5/9. For 98.6: (98.6-32)=66.6; *5/9 = 333/9? 66.6*5=333; /9=37.0. So 37\u00b0C. Need maybe show steps.\n</think>\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nSubstitute \\(F = 98.6\\):\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 37\n\\]\n\nSo, **98.6\u00b0F = 37\u00b0C**.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.654,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "We need answer user: \"Name the process by which plants make food and give its chemical equation.\" Simple biology/chemistry. Need final concise. Process: photosynthesis. Equation: 6CO2 + 6H2O + light energy -> C6H12O6 + 6O2. Could mention chlorophyll. Ensure balanced. Maybe word equation: carbon dioxide + water -> glucose + oxygen in presence of sunlight/chlorophyll. Final.\n</think>\n\nThe process is **photosynthesis**.\n\nChemical equation:\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{light energy}} C_6H_{12}O_6 + 6O_2\n\\]\n\nIn words: carbon dioxide + water \u2192 glucose + oxygen, in the presence of sunlight and chlorophyll.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.767,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "We need answer user's request: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need output only valid JSON. Then final JSON.\n</think>\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.88,
+  "verdict": "ok"
+ }
+]

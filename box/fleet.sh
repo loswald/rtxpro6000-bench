@@ -83,15 +83,18 @@ run_model(){ # dir alias [extra vllm args...]
   fi
 }
 
-log "===== REPLICA TIER: one model per card, four cards ====="
-run_model "$MD/gpt-oss-20b"                gptoss20
-run_model "$MD/Nemotron-3.5-Lightning-30B" nemo35   --kernel-config.linear_backend b12x
-run_model "$MD/Qwen3.6-35B-A3B-FP8"        qwen36   --kernel-config.linear_backend b12x
-run_model "$MD/gemma-4-26B-A4B-it"         gemma26
-run_model "$MD/Muse-Glimmer-30B"           muse30
-run_model "$MD/gemma-4-31B-it"             gemma31
+log "===== FLEET, ordered by Artificial Analysis Intelligence Index ====="
+# 57  GLM-5.3-Flash NVFP4   198 GB  TP4   -- highest-scoring open-weight model that fits
+# 52  Qwen3.8-27B-FP8        29 GB  1 card -- best quality-per-GB by a wide margin
+# 45  MiniMax-M3            259 GB  TP4
+# 35  Muse Glimmer 30B       60 GB  1 card
+# 24  gpt-oss-120b           61 GB  1 card -- throughput reference, weakest on the index
+# 24  Nemotron 3.5 Lightning 22 GB  1 card
+# DROPPED: gemma-4-26B, gemma-4-31B, Qwen3.6-35B -- absent from the index, so below 23
 
-log "===== re-baseline the champion in the same session for comparability ====="
+run_model "$MD/Qwen3.8-27B-FP8"           qwen27b  --kernel-config.linear_backend b12x
+run_model "$MD/Muse-Glimmer-30B"          muse30
+run_model "$MD/Nemotron-3.5-Lightning-30B" nemo35  --kernel-config.linear_backend b12x
 run_model "$MD/gpt-oss-120b" gptoss120 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
 
 log "FLEET DONE"
