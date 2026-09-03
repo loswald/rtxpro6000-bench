@@ -58,5 +58,8 @@ judge 4,096 / 512; short 256 / 64. Artificial Analysis Intelligence Index v4.1.1
 ## Reproducing
 
 Every server launch in `box/*.sh` writes the exact command it ran to `l_*.sh` and the kernel the engine
-selected to the smoke log. `results/summary_full.tsv` is appended by `box/agg.py` with one row per
-(model, shape, concurrency): req/min, in/out/total tok/s, TTFT/TPOT/ITL/E2E at p50/p99.
+selected to the server log; `results/kernels_by_server.tsv` collects those kernel lines, one per server.
+`box/agg.py` writes one `summary.tsv` per run under `results/probe/<tag>/` with one row per
+(shape, concurrency): req/s, in/out/total tok/s, TTFT/TPOT/ITL/E2E at p50/p99. `results/summary_all.tsv`
+is the concatenation of all of them (213 rows across 39 runs at the time of writing). Raw per-port
+`vllm bench serve` JSON sits beside each summary; the multi-GB server logs stay on the node.
