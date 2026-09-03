@@ -11,7 +11,7 @@ log(){ echo "[$(date +%H:%M:%S)] $*"; }
 source /workspace/bench/hardkill.sh
 CLEAN="env -u PYTHONHOME -u PYTHONPATH -u LD_LIBRARY_PATH"
 COMMON="--kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 512 --max-num-batched-tokens 8192 \
- --gpu-memory-utilization 0.94 --compilation-config {\"cudagraph_mode\":\"FULL_AND_PIECEWISE\"} \
+ --gpu-memory-utilization 0.94 --compilation-config '{\"cudagraph_mode\":\"FULL_AND_PIECEWISE\"}' \
  --no-enable-flashinfer-autotune --enable-prefix-caching --trust-remote-code --disable-uvicorn-access-log"
 ENV="export VLLM_USE_DEEP_GEMM=0 VLLM_MOE_USE_DEEP_GEMM=0 FLASHINFER_CUDA_ARCH_LIST=12.0f TORCH_CUDA_ARCH_LIST=12.0 HF_HUB_OFFLINE=1 MAX_JOBS=6 NVCC_THREADS=2"
 
@@ -40,7 +40,7 @@ serve_x4(){ # tag dir [extra...]   four replicas, ports 8000-8003
 #!/usr/bin/env bash
 $ENV
 for i in 0 1 2 3; do
-  CUDA_VISIBLE_DEVICES=\$i vllm serve $dir --served-model-name m --host 0.0.0.0 --port \$((8000+i)) $COMMON $* \\
+  CUDA_VISIBLE_DEVICES=\$i vllm serve $dir --served-model-name m --host 0.0.0.0 --port \$((8000+i)) $COMMON $(for a in "$@"; do printf ' %q' "$a"; done) \\
     > $S/${tag}_p\$((8000+i)).log 2>&1 &
   sleep 2
 done
@@ -58,7 +58,7 @@ $ENV
 for r in \$(seq 0 $((reps-1))); do
   devs=\$(seq -s, \$((r*$tp)) \$((r*$tp+$tp-1)))
   CUDA_VISIBLE_DEVICES=\$devs vllm serve $dir --served-model-name m --host 0.0.0.0 --port \$((8000+r)) \\
-    --tensor-parallel-size $tp --disable-custom-all-reduce $COMMON $* \\
+    --tensor-parallel-size $tp --disable-custom-all-reduce $COMMON $(for a in "$@"; do printf ' %q' "$a"; done) \\
     > $S/${tag}_p\$((8000+r)).log 2>&1 &
   sleep 2
 done
@@ -103,7 +103,7 @@ need_dl(){ # dir -> 0 once the download log says done/have for it (config.json l
   grep -qE "\] (done|have) $dn( |\$)" "$DL" && return 0
   log "  WAIT $dn (still downloading)"
   local w=0
-  while ! grep -qE "\] (done|have) $dn( |\$)" "$DL" && [ $w -lt 300 ] && { tmux has-session -t =dl2 2>/dev/null || tmux has-session -t =dl 2>/dev/null; }; do sleep 60; w=$((w+1)); done
+  while ! grep -qE "\] (done|have) $dn( |\$)" "$DL" && [ $w -lt 300 ] && { tmux has-session -t =dl3 2>/dev/null || tmux has-session -t =dl2 2>/dev/null || tmux has-session -t =dl 2>/dev/null; }; do sleep 60; w=$((w+1)); done
   grep -qE "\] (done|have) $dn( |\$)" "$DL"
 }
 

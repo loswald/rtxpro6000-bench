@@ -26,7 +26,7 @@ for i in 0 1 2 3; do
     --max-num-batched-tokens 8192 --gpu-memory-utilization 0.96 \\
     --compilation-config '{"cudagraph_mode":"FULL_AND_PIECEWISE"}' \\
     --no-enable-flashinfer-autotune --enable-prefix-caching --trust-remote-code \\
-    --disable-uvicorn-access-log $* \\
+    --disable-uvicorn-access-log $(for a in "$@"; do printf ' %q' "$a"; done) \\
     > /workspace/results/smoke/${tag}_p\$((8000+i)).log 2>&1 &
   sleep 2
 done
