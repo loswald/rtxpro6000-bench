@@ -187,5 +187,15 @@ if fetch littlecedar/Ornith-1.5-397B-NVFP4-MTP-Graft Ornith-1.5-397B-NVFP4; then
   drop Ornith-1.5-397B-NVFP4
 fi
 
+# 9. Motif-3 (AA 47, 186.9 GB). Only the vendor's vLLM fork loads it; motif_vllm.sh runs that fork from the
+#    image tree lifted into /workspace/motifimg. Skipped cleanly if the image pull did not complete.
+if [ -d /workspace/motifimg/usr ] && fetch Motif-Technologies/Motif-3-NVFP4 Motif-3-NVFP4; then
+  kill_all
+  MD="$MD/Motif-3-NVFP4" bash /workspace/bench/motif_vllm.sh 2>&1 | tee -a "$R/motif.log"
+  drop Motif-3-NVFP4
+else
+  log "SKIP motif3 (vendor image tree or weights absent)"
+fi
+
 log "ROSTER3 DONE"
 kill_all
