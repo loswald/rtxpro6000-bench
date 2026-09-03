@@ -1,0 +1,19 @@
+[02:25:35] ############ gpt-oss-120b (native MXFP4 MoE) ############
+[02:25:43] launch sw_gptoss_marlin :: --moe-backend marlin
+[02:26:54] sw_gptoss_marlin healthy 70s | GPU KV cache size: 928,080 tokens
+[02:26:54]   marlin OK | Using 'MARLIN' Mxfp4 MoE backend | KV 928,080
+  router     C2048   210.8s    4667 req/min     9956 out/s     79649 in/s     89605 tot/s  TTFT   2359/  20107 ms  TPOT 187.4/ 201.3 ms  ITL 187.4  E2E  26.2/ 44.6 s
+  judge      C1024   562.6s     876 req/min     7476 out/s     59806 in/s     67281 tot/s  TTFT   3904/  40629 ms  TPOT 129.0/ 135.4 ms  ITL 129.0  E2E  69.8/108.6 s
+[02:41:25] launch sw_gptoss_ficutlass_mxfp8 :: --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[02:42:46] sw_gptoss_ficutlass_mxfp8 healthy 80s | GPU KV cache size: 1,029,289 tokens
+[02:42:46]   ficutlass_mxfp8 OK | Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend | KV 1,029,289
+  router     C2048   153.2s    6446 req/min    13752 out/s    110017 in/s    123769 tot/s  TTFT   1618/  13578 ms  TPOT 135.9/ 144.0 ms  ITL 135.9  E2E  18.9/ 31.3 s
+  judge      C1024   459.9s    1073 req/min     9152 out/s     73217 in/s     82369 tot/s  TTFT   2614/  27528 ms  TPOT 106.4/ 110.5 ms  ITL 106.4  E2E  57.0/ 83.4 s
+[02:54:33] launch sw_gptoss_ficutlass_plain :: --moe-backend flashinfer_cutlass
+[03:06:35] sw_gptoss_ficutlass_plain FAILED to become healthy
+(EngineCore pid=183055) ERROR 09-03 02:54:57 [core.py:1374] EngineCore failed to start.
+(EngineCore pid=183055) ERROR 09-03 02:54:57 [core.py:1374] Traceback (most recent call last):
+(EngineCore pid=183055) ERROR 09-03 02:54:57 [core.py:1374]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1336, in run_engine_core
+[03:06:35]   ficutlass_plain REJECTED
+    ValueError: Mxfp4 MoE backend 'FLASHINFER_CUTLASS_MXFP4_BF16' does not support the deployment configuration since kernel does not support quantization scheme QuantKey(u8,scale(u8,static,
+[03:06:43] launch sw_gptoss_ficutedsl :: --moe-backend flashinfer_cutedsl --quantization-config.moe.activation mxfp8

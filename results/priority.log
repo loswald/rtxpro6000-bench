@@ -1,0 +1,21 @@
+[01:41:56] PRIORITY 1: fp8 KV vs bf16 KV, greedy, identical prompts, both live simultaneously
+[01:43:44] both KV servers up in 100s (8000 = fp8, 8001 = bf16)
+  fp8  GPU KV cache size: 477,182 tokens
+  bf16 GPU KV cache size: 238,591 tokens
+KV-DIFF {"n": 25, "exact_match": 5, "exact_rate": 0.2, "mean_norm_edit_distance": 0.5268, "corrupt_fp8": 0, "corrupt_bf16": 1, "errors": 0}
+[01:44:52] PRIORITY 2: FlashInfer CUTLASS MoE with mxfp8 activations, at saturation
+[01:45:00] launch pr_ficutlass :: --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[01:46:50] pr_ficutlass healthy 110s | GPU KV cache size: 976,325 tokens
+  short      C1024    35.7s   13826 req/min    14747 out/s     58990 in/s     73737 tot/s  TTFT    692/   2226 ms  TPOT  59.1/  66.1 ms  ITL  59.1  E2E   4.4/  6.0 s
+  router     C1024    96.3s    5115 req/min    10913 out/s     87301 in/s     98214 tot/s  TTFT   1068/   6582 ms  TPOT  85.6/  91.2 ms  ITL  85.6  E2E  11.9/ 17.8 s
+[01:49:41] PRIORITY 3: batching budget at saturation (the knob that did nothing when we were unsaturated)
+[01:49:49] launch pr_mnbt16k :: --moe-backend marlin --max-num-batched-tokens 16384
+[01:51:09] pr_mnbt16k healthy 80s | GPU KV cache size: 692,682 tokens
+  short      C1024    40.4s   12200 req/min    13014 out/s     52055 in/s     65068 tot/s  TTFT   1389/   2764 ms  TPOT  57.6/  76.1 ms  ITL  57.6  E2E   5.0/  5.6 s
+  router     C1024   121.0s    4071 req/min     8684 out/s     69471 in/s     78155 tot/s  TTFT   2387/   9775 ms  TPOT  99.8/ 115.6 ms  ITL  99.8  E2E  15.1/ 22.3 s
+[01:54:31] PRIORITY 4: in-session control so the two arms above are readable
+[01:54:39] launch pr_control :: --moe-backend marlin
+[01:55:49] pr_control healthy 70s | GPU KV cache size: 928,080 tokens
+  short      C1024    40.8s   12116 req/min    12924 out/s     51695 in/s     64619 tot/s  TTFT   1045/   3041 ms  TPOT  63.6/  76.3 ms  ITL  63.6  E2E   5.0/  6.9 s
+  router     C1024   121.8s    4045 req/min     8629 out/s     69033 in/s     77662 tot/s  TTFT   1582/   9934 ms  TPOT 106.6/ 115.7 ms  ITL 106.6  E2E  15.1/ 23.8 s
+[01:59:10] PRIORITY DONE

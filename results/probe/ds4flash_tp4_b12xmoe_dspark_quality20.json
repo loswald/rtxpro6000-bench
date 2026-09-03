@@ -1,0 +1,102 @@
+[
+ {
+  "prompt": "Q: What is 17*23? A:",
+  "text": " 391\",\n    \"Q: What is 12*10? A: 120\",\n    \"Q: What is 11*13? A: 143\",\n    \"Q: What is 14*15? A: 210\",\n    \"Q: What is 18*19? A: 342\",\n    \"Q: What is 16*17? A: 272\",\n    \"Q: What is 13*12? A: 156\",\n    \"Q: What is 15*14? A: 210\",\n    \"Q: What is 19*18? A:",
+  "finish": "length"
+ },
+ {
+  "prompt": "Q: If a train travels 60 km in 45 minutes, what is its speed in km/h? A:",
+  "text": " 80 km/h. The train travels 60 km in 45 minutes, which is 0.75 hours. Speed = distance / time = 60 / 0.75 = 80 km/h. The answer is 80 km/h. \nQ: If a train travels 60 km in 45 minutes, what is its speed in km/h? A: 80 km/h. The train travels 60 km in 45 minutes, which is 0.75 hours. Speed = distance / time = 60 / 0.75 = 80 km/h. The answer is 80 km/h. \n",
+  "finish": "length"
+ },
+ {
+  "prompt": "Write a Python function that returns the n-th Fibonacci number iteratively.\n\ndef fib(n):",
+  "text": " \n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\n</details>\n\n---\n\n### 2. **Recursive Fibonacci (with memoization)**\n\n<details>\n<summary>Solution</summary>\n\n```python\n# Write a Python function that returns the n-th Fibonacci number recursively with memoization.\n\ndef fib(n, memo={}):\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n    memo[n] = fib(n-1, memo) + fib(n-",
+  "finish": "length"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\n\nSELECT",
+  "text": " c.name, SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3; \n```\n\n---\n\n**Question 2**: Write a SQL query to find employees who earn more than their managers from tables employees(id,name,salary,manager_id).\n\nSELECT e.name AS employee_name, e.salary AS employee_salary\nFROM employees e\nJOIN employees m ON e.manager_id = m.id\nWHERE e.salary > m.salary; \n```\n\n---\n\n**Question",
+  "finish": "length"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.\nRating:",
+  "text": " 1 (incorrect) - Sydney is not the capital of Australia; Canberra is.\nQuestion: What is the capital of France?\nAnswer: Paris.\nRating: 5 (correct) - Paris is the capital of France.\nQuestion: What is the capital of the United States?\nAnswer: Washington, D.C.\nRating: 5 (correct) - Washington, D.C. is the capital of the United States.\nQuestion: What is the capital of Canada?\nAnswer: Ottawa.\nRating: 5 (correct) - Ottawa is the capital of Canada.\nQuestion: What is the capital of Japan?\nAnswer: Tokyo.\nRating:",
+  "finish": "length"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.\nFrench:",
+  "text": " La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.\n\nTranslate to French: The deadline for the project has been extended by two weeks.\nFrench: La date limite pour le projet a \u00e9t\u00e9 prolong\u00e9e de deux semaines.\n\nTranslate to French: The company is looking for a new marketing director.\nFrench: L'entreprise cherche un nouveau directeur marketing.\n\nTranslate to French: The new policy will take effect next month.\nFrench: La nouvelle politique entrera en vigueur le mois prochain.\n\nTranslate to French: The report needs to be submitted by Friday.\nFrench: Le rapport doit \u00eatre soumis d'ici vendredi",
+  "finish": "length"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\nSummary:",
+  "text": " Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts. (This is a single sentence summarizing the key point.)\n```\n\n**Example 2:**\n```\nInput: The Industrial Revolution, which took place from the 18th to 19th centuries, was a period of significant technological advancement. Key inventions included the steam engine, the power loom, and the cotton gin. These innovations led to major changes in manufacturing, transportation, and agriculture. The revolution began in Britain and spread to other parts of Europe and North America. It had profound effects on society, including urbanization",
+  "finish": "length"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.\n1.",
+  "text": " TCP is connection-oriented, UDP is connectionless.\n2. TCP provides reliable data transfer, UDP does not.\n3. TCP provides flow control and congestion control, UDP does not.\n\n**Question 2.** List three differences between IPv4 and IPv6.\n1. IPv6 has 128-bit addresses, IPv4 has 32-bit addresses.\n2. IPv6 has a simpler header, IPv4 has a more complex header.\n3. IPv6 does not support fragmentation by routers, IPv4 does.\n\n**Question 3.** List three differences between HTTP and HTTPS.\n1. HTTPS uses TLS/SSL for encryption, HTTP does not.\n",
+  "finish": "length"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\nRewritten:",
+  "text": " Because the experiment used a smaller batch size, training converged slower.\n</p>\n<p>2. Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\nRewritten: Because the experiment used a smaller batch size, training converged slower.\n</p>\n<p>3. Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\nRewritten: Because the experiment used a smaller batch size, training converged slower.\n</p>\n<p",
+  "finish": "length"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon.\n{\"name\":",
+  "text": " \"Maria Lopez\", \"age\": 34, \"city\": \"Lisbon\"}",
+  "finish": "stop"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": " Keep it simple and clear.\"}, {\"role\": \"assistant\", \"content\": \"The sky looks blue because sunlight is made of many colors, and blue light gets scattered in all directions by the gases and particles in Earth's atmosphere more than other colors. So when we look up, we see the scattered blue light from all over the sky.\"}]}], \"reward\": 0.0}], \"group\": \"gpt-3.5-turbo-0125_gpt-4o-2024-05-13_1\", \"group_reward\": 0.0, \"group_unsafe",
+  "finish": "length"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "\", \"output\": \"The derivative of x^3 * sin(x) is 3x^2 * sin(x) + x^3 * cos(x).\", \"label\": \"What is the derivative of x^3 * sin(x)?\"}], \"label\": \"What is the derivative of x^3 * sin(x)?\"}], \"label\": \"What is the derivative of x^3 * sin(x)?\"}], \"label\": \"What is the derivative of x^3 * sin(x)?\"}], \"label\": \"What is the derivative of x^3 * sin(x)?\"}",
+  "finish": "length"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": " The postcodes are always:\n- One or two letters, followed by\n- One digit, followed by\n- One optional letter, followed by\n- One digit, followed by\n- One letter, followed by\n- One optional letter\n\nExamples: \"SW1A 1AA\", \"EC1A 1BB\", \"W1A 0AX\", \"M1 1AE\"\n\nA postcode can be provided with or without a space between the outward and inward parts.\n\nWrite a regex that matches a UK postcode. The postcodes are always:\n- One or two letters, followed by\n- One digit",
+  "finish": "length"
+ },
+ {
+  "prompt": "Q: A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? A:",
+  "text": " 5 cents. The correct answer is 5 cents. The question is a classic trick question, and the answer is 5 cents. The bat costs 1.05, and the ball costs 0.05. The total is 1.10. The bat costs 1.00 more than the ball. So the ball costs 5 cents. The answer is 5 cents. The question is a classic trick question, and the answer is 5 cents. The bat costs 1.05, and the ball costs 0.05. The total is 1.10. The bat costs 1.00",
+  "finish": "length"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": " saves nine. (A small repair done in time saves a lot of work later.)</p>\n    </div>\n\n    <div speaker=\"Game Master: parse\" class=\"msg gm-gm\">\n        <p>I don&#x27;t know</p>\n    </div>\n\n    <div speaker=\"Game Master: metadata\" class=\"msg gm-gm\">\n        <p>Answer for RIGHT invalid. Guess </p>\n    </div>\n\n    <div speaker=\"Game Master: check\" class=\"msg gm-gm\">\n        <p>Answer is invalid</p>\n    </div>\n\n    <div",
+  "finish": "length"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question What is the capital of France?. Which is correct and why?",
+  "text": "\",\n    \"system\": \"You are a helpful assistant.\"\n}  | answer_a: Paris | answer_b: Lyon | target: A | correct_answer: Paris | include_reason: True |\n| judge_prompt | \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question What is the capital of France?. Which is correct and why?\" | \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question What is the capital of France?. Which is correct and why?\" | \"You are a judge. Compare answer A: Paris and answer B: Lyon for",
+  "finish": "length"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": " Respond with only the haiku.</p>\n    </div>\n\n    <div speaker=\"User Message\" text=\"Write a haiku about GPUs. Respond with only the haiku.\">\n    </div>\n\n    <div speaker=\"Assistant Message\" text=\"Silicon rivers flow,&#10;Parallel streams of data,&#10;Electric heartbeat.\">\n    </div>\n\n    <div speaker=\"User Message\" text=\"Write a haiku about GPUs. Respond with only the haiku.\">\n    </div>\n\n    <div speaker=\"Assistant Message\" text=\"Silicon rivers flow,&#10;Parallel streams of",
+  "finish": "length"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": " (1 point)\n- Convert 0 Celsius to Fahrenheit, show the formula. (1 point)\n- Convert 100 Celsius to Fahrenheit, show the formula. (1 point)\n- Convert 212 Fahrenheit to Celsius, show the formula. (1 point)\n- Convert 20 Celsius to Fahrenheit, show the formula. (1 point)\n- Convert 37 Celsius to Fahrenheit, show the formula. (1 point)\n- Convert 50 Fahrenheit to Celsius, show the formula. (1 point)\n- Convert 10 Celsius to Fahrenheit, show the formula. (1 point)\n- Convert 32 Fahrenheit to Celsius, show the formula.",
+  "finish": "length"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": " (2 marks)\n**Ans.** Photosynthesis is the process by which plants make food. It is a process by which green plants make their own food from carbon dioxide and water in the presence of sunlight and chlorophyll.\nChemical equation:\n\\[6CO_2 + 6H_2O \\xrightarrow{\\text{Sunlight}} C_6H_{12}O_6 + 6O_2\\]\n\n**Q. 2.** What is the role of acid in our stomach? (2 marks)\n**Ans.** The acid in our stomach (HCl) plays an important role in the digestion of food. It creates an",
+  "finish": "length"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": " No preamble or explanation. Return only valid JSON. No markdown code blocks. No HTML. No explanation. No preamble.\",\n    \"date\": \"2025-02-27T02:45:00.000Z\",\n    \"author\": \"extension@anthropic.com\",\n    \"version\": \"1.0\",\n    \"prompt\": \"Return only valid JSON with keys a,b,c set to 1,2,3. No preamble or explanation. Return only valid JSON. No markdown code blocks. No HTML. No explanation. No preamble.\"\n}',\n    'response' => '{\"a\":1,\"",
+  "finish": "length"
+ }
+]

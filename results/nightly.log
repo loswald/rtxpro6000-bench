@@ -1,0 +1,41 @@
+++ pip index versions vllm --pre --extra-index-url https://wheels.vllm.ai/nightly/cu130
+++ head -1
+++ grep -oE '0\.[0-9]+\.[0-9]+rc[0-9]+\.dev[0-9]+\+g[a-f0-9]+'
++ V=0.28.1rc1.dev332+gad127d9a0
++ echo 'nightly target: 0.28.1rc1.dev332+gad127d9a0'
+nightly target: 0.28.1rc1.dev332+gad127d9a0
++ uv pip install --system --prerelease=allow --index-strategy unsafe-best-match --torch-backend=cu130 vllm==0.28.1rc1.dev332+gad127d9a0 --extra-index-url https://wheels.vllm.ai/nightly/cu130
+Using Python 3.12.3 environment at: /usr
+Resolved 197 packages in 2.76s
+Downloading instanttensor (5.6MiB)
+Downloading vllm (301.8MiB)
+ Downloaded instanttensor
+ Downloaded vllm
+Prepared 2 packages in 6.23s
+Uninstalled 1 package in 317ms
+Installed 2 packages in 1.57s
+ + instanttensor==0.1.9
+ - vllm==0.28.0 (from file:///vllm-workspace/dist/vllm-0.28.0-cp38-abi3-linux_x86_64.whl)
+ + vllm==0.28.1rc1.dev332+gad127d9a0
++ echo vllm-rc=0
+vllm-rc=0
++ uv pip install --system flashinfer-python==0.6.18
+Using Python 3.12.3 environment at: /usr
+Checked 1 package in 10ms
++ uv pip install --system flashinfer-jit-cache==0.6.18 --extra-index-url https://flashinfer.ai/whl/cu130
+Using Python 3.12.3 environment at: /usr
+Checked 1 package in 5ms
++ uv pip install --system b12x
+Using Python 3.12.3 environment at: /usr
+Checked 1 package in 11ms
++ set +x
+torch 2.13.0+cu130
+vllm 0.28.1rc1.dev332+gad127d9a0
+flashinfer 0.6.18
+b12x (ok)
+moe backends: ('auto', 'triton', 'batched_triton', 'deep_gemm', 'deep_gemm_mega_moe', 'cutlass', 'flashinfer_trtllm', 'flashinfer_cutlass', 'flashinfer_cutedsl', 'flashinfer_b12x', 'b12x', 'flashinfer_moe_ep_mega_deep_gemm', 'flashinfer_moe_ep_mega_cutedsl', 'marlin', 'humming', 'triton_unfused', 'aiter', 'aiter_triton_mxfp4_bf16', 'flydsl', 'hpc', 'emulation')
+b12x MoE available: True
+patched OK: /usr/local/lib/python3.12/dist-packages/vllm/models/deepseek_v4/nvidia/ops/o_proj.py
+  fallback flag currently: False
+  vllm version: 0.28.1rc1.dev332+gad127d9a0
+NIGHTLY-FIX-DONE

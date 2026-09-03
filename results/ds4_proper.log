@@ -1,0 +1,12 @@
+[03:35:11] ########## A: best-known kernel stack + SATURATION LADDER ##########
+[03:35:19] launch ds_ficutlass :: --tensor-parallel-size 4 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[03:35:59]   ds_ficutlass DIED
+(Worker_TP3 pid=197119) ERROR 09-03 03:35:51 [multiproc_executor.py:944] WorkerProc failed to start.
+(Worker_TP3 pid=197119) ERROR 09-03 03:35:51 [multiproc_executor.py:944] Traceback (most recent call last):
+[03:35:59]   ficutlass rejected for DSV4; falling back to marlin+EP at saturation
+[03:36:07] launch ds_marlin_ep :: --tensor-parallel-size 4 --enable-expert-parallel --moe-backend auto
+[03:38:17]   ds_marlin_ep healthy 130s | GPU KV cache size: 301,327 tokens | Using 'MARLIN' Mxfp4 MoE backend
+  router     C256    241.8s     508 req/min     1084 out/s      8675 in/s      9759 tot/s  TTFT   3499/  22374 ms  TPOT 209.8/ 281.7 ms  ITL 209.8  E2E  30.1/ 48.9 s
+  router     C512    217.2s     566 req/min     1207 out/s      9654 in/s     10861 tot/s  TTFT   7981/  45969 ms  TPOT 361.8/ 413.8 ms  ITL 361.8  E2E  53.9/ 96.2 s
+  router     C1024   105.7s     554 req/min     1182 out/s      9457 in/s     10640 tot/s  TTFT  49010/  97124 ms  TPOT 317.1/ 404.8 ms  ITL 317.1  E2E  89.3/105.6 s
+  promptopt  C512    174.6s     704 req/min     3002 out/s     42032 in/s     45034 tot/s  TTFT   5524/  25166 ms  TPOT 148.8/ 166.4 ms  ITL 148.8  E2E  43.5/ 64.7 s

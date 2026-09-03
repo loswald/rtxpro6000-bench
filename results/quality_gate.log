@@ -1,0 +1,23 @@
+[01:59:13] installing lm-eval into an isolated venv (does not touch the vLLM environment)
+usage: lm-eval [-h] COMMAND ...
+[01:59:33] launching fp8 (8000), bf16 (8001) and a second fp8 (8002, the control)
+[02:01:23] all three servers up in 110s
+  :8000 GPU KV cache size: 476,494 tokens
+  :8001 GPU KV cache size: 238,247 tokens
+  :8002 GPU KV cache size: 476,502 tokens
+[02:01:23] --- metric 1: GSM8K task accuracy (200 questions, 5-shot, strict answer match) ---
+  bf16   no results
+  fp8    no results
+  fp8b   no results
+[02:02:03] --- metric 2: logit-level divergence (top-1 agreement, top-5 overlap, KL) ---
+  treatment: fp8 vs bf16
+LOGIT-DIFF {"positions": 80, "top1_agreement": 0.925, "top5_overlap": 0.965, "mean_kl": 0.058892, "p95_kl": 0.318928, "max_kl": 0.540169, "mean_top1_prob_delta": 0.015472, "errors": 0}
+  control  : fp8 vs fp8
+LOGIT-DIFF {"positions": 80, "top1_agreement": 0.9875, "top5_overlap": 0.9875, "mean_kl": 0.005315, "p95_kl": 0.031597, "max_kl": 0.072386, "mean_top1_prob_delta": 0.011038, "errors": 0}
+  control  top1 0.988  top5 0.988  meanKL 0.00532
+  fp8/bf16 top1 0.925  top5 0.965  meanKL 0.05889
+  EXCESS KL attributable to the KV dtype: +0.05358
+  top-1 agreement lost vs control: +0.062
+[02:02:14] --- metric 3: corruption tripwire, with its own floor ---
+KV-DIFF {"n": 25, "exact_match": 19, "exact_rate": 0.76, "mean_norm_edit_distance": 0.1534, "corrupt_fp8": 0, "corrupt_bf16": 0, "errors": 0}
+[02:03:20] QUALITY GATE DONE

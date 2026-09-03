@@ -1,0 +1,20 @@
+== P2P ==
+0->1 peer=True 52.0 GB/s lat 11.94 us
+0->2 peer=True 38.9 GB/s lat 11.79 us
+0->3 peer=True 37.1 GB/s lat 11.79 us
+1->0 peer=True 51.9 GB/s lat 11.93 us
+1->2 peer=True 38.5 GB/s lat 11.68 us
+1->3 peer=True 36.1 GB/s lat 11.72 us
+2->0 peer=True 38.9 GB/s lat 11.97 us
+2->1 peer=True 39.0 GB/s lat 11.35 us
+2->3 peer=True 52.1 GB/s lat 10.85 us
+3->0 peer=True 37.4 GB/s lat 11.19 us
+3->1 peer=True 37.0 GB/s lat 11.22 us
+3->2 peer=True 52.2 GB/s lat 11.15 us
+== NCCL all_reduce x4 ==
+{"world": 4, "results": [{"MB": 1, "us": 97.5, "busbw_GBps": 16.12}, {"MB": 16, "us": 932.6, "busbw_GBps": 26.99}, {"MB": 128, "us": 7312.8, "busbw_GBps": 27.53}, {"MB": 512, "us": 29120.7, "busbw_GBps": 27.65}]}
+== NCCL pair 0,1 ==
+{"world": 2, "results": [{"MB": 1, "us": 54.3, "busbw_GBps": 19.32}, {"MB": 16, "us": 479.8, "busbw_GBps": 34.97}, {"MB": 128, "us": 3683.9, "busbw_GBps": 36.43}, {"MB": 512, "us": 13873.5, "busbw_GBps": 38.7}]}
+== NCCL pair 0,2 ==
+{"world": 2, "results": [{"MB": 1, "us": 51.8, "busbw_GBps": 20.24}, {"MB": 16, "us": 712.3, "busbw_GBps": 23.55}, {"MB": 128, "us": 5129.0, "busbw_GBps": 26.17}, {"MB": 512, "us": 20306.6, "busbw_GBps": 26.44}]}
+HW-DONE

@@ -1,0 +1,21 @@
+[17:53:38] stage 0: wait for ds4flash_tp4_b12xmoe probe (<= 40 min)
+[18:04:58] stage 1: DP4+EP4 (marlin) quick
+[18:05:14] launch ds4flash_dp4ep4
+[18:06:54] ds4flash_dp4ep4 healthy
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/ds4flash_dp4ep4_quality20.json
+[18:11:32] stage 2: TP4 b12x + DSpark spec decode
+[18:11:48] launch ds4flash_tp4_b12xmoe_dspark
+[18:13:58] ds4flash_tp4_b12xmoe_dspark healthy
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/ds4flash_tp4_b12xmoe_dspark_quality20.json
+[18:22:39] stage 3: Qwen3.8-27B-FP8 x4 replicas
+[18:22:55] launch qwen27b_x4
+[18:25:55] qwen27b_x4 healthy
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/qwen27b_x4_quality20.json
+[18:29:35] stage 4: gpt-oss-120b x4 replicas
+[18:29:51] launch gptoss_x4
+[18:31:01] gptoss_x4 healthy
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/gptoss_x4_quality20.json
+[18:33:08] stage 5: TP4+EP4 marlin clean quick (unique seeds)
+[18:33:24] launch ds4flash_tp4ep4_marlin_v2
+[18:34:44] ds4flash_tp4ep4_marlin_v2 healthy
+[18:39:19] CAMPAIGN DONE

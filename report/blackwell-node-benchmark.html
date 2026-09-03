@@ -1,0 +1,204 @@
+<title>Blackwell Node Benchmark</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root{
+    --paper:#F6F7F4; --panel:#FFFFFF; --panel-2:#EEF1EC; --line:#D5DAD3;
+    --ink:#182029; --ink-2:#4A5563; --ink-3:#6E7A88;
+    --accent:#0E6F68; --accent-ink:#0B4F4A; --accent-soft:#D9EFEC;
+    --warn:#9A6700; --warn-soft:#FBEFD2; --bad:#A32D2D; --bad-soft:#F8DEDE; --good:#2F6F3E; --good-soft:#DDEEE1;
+    --display:"Archivo",system-ui,sans-serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+    --paper:#12171D; --panel:#181F27; --panel-2:#1F2830; --line:#2C3743;
+    --ink:#E7EBEF; --ink-2:#B4BEC9; --ink-3:#8593A1;
+    --accent:#3FB5AA; --accent-ink:#7AD4CB; --accent-soft:#12312F;
+    --warn:#E0B150; --warn-soft:#3A2E10; --bad:#E27373; --bad-soft:#3B1E1E; --good:#7CC48A; --good-soft:#16301C; } }
+  :root[data-theme="dark"]{
+    --paper:#12171D; --panel:#181F27; --panel-2:#1F2830; --line:#2C3743;
+    --ink:#E7EBEF; --ink-2:#B4BEC9; --ink-3:#8593A1;
+    --accent:#3FB5AA; --accent-ink:#7AD4CB; --accent-soft:#12312F;
+    --warn:#E0B150; --warn-soft:#3A2E10; --bad:#E27373; --bad-soft:#3B1E1E; --good:#7CC48A; --good-soft:#16301C; }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink)}
+  .wrap{max-width:940px;margin:0 auto;padding:40px 24px 72px}
+  header{display:grid;gap:14px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,5vw,44px);line-height:1.05;margin:0;text-wrap:balance;font-variation-settings:"wdth" 85}
+  .lede{font-size:18px;color:var(--ink-2);max-width:66ch;margin:0}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:8px 18px}
+  h2{font-family:var(--display);font-weight:700;font-size:22px;margin:44px 0 12px;letter-spacing:-.01em;text-wrap:balance}
+  h3{font-family:var(--display);font-weight:600;font-size:16px;margin:26px 0 8px;color:var(--ink-2)}
+  p{max-width:70ch;margin:0 0 12px}
+  ul,ol{max-width:72ch;padding-left:22px;margin:0 0 12px}
+  li{margin:0 0 7px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:26px 0 8px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;gap:4px}
+  .tile .k{font-family:var(--display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+  .tile .v{font-family:var(--mono);font-size:25px;font-weight:600;color:var(--ink);line-height:1.1}
+  .tile .s{font-size:13px;color:var(--ink-2)}
+  .tile.accent .v{color:var(--accent-ink)}
+  .tile.warn .v{color:var(--warn)}
+  .tile.bad .v{color:var(--bad)}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--panel);margin:10px 0 14px}
+  table{border-collapse:collapse;width:100%;font-size:14px}
+  th,td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);background:var(--panel-2)}
+  td:first-child,th:first-child,td.l,th.l{text-align:left}
+  td{font-family:var(--mono);font-size:13px}
+  td.l{font-family:var(--body);font-size:14px}
+  tr:last-child td{border-bottom:none}
+  tr.hi td{background:var(--accent-soft)}
+  tr.dim td{color:var(--ink-3)}
+  .tag{display:inline-block;font-family:var(--display);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:3px}
+  .tag.ok{background:var(--good-soft);color:var(--good)}
+  .tag.warn{background:var(--warn-soft);color:var(--warn)}
+  .tag.bad{background:var(--bad-soft);color:var(--bad)}
+  .note{border-left:3px solid var(--accent);background:var(--panel);padding:12px 16px;margin:14px 0;max-width:74ch}
+  .note.warn{border-left-color:var(--warn)}
+  .note.bad{border-left-color:var(--bad)}
+  code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:1px 5px;border-radius:3px}
+  footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);max-width:74ch}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Sqwish Labs · infrastructure decision · 2–3 September 2026 · updated 3 Sept 11:30</div>
+  <h1>Four Blackwells, and what actually runs fast on them</h1>
+  <p class="lede">Measured throughput across research workload shapes, six models, two engines and every kernel we could make load, to price a two-year Scan commitment and decide which models the node should host.</p>
+  <div class="meta">
+    <span>vLLM 0.28.1rc1.dev332 cu130 · FlashInfer 0.6.18 · b12x 1.3.0 · SGLang 0.5.18 + PR-36507 build</span>
+    <span>steady-state loads, unique seed per run, in-session controls</span>
+    <span>~70,000 benchmark requests</span>
+  </div>
+</header>
+
+<section class="tiles" aria-label="headline numbers">
+  <div class="tile accent"><div class="k">Index-52 model, best output</div><div class="v">5,161 tok/s</div><div class="s">Qwen3.8-27B NVFP4 as 4 replicas with the sm_120 native kernel forced · +64% over FP8 · 310k output tokens a minute</div></div>
+  <div class="tile accent"><div class="k">Index-57 model</div><div class="v">Serving</div><div class="s">GLM-5.3-Flash produces correct output on this card via a ported vLLM backend · 18/20 tripwire at a 2k budget · 920 out / 7,362 in tok/s at C256 before speculation</div></div>
+  <div class="tile warn"><div class="k">Cost of trusting auto kernel choice</div><div class="v">−47%</div><div class="s">vLLM picked a W4A16 dequant kernel for a W4A4 checkpoint. Forcing <code>b12x</code> turned a loss into a 64% gain</div></div>
+  <div class="tile"><div class="k">Peak total throughput</div><div class="v">222k tok/s</div><div class="s">gpt-oss-120b, shared-prefix prompt-optimisation traffic · 13.3 million tokens a minute · index 24</div></div>
+  <div class="tile warn"><div class="k">fp8 KV cache quality cost</div><div class="v">+0.054 KL</div><div class="s">excess divergence above the noise floor; top-1 agreement 0.925 vs 0.988 control. Small but real</div></div>
+  <div class="tile bad"><div class="k">Decisive unknown</div><div class="v">Access model</div><div class="s">Scan does not publish whether this is bare metal with root or vGPU behind a VPN. Ask before discussing price</div></div>
+</section>
+
+<h2>1 · What we found, in one paragraph</h2>
+<p>On a four-GPU Blackwell box, <strong>four independent copies of a mid-size model beat one large model spread across all four by several times</strong>, because replicas exchange nothing between GPUs and because weights compete with KV cache for the same 384 GB. Getting the best out of that configuration depended almost entirely on things set wrong on our side rather than on the hardware: KV cache dtype, the memory ceiling, whether the load generator actually saturated the box, and above all <em>which kernel the engine silently chose</em>. On 3 September that last point repeated itself on a second model in the opposite direction: the NVFP4 build of Qwen3.8-27B was 47% slower than FP8 until the sm_120 W4A4 kernel was forced, after which it was 64% faster. The hardware performs; the software picks badly by default; and the highest-intelligence open model that fits (GLM-5.3-Flash) now serves correctly here after a day of kernel work. The open question remains whether Scan will sell hardware we can configure this way.</p>
+
+<h2>2 · Throughput per node, per minute</h2>
+<p>Every row is steady state with eight times as many prompts as concurrent slots, on four RTX PRO 6000 (96 GB) cards. Shapes: <strong>router</strong> 1,024 in / 128 out; <strong>promptopt</strong> 3,072-token shared prefix + 512 in / 256 out; <strong>judge</strong> 4,096 in / 512 out; <strong>short</strong> 256 / 64; <strong>rollout</strong> 8,192 / 2,048. Artificial Analysis Intelligence Index v4.1.1 in brackets.</p>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">model · configuration</th><th class="l">shape</th><th>concurrency</th><th>requests/min</th><th>input tok/min</th><th>output tok/min</th><th>TTFT p50</th></tr></thead>
+  <tbody>
+    <tr class="hi"><td class="l">Qwen3.8-27B NVFP4 (52) · 4 replicas · <code>b12x</code> W4A4 kernel</td><td class="l">router</td><td>1,024</td><td>2,419</td><td>2,477,000</td><td>310,000</td><td>2.4 s</td></tr>
+    <tr class="hi"><td class="l"></td><td class="l">router</td><td>256</td><td>2,010</td><td>2,058,000</td><td>257,000</td><td>1.4 s</td></tr>
+    <tr class="hi"><td class="l"></td><td class="l">promptopt</td><td>1,024</td><td>1,126</td><td>4,036,000</td><td>288,000</td><td>4.5 s</td></tr>
+    <tr class="hi"><td class="l"></td><td class="l">judge</td><td>512</td><td>516</td><td>2,112,000</td><td>264,000</td><td>4.0 s</td></tr>
+    <tr><td class="l">Qwen3.8-27B FP8 (52) · 4 replicas · <code>b12x</code></td><td class="l">router</td><td>1,024</td><td>1,475</td><td>1,510,000</td><td>189,000</td><td>4.4 s</td></tr>
+    <tr><td class="l"></td><td class="l">router</td><td>256</td><td>1,238</td><td>1,268,000</td><td>159,000</td><td>2.6 s</td></tr>
+    <tr><td class="l"></td><td class="l">promptopt</td><td>1,024</td><td>701</td><td>2,513,000</td><td>180,000</td><td>11.3 s</td></tr>
+    <tr><td class="l"></td><td class="l">judge</td><td>512</td><td>328</td><td>1,344,000</td><td>168,000</td><td>7.5 s</td></tr>
+    <tr class="dim"><td class="l">Qwen3.8-27B NVFP4 (52) · vLLM auto kernel (W4A16)</td><td class="l">router</td><td>1,024</td><td>783</td><td>802,000</td><td>100,000</td><td>8.9 s</td></tr>
+    <tr class="dim"><td class="l"></td><td class="l">promptopt</td><td>1,024</td><td>384</td><td>1,376,000</td><td>98,000</td><td>15.8 s</td></tr>
+    <tr><td class="l">gpt-oss-120b (24) · 4 replicas · FlashInfer CUTLASS mxfp8 MoE</td><td class="l">short</td><td>1,024</td><td>13,826</td><td>3,539,000</td><td>885,000</td><td>0.7 s</td></tr>
+    <tr><td class="l"></td><td class="l">router</td><td>1,024</td><td>5,115</td><td>5,238,000</td><td>655,000</td><td>1.1 s</td></tr>
+    <tr><td class="l"></td><td class="l">promptopt</td><td>1,024</td><td>3,468</td><td>12,431,000</td><td>888,000</td><td>1.5 s</td></tr>
+    <tr><td class="l"></td><td class="l">judge</td><td>512</td><td>684</td><td>2,801,000</td><td>350,000</td><td>4.6 s</td></tr>
+    <tr><td class="l"></td><td class="l">rollout</td><td>128</td><td>117</td><td>957,000</td><td>239,000</td><td>2.5 s</td></tr>
+    <tr><td class="l">DeepSeek-V4-Flash · TP1 × DP4 + EP</td><td class="l">router</td><td>512</td><td>691</td><td>708,000</td><td>88,500</td><td>—</td></tr>
+    <tr><td class="l"></td><td class="l">promptopt</td><td>512</td><td>863</td><td>3,094,000</td><td>221,000</td><td>—</td></tr>
+    <tr><td class="l">GLM-5.3-Flash (57) · vLLM route, sm_120 port · TP4, no speculation</td><td class="l">router</td><td>64</td><td>328</td><td>336,000</td><td>42,000</td><td>2.3 s</td></tr>
+    <tr><td class="l"></td><td class="l">router</td><td>256</td><td>431</td><td>442,000</td><td>55,000</td><td>4.1 s</td></tr>
+    <tr><td class="l"></td><td class="l">promptopt</td><td>256</td><td>235</td><td>842,000</td><td>60,000</td><td>6.6 s</td></tr>
+    <tr><td class="l"></td><td class="l">judge</td><td>128</td><td>90</td><td>370,000</td><td>46,000</td><td>6.7 s</td></tr>
+    <tr class="dim"><td class="l">GLM-5.3-Flash (57) · same, MTP 3-token speculation</td><td class="l">all</td><td></td><td colspan="4">queued behind the fleet; first attempt lost its config to a quoting bug</td></tr>
+  </tbody></table></div>
+<div class="note"><strong>How to read this against the intelligence index.</strong> gpt-oss-120b is the fastest model here by a wide margin and the weakest (index 24, joint lowest of the fourteen open models charted). Qwen3.8-27B scores 52 and fits one card; it is the workhorse. GLM-5.3-Flash scores 57, the highest open-weight model that fits in 384 GB at all, and three points below the 60-point ceiling that only 750B–2.8T models reach. The node buys roughly 95% of the best open intelligence in existence. Every near-frontier model still gets measured, because they have complementary strengths and the target is a multi-model system on a 7-GPU node, not a single winner.</div>
+
+<h3>NVFP4 is the biggest lever we have found, and only if the kernel is forced</h3>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">Qwen3.8-27B, 4 replicas, same session</th><th>kernel the engine used</th><th>router C256 out tok/s</th><th>router C1024</th><th>promptopt C1024</th><th>judge C512</th><th>tripwire</th></tr></thead>
+  <tbody>
+    <tr><td class="l">FP8 checkpoint, <code>linear_backend b12x</code></td><td>B12xFp8BlockScaledMM</td><td>2,642</td><td>3,146</td><td>2,992</td><td>2,799</td><td>19/20</td></tr>
+    <tr class="dim"><td class="l">NVFP4 checkpoint, engine auto-selection</td><td>CuTeDSL <strong>W4A16</strong></td><td>1,607</td><td>1,670</td><td>1,638</td><td>—</td><td>—</td></tr>
+    <tr class="hi"><td class="l">NVFP4 checkpoint, <code>linear_backend b12x</code></td><td>B12xNvFp4 <strong>W4A4</strong></td><td><strong>4,288</strong></td><td><strong>5,161</strong></td><td><strong>4,804</strong></td><td><strong>4,400</strong></td><td>19/20</td></tr>
+    <tr><td class="l">NVFP4 checkpoint, <code>linear_backend flashinfer_b12x</code></td><td>FlashInferB12xNvFp4 W4A4</td><td>4,304</td><td>5,182</td><td>4,842</td><td>running</td><td>20/20</td></tr>
+    <tr class="dim"><td class="l">NVFP4 checkpoint, <code>linear_backend flashinfer_cutedsl</code></td><td>FlashInferCuteDslNvFp4 <strong>W4A16</strong></td><td>1,608</td><td>1,671</td><td>1,637</td><td>—</td><td>19/20</td></tr>
+  </tbody></table></div>
+<p>The NVFP4 checkpoint carries 4-bit activation scales, so a true W4A4 tensor-core path exists, and vLLM ships two of them for capability 12 (<code>b12x</code>, <code>flashinfer_b12x</code>). Its auto-selection nevertheless took a weight-only W4A16 kernel that dequantises to 16-bit, which is bandwidth-friendly at batch 1 and compute-bound at ours: it barely moved from C256 to C1024 while FP8 climbed 19%. The published "+36% for NVFP4" figure understates what we see once the right kernel runs. Lesson, now twice-learned on this hardware: read the <code>Using … Kernel</code> line in the log and force the backend; never trust the default.</p>
+
+<h2>3 · GLM-5.3-Flash: the index-57 model now serves correctly</h2>
+<p>Neither vLLM 0.28.1 nor SGLang 0.5.18 knows the <code>glm5_next</code> architecture; both vendors publish it as per-model Docker images. We lifted those images' Python trees without Docker (Vast had no spare nodes) and ran them against the box's own runtime.</p>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">route</th><th class="l">what stood in the way</th><th class="l">outcome</th></tr></thead>
+  <tbody>
+    <tr><td class="l">SGLang, Z.AI's PR-36507 build, TileLang sparse attention</td><td class="l">nine separate blockers cleared (editable-install stubs, duplicated metadata, a DeepGEMM pre-norm path, quant-config naming, an MTP runner, TileLang tiles needing 148 KB of shared memory on a 99 KB card, a CUTLASS DSL path); server healthy in 135 s</td><td class="l"><span class="tag bad">degenerate output</span> prefill exact after a dense-prefill patch, but decode drifts into loops; ten discriminators cleared graphs, MTP, MoE runner, tiles, PDL, indexer, conv, SSM dtype; the TileLang sparse decode kernel is what is left</td></tr>
+    <tr class="hi"><td class="l">vLLM, Z.AI's vendor build, ported</td><td class="l">its only sm_120 sparse backend is hard-wired to DeepSeek's cache layout (<code>pe_dim</code> 64; GLM has 0); its Hopper NoPE backend supports rope 0 but was gated to major 9 and built on FlashAttention-3</td><td class="l"><span class="tag ok">correct</span> gate widened to major 12, wrapper built on FlashInfer's FA2 path, DeepGEMM indexer at a 1,024-token block (its own gate: arch 12 needs a 64-entry storage block), FlashInfer autotune off to avoid a rank deadlock. 17/20 tripwire, the three flags being long reasoning at the token cap. Healthy in 210 s, 2.14M-token KV cache</td></tr>
+  </tbody></table></div>
+<div class="note"><strong>Credit where due.</strong> The DGX Spark (GB10, sm_121) community had already hit most of these failures and documented fixes: widening the SM90 NoPE gate, the FlashInfer 0.6.17 FA2 NaN, PDL corrupting linear-attention state, an uninitialised top-k destination, the TileLang retune. Their block-size hint and the SM90-backend port are what made the vLLM route work. Their measured throughput on two GB10s is tiny (15–80 tok/s), so only their fixes transfer, not their numbers.</div>
+
+<h2>4 · Kernel choice is model-specific</h2>
+<p>Measured against a control launched minutes apart in the same session.</p>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">model</th><th class="l">winning kernel</th><th>vs default</th><th class="l">note</th></tr></thead>
+  <tbody>
+    <tr><td class="l">gpt-oss-120b (MXFP4 MoE)</td><td class="l">FlashInfer CUTLASS + mxfp8 activations</td><td><span class="tag ok">+26.5%</span></td><td class="l">also cut TTFT 1,045 → 692 ms; 5 of 7 MoE backends refuse to load</td></tr>
+    <tr><td class="l">Qwen3.8-27B (dense)</td><td class="l"><code>b12x</code> for FP8 (CUTLASS c3x crashes), <code>b12x</code> NVFP4 W4A4</td><td><span class="tag ok">+64% NVFP4 over FP8</span></td><td class="l">auto-selected NVFP4 kernel is −47%</td></tr>
+    <tr><td class="l">DeepSeek-V4-Flash (sparse MLA MoE)</td><td class="l">DP4 + EP, TP1 layout</td><td><span class="tag ok">+36%</span></td><td class="l">native MXFP4 MoE kernel admits but does not help; run-to-run spread up to 1.6× across hosts</td></tr>
+    <tr><td class="l">GLM-5.3-Flash (NoPE sparse MLA + linear attention)</td><td class="l">FlashInfer SM90 backend, FA2, block 1,024</td><td>—</td><td class="l">throughput sweep running; MTP arm queued</td></tr>
+  </tbody></table></div>
+
+<h2>5 · Quality, measured properly</h2>
+<p>String comparison of greedy generations is not a valid quality measure — one differing token cascades, and it cannot tell better from worse. The defensible measures are logit-level divergence against a control and task accuracy stated as recovery against the unquantized parent. For fp8 KV cache on gpt-oss:</p>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">metric</th><th>control: fp8 vs fp8</th><th>treatment: fp8 vs bf16</th><th>excess</th></tr></thead>
+  <tbody>
+    <tr><td class="l">top-1 token agreement</td><td>0.988</td><td>0.925</td><td>−0.062</td></tr>
+    <tr><td class="l">top-5 overlap</td><td>0.988</td><td>0.965</td><td>−0.023</td></tr>
+    <tr><td class="l">mean KL divergence</td><td>0.0053</td><td>0.0589</td><td><strong>+0.054</strong></td></tr>
+  </tbody></table></div>
+<div class="note warn"><strong>The corruption tripwire had to be rebuilt.</strong> The first version sent raw completions to chat models with a 128-token cap and flagged an answer only if it contained "!!!!" or fewer than three distinct words. It passed GLM output that read "111 222 333 444". Version two uses the chat template, a 1–2k token budget, a repetition detector (repeated 6-grams, distinct-token ratio) and expected substrings for a few prompts. Every number above was re-checked with it; the Qwen rows pass 19/20 in both quantizations.</div>
+<p><strong>Still outstanding:</strong> task accuracy as recovery percentage across agentic and tool-calling, long-context, reasoning, code and instruction following, on small high-discrimination slices. The suite is designed; the harness is not yet producing numbers.</p>
+
+<h2>6 · Economics against quantization-matched providers</h2>
+<p>Scan's 4× configuration is £1,999.98 per month including VAT, £1,666.65 ex VAT, £2.28 per hour across 730 hours with electricity included, or <strong>$3.08 per active hour</strong> at 70% utilisation. Fully loaded — committed-use discount, ERIS at 26.97%, Vast resale of idle hours — the cost stack comes to $0.417 per GPU-hour. Comparisons price the whole token bill at tenth-percentile OpenRouter rates for the same checkpoint, because research traffic is input-heavy.</p>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">model · shape</th><th>node $/h</th><th>API $/h at p10</th><th>advantage</th></tr></thead>
+  <tbody>
+    <tr><td class="l">gpt-oss ×4 · promptopt</td><td>3.08</td><td>25.60</td><td><span class="tag ok">8.3×</span></td></tr>
+    <tr class="hi"><td class="l">Qwen3.8-27B ×4 · judge (FP8 figures; NVFP4 adds 57%)</td><td>3.08</td><td>41.97</td><td><span class="tag ok">13.6×</span></td></tr>
+    <tr><td class="l">DeepSeek-V4-Flash · router, list price</td><td>3.08</td><td>2.16</td><td><span class="tag bad">0.7×</span></td></tr>
+    <tr><td class="l">DeepSeek-V4-Flash · fully-loaded cost, shared-prefix traffic</td><td>0.42/GPU-h</td><td></td><td><span class="tag ok">2.5–9.2×</span></td></tr>
+  </tbody></table></div>
+<div class="note"><strong>Which model you run decides whether the node pays for itself.</strong> API prices track each provider's economics, not model size. Third-party hosts charge an order of magnitude more for a 27B model than the hardware costs to produce it; DeepSeek prices its own flagship below our list-price cost and above our fully-loaded cost. A node fixes the unit cost for the term; renting tokens does not (DeepSeek raised list prices 2.4–4.7× in one step on 16 August 2026).</div>
+
+<h2>7 · Selling idle capacity on Vast</h2>
+<p>Live market data from 86 RTX PRO 6000 listings, 3 September 2026: renters pay a median $1.51 per GPU-hour, hosts receive about $1.13 after commission, against a lease cost of $0.77; 74% of the fleet is rented. Subletting plausibly covers <strong>75–100% of the lease</strong>. Interruptible listings clear lower, and hosting needs Docker, root, a public IP and an inbound port range. Vast currently lists <strong>zero</strong> RTX PRO 6000 nodes for rent, which is also why every experiment above ran serialised through one box.</p>
+
+<h2>8 · The question to ask before discussing price</h2>
+<p>Scan's material describes OpenVPN logins and vGPU-powered virtual workstations for its general cloud, and whole named machines for the RTX PRO 6000 line; neither mentions SSH, root or Docker. Three things would not survive a virtualised model: host BIOS control (PCIe ACS was worth 45–73% of interconnect bandwidth between two otherwise identical hosts), peer access between GPUs (vGPU commonly disables it; replicas are nearly immune, tensor-parallel is not), and public inbound networking (no public IP means no Vast hosting).</p>
+<div class="note bad"><strong>Five questions, before price.</strong> Is the 4× or 7× configuration dedicated bare metal with full PCIe passthrough, or vGPU on shared hardware? Do we get root on Linux with our own kernel modules, CUDA stack and Docker? Is PCIe ACS disabled, and will you run our NCCL test during the pilot? Do we get a public IP and a configurable inbound port range? Do your terms permit reselling idle capacity? If the first answer is vGPU, none of these throughput numbers transfer.</div>
+
+<h2>9 · Software maturity, priced honestly</h2>
+<ul>
+  <li>The default FP8 block-scaled linear kernel crashes at dispatch on this architecture; an explicit backend override is required. The default NVFP4 kernel is a slow dequant path; another override is required.</li>
+  <li>DeepSeek's attention output projection needed a source patch we wrote ourselves; SGLang 0.5.18 cannot serve it here at all.</li>
+  <li>GLM-5.3-Flash needed two lifted vendor images, roughly a dozen patches between them, and community knowledge from the DGX Spark forums to produce correct output; the SGLang route still does not.</li>
+  <li>vLLM's platform check wrongly reports DeepGEMM support on these cards; the mixture-of-experts switch for it is separate from the one everybody sets; FlashInfer's autotuner deadlocks a TP group when only some ranks have a cached result.</li>
+  <li>Speculative decoding: every method tried so far lost throughput at high concurrency; the community's DSpark drafter is queued with the correct kernel and acceptance counters, and GLM's MTP head is in the running sweep.</li>
+</ul>
+
+<h2>10 · Queued and running</h2>
+<ul>
+  <li><strong>Running now:</strong> the explicit-kernel NVFP4 sweep on Qwen3.8-27B (<code>flashinfer_b12x</code> done, then CuTe-DSL, CUTLASS, the RedHat and unsloth W4A4 builds, the DSpark drafter with acceptance counters).</li>
+  <li><strong>Next, automatically:</strong> the full fleet — Nemotron-3.5-Lightning, Qwen3.6-35B, Muse Glimmer, gpt-oss-20b, gemma-4-31B and gemma-4-26B-A4B in bf16 as quality references, MiniMax-M3 with and without MTP, Qwen3.8-Flash-Next NVFP4 as two TP2 replicas, then two late additions: <strong>Inkling-Small</strong> (Thinking Machines, 266B MoE, first-party NVFP4 at 156 GB, native vLLM support with an MTP head and a community drafter; downloading) and the GLM-5.3-Flash MTP arm.</li>
+  <li><strong>Then the drafter arms</strong> on models already measured: MiniMax-M3 with NVIDIA's DSpark drafter (the checkpoint ships no MTP weights), gemma-4-26B with Google's official assistant, Nemotron-3.5-Lightning with its built-in MTP head and NVIDIA's DSpark, Muse Glimmer with Meta's DFlash assistant, Qwen3.8-27B NVFP4 with the DFlash2 block-diffusion drafter. Every arm reports acceptance counters, which is the only way to tell a real speculation win from a fixed per-step tax.</li>
+  <li><strong>Then the roster rotation.</strong> An 80-agent audit of the August-2026 open-weight frontier, adversarially verified against the Hub, found eight fittable models the fleet did not have. Because the box holds 1.2 TB and the roster is 1.5 TB, each is downloaded, measured and removed in turn, with and without its speculation head: Hy3 (Tencent, index 42, RedHat W4A4 build with MTP, the lowest engine risk), Nemotron 3 Super 120B (one card, four replicas, MTPv2 drafter), Ling-3.0-flash (index 38 at 5B active, a known FP8 gibberish bug to trip), Laguna-S 2.1 (Poolside's agentic coder, DFlash), Mistral Medium 3.5 (the only dense 128B control, official EAGLE), Step-3.7-Flash (3-layer MTP), MiMo-V2.5 (the one candidate already validated on 4× RTX PRO 6000), Ornith-1.5-397B (vendor claims above GLM-5.3-Flash, no third-party evals, a known CUDA-graph crash to work around).</li>
+  <li><strong>Needing engineering rather than GPU time:</strong> Motif-3 (index 47) and Solar-Open2 (37) load only in their vendors' forked images; dots3-note (agentic numbers in MiniMax-M3 territory) needs the same kind of sm_120 port GLM-5.3-Flash got. The audit's lessons are also recorded: an NVFP4 MoE checkpoint is 1.1–1.25 bytes per listed parameter, not 0.55; ModelOpt W4A16-mixed builds always land on the slow Marlin path; TP=7 is impossible on a 7-GPU node (prime), so it runs pipeline-parallel.</li>
+  <li><strong>Roster facts settled today:</strong> Hy4-preview (Tencent, 27 Aug) is 804 GB in FP8 and Inkling is 952B, so both belong to the 7-GPU node only; DeepSeek V4-Flash-Vision-Exp (1 Sept) is a text-equivalent sibling of the measured V4-Flash; Nemotron 3 Ultra's first-party NVFP4 is roughly 300 GB, marginal on 4 cards. DeepSeek-V4-Flash's weights were removed to make room after eight measured configurations; they re-download in half an hour.</li>
+  <li><strong>Blocked on people:</strong> two hours on an H100 or B200 to run the same SGLang build (settles whether that route's fault is sm_120-specific); a second RTX PRO 6000 node to parallelise; the five Scan questions; the task-accuracy harness.</li>
+</ul>
+
+<footer>Sqwish Labs internal. Measurements from rented hosts, 2–3 September 2026. Numbers from the first host's tensor-parallel runs are pessimistic lower bounds because PCIe ACS was enabled there. Treat all of this as evidence about the current state of sm_120 software, which is changing weekly; the reproducible recipe for every working configuration is in the campaign scripts.</footer>
+</div>

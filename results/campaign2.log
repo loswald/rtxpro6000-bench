@@ -1,0 +1,10 @@
+[22:25:03] stage A: gpt-oss-120b x4 replicas, FULL shape matrix
+[22:25:17] launch gptoss_x4_full
+[22:26:07] gptoss_x4_full healthy
+[22:31:29] stage B: gpt-oss-120b x4 + ngram speculative decoding
+[22:31:43] launch gptoss_x4_ngram
+[22:32:43] gptoss_x4_ngram healthy
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/gptoss_x4_ngram_quality20.json
+[22:35:50] stage C: Qwen3.8-27B-FP8 x4 replicas, FULL shape matrix
+[22:36:04] launch qwen27b_x4_full
+[22:37:24] qwen27b_x4_full healthy

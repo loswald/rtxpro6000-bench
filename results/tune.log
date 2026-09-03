@@ -1,0 +1,15 @@
+[22:53:09] variant mnbt16k :: --max-num-batched-tokens 16384
+[22:53:59] mnbt16k healthy
+[22:55:35] variant mnbt4k :: --max-num-batched-tokens 4096
+[22:56:26] mnbt4k healthy
+[22:58:03] variant seqs512 :: --max-num-seqs 512 --max-num-batched-tokens 16384
+[22:58:53] seqs512 healthy
+[23:00:29] variant ficutlass :: --moe-backend flashinfer_cutlass
+[23:10:30] ficutlass FAILED
+[23:10:44] variant b12xmoe :: --moe-backend b12x
+[23:20:45] b12xmoe FAILED
+[23:20:59] variant asyncsched :: --async-scheduling
+[23:21:49] asyncsched healthy
+[23:23:26] variant util96 :: --gpu-memory-utilization 0.96 --max-num-batched-tokens 16384
+[23:24:16] util96 healthy
+[23:25:39] TUNE DONE
