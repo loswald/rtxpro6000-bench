@@ -1,6 +1,6 @@
-# AIRR — Blackwell node benchmark for Sqwish Labs
+# rtxpro6000-bench — Blackwell node serving benchmark for Sqwish Labs
 
-Everything behind the decision on a two-year 4×/7× RTX PRO 6000 Blackwell (sm_120) commitment:
+Everything behind the decision on a two-year 4×/7× RTX PRO 6000 Blackwell (sm_120) commitment for dedicated LLM inference:
 the benchmark harness, the per-model serving recipes that actually work on this silicon, the raw
 measurements, the roster audit, and the running report.
 
