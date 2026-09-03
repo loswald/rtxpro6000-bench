@@ -97,15 +97,25 @@ shapes(){ # tag dir nports
   pt "$tag" "$dir" judge     4096 512 0    $((128/n*1)) "$n"
 }
 
+need_dl(){ # dir -> 0 once the download log says done/have for it (config.json lands before the safetensors do)
+  local dn; dn=$(basename "$1") DL=/workspace/results/dl6000.log
+  [ -f "$DL" ] || { [ -f "$1/config.json" ]; return; }   # no download log on this box: fall back to presence
+  grep -qE "\] (done|have) $dn( |\$)" "$DL" && return 0
+  log "  WAIT $dn (still downloading)"
+  local w=0
+  while ! grep -qE "\] (done|have) $dn( |\$)" "$DL" && [ $w -lt 300 ] && { tmux has-session -t =dl2 2>/dev/null || tmux has-session -t =dl 2>/dev/null; }; do sleep 60; w=$((w+1)); done
+  grep -qE "\] (done|have) $dn( |\$)" "$DL"
+}
+
 rep(){ # alias dir [extra...]
   local alias=$1 dir=$2; shift 2
-  [ -f "$dir/config.json" ] || { log "SKIP $alias (not downloaded)"; return; }
+  need_dl "$dir" || { log "SKIP $alias (not downloaded)"; return; }
   log "########## $alias ($(du -sh "$dir" | cut -f1)) ##########"
   serve_x4 "f2_$alias" "$dir" "$@" && shapes "f2_$alias" "$dir" 4
 }
 tpm(){ # alias dir tp replicas [extra...]
   local alias=$1 dir=$2 tp=$3 reps=$4; shift 4
-  [ -f "$dir/config.json" ] || { log "SKIP $alias (not downloaded)"; return; }
+  need_dl "$dir" || { log "SKIP $alias (not downloaded)"; return; }
   log "########## $alias ($(du -sh "$dir" | cut -f1)) tp$tp x$reps ##########"
   serve_tp "f2_$alias" "$dir" "$tp" "$reps" "$@" && shapes "f2_$alias" "$dir" "$reps"
 }
@@ -160,7 +170,7 @@ else log "SKIP q27_dflash2 (drafter absent)"; fi
 log "===== FLEET, late additions ====="
 # Inkling-Small (Thinking Machines, Apache-2.0, 266B MoE, multimodal incl. audio). vLLM 0.28.1 has
 # native inkling_mm_model + inkling_mtp support. Runs only if the download finished in time.
-if [ -f "$MD/Inkling-Small-NVFP4/config.json" ]; then
+if need_dl "$MD/Inkling-Small-NVFP4"; then
   tpm inkling     "$MD/Inkling-Small-NVFP4" 4 1 --kernel-config.linear_backend b12x
   tpm inkling_mtp "$MD/Inkling-Small-NVFP4" 4 1 --kernel-config.linear_backend b12x \
       --speculative-config '{"method":"inkling_mtp","num_speculative_tokens":2}'
@@ -170,7 +180,16 @@ fi
 # GLM-5.3-Flash MTP arm. The first attempt lost its JSON quotes in the launcher; glm_vllm.sh now
 # routes the config through SPEC, and ARMS=mtp skips the already-measured base arm.
 kill_all
-ARMS=mtp bash /workspace/bench/glm_vllm.sh >> /workspace/results/glm_vllm_full.log 2>&1
+glm_ready(){ # weights downloaded and the vendor image lifted (img6000.log on a fresh box; presence otherwise)
+  need_dl "$MD/GLM-5.3-Flash-NVFP4" || return 1
+  if [ -f /workspace/results/img6000.log ]; then
+    local w=0; while ! grep -q "done /workspace/glmimg" /workspace/results/img6000.log && ! grep -q "FAILED /workspace/glmimg" /workspace/results/img6000.log && [ $w -lt 180 ]; do sleep 60; w=$((w+1)); done
+  fi
+  [ -d /workspace/glmimg/usr ]
+}
+if glm_ready; then
+  ARMS=${GLM_ARMS:-mtp} bash /workspace/bench/glm_vllm.sh >> /workspace/results/glm_vllm_full.log 2>&1
+else log "SKIP glm (weights or vendor image absent)"; fi
 
 log "FLEET2 DONE"
 kill_all

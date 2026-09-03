@@ -77,7 +77,15 @@ pt(){ # tag label in out prefix c_per_server n dir
 run(){ # tag dir tp [extra...]
   local tag="$1" dir="$2" tp="$3"; shift 3
   local n=$(( NGPU / tp ))
-  [ -f "$dir/config.json" ] || { log "SKIP $tag (no weights)"; return 1; }
+  # Downloads run alongside the campaign. config.json lands before the safetensors do, so the completion
+  # signal is dl5090.sh's "done <dir>" / "have <dir>" line, not the presence of config.json.
+  local dn; dn=$(basename "$dir")
+  if ! grep -qE "\] (done|have) $dn( |\$)" "$R/dl5090.log" 2>/dev/null; then
+    log "WAIT $tag (weights still downloading)"
+    local w=0
+    while ! grep -qE "\] (done|have) $dn( |\$)" "$R/dl5090.log" 2>/dev/null && [ $w -lt 180 ] && tmux has-session -t =dl 2>/dev/null; do sleep 60; w=$((w+1)); done
+    grep -qE "\] (done|have) $dn( |\$)" "$R/dl5090.log" 2>/dev/null || { log "SKIP $tag (no complete weights after ${w} min)"; return 1; }
+  fi
   log "########## $tag  ($(du -sh "$dir" | cut -f1), tp=$tp x$n) ##########"
   serve "$tag" "$dir" "$tp" "$@" || return 1
   python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
