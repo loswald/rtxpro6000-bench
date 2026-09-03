@@ -1,0 +1,32 @@
++ IDX='--extra-index-url https://wheels.vllm.ai/nightly/cu130 --extra-index-url https://flashinfer.ai/whl/cu130 --index-strategy unsafe-best-match --torch-backend cu130'
++ uv pip install --system --pre 'vllm[b12x]' flashinfer-python==0.6.18 flashinfer-jit-cache==0.6.18 --extra-index-url https://wheels.vllm.ai/nightly/cu130 --extra-index-url https://flashinfer.ai/whl/cu130 --index-strategy unsafe-best-match --torch-backend cu130
++ tail -8
+ + b12x==1.3.0
+ - flashinfer-jit-cache==0.6.16.post3+cu130
+ + flashinfer-jit-cache==0.6.18+cu130
+ - flashinfer-python==0.6.16.post3
+ + flashinfer-python==0.6.18
+ + instanttensor==0.1.9
+ - vllm==0.28.0 (from file:///vllm-workspace/dist/vllm-0.28.0-cp38-abi3-linux_x86_64.whl)
+ + vllm==0.28.1rc1.dev361+gd4d703caf
+++ python3 -c 'import importlib.metadata as m; print(m.version("flashinfer-python"))'
++ FV=0.6.18
++ uv pip install --system --no-deps flashinfer-cubin==0.6.18 --index-url https://flashinfer.ai/whl/
++ tail -2
+ - flashinfer-cubin==0.6.16.post3
+ + flashinfer-cubin==0.6.18
++ uv pip list --system
++ grep -iE '^(flashinfer|b12x|vllm|torch) '
+b12x                                     1.3.0
+torch                                    2.13.0+cu130
+vllm                                     0.28.1rc1.dev361+gd4d703caf
++ python3 -
+  vllm           0.28.1rc1.dev361+gd4d703caf
+  flashinfer     0.6.18
+  b12x           ?
+  torch          2.13.0+cu130
+  transformers   5.15.1
+  triton         3.7.1
+  torch.cuda 13.0 True 4
++ echo ENGINE-SETUP2-DONE
+ENGINE-SETUP2-DONE

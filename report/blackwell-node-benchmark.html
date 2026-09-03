@@ -64,7 +64,7 @@
 
 <div class="wrap">
 <header>
-  <div class="eyebrow">Sqwish Labs · infrastructure decision · 2–3 September 2026 · updated 3 Sept 11:30</div>
+  <div class="eyebrow">Sqwish Labs · infrastructure decision · 2–3 September 2026 · updated 3 Sept 21:00</div>
   <h1>Four Blackwells, and what actually runs fast on them</h1>
   <p class="lede">Measured throughput across research workload shapes, six models, two engines and every kernel we could make load, to price a two-year Scan commitment and decide which models the node should host.</p>
   <div class="meta">
@@ -190,9 +190,23 @@
   <li>Speculative decoding: every method tried so far lost throughput at high concurrency; the community's DSpark drafter is queued with the correct kernel and acceptance counters, and GLM's MTP head is in the running sweep.</li>
 </ul>
 
-<h2>10 · Queued and running</h2>
+<h2>10 · A second host, and what a 400 W power cap costs</h2>
+<p>At 16:45 on 3 September every rented instance was stopped at once. A stopped Vast instance keeps its disk but not its GPUs: within the hour another renter had the first box's four Server Edition cards, so its restart is queued indefinitely and its 1.1 TB of weights and results sit stranded (the results were already in the repository). The campaign moved to a replacement 4× RTX PRO 6000 host the same evening. It is the <strong>Workstation Edition, and the host caps each card at 400 W</strong> (the card allows 600). Under load all four sit at exactly 400.0 W with SM clocks near 1,290 MHz against a 3,090 MHz ceiling, and the driver reports the software power cap as the active limiter. The first two arms on it were deliberate controls against the first box's numbers:</p>
+<div class="tblwrap"><table>
+  <thead><tr><th class="l">Qwen3.8-27B · 4 replicas · same kernel</th><th class="l">shape · concurrency</th><th>Server Edition, 600 W</th><th>Workstation Edition, 400 W cap</th><th>Δ</th></tr></thead>
+  <tbody>
+    <tr><td class="l">NVFP4 · <code>b12x</code> W4A4</td><td class="l">router · 1,024</td><td>5,161 out tok/s</td><td>3,965</td><td><span class="tag warn">−23%</span></td></tr>
+    <tr><td class="l"></td><td class="l">promptopt · 1,024</td><td>4,804</td><td>3,675</td><td><span class="tag warn">−24%</span></td></tr>
+    <tr><td class="l"></td><td class="l">judge · 512</td><td>4,400</td><td>3,522</td><td><span class="tag warn">−20%</span></td></tr>
+    <tr><td class="l">FP8 · <code>b12x</code></td><td class="l">router · 1,024</td><td>3,146</td><td>2,071</td><td><span class="tag bad">−34%</span></td></tr>
+    <tr><td class="l"></td><td class="l">router · 256</td><td>2,642</td><td>1,994</td><td><span class="tag bad">−25%</span></td></tr>
+  </tbody></table></div>
+<p>Two things follow. First, the power profile is worth about a quarter of the node at saturation, and it hits FP8 harder than NVFP4 because four-bit tensor-core work is cheaper per token in energy; <strong>the Scan quote must name the edition and the power limit</strong> (Server 600 W, Workstation 600 W, or Max-Q 300 W) before any of the per-node numbers above can be read against it. Second, everything measured on the replacement host is reported <em>relative</em> to these controls: kernel choices, speculation acceptance, feasibility and quality transfer; absolute per-node throughput does not. The engine on both new hosts is vLLM 0.28.1rc1.dev361 with FlashInfer 0.6.18 (the first box ran dev332), and the FlashInfer cubin package had to be pulled from FlashInfer's root wheel index because the vLLM image ships a mismatched one.</p>
+
+<h2>11 · Queued and running</h2>
 <ul>
-  <li><strong>Running now:</strong> the explicit-kernel NVFP4 sweep on Qwen3.8-27B (<code>flashinfer_b12x</code> done, then CuTe-DSL, CUTLASS, the RedHat and unsloth W4A4 builds, the DSpark drafter with acceptance counters).</li>
+  <li><strong>Running now, replacement PRO 6000 host:</strong> the DSpark drafter arm with acceptance counters, then the fleet (below) with a GLM-5.3-Flash base control and MTP arm, then the roster rotation. Each arm waits for its weights to finish downloading rather than skipping.</li>
+  <li><strong>8× RTX 5090, like-for-like at Scan's price:</strong> Scan's GB8-32T (8× RTX 5090, EPYC 9354P, 512 GB) costs the same £1,999.98 a month as the 4× RTX PRO 6000, so the campaign runs the replica tier eight-wide (Qwen3.8-27B NVFP4 with the sm_120 kernel and with the DSpark drafter, gpt-oss-20b, Nemotron-3.5-Lightning, Muse Glimmer, gemma-4-26B-A4B, Qwen3.6-35B) and a TP tier (FP8 Qwen3.8-27B at TP2, gpt-oss-120b and Ling-3.0-flash at TP4, Qwen3.8-Flash-Next at TP8 with and without MTP). Three hosts were rejected on the way: two pulled from the Hugging Face CDN at 1–5 MB/s, one ran a 575 driver that the CUDA 13 container cannot use on consumer cards (the forward-compatibility shim is datacenter-only, CUDA error 804). Two candidates are booting, PCIe Gen4 and Gen5; the Gen5 one is kept if its download speed holds.</li>
   <li><strong>Next, automatically:</strong> the full fleet — Nemotron-3.5-Lightning, Qwen3.6-35B, Muse Glimmer, gpt-oss-20b, gemma-4-31B and gemma-4-26B-A4B in bf16 as quality references, MiniMax-M3 with and without MTP, Qwen3.8-Flash-Next NVFP4 as two TP2 replicas, then two late additions: <strong>Inkling-Small</strong> (Thinking Machines, 266B MoE, first-party NVFP4 at 156 GB, native vLLM support with an MTP head and a community drafter; downloading) and the GLM-5.3-Flash MTP arm.</li>
   <li><strong>Then the drafter arms</strong> on models already measured: MiniMax-M3 with NVIDIA's DSpark drafter (the checkpoint ships no MTP weights), gemma-4-26B with Google's official assistant, Nemotron-3.5-Lightning with its built-in MTP head and NVIDIA's DSpark, Muse Glimmer with Meta's DFlash assistant, Qwen3.8-27B NVFP4 with the DFlash2 block-diffusion drafter. Every arm reports acceptance counters, which is the only way to tell a real speculation win from a fixed per-step tax.</li>
   <li><strong>Then the roster rotation.</strong> An 80-agent audit of the August-2026 open-weight frontier, adversarially verified against the Hub, found eight fittable models the fleet did not have. Because the box holds 1.2 TB and the roster is 1.5 TB, each is downloaded, measured and removed in turn, with and without its speculation head: Hy3 (Tencent, index 42, RedHat W4A4 build with MTP, the lowest engine risk), Nemotron 3 Super 120B (one card, four replicas, MTPv2 drafter), Ling-3.0-flash (index 38 at 5B active, a known FP8 gibberish bug to trip), Laguna-S 2.1 (Poolside's agentic coder, DFlash), Mistral Medium 3.5 (the only dense 128B control, official EAGLE), Step-3.7-Flash (3-layer MTP), MiMo-V2.5 (the one candidate already validated on 4× RTX PRO 6000), Ornith-1.5-397B (vendor claims above GLM-5.3-Flash, no third-party evals, a known CUDA-graph crash to work around).</li>

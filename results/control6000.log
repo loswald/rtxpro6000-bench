@@ -1,0 +1,16 @@
+[18:26:47] ===== control: Qwen3.8-27B NVFP4 b12x (first box: 5,161 out tok/s at C1024 router) =====
+[18:26:53]   launch c6_b12x :: --kernel-config.linear_backend b12x
+[18:31:24]   c6_b12x healthy 270s | GPU KV cache size: 1,818,375 tokens
+    kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/c6_b12x_quality20.json
+  router     C256     71.5s    1744 req/min     3721 out/s     29770 in/s     33491 tot/s  TTFT   1971/   5823 ms  TPOT  53.7/  65.5 ms  ITL  53.7  E2E   8.8/ 13.1 s
+  router     C1024   268.7s    1858 req/min     3965 out/s     31716 in/s     35681 tot/s  TTFT   3355/  23138 ms  TPOT 233.3/ 255.3 ms  ITL 233.3  E2E  33.0/ 54.1 s
+  promptopt  C1024   578.5s     861 req/min     3675 out/s     51453 in/s     55128 tot/s  TTFT   6318/  47992 ms  TPOT 254.3/ 276.1 ms  ITL 254.3  E2E  71.2/111.9 s
+  judge      C512    603.0s     413 req/min     3522 out/s     28179 in/s     31701 tot/s  TTFT   5827/  46192 ms  TPOT 134.0/ 143.8 ms  ITL 134.0  E2E  74.3/118.3 s
+[18:59:00] ===== control: Qwen3.8-27B FP8 b12x (first box: 3,146 at C1024) =====
+[18:59:05]   launch c6_fp8_b12x :: --kernel-config.linear_backend b12x
+[19:03:27]   c6_fp8_b12x healthy 260s | GPU KV cache size: 1,524,208 tokens
+    kernel: Selected B12xFp8BlockScaledMMKernel
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/c6_fp8_b12x_quality20.json
+  router     C256    134.3s     935 req/min     1994 out/s     15952 in/s     17946 tot/s  TTFT   4122/  12032 ms  TPOT  96.9/ 123.4 ms  ITL  96.9  E2E  16.4/ 25.2 s
+  router     C1024   513.9s     971 req/min     2071 out/s     16566 in/s     18637 tot/s  TTFT   6974/  48680 ms  TPOT 442.6/ 490.1 ms  ITL 442.6  E2E  63.2/108.0 s
