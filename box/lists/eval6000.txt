@@ -1,9 +1,15 @@
-# Quality pass on the 4x PRO 6000: the winning configuration of every model measured on this host, plus
-# the FP8-vs-NVFP4 and speculation A/B pairs. Same items, same seed, so arms are directly pairable.
-# MODE=eval bash ksweep.sh lists/eval6000.txt
+# Quality pass on the 4x PRO 6000 (WS, 400 W). One row per model at its winning configuration, plus the
+# A/B pairs that only mean something on identical items and seed: NVFP4 vs FP8, and speculation on/off.
+# Run as: MODE=eval bash ksweep.sh lists/eval6000.txt
 q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-
 q27_fp8|/workspace/models/Qwen3.8-27B-FP8|1|b12x:-
 hy3|/workspace/models/Hy3-NVFP4-FP8|4|b12x:flashinfer_cutlass
 nemo3s|/workspace/models/Nemotron-3-Super-NVFP4|1|b12x:flashinfer_cutlass|--mamba-ssm-cache-dtype|float16|--max-num-seqs|256
 laguna|/workspace/models/Laguna-S-2.1-NVFP4|2|-:flashinfer_cutlass|--max-model-len|65536
-mimo25|/workspace/models/MiMo-V2.5-NVFP4|4|b12x:flashinfer_cutlass
+nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:flashinfer_cutlass
+muse30|/workspace/models/Muse-Glimmer-30B|1|-:-
+gptoss20|/workspace/models/gpt-oss-20b|1|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8
+gemma26|/workspace/models/gemma-4-26B-A4B-it|1|-:-
+qwen36_fp8|/workspace/models/Qwen3.6-35B-A3B-FP8|1|b12x:-
+inkling|/workspace/models/Inkling-Small-NVFP4|4|b12x:-
+qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-
