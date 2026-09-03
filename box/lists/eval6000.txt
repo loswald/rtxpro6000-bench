@@ -1,0 +1,9 @@
+# Quality pass on the 4x PRO 6000: the winning configuration of every model measured on this host, plus
+# the FP8-vs-NVFP4 and speculation A/B pairs. Same items, same seed, so arms are directly pairable.
+# MODE=eval bash ksweep.sh lists/eval6000.txt
+q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-
+q27_fp8|/workspace/models/Qwen3.8-27B-FP8|1|b12x:-
+hy3|/workspace/models/Hy3-NVFP4-FP8|4|b12x:flashinfer_cutlass
+nemo3s|/workspace/models/Nemotron-3-Super-NVFP4|1|b12x:flashinfer_cutlass|--mamba-ssm-cache-dtype|float16|--max-num-seqs|256
+laguna|/workspace/models/Laguna-S-2.1-NVFP4|2|-:flashinfer_cutlass|--max-model-len|65536
+mimo25|/workspace/models/MiMo-V2.5-NVFP4|4|b12x:flashinfer_cutlass

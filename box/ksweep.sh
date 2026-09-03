@@ -93,9 +93,22 @@ pt(){ # tag label in out prefix c_per_port nports dir
   $CLEAN python3 "$B/agg.py" "$P/$tag" "${tag}__${label}__c${tot}__p" "$label" "$tot" "$tag"
 }
 
+evalrun(){ # tag n   — the six-family quality suite against the servers that are already up
+  local tag=$1 n=$2 urls="" i
+  for i in $(seq 0 $((n-1))); do urls="${urls}${urls:+,}http://127.0.0.1:$((8000+i))"; done
+  mkdir -p "$R/eval"
+  $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
+    --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency $(( 16 * n )) \
+    ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
+}
+
 shapes(){ # tag dir n
   local tag=$1 dir=$2 n=$3
   $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
+  case "${MODE:-bench}" in
+    eval) evalrun "$tag" "$n"; return;;
+    both) evalrun "$tag" "$n";;
+  esac
   pt "$tag" router    1024 128 0    $(( 256 / n ))  "$n" "$dir"
   pt "$tag" router    1024 128 0    $(( 1024 / n )) "$n" "$dir"
   pt "$tag" promptopt  512 256 3072 $(( 1024 / n )) "$n" "$dir"
@@ -115,7 +128,10 @@ sweep(){ # tag dir tp combos [extra...]
   for c in "${CC[@]}"; do
     local lin="${c%%:*}" moe="${c##*:}" atag
     atag="${tag}_$(echo "$c" | tr ':' '-' | tr -d '.')"
-    if [ "$(ls "$P/$atag"/*__judge__*.json 2>/dev/null | wc -l)" -ge "$n" ]; then log "  $atag already measured"; any=1; continue; fi
+    case "${MODE:-bench}" in
+      eval) [ -f "$R/eval/$atag.json" ] && { log "  $atag already evaluated"; any=1; continue; };;
+      *)    [ "$(ls "$P/$atag"/*__judge__*.json 2>/dev/null | wc -l)" -ge "$n" ] && { log "  $atag already measured"; any=1; continue; };;
+    esac
     if serve "$atag" "$dir" "$tp" "$lin" "$moe" "$@"; then
       shapes "$atag" "$dir" "$n"; any=1
       [ "${FIRST_ONLY:-0}" = 1 ] && break

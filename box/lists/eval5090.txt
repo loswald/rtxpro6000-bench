@@ -1,0 +1,6 @@
+# Quality pass on the 8x RTX 5090, same items and seed as the PRO 6000 pass: a 32 GB card serving the
+# same checkpoint should score identically, so any gap is a serving bug, not a hardware property.
+q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-
+q27_fp8_tp2|/workspace/models/Qwen3.8-27B-FP8|2|b12x:-
+gptoss20|/workspace/models/gpt-oss-20b|1|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8
+muse30_nvfp4|/workspace/models/Muse-Glimmer-30B-NVFP4|1|b12x:flashinfer_cutlass
