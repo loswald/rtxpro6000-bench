@@ -1,0 +1,14 @@
+# tag|dir|tp|combos (linear:moe, "-" = engine default)|extra args
+# Models the rotation lost to a hard-coded flashinfer_cutlass MoE backend, re-run as real sweeps.
+ling3f|/workspace/models/Ling-3.0-flash-NVFP4|1|b12x:b12x,b12x:flashinfer_b12x,b12x:triton,b12x:marlin,-:-
+ling3f_mtp|/workspace/models/Ling-3.0-flash-NVFP4|1|b12x:b12x,b12x:triton,-:-|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
+step37|/workspace/models/Step-3.7-Flash-NVFP4|4|b12x:b12x,b12x:triton,b12x:marlin,-:-|--enable-expert-parallel
+step37_mtp|/workspace/models/Step-3.7-Flash-NVFP4|4|b12x:b12x,b12x:triton,-:-|--enable-expert-parallel|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
+# Hybrid/Mamba: max_num_seqs must not exceed the Mamba cache blocks (333 at tp=1); ksweep uses 512 on
+# 96 GB cards, so cap it explicitly here.
+nemo3s_mtp|/workspace/models/Nemotron-3-Super-NVFP4|1|b12x:b12x,b12x:triton,b12x:flashinfer_cutlass|--mamba-ssm-cache-dtype|float16|--max-num-seqs|256|--speculative-config|{"method":"mtp","model":"/workspace/models/Nemotron-3-Super-MTPv2","num_speculative_tokens":3}
+# Laguna's DFlash arm died mid-benchmark (executor dead, resource-tracker KeyError) - the known sm_120
+# CUDA-graph fault; retry eager.
+laguna_dflash_eager|/workspace/models/Laguna-S-2.1-NVFP4|2|-:flashinfer_cutlass,-:triton|--max-model-len|65536|--enforce-eager|--speculative-config|{"method":"dflash","model":"/workspace/models/Laguna-S-2.1-DFlash","num_speculative_tokens":7}
+# The DSpark drafter arm that lost its JSON to the old launcher; sm_120 needs the draft quantisation named.
+q27_dspark|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--speculative-draft-model-quantization|modelopt_fp4|--speculative-config|{"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}

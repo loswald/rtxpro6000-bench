@@ -1,0 +1,8 @@
+# 8x RTX 5090 (32 GB): ksweep drops to util 0.88 / 32k / 128 seqs automatically, which is what the three
+# OOMs needed; the MoE arms get the same backend sweep as the PRO 6000 box.
+q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-,flashinfer_b12x:-,-:-
+q27_nvfp4_dspark|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--speculative-draft-model-quantization|modelopt_fp4|--speculative-config|{"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}
+nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:b12x,b12x:triton,b12x:marlin,-:-|--max-num-seqs|128
+qwen36_nvfp4|/workspace/models/Qwen3.6-35B-A3B-NVFP4|1|b12x:b12x,b12x:triton,b12x:marlin,-:-
+gemma26_nvfp4|/workspace/models/gemma-4-26B-A4B-NVFP4|1|-:-,-:triton,-:marlin,b12x:triton
+ling3f_tp4|/workspace/models/Ling-3.0-flash-NVFP4|4|b12x:b12x,b12x:triton,b12x:marlin,-:-
