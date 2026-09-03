@@ -13,7 +13,7 @@ Report (kept current): https://claude.ai/code/artifact/60fe58ea-4220-4e4d-8d53-7
 | `bench/` | local harness: `launch.sh`, `sweep.sh`, `summarise.py`, `rr_proxy.py`, `collect_env.sh`, `setup_engine.sh` |
 | `box/` | scripts that run on the rented node: campaign runners (`nvtier*.sh`, `fleet2.sh`, `roster3.sh`, `glm_vllm.sh`, `qtier.sh`), `agg.py` (per-port aggregation), `quality20.py` (corruption tripwire), `logit_diff.py` (KL / top-k quantization metric), `hardkill.sh` / `cleanup.sh` (safe teardown), `pull_image.py` (lift a vendor Docker image without Docker), `vllm_sm120_nope.py` (the GLM-5.3-Flash port) |
 | `cells/`, `gates/`, `train/`, `vast/`, `patches/` | sweep cells, quality gates, training probes, Vast.ai provisioning, source patches (DeepSeek-V4 o_proj on sm_120) |
-| `results/` | raw `vllm bench serve` JSON per port, aggregated `summary_full.tsv`, server logs, tripwire verdicts |
+| `results/` | raw `vllm bench serve` JSON per port, one `summary.tsv` per run, `summary_all.tsv` across all runs, `kernels_by_server.tsv`, campaign logs, tripwire verdicts |
 | `report/` | the HTML report and the roster audit |
 | `econ/` | cost stack, runway and make-vs-buy models |
 
