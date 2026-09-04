@@ -33,3 +33,8 @@ Ling-3\.0	--reasoning-parser ling3 --tool-call-parser ling3 --enable-auto-tool-c
 MiMo	--reasoning-parser mimo --tool-call-parser mimo --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --chat-template-kwargs {"enable_thinking":true}
 Laguna	--reasoning-parser poolside_v1 --tool-call-parser poolside_v1 --enable-auto-tool-choice	--chat-template-kwargs {"enable_thinking":true}
 granite	--reasoning-parser granite --enable-auto-tool-choice	--temperature 0.0 --top-p 1.0
+# Tag-keyed rows come first, so one checkpoint can be measured two ways. gemma-4's vendor default is
+# thinking OFF; turning it on took maths 0.600 -> 0.962 and cost knowledge, long-context and instruction
+# following. Both modes get measured rather than assumed.
+^gemma26_nothink	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":false}
+^gemma26_think	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":true}

@@ -84,9 +84,16 @@ PY
 # Serving a model outside its vendor recipe is not a small effect - it is how this campaign spent a day
 # grading models on their own chain-of-thought.
 PROFILES=${PROFILES:-$B/lists/profiles.tsv}
-profile_field(){ # dir field(2=serve,3=eval)
+profile_field(){ # dir field(2=serve,3=eval) [tag]
+  # The tag is tried first so one checkpoint can be measured under two recipes - which is the only way to
+  # settle questions like gemma-4's, where the vendor default is thinking OFF and turning it on trades
+  # 0.600 -> 0.962 on maths against losses everywhere else. Falls back to the model directory name.
   local name; name=$(basename "$1")
   [ -f "$PROFILES" ] || return 0
+  local out=""
+  [ -n "${3:-}" ] && out=$(awk -F'\t' -v n="$3" -v f="$2" '
+    !/^#/ && NF>=3 { if (n ~ $1) { print $f; exit } }' "$PROFILES")
+  [ -n "$out" ] && { printf '%s' "$out"; return 0; }
   awk -F'\t' -v n="$name" -v f="$2" '
     !/^#/ && NF>=3 { if (n ~ $1) { print $f; exit } }' "$PROFILES"
 }
@@ -94,7 +101,7 @@ profile_field(){ # dir field(2=serve,3=eval)
 serve(){ # tag dir tp linear moe [extra...]
   local tag="$1" dir="$2" tp="$3" lin="$4" moe="$5"; shift 5
   local n=$(( NGPU / tp ))
-  local prof; prof=$(profile_field "$dir" 2)
+  local prof; prof=$(profile_field "$dir" 2 "$tag")
   kill_all
   {
     echo '#!/usr/bin/env bash'
@@ -159,7 +166,7 @@ pt(){ # tag label in out prefix c_per_port nports dir
 
 evalrun(){ # tag n dir  - the six-family quality suite against the servers that are already up
   local tag=$1 n=$2 dir=$3 urls="" i
-  local esamp; esamp=$(profile_field "$dir" 3)
+  local esamp; esamp=$(profile_field "$dir" 3 "$tag")
   for i in $(seq 0 $((n-1))); do urls="${urls}${urls:+,}http://127.0.0.1:$((8000+i))"; done
   mkdir -p "$R/eval"
   # No meaningful token cap. A truncated answer is not a wrong answer, it is a broken measurement, and it

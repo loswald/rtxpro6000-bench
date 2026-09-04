@@ -1,0 +1,10 @@
+# Thinking on vs off, on the precision the vendor actually supports.
+#
+# gemma-4 is the one model here whose vendor default is thinking OFF, and the first pass with it ON took
+# maths 0.600 -> 0.962 while knowledge fell to 0.278 and instruction following to 0.614. Worth settling.
+# But not on the 4-bit build: Google publishes no official 4-bit gemma-4-26B and advises against serving
+# one, and ours proved the point - eight replicas of the community NVFP4 build died mid-eval with the
+# engine core exiting without a traceback (146 of 403 items lost to connection errors, no host OOM, no
+# kernel OOM-kill). So this runs the BF16 checkpoint, which is what Google ships.
+gemma26_nothink|/workspace/models/gemma-4-26B-A4B-it|1|-:-
+gemma26_think|/workspace/models/gemma-4-26B-A4B-it|1|-:-
