@@ -1,0 +1,4 @@
+# Same QSA rule on the 5090 box: Qwen3.8-Flash-Next cannot take an fp8 KV cache. On 32 GB cards a bf16
+# cache is expensive, so this is also the honest test of whether the model is servable there at all.
+qwen38fn_tp8_bf16kv|/workspace/models/Qwen3.8-Flash-Next-NVFP4|8|b12x:-,b12x:triton|--kv-cache-dtype|auto
+qwen38fn_tp8_bf16kv_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|8|b12x:-|--kv-cache-dtype|auto|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
