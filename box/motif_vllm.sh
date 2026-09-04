@@ -13,21 +13,22 @@ mkdir -p "$P" "$S"
 log(){ echo "[$(date +%H:%M:%S)] $*"; }
 source /workspace/bench/hardkill.sh
 
+DEPS=${DEPS:-/workspace/motifdeps}   # pure-python packages the image forgot (pydivsufsort); never installed INTO the lifted tree
 SITE=$(find "$IMG" -maxdepth 6 -type d -name dist-packages -path "*python3*" 2>/dev/null | head -1)
 [ -z "$SITE" ] && SITE=$(find "$IMG" -maxdepth 7 -type d -name site-packages -path "*python3*" 2>/dev/null | head -1)
 [ -z "$SITE" ] && { log "no python tree under $IMG"; exit 1; }
 PYBIN=$(ls "$IMG"/usr/bin/python3* 2>/dev/null | head -1); PYBIN=${PYBIN:-python3}
 log "vendor tree: $SITE  (python: $PYBIN)"
-log "  vendor torch: $(PYTHONPATH=$SITE $PYBIN -c 'import torch;print(torch.__version__)' 2>&1 | tail -1)"
-log "  vendor vllm : $(PYTHONPATH=$SITE $PYBIN -c 'import vllm;print(vllm.__version__)' 2>&1 | tail -1)"
-PYTHONPATH=$SITE $PYBIN -c "from vllm.model_executor.models.registry import ModelRegistry as M; print('  motif archs:', [a for a in M.get_supported_archs() if 'otif' in a])" 2>&1 | tail -1
+log "  vendor torch: $(PYTHONPATH=$SITE:$DEPS $PYBIN -c 'import torch;print(torch.__version__)' 2>&1 | tail -1)"
+log "  vendor vllm : $(PYTHONPATH=$SITE:$DEPS $PYBIN -c 'import vllm;print(vllm.__version__)' 2>&1 | tail -1)"
+PYTHONPATH=$SITE:$DEPS $PYBIN -c "from vllm.model_executor.models.registry import ModelRegistry as M; print('  motif archs:', [a for a in M.get_supported_archs() if 'otif' in a])" 2>&1 | tail -1
 
 launch(){ # tag [extra...]
   local tag="$1"; shift
   kill_all
   cat > "$B/l_motif.sh" <<L
 #!/usr/bin/env bash
-export PYTHONPATH=$SITE
+export PYTHONPATH=$SITE:$DEPS
 export VLLM_WORKER_MULTIPROC_METHOD=spawn EP_DISABLE_GIN=1
 export FLASHINFER_CUDA_ARCH_LIST=12.0f TORCH_CUDA_ARCH_LIST=12.0 HF_HUB_OFFLINE=1
 export VLLM_ENGINE_READY_TIMEOUT_S=3600 MAX_JOBS=6 NVCC_THREADS=2
