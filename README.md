@@ -209,7 +209,36 @@ this passed GLM output reading "111 222 333 444"; do not trust a tripwire that o
 
 **2. Logit-level divergence** (`box/logit_diff.py`), for questions a task benchmark cannot resolve: identical
 contexts on two servers, twenty log-probabilities per position, and a control pair that fixes the noise
-floor. For fp8 KV cache on gpt-oss:
+floor.
+
+Qwen3.8-27B, ~104 positions per pair, 600 W box. **Read every row against the control**, which is the same
+configuration served twice:
+
+| pair | top-1 agreement | mean KL | verdict |
+|---|---:|---:|---|
+| **control** — same config, twice | **0.9615** | **0.01840** | the noise floor |
+| `b12x` vs `flashinfer_b12x` | 0.9904 | 0.00158 | **below** the floor — the two W4A4 kernels are interchangeable |
+| fp8 KV cache vs bf16 | 0.9417 | 0.02555 | just above: excess KL +0.007 |
+| **NVFP4 (community PTQ) vs FP8** | **0.8190** | **0.14515** | **excess KL +0.127, seven times the floor** |
+
+Three things this settles that task accuracy could not.
+
+**The stack is not deterministic**, and the control quantifies it: two identical servers disagree on 3.8%
+of top-1 tokens. Prefix caching, atomics in MoE and attention reductions, and continuous batching all
+contribute. Any claim resting on reproducing an output exactly — including "speculation must be
+bit-identical" — is unfounded here, which is why the greedy sequence comparison in `box/specdiff.py` now
+refuses to draw a conclusion unless its own control reproduces.
+
+**The two four-bit kernels are equivalent**, and by a wide margin: they agree with each other *better* than
+one configuration agrees with itself. Choosing between `b12x` and `flashinfer_b12x` is a throughput
+decision only.
+
+**Four-bit post-training quantisation really does change the model.** 18% of top-1 tokens differ from the
+FP8 release — not a subtle shift, and measured without a single task, token cap or scorer involved. It
+corroborates the maths gap seen in the task suite (0.650 against 0.939) through a completely independent
+instrument, which is the strongest form of agreement available here.
+
+For fp8 KV cache on gpt-oss, measured earlier the same way:
 
 | metric | control: fp8 vs fp8 | treatment: fp8 vs bf16 | excess |
 |---|---:|---:|---:|
