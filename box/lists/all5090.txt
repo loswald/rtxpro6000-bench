@@ -2,14 +2,14 @@
 # The replica tier is the like-for-like number the box exists for: eight 32 GB cards vs four 96 GB cards
 # at the same Scan monthly price. ksweep derives util 0.88 / 32k / 128 seqs from the card's VRAM, which is
 # what the three OOMs needed, and sweeps MoE backends, which is what the two "does not support" arms needed.
-q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-,flashinfer_b12x:-,-:-|--reasoning-parser|qwen3
-q27_nvfp4_dspark|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--speculative-draft-model-quantization|modelopt_fp4|--speculative-config|{"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}|--reasoning-parser|qwen3
-nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:b12x,b12x:triton,b12x:marlin,-:-|--max-num-seqs|128|--reasoning-parser|nemotron_v3
-qwen36_nvfp4|/workspace/models/Qwen3.6-35B-A3B-NVFP4|1|b12x:b12x,b12x:triton,b12x:marlin,-:-|--reasoning-parser|qwen3
-gemma26_nvfp4|/workspace/models/gemma-4-26B-A4B-NVFP4|1|-:-,-:triton,-:marlin,b12x:triton|--reasoning-parser|gemma4
+q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-,flashinfer_b12x:-,-:-
+q27_nvfp4_dspark|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--speculative-draft-model-quantization|modelopt_fp4|--speculative-config|{"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}
+nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:b12x,b12x:triton,b12x:marlin,-:-|--max-num-seqs|128
+qwen36_nvfp4|/workspace/models/Qwen3.6-35B-A3B-NVFP4|1|b12x:b12x,b12x:triton,b12x:marlin,-:-
+gemma26_nvfp4|/workspace/models/gemma-4-26B-A4B-NVFP4|1|-:-,-:triton,-:marlin,b12x:triton
 # TP tier: gpt-oss-120b and Ling per socket (GPUs 0-3 / 4-7 are separate NUMA nodes here), Flash-Next on all
 # eight. Scan's GB8-32T is single-socket, so its TP8 should beat this host's.
-gptoss120_tp4|/workspace/models/gpt-oss-120b|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--reasoning-parser|openai_gptoss
-ling3f_tp4|/workspace/models/Ling-3.0-flash-NVFP4|4|b12x:b12x,b12x:triton,b12x:marlin,-:-|--reasoning-parser|ling3
-qwen38fn_tp8|/workspace/models/Qwen3.8-Flash-Next-NVFP4|8|b12x:b12x,b12x:triton,-:-|--reasoning-parser|qwen3
-qwen38fn_tp8_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|8|b12x:b12x,b12x:triton|--speculative-config|{"method":"mtp","num_speculative_tokens":3}|--reasoning-parser|qwen3
+gptoss120_tp4|/workspace/models/gpt-oss-120b|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8
+ling3f_tp4|/workspace/models/Ling-3.0-flash-NVFP4|4|b12x:b12x,b12x:triton,b12x:marlin,-:-
+qwen38fn_tp8|/workspace/models/Qwen3.8-Flash-Next-NVFP4|8|b12x:b12x,b12x:triton,-:-
+qwen38fn_tp8_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|8|b12x:b12x,b12x:triton|--speculative-config|{"method":"mtp","num_speculative_tokens":3}

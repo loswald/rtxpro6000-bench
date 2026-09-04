@@ -1,0 +1,35 @@
+# Per-model serving profile: what the VENDOR says, not what our house defaults were.
+#
+# Researched 4 Sept 2026 from model cards, vendor repos and vLLM recipes, each profile written by one agent
+# and then checked against primary sources by a second. Three columns, tab-separated:
+#   1. a regex matched against the model directory name
+#   2. flags appended to `vllm serve`
+#   3. flags appended to the eval runner (sampling and chat-template controls)
+#
+# Why this file exists: the campaign served every model greedily or at T=0.6 with no reasoning parser and
+# no template kwargs. Not one of those is right for any model here. Three classes of error it fixes:
+#   * the chain-of-thought being scored as the answer (no --reasoning-parser)
+#   * sampling far from the vendor's recipe - every card here specifies temperature, top_p and usually
+#     top_k/min_p, and top_k/min_p have no slot in the OpenAI schema so they must go through extra_body
+#   * thinking silently OFF or ON. Hy3 defaults to no_think; gemma-4 defaults to enable_thinking FALSE;
+#     Qwen, Inkling, MiniMax, Nemotron, Ling and Ornith default ON. We were measuring some models in a mode
+#     their vendor does not recommend and comparing them with models in the other mode.
+#
+# pattern	serve_flags	eval_args
+Qwen27B|Qwen3\.8-27B|Qwen3\.6-35B|Qwen3\.8-Flash-Next|KAT-Coder|Agents-A1	--reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --extra-body {"top_k":20,"min_p":0.0,"presence_penalty":0.0} --chat-template-kwargs {"enable_thinking":true}
+Ornith	--reasoning-parser qwen3 --tool-call-parser qwen3_xml --enable-auto-tool-choice	--temperature 1.0 --top-p 1.0 --extra-body {"top_k":20} --chat-template-kwargs {"enable_thinking":true}
+GLM-5\.3	--reasoning-parser glm45 --tool-call-parser glm47 --enable-auto-tool-choice	--temperature 0.95 --top-p 0.95 --extra-body {"min_p":0.0} --chat-template-kwargs {"reasoning_effort":"max"}
+DeepSeek-V4	--reasoning-parser deepseek_v4 --tool-call-parser deepseek_v4 --enable-auto-tool-choice --tokenizer-mode deepseek_v4	--temperature 1.0 --top-p 0.95
+gpt-oss-20b	--reasoning-parser openai_gptoss --tool-call-parser openai --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --extra-body {"top_k":0} --chat-template-kwargs {"reasoning_effort":"high"}
+gpt-oss-120b	--reasoning-parser openai_gptoss --tool-call-parser openai --enable-auto-tool-choice	--temperature 1.0 --top-p 1.0 --extra-body {"top_k":0} --chat-template-kwargs {"reasoning_effort":"high"}
+gemma-4	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":true}
+Muse-Glimmer	--reasoning-parser muse_glimmer --tool-call-parser muse_glimmer --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"reasoning_strength":"high"}
+Nemotron-3	--reasoning-parser nemotron_v3 --tool-call-parser qwen3_coder --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --chat-template-kwargs {"enable_thinking":true}
+MiniMax-M3	--reasoning-parser minimax_m3 --tool-call-parser minimax_m3 --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --extra-body {"top_k":40} --chat-template-kwargs {"thinking_mode":"enabled"}
+Inkling	--reasoning-parser inkling --tool-call-parser inkling --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --extra-body {"min_p":0.0} --chat-template-kwargs {"thinking":true}
+Hy3	--reasoning-parser hy_v3 --tool-call-parser hy_v3 --enable-auto-tool-choice	--temperature 0.9 --top-p 1.0 --chat-template-kwargs {"reasoning_effort":"high"}
+Step-3\.7	--reasoning-parser step3p5 --tool-call-parser step3p5 --enable-auto-tool-choice --disable-cascade-attn	--temperature 1.0 --top-p 0.95 --chat-template-kwargs {"reasoning_effort":"high"}
+Ling-3\.0	--reasoning-parser ling3 --tool-call-parser ling3 --enable-auto-tool-choice --mamba-cache-mode align	--temperature 0.85 --top-p 0.95 --extra-body {"top_k":20} --chat-template-kwargs {"enable_thinking":true}
+MiMo	--reasoning-parser mimo --tool-call-parser mimo --enable-auto-tool-choice	--temperature 1.0 --top-p 0.95 --chat-template-kwargs {"enable_thinking":true}
+Laguna	--reasoning-parser poolside_v1 --tool-call-parser poolside_v1 --enable-auto-tool-choice	--chat-template-kwargs {"enable_thinking":true}
+granite	--reasoning-parser granite --enable-auto-tool-choice	--temperature 0.0 --top-p 1.0

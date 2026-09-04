@@ -68,9 +68,21 @@ PY
   compgen -G "$d/*.safetensors" >/dev/null || compgen -G "$d/*.bin" >/dev/null || compgen -G "$d/*.gguf" >/dev/null
 }
 
+# Per-model serving profile from lists/profiles.tsv: the vendor's own parser, template kwargs and sampling.
+# Serving a model outside its vendor recipe is not a small effect - it is how this campaign spent a day
+# grading models on their own chain-of-thought.
+PROFILES=${PROFILES:-$B/lists/profiles.tsv}
+profile_field(){ # dir field(2=serve,3=eval)
+  local name; name=$(basename "$1")
+  [ -f "$PROFILES" ] || return 0
+  awk -F'\t' -v n="$name" -v f="$2" '
+    !/^#/ && NF>=3 { if (n ~ $1) { print $f; exit } }' "$PROFILES"
+}
+
 serve(){ # tag dir tp linear moe [extra...]
   local tag="$1" dir="$2" tp="$3" lin="$4" moe="$5"; shift 5
   local n=$(( NGPU / tp ))
+  local prof; prof=$(profile_field "$dir" 2)
   kill_all
   {
     echo '#!/usr/bin/env bash'
@@ -85,6 +97,8 @@ serve(){ # tag dir tp linear moe [extra...]
       [ "$lin" != "-" ] && printf ' --kernel-config.linear_backend %q' "$lin"
       [ "$moe" != "-" ] && printf ' --moe-backend %q' "$moe"
       for a in "$@"; do printf ' %q' "$a"; done
+      # the vendor profile goes last so a list row can still override any of it
+      [ -n "$prof" ] && printf ' %s' "$prof"
       printf ' > %s/%s_p%d.log 2>&1 &\nsleep 2\n' "$S" "$tag" $((8000+i))
     done
     echo 'wait'
@@ -131,8 +145,9 @@ pt(){ # tag label in out prefix c_per_port nports dir
   $CLEAN python3 "$B/agg.py" "$P/$tag" "${tag}__${label}__c${tot}__p" "$label" "$tot" "$tag"
 }
 
-evalrun(){ # tag n   — the six-family quality suite against the servers that are already up
-  local tag=$1 n=$2 urls="" i
+evalrun(){ # tag n dir  - the six-family quality suite against the servers that are already up
+  local tag=$1 n=$2 dir=$3 urls="" i
+  local esamp; esamp=$(profile_field "$dir" 3)
   for i in $(seq 0 $((n-1))); do urls="${urls}${urls:+,}http://127.0.0.1:$((8000+i))"; done
   mkdir -p "$R/eval"
   # No meaningful token cap. A truncated answer is not a wrong answer, it is a broken measurement, and it
@@ -146,15 +161,19 @@ evalrun(){ # tag n   — the six-family quality suite against the servers that a
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
     --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency $(( 16 * n )) \
     ${EVAL_REASONING:---reasoning} --max-tokens "${EVAL_MAXTOK:-24576}" --max-tokens-family "$caps" \
-    ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
+    $esamp ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
+  # $esamp is the vendor's own sampling recipe from lists/profiles.tsv and it comes after --reasoning on
+  # purpose: --reasoning sets a house default of T=0.6/top_p=0.95 for every model, and not one vendor here
+  # recommends that. Qwen wants T=1.0/top_p=0.95/top_k=20/min_p=0, gemma T=0.0/top_k=64, Ling T=0.85,
+  # Hy3 T=0.9/top_p=1.0. top_k and min_p have no slot in the OpenAI schema, so they ride in extra_body.
 }
 
 shapes(){ # tag dir n
   local tag=$1 dir=$2 n=$3
   $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
   case "${MODE:-bench}" in
-    eval) evalrun "$tag" "$n"; return;;
-    both) evalrun "$tag" "$n";;
+    eval) evalrun "$tag" "$n" "$dir"; return;;
+    both) evalrun "$tag" "$n" "$dir";;
   esac
   pt "$tag" router    1024 128 0    $(( 256 / n ))  "$n" "$dir"
   pt "$tag" router    1024 128 0    $(( 1024 / n )) "$n" "$dir"

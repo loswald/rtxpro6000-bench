@@ -1,14 +1,14 @@
 # The five tensor-parallel arms the fleet tier lost, with the cause fixed rather than the flag repeated.
 # Qwen3.8-Flash-Next: "Qwen4Exp QSA requires a BF16 main KV cache" - the campaign's blanket --kv-cache-dtype
 # fp8 is illegal for this architecture, so it gets auto (bf16) and pays for it in cache size.
-qwen38fn_bf16kv|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-,b12x:cutlass|--kv-cache-dtype|auto|--reasoning-parser|qwen3
-qwen38fn_bf16kv_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-|--kv-cache-dtype|auto|--speculative-config|{"method":"mtp","num_speculative_tokens":3}|--reasoning-parser|qwen3
+qwen38fn_bf16kv|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-,b12x:cutlass|--kv-cache-dtype|auto
+qwen38fn_bf16kv_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-|--kv-cache-dtype|auto|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
 # MiniMax-M3 and Inkling died with a shared-memory KeyError, which is what a worker segfault looks like from
 # the parent: the known sm_120 CUDA-graph fault in hybrid attention. Eager avoids it; MiniMax also needs a
 # 128-token block for its sparse attention.
-minimaxm3_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass,-:flashinfer_trtllm|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager|--reasoning-parser|minimax_m3
-minimaxm3_dspark_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager|--speculative-config|{"method":"dspark","model":"/workspace/models/MiniMax-M3-DSpark","num_speculative_tokens":8}|--reasoning-parser|minimax_m3
-inkling_eager|/workspace/models/Inkling-Small-NVFP4|4|b12x:-,b12x:cutlass|--enforce-eager|--reasoning-parser|inkling
-inkling_eager_mtp|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager|--speculative-config|{"method":"inkling_mtp","num_speculative_tokens":2}|--reasoning-parser|inkling
+minimaxm3_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass,-:flashinfer_trtllm|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager
+minimaxm3_dspark_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager|--speculative-config|{"method":"dspark","model":"/workspace/models/MiniMax-M3-DSpark","num_speculative_tokens":8}
+inkling_eager|/workspace/models/Inkling-Small-NVFP4|4|b12x:-,b12x:cutlass|--enforce-eager
+inkling_eager_mtp|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager|--speculative-config|{"method":"inkling_mtp","num_speculative_tokens":2}
 # Muse Glimmer's DFlash drafter ran the box out of memory at 0.94; ksweep uses 0.94 on 96 GB cards, so cap it.
-muse30_dflash_lowmem|/workspace/models/Muse-Glimmer-30B|1|-:-|--gpu-memory-utilization|0.86|--speculative-config|{"method":"dflash","model":"/workspace/models/Muse-Glimmer-30B-assistant","num_speculative_tokens":15}|--reasoning-parser|muse_glimmer
+muse30_dflash_lowmem|/workspace/models/Muse-Glimmer-30B|1|-:-|--gpu-memory-utilization|0.86|--speculative-config|{"method":"dflash","model":"/workspace/models/Muse-Glimmer-30B-assistant","num_speculative_tokens":15}
