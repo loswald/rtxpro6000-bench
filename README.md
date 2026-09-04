@@ -193,6 +193,23 @@ knowledge questions and short-answer factuality, and instruction following with 
 re-implemented from the reference. Ungated public sources, programmatic scoring, no model judging another
 model, Wilson intervals, and the same items and seed across configurations so arms are directly pairable.
 
+403 scored items per configuration, on the 8× RTX 5090 node:
+
+| configuration (AA index) | overall | maths | code | tools | long ctx | knowledge | instructions | truncated |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| gemma-4-26B-A4B NVFP4 (26) | **0.712** | 0.600 | 0.800 | 0.857 | 0.875 | 0.457 | 0.750 | 0.087 |
+| gpt-oss-20b (24) | 0.665 | 0.525 | 0.760 | 0.871 | 0.771 | 0.371 | 0.750 | 0.137 |
+| Qwen3.8-27B FP8 (52) | 0.610 | 0.573 | 0.432 | 0.843 | 0.930 | 0.493 | 0.356 | 0.211 |
+| Qwen3.8-27B NVFP4 (52) | 0.558 | 0.525 | 0.413 | 0.829 | 0.917 | 0.443 | 0.317 | 0.248 |
+| Muse-Glimmer-30B NVFP4 (35) | 0.556 | 0.613 | 0.453 | 0.829 | 0.708 | 0.457 | 0.283 | 0.149 |
+
+Two readings matter more than the ranking. **The published intelligence index does not predict these
+workloads**: gemma-4-26B at index 26 beats Qwen3.8-27B at index 52 here, because half of what we ask for is
+code, tool calls and instruction following, and because Qwen spends its budget reasoning. And **four-bit may
+cost about five points** — but that pair compared a one-card NVFP4 server against a two-card FP8 one with
+different truncation rates, so it does not settle the question; a matched run at the same layout, budget,
+items and seed is in flight, alongside the logit-level pass that asks the same thing with no task in between.
+
 Two findings from building it that generalise:
 
 * **Give reasoning models room.** The first run scored 181 of 403 items as wrong because they hit the token
