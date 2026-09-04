@@ -34,6 +34,40 @@ VRAM=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits | head 
 if [ "$VRAM" -lt 40000 ]; then UTIL=0.88; MAXLEN=32768; SEQS=128; else UTIL=0.94; MAXLEN=40960; SEQS=512; fi
 log "host: ${NGPU}x GPU, ${VRAM} MiB each -> util $UTIL, max-model-len $MAXLEN, max-num-seqs $SEQS"
 
+# A full disk does not announce itself: the engine fails to write its compile cache and its own log, so
+# every arm dies silently and looks like a model problem. Check before each launch, not once at the start.
+FREE_GB(){ df -BG --output=avail / 2>/dev/null | tail -1 | tr -dc '0-9'; }
+disk_ok(){
+  local f; f=$(FREE_GB)
+  [ -n "$f" ] && [ "$f" -ge 15 ] && return 0
+  log "  DISK ${f:-?} GB free: refusing to launch (an engine that cannot write its cache fails in ways that look like the model's fault)"
+  return 1
+}
+
+# Trust our own downloader's sentinel where it exists; otherwise verify every shard the index names.
+# A directory with a config and two small files passed the old check while holding 0.7 GB of a 171 GB model.
+weights_ok(){ # dir
+  local d="$1"
+  [ -f "$d/config.json" ] || return 1
+  find "$d" \( -name '*.incomplete' -o -name '*.part' \) 2>/dev/null | grep -q . && return 1
+  [ -f "$d/.dl_complete" ] && return 0
+  local idx="$d/model.safetensors.index.json"
+  if [ -f "$idx" ]; then
+    python3 - "$d" <<'PY'
+import json, os, sys
+d = sys.argv[1]
+try:
+    wm = json.load(open(os.path.join(d, "model.safetensors.index.json")))["weight_map"]
+except Exception:
+    sys.exit(1)
+files = set(wm.values())
+sys.exit(0 if files and all(os.path.exists(os.path.join(d, f)) for f in files) else 1)
+PY
+    return $?
+  fi
+  compgen -G "$d/*.safetensors" >/dev/null || compgen -G "$d/*.bin" >/dev/null || compgen -G "$d/*.gguf" >/dev/null
+}
+
 serve(){ # tag dir tp linear moe [extra...]
   local tag="$1" dir="$2" tp="$3" lin="$4" moe="$5"; shift 5
   local n=$(( NGPU / tp ))
@@ -58,10 +92,14 @@ serve(){ # tag dir tp linear moe [extra...]
   chmod +x "$B/l_ks.sh"
   tmux new-session -d -s srv "bash $B/l_ks.sh"
   local t=0 ok=0
+  # A dead launcher is the only reliable failure signal. On 4 Sept the box filled up, vLLM could not write
+  # its own traceback into the server log, the log-scraping fast-fail below never matched, and eight hours
+  # went into arms that had already died in the first minute. If the tmux session is gone, so is the run.
   while [ "$t" -lt 2100 ]; do
     ok=1; for i in $(seq 0 $((n-1))); do curl -fsS -m 3 "http://127.0.0.1:$((8000+i))/health" >/dev/null 2>&1 || ok=0; done
     [ "$ok" = 1 ] && break
     grep -qiE "^(ValueError|RuntimeError|NotImplementedError|TypeError)|Engine core initialization failed|CUDA out of memory|does not support|Address already in use" "$S/${tag}_p8000.log" 2>/dev/null && { sleep 15; break; }
+    tmux has-session -t =srv 2>/dev/null || { log "    (launcher exited after ${t}s)"; break; }
     sleep 10; t=$((t+10))
   done
   if [ "$ok" != 1 ]; then
@@ -123,10 +161,8 @@ sweep(){ # tag dir tp combos [extra...]
   local n=$(( NGPU / tp ))
   # A directory is not a model: Hugging Face leaves partial blobs under .cache/huggingface/download as
   # *.incomplete, and benchmarking a half-downloaded checkpoint wastes an hour and produces a wrong number.
-  if [ ! -f "$dir/config.json" ] || find "$dir" \( -name '*.incomplete' -o -name '*.part' \) 2>/dev/null | grep -q . \
-     || ! { compgen -G "$dir/*.safetensors" >/dev/null || compgen -G "$dir/*.bin" >/dev/null || compgen -G "$dir/*.gguf" >/dev/null; }; then
-    log "SKIP $tag (weights absent or incomplete)"; return 1
-  fi
+  weights_ok "$dir" || { log "SKIP $tag (weights absent or incomplete)"; return 1; }
+  disk_ok || return 1
   log "########## $tag ($(du -sh "$dir" 2>/dev/null | cut -f1), tp=$tp x$n) : $combos ##########"
   local any=0 i=0
   IFS=',' read -ra CC <<< "$combos"
