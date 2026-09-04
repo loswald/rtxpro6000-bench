@@ -105,8 +105,18 @@ for arm in ${ARMS:-base mtp}; do
           # truncation (28 of 80 maths items hit the ceiling with speculation, 10 without) - a
           # distribution-preserving speculator cannot make a model ramble further. This settles it without
           # sampling noise or a token cap in the way.
+          # A CONTROL FIRST. Speculation verifies k tokens in one forward pass where the base model does one
+          # at a time, so the two run different kernel shapes and different reduction orders. Floating-point
+          # results differ in the last bits, and at greedy argmax a near-tie between two tokens then flips -
+          # after which the texts diverge completely. That is numerics, not a speculator bug. The only way
+          # to tell them apart is to capture the base model TWICE, once with a batch shape that mimics
+          # verification, and see whether it reproduces itself. Skipping this control is how a numerical
+          # artefact gets published as an engine defect.
           if launch glm53f_specbase; then
             $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_base.json" 2>&1 | tail -14 | sed 's/^/    base: /'
+            $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_base2.json" 2>&1 | tail -3 | sed 's/^/    base2: /'
+            log "  CONTROL: the same server, twice, greedy"
+            $CLEAN python3 "$B/specdiff.py" compare "$P/specdiff_glm_base.json" "$P/specdiff_glm_base2.json" 2>&1 | tail -3 | sed 's/^/    control: /'
           fi
           if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_specmtp; then
             $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_mtp.json" 2>&1 | tail -14 | sed 's/^/    mtp:  /'
