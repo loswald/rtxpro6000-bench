@@ -7,3 +7,158 @@ quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/
   router     C256     42.4s    3021 req/min     6445 out/s     51558 in/s     58002 tot/s  TTFT   1610/   2875 ms  TPOT  27.3/  37.7 ms  ITL  27.3  E2E   5.1/  6.7 s
   router     C1024   165.9s    3074 req/min     6558 out/s     52463 in/s     59021 tot/s  TTFT  14511/  18813 ms  TPOT  36.4/  43.6 ms  ITL  36.4  E2E  19.1/ 23.8 s
   promptopt  C1024   440.1s    1146 req/min     4889 out/s     68449 in/s     73338 tot/s  TTFT  40252/  47649 ms  TPOT  42.2/  49.3 ms  ITL  42.2  E2E  51.0/ 59.5 s
+  judge      C512    418.5s     614 req/min     5237 out/s     41892 in/s     47129 tot/s  TTFT  30810/  43348 ms  TPOT  33.6/  37.8 ms  ITL  33.6  E2E  48.0/ 60.0 s
+[00:13:47]     v lin=flashinfer_b12x moe=- healthy 210s | GPU KV cache size: 174,762 tokens
+      kernel: Using FlashInferB12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_flashinfer_b12x--_quality20.json
+  router     C256     42.6s    3024 req/min     6452 out/s     51617 in/s     58069 tot/s  TTFT   1639/   2881 ms  TPOT  27.1/  37.8 ms  ITL  27.1  E2E   5.1/  6.7 s
+  router     C1024   166.5s    3048 req/min     6502 out/s     52014 in/s     58516 tot/s  TTFT  14807/  18489 ms  TPOT  34.5/  40.7 ms  ITL  34.5  E2E  19.2/ 22.8 s
+  promptopt  C1024   454.6s    1118 req/min     4768 out/s     66757 in/s     71525 tot/s  TTFT  41632/  52026 ms  TPOT  42.0/  50.9 ms  ITL  42.0  E2E  52.4/ 64.0 s
+  judge      C512    431.1s     602 req/min     5136 out/s     41085 in/s     46220 tot/s  TTFT  32020/  42981 ms  TPOT  32.8/  38.0 ms  ITL  32.8  E2E  48.8/ 59.6 s
+[00:37:44]     v lin=- moe=- healthy 200s | GPU KV cache size: 180,830 tokens
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_---_quality20.json
+  router     C256    130.1s    1000 req/min     2133 out/s     17062 in/s     19195 tot/s  TTFT   6714/  12372 ms  TPOT  68.3/ 114.2 ms  ITL  68.3  E2E  15.4/ 21.6 s
+  router     C1024   566.2s     925 req/min     1974 out/s     15795 in/s     17769 tot/s  TTFT  49784/  65064 ms  TPOT 111.5/ 147.4 ms  ITL 111.5  E2E  63.9/ 80.8 s
+  promptopt  C1024  1141.5s     457 req/min     1951 out/s     27312 in/s     29263 tot/s  TTFT 103207/ 131921 ms  TPOT 102.5/ 129.2 ms  ITL 102.5  E2E 129.3/159.7 s
+  judge      C512   1151.2s     227 req/min     1941 out/s     15528 in/s     17469 tot/s  TTFT  86313/ 129860 ms  TPOT  87.3/ 106.3 ms  ITL  87.3  E2E 130.9/172.3 s
+[01:29:58] ########## q27_nvfp4_dspark (17G, tp=1 x8) : b12x:- ##########
+[02:05:15]     x lin=b12x moe=- : unknown (see q27_nvfp4_dspark_b12x--_p8000.log)
+[02:05:21]   q27_nvfp4_dspark: NO combination served
+[02:05:21] ########## nemo35 (21G, tp=1 x8) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[02:08:58]     v lin=b12x moe=b12x healthy 210s | GPU KV cache size: 970,752 tokens
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/nemo35_b12x-b12x_quality20.json
+  router     C256     26.5s    4880 req/min    10410 out/s     83283 in/s     93693 tot/s  TTFT   1029/   3664 ms  TPOT  16.7/  22.1 ms  ITL  16.7  E2E   3.1/  5.6 s
+  router     C1024    75.4s    6660 req/min    14208 out/s    113665 in/s    127873 tot/s  TTFT   2557/   8682 ms  TPOT  51.4/  62.9 ms  ITL  51.4  E2E   9.1/ 16.5 s
+  promptopt  C1024   219.5s    2296 req/min     9795 out/s    137126 in/s    146920 tot/s  TTFT   6589/  24358 ms  TPOT  77.9/  94.0 ms  ITL  77.9  E2E  26.5/ 47.8 s
+  judge      C512    176.5s    1450 req/min    12374 out/s     98990 in/s    111364 tot/s  TTFT   1424/  11330 ms  TPOT  38.6/  42.3 ms  ITL  38.6  E2E  21.2/ 32.4 s
+[02:20:07]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[02:22:44]     v lin=b12x moe=marlin healthy 150s | GPU KV cache size: 1,153,024 tokens
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/nemo35_b12x-marlin_quality20.json
+  router     C256     22.5s    5796 req/min    12364 out/s     98916 in/s    111280 tot/s  TTFT    849/   1793 ms  TPOT  14.2/  20.1 ms  ITL  14.2  E2E   2.6/  3.5 s
+  router     C1024    66.8s    7572 req/min    16154 out/s    129236 in/s    145390 tot/s  TTFT   1442/   7648 ms  TPOT  51.5/  59.3 ms  ITL  51.5  E2E   8.0/ 14.3 s
+  promptopt  C1024   200.7s    2525 req/min    10773 out/s    150821 in/s    161594 tot/s  TTFT   3450/  22225 ms  TPOT  80.9/  91.8 ms  ITL  80.9  E2E  24.1/ 43.1 s
+  judge      C512    158.3s    1622 req/min    13838 out/s    110706 in/s    124545 tot/s  TTFT   1400/  10769 ms  TPOT  34.3/  37.7 ms  ITL  34.3  E2E  18.9/ 29.7 s
+[02:34:33]     v lin=- moe=- healthy 140s | GPU KV cache size: 1,118,208 tokens
+      kernel: Selected FlashInferFP8ScaledMMLinearKernel
+      kernel: Selected FlashInferFP8ScaledMMLinearKernel
+      kernel: Using MarlinNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/nemo35_---_quality20.json
+  router     C256     24.3s    5294 req/min    11293 out/s     90344 in/s    101637 tot/s  TTFT    814/   1808 ms  TPOT  16.4/  21.8 ms  ITL  16.4  E2E   2.9/  3.9 s
+  router     C1024    69.2s    7294 req/min    15560 out/s    124478 in/s    140038 tot/s  TTFT   1856/   7750 ms  TPOT  50.6/  58.7 ms  ITL  50.6  E2E   8.3/ 14.8 s
+  promptopt  C1024   205.1s    2473 req/min    10553 out/s    147745 in/s    158298 tot/s  TTFT   4665/  22473 ms  TPOT  78.0/  87.5 ms  ITL  78.0  E2E  24.5/ 43.9 s
+  judge      C512    164.9s    1548 req/min    13212 out/s    105695 in/s    118907 tot/s  TTFT   1353/  10679 ms  TPOT  36.1/  39.4 ms  ITL  36.1  E2E  19.8/ 30.5 s
+[02:44:27] ########## qwen36_nvfp4 (22G, tp=1 x8) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[02:48:39]     x lin=b12x moe=b12x : RuntimeError: 
+[02:49:50]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[02:53:37]     v lin=b12x moe=marlin healthy 220s | GPU KV cache size: 291,933 tokens
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/qwen36_nvfp4_b12x-marlin_quality20.json
+  router     C256     24.6s    5366 req/min    11447 out/s     91576 in/s    103023 tot/s  TTFT    987/   3164 ms  TPOT  14.8/  19.9 ms  ITL  14.8  E2E   2.9/  5.1 s
+  router     C1024    81.3s    6400 req/min    13654 out/s    109229 in/s    122882 tot/s  TTFT   6126/   8625 ms  TPOT  24.2/  29.0 ms  ITL  24.2  E2E   9.2/ 11.9 s
+  promptopt  C1024   144.5s    3598 req/min    15352 out/s    214926 in/s    230278 tot/s  TTFT  10785/  14900 ms  TPOT  22.2/  24.8 ms  ITL  22.2  E2E  16.4/ 21.0 s
+  judge      C512    216.0s    1197 req/min    10212 out/s     81693 in/s     91905 tot/s  TTFT  12029/  17407 ms  TPOT  25.2/  40.6 ms  ITL  25.2  E2E  24.9/ 30.7 s
+[03:07:00]     v lin=- moe=- healthy 210s | GPU KV cache size: 288,954 tokens
+      kernel: Selected FlashInferFP8ScaledMMLinearKernel
+      kernel: Selected FlashInferFP8ScaledMMLinearKernel
+      kernel: Using MarlinNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/qwen36_nvfp4_---_quality20.json
+  router     C256     24.1s    5338 req/min    11388 out/s     91103 in/s    102491 tot/s  TTFT    769/   1474 ms  TPOT  16.6/  21.3 ms  ITL  16.6  E2E   2.9/  3.6 s
+  router     C1024    83.1s    6095 req/min    13004 out/s    104028 in/s    117032 tot/s  TTFT   6480/   8979 ms  TPOT  25.2/  28.2 ms  ITL  25.2  E2E   9.7/ 12.3 s
+  promptopt  C1024   150.9s    3343 req/min    14263 out/s    199685 in/s    213949 tot/s  TTFT  11592/  15589 ms  TPOT  23.4/  25.3 ms  ITL  23.4  E2E  17.6/ 21.6 s
+  judge      C512    235.6s    1097 req/min     9359 out/s     74876 in/s     84235 tot/s  TTFT  13257/  18430 ms  TPOT  26.8/  42.6 ms  ITL  26.8  E2E  26.9/ 33.3 s
+[03:17:23] ########## gemma26_nvfp4 (16G, tp=1 x8) : -:-,-:triton,-:marlin,b12x:triton ##########
+[03:20:40]     v lin=- moe=- healthy 190s | GPU KV cache size: 161,327 tokens
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gemma26_nvfp4_---_quality20.json
+  router     C256     21.9s    5884 req/min    12552 out/s    100418 in/s    112971 tot/s  TTFT    716/   1334 ms  TPOT  14.9/  20.3 ms  ITL  14.9  E2E   2.6/  3.0 s
+  router     C1024    69.6s    7347 req/min    15674 out/s    125396 in/s    141070 tot/s  TTFT   3125/   7263 ms  TPOT  39.8/  46.4 ms  ITL  39.8  E2E   8.2/ 12.5 s
+  promptopt  C1024    78.7s    6491 req/min    27696 out/s    387745 in/s    415441 tot/s  TTFT   1238/   3093 ms  TPOT  31.2/  41.2 ms  ITL  31.3  E2E   9.2/ 11.3 s
+  judge      C512    162.4s    1579 req/min    13478 out/s    107823 in/s    121301 tot/s  TTFT   1920/  10322 ms  TPOT  34.3/  38.9 ms  ITL  34.3  E2E  19.4/ 28.7 s
+[03:29:13]     x lin=- moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[03:32:30]     v lin=- moe=marlin healthy 190s | GPU KV cache size: 162,624 tokens
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gemma26_nvfp4_--marlin_quality20.json
+  router     C256     24.0s    5338 req/min    11388 out/s     91107 in/s    102495 tot/s  TTFT    979/   1720 ms  TPOT  14.9/  22.4 ms  ITL  14.9  E2E   2.9/  3.2 s
+  router     C1024    82.6s    6158 req/min    13137 out/s    105096 in/s    118233 tot/s  TTFT   3828/   8824 ms  TPOT  46.9/  54.6 ms  ITL  46.9  E2E   9.8/ 15.0 s
+  promptopt  C1024    84.9s    5994 req/min    25573 out/s    358025 in/s    383598 tot/s  TTFT   1536/   4081 ms  TPOT  33.3/  44.2 ms  ITL  33.3  E2E  10.0/ 12.9 s
+  judge      C512    185.6s    1374 req/min    11728 out/s     93821 in/s    105548 tot/s  TTFT   2474/  13332 ms  TPOT  38.9/  44.6 ms  ITL  38.9  E2E  22.3/ 34.0 s
+[03:41:49]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[03:41:54] ########## gptoss120_tp4 (183G, tp=4 x2) : -:flashinfer_cutlass ##########
+[03:44:20]     v lin=- moe=flashinfer_cutlass healthy 140s | GPU KV cache size: 1,209,757 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend.
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gptoss120_tp4_--flashinfer_cutlass_quality20.json
+  router     C256    773.2s     768 req/min     1639 out/s     13109 in/s     14747 tot/s  TTFT   8482/  59967 ms  TPOT 357.0/ 790.7 ms  ITL 357.0  E2E  53.8/135.3 s
+  router     C1024  3382.2s     769 req/min     1640 out/s     13119 in/s     14759 tot/s  TTFT 171428/ 414985 ms  TPOT 418.5/ 937.5 ms  ITL 418.5  E2E 224.6/525.9 s
+  promptopt  C1024  3550.2s     786 req/min     3352 out/s     46932 in/s     50285 tot/s  TTFT 177533/ 398786 ms  TPOT 218.9/ 488.4 ms  ITL 218.9  E2E 233.4/507.3 s
+  judge      C512   7205.0s     185 req/min     1578 out/s     12622 in/s     14200 tot/s  TTFT 250234/ 806380 ms  TPOT 461.3/1012.1 ms  ITL 461.3  E2E 486.0/1221.3 s
+[07:56:31] ########## ling3f_tp4 (76G, tp=4 x2) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[08:06:23]     x lin=b12x moe=b12x : RuntimeError: Worker failed with error 'out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing b
+[08:07:54]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[08:15:46]     x lin=b12x moe=marlin : RuntimeError: Worker failed with error 'out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing b
+[08:24:57]     x lin=- moe=- : RuntimeError: Worker failed with error 'out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing b
+[08:25:03]   ling3f_tp4: NO combination served
+[08:25:03] ########## qwen38fn_tp8 (126G, tp=8 x1) : b12x:b12x,b12x:triton,-:- ##########
+[08:26:44]     x lin=b12x moe=b12x : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[08:28:14]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[08:29:45]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[08:29:51]   qwen38fn_tp8: NO combination served
+[08:29:51] ########## qwen38fn_tp8_mtp (126G, tp=8 x1) : b12x:b12x,b12x:triton ##########
+[08:31:32]     x lin=b12x moe=b12x : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[08:33:02]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[08:33:08]   qwen38fn_tp8_mtp: NO combination served
+/workspace/bench/ksweep.sh: line 157: ed,: command not found
+[08:33:08] ########## q27_nvfp4 (17G, tp=1 x8) : b12x:-,flashinfer_b12x:-,-:- ##########
+[08:33:08]   q27_nvfp4_b12x-- already measured
+[08:33:08]   q27_nvfp4_flashinfer_b12x-- already measured
+[08:33:08]   q27_nvfp4_--- already measured
+[08:33:14] ########## q27_nvfp4_dspark (17G, tp=1 x8) : b12x:- ##########
+[09:08:31]     x lin=b12x moe=- : unknown (see q27_nvfp4_dspark_b12x--_p8000.log)
+[09:08:37]   q27_nvfp4_dspark: NO combination served
+[09:08:37] ########## nemo35 (21G, tp=1 x8) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[09:08:37]   nemo35_b12x-b12x already measured
+[09:09:38]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:09:38]   nemo35_b12x-marlin already measured
+[09:09:38]   nemo35_--- already measured
+[09:09:43] ########## qwen36_nvfp4 (22G, tp=1 x8) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[09:11:55]     x lin=b12x moe=b12x : RuntimeError: 
+[09:13:05]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:13:05]   qwen36_nvfp4_b12x-marlin already measured
+[09:13:05]   qwen36_nvfp4_--- already measured
+[09:13:11] ########## gemma26_nvfp4 (16G, tp=1 x8) : -:-,-:triton,-:marlin,b12x:triton ##########
+[09:13:11]   gemma26_nvfp4_--- already measured
+[09:14:22]     x lin=- moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:14:22]   gemma26_nvfp4_--marlin already measured
+[09:15:33]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:15:38] ########## gptoss120_tp4 (183G, tp=4 x2) : -:flashinfer_cutlass ##########
+[09:15:38]   gptoss120_tp4_--flashinfer_cutlass already measured
+[09:15:43] ########## ling3f_tp4 (76G, tp=4 x2) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[09:22:45]     x lin=b12x moe=b12x : RuntimeError: Worker failed with error 'out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing b
+[09:24:16]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:31:07]     x lin=b12x moe=marlin : RuntimeError: Worker failed with error 'out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing b
+[09:36:59]     x lin=- moe=- : RuntimeError: Worker failed with error 'out of resource: shared memory, Required: 102400, Hardware limit: 101376. Reducing b
+[09:37:04]   ling3f_tp4: NO combination served
+[09:37:04] ########## qwen38fn_tp8 (126G, tp=8 x1) : b12x:b12x,b12x:triton,-:- ##########
+[09:38:35]     x lin=b12x moe=b12x : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[09:40:05]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:41:36]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[09:41:42]   qwen38fn_tp8: NO combination served
+[09:41:42] ########## qwen38fn_tp8_mtp (126G, tp=8 x1) : b12x:b12x,b12x:triton ##########
+[09:43:13]     x lin=b12x moe=b12x : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[09:44:43]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[09:44:49]   qwen38fn_tp8_mtp: NO combination served
+/workspace/bench/ksweep.sh: line 165: syntax error near unexpected token `fi'
+/workspace/bench/ksweep.sh: line 165: `fi'

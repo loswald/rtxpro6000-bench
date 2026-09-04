@@ -1,0 +1,1654 @@
+{
+ "aggregate": {
+  "acc_macro": 0.7615,
+  "acc_micro": 0.7328,
+  "acc_strict": 0.7328,
+  "answer_from_reasoning": 0,
+  "ci95": [
+   0.6457,
+   0.8049
+  ],
+  "degenerate_rate": 0.0,
+  "gpu_minutes": 56.026,
+  "mean_out_tokens": 1347.2,
+  "mean_prompt_tokens": 3267.4,
+  "mean_score": 0.7385,
+  "n_attempted": 116,
+  "n_cancelled": 0,
+  "n_correct": 85,
+  "n_error": 0,
+  "n_planned": 403,
+  "n_scored": 116,
+  "n_skipped": 287,
+  "out_tokens_per_s": 371.9,
+  "p50_item_s": 21.86,
+  "p50_out_tokens": 461,
+  "p90_item_s": 223.74,
+  "per_url": {
+   "http://127.0.0.1:8000": {
+    "completion_tokens": 138037,
+    "requests": 74
+   },
+   "http://127.0.0.1:8001": {
+    "completion_tokens": 18235,
+    "requests": 74
+   }
+  },
+  "request_errors": 0,
+  "requests": 148,
+  "retries": 0,
+  "status_counts": {
+   "correct": 85,
+   "truncated": 7,
+   "wrong": 24
+  },
+  "total_out_tokens": 156272,
+  "total_prompt_tokens": 379014,
+  "trunc_rate": 0.0603,
+  "wall_s": 414.5
+ },
+ "base_urls": [
+  "http://127.0.0.1:8000",
+  "http://127.0.0.1:8001"
+ ],
+ "config": {
+  "chat_template_kwargs": null,
+  "concurrency": 32,
+  "extra_body": null,
+  "families": [
+   "tools",
+   "code",
+   "math",
+   "longctx",
+   "knowledge",
+   "ifeval"
+  ],
+  "family_opts": {},
+  "gpus": 8,
+  "grace_s": 120.0,
+  "limit": null,
+  "max_tokens": 4096,
+  "max_tokens_family": {
+   "code": 8192,
+   "ifeval": 5376,
+   "longctx": 1024,
+   "math": 8192,
+   "tools": 2048
+  },
+  "notes": "",
+  "profile": "default",
+  "reasoning": true,
+  "request_timeout_s": 600.0,
+  "resume": false,
+  "retries": 3,
+  "seed": 20260903,
+  "temperature": 0.6,
+  "time_budget_s": 1200.0,
+  "top_p": 0.95
+ },
+ "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
+ "ended_at": "2026-09-04T11:15:19Z",
+ "endpoint": {
+  "max_model_len": 32768,
+  "served_models": [
+   "m"
+  ],
+  "urls_alive": 2,
+  "urls_dead": [],
+  "vllm_version": "0.28.1rc1.dev370+g6fdee17f8"
+ },
+ "evalsuite_git_sha": null,
+ "families": {
+  "code": {
+   "acc": 0.9333,
+   "acc_strict": 0.9333,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7018,
+    0.9881
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "fail_kinds": {
+     "assertion": 1
+    },
+    "lcb_mean_test_pass_frac": 1.0,
+    "syntax_error_rate": 0.0,
+    "timeout_rate": 0.0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mbppplus-753"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "min_k passes base+plus tests",
+     "extracted": "2384 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-753",
+     "out_tokens": 896,
+     "response_tail": "y input should yield empty output\"\n    assert min_k([('A', 5)], 0) == [], \"k=0 should yield empty list\"\n    assert min_k([('A', 5), ('B', 1), ('C', 3)], 5) == [\n        ('B', 1), ('C', 3), ('A', 5)\n    ], \"k larger than list length should return whole sorted list\"\n\n    print(\"All tests passed.\")\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    }
+   ],
+   "gpu_minutes": 2.142,
+   "info_per_gpu_min": 0.436,
+   "max_tokens": 8192,
+   "mean_out_tokens": 486.7,
+   "mean_prompt_tokens": 259.1,
+   "mean_score": 0.9333,
+   "n_attempted": 15,
+   "n_cancelled": 0,
+   "n_correct": 14,
+   "n_error": 0,
+   "n_planned": 75,
+   "n_scored": 15,
+   "n_skipped": 60,
+   "opts": {},
+   "p50_item_s": 203.48,
+   "p50_out_tokens": 461,
+   "p90_item_s": 275.45,
+   "status_counts": {
+    "correct": 14,
+    "wrong": 1
+   },
+   "sub": {
+    "humanevalplus": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6457,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 464.7,
+     "mean_prompt_tokens": 231.0,
+     "mean_score": 1.0,
+     "n_attempted": 7,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 25,
+     "n_scored": 7,
+     "n_skipped": 18,
+     "p50_item_s": 180.14,
+     "p50_out_tokens": 588,
+     "p90_item_s": 275.45,
+     "status_counts": {
+      "correct": 7
+     },
+     "total_out_tokens": 3253,
+     "total_prompt_tokens": 1617,
+     "trunc_rate": 0.0,
+     "wall_s": 365.7
+    },
+    "lcb_easy_medium": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4385,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 411.7,
+     "mean_prompt_tokens": 480.7,
+     "mean_score": 1.0,
+     "n_attempted": 3,
+     "n_cancelled": 0,
+     "n_correct": 3,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 3,
+     "n_skipped": 27,
+     "p50_item_s": 164.15,
+     "p50_out_tokens": 461,
+     "p90_item_s": 272.54,
+     "status_counts": {
+      "correct": 3
+     },
+     "total_out_tokens": 1235,
+     "total_prompt_tokens": 1442,
+     "trunc_rate": 0.0,
+     "wall_s": 319.9
+    },
+    "mbppplus": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3755,
+      0.9638
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 562.4,
+     "mean_prompt_tokens": 165.6,
+     "mean_score": 0.8,
+     "n_attempted": 5,
+     "n_cancelled": 0,
+     "n_correct": 4,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 5,
+     "n_skipped": 15,
+     "p50_item_s": 221.84,
+     "p50_out_tokens": 445,
+     "p90_item_s": 289.95,
+     "status_counts": {
+      "correct": 4,
+      "wrong": 1
+     },
+     "total_out_tokens": 2812,
+     "total_prompt_tokens": 828,
+     "trunc_rate": 0.0,
+     "wall_s": 393.2
+    }
+   },
+   "total_out_tokens": 7300,
+   "total_prompt_tokens": 3887,
+   "trunc_rate": 0.0,
+   "wall_s": 393.2
+  },
+  "ifeval": {
+   "acc": 0.8571,
+   "acc_strict": 0.8571,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.4869,
+    0.9743
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "by_n_instructions": {
+     "1": {
+      "n": 3,
+      "prompt_loose": 1.0,
+      "prompt_strict": 1.0
+     },
+     "2": {
+      "n": 1,
+      "prompt_loose": 1.0,
+      "prompt_strict": 1.0
+     },
+     "3": {
+      "n": 3,
+      "prompt_loose": 0.6667,
+      "prompt_strict": 0.6667
+     }
+    },
+    "instruction_loose": 0.9286,
+    "instruction_strict": 0.9286,
+    "loose_only_rate": 0.0,
+    "n_instructions": 14,
+    "per_type": {
+     "change_case:capital_word_frequency": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "combination:repeat_prompt": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:number_highlighted_sections": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:frequency": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "keywords:letter_frequency": {
+      "loose": 0.0,
+      "n": 1,
+      "strict": 0.0
+     },
+     "length_constraints:number_sentences": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:number_words": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "punctuation:no_comma": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "startend:end_checker": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     }
+    },
+    "prompt_loose": 0.8571,
+    "prompt_strict": 0.8571
+   },
+   "failed_ids": [
+    "ifeval-1174"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1174",
+     "out_tokens": 724,
+     "response_tail": "g template to capture the user's location and return a concise weather forecast.  \n*Input*: `{{o_location}}` \u2013 the user provides a city or zip code.  \n*Output*: `The weather in {{o_location}} is {{o_condition}} with a temperature of {{o_temp}}\u00b0C.`  \nNote: the keyword **o** must be used consistently.",
+     "status": "wrong",
+     "sub": "triple"
+    }
+   ],
+   "gpu_minutes": 1.378,
+   "info_per_gpu_min": 0.622,
+   "max_tokens": 5376,
+   "mean_out_tokens": 701.3,
+   "mean_prompt_tokens": 115.4,
+   "mean_score": 0.9524,
+   "n_attempted": 7,
+   "n_cancelled": 0,
+   "n_correct": 6,
+   "n_error": 0,
+   "n_planned": 60,
+   "n_scored": 7,
+   "n_skipped": 53,
+   "opts": {},
+   "p50_item_s": 238.25,
+   "p50_out_tokens": 724,
+   "p90_item_s": 399.47,
+   "status_counts": {
+    "correct": 6,
+    "wrong": 1
+   },
+   "sub": {
+    "double": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2065,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1116.0,
+     "mean_prompt_tokens": 121.0,
+     "mean_score": 1.0,
+     "n_attempted": 1,
+     "n_cancelled": 0,
+     "n_correct": 1,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 1,
+     "n_skipped": 23,
+     "p50_item_s": 399.47,
+     "p50_out_tokens": 1116,
+     "p90_item_s": 399.47,
+     "status_counts": {
+      "correct": 1
+     },
+     "total_out_tokens": 1116,
+     "total_prompt_tokens": 121,
+     "trunc_rate": 0.0,
+     "wall_s": 399.5
+    },
+    "single": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4385,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 554.3,
+     "mean_prompt_tokens": 102.3,
+     "mean_score": 1.0,
+     "n_attempted": 3,
+     "n_cancelled": 0,
+     "n_correct": 3,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 3,
+     "n_skipped": 9,
+     "p50_item_s": 182.04,
+     "p50_out_tokens": 502,
+     "p90_item_s": 238.25,
+     "status_counts": {
+      "correct": 3
+     },
+     "total_out_tokens": 1663,
+     "total_prompt_tokens": 307,
+     "trunc_rate": 0.0,
+     "wall_s": 407.7
+    },
+    "triple": {
+     "acc": 0.6667,
+     "acc_strict": 0.6667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2077,
+      0.9385
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 710.0,
+     "mean_prompt_tokens": 126.7,
+     "mean_score": 0.8889,
+     "n_attempted": 3,
+     "n_cancelled": 0,
+     "n_correct": 2,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 3,
+     "n_skipped": 21,
+     "p50_item_s": 247.82,
+     "p50_out_tokens": 724,
+     "p90_item_s": 360.94,
+     "status_counts": {
+      "correct": 2,
+      "wrong": 1
+     },
+     "total_out_tokens": 2130,
+     "total_prompt_tokens": 380,
+     "trunc_rate": 0.0,
+     "wall_s": 360.9
+    }
+   },
+   "total_out_tokens": 4909,
+   "total_prompt_tokens": 808,
+   "trunc_rate": 0.0,
+   "wall_s": 414.3
+  },
+  "knowledge": {
+   "acc": 0.375,
+   "acc_strict": 0.375,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.2116,
+    0.5729
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "extraction_methods": {
+     "answer_phrase": 11,
+     "none": 1,
+     "phrase": 12
+    },
+    "mmlu_pro_hard_hedged": 0,
+    "mmlu_pro_hard_weak_extraction": 0,
+    "simpleqa_no_answer_phrase": 0,
+    "simpleqa_superset_only": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mmlupro-11407",
+    "mmlupro-1401",
+    "mmlupro-4284",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-0673",
+    "simpleqa-2174",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2905",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4255",
+    "simpleqa-4322"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-11407",
+     "out_tokens": 4096,
+     "response_tail": "660^{\\circ}\\!R,\\qquad \nT_\\infty = 80^{\\circ}\\!F + 460 = 540^{\\circ}\\!R\n\\]\n\nThe Stefan\u2011Boltzmann constant in English units is  \n\n\\[\n\\sigma = 1.71 \\times 10^{-9}\\; \\frac{\\text{Btu}}{\\text{hr\u00b7ft}^2\\;^{\\circ}\\!R^{4}}\n\\]\n\n\\[\n\\begin{aligned}\nq_{\\text{rad}} &= 0.9\\,(1.71\\times10^{-9})\\,\n\\bigl(660^{4}-540^{",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "G",
+     "extracted": "I",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1401",
+     "out_tokens": 993,
+     "response_tail": "s son said, offered for the truth of the matter (that the windows shattered).  That is hearsay, and none of the listed exceptions (the excited\u2011utterance exception is not invoked in the answer choices) applies.  Therefore the testimony must be struck as inadmissible hearsay.  \n\n**The answer is (I).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": "D",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 329,
+     "response_tail": "The Grignard reagent is extremely moisture\u2011sensitive; any water present will react with it, destroying the reagent and giving side\u2011products rather than the desired alcohol. Therefore the aldehyde must be completely dry before it is added to the Grignard.  \n\n**The answer is (D).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "Joseph Jean Pierre Laurent",
+     "extracted": "M.\u202fLaurent, a French amateur astronomer",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0409",
+     "out_tokens": 386,
+     "response_tail": "Answer: M.\u202fLaurent, a French amateur astronomer.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "2002 September 30",
+     "extracted": "1996\u201108\u201112",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0492",
+     "out_tokens": 655,
+     "response_tail": "eele (Beele)\". Could be a Thai singer? Actually \"Beele\" might be a stage name of \"Lee Beel\"? Hmm.\n\nLet's think: There is a Japanese singer \"Beele\"? Not sure.\n\nMaybe it's a Korean singer \"Beele (\ube44\uc77c)\"? Actually there is a Korean singer \"Beele\" from group \"B.E.D\"? Not.\n\nLet's search.\nAnswer: 1996\u201108\u201112",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "10,423",
+     "extracted": "10,342",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0672",
+     "out_tokens": 190,
+     "response_tail": "Answer: 10,342",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "Roosevelt Island",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 933,
+     "response_tail": "Answer: Roosevelt Island",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Lloyd Hopkins Field",
+     "extracted": "Cairo Sports Complex",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2174",
+     "out_tokens": 1608,
+     "response_tail": "approximate: The answer likely is \"Baker Stadium\" but I'm not sure.\n\nBetter approach: Use remote memory: The CICL had a team \"Bluff City Bombers\" based in \"Cairo, Illinois\" and they played at \"Cairo Sports Complex\". So answer: \"Cairo Sports Complex\". Let's answer that.\n\n\nAnswer: Cairo Sports Complex",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Sarvepalli Radhakrishnan",
+     "extracted": "R.\u202fK.\u202fNehru",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2706",
+     "out_tokens": 1099,
+     "response_tail": "Answer: R.\u202fK.\u202fNehru",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Punkature",
+     "extracted": "The Anarchist",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2782",
+     "out_tokens": 385,
+     "response_tail": "Answer: The Anarchist",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Colegio Lacordaire",
+     "extracted": "Colegio San Jos\u00e9 de Calasanz",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2905",
+     "out_tokens": 935,
+     "response_tail": "Search.\nAnswer: Colegio San Jos\u00e9 de Calasanz",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Carlotta Cardana",
+     "extracted": "Andrew D. McDonald",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3339",
+     "out_tokens": 670,
+     "response_tail": "Answer: Andrew D. McDonald",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St David.",
+     "extracted": "Ontario",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3342",
+     "out_tokens": 659,
+     "response_tail": "Answer: Ontario",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Drepano",
+     "extracted": "Hiera",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4255",
+     "out_tokens": 470,
+     "response_tail": "Answer: Hiera",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Jodelle Ferland",
+     "extracted": "Katherine\u202fMcFarlane",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4322",
+     "out_tokens": 403,
+     "response_tail": "Answer: Katherine\u202fMcFarlane",
+     "status": "wrong",
+     "sub": "simpleqa"
+    }
+   ],
+   "gpu_minutes": 6.364,
+   "info_per_gpu_min": 0.884,
+   "max_tokens": 4096,
+   "mean_out_tokens": 934.7,
+   "mean_prompt_tokens": 233.5,
+   "mean_score": 0.375,
+   "n_attempted": 24,
+   "n_cancelled": 0,
+   "n_correct": 9,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 24,
+   "n_skipped": 46,
+   "opts": {},
+   "p50_item_s": 6.28,
+   "p50_out_tokens": 659,
+   "p90_item_s": 15.58,
+   "status_counts": {
+    "correct": 9,
+    "truncated": 1,
+    "wrong": 14
+   },
+   "sub": {
+    "mmlu_pro_hard": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4677,
+      0.9111
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1169.9,
+     "mean_prompt_tokens": 357.7,
+     "mean_score": 0.75,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 40,
+     "n_scored": 12,
+     "n_skipped": 28,
+     "p50_item_s": 6.55,
+     "p50_out_tokens": 730,
+     "p90_item_s": 21.86,
+     "status_counts": {
+      "correct": 9,
+      "truncated": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 14039,
+     "total_prompt_tokens": 4292,
+     "trunc_rate": 0.0833,
+     "wall_s": 390.2
+    },
+    "simpleqa": {
+     "acc": 0.0,
+     "acc_strict": 0.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0,
+      0.2425
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 699.4,
+     "mean_prompt_tokens": 109.2,
+     "mean_score": 0.0,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 0,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 12,
+     "n_skipped": 18,
+     "p50_item_s": 6.04,
+     "p50_out_tokens": 655,
+     "p90_item_s": 8.15,
+     "status_counts": {
+      "wrong": 12
+     },
+     "total_out_tokens": 8393,
+     "total_prompt_tokens": 1311,
+     "trunc_rate": 0.0,
+     "wall_s": 407.4
+    }
+   },
+   "total_out_tokens": 22432,
+   "total_prompt_tokens": 5603,
+   "trunc_rate": 0.0417,
+   "wall_s": 407.4
+  },
+  "longctx": {
+   "acc": 0.8571,
+   "acc_strict": 0.8571,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.6536,
+    0.9502
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_by_len": {
+     "16k": 0.7143,
+     "32k": 0.8333,
+     "8k": 1.0
+    },
+    "calibration": {
+     "budgets": {
+      "16k": 16384,
+      "32k": 30208,
+      "8k": 8192
+     },
+     "chars_per_token": {
+      "docs": 4.6859,
+      "filler": 4.6715
+     },
+     "checks": {
+      "niah_multikey": {
+       "budget": 30208,
+       "item": "longctx-niah-32k-d85-11",
+       "prompt_tokens": 29194
+      },
+      "qa_multi_doc": {
+       "budget": 30208,
+       "item": "longctx-qa-32k-d10-08",
+       "prompt_tokens": 29472
+      },
+      "var_tracking": {
+       "budget": 30208,
+       "item": "longctx-vt-32k-05",
+       "prompt_tokens": 29231
+      }
+     },
+     "fixed_tokens": {
+      "niah_multikey": 170,
+      "qa_multi_doc": 106,
+      "var_tracking": 248
+     },
+     "max_model_len": 32768,
+     "max_tokens": 1024,
+     "method": "tokenize",
+     "tokenize_calls": 12
+    },
+    "context_length_errors": 0,
+    "mean_prompt_tokens_by_len": {
+     "16k": 15928.4,
+     "32k": 29179.3,
+     "8k": 7940.6
+    },
+    "niah_acc_by_depth": {
+     "0.10": 1.0,
+     "0.35": 1.0,
+     "0.60": 1.0,
+     "0.85": 1.0
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "longctx-qa-16k-d10-04",
+    "longctx-qa-16k-d85-07",
+    "longctx-qa-32k-d85-11"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "second-largest",
+     "extracted": "second\u2011largest city",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "longctx-qa-16k-d10-04",
+     "out_tokens": 194,
+     "response_tail": "Melbourne is Australia\u2019s second\u2011largest city, making it the nation\u2019s next\u2011biggest urban centre after Sydney.  \nAnswer: second\u2011largest city.",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "8.8",
+     "extracted": "8.8\u202flb/kWh",
+     "finish_reason": "stop",
+     "flags": [
+      "hedged"
+     ],
+     "id": "longctx-qa-16k-d85-07",
+     "out_tokens": 165,
+     "response_tail": "The Energoprojekt\u202fAB engine consumes about **8.8\u202flb of steam per\u202fkWh**.  \nAnswer: 8.8\u202flb/kWh",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "simple majority vote",
+     "extracted": "Commission proposes, Parliament and Council amend and vote",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 466,
+     "response_tail": "sion\u2019s legislative proposals, which are then amended and approved by the European Parliament and the Council of the EU (the Council votes with weighted, qualified\u2011majority rules), with the Commission President setting the agenda.  \n\nAnswer: Commission proposes, Parliament and Council amend and vote.",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    }
+   ],
+   "gpu_minutes": 13.697,
+   "info_per_gpu_min": 0.188,
+   "max_tokens": 1024,
+   "mean_out_tokens": 287.0,
+   "mean_prompt_tokens": 16671.4,
+   "mean_score": 0.8571,
+   "n_attempted": 21,
+   "n_cancelled": 0,
+   "n_correct": 18,
+   "n_error": 0,
+   "n_planned": 48,
+   "n_scored": 21,
+   "n_skipped": 27,
+   "opts": {},
+   "p50_item_s": 102.3,
+   "p50_out_tokens": 165,
+   "p90_item_s": 228.66,
+   "status_counts": {
+    "correct": 18,
+    "wrong": 3
+   },
+   "sub": {
+    "niah_multikey": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6756,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 158.1,
+     "mean_prompt_tokens": 16237.5,
+     "mean_score": 1.0,
+     "n_attempted": 8,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 8,
+     "n_skipped": 16,
+     "p50_item_s": 55.04,
+     "p50_out_tokens": 150,
+     "p90_item_s": 172.82,
+     "status_counts": {
+      "correct": 8
+     },
+     "total_out_tokens": 1265,
+     "total_prompt_tokens": 129900,
+     "trunc_rate": 0.0,
+     "wall_s": 414.4
+    },
+    "qa_multi_doc": {
+     "acc": 0.5714,
+     "acc_strict": 0.5714,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2505,
+      0.8418
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 200.4,
+     "mean_prompt_tokens": 16359.9,
+     "mean_score": 0.5714,
+     "n_attempted": 7,
+     "n_cancelled": 0,
+     "n_correct": 4,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 7,
+     "n_skipped": 5,
+     "p50_item_s": 102.3,
+     "p50_out_tokens": 165,
+     "p90_item_s": 162.81,
+     "status_counts": {
+      "correct": 4,
+      "wrong": 3
+     },
+     "total_out_tokens": 1403,
+     "total_prompt_tokens": 114519,
+     "trunc_rate": 0.0,
+     "wall_s": 402.2
+    },
+    "var_tracking": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6097,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 559.7,
+     "mean_prompt_tokens": 17613.5,
+     "mean_score": 1.0,
+     "n_attempted": 6,
+     "n_cancelled": 0,
+     "n_correct": 6,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 6,
+     "n_skipped": 6,
+     "p50_item_s": 197.53,
+     "p50_out_tokens": 329,
+     "p90_item_s": 341.92,
+     "status_counts": {
+      "correct": 6
+     },
+     "total_out_tokens": 3358,
+     "total_prompt_tokens": 105681,
+     "trunc_rate": 0.0,
+     "wall_s": 358.7
+    }
+   },
+   "total_out_tokens": 6026,
+   "total_prompt_tokens": 350100,
+   "trunc_rate": 0.0,
+   "wall_s": 414.4
+  },
+  "math": {
+   "acc": 0.6667,
+   "acc_strict": 0.6667,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.4671,
+    0.8203
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 0.75,
+    "match_methods": {
+     "set": 1,
+     "string": 15
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "aime25-I-13",
+    "aime25-I-15",
+    "hmmt25-feb-10",
+    "hmmt25-feb-17",
+    "hmmt25-feb-27",
+    "hmmt25-feb-30",
+    "hmmt25-feb-5",
+    "math500-hard-intermediate-algebra-2022"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "204",
+     "extracted": "\\dfrac{1049}{6}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-I-13",
+     "out_tokens": 6716,
+     "response_tail": "### 4.  Expected total interior intersections  \n\n\\[\nE[I]= I_{dd}+E[I_{cd}]+E[I_{cc}]\n      = 1+\\frac{100}{3}+\\frac{225}{2}\n      = \\frac{881}{6}.\n\\]\n\n---\n\n### 5.  Expected number of regions  \n\n\\[\nE[R]= n+1+E[I}= 27+1+\\frac{881}{6}\n      = \\frac{1049}{6}=174\\frac56 .\n\\]\n\n\\[\n\\boxed{\\dfrac{1049}{6}}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "735",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-15",
+     "out_tokens": 8192,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{-1+\\sqrt{17}}{2}, \\frac{-1-\\sqrt{17}}{2}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-10",
+     "out_tokens": 8192,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2^25*26!",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 8192,
+     "response_tail": "r contain the same multiset, the order of the **second** copies is forced to be the same \\(\\sigma\\), and likewise for the **third** copies.  \n\nConsequently the whole word is a linear extension of the poset that is the product of a chain of length \\(3\\) (the three copies) and a chain of length \\(26\\)",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{7}{18}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-27",
+     "out_tokens": 8192,
+     "response_tail": "qrt{15}}{4},\\\\[4pt]\n[ BPC] &=\\frac12\\Bigl|\\,(B-P)\\times(C-P)\\Bigr|\n       =\\frac12\\left|\\frac{245}{4\\sqrt{15}}\\right|\n       =\\frac{245}{8\\sqrt{15}}.\n\\end{aligned}\n\\]\n\n---\n\n### 4.  Ratio\n\n\\[\n\\frac{[BPC]}{[ABC]}\n   =\\frac{\\displaystyle\\frac{245}{8\\sqrt{15}}}\n          {\\displaystyle\\frac{21\\sqrt{15}}",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-30",
+     "out_tokens": 8192,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "890",
+     "extracted": "9000",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-5",
+     "out_tokens": 4059,
+     "response_tail": "=x^4-10x^2+1+c\\;(c\\in\\mathbb Z).\n\\]\n\n---\n\n### Computing \\(Q(10)-Q(0)\\)\n\n\\[\n\\begin{aligned}\nQ(10)-Q(0) &=\\bigl(10^{4}-10\\cdot10^{2}+1+c\\bigr)-\\bigl(0^{4}-10\\cdot0^{2}+1+c\\bigr)\\\\\n&=10000-1000=9000 .\n\\end{aligned}\n\\]\n\nThe constant \\(c\\) cancels, so the value is uniquely determined.\n\n\\[\n\\boxed{9000}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "64",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "math500-hard-intermediate-algebra-2022",
+     "out_tokens": 8192,
+     "response_tail": "n  \n\n\\[\n\\frac{96}{n}\\le \\frac{12}{\\sqrt n}\\Longrightarrow n\\ge 64 .\n\\]\n\nFrom \\(M_{2}\\le M_{3}\\) we also obtain \\(n\\ge 64\\); and from H\u00f6lder\u2019s inequality  \n\n\\[\n\\bigl(\\sum a_i\\bigr)^3\\le n^{2}\\sum a_i^{3}\n\\]\n\nwe again get \\(n\\ge 64\\).  \n\nThus any admissible \\(n\\) must satisfy \\(n\\ge 64\\).\n\nWhen \\(n=64",
+     "status": "truncated",
+     "sub": "math500_hard"
+    }
+   ],
+   "gpu_minutes": 30.332,
+   "info_per_gpu_min": 0.176,
+   "max_tokens": 8192,
+   "mean_out_tokens": 4572.5,
+   "mean_prompt_tokens": 171.4,
+   "mean_score": 0.6667,
+   "n_attempted": 24,
+   "n_cancelled": 0,
+   "n_correct": 16,
+   "n_error": 0,
+   "n_planned": 80,
+   "n_scored": 24,
+   "n_skipped": 56,
+   "opts": {},
+   "p50_item_s": 22.85,
+   "p50_out_tokens": 3813,
+   "p90_item_s": 63.27,
+   "status_counts": {
+    "correct": 16,
+    "truncated": 6,
+    "wrong": 2
+   },
+   "sub": {
+    "aime25": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4093,
+      0.9285
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3854.2,
+     "mean_prompt_tokens": 155.8,
+     "mean_score": 0.75,
+     "n_attempted": 8,
+     "n_cancelled": 0,
+     "n_correct": 6,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 8,
+     "n_skipped": 22,
+     "p50_item_s": 13.29,
+     "p50_out_tokens": 2713,
+     "p90_item_s": 73.2,
+     "status_counts": {
+      "correct": 6,
+      "truncated": 1,
+      "wrong": 1
+     },
+     "total_out_tokens": 30834,
+     "total_prompt_tokens": 1246,
+     "trunc_rate": 0.125,
+     "wall_s": 379.3
+    },
+    "hmmt25": {
+     "acc": 0.375,
+     "acc_strict": 0.375,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.1368,
+      0.6943
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 6309.1,
+     "mean_prompt_tokens": 159.2,
+     "mean_score": 0.375,
+     "n_attempted": 8,
+     "n_cancelled": 0,
+     "n_correct": 3,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 8,
+     "n_skipped": 22,
+     "p50_item_s": 42.14,
+     "p50_out_tokens": 5093,
+     "p90_item_s": 63.27,
+     "status_counts": {
+      "correct": 3,
+      "truncated": 4,
+      "wrong": 1
+     },
+     "total_out_tokens": 50473,
+     "total_prompt_tokens": 1274,
+     "trunc_rate": 0.5,
+     "wall_s": 404.6
+    },
+    "math500_hard": {
+     "acc": 0.875,
+     "acc_strict": 0.875,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5291,
+      0.9776
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3554.1,
+     "mean_prompt_tokens": 199.1,
+     "mean_score": 0.875,
+     "n_attempted": 8,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 8,
+     "n_skipped": 12,
+     "p50_item_s": 14.35,
+     "p50_out_tokens": 2687,
+     "p90_item_s": 73.19,
+     "status_counts": {
+      "correct": 7,
+      "truncated": 1
+     },
+     "total_out_tokens": 28433,
+     "total_prompt_tokens": 1593,
+     "trunc_rate": 0.125,
+     "wall_s": 413.8
+    }
+   },
+   "total_out_tokens": 109740,
+   "total_prompt_tokens": 4113,
+   "trunc_rate": 0.25,
+   "wall_s": 413.8
+  },
+  "tools": {
+   "acc": 0.88,
+   "acc_strict": 0.88,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7004,
+    0.9583
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_ast_micro": 0.95,
+    "acc_by_sub": {
+     "irrelevance": 0.6,
+     "multiple": 1.0,
+     "parallel": 1.0,
+     "parallel_multiple": 1.0,
+     "simple": 0.8
+    },
+    "acc_irrelevance": 0.6,
+    "acc_official": 0.95,
+    "declined_rate_ast": 0.0,
+    "error_codes": {
+     "spurious_call": 2,
+     "value_mismatch": 1
+    },
+    "mean_score_ast": 0.95,
+    "mode": "prompt",
+    "parse_methods": {
+     "json_list": 25
+    },
+    "text_calls_ignored": 0,
+    "tool_calls_in_prompt_mode": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "bfcl3-irrelevance_27",
+    "bfcl3-irrelevance_33",
+    "bfcl3-simple_50"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "change_in_temp": 4,
+        "mass": 3,
+        "specific_heat": 4.184
+       },
+       "name": "calculate_heat"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_27",
+     "out_tokens": 100,
+     "response_tail": "[{\"name\":\"calculate_heat\",\"arguments\":{\"mass\":3,\"specific_heat\":4.184,\"change_in_temp\":4}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "sequence": "ATCG"
+       },
+       "name": "identify_species"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_33",
+     "out_tokens": 82,
+     "response_tail": "[{\"name\":\"identify_species\",\"arguments\":{\"sequence\":\"ATCG\"}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "entropy_change.calculate": {
+        "final_temperature": [
+         100
+        ],
+        "initial_temperature": [
+         0
+        ],
+        "mass": [
+         1
+        ],
+        "pressure": [
+         "",
+         1
+        ],
+        "substance": [
+         "ice"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "final_temperature": 100,
+        "initial_temperature": 0,
+        "mass": 1,
+        "substance": "water"
+       },
+       "name": "entropy_change_calculate"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_50",
+     "out_tokens": 148,
+     "response_tail": "[{\"name\":\"entropy_change_calculate\",\"arguments\":{\"substance\":\"water\",\"mass\":1,\"initial_temperature\":0,\"final_temperature\":100}}]",
+     "status": "wrong",
+     "sub": "simple"
+    }
+   ],
+   "gpu_minutes": 2.112,
+   "info_per_gpu_min": 1.25,
+   "max_tokens": 2048,
+   "mean_out_tokens": 234.6,
+   "mean_prompt_tokens": 580.1,
+   "mean_score": 0.88,
+   "n_attempted": 25,
+   "n_cancelled": 0,
+   "n_correct": 22,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 25,
+   "n_skipped": 45,
+   "opts": {},
+   "p50_item_s": 1.28,
+   "p50_out_tokens": 148,
+   "p90_item_s": 8.95,
+   "status_counts": {
+    "correct": 22,
+    "wrong": 3
+   },
+   "sub": {
+    "irrelevance": {
+     "acc": 0.6,
+     "acc_strict": 0.6,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2307,
+      0.8824
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 129.0,
+     "mean_prompt_tokens": 404.0,
+     "mean_score": 0.6,
+     "n_attempted": 5,
+     "n_cancelled": 0,
+     "n_correct": 3,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 5,
+     "n_skipped": 5,
+     "p50_item_s": 0.67,
+     "p50_out_tokens": 100,
+     "p90_item_s": 5.46,
+     "status_counts": {
+      "correct": 3,
+      "wrong": 2
+     },
+     "total_out_tokens": 645,
+     "total_prompt_tokens": 2020,
+     "trunc_rate": 0.0,
+     "wall_s": 414.5
+    },
+    "multiple": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5655,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 125.4,
+     "mean_prompt_tokens": 743.8,
+     "mean_score": 1.0,
+     "n_attempted": 5,
+     "n_cancelled": 0,
+     "n_correct": 5,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 5,
+     "n_skipped": 10,
+     "p50_item_s": 1.07,
+     "p50_out_tokens": 135,
+     "p90_item_s": 5.91,
+     "status_counts": {
+      "correct": 5
+     },
+     "total_out_tokens": 627,
+     "total_prompt_tokens": 3719,
+     "trunc_rate": 0.0,
+     "wall_s": 380.0
+    },
+    "parallel": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5655,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 403.8,
+     "mean_prompt_tokens": 483.6,
+     "mean_score": 1.0,
+     "n_attempted": 5,
+     "n_cancelled": 0,
+     "n_correct": 5,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 5,
+     "n_skipped": 10,
+     "p50_item_s": 2.15,
+     "p50_out_tokens": 358,
+     "p90_item_s": 10.91,
+     "status_counts": {
+      "correct": 5
+     },
+     "total_out_tokens": 2019,
+     "total_prompt_tokens": 2418,
+     "trunc_rate": 0.0,
+     "wall_s": 366.9
+    },
+    "parallel_multiple": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5655,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 371.0,
+     "mean_prompt_tokens": 833.6,
+     "mean_score": 1.0,
+     "n_attempted": 5,
+     "n_cancelled": 0,
+     "n_correct": 5,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 5,
+     "n_skipped": 5,
+     "p50_item_s": 2.02,
+     "p50_out_tokens": 364,
+     "p90_item_s": 9.14,
+     "status_counts": {
+      "correct": 5
+     },
+     "total_out_tokens": 1855,
+     "total_prompt_tokens": 4168,
+     "trunc_rate": 0.0,
+     "wall_s": 352.9
+    },
+    "simple": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3755,
+      0.9638
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 143.8,
+     "mean_prompt_tokens": 435.6,
+     "mean_score": 0.8,
+     "n_attempted": 5,
+     "n_cancelled": 0,
+     "n_correct": 4,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 5,
+     "n_skipped": 15,
+     "p50_item_s": 0.74,
+     "p50_out_tokens": 148,
+     "p90_item_s": 6.59,
+     "status_counts": {
+      "correct": 4,
+      "wrong": 1
+     },
+     "total_out_tokens": 719,
+     "total_prompt_tokens": 2178,
+     "trunc_rate": 0.0,
+     "wall_s": 393.9
+    }
+   },
+   "total_out_tokens": 5865,
+   "total_prompt_tokens": 14503,
+   "trunc_rate": 0.0,
+   "wall_s": 414.5
+  }
+ },
+ "invalid_reasons": [],
+ "lcb_window": {
+  "after": "2025-01-11",
+  "before": "2025-04-05",
+  "counts": {
+   "easy": 8,
+   "medium": 22
+  },
+  "difficulties": [
+   "easy",
+   "medium"
+  ],
+  "file": "test6.jsonl",
+  "hard_available": false,
+  "n_seen": {
+   "easy": 43,
+   "hard": 80,
+   "medium": 52
+  },
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+ },
+ "model": "m",
+ "notes": [
+  "tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)",
+  "tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others",
+  "code: HumanEval+ items are a seeded sample of a curated 60-task hard pool (not the whole benchmark); MBPP+ items are a seeded sample of tasks with >= 3-line canonical solutions",
+  "code: HumanEval/32 (find_zero) is excluded: the HF test.jsonl assertion is malformed (unpacks a float) and even the canonical solution violates the find_zero oracle on 7/886 plus inputs, so the task is unpassable as shipped",
+  "code: LCB items are easy+medium problems of the newest release window (test6.jsonl), scored on the public tests plus a seeded sample of private tests (<= 24 per problem, first failure stops) with a 10 s wall limit per test; this is not the official LiveCodeBench scorer (which runs every private test)",
+  "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; no network isolation (the tests do not need network)",
+  "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is 'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and stdout must match the expected line structure",
+  "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
+  "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
+  "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+  "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
+  "longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers",
+  "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), 10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of MMLU-Pro keys are known to be noisy and are not corrected here",
+  "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged ('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; stricter than the official LLM grader on partial names, so absolute numbers are not comparable with published SimpleQA scores - use it for paired comparisons",
+  "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
+  "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
+  "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
+  "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
+  "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
+  "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+  "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+  "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/'et al.', deliberately not protected because protecting a form means never splitting after it again; 19 of the 132 instruction instances are number_sentences",
+  "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+  "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
+ ],
+ "partial": true,
+ "schema_version": 1,
+ "skipped_ids": [],
+ "started_at": "2026-09-04T11:08:19Z",
+ "tag": "gptoss120_tp4_--flashinfer_cutlass",
+ "truncated": false,
+ "valid": true,
+ "wall_s": 420.2
+}

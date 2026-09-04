@@ -1,0 +1,4862 @@
+{
+ "aggregate": {
+  "acc_macro": 0.4884,
+  "acc_micro": 0.4715,
+  "acc_strict": 0.4715,
+  "answer_from_reasoning": 0,
+  "ci95": [
+   0.4232,
+   0.5202
+  ],
+  "degenerate_rate": 0.0471,
+  "gpu_minutes": 17.238,
+  "mean_out_tokens": 1323.9,
+  "mean_prompt_tokens": 2382.7,
+  "mean_score": 0.5027,
+  "n_attempted": 403,
+  "n_cancelled": 0,
+  "n_correct": 190,
+  "n_error": 0,
+  "n_planned": 403,
+  "n_scored": 403,
+  "n_skipped": 0,
+  "out_tokens_per_s": 4126.7,
+  "p50_item_s": 18.65,
+  "p50_out_tokens": 1021,
+  "p90_item_s": 62.29,
+  "per_url": {
+   "http://127.0.0.1:8000": {
+    "completion_tokens": 82273,
+    "requests": 51
+   },
+   "http://127.0.0.1:8001": {
+    "completion_tokens": 57395,
+    "requests": 51
+   },
+   "http://127.0.0.1:8002": {
+    "completion_tokens": 70048,
+    "requests": 51
+   },
+   "http://127.0.0.1:8003": {
+    "completion_tokens": 53895,
+    "requests": 50
+   },
+   "http://127.0.0.1:8004": {
+    "completion_tokens": 87555,
+    "requests": 50
+   },
+   "http://127.0.0.1:8005": {
+    "completion_tokens": 52438,
+    "requests": 50
+   },
+   "http://127.0.0.1:8006": {
+    "completion_tokens": 74476,
+    "requests": 50
+   },
+   "http://127.0.0.1:8007": {
+    "completion_tokens": 55442,
+    "requests": 50
+   }
+  },
+  "request_errors": 0,
+  "requests": 403,
+  "retries": 0,
+  "status_counts": {
+   "correct": 190,
+   "truncated": 154,
+   "wrong": 59
+  },
+  "total_out_tokens": 533522,
+  "total_prompt_tokens": 960212,
+  "trunc_rate": 0.4491,
+  "wall_s": 129.3
+ },
+ "base_urls": [
+  "http://127.0.0.1:8000",
+  "http://127.0.0.1:8001",
+  "http://127.0.0.1:8002",
+  "http://127.0.0.1:8003",
+  "http://127.0.0.1:8004",
+  "http://127.0.0.1:8005",
+  "http://127.0.0.1:8006",
+  "http://127.0.0.1:8007"
+ ],
+ "config": {
+  "chat_template_kwargs": null,
+  "concurrency": 128,
+  "extra_body": null,
+  "families": [
+   "tools",
+   "code",
+   "math",
+   "longctx",
+   "knowledge",
+   "ifeval"
+  ],
+  "family_opts": {},
+  "gpus": 8,
+  "grace_s": 120.0,
+  "limit": null,
+  "max_tokens": 2048,
+  "max_tokens_family": {
+   "ifeval": 2816,
+   "knowledge": 1024,
+   "longctx": 512,
+   "math": 4096,
+   "tools": 1024
+  },
+  "notes": "",
+  "profile": "default",
+  "reasoning": false,
+  "request_timeout_s": 600.0,
+  "resume": false,
+  "retries": 3,
+  "seed": 20260903,
+  "temperature": 0.0,
+  "time_budget_s": 900.0,
+  "top_p": 1.0
+ },
+ "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
+ "ended_at": "2026-09-04T10:00:28Z",
+ "endpoint": {
+  "max_model_len": 32768,
+  "served_models": [
+   "m"
+  ],
+  "urls_alive": 8,
+  "urls_dead": [],
+  "vllm_version": "0.28.1rc1.dev370+g6fdee17f8"
+ },
+ "evalsuite_git_sha": null,
+ "families": {
+  "code": {
+   "acc": 0.32,
+   "acc_strict": 0.32,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.2254,
+    0.4321
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "fail_kinds": {
+     "NameError": 1,
+     "TypeError": 1,
+     "assertion": 5,
+     "syntax_error": 32,
+     "timeout": 1,
+     "truncated": 9,
+     "wrong_output": 2
+    },
+    "lcb_mean_test_pass_frac": 0.1694,
+    "syntax_error_rate": 0.4267,
+    "timeout_rate": 0.0133,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "heplus-010",
+    "heplus-038",
+    "heplus-076",
+    "heplus-095",
+    "heplus-099",
+    "heplus-103",
+    "heplus-129",
+    "heplus-141",
+    "heplus-144",
+    "heplus-146",
+    "lcb-atcoder-abc388_d",
+    "lcb-atcoder-abc390_d",
+    "lcb-atcoder-abc395_c",
+    "lcb-atcoder-abc396_d",
+    "lcb-atcoder-abc397_b",
+    "lcb-atcoder-abc399_b",
+    "lcb-atcoder-abc400_b",
+    "lcb-atcoder-arc192_a",
+    "lcb-atcoder-arc194_a",
+    "lcb-atcoder-arc195_a",
+    "lcb-leetcode-3677",
+    "lcb-leetcode-3705",
+    "lcb-leetcode-3708",
+    "lcb-leetcode-3721",
+    "lcb-leetcode-3743",
+    "lcb-leetcode-3747",
+    "lcb-leetcode-3751",
+    "lcb-leetcode-3754",
+    "lcb-leetcode-3760",
+    "lcb-leetcode-3764",
+    "lcb-leetcode-3776",
+    "lcb-leetcode-3785",
+    "lcb-leetcode-3791",
+    "lcb-leetcode-3793",
+    "lcb-leetcode-3794",
+    "mbppplus-072",
+    "mbppplus-074",
+    "mbppplus-088",
+    "mbppplus-129",
+    "mbppplus-137",
+    "mbppplus-223",
+    "mbppplus-297",
+    "mbppplus-311",
+    "mbppplus-446",
+    "mbppplus-563",
+    "mbppplus-576",
+    "mbppplus-577",
+    "mbppplus-585",
+    "mbppplus-623",
+    "mbppplus-739",
+    "mbppplus-753"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "make_palindrome passes base+plus tests",
+     "extracted": "555 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-010",
+     "out_tokens": 2048,
+     "response_tail": "at begins with a supplied string. Algorithm idea is simple: - Find the longest postfix of supplied string that is a palindrome. - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\" The expected solution often:\ndef make_palindrome(string: str) -> str",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "decode_cyclic passes base+plus tests",
+     "extracted": "264 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-038",
+     "out_tokens": 559,
+     "response_tail": "    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "is_simple_power passes base+plus tests",
+     "extracted": "517 chars via whole",
+     "finish_reason": "length",
+     "flags": [
+      "timeout"
+     ],
+     "id": "heplus-076",
+     "out_tokens": 2048,
+     "response_tail": "y x==1 handled. For x<1 (0 or negative), return n==0 and x==0? For positive n, false. So:\nif x == 1: return True\nif x == 0: return n == 0\nif x < 0:\n    # if n negative and exponent odd? Could handle but not needed.\n    return False\nif n == 0: return False\nif n == 1: return False\nwhile x > 1:\n   ...\n",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "check_dict_case passes base+plus tests",
+     "extracted": "8 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-095",
+     "out_tokens": 962,
+     "response_tail": " check_dict_case({\"STATE\":\"NC\", \"ZIP\":\"12345\" }) should return True.\n    \"\"\"\n    if not dict:\n        return False\n\n    if not all(isinstance(key, str) for key in dict.keys()):\n        return False\n\n    return all(key.islower() for key in dict.keys()) or all(key.isupper() for key in dict.keys())\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "closest_integer passes base+plus tests",
+     "extracted": "308 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-099",
+     "out_tokens": 2048,
+     "response_tail": "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "rounded_avg passes base+plus tests",
+     "extracted": "197 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-103",
+     "out_tokens": 2048,
+     "response_tail": "refix '0b'. bin() returns that. For -1? If n>m return -1 int, not binary. Good.\n\nNeed final:\n```python\ndef rounded_avg(n, m):\n    \"\"\"...\"\"\"\n    if n > m:\n        return -1\n    total = n + m\n    rounded = total // 2\n    if total % 2 == 1 and rounded % 2 == 1:\n        rounded += 1\n    return bin(round",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "minPath passes base+plus tests",
+     "extracted": "29 chars via fence",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "heplus-129",
+     "out_tokens": 2048,
+     "response_tail": " can move. For N>=2, from 1 can always make k cells by oscillating. If k=1, [1].\n\nLet's examine lexicographic greedy proof: At step t, all valid paths of length k with prefix P. The next value can be any neighbor of current cell. Since graph has no dead ends, every neighbor can be extended to length",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "file_name_check passes base+plus tests",
+     "extracted": "1286 chars via fence",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "heplus-141",
+     "out_tokens": 2048,
+     "response_tail": " but also starts digit. If \"a1b2c3.txt\" digits 3, starts letter -> Yes? likely. If \"a1b2c34.txt\" digits 4 -> No. Good.\n\nCould there be multiple dots but extension one of list? exactly one dot condition. Good.\n\nNeed maybe count digits in file name before dot only? If extension invalid with digits, no",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "simplify passes base+plus tests",
+     "extracted": "8 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-144",
+     "out_tokens": 518,
+     "response_tail": "implify(\"1/5\", \"5/1\") = True\n    simplify(\"1/6\", \"2/1\") = False\n    simplify(\"7/10\", \"10/2\") = False\n    \"\"\"\n    x_num, x_den = map(int, x.split(\"/\"))\n    n_num, n_den = map(int, n.split(\"/\"))\n\n    numerator = x_num * n_num\n    denominator = x_den * n_den\n\n    return numerator % denominator == 0\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "specialFilter passes base+plus tests",
+     "extracted": "2546 chars via whole",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "heplus-146",
+     "out_tokens": 2048,
+     "response_tail": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "pass 21 tests (stdin)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-atcoder-abc388_d",
+     "out_tokens": 2048,
+     "response_tail": "t = # previous j with end >= i.\n- G_i = active_count.\n- S_i = A_i + G_i.\n- end_i = i + S_i. If S_i > 0, alien i active for years i+1..end_i (if end_i > i). It should not count for G_i itself. For future years, add to active. We can schedule removal at end_i+1: active_count++ now? But if we increment",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-atcoder-abc390_d",
+     "out_tokens": 2048,
+     "response_tail": "set. This is like set partition DP: dp[mask] = set of XOR values for partitions of mask. Recurrence: choose block containing least element i, choose submask T containing i, value = sum[T] xor rest_value. dp[mask] = union over T subset mask containing i of {v xor sum[T] for v in dp[mask\\T]}. Base dp[",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1709 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-atcoder-abc395_c",
+     "out_tokens": 1342,
+     "response_tail": " for i in range(n):\n        x = int(data[i + 1])\n        prev = last.get(x)\n        if prev is not None:\n            length = i - prev + 1\n            if length < ans:\n                ans = length\n        last[x] = i\n\n    print(-1 if ans == 10**18 else ans)\n\nif __name__ == \"__main__\":\n    main()\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "3006 chars via fence_other_lang",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-atcoder-abc396_d",
+     "out_tokens": 2048,
+     "response_tail": "1 to 10: choose k intermediate vertices from 8, order: P(8,k). Sum 109601. Prefixes to any vertex: start at 1, choose sequence of distinct vertices from remaining 9 of length l: P(9,l). Sum l=0..9 = 986410. Yes.\n\nNow, any issue with recursion limit? depth <=10, no.\n\nLet's craft code:\nimport sys\n\ndef",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "2377 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-atcoder-abc397_b",
+     "out_tokens": 2048,
+     "response_tail": "is a twist: We insert characters into S, not necessarily preserving S as subsequence? Inserting at arbitrary positions preserves original order, yes S is subsequence. Resulting string must alternate starting i and even length. Min insertions. Our approach correct.\n\nLet's consider dynamic programming",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "632 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-atcoder-abc399_b",
+     "out_tokens": 536,
+     "response_tail": " + n]))\n\n    count = Counter(scores)\n    rank = {}\n    current_rank = 1\n\n    for score in sorted(count.keys(), reverse=True):\n        rank[score] = current_rank\n        current_rank += count[score]\n\n    print(\"\\n\".join(str(rank[score]) for score in scores))\n\nif __name__ == \"__main__\":\n    main()\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1291 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-atcoder-abc400_b",
+     "out_tokens": 1000,
+     "response_tail": "   return\n\n    N = int(data[0])\n    M = int(data[1])\n\n    limit = 10**9\n    total = 0\n    power = 1\n\n    for _ in range(M + 1):\n        total += power\n        if total > limit:\n            print(\"inf\")\n            return\n        power *= N\n\n    print(total)\n\nif __name__ == \"__main__\":\n    main()\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 2048,
+     "response_tail": "n-center). Edge between them. OK. If T has centers every other position on even cycle, e.g. N even, T = even positions. Then non-T odd positions: each active center connects adjacent odd positions? For center even c, edge c-1 (odd) to c+1 (odd). This forms a cycle over odd positions? Let's check N=6",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-atcoder-arc194_a",
+     "out_tokens": 2048,
+     "response_tail": "es final, so yes. Thus survivors are pushes at time i where height after push = L and suffix minimum of height from i onward >= L. That means the push is at a time when height reaches a new suffix minimum? More precisely, for each level L, the last time height goes from L-1 to L before the last time",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "461 chars via whole",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-atcoder-arc195_a",
+     "out_tokens": 2048,
+     "response_tail": "        earliest[j] = i\n            j += 1\n            if j == M:\n                break\n    if j < M:\n        print(\"No\")\n        return\n    latest = [0]*M\n    j = M-1\n    for i in range(N-1, -1, -1):\n        if j >= 0 and A[i] == B[j]:\n            latest[j] = i+1\n            j -= 1\n            if j",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-leetcode-3677",
+     "out_tokens": 2048,
+     "response_tail": "do full 2D: dp = [[[-inf]*3 for _ in range(n)] for _ in range(m)] but 250k*3 ints ~ 750k Python ints, memory maybe ~21MB plus lists ~ maybe okay but could be high. 500x500x3 = 750k, each int 28 bytes ~21MB, lists overhead ~ maybe 30-40MB, acceptable likely. But O(n) better.\n\nO(n): We need top values",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "77 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3705",
+     "out_tokens": 2048,
+     "response_tail": "ng import may be accepted. If they paste into starter, import maybe outside. The instruction: \"You will use the following starter code to write the solution to the problem and enclose your code within delimiters.\n```python\nclass Solution:\n    def largestInteger(self, nums: List[int], k: int) -> int:",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "303 chars via fence_other_lang",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3708",
+     "out_tokens": 1495,
+     "response_tail": "    if r % 2 == 0:\n                col_range = range(cols)\n            else:\n                col_range = range(cols - 1, -1, -1)\n\n            for c in col_range:\n                if include:\n                    result.append(grid[r][c])\n                include = not include\n\n        return result\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "102 chars via whole",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3721",
+     "out_tokens": 2048,
+     "response_tail": " id0 -> [1,1]. OFFLINE 11 id0 -> offline_until[0]=71. MESSAGE 71 HERE: online if offline_until <=71: user0 true, user1 true -> [2,2].\nEx2: MESSAGE 10 -> [1,1]; OFFLINE 11 -> off0=71; MESSAGE 12 ALL -> all -> [2,2].\nEx3: OFFLINE 10 -> off0=70; MESSAGE 12 HERE -> user0 offline_until 70 >12 false, user",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 23 tests (functional)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-leetcode-3743",
+     "out_tokens": 2048,
+     "response_tail": "ns into before/after. Fixed meetings that lie before A must be before; fixed after B after. Fixed meetings that overlap [A,B] impossible unless rescheduled. So any fixed meeting overlapping gap must be rescheduled. Thus the set of rescheduled meetings must include all meetings that overlap [A,B] and",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "154 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3747",
+     "out_tokens": 471,
+     "response_tail": "nly code.\n</think>\n\n```python\nfrom typing import List\n\nclass Solution:\n    def maxAdjacentDistance(self, nums: List[int]) -> int:\n        n = len(nums)\n        max_diff = 0\n\n        for i in range(n):\n            max_diff = max(max_diff, abs(nums[i] - nums[(i + 1) % n]))\n\n        return max_diff\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "1265 chars via whole",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3751",
+     "out_tokens": 2048,
+     "response_tail": "\nLet's test edge cases.\n- nums all k, total_k=n. For y != k no y, b all -1, Kadane empty best 0. answer n. Operation x=0 or any segment negative not chosen. Good.\n- nums [1,2], k=3. total=0. y=1: b [1,-? k=3 none] => max1. y=2 max1. answer1. Choose one element. Good.\n- nums [3,3,1,1], k=3 total=2. y",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 23 tests (functional)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-leetcode-3754",
+     "out_tokens": 2048,
+     "response_tail": "E V=0 opp S? c=-1 are S,W? For NE opposite are S,W. count W=1 => 0+2=2. NW V=2 opp E=0=>2. SE V=-2? E? V= x - y = -2, opp N? count N=1 =>0? -2+2=0. SW V=0? -x-y=0, opp E? count E=0 =>0. max2.\nt3 NWS: (-1,0). NE V=-1 opp S,W? S=1,W=1 count2 min1 =>1. NW V=1 opp E=0=>1. SE V=-1? x-y=-1, opp N? N=1 =>1",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 22 tests (functional)",
+     "extracted": "67 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3760",
+     "out_tokens": 2048,
+     "response_tail": "se. So condition should be if best[m] == -1 or idx < best[m]. Or initialize best to large sentinel? Use INF = 10**9, then min. But -1 sentinel complicates. Could use best = [INF]*(M+1), update if idx < best[m], then answer best[g] if != INF else -1. That is simpler and faster maybe. But memory same.",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 23 tests (functional)",
+     "extracted": "214 chars via whole",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3764",
+     "out_tokens": 2048,
+     "response_tail": ". Row A [10,9], B [9,8], k=2. Top2: 10,9 (could be A2 or B1). If choose A2, prefix requires A1 too, then size 2 sum 19. Feasible. If top2 includes B1 and A1 sum 19. Good.\n\nCan top k sum require selecting a later element without earlier? Suppose row A values [5,4], row B [4,4], k=2. Top2 sum 9 (5 and",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-leetcode-3776",
+     "out_tokens": 2048,
+     "response_tail": "k: cost = max(vals[i] for i in triple if i != k). Then state carry = vals[k].\n- For subsequent operations t=1..m-1: triple = [carry, nums[pos], nums[pos+1]] where pos = 3 + 2*t? Let's index. After first, consumed 3. For second, consume nums[3], nums[4]. After second, consumed 5. In general operation",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "1023 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3785",
+     "out_tokens": 2048,
+     "response_tail": "t]]) -> int:\n        low = bounds[0][0] - original[0]\n        high = bounds[0][1] - original[0]\n\n        for i in range(1, len(original)):\n            u, v = bounds[i]\n            low = max(low, u - original[i])\n            high = min(high, v - original[i])\n\n        return max(0, high - low + 1)\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 22 tests (functional)",
+     "extracted": "510 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "lcb-leetcode-3791",
+     "out_tokens": 2048,
+     "response_tail": "vironment already provides, okay. If not, import. The starter code includes `class Solution:` with List annotation. Including import is acceptable.\n\nLet's maybe use `max` built-in in update for readability; performance okay. But to optimize, use conditional.\n\nPotential micro-optimization: store tree",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "83 chars via fence",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3793",
+     "out_tokens": 2048,
+     "response_tail": " (contiguous) from s and *any* substring from t. Yes.\n\nLet's think about alternative DP to be safe if constraints were larger? But given 30, enumeration accepted. However, if test harness has many test cases, 217k per case, if 10^4 cases maybe too slow. But LeetCode single call. Could still optimize",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_code"
+     ],
+     "id": "lcb-leetcode-3794",
+     "out_tokens": 2048,
+     "response_tail": "until 60. At t=58 wizard2 done potion1, but wizard3 still working potion0 till 60. They say cannot start before 52. If start 50, C21=58, C31=62. Wizard3 would need to start potion1 at 58? Wait if immediate pass, wizard3 begins potion1 when arrives from wizard2 at 58. But wizard3 is busy with potion0",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "dif_Square passes base+plus tests",
+     "extracted": "1110 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-072",
+     "out_tokens": 2048,
+     "response_tail": "-5 = 2^2-3^2 true. Condition abs(n) not 2 mod4 and abs(n) not 1/4? But likely not.\n\nNeed decide final code. Since user only asserts 5, simplest robust. But maybe hidden tests? They may test dif_Square(2) == False, dif_Square(4) == True, dif_Square(1) == True. Our condition passes. If they test dif_S",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_samepatterns passes base+plus tests",
+     "extracted": "648 chars via fence",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mbppplus-074",
+     "out_tokens": 2048,
+     "response_tail": "x\"] true. If pattern [\"a\",\"b\",\"c\"], arr [\"x\",\"y\",\"z\"] true. If pattern [\"a\",\"b\",\"c\"], arr [\"x\",\"y\",\"x\"] false because pattern distinct but arr repeats. So two-way.\n\nCould there be case pattern [\"a\",\"b\",\"b\"], arr [\"x\",\"y\",\"y\"] true. Good.\n\nNeed maybe if pattern array is [\"a\",\"b\",\"b\"] and sequence [\"a",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "freq_count passes base+plus tests",
+     "extracted": "119 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-088",
+     "out_tokens": 416,
+     "response_tail": "al only code block.\n</think>\n\n```python\ndef freq_count(lst):\n    counts = {}\n    for item in lst:\n        counts[item] = counts.get(item, 0) + 1\n    return counts\n\nassert freq_count([10, 10, 10, 10, 20, 20, 20, 20, 40, 40, 50, 50, 30]) == {\n    10: 4,\n    20: 4,\n    40: 2,\n    50: 2,\n    30: 1\n}\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "magic_square_test passes base+plus tests",
+     "extracted": "1635 chars via whole",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-129",
+     "out_tokens": 2048,
+     "response_tail": "re_test([[1,2,3],[4,5,6],[7,8,9]])? no.\n- maybe assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]]) == False\n- assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])? \n- maybe assert magic_square_test([[1, 2, 3], [4, 5, 6], [7, 8, 9]])? \n- maybe assert magic_square_test([[1, 2, 3], [4, ",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "zero_count passes base+plus tests",
+     "extracted": "462 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-137",
+     "out_tokens": 1233,
+     "response_tail": "    \"\"\"\n    items = list(arr)\n    zeros = sum(1 for x in items if x == 0)\n    nonzeros = len(items) - zeros\n\n    if nonzeros == 0:\n        return 0.0\n\n    return zeros / nonzeros\n\n\nassert math.isclose(\n    zero_count([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8]),\n    0.181818,\n    rel_tol=0.001\n)\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_majority passes base+plus tests",
+     "extracted": "90 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-223",
+     "out_tokens": 1896,
+     "response_tail": " Find the first index greater than x.\n    lo, hi = 0, n\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if arr[mid] <= x:\n            lo = mid + 1\n        else:\n            hi = mid\n    last = lo\n\n    return last - first > n // 2\n\n\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "flatten_list passes base+plus tests",
+     "extracted": "550 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-297",
+     "out_tokens": 523,
+     "response_tail": "item, list):\n                _flatten(item)\n            else:\n                flattened.append(item)\n\n    _flatten(nested_list)\n    return flattened\n\n\nassert flatten_list([0, 10, [20, 30], 40, 50, [60, 70, 80], [90, 100, 110, 120]]) == [\n    0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120\n]\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "set_left_most_unset_bit passes base+plus tests",
+     "extracted": "96 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-311",
+     "out_tokens": 2048,
+     "response_tail": "s no clear expected. Raising might be considered correct if function domain nonnegative. But if they just want a function, maybe no raise. Could handle negative by treating two's complement with a finite width? For negative, Python's ~n & mask? Let's see if we use n.bit_length() for negative returns",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "count_Occurrence passes base+plus tests",
+     "extracted": "270 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-446",
+     "out_tokens": 897,
+     "response_tail": "sses.\n</think>\n\n```python\ndef count_Occurrence(t, lst):\n    \"\"\"\n    Count the total occurrences in the tuple `t` of all distinct elements\n    present in the list `lst`.\n    \"\"\"\n    return sum(t.count(item) for item in set(lst))\n\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "extract_values passes base+plus tests",
+     "extracted": "246 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-563",
+     "out_tokens": 681,
+     "response_tail": "tract values enclosed in double quotation marks from a string.\n\n    Example:\n        extract_values('\"Python\", \"PHP\", \"Java\"')\n        # returns ['Python', 'PHP', 'Java']\n    \"\"\"\n    return re.findall(r'\"([^\"]*)\"', s)\n\nassert extract_values('\"Python\", \"PHP\", \"Java\"') == ['Python', 'PHP', 'Java']\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_Sub_Array passes base+plus tests",
+     "extracted": "695 chars via fence",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-576",
+     "out_tokens": 2048,
+     "response_tail": "an't satisfy both. Need pick.\n\nMaybe we can infer from assertion only. The benchmark likely only checks that assertion? It says satisfy example assertion. But hidden may check. We need best.\n\nLet's search memory: There is a known function in some dataset:\n```\ndef is_Sub_Array(arr1, arr2):\n    if len",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "last_Digit_Factorial passes base+plus tests",
+     "extracted": "391 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-577",
+     "out_tokens": 643,
+     "response_tail": "\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    # For n >= 5, n! always ends in 0.\n    if n >= 5:\n        return 0\n\n    # Precomputed last digits for 0! through 4!\n    return [1, 1, 2, 6, 4][n]\n\n\nif __name__ == \"__main__\":\n    assert last_Digit_Factorial(4) == 4\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "expensive_items passes base+plus tests",
+     "extracted": "92 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-585",
+     "out_tokens": 921,
+     "response_tail": "\"\"\"\n    if n <= 0:\n        return []\n\n    return sorted(items, key=lambda item: item.get(\"price\", 0), reverse=True)[:n]\n\n\nassert expensive_items(\n    [\n        {\"name\": \"Item-1\", \"price\": 101.1},\n        {\"name\": \"Item-2\", \"price\": 555.22},\n    ],\n    1\n) == [{\"name\": \"Item-2\", \"price\": 555.22}]\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "nth_nums passes base+plus tests",
+     "extracted": "58 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-623",
+     "out_tokens": 278,
+     "response_tail": "ums, n). Return [num ** n for num in nums]. Include assert. That's it.\nNeed final only code block. Ensure no extra text.\n</think>\n\n```python\ndef nth_nums(nums, n):\n    return [num ** n for num in nums]\n\nassert nth_nums([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 2) == [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "find_Index passes base+plus tests",
+     "extracted": "42 chars via fence_unterminated",
+     "finish_reason": "length",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-739",
+     "out_tokens": 2048,
+     "response_tail": " math, function, assert. Self-contained script. Need maybe no extra text. Ensure code block only.\n\nNeed think about edge cases and exactness.\n\nLet's test formula with some values:\nn=1 target=1 D=9 s=3 i=(2)//2=1 T=1 ok.\nn=2 target=10 D=81 s=9 i=4 T=10 ok.\nn=3 target=100 D=801 s=28 (28^2=784,29^2=841",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "min_k passes base+plus tests",
+     "extracted": "894 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "syntax_error"
+     ],
+     "id": "mbppplus-753",
+     "out_tokens": 754,
+     "response_tail": "\n        A list containing the k smallest tuples based on their second element.\n    \"\"\"\n    if k <= 0:\n        return []\n\n    return sorted(records, key=lambda record: record[1])[:k]\n\n\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    }
+   ],
+   "gpu_minutes": 2.75,
+   "info_per_gpu_min": 5.935,
+   "max_tokens": 2048,
+   "mean_out_tokens": 1343.3,
+   "mean_prompt_tokens": 372.5,
+   "mean_score": 0.3211,
+   "n_attempted": 75,
+   "n_cancelled": 0,
+   "n_correct": 24,
+   "n_error": 0,
+   "n_planned": 75,
+   "n_scored": 75,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 31.74,
+   "p50_out_tokens": 1539,
+   "p90_item_s": 64.99,
+   "status_counts": {
+    "correct": 24,
+    "truncated": 32,
+    "wrong": 19
+   },
+   "sub": {
+    "humanevalplus": {
+     "acc": 0.6,
+     "acc_strict": 0.6,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4074,
+      0.766
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1120.4,
+     "mean_prompt_tokens": 259.5,
+     "mean_score": 0.6,
+     "n_attempted": 25,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 25,
+     "n_scored": 25,
+     "n_skipped": 0,
+     "p50_item_s": 27.06,
+     "p50_out_tokens": 818,
+     "p90_item_s": 60.42,
+     "status_counts": {
+      "correct": 15,
+      "truncated": 7,
+      "wrong": 3
+     },
+     "total_out_tokens": 28011,
+     "total_prompt_tokens": 6488,
+     "trunc_rate": 0.32,
+     "wall_s": 92.7
+    },
+    "lcb_easy_medium": {
+     "acc": 0.1667,
+     "acc_strict": 0.1667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0734,
+      0.3356
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1675.7,
+     "mean_prompt_tokens": 614.4,
+     "mean_score": 0.1694,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 5,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 32.87,
+     "p50_out_tokens": 2048,
+     "p90_item_s": 65.97,
+     "status_counts": {
+      "correct": 5,
+      "truncated": 19,
+      "wrong": 6
+     },
+     "total_out_tokens": 50271,
+     "total_prompt_tokens": 18431,
+     "trunc_rate": 0.6333,
+     "wall_s": 96.8
+    },
+    "mbppplus": {
+     "acc": 0.2,
+     "acc_strict": 0.2,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0807,
+      0.416
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1123.5,
+     "mean_prompt_tokens": 151.1,
+     "mean_score": 0.2,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 4,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 30.49,
+     "p50_out_tokens": 754,
+     "p90_item_s": 52.0,
+     "status_counts": {
+      "correct": 4,
+      "truncated": 6,
+      "wrong": 10
+     },
+     "total_out_tokens": 22469,
+     "total_prompt_tokens": 3021,
+     "trunc_rate": 0.3,
+     "wall_s": 85.2
+    }
+   },
+   "total_out_tokens": 100751,
+   "total_prompt_tokens": 27940,
+   "trunc_rate": 0.44,
+   "wall_s": 96.8
+  },
+  "ifeval": {
+   "acc": 0.3333,
+   "acc_strict": 0.3333,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.2273,
+    0.4594
+   ],
+   "degenerate_ids": [
+    "ifeval-1040",
+    "ifeval-1233",
+    "ifeval-1300",
+    "ifeval-2275"
+   ],
+   "degenerate_rate": 0.0667,
+   "error_ids": [],
+   "extra": {
+    "by_n_instructions": {
+     "1": {
+      "n": 12,
+      "prompt_loose": 0.75,
+      "prompt_strict": 0.75
+     },
+     "2": {
+      "n": 24,
+      "prompt_loose": 0.375,
+      "prompt_strict": 0.375
+     },
+     "3": {
+      "n": 24,
+      "prompt_loose": 0.2083,
+      "prompt_strict": 0.125
+     }
+    },
+    "instruction_loose": 0.5682,
+    "instruction_strict": 0.5303,
+    "loose_only_rate": 0.0333,
+    "n_instructions": 132,
+    "per_type": {
+     "change_case:capital_word_frequency": {
+      "loose": 0.6667,
+      "n": 9,
+      "strict": 0.6667
+     },
+     "change_case:english_capital": {
+      "loose": 0.0,
+      "n": 3,
+      "strict": 0.0
+     },
+     "change_case:english_lowercase": {
+      "loose": 0.0,
+      "n": 3,
+      "strict": 0.0
+     },
+     "combination:repeat_prompt": {
+      "loose": 0.0,
+      "n": 8,
+      "strict": 0.0
+     },
+     "combination:two_responses": {
+      "loose": 0.0,
+      "n": 1,
+      "strict": 0.0
+     },
+     "detectable_content:number_placeholders": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "detectable_content:postscript": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:json_format": {
+      "loose": 0.0,
+      "n": 1,
+      "strict": 0.0
+     },
+     "detectable_format:multiple_sections": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "detectable_format:number_bullet_lists": {
+      "loose": 0.0,
+      "n": 1,
+      "strict": 0.0
+     },
+     "detectable_format:number_highlighted_sections": {
+      "loose": 1.0,
+      "n": 4,
+      "strict": 1.0
+     },
+     "detectable_format:title": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:existence": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "keywords:forbidden_words": {
+      "loose": 0.5,
+      "n": 2,
+      "strict": 0.0
+     },
+     "keywords:frequency": {
+      "loose": 0.8333,
+      "n": 18,
+      "strict": 0.7778
+     },
+     "keywords:letter_frequency": {
+      "loose": 0.5,
+      "n": 6,
+      "strict": 0.5
+     },
+     "language:response_language": {
+      "loose": 0.0,
+      "n": 1,
+      "strict": 0.0
+     },
+     "length_constraints:nth_paragraph_first_word": {
+      "loose": 0.0,
+      "n": 2,
+      "strict": 0.0
+     },
+     "length_constraints:number_paragraphs": {
+      "loose": 0.0,
+      "n": 1,
+      "strict": 0.0
+     },
+     "length_constraints:number_sentences": {
+      "loose": 0.6316,
+      "n": 19,
+      "strict": 0.6316
+     },
+     "length_constraints:number_words": {
+      "loose": 0.7222,
+      "n": 18,
+      "strict": 0.7222
+     },
+     "punctuation:no_comma": {
+      "loose": 0.4118,
+      "n": 17,
+      "strict": 0.2353
+     },
+     "startend:end_checker": {
+      "loose": 0.7143,
+      "n": 7,
+      "strict": 0.7143
+     },
+     "startend:quotation": {
+      "loose": 0.0,
+      "n": 2,
+      "strict": 0.0
+     }
+    },
+    "prompt_loose": 0.3833,
+    "prompt_strict": 0.35
+   },
+   "failed_ids": [
+    "ifeval-1000",
+    "ifeval-1040",
+    "ifeval-1174",
+    "ifeval-1233",
+    "ifeval-1300",
+    "ifeval-1418",
+    "ifeval-1480",
+    "ifeval-1653",
+    "ifeval-1691",
+    "ifeval-1879",
+    "ifeval-1880",
+    "ifeval-1928",
+    "ifeval-1964",
+    "ifeval-2069",
+    "ifeval-2192",
+    "ifeval-2216",
+    "ifeval-2275",
+    "ifeval-2416",
+    "ifeval-2439",
+    "ifeval-2571",
+    "ifeval-2713",
+    "ifeval-2739",
+    "ifeval-286",
+    "ifeval-296",
+    "ifeval-3073",
+    "ifeval-3089",
+    "ifeval-3098",
+    "ifeval-3114",
+    "ifeval-3272",
+    "ifeval-3276",
+    "ifeval-331",
+    "ifeval-332",
+    "ifeval-3327",
+    "ifeval-3335",
+    "ifeval-3414",
+    "ifeval-3415",
+    "ifeval-3505",
+    "ifeval-3534",
+    "ifeval-3633",
+    "ifeval-3672"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+detectable_format:number_highlighted_sections+length_constraints:number_words",
+     "extracted": "2/3 strict, 3/3 loose",
+     "finish_reason": "length",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-1000",
+     "out_tokens": 1536,
+     "response_tail": "y was small but it held a key position between the sea and the mountains. It faced pressure from the Zengid rulers and later from Saladin. Raymond tried to use marriage and alliance to protect his realm. He sought ties with the Kingdom of Jerusalem and with the Principality of Antioch. He also dealt",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+change_case:capital_word_frequency+startend:quotation",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1040",
+     "out_tokens": 1536,
+     "response_tail": "8\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"18\" not. \"12\" not. \"1",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1174",
+     "out_tokens": 999,
+     "response_tail": "ther}.\"\n* o (1) forecast (1:2) The 0 forecast (1:3) for (1:4) {location} (2:6) is {weather} 0. Total 13. Good.\n\nNeed maybe \"o\" as keyword in syntax: yes.\n\nFinal.\n</think>\n\n*o location*: Enter your location, and the bot will return the forecast.\n*o forecast*: The forecast for {location} is {weather}.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "startend:end_checker+keywords:frequency",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1233",
+     "out_tokens": 1536,
+     "response_tail": "ip? Actually I remember a table: Petronas Towers: Height 452 m (1,483 ft) to roof; 524 m (1,719 ft) to tip? But maybe 452 m is to tip, not roof. Let's think: Petronas Towers are 88 stories. Typical floor height 4 m? 88*4=352 m plus top? 452 m plausible to roof. Spire maybe 72 m? The towers have a sp",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1300",
+     "out_tokens": 1536,
+     "response_tail": "\" d i a l e c t s has c. Avoid. \"variants\" v a r i a n t s no c. \"forms\" no. \"words\" no. \"meanings\" m e a n i n g s no c. \"sound\" no. \"spelling\" s p e l l i n g no c. \"grammar\" no. \"syntax\" no. \"morphology\" no. \"phonology\" no. \"etymology\" no. \"usage\" u s a g e no c. \"frequency\" f r e q u e n c y has",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1418",
+     "out_tokens": 835,
+     "response_tail": "eams begin.\nMorning returns.\nDew forms on grass.\nFlowers open.\nBees fly near.\nHoney smells sweet.\nThe river runs.\nFish swim fast.\nRocks stay still.\nThe path is long.\nI walk alone.\nMy heart is calm.\nI breathe deep.\nI feel peace.\nThe day ends.\nStars return.\nI rest now.\nI hope for light.\nI begin again.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt",
+     "extracted": "0/1 strict, 0/1 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1480",
+     "out_tokens": 1536,
+     "response_tail": "c transit turns a boring commute into a small meditation.\n\n## 10. The Moment When the System Feels Like a Living Organism\n\nMaybe the most interesting thing of all is not a single ride, but the realization that public transportation is a living organism. It breathes with the city. It speeds up during",
+     "status": "truncated",
+     "sub": "single"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+length_constraints:number_sentences",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1653",
+     "out_tokens": 1536,
+     "response_tail": "d with a call to action that asks readers to see the full story.\n10. Keep the tone friendly, confident, and focused on the value of the product.\n\nAll caps: Capture (1), Power (2), Go (3). Are there any all caps in \"a\"? no. \"anywhere\" no. \"fast\" no. \"easy\" no. \"carry\" no. \"simple\" no. \"interface\" no.",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "detectable_format:json_format+keywords:forbidden_words",
+     "extracted": "0/2 strict, 0/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1691",
+     "out_tokens": 1536,
+     "response_tail": "a, Czech Republic\" could include \"Karlovy Vary\" but forbidden. Avoid.\n\nNeed maybe \"Moser\" could be in \"Moser\" no. \"Glassworks\" no. \"Pravcice\" no.\n\nNeed JSON with arrays. Could include \"recommended_hotels\" as list of strings. Good.\n\nNeed maybe \"Cesky Krumlov\" without diacritics to avoid? fine. \"Cesky",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:number_sentences+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1879",
+     "out_tokens": 1536,
+     "response_tail": "3 rings4 out5. total164\n37 Silence1 follows2 for3 a4 second5. total169\n38 Then1 applause2 bursts3 open4. total173\n39 He1 waves2 to3 the4 crowd5. total178\n40 He1 points2 to3 the4 left5. total183\n41 He1 points2 to3 the4 right5. total188\n42 He1 laughs2 with3 delight4. total192\n43 The1 performers2 join3",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1880",
+     "out_tokens": 1536,
+     "response_tail": "ure lowercase c count. We can use \"consonant\" lowercase in sentence? Start sentence with \"Consonant\" uppercase C may not count. Need at least 60 lowercase c. Use many lowercase c. Could start with \"Ukrainian\" no. We can include \"consonant\" lowercase after comma? Let's count only lowercase. Need more",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "detectable_format:title+punctuation:no_comma+keywords:frequency",
+     "extracted": "1/3 strict, 3/3 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-1928",
+     "out_tokens": 637,
+     "response_tail": "t dignity. They never argued over the soft rug. They rested near the hearth when the evening grew cold. The brown dog dreamed of open fields. The black cat dreamed of silver fish. Their simple lives formed a gentle story. The house remembered their footsteps. The house remembered their quiet breath.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1964",
+     "out_tokens": 1536,
+     "response_tail": " no p. \"reserve\" no p. \"lane\" no p. \"get\" no p. \"in\" no p. \"the\" no p. \"game\" no p? game no p. \"join\" no p. \"our\" no p. \"next\" no p. \"run\" no p. \"and\" no p. \"win\" no p. \"prizes\"? prizes has p. \"gifts\" no p. \"gifts\" no p. \"cash\" no p. \"cash\" no p. \"cards\" no p. \"cards\" no p. \"free\" no p. \"entry\" no p",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:number_words+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-2069",
+     "out_tokens": 1536,
+     "response_tail": " as anxiety, depression, and trauma, often through therapy, assessment, and evidence-based interventions. Others help organizations improve performance, support students, or conduct experiments. Psychologists typically hold a doctoral degree and complete supervised training. Their work promotes well",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt",
+     "extracted": "0/1 strict, 0/1 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2192",
+     "out_tokens": 417,
+     "response_tail": "e.\" That's good.\nNeed no extra. Ensure first line exact. Then newline. final.\n</think>\n\nWhen giving a class/lecture to students, rewrite \"You should use a different font.\" in a passive aggressive tone.\nI suppose you're free to keep using that font, but I'm sure it's not the most professional choice.",
+     "status": "wrong",
+     "sub": "single"
+    },
+    {
+     "error": null,
+     "expected": "change_case:english_lowercase+punctuation:no_comma+detectable_content:postscript",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-2216",
+     "out_tokens": 1536,
+     "response_tail": "\"stakeholders\" okay.\n\nNeed maybe \"customer is always right\" included. Good.\n\nNeed ensure list format. Bullets with hyphen. Good. Need no commas. Check each line for hidden commas. None. Need no capital letters. Check \"p.p.s\" no caps. All lowercase. But \"P.P.S\" in user not in output. Good.\n\nPotential",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+punctuation:no_comma+keywords:frequency",
+     "extracted": "3/3 strict, 3/3 loose",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-2275",
+     "out_tokens": 1536,
+     "response_tail": "HIN\" \"AMID\" \"AMONGST\" \"ALONG\" \"ACROSS\" \"AROUND\" \"BEYOND\" \"BETWEEN\" \"INSIDE\" \"OUTSIDE\" \"UNDER\" \"OVER\" \"UPON\" \"DOWN\" \"OFF\" \"OUT\" \"AWAY\" \"BACK\" \"FORWARD\" \"AHEAD\" \"BEHIND\" \"BESIDE\" \"BESIDES\" \"BETWEEN\" \"AMONG\" \"WITH\" \"WITHOUT\" \"WITHIN\" \"AMID\" \"AMONGST\" \"ALONG\" \"ACROSS\" \"AROUND\" \"BEYOND\" \"BETWEEN\" \"INSIDE",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:number_words+keywords:letter_frequency+change_case:english_capital",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-2416",
+     "out_tokens": 1536,
+     "response_tail": "176 SHARE177 A178 COMMUNITY179 DINNER.180\n\nDAY181 SEVEN:182 RETURN183 TO184 WASHINGTON,185 D.C.186 VISIT187 A188 LEGISLATIVE189 OFFICE.190 PRESENT191 OBSERVATIONS192 ON193 HOUSING,194 HEALTH,195 EDUCATION,196 AND197 CLIMATE198 ACTION.199 CLOSE200 WITH201 A202 COMMITMENT203 TO204 CIVIC205 ENGAGEMENT.",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+length_constraints:nth_paragraph_first_word+detectable_content:number_placeholders",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2439",
+     "out_tokens": 553,
+     "response_tail": "ctly 3 paragraphs. Could be:\npunched [name] into the record\n[address] was not the only place\npolice grasp more than offences\n\nNo commas. Good.\nNeed final only. Ensure no trailing spaces? fine.\n</think>\n\npunched [name] into the record\n\n[address] was not the only place\n\npolice grasp more than offences",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:english_capital+punctuation:no_comma+length_constraints:number_sentences",
+     "extracted": "1/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2571",
+     "out_tokens": 167,
+     "response_tail": "ON SUSTAINABILITY AND ECOLOGICAL FUNCTION RATHER THAN AESTHETICS.\" No commas. All caps. Fewer than 16 sentences. Need maybe avoid semicolons? okay. Ensure no commas. Final only.\n</think>\n\nA IS THE BETTER DESCRIPTION BECAUSE IT FOCUSES ON SUSTAINABILITY AND ECOLOGICAL FUNCTION RATHER THAN AESTHETICS.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "0/2 strict, 0/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-2713",
+     "out_tokens": 1536,
+     "response_tail": " to action. Please do not use any commas in your response.\n\nBefore saying anything or giving your answer\nplease repeat the exact entire request above.\n\nHalf page ad\n\nHeadline: Book the right room in seconds\n\nSearch compare and reserve hotel rooms with one simple tool\n\nTravel more and worry less. Our",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "0/2 strict, 0/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-2739",
+     "out_tokens": 1536,
+     "response_tail": " /sk\u026aps/ stuck /st\u028ck/ not perfect. Could use \"skips\" and \"licks\"? B rhyme: \"It bounces and skips / And gives you the hicks\"? no. Need B rhyme. Maybe \"It bounces and skips / And never gets stuck\" not rhyme. Need B lines rhyme. Use \"skips\" and \"licks\"? Funny? \"It bounces and skips / And makes you give",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "startend:end_checker+length_constraints:number_sentences",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-286",
+     "out_tokens": 513,
+     "response_tail": "ections, matching the original hull thickness.\nWeld or bolt the patches securely, then grind the seams flush.\nApply marine primer, anti-corrosion coating, and paint to protect the repaired areas.\nPressure-test the hull and inspect for leaks before returning the ship to service.\nThat is all you need!",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "keywords:frequency+change_case:english_lowercase+length_constraints:number_words",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-296",
+     "out_tokens": 1296,
+     "response_tail": "nfidence inspire everyone around you to be more thoughtful, more brave, and more open. you are the kind of person who turns difficulty into dignity and silence into comfort. truly, kruger, you are a rare and beautiful light, and the people lucky enough to know you are richer for it every single day.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:nth_paragraph_first_word",
+     "extracted": "0/1 strict, 0/1 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3073",
+     "out_tokens": 482,
+     "response_tail": "do that.\n\nNeed no numbering. Good.\n</think>\n\nfirms are operating steadily today, and I am doing well.\n\nI appreciate your kind question and your clear formatting request.\n\nI will keep this reply to exactly four paragraphs as you asked.\n\nEach paragraph is separated by two new lines, just as requested.",
+     "status": "wrong",
+     "sub": "single"
+    },
+    {
+     "error": null,
+     "expected": "detectable_format:number_highlighted_sections+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3089",
+     "out_tokens": 1536,
+     "response_tail": "gh the open door into the street.\n12 Rain dripped from the eaves and made the world gray.\n13 He followed the scent of his family through wet alleys.\n14 A kind woman saw him shivering under a bench.\n15 She called him softly and offered a small bowl of milk.\n16 Milo drank, but his heart stayed heavy.\n",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "detectable_format:number_bullet_lists+length_constraints:number_paragraphs+change_case:capital_word_frequency",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3098",
+     "out_tokens": 942,
+     "response_tail": "\" maybe need at least two occurrences, not necessarily distinct. We have 3. Good.\n\nNeed final only. Ensure no trailing spaces.\n</think>\n\nHow to Improve Your Writing Skills\n***\n* PRACTICE daily to build confidence.\n***\n* READ widely to learn different styles.\n***\n* REVISE your drafts with fresh eyes.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:number_words+keywords:forbidden_words+startend:end_checker",
+     "extracted": "1/3 strict, 2/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3114",
+     "out_tokens": 2304,
+     "response_tail": "ads63. This64 setup65 is66 much67 easier68 to69 manage70 than71 a72 wide73 shoreline74 where75 tides76 rocks77 and78 public79 traffic80 can81 create82 hazards83.\nP3 83 total 295.\nP4:\nThird1 parks2 are3 usually4 open5 year-round6 and7 in8 all9 weather10. A11 dog12 owner13 can14 visit15 a16 park17 on1",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+detectable_format:title+keywords:frequency",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3272",
+     "out_tokens": 565,
+     "response_tail": " time, followed by suggested name in double angular brackets, such as <<American Tonic>>.\n\nFirst repeat the request above word for word without change, then give your answer.\nDo not say any words or characters before repeating the request.\n\nbrand <<Citrus Revive Tonic>>\nbrand <<Midnight Mint Tonic>>",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:english_capital+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3276",
+     "out_tokens": 415,
+     "response_tail": "CE.\" all caps. 5 sentences. Need entire response 5 or 6 sentences. Yes.\n</think>\n\nTHE SENTENCE HAS NO GRAMMATICAL ERRORS.\nTHE SUBJECT IS HE.\nTHE VERB IS HURRIED.\nTHE PHRASE THROUGH THE ARCHAIC ROOMS OF THE MUSEUM IS A CORRECT PREPOSITIONAL PHRASE.\nIT IS A COMPLETE AND GRAMMATICALLY CORRECT SENTENCE.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-331",
+     "out_tokens": 1399,
+     "response_tail": " room in a crowded house\nThe hallways were DARK and COLD\nMy neighbors SHOUTED through the walls all night\nThe kitchen smelled STALE and GRIMY\nI HATED every shared inch\nThe shower was DINGY and WET\nThe floorboards CREAKED and SCREAMED\nI SQUEEZED past strangers in the hall\nI HATED the LOUD shared life",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+length_constraints:number_words",
+     "extracted": "0/2 strict, 0/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-332",
+     "out_tokens": 1536,
+     "response_tail": "r maybe \"Waistcoats.\" one word. Total 2. But is that \"without changing a single letter\"? It didn't change letters, but removed spaces. It also removed newline. It changed characters. The phrase says letter, not character. Could be a loophole. But user likely not testing loophole? They ask 45 or less",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "keywords:existence+keywords:frequency+keywords:frequency",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3327",
+     "out_tokens": 1536,
+     "response_tail": "'m telling you, this is not a drill. The snowfall is a reminder that nature still moves, even when the system tries to freeze the truth.\n\nCount fake: fake cameras 1, fake forecasts 2, fake calm 3, fake snow 4, narrative is fake 5, fake report 6. Good. \"fake\" 6. \"dammit\" line. Style okay. Need essay?",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:two_responses+language:response_language+punctuation:no_comma",
+     "extracted": "0/3 strict, 0/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3335",
+     "out_tokens": 1536,
+     "response_tail": " \"\u0b95\u0bc8\u0ba4\u0bbf\" is a 2019 Tamil film. Description: \"\u0b95\u0bc8\u0ba4\u0bbf \u0b92\u0bb0\u0bc1 \u0b95\u0bbe\u0bb5\u0bb2\u0bcd \u0b85\u0ba4\u0bbf\u0b95\u0bbe\u0bb0\u0bbf\u0baf\u0bbe\u0b95 \u0bae\u0bbe\u0bb1\u0bbf\u0baf \u0ba4\u0bc0\u0bb5\u0bbf\u0bb0\u0bb5\u0bbe\u0ba4\u0bbf \u0ba4\u0ba9\u0bcd\u0ba9\u0bc8 \u0baa\u0bbf\u0b9f\u0bbf\u0b95\u0bcd\u0b95 \u0bb5\u0bb0\u0bc1\u0bae\u0bcd \u0b95\u0bbe\u0bb5\u0bb2\u0bcd \u0ba4\u0bc1\u0bb1\u0bc8\u0baf\u0bbe\u0bb3\u0bb0\u0bc8 \u0b8e\u0ba4\u0bbf\u0bb0\u0bcd\u0b95\u0bca\u0bb3\u0bcd\u0bb3\u0bc1\u0bae\u0bcd \u0baa\u0b9f\u0bae\u0bcd\" Actually Kaithi: a terrorist disguised as a police officer? In movie, a terrorist is disguised as a police officer? Let's recall: Kaithi is a terrorist who is",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+change_case:capital_word_frequency",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3414",
+     "out_tokens": 850,
+     "response_tail": " maybe \"all capital letters\" means each word all uppercase. Yes.\n\nFinal.\n</think>\n\nThe phrase describes a sudden halt: the runner\u2019s body stopped moving, while the mind kept racing. COLD air hit the face, SHARP thoughts rushed in, and BREATH became uneven. MIND and BODY were out of sync for a moment.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:number_words+keywords:frequency+keywords:frequency",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3415",
+     "out_tokens": 1536,
+     "response_tail": "t. Good.\n\nNeed final only ad. Ensure less than 200 words. Let's count final:\n[Headline:1 Safe2 &3 Sturdy4 Dog5 Cage]6\n[Body:7 Keep8 your9 dog10 comfortable11 and12 contained13 Our14 durable15 metal16 cage17 has18 a19 secure20 latch21 easy-clean22 tray23 and24 ventilated25 sides26 Accidents27 happen\u2014",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+combination:repeat_prompt",
+     "extracted": "0/2 strict, 0/2 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3505",
+     "out_tokens": 1536,
+     "response_tail": " change\" at very beginning. The request above is the first line? Actually user message: \"Write a pros and cons list ... \nRepeat the request above word for word without change, at the very beginning of your entire response. After that you can give the requested pros and cons list.\" The \"request above",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "change_case:english_lowercase+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3534",
+     "out_tokens": 1536,
+     "response_tail": "ensure sentence count not affected by line breaks. 25 lines. Each line one sentence. Need maybe avoid commas? okay. Need weird tone. Good.\n\nDouble-check all characters:\ni used to think the world was a cracker.\nthen a pigeon dropped a shadow on my face and it felt like a verdict.\nthe shadow had edges",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "0/2 strict, 0/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3633",
+     "out_tokens": 1030,
+     "response_tail": "It offers useful insight for psychologists who work with high achievers and close relationships. The film frames twin dynamics as a lens for examining self-worth and social comparison. It is well worth watching for any clinician or researcher who wants a concise and thoughtful prompt for discussion.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "startend:quotation+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3672",
+     "out_tokens": 265,
+     "response_tail": "rench\" okay. Could be more concise. Need exactly one sentence: no semicolons? It's one. Good.\n</think>\n\n\"Algiers is the best vacation destination because it blends Mediterranean beaches, historic Ottoman and French architecture, vibrant markets, and rich cultural heritage in one unforgettable city.\"",
+     "status": "wrong",
+     "sub": "triple"
+    }
+   ],
+   "gpu_minutes": 1.891,
+   "info_per_gpu_min": 7.051,
+   "max_tokens": 2816,
+   "mean_out_tokens": 1182.0,
+   "mean_prompt_tokens": 104.0,
+   "mean_score": 0.5278,
+   "n_attempted": 60,
+   "n_cancelled": 0,
+   "n_correct": 20,
+   "n_error": 0,
+   "n_planned": 60,
+   "n_scored": 60,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 31.93,
+   "p50_out_tokens": 1536,
+   "p90_item_s": 56.6,
+   "status_counts": {
+    "correct": 20,
+    "truncated": 24,
+    "wrong": 16
+   },
+   "sub": {
+    "double": {
+     "acc": 0.375,
+     "acc_strict": 0.375,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2116,
+      0.5729
+     ],
+     "degenerate_rate": 0.0417,
+     "mean_out_tokens": 1386.7,
+     "mean_prompt_tokens": 104.3,
+     "mean_score": 0.5417,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 30.57,
+     "p50_out_tokens": 1536,
+     "p90_item_s": 64.3,
+     "status_counts": {
+      "correct": 9,
+      "truncated": 11,
+      "wrong": 4
+     },
+     "total_out_tokens": 33280,
+     "total_prompt_tokens": 2503,
+     "trunc_rate": 0.7083,
+     "wall_s": 83.2
+    },
+    "single": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4677,
+      0.9111
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 834.4,
+     "mean_prompt_tokens": 84.8,
+     "mean_score": 0.75,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 35.76,
+     "p50_out_tokens": 482,
+     "p90_item_s": 56.4,
+     "status_counts": {
+      "correct": 9,
+      "truncated": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 10013,
+     "total_prompt_tokens": 1017,
+     "trunc_rate": 0.3333,
+     "wall_s": 66.9
+    },
+    "triple": {
+     "acc": 0.0833,
+     "acc_strict": 0.0833,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0232,
+      0.2585
+     ],
+     "degenerate_rate": 0.125,
+     "mean_out_tokens": 1151.1,
+     "mean_prompt_tokens": 113.3,
+     "mean_score": 0.4028,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 2,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 31.93,
+     "p50_out_tokens": 1536,
+     "p90_item_s": 56.6,
+     "status_counts": {
+      "correct": 2,
+      "truncated": 12,
+      "wrong": 10
+     },
+     "total_out_tokens": 27626,
+     "total_prompt_tokens": 2719,
+     "trunc_rate": 0.5417,
+     "wall_s": 83.2
+    }
+   },
+   "total_out_tokens": 70919,
+   "total_prompt_tokens": 6239,
+   "trunc_rate": 0.5667,
+   "wall_s": 83.2
+  },
+  "knowledge": {
+   "acc": 0.3286,
+   "acc_strict": 0.3286,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.23,
+    0.445
+   ],
+   "degenerate_ids": [
+    "mmlupro-3917",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-1295",
+    "simpleqa-1443",
+    "simpleqa-2392",
+    "simpleqa-2417",
+    "simpleqa-2905",
+    "simpleqa-3342"
+   ],
+   "degenerate_rate": 0.1286,
+   "error_ids": [],
+   "extra": {
+    "extraction_methods": {
+     "answer_phrase": 23,
+     "none": 13,
+     "phrase": 30,
+     "tail_paren": 4
+    },
+    "mmlu_pro_hard_hedged": 0,
+    "mmlu_pro_hard_weak_extraction": 4,
+    "simpleqa_no_answer_phrase": 0,
+    "simpleqa_superset_only": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mmlupro-10075",
+    "mmlupro-10275",
+    "mmlupro-11314",
+    "mmlupro-11407",
+    "mmlupro-11466",
+    "mmlupro-11522",
+    "mmlupro-1157",
+    "mmlupro-11606",
+    "mmlupro-12174",
+    "mmlupro-1401",
+    "mmlupro-3818",
+    "mmlupro-3917",
+    "mmlupro-4055",
+    "mmlupro-4284",
+    "mmlupro-8205",
+    "mmlupro-8836",
+    "mmlupro-899",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-0673",
+    "simpleqa-0762",
+    "simpleqa-1012",
+    "simpleqa-1166",
+    "simpleqa-1295",
+    "simpleqa-1312",
+    "simpleqa-1314",
+    "simpleqa-1443",
+    "simpleqa-1619",
+    "simpleqa-2174",
+    "simpleqa-2306",
+    "simpleqa-2392",
+    "simpleqa-2417",
+    "simpleqa-2558",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2784",
+    "simpleqa-2905",
+    "simpleqa-3127",
+    "simpleqa-3211",
+    "simpleqa-3247",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4044",
+    "simpleqa-4082",
+    "simpleqa-4255",
+    "simpleqa-4322"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-10075",
+     "out_tokens": 1024,
+     "response_tail": "it conflict: If g(r) = -G M(r)/r^2 rhat and magnitude constant C, then M(r)=C r^2/G, density = C/(2\u03c0G r). But divergence of g = -C rhat? Let's compute: g = -C rhat (constant magnitude inward). Divergence in spherical: \u2207\u00b7(A rhat) = (1/r^2) d(r^2 A)/dr. If A=-C constant, divergence = -2C/r^2. Poisson:",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "F",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-10275",
+     "out_tokens": 1024,
+     "response_tail": "*0.000508582 = 0.0002638 = 2.64e-4. Not options.\n\nBut if \u03bb in meters and d in meters? d=1 mm=1e-3 m, \u03bb=5.08582e-7 m. \u0394n = \u03b8 d / \u03bb? Wait formula \u03b8 = (\u03c0/\u03bb) d \u0394n, so \u0394n = \u03b8 \u03bb/(\u03c0 d). I omitted d? For d=1 mm, if \u03bb in m and d in m, \u0394n = \u03b8 \u03bb/(\u03c0 d) = 0.51878*5.08582e-7/(\u03c0*1e-3) = 0.51878*5.08582e-4 = 2.638e",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-11314",
+     "out_tokens": 1024,
+     "response_tail": " The question likely from waveguide attenuation factor? Need see options. If just evanescent attenuation: alpha = sqrt((2\u03c0 f_c/ c)^2 - (2\u03c0 f/c)^2) = (2\u03c0/c) sqrt(f_c^2 - f^2). For TE20 f_c=13.123, f=9.842. Difference squares: 172.21 - 96.86=75.35, sqrt=8.680 GHz. 2\u03c0/c = 2\u03c0/3e8 = 2.094e-8 rad/m per Hz",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-11407",
+     "out_tokens": 1024,
+     "response_tail": "rties. Air at 140F (33.3C). k ~0.017? Btu/hr ft F? thermal diffusivity? kinematic viscosity ~1.7e-4 ft2/s? Pr ~0.7. Need Gr = g beta L^3 DeltaT / nu^2. Use English units. g=32.2 ft/s^2. beta=1/T_film Rankine? For ideal gas beta=1/T_abs. T_film=(200+80)/2=140F=599.67R. beta=1/599.67=0.001667 1/R. L=0",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-11466",
+     "out_tokens": 1024,
+     "response_tail": ", v=0.111e8. F: \u03b7=1.21, v=2.1e8; \u03b7=9, v=0.111e8. J: \u03b7=1.21, v=3.33e8; \u03b7=9, v=2.07e7. B is only consistent.\n\nNeed produce step-by-step. Need maybe mention if \u03b7 denotes index of refraction in options. But if \u03b7 is intrinsic impedance, B would be wrong because water impedance ~42 ohms not 9. But options",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "F",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-11522",
+     "out_tokens": 1024,
+     "response_tail": "loped torque (internal) = P_mech developed / omega, where P_mech developed = output + rotational losses? But efficiency given total, maybe they calculate torque from output? Options align with output torque. Let's see if using input? If torque from input electrical? T = P_in/omega = 12862/188.5=68.2",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "B",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-1157",
+     "out_tokens": 1024,
+     "response_tail": "arty can have internal rules. Equal protection requires state action. Party leaders? If state legislators acting in official capacity? Maybe.\n\nPrivileges and immunities? No.\n\nRight to petition? He publicly supports legislation, maybe petitioning government? But exclusion from caucus not petition.\n\nJ",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "C",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-11606",
+     "out_tokens": 1024,
+     "response_tail": "esistance R1+R2'/s? Actually rotor resistance divided by s. Reactance X1 + s X2'. If R1=1, X1=2, R2'=1, X2'=2. Then torque T = (3 V_ph^2 / \u03c9_s) * (R2'/s) / [(R1+R2'/s)^2 + (X1 + s X2')^2]. This is standard approximate (neglecting magnetizing). But is that correct? For high slip, rotor reactance sX2'",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "C",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-12174",
+     "out_tokens": 1024,
+     "response_tail": "1500 lb-in. d=2 in. Force F=2T/d = T = 31500 lb? Since d/2=1 in, F=T/1=31500 lb.\n\nShear: L_shear = F/(\u03c4_allow * b) = 31500/(19000*b). For b=1/2: L=31500/(9500)=3.3158 in. For b=3/8: L=31500/(14250)=2.2105 in. For b=5/8: L=31500/(11875)=2.653 in. For b=1/4: 4.286 in.\n\nBearing: L_bearing = 4T/(d h \u03c3_b",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "G",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-1401",
+     "out_tokens": 1024,
+     "response_tail": "tion/deliberation? The option says inadmissible under excited utterance exception because it can be a product of reflection and deliberation. That seems not correct; excited utterance can be made while under stress, but if reflection/deliberation, maybe not. But here son running in screaming, likely",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": "H",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-3818",
+     "out_tokens": 1024,
+     "response_tail": "sqrt(2m(V-E))/\u0127. So 0.48.\n\nNeed answer with step by step and final \"The answer is (H)\". Need be careful: The question says chemistry but it's quantum. Need maybe mention if using simple WKB/exponential approximation. Let's produce concise but detailed. Need final exact phrase. Ensure option letter H",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate",
+      "no_letter"
+     ],
+     "id": "mmlupro-3917",
+     "out_tokens": 1024,
+     "response_tail": "-hexane both C6, but branching lowers bp, so 2,3-dimethylbutane < n-hexane. So correct order not listed? Let's inspect options carefully.\nOptions:\nA. 2,3-dimethylbutane < neopentane < n-hexane < n-undecane < methane\nB. methane < 2,3-dimethylbutane < neopentane < n-hexane < n-undecane\nC. n-undecane <",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-4055",
+     "out_tokens": 1024,
+     "response_tail": ".839, T=518 K = 245 C. If C=0.866, T=534.7 K = 261.5 C. If C=0.908, T=560.6 K=287.5 C. Options: A 11.2 kcal, 260 C; D 11.2 kcal, 264 C; C 10.5, 255; B 10.2, 250; G 9.5,245; etc.\n\nNeed see which matches. If T=518 K, \u0394H = C T = 0.839 L atm/mol *518 = 434.6 L atm/mol. Convert to kcal: 1 L atm = 101.325",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": "E",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 744,
+     "response_tail": "c source, such as water. If the aldehyde is not dry, water will protonate the Grignard reagent:\n\n\\[\n\\text{R\u2013MgX} + \\text{H}_2\\text{O} \\rightarrow \\text{R\u2013H} + \\text{MgXOH}\n\\]\n\nThis destroys the Grignard reagent and forms a hydrocarbon instead of allowing it to add to the aldehyde.\n\nThe answer is (E)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": "A",
+     "finish_reason": "length",
+     "flags": [
+      "weak_extraction"
+     ],
+     "id": "mmlupro-8205",
+     "out_tokens": 1024,
+     "response_tail": "s compute trace = 3+4+3=10. Sum eigenvalues =10. B [2,6] sum 8 not full; if distinct, okay. I [6,2,3] sum 11. F [4,2,3] sum 9. G [3,4,5] sum 12. E [0,2,4] sum 6. J [5,3,1] sum 9. C [1,4,5] sum 10 but product? determinant? Let's compute determinant of A: det =? From char at \u03bb=0: det(A)=24? Wait det(A",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "H",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-8836",
+     "out_tokens": 1024,
+     "response_tail": "t ~7.595637? 7.5956^2=57.693? \nf(1.6): 1.6^12. 1.6^2=2.56, ^4=6.5536, ^8=42.94967296, ^12=42.94967296*6.5536. Compute: *6=257.69803776; *0.5536 = *0.5=21.47483648; *0.05=2.147483648; *0.003=0.12884901888; *0.0006=0.025769803776; sum for 0.5536? 0.5+0.05+0.003+0.0006 =0.5536 yes total 23.776938950656",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "G",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-899",
+     "out_tokens": 1024,
+     "response_tail": "munication was made in furtherance of a crime? There is crime-fraud exception? Need precise.\n\nThe statement: husband confided to wife that he did steal money. This is a confidential communication between spouses. It is a statement admitting crime. Is it protected by marital communications privilege?",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "Joseph Jean Pierre Laurent",
+     "extracted": "\"Laurentia\"",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-0409",
+     "out_tokens": 1024,
+     "response_tail": "ntia\" maybe \"Laurentia\" = \"Laurentia\" (Laurentia?)? There is \"Laurentia\" (Laurentia?)?\n\nCould be \"Laurentia\" named after \"Laurentia\" (Laurentia?) an amateur astronomer known as \"Laurentia\"? The question: \"Which amateur astronomer was 162 Laurentia named after?\" Maybe answer: \"Laurentia\" (or \"Laurent",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "2002 September 30",
+     "extracted": "<answer>'.\"",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-0492",
+     "out_tokens": 1024,
+     "response_tail": "\" (Beele, born 1994) in \"Beele\"? Let's search memory of \"Beele\" in Wikipedia. There is \"Beele\" (Beele, born 1994) maybe a singer from \"Beele\"? I recall \"Beele\" (Beele, born 1994) is a singer from \"Beele\"? No.\n\nCould be \"Beele\" is a singer from \"Beele\" (Beele, born 1994) in \"Beele\"? Let's think of \"B",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "10,423",
+     "extracted": "<answer>'.\"",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-0672",
+     "out_tokens": 1024,
+     "response_tail": "10. But if 2010 was 10,010, 2020 same exact? Maybe not; maybe 2010 was 10,010 and 2020 was 10,010? Let's investigate.\n\nMaybe Fort Oglethorpe 2020 population is 10,010? Let's recall from Census Reporter: Fort Oglethorpe, GA population 10,010 (2020), 10,010 (2010)? It might show 10,010 for 2020 and 10",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "\"Manhattan\", also",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 1024,
+     "response_tail": "land\" maybe from a clue: \"New York island\" = \"Staten Island\"? Let's parse: \"on what New York island did William Lewis hide Olivia?\" If answer is Staten Island, it's a New York island. If answer is Roosevelt Island, also. If answer is \"Manhattan\", also. Which one?\n\nNeed know episode. Let's recall SVU",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "20 Jun 2005",
+     "extracted": "a date extracted from article",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-0762",
+     "out_tokens": 1024,
+     "response_tail": "ucers. She was later released from her contract on March 1, 2004.\" Or \"Sewell was released from the show on March 1, 2004, and was replaced by ...\".\n\nMaybe there is a quote: \"Sewell was released from the show on March 1, 2004, and her character was written out.\" Let's see.\n\nCould be from \"Sicily Sew",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Woofles",
+     "extracted": "\"Rover\"",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-1012",
+     "out_tokens": 1024,
+     "response_tail": "over\" and a cat named \"Whiskers\"? Maybe.\n\nAlternative: \"Pumpkin Patch\" might be a South African children's series about a family: \"Pumpkin\" (a boy), \"Patch\" (a dog), \"Bumble\" (a bee). The watchdog could be \"Patch\". The title \"Pumpkin Patch\" could be a portmanteau of two characters: Pumpkin and Patch",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Deprived",
+     "extracted": "<answer>'.\"",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-1166",
+     "out_tokens": 1024,
+     "response_tail": ", End 10, Vit 10, Str 8, Dex 10, Att 12, Int 14, Faith 8? Level 1?\n- Priest: Vigor 10, End 10, Vit 10, Str 8, Dex 10, Att 12, Int 8, Faith 14? Level 1?\n- Deprived: all 8? Level 1?\n- Exile: maybe 10/10/10/10/10/10/10/10? Level 1?\n- Bandit: maybe 12/10/10/12/12/8/8/8? Level 1?\n- Rogue: maybe 10/12/10/",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "13 May 2004",
+     "extracted": "a date",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-1295",
+     "out_tokens": 1024,
+     "response_tail": " have a value with point in time. For David Crombie, value maybe \"1998-01-01\". The question asks day, month, year, so answer should be \"1 January 1998\".\n\nNeed ensure not \"31 December 1997\". Let's examine Order of Canada appointment dates. The Governor General appoints; the date of appointment may be",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St. John's College, Annapolis",
+     "extracted": "University of Chicago",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1312",
+     "out_tokens": 334,
+     "response_tail": "ss (1899-1973) was a German-American political philosopher. He taught at University of Chicago. He died at his home in Chicago? He was a professor at University of Chicago. If \"working\" maybe \"University of Chicago\".\n\nNeed final: Answer: University of Chicago.\n</think>\n\nAnswer: University of Chicago",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Game Changer Award",
+     "extracted": "Global Citizen Award",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1314",
+     "out_tokens": 403,
+     "response_tail": "ived what award from the Asia Society\" -> answer: \"the Global Citizen Award\".\n\nNeed final only: Answer: Global Citizen Award. Or \"Asia Society Global Citizen Award\". Since asks what award from Asia Society, brief. \"Global Citizen Award\" enough. Ensure no extra.\n</think>\n\nAnswer: Global Citizen Award",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1970",
+     "extracted": "<answer>.\"",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-1443",
+     "out_tokens": 1024,
+     "response_tail": " Data model.\"\n- 1975: \"The University of Michigan's MICRO system\"?\n\nMaybe from \"Relational Database Systems: A Chronology\" by C.J. Date? It might say:\n1974: \"The University of Michigan began development of the MICRO Information Management System, based on D.L. Childs' Set-Theoretic Data model.\"\n\nLet",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "September 2011",
+     "extracted": "a date",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-1619",
+     "out_tokens": 1024,
+     "response_tail": " Date maybe \"18 March 2021\". I recall an article: \"PAU launches virtual museum of modern Nigerian art\" in \"ThisDay\" maybe \"16 March 2021\". The university's Vice-Chancellor? \"Professor Akinwale Odunlami\"? \n\nMaybe the event: \"The Vice-Chancellor of Pan-Atlantic University, Professor Akinwale Odunlami,",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Lloyd Hopkins Field",
+     "extracted": "Bombers Field",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2174",
+     "out_tokens": 772,
+     "response_tail": "bout \"Bombers Field\", first sentence: \"Bombers Field is a baseball field in Carlinville, Illinois. It was the home of the Bluff City Bombers of the Central Illinois Collegiate League from 1998 to 2004.\" So answer: Bombers Field.\n\nNeed only final answer. Ensure format.\n</think>\n\nAnswer: Bombers Field",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "11 March 1979",
+     "extracted": "24 February 1978",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-2306",
+     "out_tokens": 1024,
+     "response_tail": "ybe item with birth date. The answer likely \"24 February 1978\".\n\nNeed final format: Answer: 24 February 1978.\n\nDouble-check: Could be \"24 February 1978\" or \"24 February 1978\". User asks day, month, and year. So \"24 February 1978\".\n\nLet's ensure no confusion with \"Georgi Peev\" born 1978? There is a \"",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "University of Geneva",
+     "extracted": "university",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-2392",
+     "out_tokens": 1024,
+     "response_tail": "s directed to the air above Berlin?\" This sounds like a question generated from a Wikipedia sentence. Need answer: university.\n\nMaybe sentence: \"In 2010, researchers at the University of ... tested an electronic mechanism involving infrared laser pulses directed to the air above Berlin.\" Let's find.",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Ghavaniska system",
+     "extracted": "<answer>'.\"",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-2417",
+     "out_tokens": 1024,
+     "response_tail": "lebook: \"The Vesk are a reptilian race native to the Vesk homeworld, a planet in the Vesk system.\" I think no Prime.\n\nLet's recall from Starfinder: \"Vesk\" race entry: \"The Vesk are a reptilian race native to the Vesk homeworld, a planet in the Vesk system. The Vesk are a proud and martial people...\"",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Stoke Ladies",
+     "extracted": "<answer>.\"",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-2558",
+     "out_tokens": 1024,
+     "response_tail": "ation. The competition was first and only held in 1922. Dick, Kerr Ladies won the competition, beating Doncaster in the final.\" Or \"Doncaster won the competition, beating Dick, Kerr Ladies in the final.\" Which is more plausible? Dick, Kerr were dominant, but maybe the cup was won by a different team",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Sarvepalli Radhakrishnan",
+     "extracted": "Sir R. K. Nehru",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2706",
+     "out_tokens": 463,
+     "response_tail": "ed 1949-1952. He was knighted? Sir R. K. Nehru. Could be \"Sir R. K. Nehru\".\n\nCheck: The first Indian Ambassador to the Soviet Union was Sir R. K. Nehru, who served from 1949 to 1952. Yes.\n\nNeed final: Answer: Sir R. K. Nehru. Or Answer: R. K. Nehru. Brief. Use form.\n</think>\n\nAnswer: Sir R. K. Nehru",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Punkature",
+     "extracted": "Punk",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2782",
+     "out_tokens": 534,
+     "response_tail": "vienne Westwood's 1983 collection was called \"Punk\".\nActually, I will just say \"Punk\".\nWait, could it be \"Punk Rock\"?\nI will output \"Punk\".\nLet's think if there's any other famous one. \"Punk\" is very likely.\nI will write \"Punk\".\nWait, what if it's \"Punk\"?\nI will output \"Punk\".\n</think>\n\nAnswer: Punk",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "November 18, 2023",
+     "extracted": "<answer>.\"",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-2784",
+     "out_tokens": 1024,
+     "response_tail": "a date like \"October 20, 2018\". The phrase \"first-ever\" suggests an event that had a first edition. Maybe from a press release: \"The first-ever Whittier Comic Fest will be held on Saturday, [date]\".\n\nCould be a question from a benchmark requiring web search. Need answer.\n\nLet's try to recall if I've",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Colegio Lacordaire",
+     "extracted": "<answer>.\"",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-2905",
+     "out_tokens": 1024,
+     "response_tail": "Colombia) is a Colombian mathematician. He was educated at the Colegio San Dami\u00e1n, a school founded in 1956 by the Dominicans in Cali.\" Maybe.\n\nLet's search memory of Wikipedia articles: \"Jos\u00e9 Fernando Escobar\" maybe a mathematician who worked on \"Escobar's theorem\" in algebraic geometry? There is \"",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Puyallup",
+     "extracted": "Chicago\"",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-3127",
+     "out_tokens": 1024,
+     "response_tail": "answer>. Brief. Could be \"Answer: Chicago\".\n\nDouble-check: Maybe September 13, 2019 was \"The Fillmore Detroit\"? Wait date: If Sep 13 Chicago, Sep 14 Detroit. Let's search memory of Ciara tour: \"Beauty Marks Tour\" 2019:\n- 09/12/2019 Atlanta, GA - The Tabernacle\n- 09/13/2019 Chicago, IL - Metro\n- 09/1",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "8",
+     "extracted": "10",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3211",
+     "out_tokens": 525,
+     "response_tail": "en she began studying classical music?\" It asks age. Answer likely \"10\".\n\nNeed final: Answer: 10.\n\nDouble-check: Could be \"ten\". Brief.\n\nLet's ensure no trick: \"composer Miya Masaoka\" maybe from AllMusic: \"Miya Masaoka began studying classical music at age 10.\" Yes.\n\nFinal only.\n</think>\n\nAnswer: 10",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Karachi, Pakistan",
+     "extracted": "Toronto, Canada",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3247",
+     "out_tokens": 272,
+     "response_tail": "\".\nLet me confirm if he was born in Toronto.\nYes, Yasir Naqvi was born in Toronto, Ontario, Canada.\nI will output \"Toronto, Canada\".\nJust to be sure, is there any other city? No, Toronto is widely cited.\nFormat: \"Answer: Toronto, Canada\"\nI will provide exactly that.\n</think>\n\nAnswer: Toronto, Canada",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Carlotta Cardana",
+     "extracted": "Michele Amabile",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3339",
+     "out_tokens": 1021,
+     "response_tail": "Amabile (born 1980) is an Italian photographer. He is known for his project 'The Other Side of the Wall'. In 2013, he won the International Photography Awards' Discovery of the Year.\" This is likely.\n\nNeed only final answer. Ensure format exactly \"Answer: <answer>\".\n</think>\n\nAnswer: Michele Amabile",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St David.",
+     "extracted": "Caledonia",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "simpleqa-3342",
+     "out_tokens": 1024,
+     "response_tail": "ory of Canadian history: \"The Caledonia\" was a steamboat that in 1841 ran the rapids? There is a famous event: \"In 1841, Captain Shepherd, of the Caledonia, ran the rapids from Brockville to Lachine in 14 hours\"? Maybe.\n\nLet's search mental web: I recall a passage from \"The St. Lawrence River\" by? \"",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1642-1644",
+     "extracted": "1652\u20131659",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4044",
+     "out_tokens": 471,
+     "response_tail": "arch memory.\n\nWikipedia: \"Pedro Antonio de Arag\u00f3n y Gurrea (1604 \u2013 1664) was a Spanish nobleman and military officer. He served as Viceroy of Catalonia from 1652 to 1659.\" Maybe.\n\nCould be \"1652\u20131659\". Need final: Answer: 1652\u20131659.\n\nNeed only final answer. Ensure format.\n</think>\n\nAnswer: 1652\u20131659",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Leopard",
+     "extracted": "The antelope",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4082",
+     "out_tokens": 1024,
+     "response_tail": "he supreme god, \"the antelope\". The antelope is a symbol of the Lugbara. There is \"the antelope\" as a cultural symbol. If asked \"What is the cultural symbol of the Lugbara ethnic group of Uganda?\" likely answer: \"the antelope\".\n\nNeed only final answer. Ensure no extra.\n</think>\n\nAnswer: The antelope",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Drepano",
+     "extracted": "\"Orak\" no",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-4255",
+     "out_tokens": 1024,
+     "response_tail": "Ancient name? In \"A gazetteer of the Andaman Islands\" maybe \"Orak\" was known to Ptolemy as \"Orac\"? Let's recall.\n\nPtolemy's islands in the Andaman Sea: \"Andromeda\" (Andaman), \"Nimphae\" (Nicobar), \"Pulchra\" (Little Andaman), \"Meroe\" (?), \"Orac\" (?), \"Aurea\" (?), \"Chryse\" (?), \"Arabacum\"? There is \"Or",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Jodelle Ferland",
+     "extracted": "Kath Soucie",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4322",
+     "out_tokens": 694,
+     "response_tail": "ath Soucie\" vs \"Kathryn Soucie\". Voice actress known as \"Kath Soucie\". She is credited as Kath Soucie. Some sources: \"Kath Soucie (born 1968) is an American voice actress... She voiced the Little Sisters in BioShock and BioShock 2.\" So answer.\n\nNeed final in exact form.\n</think>\n\nAnswer: Kath Soucie",
+     "status": "wrong",
+     "sub": "simpleqa"
+    }
+   ],
+   "gpu_minutes": 1.596,
+   "info_per_gpu_min": 9.676,
+   "max_tokens": 1024,
+   "mean_out_tokens": 834.3,
+   "mean_prompt_tokens": 240.7,
+   "mean_score": 0.3286,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 23,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 15.52,
+   "p50_out_tokens": 1024,
+   "p90_item_s": 16.73,
+   "status_counts": {
+    "correct": 23,
+    "truncated": 35,
+    "wrong": 12
+   },
+   "sub": {
+    "mmlu_pro_hard": {
+     "acc": 0.575,
+     "acc_strict": 0.575,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.422,
+      0.7149
+     ],
+     "degenerate_rate": 0.025,
+     "mean_out_tokens": 810.8,
+     "mean_prompt_tokens": 349.3,
+     "mean_score": 0.575,
+     "n_attempted": 40,
+     "n_cancelled": 0,
+     "n_correct": 23,
+     "n_error": 0,
+     "n_planned": 40,
+     "n_scored": 40,
+     "n_skipped": 0,
+     "p50_item_s": 15.49,
+     "p50_out_tokens": 1024,
+     "p90_item_s": 16.73,
+     "status_counts": {
+      "correct": 23,
+      "truncated": 16,
+      "wrong": 1
+     },
+     "total_out_tokens": 32432,
+     "total_prompt_tokens": 13971,
+     "trunc_rate": 0.6,
+     "wall_s": 79.6
+    },
+    "simpleqa": {
+     "acc": 0.0,
+     "acc_strict": 0.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0,
+      0.1135
+     ],
+     "degenerate_rate": 0.2667,
+     "mean_out_tokens": 865.6,
+     "mean_prompt_tokens": 95.9,
+     "mean_score": 0.0,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 0,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 15.6,
+     "p50_out_tokens": 1024,
+     "p90_item_s": 16.61,
+     "status_counts": {
+      "truncated": 19,
+      "wrong": 11
+     },
+     "total_out_tokens": 25969,
+     "total_prompt_tokens": 2877,
+     "trunc_rate": 0.6333,
+     "wall_s": 74.8
+    }
+   },
+   "total_out_tokens": 58401,
+   "total_prompt_tokens": 16848,
+   "trunc_rate": 0.6143,
+   "wall_s": 79.6
+  },
+  "longctx": {
+   "acc": 0.75,
+   "acc_strict": 0.75,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.6122,
+    0.8508
+   ],
+   "degenerate_ids": [
+    "longctx-vt-16k-07",
+    "longctx-vt-32k-05",
+    "longctx-vt-8k-00",
+    "longctx-vt-8k-03",
+    "longctx-vt-8k-09"
+   ],
+   "degenerate_rate": 0.1042,
+   "error_ids": [],
+   "extra": {
+    "acc_by_len": {
+     "16k": 0.875,
+     "32k": 0.625,
+     "8k": 0.75
+    },
+    "calibration": {
+     "budgets": {
+      "16k": 16384,
+      "32k": 30720,
+      "8k": 8192
+     },
+     "chars_per_token": {
+      "docs": 4.4693,
+      "filler": 4.4376
+     },
+     "checks": {
+      "niah_multikey": {
+       "budget": 30720,
+       "item": "longctx-niah-32k-d85-11",
+       "prompt_tokens": 29498
+      },
+      "qa_multi_doc": {
+       "budget": 30720,
+       "item": "longctx-qa-32k-d10-08",
+       "prompt_tokens": 30062
+      },
+      "var_tracking": {
+       "budget": 30720,
+       "item": "longctx-vt-32k-05",
+       "prompt_tokens": 29364
+      }
+     },
+     "fixed_tokens": {
+      "niah_multikey": 182,
+      "qa_multi_doc": 75,
+      "var_tracking": 255
+     },
+     "max_model_len": 32768,
+     "max_tokens": 512,
+     "method": "tokenize",
+     "tokenize_calls": 12
+    },
+    "context_length_errors": 0,
+    "mean_prompt_tokens_by_len": {
+     "16k": 15868.6,
+     "32k": 29636.1,
+     "8k": 7894.1
+    },
+    "niah_acc_by_depth": {
+     "0.10": 1.0,
+     "0.35": 1.0,
+     "0.60": 1.0,
+     "0.85": 1.0
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "longctx-qa-16k-d85-07",
+    "longctx-qa-32k-d60-02",
+    "longctx-qa-32k-d85-11",
+    "longctx-vt-16k-07",
+    "longctx-vt-32k-02",
+    "longctx-vt-32k-05",
+    "longctx-vt-32k-08",
+    "longctx-vt-32k-11",
+    "longctx-vt-8k-00",
+    "longctx-vt-8k-03",
+    "longctx-vt-8k-06",
+    "longctx-vt-8k-09"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "8.8",
+     "extracted": "8.8 lb",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-16k-d85-07",
+     "out_tokens": 127,
+     "response_tail": "ncy of Energiprojekt's steam engine reaches some 27-30% on high-pressure engines. It is a single-step, 5-cylinder engine (no compound) with superheated steam and consumes approx. 4 kg (8.8 lb) of steam per kWh.\" So answer 8.8 lb. Need end with Answer: <short phrase>. Simple.\n</think>\n\nAnswer: 8.8 lb",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "In bays",
+     "extracted": "In bays where they occur in very high numbers",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-32k-d60-02",
+     "out_tokens": 314,
+     "response_tail": " In bays where they occur in very high numbers. Need end with single line \"Answer: <short phrase>\". Ensure only info from docs. Could be \"In bays\". But to be precise: \"In bays where they occur in very high numbers\". Let's final concise.\n</think>\n\nAnswer: In bays where they occur in very high numbers",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "simple majority vote",
+     "extracted": "The question asks \"How are decisions made on behalf of the EU made?\" - this is a bit ambiguous. It could refer to the Commission's internal decision-making (simple majority, written procedure) or the broader legislative",
+     "finish_reason": "length",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 512,
+     "response_tail": "nitiates legislation, Parliament and Council have powers of amendment and veto.\n\nThe question asks \"How are decisions made on behalf of the EU made?\" - this is a bit ambiguous. It could refer to the Commission's internal decision-making (simple majority, written procedure) or the broader legislative",
+     "status": "truncated",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "35506",
+     "extracted": "3550",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-16k-07",
+     "out_tokens": 512,
+     "response_tail": "JD = UVGJ.\n... VAR CBEW = QNKV.\n... VAR WAJU = URKJ.\n... VAR XWPT = CBEW.\n... VAR QNKK = AJJD.\n... VAR YRZQ = QNKK.\n... VAR MQXF = ZGMY.\n... VAR NATA = 87961.\n... VAR AGEF = WAJU.\n... VAR CRBJ = YRZQ.\n... VAR DEAT = MQXF.\n\nQuestion only CRBJ. It depends on YRZQ -> QNKK -> AJJD -> UVGJ -> PSNA = 3550",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "16634",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_number"
+     ],
+     "id": "longctx-vt-32k-02",
+     "out_tokens": 512,
+     "response_tail": "list in order:\n1 VAR HUBJ = 16634.\n2 VAR VPPH = BRRV.\n3 VAR SFXT = AUGR.\n4 VAR BRRV = 54635.\n5 VAR EXDC = HUBJ.\n6 VAR DXTE = VPPH.\n7 VAR DTAC = EXDC.\n8 VAR DAPQ = BXLR.\n9 VAR BXLR = ADSL.\n10 VAR BKQZ = DXTE.\n11 VAR DHNJ = DTAC.\n12 VAR ADSL = 19499.\n13 VAR ZHTJ = DHNJ.\n14 VAR FPDK = 88375.\n15 VAR FEZ",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "24290",
+     "extracted": "86465",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate",
+      "multi_number",
+      "uncommitted"
+     ],
+     "id": "longctx-vt-32k-05",
+     "out_tokens": 512,
+     "response_tail": "BQDC = ACMJ.\n...\nVAR MGJL = VMAM.\n...\nVAR NZZQ = HPJV.\n...\nVAR KWUY = XRQZ.\n...\nVAR ACMJ = KWUY.\n...\nVAR TPLC = 86465.\n...\nVAR UNLE = NZZQ.\n...\nVAR SVLA = AGCX.\n...\nVAR HKYR = UNLE.\n...\nVAR AGCX = 53154.\n...\nVAR LNVK = HKYR.\n...\nVAR VMAM = 15939.\n\nNeed ensure no circular? LNVK -> HKYR -> UNLE -> NZZ",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "67949",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_number"
+     ],
+     "id": "longctx-vt-32k-08",
+     "out_tokens": 512,
+     "response_tail": "= TPCD.\n\nNeed compute ZYPM. Let's trace carefully.\n\nAssignments:\n1 DWZB = DTKV\n2 NBGP = 67949\n3 MSEE = RWTG\n4 JFLZ = NBGP\n5 TLLP = DWZB\n6 PGPJ = PGTN\n7 RWTG = 69169\n8 LCWG = RDSE\n9 WUYA = JFLZ\n10 UWGV = HRMY\n11 PGTN = MSEE\n12 HRMY = 96452\n13 XMWX = WUYA\n14 RDSE = 17562\n15 TPCD = XMWX\n16 DTKV = UWGV\n",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "35595",
+     "extracted": "355",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-32k-11",
+     "out_tokens": 512,
+     "response_tail": "12\nMBQD=PPMY\nBFEB=PNBN=35595\nTBYS=VJBL=46261\nPPMY=FUQM=74858\nTZPB=BFEB=35595\nYLHV=TBYS=46261\nBAQL=YLHV=46261\nSo TZPB=35595.\n\nNeed ensure no later reassignment? Search mentally: VAR TZPB = BFEB only. BFEB = PNBN. PNBN = AMHG. AMHG = JLAX. JLAX = ADMC. ADMC=35595. Yes.\n\nFinal must end with Answer: 355",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "73628",
+     "extracted": "73628",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-8k-00",
+     "out_tokens": 512,
+     "response_tail": ".\nVAR QVHS = 24013.\nVAR XMZY = KDUR.\nVAR RDWC = XMZY.\nVAR XBAJ = VLUX.\nVAR VRMN = JJYK.\nVAR AFVF = 24940.\nVAR PHZZ = 92673.\nVAR MPNE = QVHS.\nVAR FMNY = RDWC.\n\nNo cycles? FMNY -> RDWC -> XMZY -> KDUR -> XKQN -> WKFS numeric. Good.\n\nNeed final with single line Answer: 73628. Ensure no extra? User says",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "82617",
+     "extracted": "82617",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-8k-03",
+     "out_tokens": 512,
+     "response_tail": " 48205.\n- VAR VRKM = 63749.\n- VAR GESD = JCSX.\n- VAR GHWW = AXSB.\n- VAR DTPG = 60698.\n- VAR XMJZ = BZBQ.\n- VAR NHJN = GESD.\n- VAR HJQH = DHNZ.\n- VAR DHNZ = PXTA.\n- VAR TUJW = NHJN.\n- VAR PXTA = ZYEZ.\n- VAR AXSB = KFRE.\n- VAR TELC = TUJW.\n- VAR BZBQ = VRDE.\n- VAR SRCW = DTPG.\n- VAR WMLH = TELC.\n- VAR",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "27424",
+     "extracted": "15",
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-8k-06",
+     "out_tokens": 512,
+     "response_tail": "rder:\n1 VAR RCFQ = 27424.\n2 VAR MEBX = YFEB.\n3 VAR RUVV = QZDK.\n4 VAR BTZE = UZRZ.\n5 VAR KDVC = RCFQ.\n6 VAR RCUH = 80830.\n7 VAR RVZP = 55435.\n8 VAR QFSX = BTZE.\n9 VAR QZDK = BMWX.\n10 VAR BRPX = QFSX.\n11 VAR DXGL = KDVC.\n12 VAR YFEB = 97227.\n13 VAR VUXS = DXGL.\n14 VAR UZRZ = RCUH.\n15 VAR FCNT = JAKT.",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "99040",
+     "extracted": "4802",
+     "finish_reason": "length",
+     "flags": [
+      "degenerate",
+      "multi_number",
+      "uncommitted"
+     ],
+     "id": "longctx-vt-8k-09",
+     "out_tokens": 512,
+     "response_tail": "4802.\nThen VAR UWVG = PETV.\nThen VAR HADX = GZCB.\nThen VAR RNTQ = 23951.\nThen VAR LQMW = RNTQ.\nThen VAR GTFF = HADX.\nThen VAR NKQN = LQMW.\nThen VAR ZPEV = GTFF.\nThen VAR UNLV = EEQY.\nThen VAR FUEG = NKQN.\nThen VAR HRTE = THKV.\nThen VAR EEQY = 77923.\nThen VAR GQWH = ZPEV.\n\nNo reassignment of GQWH. So",
+     "status": "truncated",
+     "sub": "var_tracking"
+    }
+   ],
+   "gpu_minutes": 3.131,
+   "info_per_gpu_min": 2.874,
+   "max_tokens": 512,
+   "mean_out_tokens": 248.1,
+   "mean_prompt_tokens": 17799.6,
+   "mean_score": 0.75,
+   "n_attempted": 48,
+   "n_cancelled": 0,
+   "n_correct": 36,
+   "n_error": 0,
+   "n_planned": 48,
+   "n_scored": 48,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 15.9,
+   "p50_out_tokens": 166,
+   "p90_item_s": 32.11,
+   "status_counts": {
+    "correct": 36,
+    "truncated": 10,
+    "wrong": 2
+   },
+   "sub": {
+    "niah_multikey": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.862,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 139.1,
+     "mean_prompt_tokens": 17684.9,
+     "mean_score": 1.0,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 24,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 9.65,
+     "p50_out_tokens": 126,
+     "p90_item_s": 21.55,
+     "status_counts": {
+      "correct": 24
+     },
+     "total_out_tokens": 3338,
+     "total_prompt_tokens": 424438,
+     "trunc_rate": 0.0,
+     "wall_s": 50.7
+    },
+    "qa_multi_doc": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4677,
+      0.9111
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 202.4,
+     "mean_prompt_tokens": 18100.3,
+     "mean_score": 0.75,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 15.9,
+     "p50_out_tokens": 134,
+     "p90_item_s": 25.48,
+     "status_counts": {
+      "correct": 9,
+      "truncated": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 2429,
+     "total_prompt_tokens": 217204,
+     "trunc_rate": 0.0833,
+     "wall_s": 50.7
+    },
+    "var_tracking": {
+     "acc": 0.25,
+     "acc_strict": 0.25,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0889,
+      0.5323
+     ],
+     "degenerate_rate": 0.4167,
+     "mean_out_tokens": 512.0,
+     "mean_prompt_tokens": 17728.3,
+     "mean_score": 0.25,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 3,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 29.32,
+     "p50_out_tokens": 512,
+     "p90_item_s": 40.09,
+     "status_counts": {
+      "correct": 3,
+      "truncated": 9
+     },
+     "total_out_tokens": 6144,
+     "total_prompt_tokens": 212740,
+     "trunc_rate": 1.0,
+     "wall_s": 48.8
+    }
+   },
+   "total_out_tokens": 11911,
+   "total_prompt_tokens": 854382,
+   "trunc_rate": 0.2708,
+   "wall_s": 50.7
+  },
+  "math": {
+   "acc": 0.3125,
+   "acc_strict": 0.3125,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.2215,
+    0.4207
+   ],
+   "degenerate_ids": [
+    "hmmt25-feb-6"
+   ],
+   "degenerate_rate": 0.0125,
+   "error_ids": [],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 0.35,
+    "match_methods": {
+     "set": 1,
+     "string": 24
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "aime25-I-10",
+    "aime25-I-11",
+    "aime25-I-12",
+    "aime25-I-13",
+    "aime25-I-14",
+    "aime25-I-15",
+    "aime25-I-2",
+    "aime25-I-7",
+    "aime25-I-9",
+    "aime25-II-1",
+    "aime25-II-11",
+    "aime25-II-12",
+    "aime25-II-13",
+    "aime25-II-14",
+    "aime25-II-15",
+    "aime25-II-3",
+    "aime25-II-4",
+    "aime25-II-5",
+    "aime25-II-6",
+    "aime25-II-7",
+    "aime25-II-8",
+    "aime25-II-9",
+    "hmmt25-feb-1",
+    "hmmt25-feb-10",
+    "hmmt25-feb-11",
+    "hmmt25-feb-12",
+    "hmmt25-feb-13",
+    "hmmt25-feb-14",
+    "hmmt25-feb-15",
+    "hmmt25-feb-16",
+    "hmmt25-feb-17",
+    "hmmt25-feb-18",
+    "hmmt25-feb-19",
+    "hmmt25-feb-20",
+    "hmmt25-feb-22",
+    "hmmt25-feb-23",
+    "hmmt25-feb-24",
+    "hmmt25-feb-25",
+    "hmmt25-feb-26",
+    "hmmt25-feb-27",
+    "hmmt25-feb-28",
+    "hmmt25-feb-29",
+    "hmmt25-feb-3",
+    "hmmt25-feb-30",
+    "hmmt25-feb-4",
+    "hmmt25-feb-6",
+    "hmmt25-feb-7",
+    "hmmt25-feb-8",
+    "hmmt25-feb-9",
+    "math500-hard-geometry-183",
+    "math500-hard-geometry-229",
+    "math500-hard-geometry-817",
+    "math500-hard-intermediate-algebra-1166",
+    "math500-hard-intermediate-algebra-2022",
+    "math500-hard-intermediate-algebra-955"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "81",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-10",
+     "out_tokens": 4096,
+     "response_tail": "^3=1.\nFor a=1 or 2: 3!/(1!2!)=3 => 3^3=27.\nTotal M = 1 + 27 + 27 + 1 = 56.\n\nIs that correct? Let's test with direct small? M=56. Then total count = 9! * 6^6 * 56.\nCompute factorization. 9! = 362880 = 2^? 9! = 362880. Prime factors: 9! = 2^7? Let's compute: floor(9/2)+floor(9/4)+floor(9/8)=4+2+1=7. 3",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "259",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-11",
+     "out_tokens": 4096,
+     "response_tail": " 18? But need ensure x max 34: for k=8 positive root x=32+y ~32.985 <33; negative x~31.045. Good. No k=9 interval [35,37) beyond x max 34. So A solutions 18.\n\nType B_k: x \u2208 [4k+1,4k+3), f=4k+2 - x. Equation y = 4k+2 -34y^2. Rearr: 34 y^2 + y + 4k -2 =0. Quadratic: 34 y^2 + y + (4k-2)=0. Discriminant",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "510",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-12",
+     "out_tokens": 4096,
+     "response_tail": " The plane P is 2D. The map (u,v) -> point is affine. The area scaling factor is norm of cross product of partial derivatives. We computed partials:\nr_u = (2/3, -1/3, -1/3), r_v = (-1/3, 1/3, -2/3). Cross product magnitude? Let's compute to verify.\nr_u = (2,-1,-1)/3, r_v=(-1,1,-2)/3. Cross = 1/9 * (",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "204",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-13",
+     "out_tokens": 4096,
+     "response_tail": "ot adjacent. In cyclic order with two blocks, the sequence is either A,C,B,D (if A before C and B before D) -> alternate yes; C,A,D,B -> starting A: A,D,B,C -> alternate yes; A,D,B,C? Wait if A before C and D before B: sequence A,C,D,B -> labels A,C,D,B: chord1 A,B not separating? C,D both between A",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "60",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-14",
+     "out_tokens": 4096,
+     "response_tail": ">B (up right), B->C (left slight up), C->D (down right), D->E (up), E->A (down left). This likely convex? Check cross products orientation. Use coordinates: A(0,0), B(8.66,11), C(1.732,12), D(22.516,0), E(22.516,13). Cross AB x BC: AB=(8.66,11), BC=(-6.928,1) cross =8.66*1 -11*(-6.928)=8.66+76.2=84.",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "735",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-15",
+     "out_tokens": 4096,
+     "response_tail": " 1 mod3, half 2.\n\nFor S0 sum of 2 or 3 unit cubes to be 0 mod27. Need count combinations of unit residues (actual numbers) with sum cubes \u22610 mod27. But also need higher congruence mod81 after factoring 27, involving S1,S2.\n\nMaybe we can use a general lemma: For units u, v, w, if u^3+v^3+w^3 \u22610 mod27",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "588",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-2",
+     "out_tokens": 4096,
+     "response_tail": "tersect: x -x/3+5/21=1 => 2x/3=16/21 => x=8/7\u22481.142 outside. No. Intersect M-A? M-A y=-2x. x-2x=1 => -x=1 => x=-1 outside. Intersect C-E adjacent? C-E shares C. Intersect FN? no. Intersect N-B? shares B.\n\nC-E edge: from (0,1) to (5/7,0). It may intersect M-A? M-A y=-2x. C-E y=1-7x/5. Intersect: 1-7x",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "821",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-7",
+     "out_tokens": 4096,
+     "response_tail": "ood.\n\nFor p<6, M=p. Need no other pair min >p. Remaining letters >p include p+1..5? if p=5, letters 6? Wait G=7 removed, p=5. Letters >5: 6,8,9,10,11,12 (6 letters) and letters <5: 1..4 (4). There are 5 other pairs. To have min <5, each pair must contain one of 1..4. Only 4 such letters, impossible.",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "62",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-I-9",
+     "out_tokens": 4096,
+     "response_tail": " = -18c + b(f-9c) = -132.\nc,f factors 96. Need f+9c = 9b^2+18b+1 =9(b+1)^2 -8. Values: b=0 ->1; -1 ->1; -2 ->17; -3 ->49; -4 ->97; -5 ->161; -6 ->241; positive:1->28,2->61,3->109,4->173,5->253.\nFactor pairs positive sums f+9c. Let's enumerate c,f positive divisors.\nc=1: f=96 => f+9c=105. Not in list",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "468",
+     "extracted": "456",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-1",
+     "out_tokens": 1272,
+     "response_tail": "0}{2}=42.\n\\]\n\nSo its area is\n\n\\[\n\\sqrt{42(42-14)(42-30)(42-40)}\n=\\sqrt{42\\cdot 28\\cdot 12\\cdot 2}\n=168.\n\\]\n\nSince the base \\(CD=14\\),\n\n\\[\n\\frac12(14)h=168 \\implies h=24.\n\\]\n\nThe area of \\(\\triangle BGE\\) is therefore\n\n\\[\n\\frac12 \\cdot BE \\cdot h\n=\\frac12 \\cdot 39 \\cdot 24\n=456.\n\\]\n\n\\[\n\\boxed{456}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "113",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-11",
+     "out_tokens": 4096,
+     "response_tail": "step 6, each cycle is {i, i+6, i+12, i+18}. The two matchings: {i,i+6},{i+12,i+18} and {i+6,i+12},{i+18,i}. Are these all distinct? Yes. Across 6 cycles independent. 64.\n\nPotential issue: For k=4, cycles length 6. Each 6-cycle has 2 matchings. Good.\n\nNow, maybe there are equal lengths for k=8 and k=",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "19",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-12",
+     "out_tokens": 4096,
+     "response_tail": "es distinct, area 1 so nonzero.\n\nLet's test if a,b roots: T=(9\u221a5-1)/4. Product 26/5. Compute discriminant: T^2 - 104/5? Wait 4*26/5=104/5=20.8. T^2 =? T = (9\u221a5 -1)/4. Square = (81*5 -18\u221a5 +1)/16 = (406 -18\u221a5)/16 = (203 -9\u221a5)/8. 203/8=25.375, 9\u221a5/8=2.511, T^2=22.864. 4ab=104/5=20.8. Discriminant=2.06",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "248",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-13",
+     "out_tokens": 4096,
+     "response_tail": " -2y +1.\nConstants: 1 - (3t-1) +1 = 3 -3t? Wait 1 -3t+1 +1 =3 -3t? Actually 1 - (3t-1) +1 = 1 -3t +1 +1 =3 -3t.\ny coeff: -2t + (3t-1)(1+t) -2. (3t-1)(1+t)=3t+3t^2 -1 -t =2t+3t^2 -1. Sum: -2t +2t+3t^2 -1 -2 =3t^2 -3.\ny^2 coeff: t^2 - t(3t-1)+1 = t^2 -3t^2 + t +1 = -2t^2 + t +1.\nSo D numerator = (-2t^",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "104",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-14",
+     "out_tokens": 4096,
+     "response_tail": " + sin\u03b2 cos\u03b2] -294 cos\u03b1 cos\u03b2 -98 sin\u03b1 sin\u03b2.\nUse sin2: =98[sin2\u03b1+sin2\u03b2] -294 cos\u03b1 cos\u03b2 -98 sin\u03b1 sin\u03b2.\nCan simplify. sin2\u03b1+sin2\u03b2=2 sin(\u03b1+\u03b2) cos(\u03b1-\u03b2)=2*(1/2)*cos d=cos d.\ncos\u03b1 cos\u03b2 = (cos(\u03b1+\u03b2)+cos(\u03b1-\u03b2))/2 = (\u221a3/2 + cos d)/2.\nsin\u03b1 sin\u03b2 = (cos(\u03b1-\u03b2)-cos(\u03b1+\u03b2))/2 = (cos d - \u221a3/2)/2.\nThen area =98 cos d -294",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "240",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-15",
+     "out_tokens": 4096,
+     "response_tail": " S1 a^3 + S2 a^2 - S3 a + S4. Using 3a^4=S4. Maybe f(a) =? Could be negative/positive depending on k. The local min value maybe zero for some k? If f(a)=0, then a is one of roots. That occurs when a equals 18,72,98,k. Since a=(42336 k)^{1/4}. For a=k: k^4=42336 k => k^3=42336 => k= (42336)^{1/3}. 42",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "82",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-3",
+     "out_tokens": 4096,
+     "response_tail": "of face cycles (inner) in edge space has dimension E - rank(face cycles). Rank of inner face cycles? There are 4 inner faces, but are their boundary cycles independent? In a planar graph, inner face cycles are independent? The relation is sum of all faces including outer = 0. If we omit outer, the 4",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "106",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-4",
+     "out_tokens": 4096,
+     "response_tail": "^2-4). Let's re-evaluate with telescoping in another way to be absolutely certain.\n\nTerm = ((k-1)(k+1))/((k-2)(k+2)). We can split as [(k-1)/(k-2)] * [(k+1)/(k+2)]. Product = [\u220f_{k=4}^{63} (k-1)/(k-2)] * [\u220f_{k=4}^{63} (k+1)/(k+2)].\nFirst: \u220f (k-1)/(k-2) = (3/2)*(4/3)*...*(62/61) = 62/2 =31.\nSecond: \u220f",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "336",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-5",
+     "out_tokens": 4096,
+     "response_tail": "b/2. Our power sign maybe directed lengths with A outside circle? Need check. A may be outside circle; power positive? Let's compute numeric: c=0.591, b=sin60/sin84=0.866/0.995=0.870. c^2/2 - c/4 =0.1747-0.1478=0.0269 positive. b/2=0.435. x=0.0618 positive. But formula c(c-1)/(2b) =0.591*(-0.409)/(1",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "293",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-6",
+     "out_tokens": 4096,
+     "response_tail": "\n\nBecause the rectangle is inscribed in \\(\\omega_1\\), whose radius is \\(6\\),\n\n\\[\nu^2+v^2=36.\n\\]\n\nThe area of \\(\\triangle DGF\\) has base \\(GF=2u\\) and height \\(12-v\\), so\n\n\\[\n[DGF]=\\frac12(2u)(12-v)=u(12-v).\n\\]\n\nThe area of \\(\\triangle CHG\\) has base \\(GH=2v\\) and height \\(24-u\\), so\n\n\\[\n[CHG]=\\frac1",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "237",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-7",
+     "out_tokens": 4096,
+     "response_tail": "quirement B is nonempty set with property that lcm of its element is 2025. If B empty, lcm maybe 1 by convention? Not 2025. No issue.\n\nNeed produce final with boxed. Could be concise but enough.\n\nLet's consider if m/n relatively prime: 109/128, sum 237. 109 prime? 109 not divisible by 2,3,5,7 (7*15=",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "610",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-8",
+     "out_tokens": 4096,
+     "response_tail": " -79/25=-3.16 floor -4. h=1-72+96=25. b=9 diff89 m=-4? -89/25=-3.56 floor -4. h=1-81+96=16. min 1. success.\n\nr=2: g=2. b=0 2. b=1 diff8 m=-1 h=2-9+24=17. b=2 diff18 m=-1 h=2-18+24=8. b=3 diff28 m=-2 h=2-27+48=23. b=4 diff38 m=-2 h=2-36+48=14. b=5 diff48 m=-2 h=2-45+48=5. b=6 diff58 m=-3 h=2-54+72=20",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "149",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-9",
+     "out_tokens": 4096,
+     "response_tail": "\\]\n\nSet \\(u=5x\\). Since \\(0<x<2\\pi\\), we have\n\n\\[\n0<u<10\\pi.\n\\]\n\nNow\n\n\\[\nf(x)=0 \\iff \\sin(7\\pi\\sin u)=0\n\\]\n\nso\n\n\\[\n7\\pi\\sin u=k\\pi\n\\]\n\nfor some integer \\(k\\). Thus\n\n\\[\n\\sin u=\\frac{k}{7}.\n\\]\n\nBecause \\(-1\\le \\sin u\\le 1\\), the possible integer values are\n\n\\[\nk=-7,-6,\\dots,6,7.\n\\]\n\nCount solutions in",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "103",
+     "extracted": "292",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-1",
+     "out_tokens": 1369,
+     "response_tail": " 0\\le b\\le 4,\\; d\\in\\{0,1\\}.\n\\]\n\nChecking units digits:\n\n\\[\n\\begin{array}{c|c|c}\nb & 3^b & 3^b7 \\\\\n\\hline\n0 & 1 & 7 \\\\\n1 & 3 & 21 \\\\\n2 & 9 & 63 \\\\\n3 & 27 & 189 \\\\\n4 & 81 & 567\n\\end{array}\n\\]\n\nThe ones with units digit \\(1\\) are \\(1,21,189,81\\). Their sum is\n\n\\[\n1+21+189+81=292.\n\\]\n\n\\[\n\\boxed{292}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{-1+\\sqrt{17}}{2},\\frac{-1-\\sqrt{17}}{2}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-10",
+     "out_tokens": 4096,
+     "response_tail": "uations.\nUse p t + q s =? Equation r+u + p t + q s = -11 => 1-149 + p t + q(1-p) = -11 => p t + q - p q =137.\nSub t=25+149q:\np(25+149q)+q - p q =137 => 25p +149p q + q - p q =137 => 25p + q(148p+1)=137.\nAlso q=(p^2-p-42)/150.\nPlug maybe.\nAlternatively use pu+qt+rs=91: p(-149)+ q t + 1*(1-p) =91 => -",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "56",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-11",
+     "out_tokens": 4096,
+     "response_tail": "m 1 to 2 through 3,4,5,6. We counted 4 directed paths. So undirected cycles = 4. Sequences with rotations/reflections different = 14*4=56. Let's test by direct fix 7 at position 1: should be 2C=8 sequences. Let's enumerate to verify.\n\nCycles (edge sets) from P=4:\n1) 1-3-4-5-2 plus 7: cycle 7-1-3-4-5",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "29",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-12",
+     "out_tokens": 4096,
+     "response_tail": "lily pads\" maybe the frog can jump over removed pads? It says can only jump between two lily pads which are horizontally or vertically adjacent. If a pad is removed, it's not a lily pad, so cannot be between? Adjacent pads in original grid: if one removed, the two on either side are not adjacent? In",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "105",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-13",
+     "out_tokens": 4096,
+     "response_tail": "ble. ?=6? 6 isolated in A? neighbors 5,7 not in A. ?=7? 7 isolated. So no. More generally, if P_i split, P_{i-1} in A with 2i-1, P_{i+1} in B with 2i. Blocks size 4. A contains P_{i-1} and vertex 2i-1 (half of P_i). It needs one more vertex x. For x to not be isolated, x must be adjacent to 2i-1 or ",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2304",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-14",
+     "out_tokens": 4096,
+     "response_tail": "=0..5} T_s(a_{s+1})? Since T_s depends only on a_{s+1}, and a_0 fixed. But a_{s+1} must be in V_{s+1}. T_s(a') zero if not. The sum over a_1..a_5 of product T_0(a_1) T_1(a_2) ... T_5(a_6) with a_6=3. Since factors depend on different variables, sum factorizes: (sum_{a1 in V1} T0(a1)) * (sum_{a2 in V",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "200",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-15",
+     "out_tokens": 4096,
+     "response_tail": "nnects, maybe can add? We minimize deletions, so likely connected.\n\nBut wait: A closed trail cannot traverse a door more than once, but can it visit cells multiple times? Yes. It is a closed trail. It need not use all edges of an even subgraph? It uses a connected even subgraph exactly. Max edges in",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "6300",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-16",
+     "out_tokens": 4096,
+     "response_tail": " touching. Good.\n\nLet's see if answer 6300 is too large? Total unordered pairs 25200. 6300 ~25%. Plausible.\n\nLet's maybe brute force mentally for smaller n to see formula. For 1x1 grid: one rectangle. No pairs. Formula n=1: M=C(2,2)^2=1, D=2*C(2,4)? C(2,4)=0, D=0, answer 0. Good.\nFor 2x2 grid: total",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2^25*26!",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 4096,
+     "response_tail": " for pair (b,a). I only checked a. Need both ordered pairs. For two-letter subsystem, condition must hold for x1=a,x2=b and x1=b,x2=a. So valid patterns must satisfy both. Let's check our 5:\n1 aaabbb: a gaps 0,0; b gaps 0,0 ok.\n2 ababab: a gaps 1,1; b gaps 1,1 ok.\n3 bababa: a gaps 1,1; b gaps 1,1 ok",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{2025}{101}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 4096,
+     "response_tail": " forbidden right, no integer gap? If L=1, R-200=2, forbidden [1,1] and [2,201], covers all. Need L < R-200 -? For integer l, need an integer l with L < l < R-200? Wait right forbidden starts at R-200 inclusive. Left forbidden ends at L inclusive. Gap if L < R-200 - 1? i.e. R-200 - L >= 2? Let's test",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{4}{9}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-19",
+     "out_tokens": 4096,
+     "response_tail": "pe -\u221a3 has angle 30\u00b0 (or 210). Width 60: \u03b8\u2208[0,60]? But horizontal \u03b8=0 at boundary. For \u03b8 small positive (e.g., 30\u00b0), line through center y=tan30 x = x/\u221a3. Does it hit E2 and E5? Let's test. E2: y=-\u221a3(x-1), x\u2208[1/2,1]. Set x/\u221a3 = -\u221a3 x + \u221a3 => x(1/\u221a3+\u221a3)=\u221a3 => x*(4/\u221a3)=\u221a3 => x=3/4, y=\u221a3/4\u22480.433. On E2",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{448}{3}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-20",
+     "out_tokens": 4096,
+     "response_tail": "attempt to model exactly and compute expected time via Markov chain? State space huge but symmetry and small N maybe doable analytically. Need final answer likely integer/rational. We can use reasoning, maybe derive closed form.\n\nLet's first clarify merge condition and length conservation. I suspect",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "63",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-22",
+     "out_tokens": 4096,
+     "response_tail": "y from the ceiling, while two stalagmites of heights 25 and 49 grow perpendicularly from the ground. If the tips of these four structures form the vertices of a square in some order, compute the height of the cave.\" It doesn't mention positions. In a 2D cave, structures are vertical line segments at",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "8\\sqrt{10}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-23",
+     "out_tokens": 4096,
+     "response_tail": "r but not necessarily assigned to triangles in cyclic order? The phrase \"areas of triangle PAB, PBC, PCD, PDA are 1,2,3,4, in some order\" means the multiset of those four areas is {1,2,3,4}. We label them a,b,c,d in that cyclic order. Good.\n\nLet's think of edge cases: P inside square, areas positive",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "20",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-24",
+     "out_tokens": 4096,
+     "response_tail": "mple? Need verify all conditions and orientation. But wait R=10, r2^2=10, r2\u22483.162, c\u22488.944. Product 20. Need ensure S1 radius 1 and diameters parallel leads to r2^2=R? Let's double-check derivation. There may be subtlety: S1's diameter horizontal, chord of S2, so O2O1 vertical. But is S1's diameter",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{23}-2\\sqrt{3}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-25",
+     "out_tokens": 4096,
+     "response_tail": "4u)/2 + u/12 = (6t -24u + u)/12 = (6t -23u)/12.\n\u0394y = 5/2 - 5u t/12 = (30 -5u t)/12 = 5(6 - u t)/12. Note u t = \u221a69.\n\nXP^2 = [ (6t -23u)^2 + 25(6 - u t)^2 ] /144.\n\nCompute. t^2=23, u^2=3, (ut)^2=69.\nFirst: (6t -23u)^2 =36*23 -2*6*23 u t +529*3 =828 -276 u t +1587 =2415 -276 u t.\nSecond: 25(6 - u t)^2",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "9\\sqrt{15}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-26",
+     "out_tokens": 4096,
+     "response_tail": "(47r/10)*(17/2)=800? 47*17=800? 47*10=470, *7=329 total 799? Wait 47*17 = 47*(20-3)=940-141=799. /20.\nO2 y*O3 x = (33r/10)*(17/2)=561r/20.\nO3 y*O4 x = (11r/10)*(11/2)=121r/20.\nO4 y*O1 x = (9r/10)*(11/2)=99r/20.\nTotal2=(799+561+121+99)=1580? 799+561=1360, +121=1481, +99=1580. /20=79r.\nDifference=61r-",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{7}{18}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-27",
+     "out_tokens": 4096,
+     "response_tail": "final area ratio maybe rational? Let's explore.\n\nAlternative use trilinear/barycentric? Condition angle ABP = angle ACP and BP/PC ratio. Could be solved by law of sines in triangles with known sides. Let's investigate for elegant solution.\n\nLet BP = u, PC = 2u. Let AP = v. In triangle ABP: sides AB=",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{6}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-28",
+     "out_tokens": 4096,
+     "response_tail": "2-2)^2+(h/2)^2 = a^2/4 -2a+4 + h^2/4.\nBut h=k+s, so h^2/4=(k^2+2ks+s^2)/4.\nUse k^2=25-a^2, ks=4a-19, s^2=21:\nh^2/4=(25-a^2+8a-38+21)/4=(-a^2+8a+8)/4.\nThen MD^2=a^2/4-2a+4 + (-a^2+8a+8)/4 = a^2/4-2a+4 -a^2/4+2a+2=6.\nThus MD=\u221a6.\n\nNeed ensure no sign issue: s could be \u00b1\u221a21, but relation sk=4a-19 and k^",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "14+4\\sqrt{37}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-29",
+     "out_tokens": 4096,
+     "response_tail": "= w (w-10)^2 (w-18)^2.\n\nThis is quintic? Actually RHS degree 5? (w-10)^2(w-18)^2 times w degree 5. LHS linear. But maybe factor? Let's check. Did we make algebra? p+q = 24v(1/(w-10)+1/(w-18)). v=576/((w-10)(w-18)). Then p+q = 24*576*( (w-18)+(w-10) ) /[(w-10)^2(w-18)^2] = 13824*(2w-28)/... =27648(w-",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{1}{576}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-3",
+     "out_tokens": 4096,
+     "response_tail": "ince D=log_2 18, z=1/18. Then xyz = 1/(4*8*18)=1/576. Check equations:\nx=1/4, y=1/8, z=1/18.\nlog_2(yz)=log_2(1/144)= -log_2 144 = -(log_2(16*9)) = -(4+2t) = -D-3? D=1+2t, D+3=4+2t. x^{log_2(yz)} = (1/4)^{-(4+2t)} = 4^{4+2t} = 2^{8+4t}=2^8*3^4. Yes.\nSecond: yz? y^{log_2(zx)}: zx=1/(72)? 1/4*1/18=1/72",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-30",
+     "out_tokens": 4096,
+     "response_tail": "0.4/1.732=0.2309, not. Wait length diff =? For x face x=1: y+z=d-1=-0.8, length \u221a2(2-0.8)=1.2\u221a2; x=-1: y+z=d+1=1.2, length \u221a2(0.8)=0.8\u221a2; diff=0.4\u221a2. So differences all 0.4\u221a2. Distance from center to plane = |d|/\u221a3 =0.11547. 2*distance? 0.2309. Not equal. Difference =? 2d/\u221a3? 0.2309 no. Difference =",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "-984",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-4",
+     "out_tokens": 4096,
+     "response_tail": " extra? Actually S = P_pos(1..2001) + P_neg(-1..-1999). P_neg = -sum_{m=1..1999} ceil(4050/m). P_pos = sum_{m=1..1999} floor + floor(4050/2001). So S = floor(4050/2001) + sum_{m=1..1999}(floor - ceil). floor-ceil = 0 if integer else -1. So S=2 - (1000 - 14) = -984. Good.\n\nCould there be a divisor 20",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{1311}{2017}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate",
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-6",
+     "out_tokens": 4096,
+     "response_tail": " For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025? no. For p=2025?",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{9\\sqrt{23}}{23}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-7",
+     "out_tokens": 4096,
+     "response_tail": "ly algebraic solution that might be expected. But tangent is nice. Need ensure no hidden assumption: a,b,c positive real, so arctan defined. Good.\n\nLet's think about alternative derivation of identity:\nFor A+B+C=\u03c0/2,\nsin^2 A + sin^2 B + sin^2 C + 2 sin A sin B sin C =1.\nProof: Since C=\u03c0/2-(A+B), sin",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "1-\\frac{2}{\\pi}",
+     "extracted": "0? But partial not",
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed"
+     ],
+     "id": "hmmt25-feb-8",
+     "out_tokens": 4096,
+     "response_tail": "t 0 or 1/2? Need check: y_n=0 iff 2^n/(2\u03c0) integer => 2^{n-1}/\u03c0 integer => \u03c0 rational, no. y_n=1/2 iff 2^n/(2\u03c0) = k+1/2 => 2^n/\u03c0 = 2k+1 integer odd => \u03c0 rational, no. So no zeros.\n\nLet d_n = floor(2 y_n) \u2208 {0,1}. Then d_n=0 if y_n<1/2, d_n=1 if y_n>1/2. Thus sgn(sin(2^n)) = 1 - 2 d_n? Check: if y_n<",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "1037",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-9",
+     "out_tokens": 4096,
+     "response_tail": "2*4=8=3, add to next 0 =>3.\nMultiply 2*3=6=1, add to next 4 =>0. Quotient 1,2,4,3,1. Product gave constant 3? Let's multiply carefully in F5:\n(x-2)(x^4+2x^3+4x^2+3x+1)\n= x^5 +2x^4+4x^3+3x^2+x -2x^4 -4x^3 -8x^2 -6x -2\nModulo 5: -2 \u22613, -4\u22611, -8\u22612, -6\u22614.\nCoeffs:\nx^5:1\nx^4:2+3=5=0\nx^3:4+1=5=0\nx^2:3+2=5=",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "145",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "math500-hard-geometry-183",
+     "out_tokens": 4096,
+     "response_tail": "teral ABCE (order A-B-C-E) is cyclic, opposite angles B and E sum 180. Similarly BDF? Let's see: B,D,F are not opposite in a quadrilateral. But maybe combine: In cyclic quadrilateral B C D E, \u2220B? No B is not vertex. Hmm.\n\nCould use: \u2220B + \u2220D + \u2220F = 360. Need prove maybe via arcs easiest.\n\nLet's check",
+     "status": "truncated",
+     "sub": "math500_hard"
+    },
+    {
+     "error": null,
+     "expected": "16",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "math500-hard-geometry-229",
+     "out_tokens": 4096,
+     "response_tail": "s|/|m_1-m_2|.\nProof: The two lines of slope m_1 intersect the two of slope m_2; vector between intersections along one family has length in x = |p-q|/|m_1-m_2|? Or use determinant.\n\nThen apply:\nFirst: |c-d|*|c-d|/|a-b| = (c-d)^2/|a-b| = 18.\nSecond: (c+d)^2/|a-b| = 72.\nLet D=|a-b|. Then (c+d)^2 = 4(c",
+     "status": "truncated",
+     "sub": "math500_hard"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{14}{3}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "math500-hard-geometry-817",
+     "out_tokens": 4096,
+     "response_tail": "found r=14/3. Let's check geometry: S1 center O1=(7,0), radius 7. S2 center O2=(0,14-r) if diameter from y=2r to 14? Wait if radius r, diameter length 2r, top endpoint B at y=14, bottom endpoint at y=14-2r. Center y=14-r. For r=14/3, center y=28/3? Wait 14 - 14/3 = 28/3, not 38/3. I earlier used c=1",
+     "status": "truncated",
+     "sub": "math500_hard"
+    },
+    {
+     "error": null,
+     "expected": "100",
+     "extracted": "32(1+\\sqrt2)",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "math500-hard-intermediate-algebra-1166",
+     "out_tokens": 3043,
+     "response_tail": "+\\frac{64}{t}\\ge 2\\sqrt{8t\\cdot \\frac{64}{t}}\n=32\\sqrt2.\n\\]\n\nTherefore,\n\n\\[\n\\frac{(a+b+c)\\left((a+b)^2+(a+b+4c)^2\\right)}{abc}\n\\ge 32+32\\sqrt2.\n\\]\n\nEquality occurs when \\(a=b\\) and \\(8t=\\frac{64}{t}\\), i.e. \\(t=2\\sqrt2\\), so \\(a=b=\\sqrt2\\,c\\).\n\nHence the minimum value is\n\n\\[\n\\boxed{32(1+\\sqrt2)}.\n\\]",
+     "status": "wrong",
+     "sub": "math500_hard"
+    },
+    {
+     "error": null,
+     "expected": "64",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "math500-hard-intermediate-algebra-2022",
+     "out_tokens": 4096,
+     "response_tail": ", total <0.82, not 1. If negative -0.5, positives sum 0.5, squares max? For fixed positive sum 0.5, squares can be up to 0.25 if one positive, total 0.5. Not 1. If negative -0.99, positives sum 0.99, squares max 0.9801 plus 0.9801=1.9602 possible? But sum squares target 1. Example t1=-0.99, t2=0.99?",
+     "status": "truncated",
+     "sub": "math500_hard"
+    },
+    {
+     "error": null,
+     "expected": "17",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "math500-hard-intermediate-algebra-955",
+     "out_tokens": 4096,
+     "response_tail": "? For n=2, 8. Yes. So candidate 17.\n\nNeed reevaluate. T_2(2x-1)=8x^2-8x+1. At x=0:1, x=0.5:-1, x=1:1. Sum 17. Likely maximum? Need check.\n\nCould there be larger with b,c? Let's explore.\n\nIn t variable [-1,1], p(t)=A t^2 + B t + C, sup\u22641. Chebyshev T_2(t)=2t^2-1 has A=2,B=0,C=-1. In x coefficients: a",
+     "status": "truncated",
+     "sub": "math500_hard"
+    }
+   ],
+   "gpu_minutes": 7.202,
+   "info_per_gpu_min": 2.386,
+   "max_tokens": 4096,
+   "mean_out_tokens": 3388.6,
+   "mean_prompt_tokens": 195.3,
+   "mean_score": 0.3125,
+   "n_attempted": 80,
+   "n_cancelled": 0,
+   "n_correct": 25,
+   "n_error": 0,
+   "n_planned": 80,
+   "n_scored": 80,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 59.23,
+   "p50_out_tokens": 4096,
+   "p90_item_s": 63.91,
+   "status_counts": {
+    "correct": 25,
+    "truncated": 52,
+    "wrong": 3
+   },
+   "sub": {
+    "aime25": {
+     "acc": 0.2667,
+     "acc_strict": 0.2667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.1418,
+      0.4445
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3544.8,
+     "mean_prompt_tokens": 234.9,
+     "mean_score": 0.2667,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 59.35,
+     "p50_out_tokens": 4096,
+     "p90_item_s": 63.9,
+     "status_counts": {
+      "correct": 8,
+      "truncated": 21,
+      "wrong": 1
+     },
+     "total_out_tokens": 106345,
+     "total_prompt_tokens": 7047,
+     "trunc_rate": 0.7333,
+     "wall_s": 128.5
+    },
+    "hmmt25": {
+     "acc": 0.1,
+     "acc_strict": 0.1,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0346,
+      0.2562
+     ],
+     "degenerate_rate": 0.0333,
+     "mean_out_tokens": 3817.4,
+     "mean_prompt_tokens": 169.7,
+     "mean_score": 0.1,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 3,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 60.64,
+     "p50_out_tokens": 4096,
+     "p90_item_s": 63.91,
+     "status_counts": {
+      "correct": 3,
+      "truncated": 26,
+      "wrong": 1
+     },
+     "total_out_tokens": 114523,
+     "total_prompt_tokens": 5091,
+     "trunc_rate": 0.9,
+     "wall_s": 129.3
+    },
+    "math500_hard": {
+     "acc": 0.7,
+     "acc_strict": 0.7,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.481,
+      0.8545
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2510.8,
+     "mean_prompt_tokens": 174.2,
+     "mean_score": 0.7,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 14,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 39.17,
+     "p50_out_tokens": 2601,
+     "p90_item_s": 63.72,
+     "status_counts": {
+      "correct": 14,
+      "truncated": 5,
+      "wrong": 1
+     },
+     "total_out_tokens": 50217,
+     "total_prompt_tokens": 3484,
+     "trunc_rate": 0.35,
+     "wall_s": 107.6
+    }
+   },
+   "total_out_tokens": 271085,
+   "total_prompt_tokens": 15622,
+   "trunc_rate": 0.7,
+   "wall_s": 129.3
+  },
+  "tools": {
+   "acc": 0.8857,
+   "acc_strict": 0.8857,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7904,
+    0.9409
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_ast_micro": 0.9,
+    "acc_by_sub": {
+     "irrelevance": 0.8,
+     "multiple": 0.8667,
+     "parallel": 1.0,
+     "parallel_multiple": 0.7,
+     "simple": 0.95
+    },
+    "acc_irrelevance": 0.8,
+    "acc_official": 0.8792,
+    "declined_rate_ast": 0.0167,
+    "error_codes": {
+     "call_count": 1,
+     "declined": 1,
+     "spurious_call": 2,
+     "value_mismatch": 6,
+     "wrong_function": 4
+    },
+    "mean_score_ast": 0.9139,
+    "mode": "prompt",
+    "parse_methods": {
+     "json_list": 69,
+     "json_objects": 1
+    },
+    "text_calls_ignored": 0,
+    "tool_calls_in_prompt_mode": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "bfcl3-irrelevance_27",
+    "bfcl3-irrelevance_33",
+    "bfcl3-multiple_10",
+    "bfcl3-multiple_191",
+    "bfcl3-parallel_multiple_151",
+    "bfcl3-parallel_multiple_42",
+    "bfcl3-parallel_multiple_69",
+    "bfcl3-simple_358"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "change_in_temp": 4,
+        "mass": 3,
+        "specific_heat": 4.184
+       },
+       "name": "calculate_heat"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_27",
+     "out_tokens": 97,
+     "response_tail": " call calculate_heat. User asks energy needed to increase temp of 3 kg water by 4 C. Specific heat water 4.184 J/kg\u00b0C per schema. Need output ONLY JSON array of function calls. Ensure exact.\n</think>\n\n[{\"name\": \"calculate_heat\", \"arguments\": {\"mass\": 3, \"specific_heat\": 4.184, \"change_in_temp\": 4}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "sequence": "ATCG"
+       },
+       "name": "identify_species"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_33",
+     "out_tokens": 84,
+     "response_tail": "use function identify_species. Need output ONLY JSON array of function calls. Required sequence \"ATCG\". Database default GenBank, not specified. So call identify_species with sequence ATCG. Need ensure final only JSON array.\n</think>\n\n[{\"name\": \"identify_species\", \"arguments\": {\"sequence\": \"ATCG\"}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "database.modify_columns": {
+        "columns": [
+         [
+          "email",
+          "ssn"
+         ],
+         [
+          "ssn",
+          "email"
+         ],
+         [
+          "email",
+          "social_security_number"
+         ],
+         [
+          "social_security_number",
+          "email"
+         ],
+         [
+          "email",
+          "social security number"
+         ],
+         [
+          "social security number",
+          "email"
+         ]
+        ],
+        "db_name": [
+         "employees"
+        ],
+        "operation": [
+         "delete"
+        ],
+        "table": [
+         "personal_data"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_10",
+     "out_tokens": 466,
+     "response_tail": "include JSON array? It says respond with empty array [] followed by explanation. Could be:\n[]\nThe request does not specify the exact column names to delete from the personal_data table.\nNo extra.\n</think>\n\n[]\nThe request does not specify the exact column names to delete from the personal_data table.",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Paradise"
+        ],
+        "location": [
+         "Las Vegas",
+         "Las Vegas, NV",
+         "LV"
+        ],
+        "room_type": [
+         "luxury",
+         "Luxury"
+        ],
+        "start_date": [
+         "05-12-2022",
+         "2022-05-12",
+         "12/05/2022",
+         "May.12,2022",
+         "May 12, 2022"
+        ],
+        "stay_duration": [
+         3
+        ],
+        "view": [
+         "city",
+         "city view"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Paradise",
+        "location": "Las Vegas",
+        "room_type": "luxury room",
+        "start_date": "05-12-2022",
+        "stay_duration": 3,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_191",
+     "out_tokens": 156,
+     "response_tail": " => 05-12-2022. stay_duration 3. view \"city view\". Need output only JSON array. Ensure no extra.\n</think>\n\n[{\"name\": \"book_hotel\", \"arguments\": {\"hotel_name\": \"Hotel Paradise\", \"location\": \"Las Vegas\", \"room_type\": \"luxury room\", \"start_date\": \"05-12-2022\", \"stay_duration\": 3, \"view\": \"city view\"}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Le Bristol Paris"
+        ],
+        "location": [
+         "Paris, France",
+         "Paris"
+        ],
+        "room_type": [
+         "suite",
+         "Suite"
+        ],
+        "start_date": [
+         "12-01-2022",
+         "2022-12-01",
+         "Dec 1, 2022"
+        ],
+        "stay_duration": [
+         10
+        ],
+        "view": [
+         "city view",
+         "city"
+        ]
+       }
+      },
+      {
+       "latest_exchange_rate": {
+        "amount": [
+         1000
+        ],
+        "source_currency": [
+         "USD",
+         "US Dollars",
+         "US Dollar"
+        ],
+        "target_currency": [
+         "EUR",
+         "Euro"
+        ]
+       }
+      },
+      {
+       "safeway.order": {
+        "items": [
+         [
+          "water",
+          "apples",
+          "bread"
+         ]
+        ],
+        "location": [
+         "Palo Alto, CA",
+         "Palo Alto",
+         "CA"
+        ],
+        "quantity": [
+         [
+          2,
+          3,
+          1
+         ]
+        ]
+       }
+      },
+      {
+       "light_travel_time": {
+        "distance_in_light_years": [
+         4.24
+        ],
+        "speed_of_light": [
+         299792458,
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Le Bristol Paris",
+        "location": "Paris, France",
+        "room_type": "suite room",
+        "start_date": "12-01-2022",
+        "stay_duration": 10,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      },
+      {
+       "arguments": {
+        "amount": 1000,
+        "source_currency": "USD",
+        "target_currency": "EUR"
+       },
+       "name": "latest_exchange_rate"
+      },
+      {
+       "arguments": {
+        "items": [
+         "bottles of water",
+         "apples",
+         "loaf of bread"
+        ],
+        "location": "Palo Alto, CA",
+        "quantity": [
+         2,
+         3,
+         1
+        ]
+       },
+       "name": "safeway_order"
+      },
+      {
+       "arguments": {
+        "distance_in_light_years": 4.24,
+        "speed_of_light": 299792458
+       },
+       "name": "light_travel_time"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_151",
+     "out_tokens": 1007,
+     "response_tail": "items\": [\n        \"bottles of water\",\n        \"apples\",\n        \"loaf of bread\"\n      ],\n      \"quantity\": [\n        2,\n        3,\n        1\n      ]\n    }\n  },\n  {\n    \"name\": \"light_travel_time\",\n    \"arguments\": {\n      \"distance_in_light_years\": 4.24,\n      \"speed_of_light\": 299792458\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "artwork.find": {
+        "artist": [
+         ""
+        ],
+        "material": [
+         "bronze",
+         "Bronze"
+        ],
+        "museum": [
+         "Modern Arts Museum, New York",
+         "Modern Arts Museum"
+        ],
+        "type": [
+         "sculpture",
+         "Sculpture"
+        ]
+       }
+      },
+      {
+       "artwork.find": {
+        "artist": [
+         ""
+        ],
+        "material": [
+         "stone",
+         "Stone"
+        ],
+        "museum": [
+         "Louvre Museum, Paris",
+         "Louvre Museum",
+         "Paris"
+        ],
+        "type": [
+         "sculpture",
+         "Sculpture"
+        ]
+       }
+      },
+      {
+       "artwork.find": {
+        "artist": [
+         "Picasso"
+        ],
+        "material": [
+         ""
+        ],
+        "museum": [
+         "Metropolitan Museum of Art",
+         "Metropolitan Museum"
+        ],
+        "type": [
+         "painting"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "material": "Bronze",
+        "museum": "Modern Arts Museum in New York",
+        "type": "Sculpture"
+       },
+       "name": "artwork_find"
+      },
+      {
+       "arguments": {
+        "material": "Stone",
+        "museum": "Louvre Museum in Paris",
+        "type": "Sculpture"
+       },
+       "name": "artwork_find"
+      },
+      {
+       "arguments": {
+        "artist": "Picasso",
+        "museum": "Metropolitan Museum of Art",
+        "type": "Painting"
+       },
+       "name": "artwork_find"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_42",
+     "out_tokens": 608,
+     "response_tail": "artwork_find\",\n    \"arguments\": {\n      \"museum\": \"Louvre Museum in Paris\",\n      \"type\": \"Sculpture\",\n      \"material\": \"Stone\"\n    }\n  },\n  {\n    \"name\": \"artwork_find\",\n    \"arguments\": {\n      \"museum\": \"Metropolitan Museum of Art\",\n      \"type\": \"Painting\",\n      \"artist\": \"Picasso\"\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         ""
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.inflation_adjustment": {
+        "inflation_rate": [
+         0.03
+        ],
+        "initial_sum": [
+         200000.0
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.loan_repayment": {
+        "interest_rate": [
+         0.04
+        ],
+        "loan_amount": [
+         300000.0
+        ],
+        "loan_term": [
+         10
+        ]
+       }
+      },
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         true
+        ],
+        "years": [
+         5
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      },
+      {
+       "arguments": {
+        "inflation_rate": 3,
+        "initial_sum": 200000,
+        "years": 5
+       },
+       "name": "finance_inflation_adjustment"
+      }
+     ],
+     "finish_reason": "length",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_69",
+     "out_tokens": 1024,
+     "response_tail": "me\": \"finance_property_depreciation\",\n    \"arguments\": {\n      \"initial_cost\": 500000,\n      \"depreciation_rate\": 2,\n      \"years\": 5\n    }\n  },\n  {\n    \"name\": \"finance_inflation_adjustment\",\n    \"arguments\": {\n      \"initial_sum\": 200000,\n      \"years\": 5,\n      \"inflation_rate\": 3\n    }\n  },\n  {\n",
+     "status": "truncated",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "recipe_search": {
+        "diet": [
+         [
+          "Gluten Free"
+         ],
+         [
+          "GF"
+         ],
+         [
+          "gluten free"
+         ]
+        ],
+        "dish": [
+         "cookie"
+        ],
+        "time_limit": [
+         30
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "diet": [
+         "Gluten Free"
+        ],
+        "dish": "cookie",
+        "time_limit": 29
+       },
+       "name": "recipe_search"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_358",
+     "out_tokens": 230,
+     "response_tail": "ime to prepare in minutes. To ensure less than 30, set 29. Could set 30? \"less than 30\" means <30, so 29. Diet [\"Gluten Free\"].\nNeed output ONLY JSON array. No explanation. Ensure exact.\n</think>\n\n[{\"name\": \"recipe_search\", \"arguments\": {\"dish\": \"cookie\", \"diet\": [\"Gluten Free\"], \"time_limit\": 29}}]",
+     "status": "wrong",
+     "sub": "simple"
+    }
+   ],
+   "gpu_minutes": 0.669,
+   "info_per_gpu_min": 10.593,
+   "max_tokens": 1024,
+   "mean_out_tokens": 292.2,
+   "mean_prompt_tokens": 559.7,
+   "mean_score": 0.8976,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 62,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 3.94,
+   "p50_out_tokens": 232,
+   "p90_item_s": 9.11,
+   "status_counts": {
+    "correct": 62,
+    "truncated": 1,
+    "wrong": 7
+   },
+   "sub": {
+    "irrelevance": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4902,
+      0.9433
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 240.3,
+     "mean_prompt_tokens": 403.0,
+     "mean_score": 0.8,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 2.3,
+     "p50_out_tokens": 148,
+     "p90_item_s": 3.89,
+     "status_counts": {
+      "correct": 8,
+      "wrong": 2
+     },
+     "total_out_tokens": 2403,
+     "total_prompt_tokens": 4030,
+     "trunc_rate": 0.1,
+     "wall_s": 47.0
+    },
+    "multiple": {
+     "acc": 0.8667,
+     "acc_strict": 0.8667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6212,
+      0.9626
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 204.3,
+     "mean_prompt_tokens": 689.0,
+     "mean_score": 0.8667,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 13,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 2.51,
+     "p50_out_tokens": 153,
+     "p90_item_s": 7.31,
+     "status_counts": {
+      "correct": 13,
+      "wrong": 2
+     },
+     "total_out_tokens": 3064,
+     "total_prompt_tokens": 10335,
+     "trunc_rate": 0.0,
+     "wall_s": 63.8
+    },
+    "parallel": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7961,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 359.9,
+     "mean_prompt_tokens": 468.1,
+     "mean_score": 1.0,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 5.03,
+     "p50_out_tokens": 311,
+     "p90_item_s": 8.09,
+     "status_counts": {
+      "correct": 15
+     },
+     "total_out_tokens": 5399,
+     "total_prompt_tokens": 7021,
+     "trunc_rate": 0.0,
+     "wall_s": 70.2
+    },
+    "parallel_multiple": {
+     "acc": 0.7,
+     "acc_strict": 0.7,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3968,
+      0.8922
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 588.5,
+     "mean_prompt_tokens": 874.3,
+     "mean_score": 0.7833,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 7.38,
+     "p50_out_tokens": 429,
+     "p90_item_s": 15.26,
+     "status_counts": {
+      "correct": 7,
+      "truncated": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 5885,
+     "total_prompt_tokens": 8743,
+     "trunc_rate": 0.1,
+     "wall_s": 56.3
+    },
+    "simple": {
+     "acc": 0.95,
+     "acc_strict": 0.95,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7639,
+      0.9911
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 185.2,
+     "mean_prompt_tokens": 452.6,
+     "mean_score": 0.95,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 19,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 2.77,
+     "p50_out_tokens": 148,
+     "p90_item_s": 5.08,
+     "status_counts": {
+      "correct": 19,
+      "wrong": 1
+     },
+     "total_out_tokens": 3704,
+     "total_prompt_tokens": 9052,
+     "trunc_rate": 0.0,
+     "wall_s": 67.9
+    }
+   },
+   "total_out_tokens": 20455,
+   "total_prompt_tokens": 39181,
+   "trunc_rate": 0.0286,
+   "wall_s": 70.2
+  }
+ },
+ "invalid_reasons": [],
+ "lcb_window": {
+  "after": "2025-01-11",
+  "before": "2025-04-05",
+  "counts": {
+   "easy": 8,
+   "medium": 22
+  },
+  "difficulties": [
+   "easy",
+   "medium"
+  ],
+  "file": "test6.jsonl",
+  "hard_available": false,
+  "n_seen": {
+   "easy": 43,
+   "hard": 80,
+   "medium": 52
+  },
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+ },
+ "model": "m",
+ "notes": [
+  "tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)",
+  "tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others",
+  "code: HumanEval+ items are a seeded sample of a curated 60-task hard pool (not the whole benchmark); MBPP+ items are a seeded sample of tasks with >= 3-line canonical solutions",
+  "code: HumanEval/32 (find_zero) is excluded: the HF test.jsonl assertion is malformed (unpacks a float) and even the canonical solution violates the find_zero oracle on 7/886 plus inputs, so the task is unpassable as shipped",
+  "code: LCB items are easy+medium problems of the newest release window (test6.jsonl), scored on the public tests plus a seeded sample of private tests (<= 24 per problem, first failure stops) with a 10 s wall limit per test; this is not the official LiveCodeBench scorer (which runs every private test)",
+  "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; no network isolation (the tests do not need network)",
+  "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is 'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and stdout must match the expected line structure",
+  "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
+  "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
+  "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+  "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
+  "longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers",
+  "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), 10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of MMLU-Pro keys are known to be noisy and are not corrected here",
+  "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged ('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; stricter than the official LLM grader on partial names, so absolute numbers are not comparable with published SimpleQA scores - use it for paired comparisons",
+  "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
+  "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
+  "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
+  "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
+  "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
+  "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+  "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+  "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/'et al.', deliberately not protected because protecting a form means never splitting after it again; 19 of the 132 instruction instances are number_sentences",
+  "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+  "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
+ ],
+ "partial": false,
+ "schema_version": 1,
+ "skipped_ids": [],
+ "started_at": "2026-09-04T09:58:19Z",
+ "tag": "q27_nvfp4_b12x--",
+ "truncated": false,
+ "valid": true,
+ "wall_s": 129.3
+}

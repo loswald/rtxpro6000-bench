@@ -1,0 +1,46 @@
+2026-09-04T10:50:09Z run gptoss20_--flashinfer_cutlass: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['http://127.0.0.1:8000', 'http://127.0.0.1:8001', 'http://127.0.0.1:8002', 'http://127.0.0.1:8003', 'http://127.0.0.1:8004', 'http://127.0.0.1:8005', 'http://127.0.0.1:8006', 'http://127.0.0.1:8007'], concurrency 128, budget 1200s
+2026-09-04T10:50:09Z longctx: prepare_run ...
+2026-09-04T10:50:09Z longctx: calibrated -> {"budgets": {"16k": 16384, "32k": 30208, "8k": 8192}, "chars_per_token": {"docs": 4.6859, "filler": 4.6715}, "checks": {"niah_multikey": {"budget": 30208, "item": "longctx-niah-32k-d85-11", "prompt_tokens": 29194}, "qa_multi_doc": {"budget": 30208, "item": "longctx-qa-32k-d10-08", "prompt_tokens": 29472}, "var_tracking": {"budget": 30208, "item": "longctx-vt-32k-05", "prompt_tokens": 29231}}, "fixed_tokens": {"niah_multikey": 170, "qa_multi_doc": 106, "var_tracking": 248}, "max_model_len": 32768, "max_tokens": 1024, "method": "tokenize", "tokenize_calls": 12}
+2026-09-04T10:50:09Z ifeval: prepare_run ...
+2026-09-04T10:50:09Z ifeval: +2560 reasoning tokens on 60 items (caps now 4096..5376)
+2026-09-04T10:50:19Z [    10s] tools=19/70 code=0/75 math=0/80 longctx=4/48 knowledge=3/70 ifeval=0/60 inflight=128 req=154 retries=0 err=0 out_tok/s=474 budget_left=1190s
+2026-09-04T10:50:29Z [    20s] tools=34/70 code=13/75 math=2/80 longctx=20/48 knowledge=19/70 ifeval=6/60 inflight=128 req=222 retries=0 err=0 out_tok/s=1757 budget_left=1180s
+2026-09-04T10:50:39Z [    30s] tools=45/70 code=27/75 math=7/80 longctx=39/48 knowledge=30/70 ifeval=16/60 inflight=128 req=292 retries=0 err=0 out_tok/s=2786 budget_left=1170s
+2026-09-04T10:50:49Z [    40s] tools=59/70 code=40/75 math=18/80 longctx=47/48 knowledge=37/70 ifeval=32/60 inflight=128 req=361 retries=0 err=0 out_tok/s=3521 budget_left=1160s
+2026-09-04T10:50:59Z [    50s] tools=70/70 code=56/75 math=24/80 longctx=48/48 knowledge=48/70 ifeval=46/60 inflight=111 req=403 retries=0 err=0 out_tok/s=4091 budget_left=1150s
+2026-09-04T10:51:09Z [    60s] tools=70/70 code=64/75 math=32/80 longctx=48/48 knowledge=60/70 ifeval=53/60 inflight=76 req=403 retries=0 err=0 out_tok/s=4588 budget_left=1140s
+2026-09-04T10:51:19Z [    70s] tools=70/70 code=66/75 math=37/80 longctx=48/48 knowledge=67/70 ifeval=56/60 inflight=59 req=403 retries=0 err=0 out_tok/s=4654 budget_left=1130s
+2026-09-04T10:51:29Z [    80s] tools=70/70 code=66/75 math=41/80 longctx=48/48 knowledge=70/70 ifeval=58/60 inflight=50 req=403 retries=0 err=0 out_tok/s=4541 budget_left=1120s
+2026-09-04T10:51:39Z [    90s] tools=70/70 code=67/75 math=44/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=44 req=403 retries=0 err=0 out_tok/s=4297 budget_left=1110s
+2026-09-04T10:51:49Z [   100s] tools=70/70 code=70/75 math=58/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=27 req=403 retries=0 err=0 out_tok/s=5048 budget_left=1100s
+2026-09-04T10:51:59Z [   110s] tools=70/70 code=71/75 math=67/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=17 req=403 retries=0 err=0 out_tok/s=5333 budget_left=1090s
+2026-09-04T10:52:09Z [   120s] tools=70/70 code=73/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=403 retries=0 err=0 out_tok/s=5292 budget_left=1080s
+2026-09-04T10:52:19Z [   130s] tools=70/70 code=75/75 math=79/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=1 req=403 retries=0 err=0 out_tok/s=5514 budget_left=1070s
+2026-09-04T10:52:21Z == gptoss20_--flashinfer_cutlass model=m wall=132.2s truncated=False valid=True 
+2026-09-04T10:52:21Z   tools      acc=0.871 n=70/70 ci95=[0.773,0.931] out_tok=275.8 trunc=0.0 err=0 
+2026-09-04T10:52:21Z     parallel_multiple acc=0.800 n=10/10 ci95=[0.490,0.943]
+2026-09-04T10:52:21Z     parallel         acc=1.000 n=15/15 ci95=[0.796,1.000]
+2026-09-04T10:52:21Z     multiple         acc=0.667 n=15/15 ci95=[0.417,0.848]
+2026-09-04T10:52:21Z     simple           acc=0.950 n=20/20 ci95=[0.764,0.991]
+2026-09-04T10:52:21Z     irrelevance      acc=0.900 n=10/10 ci95=[0.596,0.982]
+2026-09-04T10:52:21Z   code       acc=0.760 n=75/75 ci95=[0.652,0.843] out_tok=1531.5 trunc=0.08 err=0 
+2026-09-04T10:52:21Z     lcb_easy_medium  acc=0.800 n=30/30 ci95=[0.627,0.905]
+2026-09-04T10:52:21Z     humanevalplus    acc=0.880 n=25/25 ci95=[0.700,0.958]
+2026-09-04T10:52:21Z     mbppplus         acc=0.550 n=20/20 ci95=[0.342,0.742]
+2026-09-04T10:52:21Z   math       acc=0.525 n=80/80 ci95=[0.417,0.631] out_tok=4832.5 trunc=0.375 err=0 
+2026-09-04T10:52:21Z     aime25           acc=0.467 n=30/30 ci95=[0.302,0.639]
+2026-09-04T10:52:21Z     hmmt25           acc=0.367 n=30/30 ci95=[0.219,0.545]
+2026-09-04T10:52:21Z     math500_hard     acc=0.850 n=20/20 ci95=[0.640,0.948]
+2026-09-04T10:52:21Z   longctx    acc=0.771 n=48/48 ci95=[0.635,0.867] out_tok=381.3 trunc=0.1667 err=0 
+2026-09-04T10:52:21Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+2026-09-04T10:52:21Z     var_tracking     acc=0.583 n=12/12 ci95=[0.320,0.807]
+2026-09-04T10:52:21Z     qa_multi_doc     acc=0.500 n=12/12 ci95=[0.254,0.746]
+2026-09-04T10:52:21Z   knowledge  acc=0.371 n=70/70 ci95=[0.268,0.488] out_tok=1413.1 trunc=0.1 err=0 
+2026-09-04T10:52:21Z     mmlu_pro_hard    acc=0.650 n=40/40 ci95=[0.495,0.779]
+2026-09-04T10:52:21Z     simpleqa         acc=0.000 n=30/30 ci95=[0.000,0.114]
+2026-09-04T10:52:21Z   ifeval     acc=0.750 n=60/60 ci95=[0.628,0.842] out_tok=1454.6 trunc=0.0667 err=0 
+2026-09-04T10:52:21Z     triple           acc=0.625 n=24/24 ci95=[0.427,0.788]
+2026-09-04T10:52:21Z     double           acc=0.792 n=24/24 ci95=[0.595,0.908]
+2026-09-04T10:52:21Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+2026-09-04T10:52:21Z   aggregate  acc_micro=0.665 acc_macro=0.6748 n=403/403 ci95=[0.6176, 0.7093] requests=403 retries=0 out_tok/s=5486.9
+2026-09-04T10:52:21Z wrote /workspace/results/eval/gptoss20_--flashinfer_cutlass.json, /workspace/results/eval/gptoss20_--flashinfer_cutlass.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0

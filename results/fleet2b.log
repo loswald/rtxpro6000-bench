@@ -1,0 +1,111 @@
+[00:36:53] ===== FLEET, replica tier =====
+[00:36:53] ########## nemo35 (21G) ##########
+[00:36:58]   launch f2_nemo35 :: Nemotron-3.5-Lightning-30B --kernel-config.linear_backend b12x
+[00:38:09]   f2_nemo35 healthy 70s | GPU KV cache size: 13,098,097 tokens
+    kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+    kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/f2_nemo35_quality20.json
+  router     C256     33.2s    3767 req/min     8037 out/s     64296 in/s     72333 tot/s  TTFT   1011/   2780 ms  TPOT  24.1/  30.2 ms  ITL  24.1  E2E   4.1/  5.9 s
+  promptopt  C256     94.6s    1317 req/min     5621 out/s     78690 in/s     84311 tot/s  TTFT   1753/   7570 ms  TPOT  38.8/  44.8 ms  ITL  38.8  E2E  11.6/ 18.0 s
+  judge      C128     84.2s     740 req/min     6317 out/s     50533 in/s     56850 tot/s  TTFT   1087/   4562 ms  TPOT  18.1/  20.1 ms  ITL  18.1  E2E  10.4/ 14.2 s
+[00:42:44] ########## qwen36 (35G) ##########
+[00:42:50]   launch f2_qwen36 :: Qwen3.6-35B-A3B-FP8 --kernel-config.linear_backend b12x
+[00:46:51]   f2_qwen36 healthy 240s | GPU KV cache size: 4,040,861 tokens
+    kernel: Selected B12xFp8BlockScaledMMKernel
+    kernel: Using TRITON Fp8 MoE backend out of potential backends: ['AITER'
+quality20[chat]: ok=16 degenerate=4 wrong=0 error=0 -> /workspace/results/probe/f2_qwen36_quality20.json
+  router     C256     38.3s    3236 req/min     6903 out/s     55220 in/s     62123 tot/s  TTFT    880/   2908 ms  TPOT  30.4/  34.1 ms  ITL  30.4  E2E   4.7/  7.0 s
+  promptopt  C256     68.6s    1800 req/min     7680 out/s    107518 in/s    115198 tot/s  TTFT   1203/   3348 ms  TPOT  28.7/  31.8 ms  ITL  28.7  E2E   8.5/ 10.7 s
+  judge      C128    100.8s     614 req/min     5243 out/s     41941 in/s     47183 tot/s  TTFT   1342/   4304 ms  TPOT  21.8/  23.8 ms  ITL  21.8  E2E  12.5/ 15.9 s
+[00:51:29] ########## muse30 (56G) ##########
+[00:51:34]   launch f2_muse30 :: Muse-Glimmer-30B 
+[00:54:55]   f2_muse30 healthy 200s | GPU KV cache size: 2,056,050 tokens
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/f2_muse30_quality20.json
+  router     C256    164.0s     768 req/min     1638 out/s     13106 in/s     14744 tot/s  TTFT   5230/  15373 ms  TPOT 116.2/ 158.0 ms  ITL 116.2  E2E  20.0/ 29.4 s
+  promptopt  C256    147.7s     841 req/min     3590 out/s     50253 in/s     53843 tot/s  TTFT   4545/   9460 ms  TPOT  53.7/  70.3 ms  ITL  53.7  E2E  18.2/ 21.1 s
+  judge      C128    420.4s     147 req/min     1258 out/s     10064 in/s     11322 tot/s  TTFT   7915/  30665 ms  TPOT  86.4/ 100.5 ms  ITL  86.4  E2E  52.1/ 75.6 s
+[01:08:52] ########## gptoss20 (39G) ##########
+[01:08:57]   launch f2_gptoss20 :: gpt-oss-20b --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[01:11:18]   f2_gptoss20 healthy 140s | GPU KV cache size: 4,473,531 tokens
+    kernel: Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend.
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/f2_gptoss20_quality20.json
+  router     C256     26.0s    4824 req/min    10291 out/s     82332 in/s     92623 tot/s  TTFT    610/   1477 ms  TPOT  20.2/  24.0 ms  ITL  20.2  E2E   3.2/  4.1 s
+  promptopt  C256     39.9s    3151 req/min    13442 out/s    188192 in/s    201635 tot/s  TTFT    559/   1177 ms  TPOT  16.8/  19.2 ms  ITL  17.0  E2E   4.9/  5.2 s
+  judge      C128     87.9s     714 req/min     6091 out/s     48730 in/s     54821 tot/s  TTFT   1068/   3148 ms  TPOT  18.9/  21.3 ms  ITL  18.9  E2E  10.7/ 13.3 s
+[01:14:55] ########## gemma26 (49G) ##########
+[01:15:00]   launch f2_gemma26 :: gemma-4-26B-A4B-it 
+[01:19:42]   f2_gemma26 healthy 280s | GPU KV cache size: 762,337 tokens
+    kernel: Using FlashInfer CUTLASS Unquantized MoE backend out of potential backends: ['FlashInfer TRTLLM'
+    kernel: Using FlashInferExperts MoE backend
+quality20[chat]: ok=19 degenerate=0 wrong=1 error=0 -> /workspace/results/probe/f2_gemma26_quality20.json
+  router     C256     49.0s    2534 req/min     5407 out/s     43254 in/s     48661 tot/s  TTFT   1117/   3121 ms  TPOT  38.8/  46.7 ms  ITL  38.8  E2E   6.1/  7.9 s
+  promptopt  C256     69.4s    1806 req/min     7705 out/s    107870 in/s    115574 tot/s  TTFT    975/   2355 ms  TPOT  29.5/  33.1 ms  ITL  29.6  E2E   8.5/  9.4 s
+  judge      C128    132.6s     467 req/min     3989 out/s     31913 in/s     35903 tot/s  TTFT   1906/   6534 ms  TPOT  28.4/  32.1 ms  ITL  28.4  E2E  16.4/ 21.3 s
+[01:25:00] ########## gemma31 (59G) ##########
+[01:25:05]   launch f2_gemma31 :: gemma-4-31B-it 
+[01:29:47]   f2_gemma31 healthy 280s | GPU KV cache size: 135,804 tokens
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/f2_gemma31_quality20.json
+  router     C256    219.1s     571 req/min     1218 out/s      9742 in/s     10960 tot/s  TTFT   6125/  17588 ms  TPOT 159.0/ 225.7 ms  ITL 159.0  E2E  26.3/ 39.4 s
+  promptopt  C256    209.9s     592 req/min     2527 out/s     35375 in/s     37902 tot/s  TTFT   5979/  12661 ms  TPOT  78.2/  99.7 ms  ITL  78.2  E2E  25.9/ 30.5 s
+  judge      C128    550.9s     113 req/min      963 out/s      7705 in/s      8668 tot/s  TTFT   9463/  37982 ms  TPOT 114.6/ 132.1 ms  ITL 114.6  E2E  68.0/ 97.8 s
+[01:47:32] ===== FLEET, TP tier =====
+[01:47:32] ########## minimaxm3 (221G) tp4 x1 ##########
+[01:47:37]   launch f2_minimaxm3 :: MiniMax-M3-MXFP4 tp4 x1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[01:48:53]   f2_minimaxm3 FAILED after 50s
+[01:48:53] ########## minimaxm3_mtp (221G) tp4 x1 ##########
+[01:48:58]   launch f2_minimaxm3_mtp :: MiniMax-M3-MXFP4 tp4 x1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8 --speculative-config {"method":"minimax_m3_mtp","num_speculative_tokens":2}
+[01:50:13]   f2_minimaxm3_mtp FAILED after 50s
+[01:50:13] ########## qwen38fn (126G) tp2 x2 ##########
+[01:50:19]   launch f2_qwen38fn :: Qwen3.8-Flash-Next-NVFP4 tp2 x2 --kernel-config.linear_backend b12x
+[01:51:44]   f2_qwen38fn FAILED after 60s
+(Worker_TP0 pid=257126) ERROR 09-04 01:51:11 [multiproc_executor.py:944] WorkerProc failed to start.
+(Worker_TP0 pid=257126) ERROR 09-04 01:51:11 [multiproc_executor.py:944] Traceback (most recent call last):
+(Worker_TP0 pid=257126) ERROR 09-04 01:51:11 [multiproc_executor.py:944]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 911, in worker_main
+[01:51:44] ===== FLEET, drafter arms (speculation on models already measured) =====
+[01:51:44] ########## minimaxm3_dspark (221G) tp4 x1 ##########
+[01:51:49]   launch f2_minimaxm3_dspark :: MiniMax-M3-MXFP4 tp4 x1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8 --block-size 128 --speculative-config {"method":"dspark","model":"/workspace/models/MiniMax-M3-DSpark","num_speculative_tokens":8}
+[01:52:54]   f2_minimaxm3_dspark FAILED after 40s
+[01:52:54] ########## gemma26_mtp (49G) ##########
+[01:53:00]   launch f2_gemma26_mtp :: gemma-4-26B-A4B-it --speculative-config {"method":"gemma4_mtp","model":"/workspace/models/gemma-4-26B-A4B-it-assistant","num_speculative_tokens":3}
+[01:57:01]   f2_gemma26_mtp healthy 240s | GPU KV cache size: 722,266 tokens
+    kernel: Using FlashInfer CUTLASS Unquantized MoE backend out of potential backends: ['FlashInfer TRTLLM'
+    kernel: Using FlashInferExperts MoE backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/f2_gemma26_mtp_quality20.json
+  router     C256     54.3s    2322 req/min     4955 out/s     39637 in/s     44592 tot/s  TTFT   1140/   9817 ms  TPOT  39.3/  85.3 ms  ITL  80.5  E2E   6.1/ 18.6 s
+  promptopt  C256     55.4s    2241 req/min     9560 out/s    133834 in/s    143394 tot/s  TTFT    410/   2560 ms  TPOT  23.5/  59.8 ms  ITL  56.3  E2E   6.4/ 15.5 s
+  judge      C128    114.2s     553 req/min     4720 out/s     37764 in/s     42484 tot/s  TTFT    873/   6785 ms  TPOT  24.0/  66.6 ms  ITL  57.8  E2E  13.1/ 37.5 s
+[02:01:48] ########## nemo35_mtp (21G) ##########
+[02:01:53]   launch f2_nemo35_mtp :: Nemotron-3.5-Lightning-30B --kernel-config.linear_backend b12x --speculative-config {"method":"nemotron_h_mtp","num_speculative_tokens":3}
+[02:04:09]   f2_nemo35_mtp FAILED after 110s
+(EngineCore pid=274671) INFO 09-04 02:03:36 [speculator.py:120] Fused multi-step draft decode is not supported by attention backend(s) FLASHINFER; falling back to rebuilding attention metadata between
+[02:04:09] ########## nemo35_dspark (21G) ##########
+[02:04:14]   launch f2_nemo35_dspark :: Nemotron-3.5-Lightning-30B --kernel-config.linear_backend b12x --speculative-config {"method":"dspark","model":"/workspace/models/Nemotron-3.5-Lightning-DSpark","num_speculative_tokens":3}
+[02:07:05]   f2_nemo35_dspark healthy 170s | GPU KV cache size: 6,155,377 tokens
+    kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+    kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/f2_nemo35_dspark_quality20.json
+  router     C256     61.2s    2018 req/min     4305 out/s     34441 in/s     38747 tot/s  TTFT    971/   7911 ms  TPOT  47.0/  62.9 ms  ITL  51.9  E2E   6.9/ 13.7 s
+  promptopt  C256    127.0s     979 req/min     4177 out/s     58484 in/s     62661 tot/s  TTFT    899/   8097 ms  TPOT  56.9/  75.7 ms  ITL  67.7  E2E  15.4/ 24.4 s
+  judge      C128    104.2s     604 req/min     5153 out/s     41227 in/s     46381 tot/s  TTFT    589/   4853 ms  TPOT  23.0/  38.3 ms  ITL  34.3  E2E  12.3/ 20.9 s
+[02:13:19] ########## muse30_dflash (56G) ##########
+[02:13:25]   launch f2_muse30_dflash :: Muse-Glimmer-30B --speculative-config {"method":"dflash","model":"/workspace/models/Muse-Glimmer-30B-assistant","num_speculative_tokens":15}
+[02:16:51]   f2_muse30_dflash FAILED after 180s
+(EngineCore pid=290625) ERROR 09-04 02:16:16 [core.py:1385] EngineCore failed to start.
+(EngineCore pid=290625) ERROR 09-04 02:16:16 [core.py:1385] Traceback (most recent call last):
+(EngineCore pid=290625) ERROR 09-04 02:16:16 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1347, in run_engine_core
+[02:16:51] ########## q27_dflash2 (17G) ##########
+[02:16:56]   launch f2_q27_dflash2 :: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --speculative-config {"method":"dflash","model":"/workspace/models/Qwen3.8-27B-DFlash2","num_speculative_tokens":7}
+[02:21:37]   f2_q27_dflash2 healthy 280s | GPU KV cache size: 799,022 tokens
+    kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/f2_q27_dflash2_quality20.json
+  router     C256    115.7s    1065 req/min     2272 out/s     18173 in/s     20445 tot/s  TTFT   4667/  13163 ms  TPOT  68.9/ 148.1 ms  ITL 152.1  E2E  13.4/ 26.0 s
+  promptopt  C256    374.9s     332 req/min     1415 out/s     19807 in/s     21222 tot/s  TTFT  17351/  32947 ms  TPOT 109.6/ 185.1 ms  ITL 170.0  E2E  45.3/ 72.4 s
+  judge      C128    199.1s     314 req/min     2682 out/s     21458 in/s     24140 tot/s  TTFT   1789/  12985 ms  TPOT  42.9/ 129.6 ms  ITL 129.7  E2E  23.7/ 70.7 s
+[02:34:12] ===== FLEET, late additions =====
+[02:34:12] ########## inkling (160G) tp4 x1 ##########
+[02:34:17]   launch f2_inkling :: Inkling-Small-NVFP4 tp4 x1 --kernel-config.linear_backend b12x
+[02:35:33]   f2_inkling FAILED after 50s
+[02:35:33] ########## inkling_mtp (160G) tp4 x1 ##########
+[02:35:38]   launch f2_inkling_mtp :: Inkling-Small-NVFP4 tp4 x1 --kernel-config.linear_backend b12x --speculative-config {"method":"inkling_mtp","num_speculative_tokens":2}
+[02:36:53]   f2_inkling_mtp FAILED after 50s
+[02:46:01] FLEET2 DONE

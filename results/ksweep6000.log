@@ -1,0 +1,69 @@
+[03:02:41] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[03:02:41] ########## ling3f (76G, tp=1 x4) : b12x:b12x,b12x:flashinfer_b12x,b12x:triton,b12x:marlin,-:- ##########
+[03:07:33]     x lin=b12x moe=b12x : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[03:08:24]     x lin=b12x moe=flashinfer_b12x : ValueError: Model sets swiglu_limit=4.0, but the explicitly requested moe_backend='flashinfer_b12x' does not apply the Swi
+[03:09:15]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[03:11:46]     x lin=b12x moe=marlin : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[03:14:17]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[03:14:22]   ling3f: NO combination served
+[03:14:22] ########## ling3f_mtp (76G, tp=1 x4) : b12x:b12x,b12x:triton,-:- ##########
+[03:16:23]     x lin=b12x moe=b12x : ValueError: moe_backend='b12x' is not supported for unquantized MoE. Expected one of ['triton', 'batched_triton', 'flashin
+[03:17:14]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[03:19:25]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[03:19:30]   ling3f_mtp: NO combination served
+[03:19:30] ########## step37 (121G, tp=4 x1) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[03:20:30]     x lin=b12x moe=b12x : ValueError: NvFp4 MoE backend 'B12X' does not support the deployment configuration since kernel does not support parallel 
+[03:21:31]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[03:56:41]     x lin=b12x moe=marlin : unknown (see step37_b12x-marlin_p8000.log)
+[04:31:51]     x lin=- moe=- : unknown (see step37_---_p8000.log)
+[04:31:56]   step37: NO combination served
+[04:31:56] ########## step37_mtp (121G, tp=4 x1) : b12x:b12x,b12x:triton,-:- ##########
+[05:07:06]     x lin=b12x moe=b12x : unknown (see step37_mtp_b12x-b12x_p8000.log)
+[05:42:16]     x lin=b12x moe=triton : unknown (see step37_mtp_b12x-triton_p8000.log)
+[06:17:25]     x lin=- moe=- : unknown (see step37_mtp_---_p8000.log)
+[06:17:31]   step37_mtp: NO combination served
+[06:17:31] ########## nemo3s_mtp (75G, tp=1 x4) : b12x:b12x,b12x:triton,b12x:flashinfer_cutlass ##########
+[06:52:47]     x lin=b12x moe=b12x : unknown (see nemo3s_mtp_b12x-b12x_p8000.log)
+[07:28:04]     x lin=b12x moe=triton : unknown (see nemo3s_mtp_b12x-triton_p8000.log)
+[08:03:20]     x lin=b12x moe=flashinfer_cutlass : unknown (see nemo3s_mtp_b12x-flashinfer_cutlass_p8000.log)
+[08:03:26]   nemo3s_mtp: NO combination served
+[08:03:26] ########## laguna_dflash_eager (33G, tp=2 x2) : -:flashinfer_cutlass,-:triton ##########
+[08:38:38]     x lin=- moe=flashinfer_cutlass : unknown (see laguna_dflash_eager_--flashinfer_cutlass_p8000.log)
+[09:13:50]     x lin=- moe=triton : unknown (see laguna_dflash_eager_--triton_p8000.log)
+[09:13:56]   laguna_dflash_eager: NO combination served
+[09:13:56] ########## q27_dspark (17G, tp=1 x4) : b12x:- ##########
+[09:49:13]     x lin=b12x moe=- : unknown (see q27_dspark_b12x--_p8000.log)
+[09:49:19]   q27_dspark: NO combination served
+[09:49:19] ########## mimo25 (651M, tp=4 x1) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[10:02:10] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[10:02:10] ########## ling3f (76G, tp=1 x4) : b12x:b12x,b12x:flashinfer_b12x,b12x:triton,b12x:marlin,-:- ##########
+[10:04:12]     x lin=b12x moe=b12x : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[10:05:02]     x lin=b12x moe=flashinfer_b12x : ValueError: Model sets swiglu_limit=4.0, but the explicitly requested moe_backend='flashinfer_b12x' does not apply the Swi
+[10:05:53]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[10:07:44]     x lin=b12x moe=marlin : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[10:09:35]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[10:09:40]   ling3f: NO combination served
+[10:09:40] ########## ling3f_mtp (76G, tp=1 x4) : b12x:b12x,b12x:triton,-:- ##########
+[10:11:51]     x lin=b12x moe=b12x : ValueError: moe_backend='b12x' is not supported for unquantized MoE. Expected one of ['triton', 'batched_triton', 'flashin
+[10:12:42]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[10:15:13]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[10:15:18]   ling3f_mtp: NO combination served
+[10:15:18] ########## step37 (121G, tp=4 x1) : b12x:b12x,b12x:triton,b12x:marlin,-:- ##########
+[10:16:19]     x lin=b12x moe=b12x : ValueError: NvFp4 MoE backend 'B12X' does not support the deployment configuration since kernel does not support parallel 
+[10:17:19]     x lin=b12x moe=triton : ValueError: moe_backend='triton' is not supported for NvFP4 MoE. Expected one of ['b12x', 'cutlass', 'flashinfer_trtllm', 
+[10:19:55]     v lin=b12x moe=marlin healthy 150s | GPU KV cache size: 4,277,786 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=17 degenerate=3 wrong=0 error=0 -> /workspace/results/probe/step37_b12x-marlin_quality20.json
+  router     C256    201.6s     609 req/min     1300 out/s     10400 in/s     11700 tot/s  TTFT   3526/  20061 ms  TPOT 170.3/ 192.9 ms  ITL 170.3  E2E  25.2/ 42.4 s
+  router     C1024    93.6s     626 req/min     1335 out/s     10682 in/s     12017 tot/s  TTFT  43904/  86956 ms  TPOT 279.7/ 357.9 ms  ITL 279.9  E2E  79.4/ 93.4 s
+  promptopt  C1024    72.7s     806 req/min     3437 out/s     48120 in/s     51558 tot/s  TTFT  29431/  57788 ms  TPOT 116.5/ 138.1 ms  ITL 116.6  E2E  59.1/ 72.5 s
+  judge      C512   1591.0s     154 req/min     1318 out/s     10545 in/s     11863 tot/s  TTFT  13596/ 159067 ms  TPOT 361.4/ 384.6 ms  ITL 361.4  E2E 198.3/349.8 s
+[11:01:17]     v lin=- moe=- healthy 130s | GPU KV cache size: 4,260,711 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+      kernel: Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=17 degenerate=3 wrong=0 error=0 -> /workspace/results/probe/step37_---_quality20.json
+  router     C256    187.5s     656 req/min     1398 out/s     11187 in/s     12586 tot/s  TTFT   3304/  18087 ms  TPOT 158.1/ 177.9 ms  ITL 158.1  E2E  23.4/ 39.0 s
+  router     C1024    86.7s     675 req/min     1441 out/s     11528 in/s     12969 tot/s  TTFT  40506/  79740 ms  TPOT 259.6/ 331.3 ms  ITL 259.7  E2E  73.5/ 86.6 s
+  promptopt  C1024    69.0s     849 req/min     3623 out/s     50729 in/s     54352 tot/s  TTFT  27650/  54084 ms  TPOT 110.9/ 130.7 ms  ITL 110.9  E2E  55.9/ 68.7 s

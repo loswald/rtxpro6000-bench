@@ -1,0 +1,16 @@
+[00:33:45] vendor tree: /workspace/motifimg/usr/local/lib/python3.12/dist-packages  (python: python3)
+[00:33:46]   vendor torch: 2.13.0+cu130
+[00:33:50]   vendor vllm : 0.10.1rc2.dev10313+gd314fa2af
+  motif archs: ['MotifForCausalLM', 'MotifMTPModel']
+[00:33:57] ===== Motif-3 on the vendor vLLM fork (DP4 x TP1 + EP) =====
+[00:33:57] --- A: no speculation ---
+[00:34:02]   launch motif3_base :: 
+[00:34:17]   motif3_base FAILED after 15s
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'pydivsufsort'
+[00:34:17] --- B: built-in MTP, 1 draft token (vendor recipe) ---
+[00:34:23]   launch motif3_mtp :: 
+[00:34:38]   motif3_mtp FAILED after 15s
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'pydivsufsort'
+[00:34:38] MOTIF DONE

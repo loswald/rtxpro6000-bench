@@ -1,0 +1,102 @@
+2026-09-04T09:58:19Z run q27_nvfp4_b12x--: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['http://127.0.0.1:8000', 'http://127.0.0.1:8001', 'http://127.0.0.1:8002', 'http://127.0.0.1:8003', 'http://127.0.0.1:8004', 'http://127.0.0.1:8005', 'http://127.0.0.1:8006', 'http://127.0.0.1:8007'], concurrency 128, budget 900s
+2026-09-04T09:58:19Z longctx: prepare_run ...
+2026-09-04T09:58:19Z longctx: calibrated -> {"budgets": {"16k": 16384, "32k": 30720, "8k": 8192}, "chars_per_token": {"docs": 4.4693, "filler": 4.4376}, "checks": {"niah_multikey": {"budget": 30720, "item": "longctx-niah-32k-d85-11", "prompt_tokens": 29498}, "qa_multi_doc": {"budget": 30720, "item": "longctx-qa-32k-d10-08", "prompt_tokens": 30062}, "var_tracking": {"budget": 30720, "item": "longctx-vt-32k-05", "prompt_tokens": 29364}}, "fixed_tokens": {"niah_multikey": 182, "qa_multi_doc": 75, "var_tracking": 255}, "max_model_len": 32768, "max_tokens": 512, "method": "tokenize", "tokenize_calls": 12}
+2026-09-04T09:58:19Z ifeval: prepare_run ...
+2026-09-04T09:58:29Z [    10s] tools=24/70 code=0/75 math=0/80 longctx=0/48 knowledge=5/70 ifeval=0/60 inflight=128 req=157 retries=0 err=0 out_tok/s=806 budget_left=890s
+2026-09-04T09:58:39Z [    20s] tools=30/70 code=1/75 math=1/80 longctx=13/48 knowledge=25/70 ifeval=1/60 inflight=128 req=199 retries=0 err=0 out_tok/s=1552 budget_left=880s
+2026-09-04T09:58:49Z [    30s] tools=34/70 code=8/75 math=2/80 longctx=22/48 knowledge=32/70 ifeval=6/60 inflight=128 req=232 retries=0 err=0 out_tok/s=1515 budget_left=870s
+2026-09-04T09:58:59Z [    40s] tools=43/70 code=12/75 math=8/80 longctx=34/48 knowledge=36/70 ifeval=8/60 inflight=128 req=269 retries=0 err=0 out_tok/s=1730 budget_left=860s
+2026-09-04T09:59:09Z [    50s] tools=48/70 code=16/75 math=11/80 longctx=45/48 knowledge=41/70 ifeval=14/60 inflight=128 req=303 retries=0 err=0 out_tok/s=1779 budget_left=850s
+2026-09-04T09:59:19Z [    60s] tools=58/70 code=24/75 math=13/80 longctx=48/48 knowledge=48/70 ifeval=34/60 inflight=128 req=353 retries=0 err=0 out_tok/s=2242 budget_left=840s
+2026-09-04T09:59:29Z [    70s] tools=69/70 code=42/75 math=35/80 longctx=48/48 knowledge=57/70 ifeval=46/60 inflight=106 req=403 retries=0 err=0 out_tok/s=3829 budget_left=830s
+2026-09-04T09:59:39Z [    80s] tools=70/70 code=58/75 math=42/80 longctx=48/48 knowledge=70/70 ifeval=56/60 inflight=59 req=403 retries=0 err=0 out_tok/s=4312 budget_left=820s
+2026-09-04T09:59:49Z [    90s] tools=70/70 code=67/75 math=46/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=42 req=403 retries=0 err=0 out_tok/s=4239 budget_left=810s
+2026-09-04T09:59:59Z [   100s] tools=70/70 code=75/75 math=53/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=27 req=403 retries=0 err=0 out_tok/s=4235 budget_left=800s
+2026-09-04T10:00:09Z [   110s] tools=70/70 code=75/75 math=58/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=22 req=403 retries=0 err=0 out_tok/s=4030 budget_left=790s
+2026-09-04T10:00:19Z [   120s] tools=70/70 code=75/75 math=64/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=16 req=403 retries=0 err=0 out_tok/s=3899 budget_left=780s
+2026-09-04T10:00:28Z == q27_nvfp4_b12x-- model=m wall=129.3s truncated=False valid=True 
+2026-09-04T10:00:28Z   tools      acc=0.886 n=70/70 ci95=[0.790,0.941] out_tok=292.2 trunc=0.0286 err=0 
+2026-09-04T10:00:28Z     parallel_multiple acc=0.700 n=10/10 ci95=[0.397,0.892]
+2026-09-04T10:00:28Z     parallel         acc=1.000 n=15/15 ci95=[0.796,1.000]
+2026-09-04T10:00:28Z     multiple         acc=0.867 n=15/15 ci95=[0.621,0.963]
+2026-09-04T10:00:28Z     simple           acc=0.950 n=20/20 ci95=[0.764,0.991]
+2026-09-04T10:00:28Z     irrelevance      acc=0.800 n=10/10 ci95=[0.490,0.943]
+2026-09-04T10:00:28Z   code       acc=0.320 n=75/75 ci95=[0.225,0.432] out_tok=1343.3 trunc=0.44 err=0 
+2026-09-04T10:00:28Z     lcb_easy_medium  acc=0.167 n=30/30 ci95=[0.073,0.336]
+2026-09-04T10:00:28Z     humanevalplus    acc=0.600 n=25/25 ci95=[0.407,0.766]
+2026-09-04T10:00:28Z     mbppplus         acc=0.200 n=20/20 ci95=[0.081,0.416]
+2026-09-04T10:00:28Z   math       acc=0.312 n=80/80 ci95=[0.222,0.421] out_tok=3388.6 trunc=0.7 err=0 
+2026-09-04T10:00:28Z     aime25           acc=0.267 n=30/30 ci95=[0.142,0.445]
+2026-09-04T10:00:28Z     hmmt25           acc=0.100 n=30/30 ci95=[0.035,0.256]
+2026-09-04T10:00:28Z     math500_hard     acc=0.700 n=20/20 ci95=[0.481,0.855]
+2026-09-04T10:00:28Z   longctx    acc=0.750 n=48/48 ci95=[0.612,0.851] out_tok=248.1 trunc=0.2708 err=0 
+2026-09-04T10:00:28Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+2026-09-04T10:00:28Z     var_tracking     acc=0.250 n=12/12 ci95=[0.089,0.532]
+2026-09-04T10:00:28Z     qa_multi_doc     acc=0.750 n=12/12 ci95=[0.468,0.911]
+2026-09-04T10:00:28Z   knowledge  acc=0.329 n=70/70 ci95=[0.230,0.445] out_tok=834.3 trunc=0.6143 err=0 
+2026-09-04T10:00:28Z     mmlu_pro_hard    acc=0.575 n=40/40 ci95=[0.422,0.715]
+2026-09-04T10:00:28Z     simpleqa         acc=0.000 n=30/30 ci95=[0.000,0.114]
+2026-09-04T10:00:28Z   ifeval     acc=0.333 n=60/60 ci95=[0.227,0.459] out_tok=1182.0 trunc=0.5667 err=0 
+2026-09-04T10:00:28Z     triple           acc=0.083 n=24/24 ci95=[0.023,0.259]
+2026-09-04T10:00:28Z     double           acc=0.375 n=24/24 ci95=[0.212,0.573]
+2026-09-04T10:00:28Z     single           acc=0.750 n=12/12 ci95=[0.468,0.911]
+2026-09-04T10:00:28Z   aggregate  acc_micro=0.471 acc_macro=0.4884 n=403/403 ci95=[0.4232, 0.5202] requests=403 retries=0 out_tok/s=4126.7
+2026-09-04T10:00:28Z wrote /workspace/results/eval/q27_nvfp4_b12x--.json, /workspace/results/eval/q27_nvfp4_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+2026-09-04T10:18:29Z run q27_nvfp4_b12x--: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['http://127.0.0.1:8000', 'http://127.0.0.1:8001', 'http://127.0.0.1:8002', 'http://127.0.0.1:8003', 'http://127.0.0.1:8004', 'http://127.0.0.1:8005', 'http://127.0.0.1:8006', 'http://127.0.0.1:8007'], concurrency 128, budget 1200s
+2026-09-04T10:18:29Z longctx: prepare_run ...
+2026-09-04T10:18:30Z longctx: calibrated -> {"budgets": {"16k": 16384, "32k": 30208, "8k": 8192}, "chars_per_token": {"docs": 4.4693, "filler": 4.4376}, "checks": {"niah_multikey": {"budget": 30208, "item": "longctx-niah-32k-d85-11", "prompt_tokens": 29036}, "qa_multi_doc": {"budget": 30208, "item": "longctx-qa-32k-d10-08", "prompt_tokens": 29655}, "var_tracking": {"budget": 30208, "item": "longctx-vt-32k-05", "prompt_tokens": 28884}}, "fixed_tokens": {"niah_multikey": 182, "qa_multi_doc": 75, "var_tracking": 255}, "max_model_len": 32768, "max_tokens": 1024, "method": "tokenize", "tokenize_calls": 12}
+2026-09-04T10:18:30Z ifeval: prepare_run ...
+2026-09-04T10:18:30Z ifeval: +2560 reasoning tokens on 60 items (caps now 4096..5376)
+2026-09-04T10:18:40Z [    10s] tools=0/70 code=0/75 math=0/80 longctx=0/48 knowledge=0/70 ifeval=0/60 inflight=128 req=128 retries=0 err=0 out_tok/s=0 budget_left=1190s
+2026-09-04T10:18:50Z [    20s] tools=21/70 code=0/75 math=0/80 longctx=0/48 knowledge=5/70 ifeval=0/60 inflight=128 req=154 retries=0 err=0 out_tok/s=330 budget_left=1180s
+2026-09-04T10:19:00Z [    30s] tools=29/70 code=0/75 math=1/80 longctx=15/48 knowledge=14/70 ifeval=3/60 inflight=128 req=190 retries=0 err=0 out_tok/s=654 budget_left=1170s
+2026-09-04T10:19:10Z [    40s] tools=34/70 code=7/75 math=2/80 longctx=20/48 knowledge=19/70 ifeval=8/60 inflight=128 req=218 retries=0 err=0 out_tok/s=797 budget_left=1160s
+2026-09-04T10:19:20Z [    50s] tools=38/70 code=13/75 math=4/80 longctx=29/48 knowledge=26/70 ifeval=11/60 inflight=128 req=249 retries=0 err=0 out_tok/s=1052 budget_left=1150s
+2026-09-04T10:19:30Z [    60s] tools=44/70 code=16/75 math=8/80 longctx=43/48 knowledge=29/70 ifeval=14/60 inflight=128 req=282 retries=0 err=0 out_tok/s=1282 budget_left=1140s
+2026-09-04T10:19:40Z [    70s] tools=50/70 code=23/75 math=9/80 longctx=48/48 knowledge=29/70 ifeval=18/60 inflight=128 req=305 retries=0 err=0 out_tok/s=1335 budget_left=1130s
+2026-09-04T10:19:50Z [    80s] tools=56/70 code=27/75 math=13/80 longctx=48/48 knowledge=39/70 ifeval=25/60 inflight=128 req=336 retries=0 err=0 out_tok/s=1875 budget_left=1120s
+2026-09-04T10:20:00Z [    90s] tools=62/70 code=32/75 math=17/80 longctx=48/48 knowledge=45/70 ifeval=32/60 inflight=128 req=364 retries=0 err=0 out_tok/s=2110 budget_left=1110s
+2026-09-04T10:20:10Z [   100s] tools=66/70 code=38/75 math=19/80 longctx=48/48 knowledge=50/70 ifeval=40/60 inflight=128 req=389 retries=0 err=0 out_tok/s=2374 budget_left=1100s
+2026-09-04T10:20:20Z [   110s] tools=70/70 code=44/75 math=21/80 longctx=48/48 knowledge=51/70 ifeval=46/60 inflight=123 req=403 retries=0 err=0 out_tok/s=2458 budget_left=1090s
+2026-09-04T10:20:30Z [   120s] tools=70/70 code=47/75 math=25/80 longctx=48/48 knowledge=59/70 ifeval=51/60 inflight=103 req=403 retries=0 err=0 out_tok/s=2789 budget_left=1080s
+2026-09-04T10:20:40Z [   130s] tools=70/70 code=51/75 math=26/80 longctx=48/48 knowledge=62/70 ifeval=54/60 inflight=92 req=403 retries=0 err=0 out_tok/s=2896 budget_left=1070s
+2026-09-04T10:20:50Z [   140s] tools=70/70 code=52/75 math=33/80 longctx=48/48 knowledge=64/70 ifeval=59/60 inflight=77 req=403 retries=0 err=0 out_tok/s=3262 budget_left=1060s
+2026-09-04T10:21:00Z [   150s] tools=70/70 code=54/75 math=42/80 longctx=48/48 knowledge=69/70 ifeval=59/60 inflight=61 req=403 retries=0 err=0 out_tok/s=3713 budget_left=1050s
+2026-09-04T10:21:10Z [   160s] tools=70/70 code=55/75 math=50/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=50 req=403 retries=0 err=0 out_tok/s=3886 budget_left=1040s
+2026-09-04T10:21:20Z [   170s] tools=70/70 code=55/75 math=52/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=48 req=403 retries=0 err=0 out_tok/s=3754 budget_left=1030s
+2026-09-04T10:21:30Z [   180s] tools=70/70 code=60/75 math=55/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=40 req=403 retries=0 err=0 out_tok/s=3909 budget_left=1020s
+2026-09-04T10:21:40Z [   190s] tools=70/70 code=62/75 math=60/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=33 req=403 retries=0 err=0 out_tok/s=3990 budget_left=1010s
+2026-09-04T10:21:50Z [   200s] tools=70/70 code=67/75 math=62/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=26 req=403 retries=0 err=0 out_tok/s=4075 budget_left=1000s
+2026-09-04T10:22:00Z [   210s] tools=70/70 code=69/75 math=63/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=23 req=403 retries=0 err=0 out_tok/s=3998 budget_left=990s
+2026-09-04T10:22:10Z [   220s] tools=70/70 code=72/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=15 req=403 retries=0 err=0 out_tok/s=4114 budget_left=980s
+2026-09-04T10:22:20Z [   230s] tools=70/70 code=74/75 math=78/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=3 req=403 retries=0 err=0 out_tok/s=4358 budget_left=970s
+2026-09-04T10:22:30Z [   240s] tools=70/70 code=74/75 math=78/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=3 req=403 retries=0 err=0 out_tok/s=4177 budget_left=960s
+2026-09-04T10:22:40Z [   250s] tools=70/70 code=75/75 math=79/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=1 req=403 retries=0 err=0 out_tok/s=4075 budget_left=950s
+2026-09-04T10:22:40Z == q27_nvfp4_b12x-- model=m wall=250.3s truncated=False valid=True 
+2026-09-04T10:22:40Z   tools      acc=0.829 n=70/70 ci95=[0.724,0.899] out_tok=321.4 trunc=0.0 err=0 
+2026-09-04T10:22:40Z     parallel_multiple acc=0.500 n=10/10 ci95=[0.237,0.763]
+2026-09-04T10:22:40Z     parallel         acc=1.000 n=15/15 ci95=[0.796,1.000]
+2026-09-04T10:22:40Z     multiple         acc=0.800 n=15/15 ci95=[0.548,0.929]
+2026-09-04T10:22:40Z     simple           acc=0.950 n=20/20 ci95=[0.764,0.991]
+2026-09-04T10:22:40Z     irrelevance      acc=0.700 n=10/10 ci95=[0.397,0.892]
+2026-09-04T10:22:40Z   code       acc=0.413 n=75/75 ci95=[0.309,0.526] out_tok=3263.7 trunc=0.2267 err=0 
+2026-09-04T10:22:40Z     lcb_easy_medium  acc=0.267 n=30/30 ci95=[0.142,0.445]
+2026-09-04T10:22:40Z     humanevalplus    acc=0.680 n=25/25 ci95=[0.484,0.828]
+2026-09-04T10:22:40Z     mbppplus         acc=0.300 n=20/20 ci95=[0.145,0.519]
+2026-09-04T10:22:40Z   math       acc=0.525 n=80/80 ci95=[0.417,0.631] out_tok=6042.4 trunc=0.575 err=0 
+2026-09-04T10:22:40Z     aime25           acc=0.500 n=30/30 ci95=[0.332,0.668]
+2026-09-04T10:22:40Z     hmmt25           acc=0.333 n=30/30 ci95=[0.192,0.512]
+2026-09-04T10:22:40Z     math500_hard     acc=0.850 n=20/20 ci95=[0.640,0.948]
+2026-09-04T10:22:40Z   longctx    acc=0.917 n=48/48 ci95=[0.804,0.967] out_tok=323.6 trunc=0.0625 err=0 
+2026-09-04T10:22:40Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+2026-09-04T10:22:40Z     var_tracking     acc=0.833 n=12/12 ci95=[0.552,0.953]
+2026-09-04T10:22:40Z     qa_multi_doc     acc=0.833 n=12/12 ci95=[0.552,0.953]
+2026-09-04T10:22:40Z   knowledge  acc=0.443 n=70/70 ci95=[0.333,0.559] out_tok=1971.9 trunc=0.3143 err=0 
+2026-09-04T10:22:40Z     mmlu_pro_hard    acc=0.750 n=40/40 ci95=[0.598,0.858]
+2026-09-04T10:22:40Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+2026-09-04T10:22:40Z   ifeval     acc=0.317 n=60/60 ci95=[0.213,0.442] out_tok=2051.2 trunc=0.2 err=0 
+2026-09-04T10:22:40Z     triple           acc=0.083 n=24/24 ci95=[0.023,0.259]
+2026-09-04T10:22:40Z     double           acc=0.375 n=24/24 ci95=[0.212,0.573]
+2026-09-04T10:22:40Z     single           acc=0.667 n=12/12 ci95=[0.391,0.862]
+2026-09-04T10:22:40Z   aggregate  acc_micro=0.558 acc_macro=0.5739 n=403/403 ci95=[0.5095, 0.606] requests=403 retries=0 out_tok/s=4103.6
+2026-09-04T10:22:40Z wrote /workspace/results/eval/q27_nvfp4_b12x--.json, /workspace/results/eval/q27_nvfp4_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0

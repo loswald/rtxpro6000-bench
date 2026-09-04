@@ -1,0 +1,45 @@
+2026-09-04T11:03:49Z run gemma26_nvfp4_---: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['http://127.0.0.1:8000', 'http://127.0.0.1:8001', 'http://127.0.0.1:8002', 'http://127.0.0.1:8003', 'http://127.0.0.1:8004', 'http://127.0.0.1:8005', 'http://127.0.0.1:8006', 'http://127.0.0.1:8007'], concurrency 128, budget 1200s
+2026-09-04T11:03:49Z longctx: prepare_run ...
+2026-09-04T11:03:49Z longctx: calibrated -> {"budgets": {"16k": 16384, "32k": 30208, "8k": 8192}, "chars_per_token": {"docs": 4.5739, "filler": 4.3867}, "checks": {"niah_multikey": {"budget": 30208, "item": "longctx-niah-32k-d85-11", "prompt_tokens": 29238}, "qa_multi_doc": {"budget": 30208, "item": "longctx-qa-32k-d10-08", "prompt_tokens": 29609}, "var_tracking": {"budget": 30208, "item": "longctx-vt-32k-05", "prompt_tokens": 28918}}, "fixed_tokens": {"niah_multikey": 135, "qa_multi_doc": 33, "var_tracking": 203}, "max_model_len": 32768, "max_tokens": 1024, "method": "tokenize", "tokenize_calls": 12}
+2026-09-04T11:03:49Z ifeval: prepare_run ...
+2026-09-04T11:03:49Z ifeval: +2560 reasoning tokens on 60 items (caps now 4096..5376)
+2026-09-04T11:03:59Z [    10s] tools=0/70 code=0/75 math=0/80 longctx=0/48 knowledge=0/70 ifeval=0/60 inflight=128 req=128 retries=0 err=0 out_tok/s=0 budget_left=1190s
+2026-09-04T11:04:09Z [    20s] tools=35/70 code=1/75 math=3/80 longctx=11/48 knowledge=26/70 ifeval=4/60 inflight=128 req=208 retries=0 err=0 out_tok/s=636 budget_left=1180s
+2026-09-04T11:04:19Z [    30s] tools=53/70 code=20/75 math=15/80 longctx=33/48 knowledge=47/70 ifeval=29/60 inflight=128 req=325 retries=0 err=0 out_tok/s=1752 budget_left=1170s
+2026-09-04T11:04:29Z [    40s] tools=70/70 code=55/75 math=31/80 longctx=47/48 knowledge=62/70 ifeval=58/60 inflight=80 req=403 retries=0 err=0 out_tok/s=3156 budget_left=1160s
+2026-09-04T11:04:39Z [    50s] tools=70/70 code=63/75 math=46/80 longctx=48/48 knowledge=68/70 ifeval=59/60 inflight=49 req=403 retries=0 err=0 out_tok/s=3467 budget_left=1150s
+2026-09-04T11:04:49Z [    60s] tools=70/70 code=64/75 math=50/80 longctx=48/48 knowledge=70/70 ifeval=59/60 inflight=42 req=403 retries=0 err=0 out_tok/s=3342 budget_left=1140s
+2026-09-04T11:04:59Z [    70s] tools=70/70 code=66/75 math=52/80 longctx=48/48 knowledge=70/70 ifeval=59/60 inflight=38 req=403 retries=0 err=0 out_tok/s=3043 budget_left=1130s
+2026-09-04T11:05:09Z [    80s] tools=70/70 code=67/75 math=57/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=31 req=403 retries=0 err=0 out_tok/s=3369 budget_left=1120s
+2026-09-04T11:05:19Z [    90s] tools=70/70 code=68/75 math=66/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=21 req=403 retries=0 err=0 out_tok/s=3787 budget_left=1110s
+2026-09-04T11:05:29Z [   100s] tools=70/70 code=72/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=403 retries=0 err=0 out_tok/s=4228 budget_left=1100s
+2026-09-04T11:05:39Z [   110s] tools=70/70 code=72/75 math=77/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=6 req=403 retries=0 err=0 out_tok/s=4216 budget_left=1090s
+2026-09-04T11:05:49Z [   120s] tools=70/70 code=72/75 math=78/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=403 retries=0 err=0 out_tok/s=3918 budget_left=1080s
+2026-09-04T11:05:57Z == gemma26_nvfp4_--- model=m wall=127.9s truncated=False valid=True 
+2026-09-04T11:05:57Z   tools      acc=0.857 n=70/70 ci95=[0.757,0.920] out_tok=90.3 trunc=0.0 err=0 
+2026-09-04T11:05:57Z     parallel_multiple acc=0.700 n=10/10 ci95=[0.397,0.892]
+2026-09-04T11:05:57Z     parallel         acc=0.933 n=15/15 ci95=[0.702,0.988]
+2026-09-04T11:05:57Z     multiple         acc=0.867 n=15/15 ci95=[0.621,0.963]
+2026-09-04T11:05:57Z     simple           acc=1.000 n=20/20 ci95=[0.839,1.000]
+2026-09-04T11:05:57Z     irrelevance      acc=0.600 n=10/10 ci95=[0.313,0.832]
+2026-09-04T11:05:57Z   code       acc=0.800 n=75/75 ci95=[0.696,0.875] out_tok=1399.0 trunc=0.0933 err=0 
+2026-09-04T11:05:57Z     lcb_easy_medium  acc=0.833 n=30/30 ci95=[0.664,0.927]
+2026-09-04T11:05:57Z     humanevalplus    acc=0.880 n=25/25 ci95=[0.700,0.958]
+2026-09-04T11:05:57Z     mbppplus         acc=0.650 n=20/20 ci95=[0.433,0.819]
+2026-09-04T11:05:57Z   math       acc=0.600 n=80/80 ci95=[0.490,0.700] out_tok=4044.4 trunc=0.3125 err=0 
+2026-09-04T11:05:57Z     aime25           acc=0.600 n=30/30 ci95=[0.423,0.754]
+2026-09-04T11:05:57Z     hmmt25           acc=0.367 n=30/30 ci95=[0.219,0.545]
+2026-09-04T11:05:57Z     math500_hard     acc=0.950 n=20/20 ci95=[0.764,0.991]
+2026-09-04T11:05:57Z   longctx    acc=0.875 n=48/48 ci95=[0.753,0.941] out_tok=248.2 trunc=0.0208 err=0 
+2026-09-04T11:05:57Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+2026-09-04T11:05:57Z     var_tracking     acc=0.917 n=12/12 ci95=[0.646,0.985]
+2026-09-04T11:05:57Z     qa_multi_doc     acc=0.583 n=12/12 ci95=[0.320,0.807]
+2026-09-04T11:05:57Z   knowledge  acc=0.457 n=70/70 ci95=[0.346,0.573] out_tok=573.3 trunc=0.0143 err=0 
+2026-09-04T11:05:57Z     mmlu_pro_hard    acc=0.775 n=40/40 ci95=[0.625,0.877]
+2026-09-04T11:05:57Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+2026-09-04T11:05:57Z   ifeval     acc=0.750 n=60/60 ci95=[0.628,0.842] out_tok=407.3 trunc=0.0167 err=0 
+2026-09-04T11:05:57Z     triple           acc=0.833 n=24/24 ci95=[0.641,0.933]
+2026-09-04T11:05:57Z     double           acc=0.583 n=24/24 ci95=[0.388,0.755]
+2026-09-04T11:05:57Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+2026-09-04T11:05:57Z   aggregate  acc_micro=0.712 acc_macro=0.7232 n=403/403 ci95=[0.6661, 0.7542] requests=403 retries=0 out_tok/s=3997.1
+2026-09-04T11:05:57Z wrote /workspace/results/eval/gemma26_nvfp4_---.json, /workspace/results/eval/gemma26_nvfp4_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0

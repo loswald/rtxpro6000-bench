@@ -1,0 +1,77 @@
+[10:15:55] host: 8x GPU, 32607 MiB each -> util 0.88, max-model-len 32768, max-num-seqs 128
+[10:15:55] ########## q27_nvfp4 (17G, tp=1 x8) : b12x:- ##########
+[10:18:02]     v lin=b12x moe=- healthy 120s | GPU KV cache size: 180,830 tokens
+      kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_b12x--_quality20.json
+    eval: 2026-09-04T10:22:40Z     mmlu_pro_hard    acc=0.750 n=40/40 ci95=[0.598,0.858]
+    eval: 2026-09-04T10:22:40Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+    eval: 2026-09-04T10:22:40Z   ifeval     acc=0.317 n=60/60 ci95=[0.213,0.442] out_tok=2051.2 trunc=0.2 err=0 
+    eval: 2026-09-04T10:22:40Z     triple           acc=0.083 n=24/24 ci95=[0.023,0.259]
+    eval: 2026-09-04T10:22:40Z     double           acc=0.375 n=24/24 ci95=[0.212,0.573]
+    eval: 2026-09-04T10:22:40Z     single           acc=0.667 n=12/12 ci95=[0.391,0.862]
+    eval: 2026-09-04T10:22:40Z   aggregate  acc_micro=0.558 acc_macro=0.5739 n=403/403 ci95=[0.5095, 0.606] requests=403 retries=0 out_tok/s=4103.6
+    eval: 2026-09-04T10:22:40Z wrote /workspace/results/eval/q27_nvfp4_b12x--.json, /workspace/results/eval/q27_nvfp4_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[10:22:46] ########## q27_fp8_tp2 (29G, tp=2 x4) : b12x:- ##########
+[10:25:52]     v lin=b12x moe=- healthy 180s | GPU KV cache size: 479,383 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_fp8_tp2_b12x--_quality20.json
+    eval: 2026-09-04T10:48:21Z     mmlu_pro_hard    acc=0.850 n=40/40 ci95=[0.709,0.929]
+    eval: 2026-09-04T10:48:21Z     simpleqa         acc=0.000 n=29/30 ci95=[0.000,0.117]
+    eval: 2026-09-04T10:48:21Z   ifeval     acc=0.356 n=45/60 ci95=[0.232,0.502] out_tok=2059.5 trunc=0.2 err=0 skipped=15
+    eval: 2026-09-04T10:48:21Z     triple           acc=0.062 n=16/24 ci95=[0.011,0.283]
+    eval: 2026-09-04T10:48:21Z     double           acc=0.353 n=17/24 ci95=[0.173,0.587]
+    eval: 2026-09-04T10:48:21Z     single           acc=0.750 n=12/12 ci95=[0.468,0.911]
+    eval: 2026-09-04T10:48:21Z   aggregate  acc_micro=0.610 acc_macro=0.6044 n=346/403 ci95=[0.5575, 0.6597] requests=419 retries=66 out_tok/s=609.7
+    eval: 2026-09-04T10:48:21Z wrote /workspace/results/eval/q27_fp8_tp2_b12x--.json, /workspace/results/eval/q27_fp8_tp2_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 1
+[10:48:26] ########## gptoss20 (39G, tp=1 x8) : -:flashinfer_cutlass ##########
+[10:49:52]     v lin=- moe=flashinfer_cutlass healthy 80s | GPU KV cache size: 615,391 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend.
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gptoss20_--flashinfer_cutlass_quality20.json
+    eval: 2026-09-04T10:52:21Z     mmlu_pro_hard    acc=0.650 n=40/40 ci95=[0.495,0.779]
+    eval: 2026-09-04T10:52:21Z     simpleqa         acc=0.000 n=30/30 ci95=[0.000,0.114]
+    eval: 2026-09-04T10:52:21Z   ifeval     acc=0.750 n=60/60 ci95=[0.628,0.842] out_tok=1454.6 trunc=0.0667 err=0 
+    eval: 2026-09-04T10:52:21Z     triple           acc=0.625 n=24/24 ci95=[0.427,0.788]
+    eval: 2026-09-04T10:52:21Z     double           acc=0.792 n=24/24 ci95=[0.595,0.908]
+    eval: 2026-09-04T10:52:21Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T10:52:21Z   aggregate  acc_micro=0.665 acc_macro=0.6748 n=403/403 ci95=[0.6176, 0.7093] requests=403 retries=0 out_tok/s=5486.9
+    eval: 2026-09-04T10:52:21Z wrote /workspace/results/eval/gptoss20_--flashinfer_cutlass.json, /workspace/results/eval/gptoss20_--flashinfer_cutlass.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[10:52:27] ########## muse30_nvfp4 (22G, tp=1 x8) : b12x:flashinfer_cutlass ##########
+[10:55:23]     v lin=b12x moe=flashinfer_cutlass healthy 170s | GPU KV cache size: 146,387 tokens
+      kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/muse30_nvfp4_b12x-flashinfer_cutlass_quality20.json
+    eval: 2026-09-04T10:59:17Z     mmlu_pro_hard    acc=0.750 n=40/40 ci95=[0.598,0.858]
+    eval: 2026-09-04T10:59:17Z     simpleqa         acc=0.067 n=30/30 ci95=[0.018,0.213]
+    eval: 2026-09-04T10:59:17Z   ifeval     acc=0.283 n=60/60 ci95=[0.185,0.408] out_tok=2034.8 trunc=0.0667 err=0 
+    eval: 2026-09-04T10:59:17Z     triple           acc=0.042 n=24/24 ci95=[0.007,0.202]
+    eval: 2026-09-04T10:59:17Z     double           acc=0.333 n=24/24 ci95=[0.180,0.533]
+    eval: 2026-09-04T10:59:17Z     single           acc=0.667 n=12/12 ci95=[0.391,0.862]
+    eval: 2026-09-04T10:59:17Z   aggregate  acc_micro=0.556 acc_macro=0.5572 n=403/403 ci95=[0.507, 0.6036] requests=403 retries=0 out_tok/s=4383.3
+    eval: 2026-09-04T10:59:17Z wrote /workspace/results/eval/muse30_nvfp4_b12x-flashinfer_cutlass.json, /workspace/results/eval/muse30_nvfp4_b12x-flashinfer_cutlass.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[10:59:23] ########## nemo35 (21G, tp=1 x8) : b12x:cutlass ##########
+[11:00:13]     x lin=b12x moe=cutlass : ValueError: NvFp4 MoE backend 'VLLM_CUTLASS' does not support the deployment configuration since kernel does not support q
+[11:00:19]   nemo35: NO combination served
+[11:00:19] ########## qwen36_nvfp4 (22G, tp=1 x8) : b12x:cutlass ##########
+[11:01:20]     x lin=b12x moe=cutlass : ValueError: NvFp4 MoE backend 'VLLM_CUTLASS' does not support the deployment configuration since kernel does not support q
+[11:01:25]   qwen36_nvfp4: NO combination served
+[11:01:25] ########## gemma26_nvfp4 (16G, tp=1 x8) : -:- ##########
+[11:03:42]     v lin=- moe=- healthy 130s | GPU KV cache size: 161,975 tokens
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=19 degenerate=0 wrong=1 error=0 -> /workspace/results/probe/gemma26_nvfp4_---_quality20.json
+    eval: 2026-09-04T11:05:57Z     mmlu_pro_hard    acc=0.775 n=40/40 ci95=[0.625,0.877]
+    eval: 2026-09-04T11:05:57Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+    eval: 2026-09-04T11:05:57Z   ifeval     acc=0.750 n=60/60 ci95=[0.628,0.842] out_tok=407.3 trunc=0.0167 err=0 
+    eval: 2026-09-04T11:05:57Z     triple           acc=0.833 n=24/24 ci95=[0.641,0.933]
+    eval: 2026-09-04T11:05:57Z     double           acc=0.583 n=24/24 ci95=[0.388,0.755]
+    eval: 2026-09-04T11:05:57Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T11:05:57Z   aggregate  acc_micro=0.712 acc_macro=0.7232 n=403/403 ci95=[0.6661, 0.7542] requests=403 retries=0 out_tok/s=3997.1
+    eval: 2026-09-04T11:05:57Z wrote /workspace/results/eval/gemma26_nvfp4_---.json, /workspace/results/eval/gemma26_nvfp4_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[11:06:02] ########## gptoss120_tp4 (183G, tp=4 x2) : -:flashinfer_cutlass ##########
+[11:08:08]     v lin=- moe=flashinfer_cutlass healthy 120s | GPU KV cache size: 1,226,699 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend.
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gptoss120_tp4_--flashinfer_cutlass_quality20.json

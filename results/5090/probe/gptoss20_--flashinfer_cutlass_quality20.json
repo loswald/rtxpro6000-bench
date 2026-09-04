@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 122,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 151,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "Here\u2019s a compact, iterative implementation that follows the classic definition\n\n```\nF(0) = 0\nF(1) = 1\nF(n) = F(n\u20111) + F(n\u20112)   for n \u2265 2\n```\n\n```python\ndef fib(n: int) -> int:\n    \"\"\"\n    Return the n\u2011th Fibonacci number (0\u2011based indexing).\n\n    Parameters\n    ----------\n    n : int\n        Non\u2011negative integer index of the Fibonacci sequence.\n\n    Returns\n    -------\n    int\n        The n\u2011th Fibonacci number.\n\n    Examples\n    --------\n    >>> fib(0)\n    0\n    >>> fib(1)\n    1\n    >>> fib(5)\n    5\n    >>> fib(10)\n    55\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non\u2011negative integer\")\n\n    # Base cases\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    # Iterative computation\n    a, b = 0, 1          # a = F(n-2), b = F(n-1)\n    for _ in range(2, n + 1):\n        a, b = b, a + b  # shift forward\n\n    return b\n```\n\n### How it works\n\n1. **Base cases** \u2013 return 0 for `n == 0` and 1 for `n == 1`.\n2. **Iterative loop** \u2013 keep two variables (`a` and `b`) that hold the two most recent Fibonacci numbers.  \n   In each iteration, update them to the next pair: `a` becomes the old `b`, and `b` becomes the sum `a + b`.\n3. After the loop, `b` holds `F(n)`.\n\nThis runs in `O(n)` time and `O(1)` space, making it efficient for moderate values of `n`.",
+  "reasoning_chars": 356,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.658,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "Here\u2019s a concise, ANSI\u2011SQL query that will give you the three customers with the highest total order value:\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM\n    customers AS c\nJOIN\n    orders AS o\n    ON c.id = o.customer_id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC\nLIMIT 3;          -- MySQL / PostgreSQL / SQLite\n```\n\n### What it does\n\n1. **JOIN** \u2013 Links each order to its customer.\n2. **GROUP BY** \u2013 Aggregates all orders per customer.\n3. **SUM(o.amount)** \u2013 Calculates the total order value for each customer.\n4. **ORDER BY \u2026 DESC** \u2013 Sorts customers from highest to lowest total.\n5. **LIMIT 3** \u2013 Keeps only the top three rows.\n\n---\n\n#### If you want to include customers who have no orders\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    COALESCE(SUM(o.amount), 0) AS total_order_value\nFROM\n    customers AS c\nLEFT JOIN\n    orders AS o\n    ON c.id = o.customer_id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC\nLIMIT 3;\n```\n\n---\n\n#### Using a window function (PostgreSQL, SQL Server, Oracle, etc.)\n\n```sql\nSELECT\n    id,\n    name,\n    total_order_value\nFROM (\n    SELECT\n        c.id,\n        c.name,\n        SUM(o.amount) AS total_order_value,\n        ROW_NUMBER() OVER (ORDER BY SUM(o.amount) DESC) AS rn\n    FROM\n        customers c\n    LEFT JOIN\n        orders o\n        ON c.id = o.customer_id\n    GROUP BY\n        c.id,\n        c.name\n) AS ranked\nWHERE rn <= 3;\n```\n\nThis version is handy if you need to handle ties differently (e.g., `RANK()` instead of `ROW_NUMBER()`).\n\nFeel free to drop the `LIMIT`/`WHERE rn <= 3` clause if you want the full list sorted by total order value.",
+  "reasoning_chars": 516,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.573,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1**\n\n**Explanation:** The capital of Australia is Canberra, not Sydney. The answer is factually incorrect.",
+  "reasoning_chars": 240,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.875,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s\u2011midi.",
+  "reasoning_chars": 807,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on vast corpora, can perform many tasks without task\u2011specific training, yet they sometimes hallucinate facts.",
+  "reasoning_chars": 426,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "**Three key differences between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol)**\n\n| # | Feature | TCP | UDP |\n|---|---------|-----|-----|\n| 1 | **Connection model** | *Connection\u2011oriented*: a three\u2011way handshake establishes a reliable session before data is sent. | *Connectionless*: packets (datagrams) are sent independently without any prior handshake. |\n| 2 | **Reliability & ordering** | Guarantees in\u2011order delivery, retransmits lost packets, and provides flow\u2011control and congestion\u2011control mechanisms. | No guarantee of delivery, ordering, or retransmission; the application must handle any required reliability. |\n| 3 | **Header size & overhead** | 20\u2011byte header (minimum) plus optional options; higher overhead due to control fields (sequence numbers, ACKs, flags). | 8\u2011byte header; minimal overhead, making it faster and more efficient for small or real\u2011time payloads. |\n\nThese differences drive the choice of protocol: use TCP for applications that need reliable, ordered data (e.g., web, email), and UDP for low\u2011latency or multicast scenarios where occasional packet loss is acceptable (e.g., VoIP, streaming, gaming).",
+  "reasoning_chars": 352,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.752,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "Because the experiment used a larger batch size, training converged more slowly.",
+  "reasoning_chars": 1110,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 248,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "The sky appears blue because sunlight is scattered by the Earth's atmosphere, and shorter blue wavelengths are scattered much more efficiently than longer wavelengths. This Rayleigh scattering redirects blue light in all directions, making the sky look blue to our eyes.",
+  "reasoning_chars": 779,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.854,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "Using the product rule \\((uv)' = u'v + uv'\\):\n\nLet  \n\\(u = x^3 \\;\\;\\Rightarrow\\;\\; u' = 3x^2\\)  \n\\(v = \\sin x \\;\\;\\Rightarrow\\;\\; v' = \\cos x\\)\n\nThen\n\n\\[\n\\frac{d}{dx}\\bigl(x^3\\sin x\\bigr)\n= u'v + uv'\n= 3x^2\\sin x + x^3\\cos x.\n\\]\n\nSo the derivative is  \n\n\\[\n\\boxed{3x^2\\sin x + x^3\\cos x}.\n\\]",
+  "reasoning_chars": 250,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.673,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "**UK postcode regex (official)**  \n\n```regex\n^(GIR 0AA|[A-Z]{1,2}\\d{1,2}[A-Z]?\\s?\\d[A-Z]{2})$\n```\n\n*Use the `i` flag for case\u2011insensitive matching.*\n\n---\n\n### What it does\n\n| Part | Meaning |\n|------|---------|\n| `GIR 0AA` | The only non\u2011standard postcode (GIR 0AA) |\n| `[A-Z]{1,2}` | 1 or 2 letters for the outward code (e.g. `SW`, `EC`, `W1`) |\n| `\\d{1,2}` | 1 or 2 digits (e.g. `1`, `12`, `10`) |\n| `[A-Z]?` | Optional letter (for outward codes like `W1A`) |\n| `\\s?` | Optional space between outward and inward code |\n| `\\d` | 1 digit for the inward code |\n| `[A-Z]{2}` | 2 letters for the inward code |\n\n### Example matches\n\n| Postcode | Matches? |\n|----------|---------|\n| `SW1A 1AA` | \u2705 |\n| `EC1A 1BB` | \u2705 |\n| `W1 1AA` | \u2705 |\n| `GIR 0AA` | \u2705 |\n| `B33 8TH` | \u2705 |\n| `CR2 6XH` | \u2705 |\n| `DN55 1PT` | \u2705 |\n| `INVALID` | \u274c |\n\n### Usage in code\n\n```python\nimport re\n\npattern = re.compile(r'^(GIR 0AA|[A-Z]{1,2}\\d{1,2}[A-Z]?\\s?\\d[A-Z]{2})$', re.IGNORECASE)\n\nprint(bool(pattern.match('SW1A 1AA')))  # True\nprint(bool(pattern.match('INVALID')))   # False\n```\n\nThis pattern",
+  "reasoning_chars": 3601,
+  "finish": "length",
+  "top6gram": 1,
+  "distinct": 0.53,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 253,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**Proverb:**  \n*A stitch in time saves nine.*\n\n**Explanation**\n\n- **Literal meaning:** If you catch a small tear in a piece of fabric and sew it up right away, you only need one stitch (or a few). If you ignore it, the tear can grow, and when you finally fix it you\u2019ll need many more stitches\u2014often \u201cnine\u201d or more\u2014to repair the larger damage.\n\n- **Metaphorical meaning:** Taking care of a minor problem promptly prevents it from becoming a bigger, more costly issue later. The \u201cnine\u201d is a figurative way of saying that a small, timely effort can save a lot of extra work, effort, or trouble down the line.\n\n- **Origin:** The phrase dates back to at least the 18th century. It appears in *The English Dialect Dictionary* (1884) and in earlier collections of proverbs. The \u201cnine\u201d is not a literal number but a traditional way of emphasizing the magnitude of the potential future effort.\n\n- **Usage in everyday life:**\n  - **Health:** \u201cIf you notice a rash early and see a doctor, a stitch in time saves nine\u2014otherwise it could become a serious infection.\u201d\n  - **Finance:** \u201cPaying a small overdue bill right away is a stitch in time; otherwise you\u2019ll face higher penalties.\u201d\n  - **Relationships:** \u201cAddressing a misunderstanding immediately is a stitch in time; otherwise it could lead to resentment.\u201d\n\n- **Variations:**  \n  - \u201cA stitch in time saves a lot.\u201d  \n  - \u201cA stitch in time saves a lot of trouble.\u201d  \n  - In some cultures, similar proverbs exist, such as the German *Ein Stich in der Zeit spart neun* or the Spanish *Un punto a tiempo ahorra nueve*.\n\n- **Takeaway:** The proverb encourages proactive, preventive action. It reminds us that a small, timely effort\u2014whether it\u2019s fixing a tear, fixing a mistake, or addressing a concern\u2014can prevent a much larger problem later. The \u201cnine\u201d is a vivid illustration of how quickly a minor issue can balloon if left unattended.",
+  "reasoning_chars": 3873,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.598,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Verdict**\n\nAfter careful consideration, I find that **Answer\u202fA \u2013 \u201cParis\u201d \u2013 is correct** and **Answer\u202fB \u2013 \u201cLyon\u201d \u2013 is incorrect**.\n\n---\n\n### 1. Legal and Constitutional Basis\n\n- **Constitution of France (1946, Article\u202f1)**: Declares that *\u201cThe French Republic is a democratic republic, sovereign, indivisible, secular, and based on the principle of equality.\u201d*  \n- **Article\u202f3 of the Constitution**: *\u201cThe seat of the French government is in Paris.\u201d*  \n- **Law of 4\u202fApril\u202f1999 (Loi n\u00b0 99\u20114)**: Confirms that *\u201cParis is the capital of the French Republic.\u201d*\n\nThese provisions unambiguously designate Paris as the capital city, the seat of the executive, legislative, and judicial branches.\n\n### 2. Historical Continuity\n\n- **Ancient and Medieval Periods**: Paris has been the political center of France since the reign of Charlemagne (8th\u20139th centuries) and remained so through the Capetian, Valois, and Bourbon dynasties.\n- **Revolutionary Era**: The National Convention and later the Directory and Consulate all met in Paris.\n- **Modern Republic**: Since the establishment of the Third Republic (1870), Paris has continuously served as the capital.\n\n### 3. Practical Functions\n\n- **Executive**: The President of the Republic resides in the \u00c9lys\u00e9e Palace, located in Paris.\n- **Legislative**: The National Assembly meets in the Palais Bourbon, and the Senate convenes in the Luxembourg Palace, both in Paris.\n- **Judicial**: The highest courts, including the Court of Cassation and the Constitutional Council, are headquartered in Paris.\n\n### 4. Lyon\u2019s Status\n\n- Lyon is France\u2019s third\u2011largest city and a major economic hub, but it has never served as the seat of the national government.  \n- It hosts regional institutions (e.g., the Rh\u00f4ne-Alpes Regional Council) and several national agencies, but none of the functions that define a capital.\n\n### 5. Conclusion\n\nGiven the constitutional declaration, historical continuity, and the concentration of governmental functions, **Paris is the capital of France**. Therefore, Answer\u202fA is correct, and Answer\u202fB is incorrect.\n\n**Final Judgment:** *Answer\u202fA \u2013 Paris \u2013 is the correct answer.*",
+  "reasoning_chars": 526,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.591,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Pixels dance, bright glow  \nIn silicon hearts, humming bright  \nRender dreams in light",
+  "reasoning_chars": 1252,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.923,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "**Formula**\n\n\\[\nC = \\frac{5}{9}\\,(F - 32)\n\\]\n\n**Calculation**\n\n\\[\n\\begin{aligned}\nC &= \\frac{5}{9}\\,(98.6 - 32) \\\\\n  &= \\frac{5}{9}\\,(66.6) \\\\\n  &= \\frac{333.0}{9} \\\\\n  &= 37.0^\\circ\\text{C}\n\\end{aligned}\n\\]\n\nSo, **98.6\u202f\u00b0F is equal to 37.0\u202f\u00b0C**.",
+  "reasoning_chars": 270,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.714,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "**Process:**  \n**Photosynthesis** \u2013 the light\u2011driven conversion of carbon dioxide and water into glucose (or other carbohydrates) and oxygen.\n\n**Overall chemical equation (simplified):**\n\n\\[\n\\boxed{6\\,\\mathrm{CO_2} + 6\\,\\mathrm{H_2O} + \\text{light energy} \\;\\longrightarrow\\; \\mathrm{C_6H_{12}O_6} + 6\\,\\mathrm{O_2}}\n\\]\n\nor, in a more compact form:\n\n\\[\n\\boxed{\\mathrm{CO_2 + H_2O \\;\\longrightarrow\\; (CH_2O) + O_2}}\n\\]\n\nwhere \\((CH_2O)\\) represents the carbohydrate backbone (glucose in the simplest case). This equation summarizes the net result of the light\u2011dependent and Calvin\u2011cycle (light\u2011independent) reactions that together allow plants to produce their own food.",
+  "reasoning_chars": 599,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.805,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 139,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

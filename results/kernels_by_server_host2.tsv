@@ -1,7 +1,7 @@
-c6_b12x_dspark_p8000.log	
-c6_b12x_dspark_p8001.log	
-c6_b12x_dspark_p8002.log	
-c6_b12x_dspark_p8003.log	
+c6_b12x_dspark_p8000.log	Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+c6_b12x_dspark_p8001.log	Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+c6_b12x_dspark_p8002.log	Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+c6_b12x_dspark_p8003.log	Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
 c6_b12x_p8000.log	GPU KV cache size: 1,818,375 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
 c6_b12x_p8001.log	GPU KV cache size: 1,818,375 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
 c6_b12x_p8002.log	GPU KV cache size: 1,818,375 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
@@ -10,63 +10,95 @@ c6_fp8_b12x_p8000.log	GPU KV cache size: 1,524,208 tokens|Selected B12xFp8BlockS
 c6_fp8_b12x_p8001.log	GPU KV cache size: 1,524,208 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend
 c6_fp8_b12x_p8002.log	GPU KV cache size: 1,524,208 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend
 c6_fp8_b12x_p8003.log	GPU KV cache size: 1,524,208 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend
-f2_gemma26_mtp_p8000.log	
-f2_gemma26_mtp_p8001.log	
-f2_gemma26_mtp_p8002.log	
-f2_gemma26_mtp_p8003.log	
-f2_gemma26_p8000.log	
-f2_gemma26_p8001.log	
-f2_gemma26_p8002.log	
-f2_gemma26_p8003.log	
-f2_gemma31_p8000.log	
-f2_gemma31_p8001.log	
-f2_gemma31_p8002.log	
-f2_gemma31_p8003.log	
-f2_gptoss20_p8000.log	
-f2_gptoss20_p8001.log	
-f2_gptoss20_p8002.log	
-f2_gptoss20_p8003.log	
-f2_inkling_mtp_p8000.log	
-f2_inkling_p8000.log	
-f2_minimaxm3_dspark_p8000.log	
-f2_minimaxm3_mtp_p8000.log	
-f2_minimaxm3_p8000.log	
-f2_muse30_dflash_p8000.log	
-f2_muse30_dflash_p8001.log	
-f2_muse30_dflash_p8002.log	
-f2_muse30_dflash_p8003.log	
-f2_muse30_p8000.log	
-f2_muse30_p8001.log	
-f2_muse30_p8002.log	
-f2_muse30_p8003.log	
-f2_nemo35_dspark_p8000.log	
-f2_nemo35_dspark_p8001.log	
-f2_nemo35_dspark_p8002.log	
-f2_nemo35_dspark_p8003.log	
-f2_nemo35_mtp_p8000.log	
-f2_nemo35_mtp_p8001.log	
-f2_nemo35_mtp_p8002.log	
-f2_nemo35_mtp_p8003.log	
-f2_nemo35_p8000.log	
-f2_nemo35_p8001.log	
-f2_nemo35_p8002.log	
-f2_nemo35_p8003.log	
-f2_q27_dflash2_p8000.log	
-f2_q27_dflash2_p8001.log	
-f2_q27_dflash2_p8002.log	
-f2_q27_dflash2_p8003.log	
-f2_qwen36_p8000.log	
-f2_qwen36_p8001.log	
-f2_qwen36_p8002.log	
-f2_qwen36_p8003.log	
-f2_qwen38fn_p8000.log	
-f2_qwen38fn_p8001.log	
+f2_gemma26_mtp_p8000.log	GPU KV cache size: 722,266 tokens
+f2_gemma26_mtp_p8001.log	GPU KV cache size: 722,266 tokens
+f2_gemma26_mtp_p8002.log	GPU KV cache size: 722,266 tokens
+f2_gemma26_mtp_p8003.log	GPU KV cache size: 722,266 tokens
+f2_gemma26_p8000.log	GPU KV cache size: 762,337 tokens
+f2_gemma26_p8001.log	GPU KV cache size: 762,337 tokens
+f2_gemma26_p8002.log	GPU KV cache size: 762,337 tokens
+f2_gemma26_p8003.log	GPU KV cache size: 762,337 tokens
+f2_gemma31_p8000.log	GPU KV cache size: 135,804 tokens
+f2_gemma31_p8001.log	GPU KV cache size: 135,792 tokens
+f2_gemma31_p8002.log	GPU KV cache size: 135,792 tokens
+f2_gemma31_p8003.log	GPU KV cache size: 135,804 tokens
+f2_gptoss20_p8000.log	GPU KV cache size: 4,473,531 tokens|Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend|Using FLASHINFER attention backend
+f2_gptoss20_p8001.log	GPU KV cache size: 4,473,531 tokens|Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend|Using FLASHINFER attention backend
+f2_gptoss20_p8002.log	GPU KV cache size: 4,473,531 tokens|Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend|Using FLASHINFER attention backend
+f2_gptoss20_p8003.log	GPU KV cache size: 4,473,531 tokens|Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend|Using FLASHINFER attention backend
+f2_inkling_mtp_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
+f2_inkling_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
+f2_minimaxm3_dspark_p8000.log	Using FLASHINFER attention backend|Using FlashInferCutlassMxfp8LinearKernel for MXFP8 GEMM
+f2_minimaxm3_mtp_p8000.log	Using FLASHINFER attention backend|Using FlashInferCutlassMxfp8LinearKernel for MXFP8 GEMM
+f2_minimaxm3_p8000.log	Using FLASHINFER attention backend|Using FlashInferCutlassMxfp8LinearKernel for MXFP8 GEMM
+f2_muse30_dflash_p8000.log	GPU KV cache size: 1,101,363 tokens|Using FLASHINFER attention backend
+f2_muse30_dflash_p8001.log	GPU KV cache size: 1,101,363 tokens|Using FLASHINFER attention backend
+f2_muse30_dflash_p8002.log	GPU KV cache size: 1,101,363 tokens|Using FLASHINFER attention backend
+f2_muse30_dflash_p8003.log	GPU KV cache size: 1,101,363 tokens|Using FLASHINFER attention backend
+f2_muse30_p8000.log	GPU KV cache size: 2,056,050 tokens|Using FLASHINFER attention backend
+f2_muse30_p8001.log	GPU KV cache size: 2,056,050 tokens|Using FLASHINFER attention backend
+f2_muse30_p8002.log	GPU KV cache size: 2,056,050 tokens|Using FLASHINFER attention backend
+f2_muse30_p8003.log	GPU KV cache size: 2,056,050 tokens|Using FLASHINFER attention backend
+f2_nemo35_dspark_p8000.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_dspark_p8001.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_dspark_p8002.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_dspark_p8003.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_mtp_p8000.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_mtp_p8001.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_mtp_p8002.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_mtp_p8003.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_p8000.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_p8001.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_p8002.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_nemo35_p8003.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using 'MARLIN' NvFp4 MoE backend|Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+f2_q27_dflash2_p8000.log	GPU KV cache size: 799,022 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+f2_q27_dflash2_p8001.log	GPU KV cache size: 799,022 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+f2_q27_dflash2_p8002.log	GPU KV cache size: 799,022 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+f2_q27_dflash2_p8003.log	GPU KV cache size: 799,022 tokens|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
+f2_qwen36_p8000.log	GPU KV cache size: 4,040,861 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend|Using TRITON Fp8 MoE backend
+f2_qwen36_p8001.log	GPU KV cache size: 4,040,861 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend|Using TRITON Fp8 MoE backend
+f2_qwen36_p8002.log	GPU KV cache size: 4,040,861 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend|Using TRITON Fp8 MoE backend
+f2_qwen36_p8003.log	GPU KV cache size: 4,040,861 tokens|Selected B12xFp8BlockScaledMMKernel|Using FLASHINFER attention backend|Using TRITON Fp8 MoE backend
+f2_qwen38fn_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
+f2_qwen38fn_p8001.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
 hy3_mtp_p8000.log	Selected B12xFp8BlockScaledMMKernel|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
 hy3_p8000.log	Selected B12xFp8BlockScaledMMKernel|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using B12xNvFp4LinearKernel for NVFP4 GEMM|Using FLASHINFER attention backend
 laguna_dflash_p8000.log	GPU KV cache size: 1,286,162 tokens|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
 laguna_dflash_p8001.log	GPU KV cache size: 1,286,162 tokens|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
 laguna_p8000.log	GPU KV cache size: 1,786,579 tokens|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
 laguna_p8001.log	GPU KV cache size: 1,776,578 tokens|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
+ling3f_---_p8000.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_---_p8001.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_---_p8002.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_---_p8003.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-b12x_p8000.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-b12x_p8001.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-b12x_p8002.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-b12x_p8003.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-flashinfer_b12x_p8000.log	Using 'FLASHINFER_B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-flashinfer_b12x_p8001.log	Using 'FLASHINFER_B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-flashinfer_b12x_p8002.log	Using 'FLASHINFER_B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-flashinfer_b12x_p8003.log	Using 'FLASHINFER_B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-marlin_p8000.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-marlin_p8001.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-marlin_p8002.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-marlin_p8003.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_b12x-triton_p8000.log	
+ling3f_b12x-triton_p8001.log	
+ling3f_b12x-triton_p8002.log	
+ling3f_b12x-triton_p8003.log	
+ling3f_mtp_---_p8000.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_---_p8001.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_---_p8002.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_---_p8003.log	Using 'MARLIN' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_b12x-b12x_p8000.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_b12x-b12x_p8001.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_b12x-b12x_p8002.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_b12x-b12x_p8003.log	Using 'B12X' NvFp4 MoE backend|Using TRITON_MLA attention backend
+ling3f_mtp_b12x-triton_p8000.log	
+ling3f_mtp_b12x-triton_p8001.log	
+ling3f_mtp_b12x-triton_p8002.log	
+ling3f_mtp_b12x-triton_p8003.log	
 ling3f_mtp_p8000.log	
 ling3f_mtp_p8001.log	
 ling3f_mtp_p8002.log	
@@ -78,6 +110,8 @@ ling3f_p8003.log
 mimo25_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using B12xMxfp8LinearKernel for MXFP8 GEMM
 mistralm_p8000.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using FLASHINFER attention backend
 mistralm_p8001.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using FLASHINFER attention backend
+motif3_base.log	
+motif3_mtp.log	
 nemo3s_mtp_p8000.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4LinearKernel for NVFP4 GEMM
 nemo3s_mtp_p8001.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4LinearKernel for NVFP4 GEMM
 nemo3s_mtp_p8002.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4LinearKernel for NVFP4 GEMM
@@ -86,7 +120,12 @@ nemo3s_p8000.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4Linea
 nemo3s_p8001.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4LinearKernel for NVFP4 GEMM
 nemo3s_p8002.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4LinearKernel for NVFP4 GEMM
 nemo3s_p8003.log	Selected B12xTensorFP8ScaledMMLinearKernel|Using B12xNvFp4LinearKernel for NVFP4 GEMM
+ornith_mtp_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
 ornith_p8000.log	GPU KV cache size: 2,594,658 tokens|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
+step37_---_p8000.log	GPU KV cache size: 4,260,711 tokens|Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using 'MARLIN' NvFp4 MoE backend|Using FLASHINFER attention backend
+step37_b12x-b12x_p8000.log	Using FLASHINFER attention backend
+step37_b12x-marlin_p8000.log	GPU KV cache size: 4,277,786 tokens|Using 'MARLIN' NvFp4 MoE backend|Using FLASHINFER attention backend
+step37_b12x-triton_p8000.log	Using FLASHINFER attention backend
 step37_mtp_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
 step37_p8000.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend|Using FLASHINFER attention backend
 vglm_base.log	Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend

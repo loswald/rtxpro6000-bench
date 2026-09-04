@@ -11,5 +11,11 @@ muse30|/workspace/models/Muse-Glimmer-30B|1|-:-
 gptoss20|/workspace/models/gpt-oss-20b|1|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8
 gemma26|/workspace/models/gemma-4-26B-A4B-it|1|-:-
 qwen36_fp8|/workspace/models/Qwen3.6-35B-A3B-FP8|1|b12x:-
-inkling|/workspace/models/Inkling-Small-NVFP4|4|b12x:-
-qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-
+inkling|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager
+qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-|--kv-cache-dtype|auto
+# Matched NVFP4-vs-FP8 pair: the rows above run both at TP1 with the same budget, items and seed, which is
+# the only way to read the 5-point aggregate gap the 5090 box saw between them (0.558 vs 0.610) - that run
+# compared a TP1 NVFP4 server against a TP2 FP8 one and had different truncation rates, so it cannot settle it.
+minimaxm3|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager
+step37|/workspace/models/Step-3.7-Flash-NVFP4|4|-:-|--enable-expert-parallel
+ornith|/workspace/models/Ornith-1.5-397B-NVFP4|4|-:flashinfer_cutlass|--limit-mm-per-prompt|{"image":0}|--gpu-memory-utilization|0.90

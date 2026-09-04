@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "Here is the iterative implementation of the Fibonacci function in Python.\n\n```python\ndef fib(n):\n    \"\"\"\n    Returns the n-th Fibonacci number using an iterative approach.\n    \n    Sequence: 0, 1, 1, 2, 3, 5, 8, 13, ...\n    n=0 -> 0\n    n=1 -> 1\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer.\")\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    a, b = 0, 1\n    \n    # We iterate from 2 up to n (inclusive)\n    for _ in range(2, n + 1):\n        # Calculate the next number and update the pointers\n        a, b = b, a + b\n        \n    return b\n\n# --- Testing the function ---\nif __name__ == \"__main__\":\n    test_cases = [0, 1, 2, 3, 5, 10]\n    for n in test_cases:\n        print(f\"Fibonacci({n}) = {fib(n)}\")\n```\n\n### Explanation:\n\n1.  **Base Cases:** The function first handles the simplest cases: $n=0$ returns $0$ and $n=1$ returns $1$. It also includes a check to ensure $n$ is not a negative number.\n2.  **Variables:** We use two variables, `a` and `b`, to keep track of the two most recent numbers in the sequence. \n    *   `a` represents the $(n-2)$ position.\n    *   `b` represents the $(n-1)$ position.\n3.  **The Loop:** Instead of using recursion (which is slow and can cause a stack overflow for large $n$), we use a `for` loop. In each step, we update the values:\n    *   The new value of `b` becomes the sum of the previous two (`a + b`).\n    *   The new value of `a` becomes the old value of `b`.\n4.  **Efficiency:**\n    *   **Time Complexity:** $O(n)$, because we loop through the numbers exactly once.\n    *   **Space Complexity:** $O(1)$, because we only store two integers regardless of how large $n$ is.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.604,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "To get the top 3 customers by total order value, you need to join the two tables, group the results by the customer, and then sort them in descending order.\n\nHere is the SQL query:\n\n```sql\nSELECT \n    c.name, \n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n### Explanation:\n1.  **`SELECT c.name, SUM(o.amount)`**: We select the customer's name and use the aggregate function `SUM` to calculate the total of all their order amounts.\n2.  **`JOIN orders o ON c.id = o.customer_id`**: We link the `customers` table to the `orders` table using the common ID field.\n3.  **`GROUP BY c.id, c.name`**: We group the rows by the customer. Including `c.id` in the group by is a best practice to ensure that if two customers have the same name, they are treated as distinct individuals.\n4.  **`ORDER BY total_order_value DESC`**: This sorts the list from the highest spending customer to the lowest.\n5.  **`LIMIT 3`**: This restricts the final output to only the top three records.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.698,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1/5**\n\n**Explanation:**\nThe answer is incorrect. The capital of Australia is **Canberra**. Sydney is the largest city in Australia, which is a common misconception, but it does not hold the status of the capital.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.8,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "Depending on the level of formality you want, here are a few ways to translate this:\n\n**1. Most common/Standard:**\n> **La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e au jeudi apr\u00e8s-midi.**\n\n**2. Slightly more formal (often used in business emails):**\n> **La r\u00e9union a \u00e9t\u00e9 report\u00e9e au jeudi apr\u00e8s-midi.**\n*(Note: \"Report\u00e9e\" specifically implies it has been postponed/rescheduled to a later time.)*\n\n**3. More casual/Natural in conversation:**\n> **La r\u00e9union a \u00e9t\u00e9 d\u00e9cal\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n\n**Key Vocabulary:**\n*   *La r\u00e9union* = The meeting\n*   *D\u00e9placer* = To move/relocate\n*   *Reporter* = To postpone/reschedule\n*   *D\u00e9caler* = To shift/move (the time)\n*   *Jeudi apr\u00e8s-midi* = Thursday afternoon",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.718,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "While large language models are versatile, general-purpose tools trained on massive datasets, they are prone to generating factual inaccuracies known as hallucinations.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.955,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "Here are three fundamental differences between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol):\n\n### 1. Reliability and Error Checking\n*   **TCP is Reliable:** It uses a system of acknowledgments and retransmissions. If a packet is lost or corrupted during transit, TCP detects the error and sends the data again to ensure the receiver gets exactly what was sent.\n*   **UDP is Unreliable:** It is a \"best-effort\" protocol. It sends packets without checking if they actually arrived or if they were corrupted. If a packet is lost, it is simply gone; the protocol does not attempt to recover it.\n\n### 2. Connection Type (Connection-Oriented vs. Connectionless)\n*   **TCP is Connection-Oriented:** Before any data can be sent, TCP must perform a \"three-way handshake\" (SYN, SYN-ACK, ACK) to establish a formal connection between the sender and the receiver. This ensures both parties are ready to communicate.\n*   **UDP is Connectionless:** There is no formal handshake or setup process. The sender simply starts streaming data to the destination IP and port without verifying if the receiver is active or ready to listen.\n\n### 3. Speed and Overhead\n*   **TCP is Slower (Higher Overhead):** Because TCP has to manage connections, track sequence numbers, and wait for acknowledgments, it has a higher \"overhead.\" This makes it slower and less efficient for real-time tasks.\n*   **UDP is Faster (Lower Overhead):** Because it lacks the complex management and constant \"back-and-forth\" communication of TCP, UDP is much faster and more lightweight. This makes it ideal for time-sensitive tasks where speed is more important than perfect accuracy.\n\n***\n\n**Summary Table**\n\n| Feature | TCP | UDP |\n| :--- | :--- | :--- |\n| **Reliability** | Guaranteed delivery | No guarantee (Best-effort) |\n| **Connection** | Connection-oriented (Handshake) | Connectionless |\n| **Best Use Case** | Web browsing, Email, File transfers | Video streaming, Online gaming, VoIP |",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.627,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "Depending on which part of the causality you want to reverse, here are a few ways to rewrite the sentence:\n\n**Option 1: Reversing the cause (The batch size was smaller)**\n> \"Because the experiment used a **smaller** batch size, training converged **slower**.\"\n\n**Option 2: Reversing the effect (The batch size was large, but it failed)**\n> \"Because the experiment used a larger batch size, training **failed to converge**.\"\n\n**Option 3: Reversing the relationship (The batch size was small, but it helped)**\n> \"Because the experiment used a **smaller** batch size, training converged **faster**.\"\n\n**Most common interpretation (Reversing the entire logic):**\n> \"Because the experiment used a **smaller** batch size, training converged **slower**.\"",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 4,
+  "distinct": 0.5,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "```json\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "The sky appears blue because sunlight is scattered by the gases and particles in Earth's atmosphere through a process called Rayleigh scattering. Blue light travels in shorter, smaller waves and is scattered more strongly than other colors, spreading across the sky for our eyes to see.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.87,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "To find the derivative of $x^3 \\sin(x)$, you must use the **Product Rule**.\n\nThe Product Rule states that if you have a function $f(x) = u(x)v(x)$, its derivative is:\n$$\\frac{d}{dx}[u(x)v(x)] = u'(x)v(x) + u(x)v'(x)$$\n\n### Step-by-step Solution:\n\n**1. Identify the two functions:**\n*   Let $u(x) = x^3$\n*   Let $v(x) = \\sin(x)$\n\n**2. Find the derivatives of each part:**\n*   The derivative of $u(x)$ is $u'(x) = 3x^2$ (using the Power Rule).\n*   The derivative of $v(x)$ is $v'(x) = \\cos(x)$ (standard trigonometric derivative).\n\n**3. Apply the Product Rule formula:**\n$$\\frac{d}{dx}[x^3 \\sin(x)] = (3x^2)(\\sin(x)) + (x^3)(\\cos(x))$$\n\n**4. Simplify the expression:**\nYou can factor out an $x^2$ to make the answer cleaner:\n$$\\frac{d}{dx}[x^3 \\sin(x)] = x^2(3\\sin(x) + x\\cos(x))$$\n\n**Final Answer:**\n$$\\mathbf{3x^2 \\sin(x) + x^3 \\cos(x)}$$",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.718,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "Because UK postcodes can follow several different formats (e.g., `SW1A 1AA`, `W1A 0AX`, `M1 1AA`, `CR2 6XH`), there is no single \"simple\" regex.\n\nDepending on your needs, you should choose one of the three levels of strictness below.\n\n### 1. The \"Practical\" Regex (Recommended)\nThis is the best balance for most web forms. It ensures the postcode follows the general structure of a UK postcode but isn't so strict that it rejects valid (but rare) formats.\n\n```regex\n^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$\n```\n*   **What it matches:** `SW1A 1AA`, `M1 1AA`, `CR2 6XH`, `W1A 0AX`.\n*   **Pros:** Very fast, covers 99% of use cases, allows an optional space.\n*   **Cons:** Might allow a few invalid combinations (like `A1 1AA` which is technically impossible, but unlikely to be a problem in a UI).\n\n---\n\n### 2. The \"Strict\" Regex (Official Standard)\nIf you are building a system where data integrity is critical (like a shipping or tax engine), use this. It follows the official UK government rules for character placement.\n\n```regex\n^(([A-Z]{1,2}[0-9][A-Z0-9]?|ASCN|STCN|TN|CNS|GI|AP|BS|DG|GD|GU|HN|HX|IP|KT|LN|MN|NG|NT|OX|PA|PO|PR|RG|SN|TQ|TR|WR|YT|ZW)[ ]?[0-9][A-Z]{2})$\n```\n*   **What it matches:** Only validly structured UK postcodes.\n*   **Pros:** Extremely accurate; prevents typos in the first half of the code.\n*   **Cons:** Harder to read/maintain; can be \"too\" strict if the UK introduces new area codes.\n\n---\n\n### 3. The \"Loose\" Regex (For Search/Filtering)\nIf you are writing a search feature where a user might type a postcode into a search bar, you want to be very forgiving.\n\n```regex\n^[A-Z]{1,2}[0-9][A-Z0-9]?\\s?[0-9][A-Z]{2}$\n```\n*(Note: This is almost identical to the Practical one, but uses `\\s?` to explicitly handle any whitespace character.)*\n\n---\n\n### Breakdown of the Logic\nIf you want to build your own, here is how a UK postcode is structured:\n\n1.  **`^[A-Z]{1,2}`**: Starts with 1 or 2 letters (the Area).\n2.  **`[0-9][A-Z0-9]?`**: Followed by a number (the District). This can be a single digit (`M1`) or a digit and a letter (`W1A`).\n3.  **` ?`**: An optional space.\n4.  **`[0-9]`**: A single digit (the Sector).\n5.  **`[A-Z]{2}$`**: Ends with exactly two letters (the Unit).\n\n### Implementation Tip (JavaScript Example)\nWhen using these in a web form, always convert the input to **Uppercase** before testing, as users often type in lowercase.\n\n```javascript\nconst postcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;\nconst userInput = \"sw1a 1aa\";\n\nif (postcodeRegex.test(userInput.toUpperCase())) {\n    console.log(\"Valid Postcode\");\n} else {\n    console.log(\"Invalid Postcode\");\n}\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.647,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "The complete proverb is: **\"A stitch in time saves nine.\"**\n\n### Explanation:\n\n**The Literal Meaning:**\nThe phrase comes from the world of sewing. If you notice a small tear or a loose thread in a piece of clothing, taking a moment to sew one single stitch right away will fix it. However, if you ignore that small hole and continue to wear the garment, the tear will grow larger, and eventually, you will have to sew nine stitches (or many more) to repair the damage.\n\n**The Figurative Meaning:**\nThe proverb is a piece of advice about **procrastination and prevention**. It means that you should deal with a problem immediately while it is still small and easy to manage. If you delay fixing a minor issue, it will likely grow into a much larger, more difficult, and more time-consuming problem later on.\n\n**Examples of use:**\n* **In health:** Going to the doctor for a minor ache now (one stitch) might prevent a major surgery later (nine stitches).\n* **In business:** Fixing a small bug in a software code immediately prevents a total system crash later.\n* **In relationships:** Addressing a small misunderstanding immediately prevents a massive argument down the road.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.648,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "As a judge evaluating these two responses to the question \"What is the capital of France?\", my ruling is as follows:\n\n**Verdict: Answer A is correct. Answer B is incorrect.**\n\n**Reasoning:**\n1.  **Factuality:** The capital of the French Republic is, by constitutional and political definition, **Paris**. Paris serves as the seat of the French government, the residence of the President, and the location of the National Assembly.\n2.  **Accuracy of Answer B:** While **Lyon** is a major French city, a significant economic hub, and a historical center of the country, it holds no status as the national capital.\n3.  **Conclusion:** Answer A provides the single correct factual response required by the question, whereas Answer B provides a geographically relevant but factually incorrect response.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.667,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Parallel power,\nMillions of cores racing fast,\nPixels come to life.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "To convert Fahrenheit to Celsius, you use the following formula:\n\n### **The Formula**\n$C = (F - 32) \\times \\frac{5}{9}$\n\n*(Where **C** is Celsius and **F** is Fahrenheit)*\n\n---\n\n### **The Calculation**\n\n1.  **Subtract 32 from the Fahrenheit temperature:**\n    $98.6 - 32 = 66.6$\n\n2.  **Multiply the result by 5:**\n    $66.6 \\times 5 = 333$\n\n3.  **Divide by 9:**\n    $333 \\div 9 = 37$\n\n**Result:** 98.6\u00b0F is equal to **37\u00b0C**.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.786,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "The process by which plants make food is called **photosynthesis**.\n\nDuring this process, plants use sunlight, water, and carbon dioxide to create glucose (sugar) and release oxygen as a byproduct.\n\n### The Chemical Equation\n\n**Word Equation:**\nCarbon dioxide + Water $\\xrightarrow{\\text{Light + Chlorophyll}}$ Glucose + Oxygen\n\n**Chemical Formula Equation:**\n$$6\\text{CO}_2 + 6\\text{H}_2\\text{O} \\xrightarrow{\\text{Light}} \\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2$$\n\n**Breakdown of the components:**\n*   **$6\\text{CO}_2$**: 6 molecules of Carbon Dioxide\n*   **$6\\text{H}_2\\text{O}$**: 6 molecules of Water\n*   **$\\text{C}_6\\text{H}_{12}\\text{O}_6$**: 1 molecule of Glucose (the food)\n*   **$6\\text{O}_2$**: 6 molecules of Oxygen (released into the air)",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.725,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "```json\n{\n  \"a\": 1,\n  \"b\": 2,\n  \"c\": 3\n}\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

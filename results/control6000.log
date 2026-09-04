@@ -21,3 +21,14 @@ quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/
 [20:18:03]   c6_b12x_dspark FAILED after 1500s
 vllm serve: error: argument --speculative-config/-sc: Value method:draft_model cannot be converted to <function loads at 0x7f49b5238c20>.
 [20:18:03] CONTROL6000 DONE
+[00:35:22] ===== control: Qwen3.8-27B NVFP4 b12x (first box: 5,161 out tok/s at C1024 router) =====
+[00:35:22]   c6_b12x already measured, skipping
+[00:35:22] ===== control: Qwen3.8-27B FP8 b12x (first box: 3,146 at C1024) =====
+[00:35:22]   c6_fp8_b12x already measured, skipping
+[00:35:22] ===== owed from nvtier2: b12x + DSpark drafter (read the acceptance counters) =====
+[00:35:27]   launch c6_b12x_dspark :: --kernel-config.linear_backend b12x --speculative-config {"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}
+[00:36:48]   c6_b12x_dspark FAILED after 60s
+(EngineCore pid=180754) ERROR 09-04 00:36:22 [core.py:1385] EngineCore failed to start.
+(EngineCore pid=180754) ERROR 09-04 00:36:22 [core.py:1385] Traceback (most recent call last):
+(EngineCore pid=180754) ERROR 09-04 00:36:22 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1347, in run_engine_core
+[00:36:48] CONTROL6000 DONE

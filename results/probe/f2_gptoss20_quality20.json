@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 122,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 151,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "Here\u2019s a compact, fully\u2011documented implementation that uses a simple `for` loop to compute the *n*\u2011th Fibonacci number.  \nIt follows the classic definition\n\n```\nF(0) = 0\nF(1) = 1\nF(n) = F(n\u20111) + F(n\u20112)   for n \u2265 2\n```\n\n```python\ndef fib(n: int) -> int:\n    \"\"\"\n    Return the n\u2011th Fibonacci number (0\u2011based indexing).\n\n    Parameters\n    ----------\n    n : int\n        The index of the Fibonacci number to compute. Must be non\u2011negative.\n\n    Returns\n    -------\n    int\n        The n\u2011th Fibonacci number.\n\n    Raises\n    ------\n    ValueError\n        If n is negative.\n\n    Examples\n    --------\n    >>> fib(0)\n    0\n    >>> fib(1)\n    1\n    >>> fib(5)\n    5\n    >>> fib(10)\n    55\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non\u2011negative integer\")\n\n    # Base cases\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    # Iterative computation\n    a, b = 0, 1          # a = F(n-2), b = F(n-1)\n    for _ in range(2, n + 1):\n        a, b = b, a + b  # shift forward: new a = old b, new b = old a + old b\n\n    return b\n```\n\n### Why this is efficient\n\n* **Iterative, not recursive** \u2013 no function\u2011call overhead or risk of hitting Python\u2019s recursion limit.\n* **O(1) extra space** \u2013 only two integer variables are kept, regardless of `n`.\n* **O(n) time** \u2013 each Fibonacci number is computed once, which is optimal for a straightforward algorithm.\n\nFeel free to drop this function into any script or module that needs Fibonacci numbers!",
+  "reasoning_chars": 550,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.639,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "Here\u2019s a concise, ANSI\u2011SQL query that pulls the three customers with the highest total order value:\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_amount\nFROM\n    customers AS c\nJOIN\n    orders AS o\n    ON c.id = o.customer_id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_amount DESC\nLIMIT 3;          -- MySQL / PostgreSQL / SQLite\n```\n\n### What it does\n\n1. **Join** `customers` with `orders` on the foreign key `customer_id`.\n2. **Aggregate** (`SUM`) the `amount` for each customer.\n3. **Group** by the customer\u2019s `id` and `name` so the sum is per customer.\n4. **Order** the results by the summed amount in descending order.\n5. **Limit** the output to the top 3 rows.\n\n> **Tip** \u2013 If you want to include customers who have never placed an order (so they appear with a total of `0`), replace the `JOIN` with a `LEFT JOIN` and wrap the `SUM` in `COALESCE`:\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    COALESCE(SUM(o.amount), 0) AS total_amount\nFROM\n    customers AS c\nLEFT JOIN\n    orders AS o\n    ON c.id = o.customer_id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_amount DESC\nLIMIT 3;\n```\n\nThis will still return the top 3 customers, but now customers with no orders are considered with a total of zero.",
+  "reasoning_chars": 845,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.645,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1/5**\n\n**Explanation:** The capital of Australia is Canberra, not Sydney. The answer is factually incorrect.",
+  "reasoning_chars": 235,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.875,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s\u2011midi.",
+  "reasoning_chars": 912,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on vast corpora, can perform many tasks without task\u2011specific fine\u2011tuning, yet they sometimes hallucinate facts.",
+  "reasoning_chars": 426,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "**Three key differences between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol)**\n\n| # | Feature | TCP | UDP |\n|---|--------|-----|-----|\n| 1 | **Connection model** | *Connection\u2011oriented*: a three\u2011way handshake establishes a session before data transfer. | *Connectionless*: packets are sent independently without any prior handshake. |\n| 2 | **Reliability & ordering** | Guarantees in\u2011order delivery, retransmits lost segments, and provides flow\u2011control and congestion\u2011control mechanisms. | No guarantee of delivery, ordering, or retransmission; the application must handle any needed reliability. |\n| 3 | **Header size & overhead** | 20\u2011byte header (minimum) with many control fields (sequence numbers, ACKs, flags, window size, etc.). | 8\u2011byte header, minimal overhead; only source/destination ports, length, and checksum. |\n\nThese differences drive the choice of protocol: TCP for reliable, ordered communication (e.g., web, email), and UDP for low\u2011latency, lightweight traffic where occasional packet loss is acceptable (e.g., VoIP, gaming, streaming).",
+  "reasoning_chars": 344,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.76,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "Because the experiment used a larger batch size, training converged more slowly.",
+  "reasoning_chars": 1426,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 497,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "The sky looks blue because sunlight is scattered by the Earth's atmosphere, and shorter blue wavelengths are scattered more efficiently than longer wavelengths. This Rayleigh scattering redirects blue light in all directions, making the sky appear blue to our eyes.",
+  "reasoning_chars": 948,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.85,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "Using the product rule \\((uv)' = u'v + uv'\\):\n\nLet  \n\\(u = x^3 \\;\\;\\Rightarrow\\;\\; u' = 3x^2\\)  \n\\(v = \\sin x \\;\\;\\Rightarrow\\;\\; v' = \\cos x\\)\n\nThen\n\n\\[\n\\frac{d}{dx}\\bigl(x^3\\sin x\\bigr)\n= u'v + uv'\n= 3x^2\\sin x + x^3\\cos x.\n\\]\n\nSo the derivative is  \n\n\\[\n\\boxed{3x^2\\sin x + x^3\\cos x}.\n\\]",
+  "reasoning_chars": 250,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.673,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "Here\u2019s a single\u2011line regular expression that will match **all valid UK postcodes** (including the special \u201cGIR\u202f0AA\u201d case).  \nIt\u2019s written in a way that\u2019s easy to copy\u2011paste into most regex engines (PCRE, Java, .NET, etc.) and can be used with the `i` flag for case\u2011insensitivity.\n\n```regex\n^(?:GIR\\s?0AA|[A-Z]{1,2}\\d{1,2}[A-Z]?\\s?\\d[A-Z]{2})$\n```\n\n### How it works\n\n| Part | Meaning |\n|------|---------|\n| `^` | Start of string |\n| `(?: \u2026 )` | Non\u2011capturing group \u2013 we don\u2019t need to capture the whole postcode |\n| `GIR\\s?0AA` | The one\u2011off postcode \u201cGIR\u202f0AA\u201d (the space is optional) |\n| `|` | OR |\n| `[A-Z]{1,2}` | Outward code: 1 or 2 letters (e.g. \u201cW\u201d, \u201cSW\u201d) |\n| `\\d{1,2}` | 1 or 2 digits (e.g. \u201c1\u201d, \u201c12\u201d) |\n| `[A-Z]?` | Optional letter (for the \u201cA9A\u201d or \u201cA9 9AA\u201d patterns) |\n| `\\s?` | Optional single space between outward and inward parts |\n| `\\d` | Inward code: a single digit |\n| `[A-Z]{2}` | Two letters (e.g. \u201cAA\u201d) |\n| `$` | End of string |\n\n### Example matches\n\n| Postcode | Matches? |\n|----------|---------|\n| `SW1A 1AA` | \u2705 |\n| `EC1A 1BB` | \u2705 |\n| `W1 1AA` | \u2705 |\n| `GIR 0AA` | \u2705 |\n| `B33 8TH` | \u2705 |\n| `CR2 6XH` | \u2705 |\n| `DN55 1PT` | \u2705 |\n| `INVALID` | \u274c |\n\n### Usage notes\n\n* **Case\u2011insensitive**: Add the `i` flag (e.g., `/\u2026/i`) so `sw1a 1aa` also matches.\n* **Whitespace**: The space between the outward and inward parts is optional, so both `SW1A1AA` and `SW1A 1AA` are accepted.\n* **Special postcode**: The `GIR 0AA` case is the only postcode that does not follow the general pattern, so it\u2019s handled separately.\n\nFeel free to drop this regex into your code or validation library and it will correctly validate UK postcodes.",
+  "reasoning_chars": 759,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.578,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 241,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**Proverb:**  \n*A stitch in time saves nine.*\n\n---\n\n### What it means\n\nThe saying warns that dealing with a small problem promptly prevents it from becoming a larger, more difficult issue later on.  \n- **\u201cA stitch\u201d** \u2013 a small, quick fix (like sewing a tear).  \n- **\u201cIn time\u201d** \u2013 before the problem worsens.  \n- **\u201cSaves nine\u201d** \u2013 the effort that would be required later (the number nine is used because a single stitch often needs nine more to finish a repair).\n\nIn short: **Fix a little problem now, and you\u2019ll avoid a lot of trouble later.**\n\n---\n\n### Why it\u2019s useful\n\n1. **Practical advice** \u2013 In everyday life, a small leak, a loose screw, or a minor error can grow into a bigger mess if ignored.  \n2. **Time\u2011saving** \u2013 Tackling issues early usually takes less time and effort than fixing them after they\u2019ve escalated.  \n3. **Preventive mindset** \u2013 Encourages proactive maintenance, whether at home, in work, or in relationships.\n\n---\n\n### Origin\n\n- **First recorded** in the 18th\u2011century English proverb collections.  \n- The phrase is a metaphor from sewing: a single stitch can hold a tear together; if you wait, the tear widens and you\u2019ll need many more stitches.  \n- The \u201cnine\u201d is a traditional number used in many proverbs to indicate a larger quantity (e.g., \u201ca stitch in time saves nine\u201d vs. \u201ca stitch in time saves a lot\u201d).\n\n---\n\n### How it\u2019s used\n\n| Context | Example |\n|---------|---------|\n| **Home maintenance** | \u201cI noticed a small crack in the roof. I\u2019ll patch it now; a stitch in time saves nine.\u201d |\n| **Workplace** | \u201cIf you spot a typo in the draft, fix it right away. A stitch in time saves nine.\u201d |\n| **Health** | \u201cDon\u2019t ignore that sore; see a doctor early. A stitch in time saves nine.\u201d |\n| **Relationships** | \u201cIf you\u2019re upset, talk about it instead of holding it in. A stitch in time saves nine.\u201d |\n\n---\n\n### Variations\n\n- **\u201cA stitch in time saves nine.\u201d** (most common)  \n- **\u201cA stitch in time saves a lot.\u201d**  \n- **\u201cA stitch in time saves a lot of trouble.\u201d**  \n- **\u201cA stitch in time saves a lot of work.\u201d**\n\n---\n\n### Take\u2011away\n\nThe proverb reminds us that **small, timely actions**\u2014whether fixing a tear, correcting a mistake, or addressing a concern\u2014**prevent larger problems**. It\u2019s a timeless piece of wisdom that applies to everything from household chores to career decisions.",
+  "reasoning_chars": 211,
+  "finish": "stop",
+  "top6gram": 4,
+  "distinct": 0.542,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Verdict:**  \nAnswer **A: Paris** is correct.  \nAnswer **B: Lyon** is incorrect.\n\n---\n\n### Why Paris is the correct answer\n\n| Criterion | Paris | Lyon |\n|-----------|-------|------|\n| **Official status** | Recognized by the French Constitution and international law as the capital city. | Not designated as the capital. |\n| **Seat of government** | Houses the President\u2019s official residence (\u00c9lys\u00e9e Palace), the French Parliament (National Assembly and Senate), the Prime Minister\u2019s office, and most ministries. | Hosts some ministries and agencies, but not the central executive or legislative bodies. |\n| **Historical continuity** | Paris has been the political, cultural, and economic center of France since the Middle Ages and has served as the capital continuously since the 12th century. | Lyon was historically a major commercial hub and the capital of the Roman province of Gallia Lugdunensis, but it never became the national capital. |\n| **International recognition** | Listed as the capital in all official documents, maps, and diplomatic communications worldwide. | Not listed as the capital in any official international documents. |\n| **Legal definition** | The French Constitution (Article 3) explicitly names Paris as the capital. | No constitutional or legal provision designates Lyon as the capital. |\n\n### Why Lyon is not the capital\n\n- **Administrative role:** Lyon is the third-largest city in France and the capital of the Auvergne-Rh\u00f4ne-Alpes region, but it does not host the national government\u2019s core institutions.\n- **Historical context:** While Lyon was an important Roman and medieval city, the French monarchy and later the republic chose Paris as the seat of power due to its strategic location, population, and symbolic significance.\n- **International consensus:** All diplomatic missions, international treaties, and global databases (e.g., United Nations, ISO country codes) list Paris as France\u2019s capital.\n\n---\n\n### Conclusion\n\nGiven the constitutional, historical, administrative, and international evidence, **Paris** is unequivocally the capital of France. Therefore, **Answer A** is correct, and **Answer B** is incorrect.",
+  "reasoning_chars": 447,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.556,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Pixels dance in code  \nShaders glow, light streams across  \nGPU hums low",
+  "reasoning_chars": 817,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "**Formula**\n\n\\[\nC = (F - 32)\\times\\frac{5}{9}\n\\]\n\n**Calculation**\n\n1. Subtract 32 from the Fahrenheit value:  \n   \\[\n   98.6 - 32 = 66.6\n   \\]\n\n2. Multiply by \\(5/9\\):  \n   \\[\n   66.6 \\times \\frac{5}{9} = \\frac{66.6 \\times 5}{9} = \\frac{333.0}{9} = 37.0\n   \\]\n\n**Result**\n\n\\[\n\\boxed{98.6^\\circ\\text{F} = 37.0^\\circ\\text{C}}\n\\]",
+  "reasoning_chars": 270,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.674,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "**Process:**  \n**Photosynthesis** \u2013 the light\u2011driven conversion of atmospheric carbon dioxide and water into glucose (or other carbohydrates) and oxygen.\n\n**Overall chemical equation (simplified):**\n\n\\[\n\\boxed{6\\,\\text{CO}_2 + 6\\,\\text{H}_2\\text{O} \\;+\\; \\text{light energy} \\;\\longrightarrow\\; \\text{C}_6\\text{H}_{12}\\text{O}_6 \\;+\\; 6\\,\\text{O}_2}\n\\]\n\n*Key points:*\n\n- **Reactants:** Carbon dioxide (CO\u2082) from the air and water (H\u2082O) taken up by the roots.  \n- **Products:** Glucose (C\u2086H\u2081\u2082O\u2086) \u2013 the plant\u2019s food \u2013 and oxygen (O\u2082) released into the atmosphere.  \n- **Energy source:** Solar light captured by chlorophyll in the chloroplasts.  \n\nThis equation represents the net result of the light\u2011dependent and light\u2011independent (Calvin cycle) reactions that together constitute photosynthesis.",
+  "reasoning_chars": 794,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.776,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 151,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

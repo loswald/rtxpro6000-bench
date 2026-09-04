@@ -169,3 +169,33 @@ quality20[chat]: ok=17 degenerate=3 wrong=0 error=0 -> /workspace/results/probe/
 quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/ornith_quality20.json
   router     C64      72.5s     318 req/min      678 out/s      5425 in/s      6103 tot/s  TTFT   2351/   7088 ms  TPOT  76.5/  92.5 ms  ITL  76.5  E2E  12.1/ 16.3 s
   router     C256    224.2s     411 req/min      877 out/s      7017 in/s      7894 tot/s  TTFT   4359/  26746 ms  TPOT 258.7/ 283.0 ms  ITL 258.7  E2E  37.2/ 61.5 s
+  promptopt  C256    367.7s     251 req/min     1069 out/s     14971 in/s     16040 tot/s  TTFT   5703/  39375 ms  TPOT 217.2/ 234.2 ms  ITL 217.2  E2E  61.1/ 97.0 s
+  judge      C128    508.2s      91 req/min      774 out/s      6190 in/s      6964 tot/s  TTFT   7498/  53930 ms  TPOT 150.6/ 161.9 ms  ITL 150.6  E2E  84.5/134.6 s
+[00:16:53] ########## ornith_mtp  (235G, tp=4 x1) ##########
+[00:16:58]   launch ornith_mtp :: tp=4 x1 :: --limit-mm-per-prompt {"image":0} --gpu-memory-utilization 0.90 --speculative-config {"method":"qwen3_5_mtp","num_speculative_tokens":1}
+[00:24:50]   ornith_mtp FAILED after 450s
+(EngineCore pid=159847) RuntimeError: cancelled
+Traceback (most recent call last):
+KeyError: '/psm_5fd1b93f'
+(APIServer pid=159154) Traceback (most recent call last):
+(APIServer pid=159154)     raise RuntimeError(
+(APIServer pid=159154) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[00:25:19]   removed Ornith-1.5-397B-NVFP4 (446G free)
+[00:25:19]   downloading Motif-Technologies/Motif-3-NVFP4 -> Motif-3-NVFP4
+[00:33:39]   done Motif-3-NVFP4 (175G)
+[00:33:45] vendor tree: /workspace/motifimg/usr/local/lib/python3.12/dist-packages  (python: python3)
+[00:33:46]   vendor torch: 2.13.0+cu130
+[00:33:50]   vendor vllm : 0.10.1rc2.dev10313+gd314fa2af
+  motif archs: ['MotifForCausalLM', 'MotifMTPModel']
+[00:33:57] ===== Motif-3 on the vendor vLLM fork (DP4 x TP1 + EP) =====
+[00:33:57] --- A: no speculation ---
+[00:34:02]   launch motif3_base :: 
+[00:34:17]   motif3_base FAILED after 15s
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'pydivsufsort'
+[00:34:17] --- B: built-in MTP, 1 draft token (vendor recipe) ---
+[00:34:23]   launch motif3_mtp :: 
+[00:34:38]   motif3_mtp FAILED after 15s
+Traceback (most recent call last):
+ModuleNotFoundError: No module named 'pydivsufsort'
+[00:34:38] MOTIF DONE

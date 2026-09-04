@@ -25,3 +25,30 @@
 (APIServer pid=58707)     raise RuntimeError(
 (APIServer pid=58707) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
 [20:40:02] VGLM DONE
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[02:36:59] ===== GLM-5.3-Flash on vLLM (vendor build + sm_120 NoPE port) =====
+[02:36:59] --- A: no speculation ---
+[02:37:04]   launch vglm_base :: 
+[02:42:05]   vglm_base FAILED after 300s
+(EngineCore pid=314379) ERROR 09-04 02:41:49 [core.py:1355] RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (
+(EngineCore pid=314379) ERROR 09-04 02:41:53 [multiproc_executor.py:310] Worker proc VllmWorker-0 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=314379) Traceback (most recent call last):
+(EngineCore pid=314379)     raise RuntimeError(
+(EngineCore pid=314379) RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (block_kv == 32 or block_kv == 64 or 
+(APIServer pid=313847) Traceback (most recent call last):
+(APIServer pid=313847)     raise RuntimeError(
+(APIServer pid=313847) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[02:42:05] --- B: MTP, 3 draft tokens ---
+[02:42:10]   launch vglm_mtp :: 
+[02:45:55]   vglm_mtp FAILED after 225s
+(EngineCore pid=318910) ERROR 09-04 02:45:33 [core.py:1355] RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (
+(EngineCore pid=318910) ERROR 09-04 02:45:36 [multiproc_executor.py:310] Worker proc VllmWorker-1 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=318910) Traceback (most recent call last):
+(EngineCore pid=318910)     raise RuntimeError(
+(EngineCore pid=318910) RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (block_kv == 32 or block_kv == 64 or 
+(APIServer pid=318378) Traceback (most recent call last):
+(APIServer pid=318378)     raise RuntimeError(
+(APIServer pid=318378) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[02:45:55] VGLM DONE
