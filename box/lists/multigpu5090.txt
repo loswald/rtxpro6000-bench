@@ -1,0 +1,7 @@
+# The multi-GPU question, on the box where it actually bites. A 32 GB card cannot hold any of these, so
+# every one of them is forced into tensor parallelism across cards with no NVLink - where the 4x96 GB box
+# can still run them as independent replicas. gpt-oss-120b already shows the shape of the answer: 1,640
+# output tok/s at TP4x2 here against 13,752 as four TP1 replicas on the professional box, with p50
+# time-to-first-token of 324 seconds against 0.7. These two are the models the decision actually turns on.
+ds4flash_tp8|/workspace/models/DeepSeek-V4-Flash|8|-:flashinfer_cutlass,-:-|--quantization-config.moe.activation|mxfp8|--enable-expert-parallel|--kv-cache-dtype|fp8|--attention_config.use_fp4_indexer_cache|False
+ds4flash_tp4|/workspace/models/DeepSeek-V4-Flash|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--enable-expert-parallel|--kv-cache-dtype|fp8|--attention_config.use_fp4_indexer_cache|False
