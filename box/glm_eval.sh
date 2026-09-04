@@ -33,7 +33,7 @@ exec python3 -m vllm.entrypoints.openai.api_server \\
   --tensor-parallel-size 4 --attention-backend FLASHINFER_MLA_SPARSE_SM90 \\
   --kv-cache-dtype auto --block-size 1024 --max-model-len 40960 --max-num-seqs 256 \\
   --max-num-batched-tokens 8192 --gpu-memory-utilization 0.90 \\
-  --reasoning-parser deepseek_r1 --tool-call-parser glm47 --enable-auto-tool-choice \\
+  --reasoning-parser glm47 --tool-call-parser glm47 --enable-auto-tool-choice \\
   --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \\
   --no-enable-flashinfer-autotune \\
   ${SPEC:+--speculative-config '$SPEC'} \\
@@ -82,6 +82,18 @@ for arm in ${ARMS:-base mtp}; do
     long) # kept as a named arm so the capped and uncapped runs can be compared directly; the defaults above
           # are already uncapped, so this differs from `base` only in giving the run more wall-clock time.
           if launch glm53f_long; then EVAL_BUDGET=7200 run_eval_for glm53f_long; fi;;
+    fp8)  # Fidelity arm. Everything else here serves RedHatAI's NVFP4 build, which is a post-training
+          # quantisation of this model; Z.AI's own FP8 release is the precision it was trained at, and at
+          # 330 GB it fits 4x96 GB with ~13 GB of KV left. That is a poor throughput configuration and the
+          # right quality reference: the gap between this arm and the NVFP4 one IS the cost of our
+          # quantisation on the highest-intelligence model that fits the node.
+          MD=${MD_FP8:-/workspace/models/GLM-5.3-Flash-FP8}
+          if [ ! -f "$MD/.dl_complete" ]; then log "SKIP glm53f_fp8 (native FP8 checkpoint not downloaded)"; continue; fi
+          if EXTRA_ARGS="--max-model-len 16384 --max-num-seqs 32" launch glm53f_fp8; then
+            $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_fp8_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
+            EVAL_CONC=8 EVAL_BUDGET=9000 EVAL_CAPS="math=12288,code=10240,knowledge=10240,ifeval=8192,tools=6144,longctx=1024" \
+              run_eval_for glm53f_fp8
+          fi;;
     mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             # speculation verifies against the same model, so this arm must score the same as the base one;

@@ -295,6 +295,7 @@ class RunContext:
 _THINK_BLOCK = re.compile(r"<(think|thinking|reason|reasoning|thought)>(.*?)</\1>\s*", re.S | re.I)
 _BOT_BLOCK = re.compile(r"<\|begin_of_thought\|>(.*?)<\|end_of_thought\|>\s*", re.S)
 _THINK_OPEN = re.compile(r"<(think|thinking)>", re.I)
+_THINK_CLOSE = re.compile(r"</(think|thinking|reason|reasoning|thought)>\s*", re.I)
 _HARMONY_ANALYSIS = re.compile(r"<\|channel\|>analysis<\|message\|>(.*?)(?:<\|end\|>|<\|start\|>|$)", re.S)
 _HARMONY_FINAL = re.compile(r"<\|channel\|>final<\|message\|>(.*?)(?:<\|end\|>|<\|return\|>|$)", re.S)
 _HARMONY_TOKEN = re.compile(r"<\|[a-z_]+\|>(?:assistant)?")
@@ -371,6 +372,20 @@ def normalize_response(message: dict, finish_reason: Optional[str]) -> Normalize
         hidden.append(content[m.end():])
         content = content[:m.start()]
         flags.append("unclosed_think")
+
+    # A LONE CLOSING TAG. Qwen3-family chat templates append the opening <think> to the prompt itself, so
+    # the model only ever emits </think>. Nothing above matches that, and the entire chain-of-thought stayed
+    # in the visible answer: measured on Qwen3.8-27B, 306 of 403 responses, which is why its
+    # instruction-following scored 0.317 against 0.750 for a model that does not think. Everything before
+    # the last closing tag is reasoning. Serving with the right --reasoning-parser is the primary fix; this
+    # is the backstop for every model whose parser we have not identified yet.
+    cm = None
+    for cm in _THINK_CLOSE.finditer(content):
+        pass
+    if cm is not None:
+        hidden.append(content[:cm.start()])
+        content = content[cm.end():]
+        flags.append("orphan_think_close")
 
     if "<|channel|>" in content or "<|message|>" in content:
         for am in _HARMONY_ANALYSIS.finditer(content):

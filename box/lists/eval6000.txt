@@ -1,21 +1,21 @@
 # Quality pass on the 4x PRO 6000 (WS, 400 W). One row per model at its winning configuration, plus the
 # A/B pairs that only mean something on identical items and seed: NVFP4 vs FP8, and speculation on/off.
 # Run as: MODE=eval bash ksweep.sh lists/eval6000.txt
-q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-
-q27_fp8|/workspace/models/Qwen3.8-27B-FP8|1|b12x:-
-hy3|/workspace/models/Hy3-NVFP4-FP8|4|b12x:flashinfer_cutlass
-nemo3s|/workspace/models/Nemotron-3-Super-NVFP4|1|b12x:flashinfer_cutlass|--mamba-ssm-cache-dtype|float16|--max-num-seqs|256
-laguna|/workspace/models/Laguna-S-2.1-NVFP4|2|-:flashinfer_cutlass|--max-model-len|65536
-nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:flashinfer_cutlass
-muse30|/workspace/models/Muse-Glimmer-30B|1|-:-
-gptoss20|/workspace/models/gpt-oss-20b|1|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8
-gemma26|/workspace/models/gemma-4-26B-A4B-it|1|-:-
-qwen36_fp8|/workspace/models/Qwen3.6-35B-A3B-FP8|1|b12x:-
-inkling|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager
-qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-|--kv-cache-dtype|auto
+q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--reasoning-parser|qwen3
+q27_fp8|/workspace/models/Qwen3.8-27B-FP8|1|b12x:-|--reasoning-parser|qwen3
+hy3|/workspace/models/Hy3-NVFP4-FP8|4|b12x:flashinfer_cutlass|--reasoning-parser|hy_v3
+nemo3s|/workspace/models/Nemotron-3-Super-NVFP4|1|b12x:flashinfer_cutlass|--mamba-ssm-cache-dtype|float16|--max-num-seqs|256|--reasoning-parser|nemotron_v3
+laguna|/workspace/models/Laguna-S-2.1-NVFP4|2|-:flashinfer_cutlass|--max-model-len|65536|--reasoning-parser|poolside_v1
+nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:flashinfer_cutlass|--reasoning-parser|nemotron_v3
+muse30|/workspace/models/Muse-Glimmer-30B|1|-:-|--reasoning-parser|muse_glimmer
+gptoss20|/workspace/models/gpt-oss-20b|1|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--reasoning-parser|openai_gptoss
+gemma26|/workspace/models/gemma-4-26B-A4B-it|1|-:-|--reasoning-parser|gemma4
+qwen36_fp8|/workspace/models/Qwen3.6-35B-A3B-FP8|1|b12x:-|--reasoning-parser|qwen3
+inkling|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager|--reasoning-parser|inkling
+qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-|--kv-cache-dtype|auto|--reasoning-parser|qwen3
 # Matched NVFP4-vs-FP8 pair: the rows above run both at TP1 with the same budget, items and seed, which is
 # the only way to read the 5-point aggregate gap the 5090 box saw between them (0.558 vs 0.610) - that run
 # compared a TP1 NVFP4 server against a TP2 FP8 one and had different truncation rates, so it cannot settle it.
-minimaxm3|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager
-step37|/workspace/models/Step-3.7-Flash-NVFP4|4|-:-|--enable-expert-parallel
-ornith|/workspace/models/Ornith-1.5-397B-NVFP4|4|-:flashinfer_cutlass|--limit-mm-per-prompt|{"image":0}|--gpu-memory-utilization|0.90
+minimaxm3|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager|--reasoning-parser|minimax_m3
+step37|/workspace/models/Step-3.7-Flash-NVFP4|4|-:-|--enable-expert-parallel|--reasoning-parser|step3p5
+ornith|/workspace/models/Ornith-1.5-397B-NVFP4|4|-:flashinfer_cutlass|--limit-mm-per-prompt|{"image":0}|--gpu-memory-utilization|0.90|--reasoning-parser|qwen3

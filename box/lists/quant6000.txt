@@ -13,8 +13,8 @@
 #                        quantiser and not the format
 #   NVFP4, second PTQ    a different quantiser on the same weights, to separate "4-bit is lossy"
 #                        from "that particular upload is bad"
-q27_bf16|/workspace/models/Qwen3.8-27B|1|-:-
-q27_nvfp4_quasar_qat|/workspace/models/Qwen27B-QUASAR-NVFP4|1|b12x:-,-:-
-q27_nvfp4_ptq2|/workspace/models/Qwen27B-MTP-NVFP4|1|b12x:-,-:-
+q27_bf16|/workspace/models/Qwen3.8-27B|1|-:-|--reasoning-parser|qwen3
+q27_nvfp4_quasar_qat|/workspace/models/Qwen27B-QUASAR-NVFP4|1|b12x:-,-:-|--reasoning-parser|qwen3
+q27_nvfp4_ptq2|/workspace/models/Qwen27B-MTP-NVFP4|1|b12x:-,-:-|--reasoning-parser|qwen3
 # and the same question on a second family, where we already hold the BF16 parent
-gemma26_nvfp4|/workspace/models/gemma-4-26B-A4B-NVFP4|1|-:-
+gemma26_nvfp4|/workspace/models/gemma-4-26B-A4B-NVFP4|1|-:-|--reasoning-parser|gemma4
