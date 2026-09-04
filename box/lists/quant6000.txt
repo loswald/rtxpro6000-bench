@@ -1,0 +1,20 @@
+# Does post-training quantisation cost quality, and is OUR quantisation the problem?
+#
+# Two questions that the campaign has been conflating. Natively-quantised models (gpt-oss MXFP4,
+# DeepSeek MXFP4) were trained that way and lose nothing by definition, so their high scores say nothing
+# about post-training quantisation. The models we quantise ARE post-training, and the build we benchmark
+# is a community upload chosen for kernel compatibility rather than for measured quality.
+#
+# So: the same weights, four ways, four TP1 replicas each, same items, same seed, no token cap.
+#   native BF16          the baseline everything else is a loss against
+#   FP8                  8-bit, the conservative option (already covered in eval6000.txt)
+#   NVFP4, community PTQ the build every throughput number in this repo was measured on
+#   NVFP4, QAT           quantisation-aware training: if this recovers the gap, the loss was the
+#                        quantiser and not the format
+#   NVFP4, second PTQ    a different quantiser on the same weights, to separate "4-bit is lossy"
+#                        from "that particular upload is bad"
+q27_bf16|/workspace/models/Qwen3.8-27B|1|-:-
+q27_nvfp4_quasar_qat|/workspace/models/Qwen27B-QUASAR-NVFP4|1|b12x:-,-:-
+q27_nvfp4_ptq2|/workspace/models/Qwen27B-MTP-NVFP4|1|b12x:-,-:-
+# and the same question on a second family, where we already hold the BF16 parent
+gemma26_nvfp4|/workspace/models/gemma-4-26B-A4B-NVFP4|1|-:-

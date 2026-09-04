@@ -71,6 +71,7 @@ pair(){ # tag  dirA nargsA argsA...  dirB nargsB argsB...
 
 Q4=$MD/Qwen27B-NVFP4-RTX5090
 Q8=$MD/Qwen3.8-27B-FP8
+BF=$MD/Qwen3.8-27B          # the native parent; every other rung is a loss measured against this
 B12=(--kernel-config.linear_backend b12x)
 
 log "===== logit-level quality, Qwen3.8-27B ====="
@@ -100,4 +101,23 @@ if [ -f "$MD/Qwen27B-DSpark-NVFP4/config.json" ]; then
 fi
 
 log "KLDIFF DONE"
+kill_all
+
+# ---- added 4 Sept: the question is loss FROM the native baseline, so measure against it directly ----
+# Task accuracy resolves differences of several points across 403 items. Logit divergence resolves the
+# ones it cannot see, and it is the only way to separate "this format loses information" from "this
+# particular quantiser is bad" - the same weights, three quantisers, one baseline.
+if [ -f "$BF/config.json" ]; then
+  log "===== loss from the native BF16 parent ====="
+  pair kl_bf16_control  "$BF" 2 --kv-cache-dtype auto            "$BF" 2 --kv-cache-dtype auto
+  pair kl_bf16_vs_fp8   "$BF" 2 --kv-cache-dtype auto            "$Q8" 4 "${B12[@]}" --kv-cache-dtype auto
+  pair kl_bf16_vs_nvfp4 "$BF" 2 --kv-cache-dtype auto            "$Q4" 4 "${B12[@]}" --kv-cache-dtype auto
+  [ -f "$MD/Qwen27B-QUASAR-NVFP4/config.json" ] && \
+  pair kl_bf16_vs_qat   "$BF" 2 --kv-cache-dtype auto            "$MD/Qwen27B-QUASAR-NVFP4" 4 "${B12[@]}" --kv-cache-dtype auto
+  [ -f "$MD/Qwen27B-MTP-NVFP4/config.json" ] && \
+  pair kl_bf16_vs_ptq2  "$BF" 2 --kv-cache-dtype auto            "$MD/Qwen27B-MTP-NVFP4" 4 "${B12[@]}" --kv-cache-dtype auto
+else
+  log "SKIP the BF16 ladder (native parent not downloaded yet)"
+fi
+log "KLDIFF-BF16 DONE"
 kill_all
