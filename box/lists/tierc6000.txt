@@ -1,11 +1,14 @@
 # Tier C of the roster audit: specialists and single-card models, four replicas each. All small enough to
 # sit on the box together (~180 GB total), so no download-measure-delete rotation is needed.
-agents_a1|/workspace/models/Agents-A1-NVFP4|1|b12x:b12x,b12x:triton,-:-
-kat_coder|/workspace/models/KAT-Coder-V2.5-NVFP4|1|b12x:b12x,b12x:triton,-:-
+agents_a1|/workspace/models/Agents-A1-NVFP4|1|b12x:b12x,b12x:cutlass,-:-
+kat_coder|/workspace/models/KAT-Coder-V2.5-NVFP4|1|b12x:b12x,b12x:cutlass,-:-
 granite42|/workspace/models/granite-4.2-30b-nvfp4|1|b12x:-,-:-
-ling3tiny|/workspace/models/Ling-3.0-tiny|1|-:triton,-:-
-ornith35|/workspace/models/Ornith-1.5-35B-A3B-NVFP4|1|b12x:b12x,b12x:triton,-:-
+ling3tiny|/workspace/models/Ling-3.0-tiny|1|-:flashinfer_trtllm,-:-
+ornith35|/workspace/models/Ornith-1.5-35B-A3B-NVFP4|1|b12x:b12x,b12x:cutlass,-:-
 ornith9|/workspace/models/Ornith-1.5-9B|1|-:-
-lagunaxs|/workspace/models/Laguna-XS-2.1-NVFP4|1|-:-,-:triton
+lagunaxs|/workspace/models/Laguna-XS-2.1-NVFP4|1|-:-,-:flashinfer_trtllm
 lagunaxs_dflash|/workspace/models/Laguna-XS-2.1-NVFP4|1|-:-|--speculative-config|{"method":"dflash","model":"/workspace/models/Laguna-XS-2.1-DFlash","num_speculative_tokens":7}
 interns2|/workspace/models/Intern-S2-Mobius-FP8|1|b12x:-,-:-
+# The engine lists the NVFP4 MoE backends it will accept: b12x, cutlass, flashinfer_trtllm,
+# flashinfer_cutlass, flashinfer_cutedsl, flashinfer_b12x, marlin, humming, emulation. triton is not among
+# them, so sweeps use the named set.
