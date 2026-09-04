@@ -1,0 +1,83 @@
+[22:26:42] ===== 8x RTX 5090 : replica tier (one model per 32 GB card, eight replicas) =====
+[22:26:42] ########## q27_nvfp4_b12x  (17G, tp=1 x8) ##########
+[22:26:48]   launch q27_nvfp4_b12x :: tp=1 x8 :: --kernel-config.linear_backend b12x
+[22:30:54]   q27_nvfp4_b12x FAILED after 225s
+(EngineCore pid=25469) ERROR 09-03 22:30:19 [core.py:1385] torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 31.36 GiB of which 9.75 MiB is free. I
+(EngineCore pid=25469) Traceback (most recent call last):
+(EngineCore pid=25469) torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB. GPU 0 has a total capacity of 31.36 GiB of which 9.75 MiB is free. Including non-PyTorch memory, this pr
+(APIServer pid=19978) Traceback (most recent call last):
+(APIServer pid=19978)     raise RuntimeError(
+(APIServer pid=19978) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:30:54] ########## q27_nvfp4_auto  (17G, tp=1 x8) ##########
+[22:30:59]   launch q27_nvfp4_auto :: tp=1 x8 :: 
+[22:34:05]   q27_nvfp4_auto FAILED after 165s
+(EngineCore pid=37128) ERROR 09-03 22:33:39 [core.py:1385] torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 31.36 GiB of which 7.75 MiB is free. I
+(EngineCore pid=37128) Traceback (most recent call last):
+(EngineCore pid=37128) torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 31.36 GiB of which 7.75 MiB is free. Including non-PyTorch memory, this pr
+(APIServer pid=34691) Traceback (most recent call last):
+(APIServer pid=34691)     raise RuntimeError(
+(APIServer pid=34691) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:34:05] ########## q27_nvfp4_dspark  (17G, tp=1 x8) ##########
+[22:34:10]   launch q27_nvfp4_dspark :: tp=1 x8 :: --kernel-config.linear_backend b12x --speculative-config {"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}
+[22:35:46]   q27_nvfp4_dspark FAILED after 75s
+(EngineCore pid=50052) ERROR 09-03 22:35:09 [core.py:1385] RuntimeError: The size of tensor a (128) must match the size of tensor b (256) at non-singleton dimension 1
+(EngineCore pid=50052) Traceback (most recent call last):
+(EngineCore pid=50052) RuntimeError: The size of tensor a (128) must match the size of tensor b (256) at non-singleton dimension 1
+(APIServer pid=46145) Traceback (most recent call last):
+(APIServer pid=46145)     raise RuntimeError(
+(APIServer pid=46145) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:35:46] ########## gptoss20  (39G, tp=1 x8) ##########
+[22:35:51]   launch gptoss20 :: tp=1 x8 :: --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[22:38:37]   gptoss20 healthy 165s | GPU KV cache size: 681,097 tokens per server x8
+    kernel: Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/gptoss20_quality20.json
+  router     C256     19.3s    6461 req/min    13784 out/s    110274 in/s    124058 tot/s  TTFT    475/    946 ms  TPOT  15.2/  24.2 ms  ITL  15.2  E2E   2.4/  3.6 s
+  router     C1024    32.6s   12016 req/min    25634 out/s    205071 in/s    230705 tot/s  TTFT    882/   3237 ms  TPOT  33.2/  40.7 ms  ITL  33.2  E2E   5.1/  7.9 s
+  promptopt  C1024    45.8s    9265 req/min    39529 out/s    553408 in/s    592937 tot/s  TTFT    805/   2228 ms  TPOT  22.9/  29.7 ms  ITL  23.0  E2E   6.6/  8.2 s
+  judge      C512    104.6s    1968 req/min    16790 out/s    134321 in/s    151111 tot/s  TTFT   1344/   6790 ms  TPOT  27.9/  34.0 ms  ITL  27.9  E2E  15.6/ 23.1 s
+[22:43:58] ########## nemo35  (21G, tp=1 x8) ##########
+[22:44:04]   launch nemo35 :: tp=1 x8 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[22:45:09]   nemo35 FAILED after 45s
+(EngineCore pid=84802) Traceback (most recent call last):
+(EngineCore pid=84802)     raise ValueError(_make_log_unsupported(backend, reason))
+(EngineCore pid=84802) ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not support quantization scheme QuantKey(u8,scale(f8e4m3fn,sta
+(APIServer pid=81725) Traceback (most recent call last):
+(APIServer pid=81725)     raise RuntimeError(
+(APIServer pid=81725) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:45:09] ########## muse30_nvfp4  (22G, tp=1 x8) ##########
+[22:45:14]   launch muse30_nvfp4 :: tp=1 x8 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[22:48:30]   muse30_nvfp4 healthy 195s | GPU KV cache size: 201,457 tokens per server x8
+    kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/muse30_nvfp4_quality20.json
+  router     C256     27.7s    3609 req/min     7698 out/s     61586 in/s     69285 tot/s  TTFT   1503/   2636 ms  TPOT  21.7/  34.3 ms  ITL  21.7  E2E   4.3/  5.5 s
+  router     C1024    85.2s    4585 req/min     9782 out/s     78259 in/s     88041 tot/s  TTFT   2619/  10003 ms  TPOT  83.0/ 121.2 ms  ITL  83.0  E2E  13.2/ 24.0 s
+  promptopt  C1024    69.7s    5586 req/min    23833 out/s    333660 in/s    357493 tot/s  TTFT   2525/   6330 ms  TPOT  33.2/  42.7 ms  ITL  33.3  E2E  11.0/ 15.1 s
+  judge      C512    205.8s     944 req/min     8056 out/s     64450 in/s     72506 tot/s  TTFT   9591/  30557 ms  TPOT  43.3/  53.9 ms  ITL  43.3  E2E  31.7/ 54.7 s
+[22:57:03] ########## gemma26_nvfp4  (16G, tp=1 x8) ##########
+[22:57:08]   launch gemma26_nvfp4 :: tp=1 x8 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[23:00:29]   gemma26_nvfp4 FAILED after 180s
+(EngineCore pid=121861) Traceback (most recent call last):
+(EngineCore pid=121861)     raise TypeError(
+(EngineCore pid=121861) TypeError: dense_gemm launch is unsupported with Float4E2M1FN, Float8E4M3FN, 16, BFloat16, (128, 128), (1, 1), 2816, 2112, 1, k, k, n, load_path=tma, swap_ab=False
+(APIServer pid=118235) Traceback (most recent call last):
+(APIServer pid=118235)     raise RuntimeError(
+(APIServer pid=118235) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[23:00:29] ########## qwen36_nvfp4  (22G, tp=1 x8) ##########
+[23:00:34]   launch qwen36_nvfp4 :: tp=1 x8 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[23:01:54]   qwen36_nvfp4 FAILED after 60s
+(EngineCore pid=135871) Traceback (most recent call last):
+(EngineCore pid=135871)     raise ValueError(_make_log_unsupported(backend, reason))
+(EngineCore pid=135871) ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not support quantization scheme QuantKey(u8,scale(f8e4m3fn,st
+(APIServer pid=130944) Traceback (most recent call last):
+(APIServer pid=130944)     raise RuntimeError(
+(APIServer pid=130944) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[23:01:54] ===== 8x RTX 5090 : TP tier =====
+[23:01:54] ########## q27_fp8_tp2  (29G, tp=2 x4) ##########
+[23:02:00]   launch q27_fp8_tp2 :: tp=2 x4 :: --kernel-config.linear_backend b12x
+[23:08:16]   q27_fp8_tp2 healthy 375s | GPU KV cache size: 523,074 tokens per server x4
+    kernel: Selected B12xFp8BlockScaledMMKernel
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/q27_fp8_tp2_quality20.json
+  router     C256    961.2s     854 req/min     1823 out/s     14583 in/s     16406 tot/s  TTFT  14639/ 189431 ms  TPOT 282.2/1506.4 ms  ITL 282.2  E2E  50.5/302.6 s

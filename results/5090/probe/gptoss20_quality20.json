@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 122,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 151,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "Here\u2019s a compact, fully\u2011documented iterative implementation that works for any non\u2011negative integer `n`:\n\n```python\ndef fib(n: int) -> int:\n    \"\"\"\n    Return the n\u2011th Fibonacci number (0\u2011based indexing).\n\n    Parameters\n    ----------\n    n : int\n        The index of the Fibonacci number to compute. Must be >= 0.\n\n    Returns\n    -------\n    int\n        The n\u2011th Fibonacci number.\n\n    Notes\n    -----\n    The sequence is defined as:\n        F(0) = 0\n        F(1) = 1\n        F(n) = F(n-1) + F(n-2)  for n >= 2\n\n    The algorithm runs in O(n) time and O(1) extra space.\n\n    Examples\n    --------\n    >>> fib(0)\n    0\n    >>> fib(1)\n    1\n    >>> fib(5)\n    5\n    >>> fib(10)\n    55\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non\u2011negative integer\")\n\n    # Base cases\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    # Iterative computation\n    a, b = 0, 1          # a = F(n-2), b = F(n-1)\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n```\n\n### How it works\n\n1. **Base cases** \u2013 If `n` is 0 or 1 we return the known values directly.\n2. **Iteration** \u2013 We keep two variables, `a` and `b`, representing the two most recent Fibonacci numbers.  \n   In each loop iteration we shift them forward: `a` becomes the old `b`, and `b` becomes the sum `a + b`.  \n   After the loop finishes, `b` holds `F(n)`.\n\n### Why iterative?\n\n- **Space\u2011efficient** \u2013 Only two integer variables are kept, regardless of `n`.  \n- **Time\u2011efficient** \u2013 Each Fibonacci number is computed exactly once, giving linear time.\n\nFeel free to drop this function into any script or module that needs Fibonacci numbers!",
+  "reasoning_chars": 439,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.655,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "Here\u2019s a concise, ANSI\u2011SQL\u2011style query that pulls the three customers with the highest total order value:\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM\n    customers   AS c\nJOIN\n    orders      AS o\n      ON o.customer_id = c.id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC\nLIMIT 3;          -- (use TOP 3 for SQL Server, FETCH FIRST 3 ROWS ONLY for Oracle)\n```\n\n### What it does\n\n1. **Join** `customers` with `orders` on the foreign key `customer_id`.\n2. **Aggregate** the `amount` for each customer with `SUM(o.amount)`.\n3. **Group** by the customer\u2019s `id` and `name` so the sum is per customer.\n4. **Order** the results in descending order of the summed amount.\n5. **Limit** the output to the first three rows (the top 3 customers).\n\nIf you\u2019re using a database that doesn\u2019t support `LIMIT` (e.g., SQL Server), replace the last line with:\n\n```sql\nTOP 3\n```\n\nor, for Oracle 12c+:\n\n```sql\nFETCH FIRST 3 ROWS ONLY\n```\n\nThis query will return the customer ID, name, and their total order value for the three highest\u2011spending customers.",
+  "reasoning_chars": 570,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.719,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1/5**\n\n**Explanation:** The capital of Australia is **Canberra**, not Sydney. The answer is factually incorrect.",
+  "reasoning_chars": 227,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.875,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 503,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on vast corpora, can perform many tasks without task\u2011specific training, yet they sometimes hallucinate facts.",
+  "reasoning_chars": 436,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "**Three key differences between TCP and UDP**\n\n| # | Feature | TCP | UDP |\n|---|---------|-----|-----|\n| 1 | **Connection model** | Connection\u2011oriented: a three\u2011way handshake establishes a session before data is exchanged. | Connectionless: packets are sent independently without any handshake or session state. |\n| 2 | **Reliability & ordering** | Guarantees reliable, in\u2011order delivery (acknowledgements, retransmissions, sequence numbers). | No reliability guarantees: packets may be lost, duplicated, or arrive out of order; the application must handle any needed ordering or retransmission. |\n| 3 | **Header size & overhead** | 20\u2011byte header (plus options) with many control fields (flags, window size, checksum, etc.) \u2192 higher overhead. | 8\u2011byte header (source port, dest port, length, checksum) \u2192 minimal overhead, faster processing. |\n\nThese differences drive the typical use cases: TCP for applications needing guaranteed delivery (HTTP, FTP, SMTP), and UDP for low\u2011latency or real\u2011time traffic where occasional packet loss is acceptable (VoIP, streaming, gaming).",
+  "reasoning_chars": 354,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.745,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "Because the experiment used a larger batch size, training converged more slowly.",
+  "reasoning_chars": 1095,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 245,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "The sky appears blue because sunlight is scattered by air molecules, and shorter blue wavelengths are scattered much more efficiently than longer wavelengths. This Rayleigh scattering redirects blue light in all directions, making the sky look blue to our eyes.",
+  "reasoning_chars": 770,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.875,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "To differentiate  \n\n\\[\nf(x)=x^{3}\\sin x\n\\]\n\nuse the **product rule**: if \\(f(x)=u(x)v(x)\\), then  \n\n\\[\nf'(x)=u'(x)v(x)+u(x)v'(x).\n\\]\n\nHere  \n\\(u(x)=x^{3}\\)\u2003and\u2003\\(v(x)=\\sin x\\).\n\n1. Differentiate \\(u(x)\\):  \n   \\[\n   u'(x)=3x^{2}.\n   \\]\n\n2. Differentiate \\(v(x)\\):  \n   \\[\n   v'(x)=\\cos x.\n   \\]\n\nApply the product rule:\n\n\\[\n\\begin{aligned}\nf'(x) &= u'(x)v(x)+u(x)v'(x) \\\\\n      &= (3x^{2})\\sin x + (x^{3})\\cos x.\n\\end{aligned}\n\\]\n\nSo the derivative is  \n\n\\[\n\\boxed{f'(x)=3x^{2}\\sin x + x^{3}\\cos x}.\n\\]",
+  "reasoning_chars": 170,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.714,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "",
+  "reasoning_chars": 9016,
+  "finish": "length",
+  "top6gram": 130,
+  "distinct": 0.058,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 298,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**Proverb:**  \n*A stitch in time saves nine.*\n\n---\n\n### What it means  \nThe saying warns that fixing a small problem right away prevents it from growing into a much larger, more difficult, and more costly issue later on.  \n- **\u201cStitch\u201d** refers to a small repair (like sewing a tear in a shirt).  \n- **\u201cNine\u201d** is a figurative number that represents a larger amount of work or trouble that would be required if the problem were left unattended.\n\nIn short: **Act promptly, and you\u2019ll avoid a bigger headache later.**\n\n---\n\n### Origin  \n- The phrase appears in print as early as the 18th century.  \n- It is first recorded in *The Gentleman's Magazine* (1741) as \u201cA stitch in time saves nine.\u201d",
+  "reasoning_chars": 9190,
+  "finish": "length",
+  "top6gram": 1,
+  "distinct": 0.742,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Verdict:**  \nAnswer **A: Paris** is correct.  \nAnswer **B: Lyon** is incorrect.\n\n---\n\n### Why Paris is the correct answer\n\n| Criterion | Paris | Lyon |\n|-----------|-------|------|\n| **Official status** | Recognized by the French Constitution and international law as the capital city. | Not designated as the capital. |\n| **Seat of government** | Houses the President\u2019s official residence (\u00c9lys\u00e9e Palace), the National Assembly, the Senate, and the Prime Minister\u2019s office. | Hosts regional and local institutions but not the national executive or legislative bodies. |\n| **Historical continuity** | Paris has been the political, cultural, and economic center of France since the Middle Ages and remains so today. | Lyon was historically significant (e.g., as a Roman city and a major industrial hub) but never served as the national capital. |\n| **International recognition** | Listed as the capital in all official documents, maps, and diplomatic communications worldwide. | Not listed as the capital in any official capacity. |\n\n### Why Lyon is not the capital\n\n- **Administrative role:** Lyon is the capital of the Auvergne-Rh\u00f4ne-Alpes region, not of the entire country.\n- **Government functions:** National ministries, the French Parliament, and the President\u2019s offices are all located in Paris.\n- **Legal definition:** The French Constitution explicitly names Paris as the capital; no legal provision elevates Lyon to that status.\n\n---\n\n### Conclusion\n\nGiven the clear constitutional, administrative, and historical evidence, **Paris** is unequivocally the capital of France. Therefore, **Answer A** is correct, while **Answer B** is incorrect.",
+  "reasoning_chars": 746,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.582,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Pixels blaze alive  \nShaders dance in neon light  \nSpeed of thought, bright glow",
+  "reasoning_chars": 782,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "**Formula**\n\n\\[\nC = \\frac{5}{9}\\,(F - 32)\n\\]\n\nwhere  \n\\(C\\) = temperature in Celsius,  \n\\(F\\) = temperature in Fahrenheit.\n\n**Conversion of 98.6\u202f\u00b0F**\n\n1. Subtract 32 from the Fahrenheit value:  \n   \\[\n   98.6 - 32 = 66.6\n   \\]\n\n2. Multiply by \\(5/9\\):  \n   \\[\n   C = \\frac{5}{9} \\times 66.6\n   \\]\n\n3. Compute the product:  \n   \\[\n   \\frac{5}{9} \\times 66.6 = \\frac{333.0}{9} = 37.0\n   \\]\n\n**Result**\n\n\\[\n\\boxed{98.6^\\circ\\text{F} \\approx 37.0^\\circ\\text{C}}\n\\]\n\n(If you prefer more decimal places, the exact value is \\(36.999\\ldots^\\circ\\text{C}\\), which rounds to 37.0\u202f\u00b0C.)",
+  "reasoning_chars": 391,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.675,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "**Process:**  \n**Photosynthesis** \u2013 the light\u2011driven conversion of carbon dioxide and water into glucose (or other carbohydrates) and oxygen, carried out by chlorophyll\u2011containing chloroplasts in plant cells.\n\n**Balanced chemical equation (overall reaction):**\n\n\\[\n\\boxed{6\\,\\mathrm{CO_2} + 6\\,\\mathrm{H_2O} + \\text{light energy} \\;\\longrightarrow\\; \\mathrm{C_6H_{12}O_6} + 6\\,\\mathrm{O_2}}\n\\]\n\n*In words:* six molecules of carbon dioxide and six molecules of water, using light energy, are converted into one molecule of glucose (C\u2086H\u2081\u2082O\u2086) and six molecules of oxygen gas.  \n\n(Alternatively, the reaction can be written in a more general form:  \n\\[\n\\mathrm{CO_2} + \\mathrm{H_2O} + \\text{light} \\;\\longrightarrow\\; (\\mathrm{CH_2O}) + \\mathrm{O_2}\n\\]  \nwhere \\((\\mathrm{CH_2O})\\) represents the carbohydrate polymer produced.)",
+  "reasoning_chars": 655,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.743,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 151,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

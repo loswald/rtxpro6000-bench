@@ -11,4 +11,5 @@ exec python3 -m vllm.entrypoints.openai.api_server \
   --reasoning-parser deepseek_r1 --tool-call-parser glm47 \
   --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \
   --no-enable-flashinfer-autotune \
-  --disable-uvicorn-access-log --block-size 1024 --speculative-config {"method":"glm5_next_mtp","num_speculative_tokens":3}
+  --speculative-config '{"method":"glm5_next_mtp","num_speculative_tokens":3}' \
+  --disable-uvicorn-access-log  

@@ -1,21 +1,27 @@
-    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
-    platforms/cuda.py: already patched
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: patched, parses
+    platforms/cuda.py: patched, parses
   vllm sm_120 NoPE port applied
-[11:27:57] ===== GLM-5.3-Flash on vLLM (vendor build + sm_120 NoPE port) =====
-[11:27:57] --- A: no speculation ---
-[11:28:02]   launch vglm_base :: 
-[11:31:32]   vglm_base healthy in 210s | GPU KV cache size: 2,139,806 tokens
-    Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
-quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/vglm_base_quality20.json
-  router     C64      70.3s     328 req/min      699 out/s      5595 in/s      6294 tot/s  TTFT   2269/   7311 ms  TPOT  74.2/  88.5 ms  ITL  74.2  E2E  11.7/ 16.5 s
-  router     C256    213.7s     431 req/min      920 out/s      7362 in/s      8282 tot/s  TTFT   4139/  24789 ms  TPOT 243.5/ 267.9 ms  ITL 243.5  E2E  35.1/ 57.6 s
-  promptopt  C256    392.4s     235 req/min     1002 out/s     14030 in/s     15032 tot/s  TTFT   6610/  43978 ms  TPOT 225.8/ 242.8 ms  ITL 225.8  E2E  64.2/105.0 s
-  judge      C128    510.3s      90 req/min      771 out/s      6165 in/s      6936 tot/s  TTFT   6678/  53962 ms  TPOT 152.8/ 163.1 ms  ITL 152.8  E2E  84.8/136.5 s
-[11:53:30] --- B: MTP, 3 draft tokens ---
-[11:53:35]   launch vglm_mtp :: --speculative-config {"method":"glm5_next_mtp","num_speculative_tokens":3}
-[11:53:50]   vglm_mtp FAILED after 15s
-                     [--log-error-stack | --no-log-error-stack]
-                     [--uvicorn-log-level {critical,debug,error,info,trace,warning}]
-                     [--jit-monitor-mode {error,warn}]
-api_server.py: error: argument --speculative-config/-sc: Value method:glm5_next_mtp cannot be converted to <function loads at 0x7f953e0693a0>.
-[11:53:50] VGLM DONE
+[20:32:36] ===== GLM-5.3-Flash on vLLM (vendor build + sm_120 NoPE port) =====
+[20:32:36] --- A: no speculation ---
+[20:32:41]   launch vglm_base :: 
+[20:36:56]   vglm_base FAILED after 255s
+(EngineCore pid=54155) ERROR 09-03 20:36:46 [core.py:1355] RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (b
+(EngineCore pid=54155) ERROR 09-03 20:36:49 [multiproc_executor.py:310] Worker proc VllmWorker-1 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=54155) Traceback (most recent call last):
+(EngineCore pid=54155)     raise RuntimeError(
+(EngineCore pid=54155) RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (block_kv == 32 or block_kv == 64 or b
+(APIServer pid=53291) Traceback (most recent call last):
+(APIServer pid=53291)     raise RuntimeError(
+(APIServer pid=53291) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[20:36:56] --- B: MTP, 3 draft tokens ---
+[20:37:02]   launch vglm_mtp :: 
+[20:40:02]   vglm_mtp FAILED after 180s
+(EngineCore pid=59570) ERROR 09-03 20:39:49 [core.py:1355] RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (b
+(EngineCore pid=59570) ERROR 09-03 20:39:52 [multiproc_executor.py:310] Worker proc VllmWorker-0 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=59570) Traceback (most recent call last):
+(EngineCore pid=59570)     raise RuntimeError(
+(EngineCore pid=59570) RuntimeError: Worker failed with error 'Assertion error (/workspace/.deps/deepgemm-src/csrc/apis/attention.hpp:320): (arch_major == 10 and (block_kv == 32 or block_kv == 64 or b
+(APIServer pid=58707) Traceback (most recent call last):
+(APIServer pid=58707)     raise RuntimeError(
+(APIServer pid=58707) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[20:40:02] VGLM DONE

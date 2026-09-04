@@ -1,0 +1,171 @@
+[20:40:13] ===== ROSTER ROTATION: models the audit found missing, priority order =====
+[20:40:26]   freed MiniMax-M3-MXFP4
+[20:40:31]   freed Qwen3.8-Flash-Next-NVFP4
+[20:40:45]   freed Inkling-Small-NVFP4
+[20:40:47]   freed gemma-4-31B-it
+[20:40:49]   freed gemma-4-26B-A4B-it
+[20:40:51]   freed Muse-Glimmer-30B
+[20:40:52]   freed Qwen3.6-35B-A3B-FP8
+[20:40:53]   freed Nemotron-3.5-Lightning-30B
+[20:40:54]   freed gpt-oss-20b
+[20:40:54]   disk after cleanup: 1.2T free
+[20:40:54]   downloading RedHatAI/Hy3-NVFP4-FP8 -> Hy3-NVFP4-FP8
+[20:48:39]   done Hy3-NVFP4-FP8 (166G)
+[20:48:39] ########## hy3  (166G, tp=4 x1) ##########
+[20:48:44]   launch hy3 :: tp=4 x1 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[20:54:00]   hy3 healthy 315s | GPU KV cache size: 1,102,400 tokens
+    kernel: Selected B12xFp8BlockScaledMMKernel
+    kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/hy3_quality20.json
+  router     C64      81.1s     284 req/min      606 out/s      4850 in/s      5456 tot/s  TTFT   3180/   9363 ms  TPOT  81.2/ 102.1 ms  ITL  81.2  E2E  13.5/ 18.7 s
+  router     C256    242.8s     380 req/min      810 out/s      6479 in/s      7288 tot/s  TTFT   5428/  31796 ms  TPOT 274.9/ 310.9 ms  ITL 274.9  E2E  40.3/ 68.4 s
+  promptopt  C256    216.0s     427 req/min     1821 out/s     25488 in/s     27308 tot/s  TTFT   4466/  16930 ms  TPOT 123.4/ 137.9 ms  ITL 123.4  E2E  35.9/ 48.6 s
+  judge      C128    587.4s      78 req/min      669 out/s      5355 in/s      6025 tot/s  TTFT   8934/  64137 ms  TPOT 173.7/ 187.8 ms  ITL 173.7  E2E  97.7/156.8 s
+[21:14:41] ########## hy3_mtp  (166G, tp=4 x1) ##########
+[21:14:46]   launch hy3_mtp :: tp=4 x1 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass --speculative-config {"method":"hy_v3_mtp","num_speculative_tokens":1}
+[21:20:32]   hy3_mtp healthy 345s | GPU KV cache size: 1,042,288 tokens
+    kernel: Selected B12xFp8BlockScaledMMKernel
+    kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/hy3_mtp_quality20.json
+  router     C64      87.5s     263 req/min      562 out/s      4494 in/s      5055 tot/s  TTFT   2392/   8884 ms  TPOT  95.3/ 121.5 ms  ITL  99.3  E2E  14.5/ 20.3 s
+  router     C256    276.5s     333 req/min      711 out/s      5688 in/s      6399 tot/s  TTFT   5470/  33590 ms  TPOT 317.7/ 374.7 ms  ITL 332.1  E2E  45.8/ 76.1 s
+  promptopt  C256    277.8s     332 req/min     1416 out/s     19817 in/s     21233 tot/s  TTFT   3426/  19178 ms  TPOT 166.9/ 194.3 ms  ITL 174.1  E2E  46.0/ 62.5 s
+  judge      C128    650.0s      71 req/min      605 out/s      4840 in/s      5445 tot/s  TTFT   8336/  67411 ms  TPOT 193.8/ 237.9 ms  ITL 206.9  E2E 107.3/173.2 s
+    spec: # HELP vllm:spec_decode_num_drafts_total Number of spec decoding drafts.
+    spec: # TYPE vllm:spec_decode_num_drafts_total counter
+    spec: vllm:spec_decode_num_drafts_total{engine="0",model_name="m"} 977054.0
+[21:44:14]   removed Hy3-NVFP4-FP8 (1.2T free)
+[21:44:14]   downloading nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4 -> Nemotron-3-Super-NVFP4
+[21:47:46]   done Nemotron-3-Super-NVFP4 (75G)
+[21:47:46]   downloading nvidia/Nemotron-3-Super-120B-A12B-BF16-MTPv2 -> Nemotron-3-Super-MTPv2
+[21:48:05]   done Nemotron-3-Super-MTPv2 (5.5G)
+[21:48:05] ########## nemo3s  (75G, tp=1 x4) ##########
+[21:48:11]   launch nemo3s :: tp=1 x4 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass --mamba-ssm-cache-dtype float16
+[21:51:56]   nemo3s healthy 225s | GPU KV cache size: 1,423,360 tokens
+    kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/nemo3s_quality20.json
+  router     C64      32.1s     744 req/min     1587 out/s     12700 in/s     14287 tot/s  TTFT   1711/   4921 ms  TPOT  27.2/  35.6 ms  ITL  27.2  E2E   5.2/  8.4 s
+  router     C256     70.5s    1334 req/min     2845 out/s     22761 in/s     25606 tot/s  TTFT   2007/   5841 ms  TPOT  74.7/  87.4 ms  ITL  74.7  E2E  11.5/ 15.8 s
+  promptopt  C256    201.9s     469 req/min     2002 out/s     28030 in/s     30032 tot/s  TTFT   3493/  20045 ms  TPOT 114.4/ 127.9 ms  ITL 114.4  E2E  32.7/ 51.4 s
+  judge      C128    198.1s     237 req/min     2024 out/s     16191 in/s     18215 tot/s  TTFT   2211/  11916 ms  TPOT  58.9/  63.5 ms  ITL  58.9  E2E  32.3/ 43.6 s
+[22:01:53] ########## nemo3s_mtp  (75G, tp=1 x4) ##########
+[22:01:59]   launch nemo3s_mtp :: tp=1 x4 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass --mamba-ssm-cache-dtype float16 --speculative-config {"method":"nemotron_h_mtp","model":"/workspace/models/Nemotron-3-Super-MTPv2","num_speculative_tokens":3}
+[22:05:34]   nemo3s_mtp FAILED after 195s
+(EngineCore pid=92762) Traceback (most recent call last):
+(EngineCore pid=92762)     raise ValueError(
+(EngineCore pid=92762) ValueError: max_num_seqs (512) exceeds available Mamba cache blocks (333). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lowe
+(APIServer pid=90750) Traceback (most recent call last):
+(APIServer pid=90750)     raise RuntimeError(
+(APIServer pid=90750) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:05:42]   removed Nemotron-3-Super-NVFP4 (1.2T free)
+[22:05:42]   removed Nemotron-3-Super-MTPv2 (1.2T free)
+[22:05:42]   downloading olka-fi/Ling-3.0-flash-NVFP4 -> Ling-3.0-flash-NVFP4
+[22:09:14]   done Ling-3.0-flash-NVFP4 (76G)
+[22:09:14] ########## ling3f  (76G, tp=1 x4) ##########
+[22:09:20]   launch ling3f :: tp=1 x4 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[22:10:25]   ling3f FAILED after 45s
+(EngineCore pid=98496) Traceback (most recent call last):
+(EngineCore pid=98496)     raise ValueError(_make_log_unsupported(backend, reason))
+(EngineCore pid=98496) ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not support quantization scheme QuantKey(u8,scale(f8e4m3fn,sta
+(APIServer pid=96610) Traceback (most recent call last):
+(APIServer pid=96610)     raise RuntimeError(
+(APIServer pid=96610) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:10:25] ########## ling3f_mtp  (76G, tp=1 x4) ##########
+[22:10:30]   launch ling3f_mtp :: tp=1 x4 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass --speculative-config {"method":"bailing_hybrid_v3_mtp","num_speculative_tokens":1}
+[22:11:35]   ling3f_mtp FAILED after 45s
+(EngineCore pid=103970) Traceback (most recent call last):
+(EngineCore pid=103970)     raise ValueError(_make_log_unsupported(backend, reason))
+(EngineCore pid=103970) ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not support quantization scheme QuantKey(u8,scale(f8e4m3fn,st
+(APIServer pid=101679) Traceback (most recent call last):
+(APIServer pid=101679)     raise RuntimeError(
+(APIServer pid=101679) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[22:11:43]   removed Ling-3.0-flash-NVFP4 (1.2T free)
+[22:11:43]   downloading poolside/Laguna-S-2.1-NVFP4 -> Laguna-S-2.1-NVFP4
+[22:18:21]   done Laguna-S-2.1-NVFP4 (93G)
+[22:18:21]   downloading poolside/Laguna-S-2.1-DFlash-NVFP4 -> Laguna-S-2.1-DFlash
+[22:18:45]   done Laguna-S-2.1-DFlash (2.1G)
+[22:18:45] ########## laguna  (93G, tp=2 x2) ##########
+[22:18:50]   launch laguna :: tp=2 x2 :: --moe-backend flashinfer_cutlass --max-model-len 65536
+[22:36:27]   laguna healthy 1050s | GPU KV cache size: 1,786,579 tokens
+    kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=17 degenerate=3 wrong=0 error=0 -> /workspace/results/probe/laguna_quality20.json
+  router     C64      29.4s     793 req/min     1691 out/s     13527 in/s     15218 tot/s  TTFT    804/   1711 ms  TPOT  31.7/  37.2 ms  ITL  31.7  E2E   4.8/  5.4 s
+  router     C256     69.4s    1336 req/min     2850 out/s     22803 in/s     25653 tot/s  TTFT   1571/   6569 ms  TPOT  77.7/  88.7 ms  ITL  77.7  E2E  11.4/ 16.6 s
+  promptopt  C256     87.1s    1061 req/min     4527 out/s     63382 in/s     67909 tot/s  TTFT   1525/   3913 ms  TPOT  50.7/  55.9 ms  ITL  50.7  E2E  14.5/ 16.0 s
+  judge      C128    192.1s     240 req/min     2050 out/s     16400 in/s     18450 tot/s  TTFT   2638/  13162 ms  TPOT  57.3/  61.8 ms  ITL  57.3  E2E  31.9/ 43.0 s
+[22:44:38] ########## laguna_dflash  (93G, tp=2 x2) ##########
+[22:44:43]   launch laguna_dflash :: tp=2 x2 :: --moe-backend flashinfer_cutlass --max-model-len 65536 --speculative-config {"method":"dflash","model":"/workspace/models/Laguna-S-2.1-DFlash","num_speculative_tokens":7}
+[23:02:49]   laguna_dflash healthy 1080s | GPU KV cache size: 1,286,162 tokens
+    kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=17 degenerate=3 wrong=0 error=0 -> /workspace/results/probe/laguna_dflash_quality20.json
+  router     C64      29.6s     787 req/min     1678 out/s     13425 in/s     15103 tot/s  TTFT    707/   3618 ms  TPOT  31.0/  63.7 ms  ITL  70.0  E2E   4.6/  9.7 s
+  router     C256     86.1s    1147 req/min     2447 out/s     19574 in/s     22021 tot/s  TTFT   1390/  19358 ms  TPOT  91.4/ 230.7 ms  ITL 200.2  E2E  13.0/ 34.5 s
+  promptopt  C256     91.5s    1037 req/min     4424 out/s     61934 in/s     66358 tot/s  TTFT    797/   4404 ms  TPOT  51.3/ 121.5 ms  ITL 131.5  E2E  13.9/ 31.5 s
+  judge      C128    160.9s     288 req/min     2455 out/s     19643 in/s     22098 tot/s  TTFT   1804/  14054 ms  TPOT  46.5/  94.6 ms  ITL 136.6  E2E  25.6/ 53.3 s
+    spec: # HELP vllm:spec_decode_num_drafts_total Number of spec decoding drafts.
+    spec: # TYPE vllm:spec_decode_num_drafts_total counter
+    spec: vllm:spec_decode_num_drafts_total{engine="0",model_name="m"} 204747.0
+[23:10:46]   removed Laguna-S-2.1-NVFP4 (445G free)
+[23:10:47]   removed Laguna-S-2.1-DFlash (447G free)
+[23:10:47]   downloading nvidia/Mistral-Medium-3.5-128B-NVFP4 -> Mistral-Medium-3.5-NVFP4
+[23:15:19]   done Mistral-Medium-3.5-NVFP4 (89G)
+[23:15:19]   downloading mistralai/Mistral-Medium-3.5-128B-EAGLE -> Mistral-Medium-3.5-EAGLE
+[23:15:33]   done Mistral-Medium-3.5-EAGLE (2.9G)
+[23:15:33] ########## mistralm  (89G, tp=2 x2) ##########
+[23:15:38]   launch mistralm :: tp=2 x2 :: --kernel-config.linear_backend b12x --tokenizer-mode mistral --config-format mistral --load-format mistral
+[23:16:58]   mistralm FAILED after 60s
+(EngineCore pid=135769) ERROR 09-03 23:16:26 [core.py:1385]     raise e from None
+(EngineCore pid=135769) ERROR 09-03 23:16:26 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore pid=135769) Traceback (most recent call last):
+(APIServer pid=134832) Traceback (most recent call last):
+(APIServer pid=134832)     raise RuntimeError(
+(APIServer pid=134832) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[23:17:08]   removed Mistral-Medium-3.5-NVFP4 (444G free)
+[23:17:08]   removed Mistral-Medium-3.5-EAGLE (447G free)
+[23:17:08]   downloading stepfun-ai/Step-3.7-Flash-NVFP4 -> Step-3.7-Flash-NVFP4
+[23:22:41]   done Step-3.7-Flash-NVFP4 (121G)
+[23:22:41] ########## step37  (121G, tp=4 x1) ##########
+[23:22:46]   launch step37 :: tp=4 x1 :: --enable-expert-parallel --moe-backend flashinfer_cutlass
+[23:24:06]   step37 FAILED after 60s
+(EngineCore pid=140278) ERROR 09-03 23:23:35 [core.py:1385]     raise e from None
+(EngineCore pid=140278) ERROR 09-03 23:23:35 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore pid=140278) Traceback (most recent call last):
+(APIServer pid=139737) Traceback (most recent call last):
+(APIServer pid=139737)     raise RuntimeError(
+(APIServer pid=139737) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[23:24:06] ########## step37_mtp  (121G, tp=4 x1) ##########
+[23:24:12]   launch step37_mtp :: tp=4 x1 :: --enable-expert-parallel --moe-backend flashinfer_cutlass --speculative-config {"method":"step3p5_mtp","num_speculative_tokens":3}
+[23:25:32]   step37_mtp FAILED after 60s
+(EngineCore pid=143091) ERROR 09-03 23:24:59 [core.py:1385]     raise e from None
+(EngineCore pid=143091) ERROR 09-03 23:24:59 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore pid=143091) Traceback (most recent call last):
+(APIServer pid=142545) Traceback (most recent call last):
+(APIServer pid=142545)     raise RuntimeError(
+(APIServer pid=142545) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[23:25:45]   removed Step-3.7-Flash-NVFP4 (438G free)
+[23:25:45]   downloading mitomtuna/MiMo-V2.5-0703-NVFP4 -> MiMo-V2.5-NVFP4
+[23:34:15]   done MiMo-V2.5-NVFP4 (171G)
+[23:34:15] ########## mimo25  (171G, tp=4 x1) ##########
+[23:34:20]   launch mimo25 :: tp=4 x1 :: --kernel-config.linear_backend b12x --moe-backend flashinfer_cutlass
+[23:35:55]   mimo25 FAILED after 75s
+(EngineCore pid=147629) ERROR 09-03 23:35:30 [core.py:1385]     raise e from None
+(EngineCore pid=147629) ERROR 09-03 23:35:30 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore pid=147629) Traceback (most recent call last):
+(APIServer pid=147081) Traceback (most recent call last):
+(APIServer pid=147081)     raise RuntimeError(
+(APIServer pid=147081) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
+[23:36:14]   removed MiMo-V2.5-NVFP4 (447G free)
+[23:36:14]   downloading littlecedar/Ornith-1.5-397B-NVFP4-MTP-Graft -> Ornith-1.5-397B-NVFP4
+[23:46:29]   done Ornith-1.5-397B-NVFP4 (235G)
+[23:46:29] ########## ornith  (235G, tp=4 x1) ##########
+[23:46:34]   launch ornith :: tp=4 x1 :: --limit-mm-per-prompt {"image":0} --gpu-memory-utilization 0.90
+[23:55:06]   ornith healthy 510s | GPU KV cache size: 2,594,658 tokens
+    kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend
+    kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/ornith_quality20.json
+  router     C64      72.5s     318 req/min      678 out/s      5425 in/s      6103 tot/s  TTFT   2351/   7088 ms  TPOT  76.5/  92.5 ms  ITL  76.5  E2E  12.1/ 16.3 s
+  router     C256    224.2s     411 req/min      877 out/s      7017 in/s      7894 tot/s  TTFT   4359/  26746 ms  TPOT 258.7/ 283.0 ms  ITL 258.7  E2E  37.2/ 61.5 s

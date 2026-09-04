@@ -1,0 +1,87 @@
+== tools: prepare(profile=default, seed=20260903, refresh=False, opts={})
+   tools/parallel_multiple: pool 200, candidate pool 20 (difficulty >= 22.2833), chose 10
+   tools/parallel: pool 200, candidate pool 30 (difficulty >= 16.91), chose 15
+   tools/multiple: pool 196, candidate pool 30 (difficulty >= 7.2633), chose 15
+   tools/simple: pool 304, candidate pool 40 (difficulty >= 5.2267), chose 20
+   tools/irrelevance: pool 237, candidate pool 20 (difficulty >= 2.1279), chose 10
+   tools/parallel_multiple: n=10 (pool 200)
+   tools/parallel: n=15 (pool 200)
+   tools/multiple: n=15 (pool 196)
+   tools/simple: n=20 (pool 304)
+   tools/irrelevance: n=10 (pool 237)
+   note: tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)
+   note: tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others
+   tools: 70 items -> /workspace/bench/evalsuite/data/items/tools.jsonl (0.0s)
+== code: prepare(profile=default, seed=20260903, refresh=False, opts={})
+   code: FAILED: JSONDecodeError: Unterminated string starting at: line 1 column 2803 (char 2802)
+Traceback (most recent call last):
+  File "/workspace/bench/evalsuite/prepare_data.py", line 103, in main
+    res = mod.prepare(data_dir, seed=args.seed, profile=args.profile, refresh=args.refresh, log=log,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bench/evalsuite/families/code.py", line 312, in prepare
+    row = json.loads(line)
+          ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 1 column 2803 (char 2802)
+
+== math: prepare(profile=default, seed=20260903, refresh=False, opts={})
+   math/aime25: n=30 (pool 30)
+   math/hmmt25: n=30 (pool 30)
+   math/math500_hard: n=20 (pool 125)
+   note: math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong
+   note: math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint
+   note: math/math500_hard: level-5 pool filtered to programmatically gradable answers before the seeded sample
+   note: math500_hard: 134 level-5 problems, 125 with programmatically gradable answers
+   math: 80 items -> /workspace/bench/evalsuite/data/items/math.jsonl (0.7s)
+== longctx: prepare(profile=default, seed=20260903, refresh=False, opts={})
+   longctx: filler corpus 31 essays, 849868 chars
+   longctx/niah_multikey: n=24 (pool synthetic)
+   longctx/var_tracking: n=12 (pool synthetic)
+   longctx/qa_multi_doc: n=12 (pool 1942)
+   note: longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers
+   note: longctx: filler corpus 849868 chars from 31 paulgraham.com essays; 528 SQuAD paragraphs in the item header
+   longctx: 48 items -> /workspace/bench/evalsuite/data/items/longctx.jsonl (15.3s)
+== knowledge: prepare(profile=default, seed=20260903, refresh=False, opts={})
+   knowledge: TIGER-Lab/MMLU-Pro test: 12032 rows, 121 pages
+[fetch] attempt 1/5 failed for https://datasets-server.huggingface.co/rows?dataset=TIGER-Lab/MMLU-Pro&config=default&split=test&offset=3400&length=100: HTTP Error 429: Too Many Requests; retry in 3s
+[fetch] attempt 2/5 failed for https://datasets-server.huggingface.co/rows?dataset=TIGER-Lab/MMLU-Pro&config=default&split=test&offset=3400&length=100: HTTP Error 429: Too Many Requests; retry in 6s
+[fetch] attempt 3/5 failed for https://datasets-server.huggingface.co/rows?dataset=TIGER-Lab/MMLU-Pro&config=default&split=test&offset=3400&length=100: HTTP Error 429: Too Many Requests; retry in 12s
+[fetch] attempt 4/5 failed for https://datasets-server.huggingface.co/rows?dataset=TIGER-Lab/MMLU-Pro&config=default&split=test&offset=3400&length=100: HTTP Error 429: Too Many Requests; retry in 24s
+[fetch] attempt 5/5 failed for https://datasets-server.huggingface.co/rows?dataset=TIGER-Lab/MMLU-Pro&config=default&split=test&offset=3400&length=100: HTTP Error 429: Too Many Requests; retry in 48s
+   knowledge: rate-limited by the rows API (attempt 1); sleeping 60s
+   knowledge: FAILED: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Traceback (most recent call last):
+  File "/workspace/bench/evalsuite/prepare_data.py", line 103, in main
+    res = mod.prepare(data_dir, seed=args.seed, profile=args.profile, refresh=args.refresh, log=log,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bench/evalsuite/families/knowledge.py", line 330, in prepare
+    test_rows, src_test = _crawl_split("test", data_dir, refresh, log)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bench/evalsuite/families/knowledge.py", line 128, in _crawl_split
+    data, info = _fetch_page(_rows_url(split, offset), dest, refresh, log)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bench/evalsuite/families/knowledge.py", line 105, in _fetch_page
+    data, info = _fetch_with_sha(url, dest, refresh, log)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+== ifeval: prepare(profile=default, seed=20260903, refresh=False, opts={})
+   ifeval: 541 prompts from https://raw.githubusercontent.com/google-research/google-research/26d8ccdab6fec61b5c83ad6327ea8bda9e580288/instruction_following_eval/data/input_data.jsonl (sha256 67ffeee0fcb87c31.., cached=True)
+   note: excluded from pools: {'content_free_reply_passes': 65, 'contradictory_or_unconstructible': 5, 'latin_script_language': 9, 'single_easy_type': 58}
+   note: instruction types covered: 24/25 (missing ['detectable_format:constrained_response'])
+   note: mock_skip items in the built set: 0 (unconstructible prompts are excluded from the pool: 5)
+   ifeval/triple: n=24 (pool 51)
+   ifeval/double: n=24 (pool 167)
+   ifeval/single: n=12 (pool 186)
+   note: excluded from pools: {'content_free_reply_passes': 65, 'contradictory_or_unconstructible': 5, 'latin_script_language': 9, 'single_easy_type': 58}
+   note: instruction types covered: 24/25 (missing ['detectable_format:constrained_response'])
+   note: mock_skip items in the built set: 0 (unconstructible prompts are excluded from the pool: 5)
+   ifeval: 60 items -> /workspace/bench/evalsuite/data/items/ifeval.jsonl (3.8s)
+manifest: /workspace/bench/evalsuite/data/manifest.json sha256=8670f162069e2c54.. families=['code', 'ifeval', 'knowledge', 'longctx', 'math', 'selftest', 'tools']
+FAILED: code: JSONDecodeError: Unterminated string starting at: line 1 column 2803 (char 2802); knowledge: JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+PREPARE-DONE

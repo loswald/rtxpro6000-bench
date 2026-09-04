@@ -1,0 +1,107 @@
+[20:18:09] ===== FLEET, replica tier =====
+[20:18:09] ########## nemo35 (21G) ##########
+[20:18:14]   launch f2_nemo35 :: Nemotron-3.5-Lightning-30B --kernel-config.linear_backend b12x
+[20:19:00]   f2_nemo35 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:19:00] ########## qwen36 (35G) ##########
+[20:19:05]   launch f2_qwen36 :: Qwen3.6-35B-A3B-FP8 --kernel-config.linear_backend b12x
+[20:19:50]   f2_qwen36 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:19:50] ########## muse30 (56G) ##########
+[20:19:56]   launch f2_muse30 :: Muse-Glimmer-30B 
+[20:20:41]   f2_muse30 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:20:41] ########## gptoss20 (39G) ##########
+[20:20:46]   launch f2_gptoss20 :: gpt-oss-20b --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[20:21:32]   f2_gptoss20 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:21:32] ########## gemma26 (49G) ##########
+[20:21:37]   launch f2_gemma26 :: gemma-4-26B-A4B-it 
+[20:22:22]   f2_gemma26 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:22:22] ########## gemma31 (59G) ##########
+[20:22:28]   launch f2_gemma31 :: gemma-4-31B-it 
+[20:23:13]   f2_gemma31 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:23:13] ===== FLEET, TP tier =====
+[20:23:13] ########## minimaxm3 (221G) tp4 x1 ##########
+[20:23:18]   launch f2_minimaxm3 :: MiniMax-M3-MXFP4 tp4 x1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8
+[20:24:04]   f2_minimaxm3 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:24:04] ########## minimaxm3_mtp (221G) tp4 x1 ##########
+[20:24:09]   launch f2_minimaxm3_mtp :: MiniMax-M3-MXFP4 tp4 x1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8 --speculative-config {"method":"minimax_m3_mtp","num_speculative_tokens":2}
+[20:24:54]   f2_minimaxm3_mtp FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:24:54] ########## qwen38fn (126G) tp2 x2 ##########
+[20:25:00]   launch f2_qwen38fn :: Qwen3.8-Flash-Next-NVFP4 tp2 x2 --kernel-config.linear_backend b12x
+[20:25:45]   f2_qwen38fn FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:25:45] ===== FLEET, drafter arms (speculation on models already measured) =====
+[20:25:45] ########## minimaxm3_dspark (221G) tp4 x1 ##########
+[20:25:50]   launch f2_minimaxm3_dspark :: MiniMax-M3-MXFP4 tp4 x1 --moe-backend flashinfer_cutlass --quantization-config.moe.activation mxfp8 --block-size 128 --speculative-config {"method":"dspark","model":"/workspace/models/MiniMax-M3-DSpark","num_speculative_tokens":8}
+[20:26:35]   f2_minimaxm3_dspark FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:26:35] ########## gemma26_mtp (49G) ##########
+[20:26:41]   launch f2_gemma26_mtp :: gemma-4-26B-A4B-it --speculative-config {"method":"gemma4_mtp","model":"/workspace/models/gemma-4-26B-A4B-it-assistant","num_speculative_tokens":3}
+[20:27:26]   f2_gemma26_mtp FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:27:26] ########## nemo35_mtp (21G) ##########
+[20:27:32]   launch f2_nemo35_mtp :: Nemotron-3.5-Lightning-30B --kernel-config.linear_backend b12x --speculative-config {"method":"nemotron_h_mtp","num_speculative_tokens":3}
+[20:28:17]   f2_nemo35_mtp FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:28:17] ########## nemo35_dspark (21G) ##########
+[20:28:22]   launch f2_nemo35_dspark :: Nemotron-3.5-Lightning-30B --kernel-config.linear_backend b12x --speculative-config {"method":"dspark","model":"/workspace/models/Nemotron-3.5-Lightning-DSpark","num_speculative_tokens":3}
+[20:29:07]   f2_nemo35_dspark FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:29:07] ########## muse30_dflash (56G) ##########
+[20:29:13]   launch f2_muse30_dflash :: Muse-Glimmer-30B --speculative-config {"method":"dflash","model":"/workspace/models/Muse-Glimmer-30B-assistant","num_speculative_tokens":15}
+[20:29:58]   f2_muse30_dflash FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:29:58] ########## q27_dflash2 (17G) ##########
+[20:30:04]   launch f2_q27_dflash2 :: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --speculative-config {"method":"dflash","model":"/workspace/models/Qwen3.8-27B-DFlash2","num_speculative_tokens":7}
+[20:30:49]   f2_q27_dflash2 FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:30:49] ===== FLEET, late additions =====
+[20:30:49] ########## inkling (160G) tp4 x1 ##########
+[20:30:54]   launch f2_inkling :: Inkling-Small-NVFP4 tp4 x1 --kernel-config.linear_backend b12x
+[20:31:39]   f2_inkling FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:31:39] ########## inkling_mtp (160G) tp4 x1 ##########
+[20:31:45]   launch f2_inkling_mtp :: Inkling-Small-NVFP4 tp4 x1 --kernel-config.linear_backend b12x --speculative-config {"method":"inkling_mtp","num_speculative_tokens":2}
+[20:32:30]   f2_inkling_mtp FAILED after 20s
+vllm serve: error: argument --compilation-config/-cc: 1 validation error for CompilationConfig
+  Invalid JSON: key must be a string at line 1 column 2 [type=json_invalid, input_value='{cudagraph_mode:FULL_AND_PIECEWISE}', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid
+[20:40:08] FLEET2 DONE

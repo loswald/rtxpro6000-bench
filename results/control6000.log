@@ -14,3 +14,10 @@ quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/
 quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/c6_fp8_b12x_quality20.json
   router     C256    134.3s     935 req/min     1994 out/s     15952 in/s     17946 tot/s  TTFT   4122/  12032 ms  TPOT  96.9/ 123.4 ms  ITL  96.9  E2E  16.4/ 25.2 s
   router     C1024   513.9s     971 req/min     2071 out/s     16566 in/s     18637 tot/s  TTFT   6974/  48680 ms  TPOT 442.6/ 490.1 ms  ITL 442.6  E2E  63.2/108.0 s
+  promptopt  C1024  1067.9s     466 req/min     1990 out/s     27862 in/s     29852 tot/s  TTFT  17604/  97328 ms  TPOT 443.3/ 490.4 ms  ITL 443.3  E2E 130.7/212.7 s
+  judge      C512   1106.1s     225 req/min     1924 out/s     15389 in/s     17313 tot/s  TTFT  11925/  95837 ms  TPOT 243.0/ 263.4 ms  ITL 243.0  E2E 136.1/228.0 s
+[19:52:50] ===== owed from nvtier2: b12x + DSpark drafter (read the acceptance counters) =====
+[19:52:56]   launch c6_b12x_dspark :: --kernel-config.linear_backend b12x --speculative-config {"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}
+[20:18:03]   c6_b12x_dspark FAILED after 1500s
+vllm serve: error: argument --speculative-config/-sc: Value method:draft_model cannot be converted to <function loads at 0x7f49b5238c20>.
+[20:18:03] CONTROL6000 DONE

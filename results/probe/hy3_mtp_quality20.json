@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "Here\u2019s a simple iterative Python function to compute the *n*-th Fibonacci number (with the usual convention `fib(0) = 0`, `fib(1) = 1`):\n\n```python\ndef fib(n):\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n```\n\nExample usage:\n\n```python\nprint(fib(10))  # 55\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.701,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n    ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nThis query:\n1. Joins `customers` and `orders` on `customer_id`\n2. Aggregates total order value per customer using `SUM(amount)`\n3. Orders customers by total order value descending\n4. Returns only the top 3 customers",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.869,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "Rating: 2/5\n\nThe answer is incorrect. The capital of Australia is Canberra, not Sydney. Sydney is Australia's largest and most well-known city, but it is not the capital. I gave it a 2 rather than 1 only because Sydney is a major Australian city and a common (though wrong) guess, showing partial relevance to the question.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.786,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on vast corpora, can perform many tasks without task-specific training but sometimes hallucinate facts.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "Here are three key differences between TCP and UDP:\n\n1. **Connection Orientation**  \n   - **TCP** is connection-oriented: it requires a handshake (e.g., three-way handshake) to establish a connection before data transfer.  \n   - **UDP** is connectionless: it sends data without establishing or maintaining a connection.\n\n2. **Reliability and Error Correction**  \n   - **TCP** guarantees reliable delivery through acknowledgments, retransmission of lost packets, and sequencing.  \n   - **UDP** does not guarantee delivery, ordering, or error correction; packets may be lost or arrive out of order.\n\n3. **Speed and Overhead**  \n   - **TCP** has higher overhead due to control mechanisms, making it slower but more dependable.  \n   - **UDP** has minimal overhead, making it faster and more suitable for real-time applications like video streaming or gaming.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.754,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "Because the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "The sky appears blue because molecules in the atmosphere scatter shorter (blue) wavelengths of sunlight more strongly than longer wavelengths through Rayleigh scattering. This scattered blue light comes from all directions, so we see a blue sky during the day.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.875,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "To find the derivative of  \n$$\nf(x) = x^3 \\cdot \\sin(x),\n$$  \nwe use the **product rule**:  \n$$\n\\frac{d}{dx}[u \\cdot v] = u'v + uv'\n$$  \nwhere $u = x^3$ and $v = \\sin(x)$.\n\n- $u' = 3x^2$  \n- $v' = \\cos(x)$\n\nSo:\n$$\nf'(x) = 3x^2 \\sin(x) + x^3 \\cos(x)\n$$\n\n**Answer:**\n$$\n\\boxed{3x^2 \\sin(x) + x^3 \\cos(x)}\n$$",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.65,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "Here is a commonly used regex that matches **most valid UK postcodes** (including the standard formats, with or without a space):\n\n```regex\n^[A-Za-z]{1,2}\\d[A-Za-z\\d]?\\s*\\d[A-Za-z]{2}$\n```\n\n### Examples matched\n- `SW1A 1AA`\n- `EC1M 1BB`\n- `W1A 0AX`\n- `M1 1AE`\n- `B33 8TH`\n- `CR2 6XH`\n- `DN55 1PT`\n\n### Notes\n- Allows optional space between outward and inward code (`\\s*`)\n- Covers single/double letter area codes\n- Does **not** enforce the full official BS7666 rules (e.g. excluded combinations like `Q`, `V`, `X` in certain positions), but is suitable for most practical use.\n\nIf you want a **stricter government-style regex**, let me know and I can give the full Royal Mail\u2013compliant version.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.847,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**Complete proverb:**  \n*A stitch in time saves nine.*\n\n**Explanation:**  \nThe proverb means that if you deal with a problem promptly (with a small effort, like one stitch), you prevent it from becoming worse and requiring much more work later (like nine stitches). It emphasizes the value of timely action and preventive care in avoiding bigger troubles down the road.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.915,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Judgment:**\n\n- **Question:** What is the capital of France?\n- **Answer A:** Paris\n- **Answer B:** Lyon\n\n**Ruling:** Answer A (Paris) is correct.\n\n**Reasoning:** The capital of France is officially Paris, which is the seat of the French government, the location of key state institutions (such as the \u00c9lys\u00e9e Palace, the National Assembly, and the Senate), and has been recognized as the capital city for centuries. Lyon is a major and historically significant city in France, but it is not the capital. Therefore, Answer A correctly answers the question, while Answer B does not.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.681,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Silicon hearts hum bright,\nrendering worlds in parallel\u2014\nlight born from math's fire.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "To convert Fahrenheit to Celsius, use the formula:\n\n\\[\n\u00b0C = (\u00b0F - 32) \\times \\frac{5}{9}\n\\]\n\nNow substitute \\(98.6\u00b0F\\):\n\n\\[\n\u00b0C = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\n\u00b0C = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\n\u00b0C = \\frac{333}{9} = 37\n\\]\n\n**Answer:**  \n\\[\n98.6\u00b0F = 37\u00b0C\n\\]",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.551,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "The process by which plants make food is called **photosynthesis**.\n\n**Chemical equation:**\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{light, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nIn words:  \nCarbon dioxide + water \u2192 glucose + oxygen (in the presence of sunlight and chlorophyll).",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.923,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\n  \"a\": 1,\n  \"b\": 2,\n  \"c\": 3\n}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

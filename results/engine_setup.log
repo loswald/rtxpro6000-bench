@@ -1,0 +1,27 @@
++ export HF_HUB_ENABLE_HF_TRANSFER=1
++ HF_HUB_ENABLE_HF_TRANSFER=1
++ IDX='--extra-index-url https://wheels.vllm.ai/nightly/cu130 --extra-index-url https://flashinfer.ai/whl/cu130 --index-strategy unsafe-best-match --torch-backend cu130'
++ uv pip install --system --pre 'vllm[b12x]==0.28.1rc1.dev353+gbf95f58d1' flashinfer-python==0.6.18 flashinfer-jit-cache==0.6.18 --extra-index-url https://wheels.vllm.ai/nightly/cu130 --extra-index-url https://flashinfer.ai/whl/cu130 --index-strategy unsafe-best-match --torch-backend cu130
++ tail -6
+Using Python 3.12.3 environment at: /usr
+  × No solution found when resolving dependencies:
+  ╰─▶ Because there is no version of vllm[b12x]==0.28.1rc1.dev353+gbf95f58d1
+      and you require vllm[b12x]==0.28.1rc1.dev353+gbf95f58d1, we can conclude
+      that your requirements are unsatisfiable.
++ python3 -
+/usr/local/lib/python3.12/dist-packages/huggingface_hub/constants.py:299: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+  vllm           0.28.0
+  flashinfer     0.6.16.post3
+  b12x           - (ModuleNotFoundError: No module named 'b12x')
+  torch          2.13.0+cu130
+  transformers   5.15.1
+  triton         3.7.1
+  torch.cuda 13.0 ['sm_90', 'sm_100', 'sm_120']
++ uv pip list --system
++ grep -iE '^flashinfer'
+flashinfer-cubin                         0.6.16.post3
+flashinfer-jit-cache                     0.6.16.post3+cu130
+flashinfer-python                        0.6.16.post3
++ echo ENGINE-SETUP-DONE
+ENGINE-SETUP-DONE

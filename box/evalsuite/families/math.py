@@ -8,15 +8,21 @@ Three sub-families, all public and ungated, fetched with common.fetch() and sha2
   hmmt25        HMMT February 2025, all 30 problems (MathArena/hmmt_feb_2025; the repo is parquet-only, so the
                 rows are fetched as JSON through the public datasets-server endpoint).  Closed-form answers
                 (fractions, radicals, \\pi, 2^{25}\\cdot 26!, a root pair).
-  math500_hard  a seeded sample (20 default / 60 full) of MATH-500 level-5 problems (HuggingFaceH4/MATH-500)
+  math500_hard  a seeded prefix (20 default / 60 full) of a shuffled pool of MATH-500 level-5 problems (HuggingFaceH4/MATH-500)
                 restricted to answers the programmatic grader can check exactly (numbers, fractions, radicals,
                 \\pi expressions, degrees, complex numbers, ordered tuples, root sets) - no intervals, matrices
                 or symbolic expressions in free variables.
 
+              The default 20 are the first 20 of the full 60 (shuffle-then-prefix), so the profiles nest.
+
 Prompt: the problem + "Put your final answer within \\boxed{}."  Scoring: last \\boxed{} (brace-matched), else
-the expression after the last "answer is"/"final answer:" phrase, else unparsed.  The candidate and the gold
+the expression after the last "answer is"/"final answer:" phrase, else unparsed.  Two \\boxed{} with different
+values joined by nothing but a disjunction ("either \\boxed{A} or \\boxed{B}") are a simultaneous hedge and
+score 'unparsed'; any prose between them (a self-correction: "actually", "wait", "I made an error") means the
+model revised itself and the last box wins as usual.  The candidate and the gold
 are canonicalised (delimiters, \\left/\\right, spacing, \\dfrac, \\text units, degrees, $/%, thousands
-separators, leading zeros, x= prefixes, ...) and compared as strings, then component-wise (tuples ordered,
+separators, leading zeros, x= prefixes, unit powers '\\text{ cm}^2', '\\pmod{1000}' residue tags,
+'\\text{answer: }' labels, ...) and compared as strings, then component-wise (tuples ordered,
 sets/\\pm-pairs unordered) with a sympy-free safe numeric evaluator (\\frac, \\sqrt[n], \\binom, !, ^, \\pi, i)
 at 1e-9 relative tolerance (1e-12 for a bare decimal candidate).  Approximations of exact closed forms are
 counted wrong (MathArena convention).
@@ -43,7 +49,8 @@ ITEM_TIME_FALLBACK_S = 120.0
 NOTES = [
     "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
     "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
-    "math/math500_hard: level-5 pool filtered to programmatically gradable answers before the seeded sample",
+    "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+    "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
 ]
 
 PROMPT_SUFFIX = "\n\nPut your final answer within \\boxed{}."
@@ -72,13 +79,21 @@ _UNIT_WORDS = {
     "year", "years", "day", "days", "people", "students", "cents.",
 }
 # NB: "or" is deliberately NOT a unit word - dropping it would collapse the hedge "3 \text{ or } 5" into "35".
+# the optional trailing power is captured so that a *unit* group takes its exponent with it:
+# '70 \text{ cm}^2' -> '70' and not '70^2' (= 4900).  A non-unit group keeps the exponent ('\text{x}^2').
 _TEXT_CMD = re.compile(r"\\(?:text|textbf|textit|textrm|textnormal|textsf|texttt|mathrm|mathbf|mathit|mbox|operatorname)"
-                       r"\s*\{([^{}]*)\}")
+                       r"\s*\{([^{}]*)\}(\s*\^\s*(?:\{\s*\d+\s*\}|\d+))?")
 _SPACING = re.compile(r"\\(?:left|right|displaystyle|quad|qquad|,|;|:|!| )")
 _DEGREES = re.compile(r"\^\s*(?:\\circ|\{\\circ\}|\{\\?circ\})|\\degree\b|\\deg\b")
 _TRAIL_UNITS = re.compile(r"(?i)(?:degrees?|cents?|dollars?|units?|percent|sq\.?units?|squareunits?)$")
 _THOUSANDS = re.compile(r"(?<=\d),(?=\d{3}(?!\d))")
 _LEAD_ASSIGN = re.compile(r"^[a-zA-Z](?:_\{?\w+\}?)?(?:=|\\in)(?=.)")   # 'x=5', 'x\in(-1,1)'
+# a trailing modulus annotation on an AIME-style residue: '70\pmod{1000}', '70(mod1000)', '70\bmod1000'.
+# Applied to the whitespace-free string.  Dropping it can only ever LOSE a match ('1070\pmod{1000}' stays
+# 1070 and still fails against a gold of 70), so it cannot manufacture a false positive.
+_MODULO = re.compile(r"(?:\\pmod|\\bmod|\\mod|\(mod)\s*\{?[^{}()]*\}?\)?$")
+# an answer label the model left inside the box: '\text{answer: } 70', 'Final answer = 70'
+_LEAD_LABEL = re.compile(r"(?i)^(?:the)?(?:final)?answer(?:is)?[:=]?(?=.)")
 _PLAIN_LITERAL = re.compile(r"^[+-]?(?:\d+\.?\d*|\.\d+)$")                  # a bare integer / decimal candidate
 _UNICODE = {"\u2212": "-", "\u00d7": "\\times", "\u22c5": "\\cdot", "\u221a": "\\sqrt", "\u03c0": "\\pi",
             "\u00b0": "^\\circ", "\u221e": "\\infty", "\u2044": "/", "\u00b1": "\\pm", "\u2013": "-", "\u2010": "-",
@@ -87,12 +102,13 @@ _UNICODE = {"\u2212": "-", "\u00d7": "\\times", "\u22c5": "\\cdot", "\u221a": "\
 
 def _text_repl(m: "re.Match") -> str:
     inner = m.group(1).strip()
+    power = m.group(2) or ""
     words = [w.strip(".,") for w in inner.lower().split()]
     if words == ["and"]:            # '\frac{..}{2} \text{ and } \frac{..}{2}' -> a comma-separated list
         return ","
     if words and all(w in _UNIT_WORDS for w in words):
-        return ""
-    return inner
+        return ""                   # drop the unit AND its exponent: 'cm}^2' is part of the unit
+    return inner + power
 
 
 def canon(s) -> str:
@@ -124,6 +140,9 @@ def canon(s) -> str:
     s = re.sub(r"^\\\[|\\\]$", "", s)
     s = _TRAIL_UNITS.sub("", s)
     s = re.sub(r"[.;,:]+$", "", s)
+    s = _MODULO.sub("", s)
+    s = re.sub(r"[.;,:]+$", "", s)
+    s = _LEAD_LABEL.sub("", s)
     s = s.lstrip("=")
     s = _LEAD_ASSIGN.sub("", s)
     # bare-argument \frac / \sqrt -> braced
@@ -473,6 +492,67 @@ def gradable(gold: str) -> bool:
 
 _PHRASE_CUT = re.compile(r"(?i)\s*[,;]?\s+(?:so|since|because|which|and|as|hence|therefore|thus|i\s+hope|where)\b.*$")
 
+# ---- two boxes: self-correction (last wins) vs simultaneous hedge (unparsed) -------------------
+# The convention stays "the last \boxed{} wins", because a model that revises itself
+# ("\boxed{71} ... actually \boxed{70}") means the later value.  The one case where that convention
+# turns a refusal to commit into a coin flip is a SIMULTANEOUS hedge - "either \boxed{A} or \boxed{B}" -
+# where the two boxes are joined by nothing but a disjunction.  Those are reported 'unparsed'.
+# The test is deliberately narrow: the text BETWEEN the last two boxes must consist only of disjunction
+# words and punctuation, and be short.  Any prose in the gap (a self-correction cue such as "actually",
+# "wait", "I made an error", but equally "but rechecking ... gives") means the later box supersedes the
+# earlier one, so the last box wins exactly as before.
+_BOXED_CMD = re.compile(r"\\(?:boxed|fbox)\b\s*")
+_HEDGE_WORD = r"(?:or|and/or|alternatively|possibly|perhaps|maybe|either|else|equivalently)"
+_HEDGE_GAP = re.compile(rf"(?i)^[\s,;/&.]*(?:{_HEDGE_WORD}[\s,;/&.]*)+$")
+_HEDGE_GAP_MAX = 40
+
+
+def _boxed_spans(text: str) -> list[tuple[int, int, str]]:
+    """[(start of the \\boxed command, end of the box, content)] - the spans behind common.find_boxed().
+
+    Mirrors common.find_boxed() exactly; extract() cross-checks the contents against it and falls back to
+    the plain last-box path if the two ever disagree, so this copy can never change what is extracted."""
+    out: list[tuple[int, int, str]] = []
+    for m in _BOXED_CMD.finditer(text):
+        pos = m.end()
+        if pos >= len(text):
+            continue
+        if text[pos] == "{":
+            depth = 0
+            i = pos
+            while i < len(text):
+                ch = text[i]
+                if ch == "\\":
+                    i += 2
+                    continue
+                if ch == "{":
+                    depth += 1
+                elif ch == "}":
+                    depth -= 1
+                    if depth == 0:
+                        out.append((m.start(), i + 1, text[pos + 1:i]))
+                        break
+                i += 1
+        else:
+            bm = re.match(r"[^\s$\\]+", text[pos:])
+            if bm:
+                out.append((m.start(), pos + bm.end(), bm.group(0)))
+    return out
+
+
+def hedged_boxes(text: str) -> Optional[tuple[str, str, str]]:
+    """(first, second, gap) when the last two \\boxed{} are a simultaneous hedge, else None."""
+    spans = _boxed_spans(text)
+    if [c for _, _, c in spans] != common.find_boxed(text) or len(spans) < 2:
+        return None
+    (_, end1, c1), (start2, _, c2) = spans[-2], spans[-1]
+    if not c1.strip() or not c2.strip() or canon(c1) == canon(c2):
+        return None
+    gap = text[end1:start2]
+    if len(gap) <= _HEDGE_GAP_MAX and _HEDGE_GAP.match(gap):
+        return c1.strip(), c2.strip(), gap
+    return None
+
 
 def _trim_phrase(c: str) -> str:
     """Tidy an 'answer is ...' candidate: prefer the last $...$ group, cut at sentence/clause ends."""
@@ -486,7 +566,10 @@ def _trim_phrase(c: str) -> str:
 
 
 def extract(text: str) -> tuple[Optional[str], str]:
-    cand, method = common.extract_final_answer(text or "", allow_last_integer=False)
+    text = text or ""
+    if hedged_boxes(text) is not None:
+        return None, "ambiguous_boxed"
+    cand, method = common.extract_final_answer(text, allow_last_integer=False)
     if cand is not None and method == "phrase":
         cand = _trim_phrase(cand) or None
     return cand, method
@@ -496,6 +579,11 @@ def score(item: dict, response_text: str, meta: Optional[dict] = None) -> Verdic
     expected = str(item.get("answer", ""))
     cand, method = extract(response_text)
     if cand is None:
+        if method == "ambiguous_boxed":
+            hb = hedged_boxes(response_text or "")
+            return Verdict.unparsed(canon(expected),
+                                    {"method": method, "boxes": [hb[0][:100], hb[1][:100]] if hb else []},
+                                    ["ambiguous_boxed"])
         return Verdict.unparsed(canon(expected), {"method": method}, ["no_boxed", "no_answer"])
     flags = [] if method == "boxed" else ["no_boxed"]
     if len(cand) > 400:
@@ -517,6 +605,7 @@ def aggregate(records: list[dict]) -> dict:
     if not scored:
         return {}
     unparsed = sum(1 for r in scored if r.get("status") == "unparsed")
+    hedged = sum(1 for r in scored if (r.get("detail") or {}).get("method") == "ambiguous_boxed")
     boxed = sum(1 for r in scored if (r.get("detail") or {}).get("method") == "boxed")
     matches: dict[str, int] = {}
     for r in scored:
@@ -524,7 +613,7 @@ def aggregate(records: list[dict]) -> dict:
             k = (r.get("detail") or {}).get("match") or "?"
             matches[k] = matches.get(k, 0) + 1
     return {"unparsed_rate": round(unparsed / len(scored), 4), "boxed_rate": round(boxed / len(scored), 4),
-            "match_methods": dict(sorted(matches.items()))}
+            "ambiguous_boxed": hedged, "match_methods": dict(sorted(matches.items()))}
 
 
 # ======================================================================================
@@ -643,8 +732,14 @@ def prepare(data_dir: str, seed: int = DEFAULT_SEED, profile: str = "default", r
         if not allow_short:
             raise ShortPool(f"math500_hard: gradable level-5 pool {len(pool)} < {n_math500}")
         notes.append(f"math500_hard: pool {len(pool)} < requested {n_math500}")
+    # shuffle-then-prefix, NOT rng.sample(pool, k): random.sample() switches algorithm with k, so the
+    # default 20 would not be a subset of the full-profile 60.  A single shuffle of the (deterministically
+    # sorted) pool makes every n a prefix of every larger n, which is what the README promises about
+    # smaller runs being nested subsets.  The prefix also fixes `order`, so --limit nesting agrees.
     rng = common.seeded_rng(seed, NAME, "math500_hard")
-    picked = rng.sample(pool, min(n_math500, len(pool)))
+    shuffled = list(pool)
+    rng.shuffle(shuffled)
+    picked = shuffled[:min(n_math500, len(pool))]
     m500: list[dict] = []
     for pos, r in enumerate(picked):
         slug = re.sub(r"[^a-z0-9]+", "-", r["unique_id"].lower().replace("test/", "").replace(".json", "")).strip("-")
