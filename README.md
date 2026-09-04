@@ -16,7 +16,7 @@ v4.1.1.
 
 ---
 
-## The eight rules
+## The ten rules
 
 1. **NVFP4 beats FP8 by 64%, but only if you force the kernel.** vLLM's auto-selection picks a *W4A16
    dequant* kernel for a W4A4 checkpoint and lands 47% **below** FP8. `--kernel-config.linear_backend b12x`
@@ -41,6 +41,14 @@ v4.1.1.
 8. **On consumer cards, the container's CUDA must match the host driver.** The cu130 image ships a
    compatibility shim that only works on datacentre GPUs; on an RTX 5090 host with a 575 driver every launch
    dies with CUDA error 804.
+9. **Serve each model the way its vendor says to, or you are benchmarking your own harness.** A missing
+   `--reasoning-parser` makes the scorer grade the model's chain-of-thought; the wrong sampling costs more
+   than any kernel here; and `enable_thinking` defaults differ per model, so a naive table compares some
+   models thinking and others not. Worth **+0.17 aggregate** on Qwen3.8-27B — larger than every kernel
+   finding in this document combined. See `box/lists/profiles.tsv`.
+10. **A model that does not fit one card is a different product.** Replicas exchange nothing; tensor
+    parallelism over PCIe without NVLink costs 8× throughput and turns a 0.7 s time-to-first-token into
+    324 s. Decide the memory ceiling before the card count.
 
 ---
 
@@ -143,6 +151,25 @@ nothing on shared-prefix traffic, where 32 GB per card leaves an eighth of the c
 queues instead of batching. Caveats worth carrying: this rented host is dual-socket (Scan's is not, so its
 tensor-parallel tiers should be better than measured here), and its cards are also capped at 400 W.
 
+**And then the memory ceiling arrives.** Everything above is a model that fits on one card. A model that
+does not is forced into tensor parallelism across cards with no NVLink, where the 96 GB box still runs
+independent replicas that exchange nothing. gpt-oss-120b is the one model measured both ways:
+
+| gpt-oss-120b, same MoE kernel | 4× PRO 6000, four TP1 replicas | 8× RTX 5090, two TP4 groups |
+|---|---:|---:|
+| router, out tok/s | **13,752** (C2048) | 1,640 (C1024) |
+| prompt-optimisation | **19,689** | 3,352 |
+| judge | **9,152** | 1,578 |
+| TTFT p50 | **0.7 s** | **324 s** |
+
+Eight times the throughput and three orders of magnitude on time-to-first-token. That is not a tuning gap,
+it is the configuration: 61 GB fits a 96 GB card and does not fit a 32 GB one. Two further tensor-parallel
+arms failed there outright — Ling-3.0-flash needs 102,400 bytes of shared memory against the 101,376 the
+architecture allows, and Qwen3.8-Flash-Next rejects an fp8 KV cache. **So the consumer box is the better
+buy for high-volume work on models under ~30 GB, and the wrong buy for anything frontier-class**, which on
+this roster means DeepSeek-V4-Flash (167 GB) and GLM-5.3-Flash (198 GB). Both are queued at TP8 there to
+put a number on it rather than an inference.
+
 ---
 
 ## GLM-5.3-Flash: getting the index-57 model to work
@@ -193,22 +220,55 @@ knowledge questions and short-answer factuality, and instruction following with 
 re-implemented from the reference. Ungated public sources, programmatic scoring, no model judging another
 model, Wilson intervals, and the same items and seed across configurations so arms are directly pairable.
 
-403 scored items per configuration, on the 8× RTX 5090 node:
+### How to serve a model without accidentally measuring your own harness
 
-| configuration (AA index) | overall | maths | code | tools | long ctx | knowledge | instructions | truncated |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| gemma-4-26B-A4B NVFP4 (26) | **0.712** | 0.600 | 0.800 | 0.857 | 0.875 | 0.457 | 0.750 | 0.087 |
-| gpt-oss-20b (24) | 0.665 | 0.525 | 0.760 | 0.871 | 0.771 | 0.371 | 0.750 | 0.137 |
-| Qwen3.8-27B FP8 (52) | 0.610 | 0.573 | 0.432 | 0.843 | 0.930 | 0.493 | 0.356 | 0.211 |
-| Qwen3.8-27B NVFP4 (52) | 0.558 | 0.525 | 0.413 | 0.829 | 0.917 | 0.443 | 0.317 | 0.248 |
-| Muse-Glimmer-30B NVFP4 (35) | 0.556 | 0.613 | 0.453 | 0.829 | 0.708 | 0.457 | 0.283 | 0.149 |
+The first round of quality numbers here was wrong, and the way it was wrong is the most useful thing in
+this repository. Serving every model with one house default produced a table in which every model that
+*reasons* scored below every model that does not — which reads like a finding and is in fact three bugs.
 
-Two readings matter more than the ranking. **The published intelligence index does not predict these
-workloads**: gemma-4-26B at index 26 beats Qwen3.8-27B at index 52 here, because half of what we ask for is
-code, tool calls and instruction following, and because Qwen spends its budget reasoning. And **four-bit may
-cost about five points** — but that pair compared a one-card NVFP4 server against a two-card FP8 one with
-different truncation rates, so it does not settle the question; a matched run at the same layout, budget,
-items and seed is in flight, alongside the logit-level pass that asks the same thing with no task in between.
+**The same weights, the same hardware, the same 403 items. Only the serving changed:**
+
+| Qwen3.8-27B NVFP4 | house default | vendor recipe | |
+|---|---:|---:|---|
+| **overall** | 0.558 | **0.732** | |
+| instruction following | 0.317 | **0.833** | its chain-of-thought was the graded answer |
+| code | 0.413 | 0.733 | |
+| maths | 0.525 | 0.625 | |
+| tools | 0.829 | 0.900 | |
+| long context | 0.917 | 0.979 | |
+| truncation rate | 0.248 | 0.139 | |
+
+Three independent errors, each worth more than any kernel choice in this repository:
+
+1. **No reasoning parser.** vLLM registers one per family — `qwen3`, `glm45`, `muse_glimmer`, `nemotron_v3`,
+   `ling3`, `minimax_m3`, `inkling`, `hy_v3`, `step3p5`, `poolside_v1`, `mimo`, `deepseek_v4`, `gemma4`,
+   `openai_gptoss` — and we passed none. Without one the chain-of-thought is returned as the answer.
+   It hides well: Qwen3-family templates put the opening `<think>` in the *prompt*, so the model emits only
+   a closing `</think>` and the output reads as ordinary prose. 306 of 403 responses, and 21 of 60
+   instruction items began "We need answer user's request…".
+2. **A token cap.** A truncated answer was scored *wrong*. GLM-5.3-Flash lost 51% of the maths items that
+   way. Cap generation just under the context window and let the *time* budget be the only limit — running
+   out of time marks an item skipped, which is excluded from the accuracy.
+3. **Sampling, and whether the model is even thinking.** Not one vendor recommends greedy or T=0.6. Qwen
+   wants T=1.0/top_p=0.95/top_k=20/min_p=0 in thinking mode, gemma-4 T=0.0/top_k=64, Ling-3.0 T=0.85,
+   Hy3 T=0.9/top_p=1.0. `top_k` and `min_p` have no slot in the OpenAI schema and must go through
+   `extra_body` or they silently do not apply. And thinking is not on by default everywhere: **Hy3 defaults
+   to `no_think` and gemma-4 to `enable_thinking: false`**, while Qwen, Inkling, MiniMax, Nemotron, Ling and
+   Ornith default on — so a naive table compares models in two different modes.
+
+`box/lists/profiles.tsv` carries the researched recipe per model (parser, tool parser, template kwargs,
+sampling), applied by the harness to both the server and the eval client. Every pre-fix run is kept under
+`results/eval/capped/`, `no_parser/` and `pre_profiles/` so the size of each artefact stays measurable.
+The full re-run is in flight; the corrected table will replace this section rather than sit beside it.
+
+### Which four-bit releases are lossless
+
+Worth separating before reading any quantisation comparison. These are **natively quantised** — the
+low-precision weights are the trained artefact, so there is nothing to recover: **gpt-oss** (MXFP4 experts),
+**DeepSeek-V4-Flash** (MXFP4 experts + FP8 attention), **MiMo-V2.5** (FP8), **both Nemotron 3 models**
+(pre-trained with an NVFP4 recipe), and **zai-org's own GLM-5.3-Flash release, which is native FP8** — which
+means a community NVFP4 build of it is a re-quantisation of an already-quantised model, not of a BF16
+parent. Conversely Google publishes no official 4-bit `gemma-4-26B-A4B` and advises against serving one.
 
 Two findings from building it that generalise:
 
