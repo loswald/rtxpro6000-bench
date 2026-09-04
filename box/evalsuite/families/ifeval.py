@@ -35,6 +35,10 @@ Scoring: strict prompt-level (all instructions pass on the visible text) is the 
 first/last line removed, '*' stripped) is in `detail` and summarised by aggregate() as prompt_loose /
 instruction_strict / instruction_loose / per-type accuracy.
 
+Output budget: a few IFEval prompts ask for 600-1200 words, which a flat 1536-token cap cannot hold, so
+every item carries a `max_tokens` derived from its length-implying instructions (answer_budget_tokens());
+the family cap covers the longest item and prepare_run() adds the thinking allowance on --reasoning.
+
 Mock: mock_response(item) builds a response that satisfies every instruction of the item (build_mock()),
 so the oracle run scores 1.000; canned "I am not sure." fails every selected item.
 """
@@ -57,8 +61,30 @@ DESCRIPTION = "IFEval instruction following: seeded 60-prompt subset weighted to
 SUBFAMILIES = ["triple", "double", "single"]
 PRIORITY = 60
 HIDDEN = False
-DEFAULT_MAX_TOKENS = {"default": 1536, "reasoning": 4096}
 ITEM_TIME_FALLBACK_S = 20.0
+
+# ---- output budgets -------------------------------------------------------------------------
+# A handful of IFEval prompts ask for very long answers ("at least 900 words", "at least 100
+# sentences").  A flat 1536-token cap makes those unwinnable for every model regardless of ability,
+# so each item carries its own budget, derived from its length-implying instructions.
+#
+# run_eval.py resolves the cap as  min(family_cap, item["max_tokens"])  - a per-item value can only
+# LOWER the family cap, never raise it (families/_base.py: "caps this item below the family cap").
+# So DEFAULT_MAX_TOKENS must cover the LONGEST item and each item then clamps itself back down.
+# The stored budget is the greedy (answer-only) one; prepare_run() adds the thinking allowance on a
+# --reasoning run, because the item file holds a single number that both modes read.
+WORDS_PER_SENTENCE = 12          # a floor for real prose; the mock builder writes shorter sentences
+WORDS_PER_PARAGRAPH = 40         # also used for a section of a multiple_sections answer
+TOKENS_PER_WORD = 2.0            # generous: IFEval answers carry markdown, [placeholders], SECTION headers
+BUDGET_PREAMBLE_TOK = 256        # lead-in prose, headings, and the model overshooting a floor
+BUDGET_BASE_TOK = 1536           # the family's historical greedy cap: the floor for every item
+BUDGET_THINK_TOK = 2560          # historical reasoning cap 4096 - historical greedy cap 1536
+BUDGET_ROUND_TOK = 256
+# 2816 covers the longest prompt in the source (1200-word floor: keys 3429 and 3425)
+BUDGET_MAX_ANSWER_TOK = 2816
+
+DEFAULT_MAX_TOKENS = {"default": BUDGET_MAX_ANSWER_TOK,
+                      "reasoning": BUDGET_MAX_ANSWER_TOK + BUDGET_THINK_TOK}
 NOTES = [
     "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
     "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
@@ -67,8 +93,17 @@ NOTES = [
     "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
     "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) "
     "are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
-    "ifeval: number_sentences uses a regex splitter, so abbreviations ('Dr.', 'e.g.', 'U.S.') over-count vs nltk punkt "
-    "and terminator-free bullet lines under-count; 19 of the 132 instruction instances are number_sentences",
+    "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted "
+    "initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised "
+    "word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/"
+    "'et al.', deliberately not protected because protecting a form means never splitting after it again; "
+    "19 of the 132 instruction instances are number_sentences",
+    "ifeval: each item carries its own max_tokens, derived from its length-implying instructions "
+    "(number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers "
+    "the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+    "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are "
+    "single-instruction and the checker is substring containment of one of three fixed phrases, so the item "
+    "would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar",
 ]
 
 PIN_COMMIT = "26d8ccdab6fec61b5c83ad6327ea8bda9e580288"   # google-research/google-research, 2024-06-11 "Fix an eval prompt"
@@ -140,14 +175,70 @@ _WORD_RE = re.compile(r"\w+")   # == the reference's nltk RegexpTokenizer(r"\w+"
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+|(?<=[.!?][\"'”’)])\s+")
 _PUNCT = string.punctuation + "“”‘’«»"
 
+# Abbreviation periods are not sentence terminators.  Without this pass a bare regex splitter opens a
+# new sentence in the middle of one ("Dr. Smith met Prof. Jones at noon." -> 3), which nltk punkt (the
+# reference's splitter) does not, and number_sentences verdicts sitting on their bound flip.
+# Only forms that are effectively NEVER sentence-final are protected; "etc.", "Inc.", "Ltd.", "Jr.",
+# "Sr.", "St." (a street address ends a sentence: "He lives on Main St. The house is blue.") and
+# lowercase "no." are deliberately left alone, because protecting them would swallow a real boundary
+# and UNDER-count - a worse error than the over-count it would remove.  Protecting a form is a
+# one-way trade: it can never split after that token again, so the list holds only titles that
+# always precede a name plus a few adverbials that always continue their clause.
+_ABBREV_NONFINAL = ("mr", "mrs", "ms", "mx", "dr", "prof", "rev", "hon", "fr",
+                    "sgt", "capt", "cmdr", "adm", "lt", "col", "gen", "maj",
+                    "gov", "sen", "rep", "pres", "messrs", "mmes",
+                    "vs", "cf", "al", "approx")
+_ABBREV_RE = re.compile(r"(?<![\w.])(?:" + "|".join(_ABBREV_NONFINAL) + r")\.(?=\s)", re.IGNORECASE)
+# reference markers, only where a number follows them ("Fig. 3", "No. 7", "Vol. 2", "pp. 41")
+_ABBREV_REF_RE = re.compile(r"(?<![\w.])(?:no|nos|vol|vols|fig|figs|eq|eqs|ch|chap|sec|secs|pp|para|art)\.(?=\s+\d)",
+                            re.IGNORECASE)
+# "St." has two readings and only one of them is safe to protect.  Street ("He lives on Main St. The
+# house is blue.") DOES end a sentence and is preceded by a proper noun or an ordinal; Saint ("We
+# visited St. Louis last year.") never does and is preceded by an ordinary word or nothing.  A flat
+# include/exclude gets one reading wrong either way, so the period survives only where BOTH a proper
+# noun/ordinal precedes it AND a capitalised word follows - Street mid-sentence ("the shop on Baker
+# St. closed early") keeps its clause, exactly as punkt does.
+_ABBREV_ST_RE = re.compile(r"(?<![\w.])st\.(?=\s)", re.IGNORECASE)
+_ST_STREET_LEFT = re.compile(r"(?:[A-Z][A-Za-z]*|\d+(?:st|nd|rd|th))\s+$")
+_ST_STREET_RIGHT = re.compile(r"\s+[\"'“‘(\[]?[A-Z]")
+# dotted initialisms and latin shorthands: "e.g.", "i.e.", "U.S.", "a.m.", "Ph.D." (no space inside)
+_INITIALISM_RE = re.compile(r"(?<![\w.])(?:[A-Za-z]{1,2}\.){2,}")
+# An ellipsis followed by a capitalised word IS a sentence boundary ("Wait... Stop now." -> 2, which
+# is also what punkt does); anywhere else it is a mid-sentence pause ("He paused... then left." -> 1).
+# The boundary form is rewritten to a plain terminator BEFORE the pause form is neutralised.
+_ELLIPSIS_BOUNDARY_RE = re.compile(r"\.{3,}(?=\s+[\"'“‘(\[]?[A-Z])")
+_ELLIPSIS_RE = re.compile(r"\.{3,}")
+
 
 def count_words(text: str) -> int:
     return len(_WORD_RE.findall(text))
 
 
+def _protect_saint_st(text: str) -> str:
+    """Neutralise 'St.' only in its Saint reading (see _ST_STREET_LEFT); Street keeps its terminator."""
+    def repl(m):
+        # a 64-char left window is enough for the one word/ordinal _ST_STREET_LEFT can match, and
+        # keeps this linear on a degenerate response that repeats "St. " thousands of times
+        left = text[max(0, m.start() - 64):m.start()]
+        street = _ST_STREET_LEFT.search(left) and _ST_STREET_RIGHT.match(text, m.end())
+        return m.group(0) if street else m.group(0)[:-1]
+    return _ABBREV_ST_RE.sub(repl, text)
+
+
+def _protect_abbreviations(text: str) -> str:
+    """Drop the periods that are not sentence terminators, so _SENT_SPLIT cannot break on them."""
+    text = _ELLIPSIS_BOUNDARY_RE.sub(".", text)
+    text = _ELLIPSIS_RE.sub("…", text)
+    text = _INITIALISM_RE.sub(lambda m: m.group(0).replace(".", ""), text)
+    text = _ABBREV_RE.sub(lambda m: m.group(0)[:-1], text)
+    text = _protect_saint_st(text)
+    return _ABBREV_REF_RE.sub(lambda m: m.group(0)[:-1], text)
+
+
 def count_sentences(text: str) -> int:
-    """Chunks between sentence terminators that contain a word of >= 2 characters ('P.S.' alone is not a sentence)."""
-    return sum(1 for s in _SENT_SPLIT.split(text.strip()) if re.search(r"\w{2,}", s))
+    """Chunks between sentence terminators that contain a word of >= 2 characters ('P.S.' alone is not a
+    sentence); abbreviation periods are neutralised first (see _protect_abbreviations)."""
+    return sum(1 for s in _SENT_SPLIT.split(_protect_abbreviations(text).strip()) if re.search(r"\w{2,}", s))
 
 
 def count_capital_words(text: str) -> int:
@@ -525,6 +616,63 @@ def build_mock(instructions: list[dict]) -> Optional[str]:
     return None
 
 
+# ---- per-item output budget ------------------------------------------------------------------
+def required_words(instructions: list[dict]) -> int:
+    """Words the response must contain at minimum, over every length-implying instruction.
+
+    A `number_words: less than N` bound caps the total: "at least 60 sentences" together with "less
+    than 600 words" can only be met with short sentences, so 599 - not 60*12 - is the requirement.
+    """
+    lo, cap, echo = 0, None, 0
+    for inst in instructions:
+        iid, kw = inst["id"], inst.get("kwargs") or {}
+        if iid == N_WORDS:
+            n = int(kw.get("num_words", 0))
+            if kw.get("relation") == "less than":
+                cap = n - 1 if cap is None else min(cap, n - 1)
+            else:
+                lo = max(lo, n)
+        elif iid == N_SENT:
+            if kw.get("relation") != "less than":
+                lo = max(lo, int(kw.get("num_sentences", 0)) * WORDS_PER_SENTENCE)
+        elif iid in (N_PARA, NTH_PARA):
+            lo = max(lo, int(kw.get("num_paragraphs", 0)) * WORDS_PER_PARAGRAPH)
+        elif iid == SECTIONS:
+            lo = max(lo, int(kw.get("num_sections", 0)) * WORDS_PER_PARAGRAPH)
+        elif iid == REPEAT:
+            echo += count_words(str(kw.get("prompt_to_repeat", "")))   # the echo is on top of the answer
+    lo += echo          # added AFTER the max() pass, so the result cannot depend on instruction order
+    return max(0, min(lo, cap) if cap is not None else lo)
+
+
+def answer_budget_tokens(instructions: list[dict]) -> int:
+    """Completion tokens this item's ANSWER needs, floored at the family's historical greedy cap."""
+    need = int(required_words(instructions) * TOKENS_PER_WORD) + BUDGET_PREAMBLE_TOK
+    need = -(-need // BUDGET_ROUND_TOK) * BUDGET_ROUND_TOK          # round up to a whole block
+    return max(BUDGET_BASE_TOK, min(need, BUDGET_MAX_ANSWER_TOK))
+
+
+async def prepare_run(items: list[dict], ctx: Any) -> None:
+    """On a --reasoning run give every item its thinking allowance on top of the answer budget.
+
+    The item file stores the greedy budget (one number, read by both modes); the family cap is
+    BUDGET_MAX_ANSWER_TOK + BUDGET_THINK_TOK there, so without this the per-item cap would hold a
+    reasoning model to its answer budget and cut the <think> block.
+    """
+    log = getattr(ctx, "log", print)
+    if not items or not getattr(ctx, "reasoning", False):
+        return
+    n = 0
+    for it in items:
+        if it.get("_think_allowance"):
+            continue
+        it["max_tokens"] = int(it.get("max_tokens", BUDGET_BASE_TOK)) + BUDGET_THINK_TOK
+        it["_think_allowance"] = True
+        n += 1
+    log(f"{NAME}: +{BUDGET_THINK_TOK} reasoning tokens on {n} items "
+        f"(caps now {min(it['max_tokens'] for it in items)}..{max(it['max_tokens'] for it in items)})")
+
+
 # ---- family hooks ---------------------------------------------------------------------------
 def _instructions(row: dict) -> list[dict]:
     out = []
@@ -628,8 +776,10 @@ def prepare(data_dir: str, seed: int = DEFAULT_SEED, profile: str = "default", r
             items.append({"id": f"ifeval-{int(r['key'])}", "family": NAME, "subfamily": sub, "order": i,
                           "messages": [{"role": "user", "content": r["prompt"]}],
                           "instructions": insts,
+                          "max_tokens": answer_budget_tokens(insts),
                           "meta": {"source": "google-research/instruction_following_eval", "source_key": int(r["key"]),
                                    "n_instructions": len(insts), "hardness": _hardness(insts),
+                                   "required_words": required_words(insts),
                                    "types": [x["id"] for x in insts]}})
 
     type_cov = collections.Counter(t for it in items for t in it["meta"]["types"])
@@ -639,6 +789,18 @@ def prepare(data_dir: str, seed: int = DEFAULT_SEED, profile: str = "default", r
     notes.append(f"instruction types covered: {len(type_cov)}/{len(ALL_TYPES)}" + (f" (missing {missing})" if missing else ""))
     notes.append(f"mock_skip items in the built set: 0 (unconstructible prompts are excluded from the pool: "
                  f"{len(excluded['contradictory_or_unconstructible'])})")
+
+    raised = sorted(((it["max_tokens"], it["id"], it["meta"]["required_words"]) for it in items
+                     if it["max_tokens"] > BUDGET_BASE_TOK), reverse=True)
+    budgets = {it["id"]: it["max_tokens"] for it in items}
+    notes.append(f"output budgets: family cap {DEFAULT_MAX_TOKENS['default']} greedy / "
+                 f"{DEFAULT_MAX_TOKENS['reasoning']} reasoning; {len(raised)} of {len(items)} items above the "
+                 f"{BUDGET_BASE_TOK}-token base: " + ", ".join(f"{i}={m} (>={w}w)" for m, i, w in raised))
+    clamped = [it["id"] for it in items
+               if int(required_words(it["instructions"]) * TOKENS_PER_WORD) + BUDGET_PREAMBLE_TOK > BUDGET_MAX_ANSWER_TOK]
+    if clamped:
+        notes.append(f"output budgets CLAMPED at BUDGET_MAX_ANSWER_TOK={BUDGET_MAX_ANSWER_TOK}: {clamped} "
+                     f"- raise BUDGET_MAX_ANSWER_TOK if these matter")
     for n in notes:
         log(f"   note: {n}")
 
@@ -651,7 +813,10 @@ def prepare(data_dir: str, seed: int = DEFAULT_SEED, profile: str = "default", r
             "notes": notes,
             "manifest_extra": {"ifeval_build": {"excluded": excl_counts, "excluded_keys": {k: sorted(v) for k, v in excluded.items()},
                                                 "sizes": sizes, "type_coverage": dict(sorted(type_cov.items())),
-                                                "hardness_tiers": HARDNESS}}}
+                                                "hardness_tiers": HARDNESS,
+                                                "max_tokens": {"family_cap": dict(DEFAULT_MAX_TOKENS),
+                                                               "think_allowance": BUDGET_THINK_TOK,
+                                                               "per_item": dict(sorted(budgets.items()))}}}}
 
 
 def score(item: dict, response_text: str, meta: Optional[dict] = None) -> Verdict:

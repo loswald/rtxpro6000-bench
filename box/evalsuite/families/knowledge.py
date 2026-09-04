@@ -16,10 +16,12 @@ Two sub-families, both from public, ungated sources fetched with common.fetch() 
                  last standalone letter).
   simpleqa       OpenAI simple-evals SimpleQA test set (public Azure blob CSV).  A seeded, topic-
                  stratified subset of short-answer items (<= 4-word gold answers), asked for a bare
-                 "Answer: <answer>" and scored by normalised containment of the gold answer in the
-                 extracted answer span (accent/punctuation/article-insensitive token containment, alias
-                 splitting on "or" / "/" / parentheses, numeric equality for Number answers, month
-                 canonicalisation for dates).  No LLM judge.
+                 "Answer: <answer>" and scored by normalised CONTIGUOUS containment of the gold answer
+                 in the extracted answer span (accent/punctuation/article-insensitive tokens, "St."
+                 == "Saint", middle initials skipped, comma-separated gold segments matched as runs in
+                 order, dates as a tight any-order window, numeric equality for Number answers), with a
+                 span that is a fragment of a longer proper name, that carries a second named entity,
+                 that hedges or that negates rejected.  No LLM judge.
   hle_public     NOT built: Humanity's Last Exam (cais/hle) is gated on HF (rows API -> 401) and no ungated
                  mirror is known, so there is nothing to fetch under the no-gated-datasets rule.
 
@@ -54,9 +56,12 @@ NOTES = [
     "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), "
     "10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of "
     "MMLU-Pro keys are known to be noisy and are not corrected here",
-    "knowledge/simpleqa: programmatic containment scoring (all gold tokens must appear in the extracted answer "
-    "span; the span is the 'Answer:'/boxed phrase, else the last line of the response); hedged ('X or Y') and "
-    "negated ('Y, not X') answers are not credited, matching the official grader's NOT_ATTEMPTED/INCORRECT; "
+    "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of "
+    "tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a "
+    "tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). "
+    "A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes "
+    "with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged "
+    "('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; "
     "stricter than the official LLM grader on partial names, so absolute numbers are not comparable "
     "with published SimpleQA scores - use it for paired comparisons",
     "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
@@ -429,9 +434,27 @@ _MCQ_TAIL_STRONG = re.compile(r"(?:(?<!not )\(([A-J])\)|(?i:option|choice)[ \t]{
 # number ("0.5 J.", "3 A.") and is not negated ("... is not C.")
 _MCQ_TAIL_END = re.compile(
     r"(?<!\d)(?<!\d )(?<!not )(?<![A-Za-z0-9])([A-J])[\s*]{0,4}[.)\]:;!]{0,3}[\s*]{0,4}$")
-# "C or D", "C, D": the model named a second candidate right next to the extracted letter
-_HEDGE_AFTER = re.compile(r"^[\s*)\]]{0,3}(?:,|/|;|\bor\b|\band\b)[\s*(\[]{0,3}([A-J])(?![A-Za-z0-9])")
-_HEDGE_BEFORE = re.compile(r"(?<![A-Za-z0-9])([A-J])[\s*)\]]{0,3}(?:,|/|;|\bor\b|\band\b)[\s*(\[]{0,3}$")
+# ... and, on top of that, only when the letter is ANSWER-SHAPED: it must follow a conclusion cue or
+# an assignment on the same line ("Therefore, C.", "the best fit is D", "-> C", "Answer = C").
+# Without the cue the terminal letter is far more often a variable, a label or a figure reference
+# ("... the magnetic field B", "... at point C", "... as shown in panel D)") and crediting it hands a
+# malformed response a free 1-in-10 hit against a 10-option key; an unparsed verdict is honest.
+_TAIL_CUE = re.compile(
+    r"(?i)(?:\b(?:answer|answers|option|options|choice|choices|letter|therefore|thus|hence|so|ergo|"
+    r"conclusion|conclude|final|finally|result|correct|select|selected|choose|chose|pick|picked|"
+    r"is|are|was|be|it's|its)\b|[:=]|-{1,2}>|=>|→)[\s:=*.,;\-—–]{0,8}$")
+_TAIL_CUE_WINDOW = 64
+# "C or D", "C, D", "\boxed{C} and \boxed{D}": the model named two candidates instead of one.
+# The pair is searched over the WHOLE answer region: the earlier +-12-character window around the
+# extracted letter could not see across the second \boxed{} wrapper ("\boxed{C} and \boxed{D}" is
+# 7 characters of LaTeX between the connective and the letter), so a two-box hedge silently
+# resolved to the last box.  _collapse_boxes() first rewrites a one-letter box to the bare letter.
+_BOX_LETTER = re.compile(
+    r"\\(?:boxed|fbox)[ \t]{0,4}\{[\s]{0,4}(?:\\(?:text|textbf|mathrm|mathbf)[ \t]{0,4}\{[\s]{0,4})?"
+    r"[(\[]{0,2}[ \t*]{0,4}([A-J])[ \t*]{0,4}[)\]]{0,2}[\s]{0,4}\}{1,2}")
+_ALT_PAIR = re.compile(
+    r"(?<![A-Za-z0-9])([A-J])(?![A-Za-z0-9])[\s*)\].]{0,4}(?:,|/|;|\bor\b|\band\b)"
+    r"[\s*(\[]{0,4}(?=([A-J])(?![A-Za-z0-9]))")
 
 
 def _norm_opt(s: str) -> str:
@@ -475,13 +498,48 @@ def _last_phrase_letter(text: str, valid: set) -> Optional[str]:
     return strong or weak
 
 
+def _collapse_boxes(text: str) -> str:
+    """\\boxed{C} / \\fbox{\\text{C}} -> ' C ', so an alternation of two boxed letters reads as
+    'C and D' to the hedge scan."""
+    return _BOX_LETTER.sub(r" \1 ", text or "")
+
+
+_HEDGE_REGION = 300
+_HEDGE_MARGIN = 64
+
+
+def _answer_region(text: str, letter: str) -> str:
+    """The part of the response the letter was actually READ from: the last _HEDGE_REGION characters,
+    extended with the neighbourhood of the last \\boxed{} / answer phrase stating the extracted letter
+    when the model stated it further back than that.  Scanning the tail alone let a hedge escape as
+    soon as the model kept writing after it ("\\boxed{C} and \\boxed{D}" followed by 400 characters of
+    prose scored as a committed D - the very free hit the two-box hedge is supposed to lose);
+    scanning the WHOLE response instead would flag any early musing about the letter that the model
+    later resolved.  The two pieces are joined with a separator no alternation pattern can cross."""
+    t = text or ""
+    cut = max(0, len(t) - _HEDGE_REGION)
+    if not cut:
+        return t
+    site = None
+    head = t[: cut + _HEDGE_MARGIN]
+    for rx in (_MCQ_BOXED, _MCQ_PHRASE, _MCQ_PHRASE_LC):
+        for m in rx.finditer(head):
+            g = next((x for x in m.groups() if x), None)
+            if g and g.upper() == letter and m.start() < cut and (site is None or m.start() > site.start()):
+                site = m
+    if site is None:
+        return t[cut:]
+    return t[max(0, site.start() - _HEDGE_MARGIN): site.end() + _HEDGE_MARGIN] + " | " + t[cut:]
+
+
 def _is_hedged(text: str, letter: str) -> bool:
-    """True when the extracted letter sits inside an uncommitted alternation ("C or D", "C, D"):
-    the model named two options, which is not an answer."""
-    for m in re.finditer(rf"(?<![A-Za-z0-9]){letter}(?![A-Za-z0-9])", text):
-        after = _HEDGE_AFTER.match(text[m.end(): m.end() + 12])
-        before = _HEDGE_BEFORE.search(text[max(0, m.start() - 12): m.start()])
-        if (after and after.group(1) != letter) or (before and before.group(1) != letter):
+    """True when the extracted letter sits inside an uncommitted alternation anywhere in the answer
+    region ("C or D", "C, D", "\\boxed{C} and \\boxed{D}"): the model named two options, which is
+    not an answer."""
+    region = _collapse_boxes(text)
+    for m in _ALT_PAIR.finditer(region):
+        a, b = m.group(1), m.group(2)
+        if a != b and letter in (a, b):
             return True
     return False
 
@@ -533,7 +591,9 @@ def extract_mcq_letter(text: str, options: Optional[list[str]] = None, n_options
         return hit, "tail_paren"
     m = _MCQ_TAIL_END.search(tail)
     if m and m.group(1) in valid - {"I"}:
-        return m.group(1), "last_letter"
+        prefix = tail[: m.start(1)].rsplit("\n", 1)[-1][-_TAIL_CUE_WINDOW:]
+        if _TAIL_CUE.search(prefix):
+            return m.group(1), "last_letter"
     return None, "none"
 
 
@@ -543,7 +603,7 @@ def _score_mcq(item: dict, text: str) -> Verdict:
     if letter is None:
         return Verdict.unparsed(expected, {"method": method}, ["no_letter"])
     flags = ["weak_extraction"] if method in ("last_letter", "tail_paren") else []
-    if _is_hedged((text or "")[-300:], letter):
+    if _is_hedged(_answer_region(text or "", letter), letter):
         return Verdict(False, "wrong", 0.0, letter, expected, {"method": method, "hedged": True}, flags + ["hedged"])
     return Verdict(letter == expected, extracted=letter, expected=expected, detail={"method": method}, flags=flags)
 
@@ -582,6 +642,9 @@ def _norm_tokens(s: str, drop: Optional[frozenset] = None) -> list[str]:
 
 _ARTICLES = ("the", "a", "an")
 _NUMLIKE = re.compile(r"-?\d+(?:\.\d+)?$")
+# the same name written short or long.  Applied to gold AND candidate at SCORING time only: prepare()
+# builds the item set through _norm_tokens()/_aliases(), which this table does not touch.
+_ABBREV = {"st": "saint", "ste": "saint", "mt": "mount", "mtn": "mountain"}
 
 
 def _gold_tokens(s: str) -> list[str]:
@@ -589,10 +652,20 @@ def _gold_tokens(s: str) -> list[str]:
     everywhere silently deleted the discriminating token of short golds - 'Vitamin C' became
     {vitamin} ('c' is in the circa-noise set) and matched 'Vitamin D', 'La La Land' became {land}
     and matched 'Land of the Free', 'Hepatitis A' matched 'Hepatitis B'."""
-    toks = _norm_tokens(s, drop=frozenset())
+    toks = [_ABBREV.get(t, t) for t in _norm_tokens(s, drop=frozenset())]
     while len(toks) > 1 and toks[0] in _ARTICLES:
         toks = toks[1:]
     return toks
+
+
+# "St. John's College, Annapolis" / "Karachi, Pakistan" are two segments: each must appear as its own
+# contiguous run, in order, because a correct answer may write "St John's College in Annapolis".
+_SEG_SPLIT = re.compile(r"(?<!\d)\s*[,;]\s*(?!\d)|\s+[-–—]\s+")
+
+
+def _gold_segments(gold: str) -> list[list[str]]:
+    segs = [t for t in (_gold_tokens(p) for p in _SEG_SPLIT.split(gold or "")) if t]
+    return segs or [_gold_tokens(gold)]
 
 
 _ISO_DATE = re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b")
@@ -600,16 +673,34 @@ _MONTH_NAMES = ["january", "february", "march", "april", "may", "june", "july", 
                 "october", "november", "december"]
 
 
+def _iso_expand(m: re.Match) -> str:
+    mm = int(m.group(2))
+    name = _MONTH_NAMES[mm - 1] if 1 <= mm <= 12 else m.group(2)
+    return f"{m.group(1)} {name} {int(m.group(3))} {m.group(0)}"
+
+
+# A degenerate span is cut before it is TOKENISED: _contains() only ever scans the first
+# _MAX_CAND_TOKENS tokens, but tokenising a 90 kB "Answer:" span first cost 74 ms per call inside
+# score(), which runs on the runner's event loop.  10 characters per token is far above real prose,
+# so the token budget is still the binding limit on anything a model actually writes.
+_MAX_CAND_CHARS = 4000
+
+
+def _cand_words(s: str) -> list[tuple[str, str, int]]:
+    """[(normalised token, the raw word it came from, raw-word index)].  Nothing is dropped - extra
+    articles / hedge words in the candidate are harmless, while dropping them can only manufacture
+    matches.  An unambiguous ISO date is additionally spelled out (1996-08-12 -> 1996 august 12) so a
+    correct answer in ISO form is not scored wrong against a '12 August 1996' gold.  The raw word is
+    kept so the span guards below can see capitalisation and punctuation."""
+    out: list[tuple[str, str, int]] = []
+    for w, raw in enumerate(_ISO_DATE.sub(_iso_expand, (s or "")[:_MAX_CAND_CHARS]).split()):
+        for t in _norm_tokens(raw, drop=frozenset()):
+            out.append((_ABBREV.get(t, t), raw, w))
+    return out
+
+
 def _cand_tokens(s: str) -> list[str]:
-    """Candidate tokens: nothing is dropped - the candidate only has to be a SUPERSET of the gold, so
-    extra articles / hedge words are harmless, while dropping them can only manufacture matches.
-    An unambiguous ISO date is additionally spelled out (1996-08-12 -> 1996 august 12) so a correct
-    answer in ISO form is not scored wrong against a '12 August 1996' gold."""
-    def _iso(m):
-        mm = int(m.group(2))
-        name = _MONTH_NAMES[mm - 1] if 1 <= mm <= 12 else m.group(2)
-        return f"{m.group(1)} {name} {int(m.group(3))} {m.group(0)}"
-    return _norm_tokens(_ISO_DATE.sub(_iso, s or ""), drop=frozenset())
+    return [t for t, _raw, _w in _cand_words(s)]
 
 
 def _numbers(s: str) -> list[float]:
@@ -640,20 +731,202 @@ def _aliases(gold: str) -> list[str]:
     return out or [gold.strip()]
 
 
-def _contains(gold: str, cand: str, answer_type: str) -> bool:
+# ---- contiguous-span containment -------------------------------------------------------------
+# Set-based containment ("every gold token appears somewhere in the span") credited any token
+# SUPERSET of the gold: 'the Denver Broncos lost to the Carolina Panthers' scored correct against
+# gold 'Denver Broncos', 'Carolina Panthers' against 'Carolina', 'North Carolina' against 'Carolina',
+# 'the island is very long' against 'Long Island'.  The gold now has to appear as a contiguous run of
+# candidate tokens, and the run has to BE the answer rather than a fragment of a longer name or a
+# mention inside a statement about something else.
+
+_MAX_CAND_TOKENS = 400          # score() runs on the event loop: keep the span scan bounded
+_MAX_COVERS = 32
+
+
+def _tok_eq(g: str, c: str) -> bool:
+    """Token equality, numeric tokens compared by value ('1.50' == '1.5', '007' == '7')."""
+    if g == c:
+        return True
+    if _NUMLIKE.match(g) and _NUMLIKE.match(c):
+        try:
+            return math.isclose(float(g), float(c), rel_tol=1e-9, abs_tol=1e-9)
+        except ValueError:
+            return False
+    return False
+
+
+def _iter_runs(gtoks: list[str], ctoks: list[str], start: int = 0):
+    """Every (i, j) with ctoks[i:j] matching gtoks in order and adjacently.  A single-letter
+    candidate token inside the run is skipped, so 'John A. Smith' still matches gold 'John Smith'."""
+    n = len(ctoks)
+    for i in range(start, n):
+        j, k = i, 0
+        while k < len(gtoks) and j < n:
+            if _tok_eq(gtoks[k], ctoks[j]):
+                k += 1
+                j += 1
+            elif k and len(ctoks[j]) == 1 and ctoks[j].isalpha():
+                j += 1                     # middle initial inside a name
+            else:
+                break
+        if k == len(gtoks):
+            yield i, j
+
+
+def _segment_covers(gold: str, ctoks: list[str]):
+    """Every way of matching the gold's comma-separated segments as runs, in order."""
+    segs = _gold_segments(gold)
+    for first in _iter_runs(segs[0], ctoks):
+        cover, pos, ok = [first], first[1], True
+        for seg in segs[1:]:
+            nxt = next(_iter_runs(seg, ctoks, pos), None)
+            if nxt is None:
+                ok = False
+                break
+            cover.append(nxt)
+            pos = nxt[1]
+        if ok:
+            yield cover
+
+
+_DATE_SLACK = 2
+
+
+def _date_covers(gtoks: list[str], ctoks: list[str]):
+    """Dates match as a tight window in ANY order, so '13 May 2004' == 'May 13, 2004' == '2004-05-13'
+    while '2011 was the year the September series began' (gold 'September 2011') does not."""
+    need = len(gtoks)
+    for i in range(len(ctoks)):
+        for j in range(i + need, min(len(ctoks), i + need + _DATE_SLACK) + 1):
+            pool = list(ctoks[i:j])
+            for g in gtoks:
+                hit = next((x for x, c in enumerate(pool) if _tok_eq(g, c)), None)
+                if hit is None:
+                    break
+                pool.pop(hit)
+            else:
+                yield [(i, j)]
+                break                       # the shortest window at this start is enough
+
+
+# heads that only expand a name without changing the entity ("Harvard" -> "Harvard University")
+_EXPANSION_HEADS = {
+    "university", "universite", "universidad", "college", "institute", "institution", "school",
+    "academy", "hospital", "museum", "library", "foundation", "society", "association", "federation",
+    "union", "league", "club", "fc", "afc", "company", "corporation", "corp", "inc", "ltd", "llc",
+    "plc", "gmbh", "group", "press", "publishing", "records", "studios", "studio", "observatory",
+    "laboratory", "laboratories", "airlines", "railway", "bank", "party", "church", "cathedral",
+    "abbey", "temple", "monastery", "orchestra", "ensemble", "quartet", "band", "magazine", "journal",
+}
+# capitalised words that are not names: sentence openers, titles, hedges
+_COMMON_CAPS = {
+    "the", "a", "an", "and", "or", "but", "so", "as", "at", "in", "on", "of", "for", "from", "to",
+    "with", "by", "it", "its", "it's", "this", "that", "these", "those", "he", "she", "they", "we",
+    "you", "his", "her", "their", "there", "here", "answer", "answers", "final", "note", "however",
+    "therefore", "thus", "hence", "based", "according", "no", "not", "yes", "both", "either",
+    "neither", "after", "before", "during", "while", "when", "where", "which", "who", "whom", "what",
+    "why", "how", "probably", "possibly", "likely", "apparently", "actually", "indeed", "perhaps",
+    "maybe", "only", "just", "still", "then", "again", "well", "overall", "finally", "correct",
+    "incorrect", "unknown", "unsure", "sorry", "i", "my", "me",
+    # titles: part of the reference to the same person, not a second name
+    "mr", "mrs", "ms", "miss", "dr", "doctor", "prof", "professor", "sir", "lord", "lady", "dame",
+    "president", "vice", "king", "queen", "prince", "princess", "emperor", "empress", "pope",
+    "general", "colonel", "captain", "major", "admiral", "senator", "governor", "mayor", "judge",
+    "justice", "chancellor", "minister", "secretary", "sultan", "tsar", "czar", "duke", "duchess",
+    "earl", "baron", "father", "mother", "sister", "brother", "rabbi", "imam", "sheikh", "saint",
+}
+_STRIP_EDGE = "([{\"'“”‘’«».,;:!?)]}"
+
+
+def _bare(raw: str) -> str:
+    return (raw or "").strip(_STRIP_EDGE)
+
+
+def _case_informative(words: list[tuple[str, str, int]]) -> bool:
+    """Capitalisation only means something when the candidate is not written in a single case."""
+    letters = [c for _t, raw, _w in words for c in raw if c.isalpha()]
+    return any(c.isupper() for c in letters) and any(c.islower() for c in letters)
+
+
+def _proper_word(raw: str, prev_raw: Optional[str]) -> bool:
+    """`raw` reads as part of a proper name (not a sentence-opening capital, a title, or initials)."""
+    w = _bare(raw)
+    if len(w) < 2 or not w[:1].isupper() or not w[:1].isalpha() or w.lower() in _COMMON_CAPS:
+        return False
+    toks = _norm_tokens(w, drop=frozenset())
+    if not toks or all(len(t) == 1 for t in toks):
+        return False                        # "F.C.", "J.R." - initials/abbreviation
+    if prev_raw is not None and _bare(prev_raw) and prev_raw.rstrip().endswith((".", "!", "?")) \
+            and len(_bare(prev_raw)) > 2:
+        return False                        # capital that merely opens a new sentence
+    return True
+
+
+def _name_fragment(words: list[tuple[str, str, int]], s: int, e: int) -> bool:
+    """The run is a fragment of a longer proper name in the candidate: 'Carolina' inside 'Carolina
+    Panthers', 'York' inside 'New York'.  Only a directly juxtaposed capitalised word counts - a name
+    after a comma ('Annapolis, Maryland') or a whitelisted head ('Harvard University') does not."""
+    if e < len(words) and words[e][2] != words[e - 1][2]:
+        last_raw = words[e - 1][1]
+        if last_raw[-1:].isalnum() or last_raw.endswith("'"):
+            nxt = _bare(words[e][1])
+            if nxt.lower() not in _EXPANSION_HEADS and _proper_word(words[e][1], last_raw):
+                return True
+    if s > 0 and words[s - 1][2] != words[s][2]:
+        prev_raw = words[s - 1][1]
+        if prev_raw[-1:].isalnum() or prev_raw.endswith("'"):
+            if _proper_word(prev_raw, words[s - 2][1] if s >= 2 else None):
+                return True
+    return False
+
+
+def _extra_entity(words: list[tuple[str, str, int]], cover: list[tuple[int, int]],
+                  qwords: frozenset, gold_toks: set) -> Optional[str]:
+    """A second named entity, separated from the gold by words that carry meaning: the candidate is a
+    statement ABOUT the gold rather than the gold itself ('the Denver Broncos lost to Carolina').
+    Names that the question itself uses, and names directly appended to the gold ('Karachi, Sindh,
+    Pakistan'), are not second entities."""
+    covered = {k for s, e in cover for k in range(s, e)}
+    lo, hi = min(covered), max(covered)
+    for k, (tok, raw, _w) in enumerate(words):
+        if k in covered or tok in gold_toks or tok in qwords:
+            continue
+        if not _proper_word(raw, words[k - 1][1] if k else None):
+            continue
+        a, b = (k + 1, lo) if k < lo else (hi + 1, k)
+        if any(t not in _STOP and t not in _NOISE and t not in qwords for t, _r, _w2 in words[a:b]):
+            return _bare(raw)
+    return None
+
+
+def _contains(gold: str, cand: str, answer_type: str, qwords: frozenset = frozenset()) -> bool:
+    """True when `cand` states `gold` as its answer: the gold's tokens appear as a contiguous run
+    (per comma-separated segment, in order; dates as a tight window in any order), the run is not a
+    fragment of a longer proper name, and no unrelated second entity is attached to it."""
     gtoks = _gold_tokens(gold)
     if not gtoks:
         return False
-    ctoks = set(_cand_tokens(cand))
+    # bounded work: score() runs on the runner's event loop and a degenerate response can be huge
+    words = _cand_words(cand)[:_MAX_CAND_TOKENS]
+    ctoks = [t for t, _r, _w in words]
     if answer_type == "Number":
         gnums = _numbers(gold)
         if gnums:
             cnums = _numbers(cand)
             if not all(any(math.isclose(g, c, rel_tol=1e-9, abs_tol=1e-9) for c in cnums) for g in gnums):
                 return False
-            # the numbers agree; any non-numeric gold token ("1.5 million" vs "1.5 billion") must too
-            return all(t in ctoks for t in gtoks if not _NUMLIKE.match(t))
-    return all(t in ctoks for t in gtoks)
+    cased = _case_informative(words)
+    covers = _date_covers(gtoks, ctoks) if answer_type == "Date" else _segment_covers(gold, ctoks)
+    gset = set(gtoks)
+    for n_cover, cover in enumerate(covers):
+        if n_cover >= _MAX_COVERS:
+            break
+        if cased and any(_name_fragment(words, s, e) for s, e in cover):
+            continue
+        if cased and _extra_entity(words, cover, qwords, gset):
+            continue
+        return True
+    return False
 
 
 _SENTENCE_CUT = re.compile(r"(?<=\w{3})\.\s+(?=[A-Z(])")
@@ -693,9 +966,17 @@ def _tail_span(visible: str) -> str:
     return lines[-1][-600:] if lines else ""
 
 
+def _question_words(item: dict) -> frozenset:
+    """Normalised tokens of the question - a name the question itself uses is not a second entity."""
+    msgs = item.get("messages") or []
+    q = str(msgs[-1].get("content", "")) if msgs else ""
+    return frozenset(_cand_tokens(q.replace(SIMPLEQA_SUFFIX, " ")))
+
+
 def _score_simpleqa(item: dict, text: str) -> Verdict:
     expected = str(item["answer"])
     aliases = list(item.get("aliases") or _aliases(expected))
+    qwords = _question_words(item)
     atype = str(item.get("answer_type") or item.get("meta", {}).get("answer_type") or "Other")
     visible = (text or "").strip()
     if not visible:
@@ -712,7 +993,7 @@ def _score_simpleqa(item: dict, text: str) -> Verdict:
     gold_hedges = bool(hedge_rx.search(gold_norm)) or bool(_RANGE.search(gold_norm))
     gold_negates = bool(_NEG_WORD.search(expected))
     for alias in aliases:
-        if not _contains(alias, span, atype):
+        if not _contains(alias, span, atype, qwords):
             continue
         # a range where a single number was asked for ("6 to 8" against gold 8)
         if atype == "Number" and not gold_hedges and _RANGE.search(span):
@@ -723,9 +1004,13 @@ def _score_simpleqa(item: dict, text: str) -> Verdict:
             return Verdict(False, "wrong", 0.0, span[:200], expected, {"method": method, "alias": alias}, flags + ["hedged"])
         # the gold only appears AFTER a negation ("Wellesley College, not Radcliffe College")
         neg = None if gold_negates else _NEG_WORD.search(span)
-        if neg and not _contains(alias, span[: neg.start()], atype):
+        if neg and not _contains(alias, span[: neg.start()], atype, qwords):
             return Verdict(False, "wrong", 0.0, span[:200], expected, {"method": method, "alias": alias}, flags + ["negated"])
         return Verdict(True, extracted=span[:200], expected=expected, detail={"method": method, "alias": alias}, flags=flags)
+    # audit: the span held every gold token but not as a committed contiguous answer (the old
+    # set-based rule scored these correct)
+    if any(_gold_tokens(a) and set(_gold_tokens(a)) <= set(_cand_tokens(span)) for a in aliases):
+        flags = flags + ["superset_only"]
     if method == "tail":
         return Verdict.unparsed(expected, {"method": method}, flags + ["no_match"])
     return Verdict(False, extracted=span[:200], expected=expected, detail={"method": method}, flags=flags)
@@ -759,7 +1044,11 @@ def aggregate(records: list[dict]) -> dict:
     mcq = [r for r in scored if r.get("sub") == "mmlu_pro_hard"]
     if mcq:
         out["mmlu_pro_hard_weak_extraction"] = sum(1 for r in mcq if "weak_extraction" in (r.get("flags") or []))
+        out["mmlu_pro_hard_hedged"] = sum(1 for r in mcq if "hedged" in (r.get("flags") or []))
     sq = [r for r in scored if r.get("sub") == "simpleqa"]
     if sq:
         out["simpleqa_no_answer_phrase"] = sum(1 for r in sq if "no_answer_phrase" in (r.get("flags") or []))
+        # gold tokens all present but not as a committed contiguous answer (the old set-based rule
+        # scored these correct) - how much of the SimpleQA score the containment fix moved
+        out["simpleqa_superset_only"] = sum(1 for r in sq if "superset_only" in (r.get("flags") or []))
     return out

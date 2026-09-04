@@ -29,10 +29,23 @@ data/items/longctx.jsonl.
 Scoring: \\boxed{} -> a line-initial "Answer:"/"answer is" phrase (a phrase buried in trailing prose only as a
 fallback) -> last non-empty line; numeric answers compared numerically (digit grouping removed; several distinct
 numbers -> the one the candidate attributes to the asked key, else the candidate never committed and is wrong -
-crediting the first number would pass "the codes are A, B, C, D, E" whenever the target is listed first),
-text answers by SQuAD-style normalisation (case,
-digit grouping, punctuation, articles, whitespace) with exact or length-guarded containment match (no containment
-for candidates that hedge, negate or refuse, or carry numbers the gold does not have).
+crediting the first number would pass "the codes are A, B, C, D, E" whenever the target is listed first).
+Attribution is read in both orders - "the crimson lantern is 4831920" and "4831920 is the code for the crimson
+lantern" (value first, then only role words up to the key).
+A single number is credited only when the candidate does not attribute it to a DIFFERENT key (a distractor needle
+or a distractor-chain variable: right value, wrong role), does not attribute two different values to the asked key
+(contradiction) and, when nothing is attributed to the asked key, does not hedge or refuse around it.
+
+Text answers use SQuAD-style normalisation (case, digit grouping, punctuation, articles, whitespace).  Exact match,
+or a CONTIGUOUS whole-token span of the gold inside a candidate whose every OTHER token is licensed: a function
+word, a word the question itself used (stemmed, plus concatenations of adjacent question words so "gun powder" ->
+"gunpowder"), a token of the gold, or a unit synonym of a symbol in the gold ("%" -> "percent").  Any unlicensed
+content word means the candidate said something the question did not ask about - the gold is then part of a longer
+noun phrase ("the Denver Broncos' quarterback", "the mouths of coastal bays") or the object of a different
+predicate ("the Carolina Panthers beat the Denver Broncos") - and is rejected, as are candidates that hedge,
+negate or refuse, or carry numbers the gold does not have (an item with no "question" licenses function words
+only, i.e. a bare answer phrase).  The same licence check guards the numeric-form match
+("8.80" for gold "8.8"), so a right value in an unrelated clause is not credited either.
 """
 from __future__ import annotations
 
@@ -860,6 +873,11 @@ _ANSWER_PHRASE = re.compile(r"(?i)\b(?:final\s+answer|answer)\s*(?:is\b|:|=)\s*"
 # is the committed answer, so trailing prose ("...that answer is supported by Document 3") cannot hijack it
 _ANSWER_LINE = re.compile(r"(?im)^[\s>*_#`\-]*(?:final\s+answer|answer)\s*(?:is\b|:|=)\s*")
 _CITATION = re.compile(r"\s*[\[(](?:see\s+|from\s+|in\s+)?(?:document|doc|paragraph|passage|source|section)s?\b[^()\[\]]*[\])]\s*$", re.I)
+# the same provenance tail written without brackets ("..., according to Document 7") - stripped only when
+# something is left in front of it, so "Answer: Document 7" stays as it is
+_CITATION_TAIL = re.compile(r"[,;]?\s*(?:as\s+)?(?:stated|mentioned|described|shown|found|noted|given)?\s*"
+                            r"(?:according\s+to|in|per|from)\s+(?:the\s+)?(?:document|doc|paragraph|passage|source|section)s?"
+                            r"\s*(?:no\.?\s*)?\d*\s*[.]?\s*$", re.I)
 # hedges / refusals / negations: a candidate carrying one of these is never accepted by containment or by the
 # first-of-several-numbers rule (the model did not commit to one answer)
 _HEDGE_NUM = re.compile(r"(?i)(?<![A-Za-z])(?:or|either|cannot|can't|could\s*not|couldn't|unable|not\s+(?:sure|certain|find|found|"
@@ -872,6 +890,28 @@ _MIN_ANSWER_DIGITS = 4          # needle codes have 7 digits, variable values 5:
 # when EVERY number is rejected the candidate answered in the negative and is wrong
 _NEGATED_NUM = re.compile(r"(?i)\b(?:not|isn'?t|no|never)\s+(?:equal\s+to\s+|exactly\s+)?(-?\d[\d,]{%d,})(?![\d,])"
                           % (_MIN_ANSWER_DIGITS - 1))
+# _HEDGE_NUM without the bare-slash alternative: applied to a SINGLE-number candidate that never names the asked
+# key ("I cannot determine the code ...; the passage mentions 4831920"), where a slash is usually a date or a page
+_HEDGE_SOLO = re.compile(r"(?i)(?<![A-Za-z])(?:or|either|cannot|can't|could\s*not|couldn't|unable|not\s+(?:sure|certain|find|"
+                         r"found|determine|possible|clear|stated|mentioned)|unclear|unsure|unknown|don't\s+know|"
+                         r"do\s+not\s+know|no\s+(?:idea|answer|information))(?![A-Za-z])")
+_VAR_STMT = re.compile(r"^VAR\s+([A-Z]{2,})\b")
+# words that may stand between a value and the key it is handed to, in "<value> ... <key>" order
+_ROLE_WORD = (r"(?i:is|was|are|were|the|a|an|its|that|secret|code|codes|value|values|number|numbers|belongs?|"
+              r"belonged|assigned|given|associated|corresponds?|listed|stored|held|under|for|of|to|with|var|"
+              r"variable|key|answer|equals?)")
+# tokens a candidate may carry around the gold span without saying anything the question did not ask about
+# (articles are already removed by norm_text; qualifiers - about/around/nearly/over/under - are deliberately absent)
+_EXTRA_FUNCTION = frozenset("""
+ is are was were be been being am do does did doing done has have had having s
+ it its they them their there here he she his her him we us our you your i my me
+ this that these those what which who whom whose when where why how
+ in on at by to for from of with as into onto through within across between among
+ answer answers value code
+""".split())
+_UNIT_SYNONYMS = (("%", ("percent", "percentage", "pct")), ("$", ("dollar", "dollars", "usd")),
+                  ("£", ("pound", "pounds", "gbp")), ("€", ("euro", "euros", "eur")))
+_MAX_EXTRA_TOKENS = 12          # a candidate far longer than the gold is prose, not a committed short answer
 
 
 def _clean(s: str) -> str:
@@ -882,6 +922,9 @@ def _clean(s: str) -> str:
     s = _LEAD_ANSWER.sub("", s)
     s = s.lstrip(":= ").strip()
     s = _CITATION.sub("", s)
+    stripped = _CITATION_TAIL.sub("", s).strip()
+    if stripped:
+        s = stripped
     s = re.sub(r"[.。!]+$", "", s.strip())
     return s.strip().strip("*_`\"'“”‘’ ")
 
@@ -918,25 +961,62 @@ def extract_candidate(visible: str) -> tuple[Optional[str], str]:
     return _clean(lines[-1]), "last_line"
 
 
-def _key_number(cand: str, key: Optional[str]) -> Optional[str]:
-    """The number the candidate attributes to the asked key ('... the crimson lantern is 4831920', 'QMTX = 48213'):
-    the LAST such statement wins (a model's final claim).  None when the key is unknown or not attributed."""
+def _key_numbers(cand: str, key: Optional[str]) -> list[str]:
+    """Every number the candidate attributes to `key`, distinct, in order of appearance.  Both orders count:
+    key first ('... the crimson lantern is 4831920', 'QMTX = 48213') and value first ('4831920 is the secret
+    code for the crimson lantern', 'the code 4831920 belongs to the crimson lantern').  Empty when the key is
+    unknown or never attributed a value."""
     if not key:
-        return None
+        return []
     core = re.sub(r"^(?:the|a|an)\s+", "", key.strip(), flags=re.I)
+    flags = 0 if core.isupper() else re.I
+    ekey = re.escape(core)
+    num = r"(-?\d[\d,]{%d,})(?![\d,])" % (_MIN_ANSWER_DIGITS - 1)
     # key (whole word; a variable name such as QMTX is matched case-sensitively so 'THAT' never matches prose),
     # optional possessive, a separator and up to 4 words - none of which may cross a sentence boundary
     # ("...the crimson lantern. Codes seen: 4831920" attributes nothing to the lantern)
-    rx = re.compile(r"(?<![A-Za-z])" + re.escape(core) + r"(?![A-Za-z])(?:['’]s)?[^\w\n.;!?]+(?:[^\s.;:!?]+\s+){0,4}?"
-                    r"(-?\d[\d,]{%d,})(?![\d,])" % (_MIN_ANSWER_DIGITS - 1), 0 if core.isupper() else re.I)
-    hits = [m.group(1) for m in rx.finditer(cand)]
-    if not hits:
-        return None
-    n = _numbers(hits[-1])
-    return n[0] if n else None
+    rx_pre = re.compile(r"(?<![A-Za-z])" + ekey + r"(?![A-Za-z])(?:['’]s)?[^\w\n.;!?]+(?:[^\s.;:!?]+\s+){0,4}?"
+                        + num, flags)
+    # the mirror image: value first, then up to 6 ROLE words and the key.  Only role words may stand between
+    # them ("4831920 is the secret code for the crimson lantern"), so a number that merely precedes a key in
+    # unrelated prose ("4831920 - this has nothing to do with the crimson lantern") attributes nothing.
+    rx_post = re.compile(r"(?<![\d.,])" + num + r"(?:[^\w\n.;!?]+" + _ROLE_WORD + r"(?![A-Za-z])){0,6}"
+                         r"[^\w\n.;!?]+(?<![A-Za-z])" + ekey + r"(?![A-Za-z])", flags)
+    hits = sorted([(m.start(1), m.group(1)) for m in rx_pre.finditer(cand)]
+                  + [(m.start(1), m.group(1)) for m in rx_post.finditer(cand)])
+    out: list[str] = []
+    for _pos, raw in hits:
+        n = _numbers(raw)
+        if n and not any(_num_equal(n[0], x) for x in out):
+            out.append(n[0])
+    return out
 
 
-def _score_numeric(expected: str, visible: str, key: Optional[str] = None) -> Verdict:
+def _key_number(cand: str, key: Optional[str]) -> Optional[str]:
+    """The value the candidate attributes to the asked key; the LAST statement wins (a model's final claim)."""
+    hits = _key_numbers(cand, key)
+    return hits[-1] if hits else None
+
+
+def _other_keys(item: dict) -> list[str]:
+    """Keys whose value is NOT the answer: the distractor needles, or the variables of the distractor chains
+    (the target chain's own variables legitimately carry the answer, so they are not listed)."""
+    sub = item.get("subfamily")
+    if sub == "niah_multikey":
+        return [d.get("key", "") for d in (item.get("distractors") or []) if d.get("key")]
+    if sub == "var_tracking":
+        out: list[str] = []
+        for st in item.get("statements") or []:
+            if st.get("chain"):
+                m = _VAR_STMT.match(str(st.get("text", "")))
+                if m and m.group(1) not in out:
+                    out.append(m.group(1))
+        return out
+    return []
+
+
+def _score_numeric(expected: str, visible: str, key: Optional[str] = None,
+                   other_keys: Optional[list[str]] = None) -> Verdict:
     cand, method = extract_candidate(visible)
     if cand is None:
         return Verdict.unparsed(expected, {"method": method}, ["empty"])
@@ -959,24 +1039,114 @@ def _score_numeric(expected: str, visible: str, key: Optional[str] = None) -> Ve
         nums = long_nums
     flags = ["multi_number"] if len(nums) > 1 else []
     detail = {"method": method, "numbers": nums[:6]}
+    attributed = [n for n in _key_numbers(cand, key) if not any(_num_equal(n, x) for x in negated)]
+    if len(attributed) > 1:
+        # the candidate assigns two different values to the asked key ("QMTX = 77777 because QMTX = EFGH = 48213"):
+        # contradictory, so it never committed to one value
+        return Verdict(False, extracted=attributed[-1], expected=expected,
+                       detail=dict(detail, reason="contradictory", attributed=attributed[:4]),
+                       flags=flags + ["uncommitted"])
     pick = nums[0]
-    if len(nums) > 1:
-        kn = _key_number(cand, key)
-        if kn is not None:
-            pick, detail["pick"] = kn, "key_attribution"
-        elif _HEDGE_NUM.search(cand):
+    if attributed:
+        pick, detail["pick"] = attributed[-1], "key_attribution"
+    elif len(nums) > 1:
+        if _HEDGE_NUM.search(cand):
             return Verdict(False, extracted=nums[0], expected=expected, detail=dict(detail, reason="hedged"), flags=flags + ["hedged"])
-        else:
-            # several candidate numbers, none attributed to the asked key: the model enumerated the needles
-            # instead of answering.  Crediting the first one would score "all the codes are A, B, C, D, E"
-            # correct whenever the target happens to be listed first (RULER credit without retrieval).
-            return Verdict(False, extracted=nums[0], expected=expected, detail=dict(detail, reason="uncommitted"),
-                           flags=flags + ["uncommitted"])
+        # several candidate numbers, none attributed to the asked key: the model enumerated the needles
+        # instead of answering.  Crediting the first one would score "all the codes are A, B, C, D, E"
+        # correct whenever the target happens to be listed first (RULER credit without retrieval).
+        return Verdict(False, extracted=nums[0], expected=expected, detail=dict(detail, reason="uncommitted"),
+                       flags=flags + ["uncommitted"])
+    else:
+        # exactly one number and nothing attributed to the asked key.  Reject it when the candidate hands that
+        # number to a DIFFERENT key ("The secret code for the amber violin is 4831920", "VAR WXYZ = 48213":
+        # right value, wrong role - retrieval failed) or when it hedges/refuses around the number instead of
+        # committing ("I cannot determine the code ...; the passage mentions 4831920").
+        for k in other_keys or []:
+            if any(_num_equal(x, pick) for x in _key_numbers(cand, k)):
+                return Verdict(False, extracted=pick, expected=expected,
+                               detail=dict(detail, reason="wrong_key", attributed_to=k), flags=flags + ["wrong_key"])
+        if _HEDGE_SOLO.search(cand):
+            return Verdict(False, extracted=pick, expected=expected, detail=dict(detail, reason="uncommitted_hedge"),
+                           flags=flags + ["hedged"])
     ok = _num_equal(pick, expected)
     return Verdict(ok, extracted=pick, expected=expected, detail=detail, flags=flags)
 
 
-def _score_text(answers: list[str], visible: str) -> Verdict:
+def _stem(w: str) -> str:
+    """Crude suffix stripper, only ever used to compare a candidate word with a word of the QUESTION
+    ('resigned' ~ 'resign', 'cells' ~ 'cell')."""
+    for suf in ("ing", "ed", "es", "s"):
+        if w.endswith(suf) and len(w) > len(suf) + 2:
+            return w[: -len(suf)]
+    return w
+
+
+def _typo_variant(a: str, b: str) -> bool:
+    """a and b are the same word up to one typo: one adjacent transposition (SQuAD questions contain
+    'captian', 'behave' for 'behalf') or one substitution / insertion / deletion.  Six letters and up only:
+    at five letters the edit neighbourhood is dense enough to license a different word ('prize' ~ 'pride',
+    so "the G. H. Hardy Prize" would count as an answer to a question that says 'took pride in')."""
+    if len(a) < 6 or len(b) < 6 or abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) == len(b):
+        diff = [i for i, (x, y) in enumerate(zip(a, b)) if x != y]
+        if len(diff) == 1:
+            return True
+        if len(diff) == 2 and diff[1] == diff[0] + 1 and a[diff[0]] == b[diff[1]] and a[diff[1]] == b[diff[0]]:
+            return True
+        return False
+    lo, hi = (a, b) if len(a) < len(b) else (b, a)
+    for i in range(len(hi)):                      # one deletion from the longer word
+        if hi[:i] + hi[i + 1:] == lo:
+            return True
+    return False
+
+
+def _licence(question: Optional[str], gold_raw: str, gold_tokens: list[str]) -> tuple[set[str], list[str]]:
+    """(exactly licensed tokens, question words for typo matching).  A candidate may carry, besides the gold
+    span: function words, whatever the question itself already said (stemmed, plus concatenations of adjacent
+    question words so "gun powder" licenses "gunpowder"), the gold's own tokens, and unit synonyms of a symbol
+    in the gold ("%" -> "percent")."""
+    allowed = set(_EXTRA_FUNCTION)
+    q = norm_text(question or "").split()
+    qwords: list[str] = []
+    for i, w in enumerate(q):
+        allowed.update((w, _stem(w)))
+        qwords.append(w)
+        if i + 1 < len(q):
+            joined = w + q[i + 1]
+            allowed.update((joined, _stem(joined)))
+            qwords.append(joined)
+    for w in gold_tokens:
+        allowed.update((w, _stem(w)))
+    for sym, syns in _UNIT_SYNONYMS:
+        if sym in (gold_raw or ""):
+            allowed.update(syns)
+    return allowed, qwords
+
+
+def _unlicensed(tokens: list[str], licence: tuple[set[str], list[str]]) -> list[str]:
+    allowed, qwords = licence
+    return [t for t in tokens
+            if t not in allowed and _stem(t) not in allowed and not any(_typo_variant(t, q) for q in qwords)]
+
+
+def _spans(toks: list[str], gtoks: list[str]) -> list[int]:
+    """Start indices of every CONTIGUOUS whole-token occurrence of the gold in the candidate."""
+    m = len(gtoks)
+    return [i for i in range(len(toks) - m + 1) if toks[i:i + m] == gtoks] if m else []
+
+
+def _hedges(cn: str, cand: str, g: str, expected: str) -> set[str]:
+    """Hedge / negation / refusal words the candidate carries and the gold does not."""
+    out = set(_HEDGE_TEXT.findall(cn)) - set(_HEDGE_TEXT.findall(g))
+    if re.search(r"\w\s*/\s*\w", cand) and "/" not in expected:
+        out.add("/")
+    return out
+
+
+def _score_text(answers: list[str], visible: str, question: Optional[str] = None) -> Verdict:
     expected = answers[0] if answers else ""
     cand, method = extract_candidate(visible)
     if cand is None:
@@ -984,37 +1154,64 @@ def _score_text(answers: list[str], visible: str) -> Verdict:
     cn = norm_text(cand)
     if not cn:
         return Verdict.unparsed(expected, {"method": method, "candidate": cand[:120]}, ["empty_candidate"])
-    golds = [norm_text(a) for a in answers if norm_text(a)]
+    pairs = [(a, norm_text(a)) for a in answers if norm_text(a)]
+    golds = [g for _, g in pairs]
     detail = {"method": method, "candidate": cand[:120]}
     if cn in golds:
         return Verdict(True, extracted=cand, expected=expected, detail=detail)
+    toks = cn.split()
     cand_nums = _numbers(cand)
-    for g in answers:
-        gn = _numbers(g)
-        if gn and len(gn) == 1 and re.fullmatch(r"[\d.,\s]+", g.strip()) and len(cand_nums) == 1 and _num_equal(cand_nums[0], gn[0]):
+    reject: Optional[tuple[str, list[str]]] = None
+
+    # 1. a purely numeric gold written in another digit form ('8.80' for '8.8'): the candidate's single number
+    #    stands in for the gold span, every non-numeric token still has to be licensed ("the engine weighs 8.8
+    #    tons" is the right value in a clause the question never asked about)
+    for raw, g in pairs:
+        gn = _numbers(raw)
+        if not (gn and len(gn) == 1 and re.fullmatch(r"[\d.,\s]+", raw.strip())):
+            continue
+        if len(cand_nums) != 1 or not _num_equal(cand_nums[0], gn[0]):
+            continue
+        h = _hedges(cn, cand, g, expected)
+        if h:
+            return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason="hedged", words=sorted(h)), flags=["hedged"])
+        bad = _unlicensed([t for t in toks if not any(ch.isdigit() for ch in t)], _licence(question, raw, g.split()))
+        if not bad:
             return Verdict(True, extracted=cand, expected=expected, detail=dict(detail, match="numeric"))
-    # containment: the gold as a whole-word span inside a SHORT candidate that commits to it - no hedge / negation /
-    # refusal words (unless the gold itself has them), no extra numbers when the gold is numeric
-    n_cand = len(cn.split())
-    reject: Optional[str] = None
-    for g in golds:
-        m = re.search(r"(?<!\S)" + re.escape(g) + r"(?!\S)", cn)
-        if not m or n_cand > len(g.split()) + 5:
+        reject = ("unlicensed_context", bad)
+
+    # 2. containment: the gold as a CONTIGUOUS whole-token span of the candidate, with no hedge / negation /
+    #    refusal (unless the gold has it), no extra numbers when the gold is numeric, and no unlicensed content
+    #    word around the span - such a word means the gold sits in a longer noun phrase ("the Denver Broncos'
+    #    quarterback", "the mouths of coastal bays") or under a predicate the question did not ask about ("the
+    #    Carolina Panthers beat the Denver Broncos"), which is not an answer to the question.
+    for raw, g in pairs:
+        gtoks = g.split()
+        occ = _spans(toks, gtoks)
+        if not occ:
             continue
-        tail = cn[m.end():].split()
-        if tail[:1] == ["s"] and len(tail) > 1:   # "the mortgage banker's assistant" is not "the mortgage banker"
-            reject = "possessive"
+        if len(toks) > len(gtoks) + _MAX_EXTRA_TOKENS:
+            reject = ("too_long", toks[: _MAX_EXTRA_TOKENS])
             continue
-        hedges = {h for h in _HEDGE_TEXT.findall(cn)} - set(_HEDGE_TEXT.findall(g))
-        if re.search(r"\w\s*/\s*\w", cand) and "/" not in expected:
-            hedges.add("/")
-        if hedges:
-            return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason="hedged", words=sorted(hedges)), flags=["hedged"])
+        h = _hedges(cn, cand, g, expected)
+        if h:
+            return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason="hedged", words=sorted(h)), flags=["hedged"])
         if _numbers(g) and set(_numbers(cn)) != set(_numbers(g)):     # both SQuAD-normalised ('29 7' vs '29 7 percent')
             return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason="extra_numbers"), flags=["hedged"])
-        return Verdict(True, extracted=cand, expected=expected, detail=dict(detail, match="containment"), flags=["containment"])
+        allowed = _licence(question, raw, gtoks)
+        for i in occ:
+            tail = toks[i + len(gtoks):]
+            if tail[:1] == ["s"] and len(tail) > 1:   # "the mortgage banker's assistant" is not "the mortgage banker"
+                reject = ("possessive", tail[:4])
+                continue
+            bad = _unlicensed(toks[:i] + tail, allowed)
+            if bad:
+                reject = ("unlicensed_context", bad)
+                continue
+            return Verdict(True, extracted=cand, expected=expected, detail=dict(detail, match="containment"), flags=["containment"])
     if reject:
-        return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason=reject), flags=["hedged"])
+        return Verdict(False, extracted=cand, expected=expected,
+                       detail=dict(detail, reason=reject[0], words=reject[1][:6]), flags=["context_mismatch"])
     return Verdict(False, extracted=cand, expected=expected, detail=detail)
 
 
@@ -1022,13 +1219,13 @@ def score(item: dict, response_text: str, meta: Optional[dict] = None) -> Verdic
     sub = item.get("subfamily")
     if sub == "qa_multi_doc":
         answers = list(item.get("answers") or [item.get("answer", "")])
-        return _score_text(answers, response_text)
+        return _score_text(answers, response_text, item.get("question"))
     if sub == "var_tracking":
         chain = item.get("target_chain") or []
         key = chain[-1] if chain else None          # the bare variable name ("QMTX = 48213", "VAR QMTX is 48213")
     else:
         key = (item.get("needle") or {}).get("key")
-    return _score_numeric(str(item["answer"]), response_text, key)
+    return _score_numeric(str(item["answer"]), response_text, key, _other_keys(item))
 
 
 def mock_response(item: dict):

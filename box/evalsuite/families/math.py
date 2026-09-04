@@ -19,7 +19,8 @@ Prompt: the problem + "Put your final answer within \\boxed{}."  Scoring: last \
 the expression after the last "answer is"/"final answer:" phrase, else unparsed.  Two \\boxed{} with different
 values joined by nothing but a disjunction ("either \\boxed{A} or \\boxed{B}") are a simultaneous hedge and
 score 'unparsed'; any prose between them (a self-correction: "actually", "wait", "I made an error") means the
-model revised itself and the last box wins as usual.  The candidate and the gold
+model revised itself and the last box wins as usual, and two boxes holding the SAME value in two notations
+("\\boxed{0.5} or \\boxed{\\frac{1}{2}}") are one committed answer, never a hedge.  The candidate and the gold
 are canonicalised (delimiters, \\left/\\right, spacing, \\dfrac, \\text units, degrees, $/%, thousands
 separators, leading zeros, x= prefixes, unit powers '\\text{ cm}^2', '\\pmod{1000}' residue tags,
 '\\text{answer: }' labels, ...) and compared as strings, then component-wise (tuples ordered,
@@ -540,13 +541,26 @@ def _boxed_spans(text: str) -> list[tuple[int, int, str]]:
     return out
 
 
+def _same_value(a: str, b: str) -> bool:
+    """True when two \\boxed{} contents denote the same answer.  Restating one answer in two notations
+    ('\\boxed{0.5} or \\boxed{\\frac{1}{2}}', '\\boxed{\\dfrac{1}{4}} or equivalently \\boxed{0.25}') is a
+    single committed answer, not a hedge, so it must keep scoring as it did before the hedge rule existed.
+    Order-independent, because equivalent() applies the decimal-approximation rule to its first argument
+    only (an exact form and a decimal approximation of it are NOT the same value and stay a hedge)."""
+    if canon(a) == canon(b):
+        return True
+    if len(a) > 400 or len(b) > 400:
+        return False
+    return equivalent(a, b)[0] or equivalent(b, a)[0]
+
+
 def hedged_boxes(text: str) -> Optional[tuple[str, str, str]]:
     """(first, second, gap) when the last two \\boxed{} are a simultaneous hedge, else None."""
     spans = _boxed_spans(text)
     if [c for _, _, c in spans] != common.find_boxed(text) or len(spans) < 2:
         return None
     (_, end1, c1), (start2, _, c2) = spans[-2], spans[-1]
-    if not c1.strip() or not c2.strip() or canon(c1) == canon(c2):
+    if not c1.strip() or not c2.strip() or _same_value(c1, c2):
         return None
     gap = text[end1:start2]
     if len(gap) <= _HEDGE_GAP_MAX and _HEDGE_GAP.match(gap):
