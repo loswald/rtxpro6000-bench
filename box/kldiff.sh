@@ -94,6 +94,16 @@ pair kl_b12x_vs_fib12x "$Q4" 4 "${B12[@]}" --kv-cache-dtype fp8 \
 
 # 5. Speculative decoding must not change the distribution at all: it proposes tokens and verifies them
 #    against the same model. Divergence above the control is a bug in the speculator, not a trade-off.
+# The DSpark drafter does not load against this target: "The size of tensor a (128) must match the size of
+# tensor b (256)" in dspark/speculator.py. DFlash2 does load, and it is the drafter the fleet actually
+# measured, so it is the one whose distribution matters. This is the pair that can answer what the greedy
+# sequence test could not - speculation must leave the next-token distribution alone, and unlike a
+# generated sequence, a distribution can be compared on a stack that is not bit-deterministic.
+if [ -f "$MD/Qwen3.8-27B-DFlash2/config.json" ]; then
+  pair kl_spec_dflash2 "$Q4" 4 "${B12[@]}" --kv-cache-dtype fp8 \
+       "$Q4" 6 "${B12[@]}" --kv-cache-dtype fp8 \
+       --speculative-config "{\"method\":\"dflash\",\"model\":\"$MD/Qwen3.8-27B-DFlash2\",\"num_speculative_tokens\":7}"
+fi
 if [ -f "$MD/Qwen27B-DSpark-NVFP4/config.json" ]; then
   pair kl_spec_vs_base "$Q4" 4 "${B12[@]}" --kv-cache-dtype fp8 \
        "$Q4" 8 "${B12[@]}" --kv-cache-dtype fp8 --speculative-draft-model-quantization modelopt_fp4 \
