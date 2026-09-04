@@ -175,11 +175,11 @@ evalrun(){ # tag n dir  - the six-family quality suite against the servers that 
   # TIME budget - and running out of time marks an item skipped, which is excluded from the accuracy, where
   # running out of tokens marked it wrong. Long-context is the one exception: its prompts are up to 32k so
   # its output cap has to stay small, and its answers are a few tokens anyway.
-  local caps="${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=2048}"
-  [ "$MAXLEN" -lt 40000 ] && caps="${EVAL_CAPS:-math=20480,code=14336,knowledge=14336,ifeval=10240,tools=8192,longctx=2048}"
+  local caps="${EVAL_CAPS:-math=32768,code=20480,knowledge=20480,ifeval=16384,tools=8192,longctx=6144}"
+  [ "$MAXLEN" -lt 40000 ] && caps="${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=4096}"
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
     --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency $(( 16 * n )) \
-    ${EVAL_REASONING:---reasoning} --max-tokens "${EVAL_MAXTOK:-24576}" --max-tokens-family "$caps" \
+    ${EVAL_REASONING:---reasoning} --max-tokens "${EVAL_MAXTOK:-32768}" --max-tokens-family "$caps" \
     $esamp ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
   # $esamp is the vendor's own sampling recipe from lists/profiles.tsv and it comes after --reasoning on
   # purpose: --reasoning sets a house default of T=0.6/top_p=0.95 for every model, and not one vendor here

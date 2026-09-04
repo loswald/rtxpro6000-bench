@@ -70,8 +70,8 @@ run_eval_for(){ # tag
   # not the suite's house T=0.6 - the same class of error that cost every other model on this roster.
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls http://127.0.0.1:8000 --model m \
     --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-5400}" --concurrency "${EVAL_CONC:-32}" \
-    --reasoning --max-tokens "${EVAL_MAXTOK:-24576}" \
-    --max-tokens-family "${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=2048}" \
+    --reasoning --max-tokens "${EVAL_MAXTOK:-32768}" \
+    --max-tokens-family "${EVAL_CAPS:-math=32768,code=20480,knowledge=20480,ifeval=16384,tools=8192,longctx=6144}" \
     --temperature "${GLM_T:-0.95}" --top-p "${GLM_TOPP:-0.95}" --extra-body '{"min_p":0.0}' \
     --chat-template-kwargs '{"reasoning_effort":"max"}' \
     ${EVAL_ARGS:-} 2>&1 | tail -12 | sed 's/^/    eval: /'
@@ -99,6 +99,20 @@ for arm in ${ARMS:-base mtp}; do
             EVAL_CONC=8 EVAL_BUDGET=9000 EVAL_CAPS="math=12288,code=10240,knowledge=10240,ifeval=8192,tools=6144,longctx=1024" \
               run_eval_for glm53f_fp8
           fi;;
+    spec) # Is the MTP head lossless? Greedy completions from the base server and from the speculating
+          # server must be bit-identical, because speculation verifies every proposed token against the
+          # full model. GLM scored 0.800 without it and 0.740 with it, and the entire gap tracked
+          # truncation (28 of 80 maths items hit the ceiling with speculation, 10 without) - a
+          # distribution-preserving speculator cannot make a model ramble further. This settles it without
+          # sampling noise or a token cap in the way.
+          if launch glm53f_specbase; then
+            $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_base.json" 2>&1 | tail -14 | sed 's/^/    base: /'
+          fi
+          if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_specmtp; then
+            $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_mtp.json" 2>&1 | tail -14 | sed 's/^/    mtp:  /'
+          fi
+          $CLEAN python3 "$B/specdiff.py" compare "$P/specdiff_glm_base.json" "$P/specdiff_glm_mtp.json" 2>&1 | sed 's/^/    /'
+          ;;
     mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             # speculation verifies against the same model, so this arm must score the same as the base one;
