@@ -265,26 +265,31 @@ sampling), applied by the harness to both the server and the eval client. Every 
 `results/eval/capped/`, `no_parser/` and `pre_profiles/` so the size of each artefact stays measurable.
 The full re-run is in flight; the corrected table will replace this section rather than sit beside it.
 
-### Does four-bit cost quality? On this model, no — and it is 3× cheaper to run
+### Does four-bit cost quality? Not in aggregate — but watch maths
 
-The first, buggy round suggested NVFP4 lost about five points to FP8. Served correctly, on the same 403
-items and seed, that gap disappears:
+This section has already been wrong once. An early, buggy round showed NVFP4 five points behind FP8; when
+the serving was fixed the aggregate gap collapsed, and I wrote that four-bit was free. A matched pair since
+— same box, same TP1 × 4 layout, same recipe, same seed — says something more specific:
 
-| Qwen3.8-27B, vendor recipe, 8× RTX 5090 | overall | maths | code | tools | long ctx | knowledge | instructions | GPU-min |
+| Qwen3.8-27B | overall | **maths** | code | tools | long ctx | knowledge | instructions | truncated |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| **NVFP4**, `b12x`, one replica per card | **0.732** | 0.625 | 0.733 | 0.900 | 0.979 | 0.429 | 0.833 | **78** |
-| **FP8**, `b12x`, TP2 × 4 | 0.740 | 0.700 | 0.733 | 0.814 | 0.979 | 0.443 | 0.867 | 260 |
+| NVFP4 (community PTQ), 8× RTX 5090 | 0.732 | 0.625 | 0.733 | 0.900 | 0.979 | 0.429 | 0.833 | 0.139 |
+| FP8 (official), TP2, 8× RTX 5090 | 0.740 | 0.700 | 0.733 | 0.814 | 0.979 | 0.443 | 0.867 | 0.114 |
+| NVFP4 (community PTQ), 4× PRO 6000 | 0.747 | 0.662 | 0.733 | 0.871 | 0.958 | 0.486 | 0.867 | 0.122 |
+| **FP8 (official), 4× PRO 6000** | **0.787** | **0.871** | 0.720 | 0.857 | 0.979 | 0.471 | 0.917 | 0.062 |
 
-0.008 apart, against a 95% interval of roughly ±0.045 — statistically indistinguishable, with each format
-ahead on three of six families. And the four-bit configuration did it in **a third of the GPU-minutes**,
-because it fits one card and the FP8 build does not. On intelligence per pound that is not a close call.
+Aggregate: 0.008 apart in one pair, 0.040 in the other — the second is at the edge of a ±0.045 interval.
+But **maths favours FP8 in both pairs, by 0.075 and 0.209**, and the four-bit build also truncates about
+twice as often, which is what a model that reasons longer without converging looks like.
 
-Two honest limits on this pair: the layouts differ (the FP8 checkpoint cannot fit a 32 GB card, which is
-itself part of the answer), and this is one model family. The professional box is running the full ladder —
-native BF16, FP8, the community PTQ build, a quantisation-aware-trained build and a second independent PTQ
-build, all at TP1 with the same items and seed — plus logit-level divergence of every rung against the BF16
-parent. That separates "four-bit is lossy" from "that particular upload is bad", which is the question
-worth answering before standardising on a checkpoint.
+A third row points at the mechanism. Nemotron-3-Super is **natively** NVFP4 — pre-trained in the format
+rather than compressed into it — and scores **0.946 on maths**, the highest of anything measured. So the
+emerging read is not "four-bit is lossy" but "*post-training* four-bit costs mathematical reasoning, and
+native four-bit does not". That is a different and much more actionable claim, and it is exactly what the
+ladder now running is built to settle: native BF16, official FP8, two independent community PTQ builds and
+a quantisation-aware-trained build, all at TP1 with the same items and seed, plus logit-level divergence of
+every rung against the BF16 parent. Treat the paragraph above as the current state of a live question, not
+a conclusion.
 
 ### Which four-bit releases are lossless
 
