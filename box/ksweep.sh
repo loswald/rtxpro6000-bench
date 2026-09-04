@@ -121,7 +121,12 @@ shapes(){ # tag dir n
 sweep(){ # tag dir tp combos [extra...]
   local tag="$1" dir="$2" tp="$3" combos="$4"; shift 4
   local n=$(( NGPU / tp ))
-  [ -d "$dir" ] || { log "SKIP $tag (no weights)"; return 1; }
+  # A directory is not a model: Hugging Face leaves partial blobs under .cache/huggingface/download as
+  # *.incomplete, and benchmarking a half-downloaded checkpoint wastes an hour and produces a wrong number.
+  if [ ! -f "$dir/config.json" ] || find "$dir" \( -name '*.incomplete' -o -name '*.part' \) 2>/dev/null | grep -q . \
+     || ! { compgen -G "$dir/*.safetensors" >/dev/null || compgen -G "$dir/*.bin" >/dev/null || compgen -G "$dir/*.gguf" >/dev/null; }; then
+    log "SKIP $tag (weights absent or incomplete)"; return 1
+  fi
   log "########## $tag ($(du -sh "$dir" 2>/dev/null | cut -f1), tp=$tp x$n) : $combos ##########"
   local any=0 i=0
   IFS=',' read -ra CC <<< "$combos"

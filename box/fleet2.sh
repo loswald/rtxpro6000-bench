@@ -97,14 +97,25 @@ shapes(){ # tag dir nports
   pt "$tag" "$dir" judge     4096 512 0    $((128/n*1)) "$n"
 }
 
-need_dl(){ # dir -> 0 once the download log says done/have for it (config.json lands before the safetensors do)
-  local dn; dn=$(basename "$1") DL=/workspace/results/dl6000.log
-  [ -f "$DL" ] || { [ -f "$1/config.json" ]; return; }   # no download log on this box: fall back to presence
-  grep -qE "\] (done|have) $dn( |\$)" "$DL" && return 0
-  log "  WAIT $dn (still downloading)"
+# Ask the disk, not the download log. The log is unreliable: dl6000_c.sh runs `sed -i` on the same file it
+# is being appended to, and sed -i replaces the inode, so every "done" line written after it went to a
+# deleted file. Hugging Face keeps partial blobs in .cache/huggingface/download/*.incomplete, so a model
+# with a config, no incomplete blobs and at least one weight shard is finished.
+complete_dl(){ # dir
+  [ -f "$1/config.json" ] || return 1
+  find "$1" \( -name '*.incomplete' -o -name '*.part' \) 2>/dev/null | grep -q . && return 1
+  compgen -G "$1/*.safetensors" >/dev/null || compgen -G "$1/*.bin" >/dev/null || compgen -G "$1/*.gguf" >/dev/null
+}
+need_dl(){ # dir -> 0 once the weights are complete on disk, waiting while any downloader is alive
+  complete_dl "$1" && return 0
+  local dn; dn=$(basename "$1")
+  log "  WAIT $dn (weights incomplete)"
   local w=0
-  while ! grep -qE "\] (done|have) $dn( |\$)" "$DL" && [ $w -lt 300 ] && { tmux has-session -t =dl3 2>/dev/null || tmux has-session -t =dl2 2>/dev/null || tmux has-session -t =dl 2>/dev/null; }; do sleep 60; w=$((w+1)); done
-  grep -qE "\] (done|have) $dn( |\$)" "$DL"
+  while ! complete_dl "$1" && [ $w -lt 300 ] \
+     && { tmux has-session -t =dl3 2>/dev/null || tmux has-session -t =dl2 2>/dev/null || tmux has-session -t =dl 2>/dev/null; }; do
+    sleep 60; w=$((w+1))
+  done
+  complete_dl "$1"
 }
 
 rep(){ # alias dir [extra...]

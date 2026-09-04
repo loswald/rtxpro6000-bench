@@ -15,3 +15,7 @@ q27_dspark|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--speculative-draft-
 # MiMo-V2.5 died the same way as Ling/Step: flashinfer_cutlass rejected its NVFP4 expert scales.
 mimo25|/workspace/models/MiMo-V2.5-NVFP4|4|b12x:b12x,b12x:triton,b12x:marlin,-:-
 mimo25_dflash|/workspace/models/MiMo-V2.5-NVFP4|4|b12x:b12x,b12x:triton|--speculative-config|{"method":"dflash","model":"/workspace/models/MiMo-V2.5-NVFP4/dflash","num_speculative_tokens":7}
+# Ornith lost its judge arm and its MTP arm to an operator error (a diagnostic line sourced fleet2.sh and
+# started a second campaign on a busy box, whose kill_all took the running servers down). Re-measure both.
+ornith|/workspace/models/Ornith-1.5-397B-NVFP4|4|-:flashinfer_cutlass|--limit-mm-per-prompt|{"image":0}|--gpu-memory-utilization|0.90
+ornith_mtp|/workspace/models/Ornith-1.5-397B-NVFP4|4|-:flashinfer_cutlass|--limit-mm-per-prompt|{"image":0}|--gpu-memory-utilization|0.90|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
