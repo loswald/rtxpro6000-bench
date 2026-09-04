@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-"""Is speculative decoding actually lossless? Compare completions token-for-token, greedily.
+"""Is speculative decoding lossless? Compare completions greedily - AGAINST A CONTROL.
 
-Speculative decoding proposes tokens with a cheap head and verifies them against the full model, so with
-greedy sampling the output must be BIT-IDENTICAL to the same model without speculation. Anything else is a
-bug in the speculator, not a quality trade-off, and no amount of task accuracy will tell you which you are
-looking at - accuracy differences at temperature are confounded by sampling noise and by truncation.
+Speculation proposes tokens with a cheap head and verifies each against the full model, so in theory greedy
+output is unchanged by it. GLM-5.3-Flash scored 0.800 without its MTP head and 0.740 with it, which that
+theory says is impossible, so this tool was written to compare the two greedily.
 
-This is what prompted it: GLM-5.3-Flash scored 0.800 without its MTP head and 0.740 with it, a gap that
-would be impossible if speculation were exact. The whole difference tracked truncation - 28 of 80 maths
-items hit the token ceiling with speculation against 10 without - so the model was rambling further, which
-a distribution-preserving speculator cannot cause.
+It found 11 of 12 completions diverging and I nearly published that as an engine defect. Then the control
+ran - the SAME server captured twice - and matched on only 4 of 12. This stack is not deterministic at
+greedy sampling at all: prefix caching serves an identical prompt from cached KV rather than recomputing
+it, MoE routing and FlashInfer reductions use atomics with no fixed order, and continuous batching changes
+which batch a request lands in. Any one of those flips an argmax on a near-tie, and the texts diverge from
+there. So sequence comparison cannot attribute anything until the control reproduces.
 
-Usage:  specdiff.py capture <base_url> <model> <out.json>     # once per arm, greedy, fixed prompts
-        specdiff.py compare <a.json> <b.json>                 # exit 0 if identical, 1 if not
+The lesson generalises past this tool: a difference is only evidence when the control says the measurement
+could have shown no difference.
+
+Usage:  specdiff.py capture <base_url> <model> <out.json>          greedy, fixed prompts
+        specdiff.py compare <a.json> <b.json>                      exit 0 if identical
+        specdiff.py judge <base.json> <base2.json> <spec.json>     control-gated verdict
 """
 import json
 import sys
@@ -85,15 +90,61 @@ def compare(pa, pb):
         print("       a: ...%r" % ta[max(0, k - 40):k + 60])
         print("       b: ...%r" % tb[max(0, k - 40):k + 60])
     print("  %d/%d completions identical" % (same, len(a)))
-    if same == len(a):
-        print("  VERDICT: speculation is exact at greedy sampling - any eval gap is sampling noise or truncation")
+    return 0 if same == len(a) else 1
+
+
+def verdict(control_same, control_n, treat_same, treat_n):
+    """Read the treatment ONLY against its control.
+
+    The first version of this tool printed "the speculator is wrong" the moment base and speculating
+    outputs differed. Then the control was run - the same server compared with itself, greedy - and it
+    matched on only 4 of 12. The base model does not reproduce itself, so divergence proves nothing about
+    speculation, and that verdict would have gone into a public repository as an engine defect.
+
+    Why a greedy server is non-deterministic here: prefix caching means an identical prompt is served from
+    cached KV on the second pass rather than recomputed, which is a different numerical path; MoE routing
+    and FlashInfer reductions use atomics whose order is not fixed; and continuous batching changes the
+    batch a request lands in. Any of those flips an argmax on a near-tie, after which the texts diverge
+    completely. Disable prefix caching and serialise the requests before this test means anything.
+    """
+    if control_same < control_n:
+        print("  CONTROL FAILED: the base model matched itself on only %d/%d - this stack is not "
+              "deterministic at greedy sampling, so this test cannot attribute anything to speculation."
+              % (control_same, control_n))
+        print("  Use the logit-level pass instead: it compares next-token DISTRIBUTIONS against a "
+              "control pair, which does not require bit-exact reproduction.")
+        return 2
+    if treat_same == treat_n:
+        print("  Speculation is exact: control reproduces, and speculation matches it. Any eval gap is "
+              "sampling noise or truncation.")
         return 0
-    print("  VERDICT: speculation CHANGES the output at greedy sampling - the speculator is wrong, not the model")
+    print("  Speculation CHANGES the output while the control reproduces exactly (%d/%d) - the speculator "
+          "is at fault, not the model." % (control_same, control_n))
     return 1
 
 
+def _count_identical(pa, pb):
+    a = json.load(open(pa, encoding="utf-8"))
+    b = json.load(open(pb, encoding="utf-8"))
+    same = sum(1 for x, y in zip(a, b)
+               if ((x["reasoning"] or "") + "\x00" + (x["content"] or ""))
+               == ((y["reasoning"] or "") + "\x00" + (y["content"] or "")))
+    return same, len(a)
+
+
 if __name__ == "__main__":
-    if sys.argv[1] == "capture":
+    mode = sys.argv[1]
+    if mode == "capture":
         capture(sys.argv[2], sys.argv[3], sys.argv[4])
-    else:
+    elif mode == "compare":
         sys.exit(compare(sys.argv[2], sys.argv[3]))
+    elif mode == "judge":
+        # judge <base.json> <base_repeat.json> <spec.json>
+        cs, cn = _count_identical(sys.argv[2], sys.argv[3])
+        print("  control  (base vs base):  %d/%d identical" % (cs, cn))
+        ts, tn = _count_identical(sys.argv[2], sys.argv[4])
+        print("  treatment(base vs spec):  %d/%d identical" % (ts, tn))
+        sys.exit(verdict(cs, cn, ts, tn))
+    else:
+        print("usage: specdiff.py capture|compare|judge ...")
+        sys.exit(2)
