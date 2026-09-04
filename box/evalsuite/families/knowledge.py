@@ -55,7 +55,9 @@ NOTES = [
     "10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of "
     "MMLU-Pro keys are known to be noisy and are not corrected here",
     "knowledge/simpleqa: programmatic containment scoring (all gold tokens must appear in the extracted answer "
-    "span); stricter than the official LLM grader on partial names, so absolute numbers are not comparable "
+    "span; the span is the 'Answer:'/boxed phrase, else the last line of the response); hedged ('X or Y') and "
+    "negated ('Y, not X') answers are not credited, matching the official grader's NOT_ATTEMPTED/INCORRECT; "
+    "stricter than the official LLM grader on partial names, so absolute numbers are not comparable "
     "with published SimpleQA scores - use it for paired comparisons",
     "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
 ]
@@ -401,33 +403,87 @@ def build_messages(item: dict, ctx) -> list[dict]:
 # scoring - MCQ
 # ==================================================================================================
 
-_MCQ_BOXED = re.compile(r"\\(?:boxed|fbox)\s*\{\s*(?:\\(?:text|textbf|mathrm|mathbf)\s*\{)?\s*\(?\s*\**\s*([A-J])\s*\**\s*\)?(?:\s*[.:)]\s*[^{}]*|\s*\}[^{}]*)?\}")
+# NOTE (review): every quantifier below is bounded and no two unbounded whitespace/star runs are
+# adjacent.  The earlier "\s*...\**\s*...\s*" chains backtracked polynomially: a response with ~200
+# whitespace characters after the word "answer" (a degenerate / truncated reasoning model, or a
+# markdown block) took > 3 s inside score(), which runs on the runner's event loop.
+_MCQ_BOXED = re.compile(
+    r"\\(?:boxed|fbox)[ \t]{0,4}\{[\s]{0,4}(?:\\(?:text|textbf|mathrm|mathbf)[ \t]{0,4}\{[\s]{0,4})?"
+    r"[(\[]{0,2}[ \t*]{0,4}([A-J])[ \t*]{0,4}[)\]]{0,2}"
+    r"(?:[ \t]{0,4}[.:)][^{}]{0,200}|[\s]{0,4}\}[^{}]{0,200})?\}")
 _MCQ_PHRASE = re.compile(
-    r"(?i)(?:final\s+answer|answer|correct\s+(?:option|choice|answer|letter))\s*(?:is|:|=|-)?\**\s*(?::|is)?\s*"
-    r"(?:option|choice|letter)?\s*\(?\s*\**\s*([A-J])\s*\**\s*\)?(?![A-Za-z0-9])")
+    r"(?i:final\s{0,3}answer|answer|correct\s{0,3}(?:option|choice|answer|letter))"
+    r"[\s:=*-]{0,8}(?i:is[\s:=*-]{0,4})?(?i:(?:option|choice|letter)[\s:=*-]{0,4})?"
+    r"[(\[]{0,2}[\s*]{0,4}([A-J])[\s*]{0,4}[)\]]{0,2}(?![A-Za-z0-9])")
+# a lower-case letter is only trusted inside parentheses ("the answer is (c)"); a bare "c" in prose is
+# far more often a variable (speed of light, concentration) than an option letter
+_MCQ_PHRASE_LC = re.compile(
+    r"(?i:final\s{0,3}answer|answer|correct\s{0,3}(?:option|choice|answer|letter))"
+    r"[\s:=*-]{0,8}(?i:is[\s:=*-]{0,4})?\([\s*]{0,3}([a-j])[\s*]{0,3}\)")
 
 
-_MCQ_BARE_LINE = re.compile(r"^\s*\(?\**([A-J])\**\)?\s*[.:)]?\s*\**\s*$")
-_MCQ_TAIL_STRONG = re.compile(r"(?:\(([A-J])\)|(?i:option|choice)\s+\(?([A-J])\)?(?![A-Za-z0-9])|(?<![A-Za-z0-9])([A-J])[.)](?![A-Za-z0-9]))")
-_MCQ_TAIL_LAST = re.compile(r"(?<![A-Za-z0-9])([A-J])(?![A-Za-z0-9])")
+_MCQ_BARE_LINE = re.compile(r"^[ \t]{0,8}[(\[]{0,2}[*]{0,3}([A-Ja-j])[*]{0,3}[)\]]{0,2}[ \t]{0,4}[.:;)]{0,2}[ \t*]{0,4}$")
+# explicit letter markers anywhere in the tail
+_MCQ_TAIL_STRONG = re.compile(r"(?:(?<!not )\(([A-J])\)|(?i:option|choice)[ \t]{0,3}\(?([A-J])\)?(?![A-Za-z0-9]))")
+# a bare / punctuated letter is only trusted when the response ENDS there, is not a unit that follows a
+# number ("0.5 J.", "3 A.") and is not negated ("... is not C.")
+_MCQ_TAIL_END = re.compile(
+    r"(?<!\d)(?<!\d )(?<!not )(?<![A-Za-z0-9])([A-J])[\s*]{0,4}[.)\]:;!]{0,3}[\s*]{0,4}$")
+# "C or D", "C, D": the model named a second candidate right next to the extracted letter
+_HEDGE_AFTER = re.compile(r"^[\s*)\]]{0,3}(?:,|/|;|\bor\b|\band\b)[\s*(\[]{0,3}([A-J])(?![A-Za-z0-9])")
+_HEDGE_BEFORE = re.compile(r"(?<![A-Za-z0-9])([A-J])[\s*)\]]{0,3}(?:,|/|;|\bor\b|\band\b)[\s*(\[]{0,3}$")
 
 
 def _norm_opt(s: str) -> str:
     s = unicodedata.normalize("NFKD", s or "")
     s = "".join(c for c in s if not unicodedata.combining(c)).lower()
     s = s.replace("\\(", "").replace("\\)", "").replace("$", "")
+    s = re.sub(r"\\[a-zA-Z]+", " ", s)        # \text{...} \mathrm{...} \ - so \boxed{12.4\ \text{kg}} matches "12.4 kg"
     s = re.sub(r"[^\w.%/+-]+", " ", s)
     return " ".join(s.split())
 
 
 def _last_valid(rx: re.Pattern, text: str, valid: set) -> Optional[str]:
-    """Last match of rx whose (first non-empty) capture group is a valid letter."""
+    """Last match of rx whose (first non-empty) capture group is a valid letter (case-folded)."""
     found = None
     for m in rx.finditer(text):
         g = next((x for x in m.groups() if x), None)
-        if g in valid:
-            found = g
+        if g and g.upper() in valid:
+            found = g.upper()
     return found
+
+
+# "answer A is the classic trap here" - the letter is the SUBJECT of a following clause, i.e. a remark
+# about an option, not the answer.  Such a match is only used when there is no other one.
+_LETTER_AS_SUBJECT = re.compile(r"^[\s*)\]]{0,3}(?:is|are|was|were|would|will|looks|seems|appears|might|may|can|could)\b")
+
+
+def _last_phrase_letter(text: str, valid: set) -> Optional[str]:
+    """Last answer-phrase letter, preferring a match that is not a remark about another option."""
+    strong = weak = None
+    for rx in (_MCQ_PHRASE, _MCQ_PHRASE_LC):
+        for m in rx.finditer(text):
+            g = (m.group(1) or "").upper()
+            if g not in valid:
+                continue
+            if _LETTER_AS_SUBJECT.match(text[m.end(): m.end() + 12]):
+                weak = g
+            else:
+                strong = g
+        if strong or weak:
+            break
+    return strong or weak
+
+
+def _is_hedged(text: str, letter: str) -> bool:
+    """True when the extracted letter sits inside an uncommitted alternation ("C or D", "C, D"):
+    the model named two options, which is not an answer."""
+    for m in re.finditer(rf"(?<![A-Za-z0-9]){letter}(?![A-Za-z0-9])", text):
+        after = _HEDGE_AFTER.match(text[m.end(): m.end() + 12])
+        before = _HEDGE_BEFORE.search(text[max(0, m.start() - 12): m.start()])
+        if (after and after.group(1) != letter) or (before and before.group(1) != letter):
+            return True
+    return False
 
 
 def extract_mcq_letter(text: str, options: Optional[list[str]] = None, n_options: int = 10) -> tuple[Optional[str], str]:
@@ -440,12 +496,13 @@ def extract_mcq_letter(text: str, options: Optional[list[str]] = None, n_options
     hit = _last_valid(_MCQ_BOXED, text, valid)
     if hit:
         return hit, "boxed"
-    hit = _last_valid(_MCQ_PHRASE, text, valid)
+    hit = _last_phrase_letter(text, valid)
     if hit:
         return hit, "answer_phrase"
-    # the model restated the option text instead of the letter
+    # the model restated the option text instead of the letter (\boxed{12.4 kg} as well as
+    # "The answer is 12.4 kg" - extract_final_answer prefers the box, then the answer phrase)
     if options:
-        phrase = common.extract_answer_phrase(text)
+        phrase, _m = common.extract_final_answer(text, allow_last_integer=False)
         if phrase:
             p = _norm_opt(common.strip_math_delims(phrase))
             normed = [_norm_opt(o) for o in options]
@@ -455,21 +512,28 @@ def extract_mcq_letter(text: str, options: Optional[list[str]] = None, n_options
             contained = [i for i, o in enumerate(normed) if len(o) >= 4 and o in p]
             if len(contained) == 1:
                 return LETTERS[contained[0]], "option_text"
+            # the model gave the option's value without its unit ("The answer is 12.4" for "12.4 kg"):
+            # only when the phrase covers a whole leading token of exactly one option
+            prefix = [i for i, o in enumerate(normed) if len(p) >= 3 and o.startswith(p + " ")]
+            if len(prefix) == 1:
+                return LETTERS[prefix[0]], "option_text"
     # a bare letter on one of the last three non-empty lines: "C", "(C).", "**C**"
     lines = [ln for ln in text.splitlines() if ln.strip()][-3:]
     for ln in reversed(lines):
         m = _MCQ_BARE_LINE.match(ln)
-        if m and m.group(1) in valid:
-            return m.group(1), "bare_line"
-    # weak fallbacks over the tail: "(C)", "option C", "C." / "C)", then the last standalone letter (never
-    # the pronoun "I", which is the classic false positive of the design-spec cascade)
+        if m and m.group(1).upper() in valid:
+            return m.group(1).upper(), "bare_line"
+    # weak fallbacks over the tail: explicit "(C)" / "option C" anywhere, then a letter the response
+    # actually ENDS on.  An unanchored "C." / last-standalone-letter rule reads unit symbols
+    # ("0.5 J.", "3 A."), figure references ("panel D)") and the article "A" as answers - a 1-in-10
+    # free hit per malformed response.
     tail = text[-300:]
     hit = _last_valid(_MCQ_TAIL_STRONG, tail, valid)
     if hit:
         return hit, "tail_paren"
-    hit = _last_valid(_MCQ_TAIL_LAST, tail, valid - {"I"})
-    if hit:
-        return hit, "last_letter"
+    m = _MCQ_TAIL_END.search(tail)
+    if m and m.group(1) in valid - {"I"}:
+        return m.group(1), "last_letter"
     return None, "none"
 
 
@@ -479,6 +543,8 @@ def _score_mcq(item: dict, text: str) -> Verdict:
     if letter is None:
         return Verdict.unparsed(expected, {"method": method}, ["no_letter"])
     flags = ["weak_extraction"] if method in ("last_letter", "tail_paren") else []
+    if _is_hedged((text or "")[-300:], letter):
+        return Verdict(False, "wrong", 0.0, letter, expected, {"method": method, "hedged": True}, flags + ["hedged"])
     return Verdict(letter == expected, extracted=letter, expected=expected, detail={"method": method}, flags=flags)
 
 
@@ -493,7 +559,10 @@ _NOISE = {"approximately", "approx", "about", "around", "roughly", "circa", "ca"
 _NUM = re.compile(r"-?\d+(?:\.\d+)?")
 
 
-def _norm_tokens(s: str) -> list[str]:
+def _norm_tokens(s: str, drop: Optional[frozenset] = None) -> list[str]:
+    """Normalised tokens.  `drop` defaults to the stop+noise set (used by prepare() for eligibility
+    and alias building - do not change that default, the built item set depends on it)."""
+    stop = (_STOP | _NOISE) if drop is None else drop
     s = unicodedata.normalize("NFKD", s or "")
     s = "".join(c for c in s if not unicodedata.combining(c)).lower()
     s = s.replace("&", " and ").replace("’", "'").replace("`", "'")
@@ -505,10 +574,42 @@ def _norm_tokens(s: str) -> list[str]:
     toks = []
     for t in s.split():
         t = _MONTHS.get(t, t)
-        if t in _STOP or t in _NOISE:
+        if t in stop:
             continue
         toks.append(t)
     return toks
+
+
+_ARTICLES = ("the", "a", "an")
+_NUMLIKE = re.compile(r"-?\d+(?:\.\d+)?$")
+
+
+def _gold_tokens(s: str) -> list[str]:
+    """Gold tokens for containment: only a LEADING article is dropped.  Dropping stop/noise words
+    everywhere silently deleted the discriminating token of short golds - 'Vitamin C' became
+    {vitamin} ('c' is in the circa-noise set) and matched 'Vitamin D', 'La La Land' became {land}
+    and matched 'Land of the Free', 'Hepatitis A' matched 'Hepatitis B'."""
+    toks = _norm_tokens(s, drop=frozenset())
+    while len(toks) > 1 and toks[0] in _ARTICLES:
+        toks = toks[1:]
+    return toks
+
+
+_ISO_DATE = re.compile(r"\b(\d{4})-(\d{2})-(\d{2})\b")
+_MONTH_NAMES = ["january", "february", "march", "april", "may", "june", "july", "august", "september",
+                "october", "november", "december"]
+
+
+def _cand_tokens(s: str) -> list[str]:
+    """Candidate tokens: nothing is dropped - the candidate only has to be a SUPERSET of the gold, so
+    extra articles / hedge words are harmless, while dropping them can only manufacture matches.
+    An unambiguous ISO date is additionally spelled out (1996-08-12 -> 1996 august 12) so a correct
+    answer in ISO form is not scored wrong against a '12 August 1996' gold."""
+    def _iso(m):
+        mm = int(m.group(2))
+        name = _MONTH_NAMES[mm - 1] if 1 <= mm <= 12 else m.group(2)
+        return f"{m.group(1)} {name} {int(m.group(3))} {m.group(0)}"
+    return _norm_tokens(_ISO_DATE.sub(_iso, s or ""), drop=frozenset())
 
 
 def _numbers(s: str) -> list[float]:
@@ -540,15 +641,18 @@ def _aliases(gold: str) -> list[str]:
 
 
 def _contains(gold: str, cand: str, answer_type: str) -> bool:
-    gtoks = _norm_tokens(gold)
+    gtoks = _gold_tokens(gold)
     if not gtoks:
         return False
+    ctoks = set(_cand_tokens(cand))
     if answer_type == "Number":
         gnums = _numbers(gold)
         if gnums:
             cnums = _numbers(cand)
-            return all(any(math.isclose(g, c, rel_tol=1e-9, abs_tol=1e-9) for c in cnums) for g in gnums)
-    ctoks = set(_norm_tokens(cand))
+            if not all(any(math.isclose(g, c, rel_tol=1e-9, abs_tol=1e-9) for c in cnums) for g in gnums):
+                return False
+            # the numbers agree; any non-numeric gold token ("1.5 million" vs "1.5 billion") must too
+            return all(t in ctoks for t in gtoks if not _NUMLIKE.match(t))
     return all(t in ctoks for t in gtoks)
 
 
@@ -569,6 +673,26 @@ def _trim_answer_span(span: str) -> str:
     return s.strip(" .") or span
 
 
+_FENCE_ONLY = re.compile(r"^[`~*_#>\-=.\s]+$")
+# an uncommitted answer span: "X or Y", "X and Y" (two entities where one was asked for), "maybe X"
+_HEDGE_WORD = re.compile(r"(?i)(?:\bor\b|\beither\b|\band\b|\bmaybe\b|\bpossibly\b|\bperhaps\b)")
+# in a free-prose tail "and" is ordinary connective tissue, so only real alternation counts there
+_HEDGE_WORD_TAIL = re.compile(r"(?i)(?:\bor\b|\beither\b|\bmaybe\b|\bpossibly\b|\bperhaps\b)")
+_NEG_WORD = re.compile(r"(?i)\b(?:not|never|isn't|wasn't|aren't|rather than|instead of)\b")
+# "6 to 8", "1990-1992": a range instead of the single number that was asked for
+_RANGE = re.compile(r"(?i)\d\s*(?:to|through|-|–|—|and|or)\s*\d")
+
+
+def _tail_span(visible: str) -> str:
+    """The last line the model actually ends on (markdown fences / rules skipped).  Scoring the whole
+    last 600 characters credits reasoning leakage: 'Radcliffe College is one candidate, Wellesley
+    another ... I cannot give a confident answer' contains the gold and was scored correct."""
+    lines = [ln.strip() for ln in visible.splitlines() if ln.strip()]
+    while lines and _FENCE_ONLY.match(lines[-1]):
+        lines.pop()
+    return lines[-1][-600:] if lines else ""
+
+
 def _score_simpleqa(item: dict, text: str) -> Verdict:
     expected = str(item["answer"])
     aliases = list(item.get("aliases") or _aliases(expected))
@@ -579,13 +703,29 @@ def _score_simpleqa(item: dict, text: str) -> Verdict:
     span, method = common.extract_final_answer(visible, allow_last_integer=False)
     flags: list[str] = []
     if span is None:
-        span = visible[-600:]
+        span = _tail_span(visible)
         method = "tail"
         flags.append("no_answer_phrase")
     span = _trim_answer_span(common.strip_math_delims(span).strip().strip("*").strip()) if method != "tail" else span
+    gold_norm = expected.replace("&", " and ")
+    hedge_rx = _HEDGE_WORD_TAIL if method == "tail" else _HEDGE_WORD
+    gold_hedges = bool(hedge_rx.search(gold_norm)) or bool(_RANGE.search(gold_norm))
+    gold_negates = bool(_NEG_WORD.search(expected))
     for alias in aliases:
-        if _contains(alias, span, atype):
-            return Verdict(True, extracted=span[:200], expected=expected, detail={"method": method, "alias": alias}, flags=flags)
+        if not _contains(alias, span, atype):
+            continue
+        # a range where a single number was asked for ("6 to 8" against gold 8)
+        if atype == "Number" and not gold_hedges and _RANGE.search(span):
+            return Verdict(False, "wrong", 0.0, span[:200], expected, {"method": method, "alias": alias}, flags + ["hedged"])
+        # the model named alternatives instead of committing ("X or Y"): the official SimpleQA grader
+        # calls this NOT_ATTEMPTED, so it must not be scored correct here either
+        if not gold_hedges and hedge_rx.search(span):
+            return Verdict(False, "wrong", 0.0, span[:200], expected, {"method": method, "alias": alias}, flags + ["hedged"])
+        # the gold only appears AFTER a negation ("Wellesley College, not Radcliffe College")
+        neg = None if gold_negates else _NEG_WORD.search(span)
+        if neg and not _contains(alias, span[: neg.start()], atype):
+            return Verdict(False, "wrong", 0.0, span[:200], expected, {"method": method, "alias": alias}, flags + ["negated"])
+        return Verdict(True, extracted=span[:200], expected=expected, detail={"method": method, "alias": alias}, flags=flags)
     if method == "tail":
         return Verdict.unparsed(expected, {"method": method}, flags + ["no_match"])
     return Verdict(False, extracted=span[:200], expected=expected, detail={"method": method}, flags=flags)

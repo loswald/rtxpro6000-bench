@@ -26,9 +26,11 @@ override with longctx.chars_per_token=.. / longctx.max_model_len=..).  Without /
 used and noted.  Filler and documents live in a header record of the item file, so a run needs nothing but
 data/items/longctx.jsonl.
 
-Scoring: \\boxed{} -> "answer is/answer:" phrase -> last non-empty line; numeric answers compared numerically
-(digit grouping removed; several numbers -> the one the candidate attributes to the asked key, else the first, and
-a hedged/refusing candidate with several numbers is wrong), text answers by SQuAD-style normalisation (case,
+Scoring: \\boxed{} -> a line-initial "Answer:"/"answer is" phrase (a phrase buried in trailing prose only as a
+fallback) -> last non-empty line; numeric answers compared numerically (digit grouping removed; several distinct
+numbers -> the one the candidate attributes to the asked key, else the candidate never committed and is wrong -
+crediting the first number would pass "the codes are A, B, C, D, E" whenever the target is listed first),
+text answers by SQuAD-style normalisation (case,
 digit grouping, punctuation, articles, whitespace) with exact or length-guarded containment match (no containment
 for candidates that hedge, negate or refuse, or carry numbers the gold does not have).
 """
@@ -854,6 +856,9 @@ _FENCE = re.compile(r"^\s*```[a-zA-Z0-9_-]*\s*$", re.M)
 _LEAD_ANSWER = re.compile(r"^\s*(?:final\s+answer|answer|code|value)\s*(?:is\b|:|=)\s*", re.I)
 # like common._ANSWER_PHRASE but 'is' must be a whole word: "the answer isn't stated" is not an answer phrase
 _ANSWER_PHRASE = re.compile(r"(?i)\b(?:final\s+answer|answer)\s*(?:is\b|:|=)\s*")
+# the prompt asks for a final line 'Answer: <x>'; a match that STARTS a line (after markdown decoration)
+# is the committed answer, so trailing prose ("...that answer is supported by Document 3") cannot hijack it
+_ANSWER_LINE = re.compile(r"(?im)^[\s>*_#`\-]*(?:final\s+answer|answer)\s*(?:is\b|:|=)\s*")
 _CITATION = re.compile(r"\s*[\[(](?:see\s+|from\s+|in\s+)?(?:document|doc|paragraph|passage|source|section)s?\b[^()\[\]]*[\])]\s*$", re.I)
 # hedges / refusals / negations: a candidate carrying one of these is never accepted by containment or by the
 # first-of-several-numbers rule (the model did not commit to one answer)
@@ -863,6 +868,10 @@ _HEDGE_NUM = re.compile(r"(?i)(?<![A-Za-z])(?:or|either|cannot|can't|could\s*not
 _HEDGE_TEXT = re.compile(r"(?<!\S)(?:or|either|and|vs|versus|not|no|never|neither|nor|cannot|can t|couldn t|unable|unclear|"
                          r"unsure|unknown|don t|doesn t|didn t|isn t|wasn t|aren t|weren t|without|except|unlike|rather)(?!\S)")
 _MIN_ANSWER_DIGITS = 4          # needle codes have 7 digits, variable values 5: shorter numbers ("Document 3") are noise
+# a number the candidate explicitly rejects ("the code is 4831920, not 1111111") is not a candidate answer;
+# when EVERY number is rejected the candidate answered in the negative and is wrong
+_NEGATED_NUM = re.compile(r"(?i)\b(?:not|isn'?t|no|never)\s+(?:equal\s+to\s+|exactly\s+)?(-?\d[\d,]{%d,})(?![\d,])"
+                          % (_MIN_ANSWER_DIGITS - 1))
 
 
 def _clean(s: str) -> str:
@@ -878,14 +887,17 @@ def _clean(s: str) -> str:
 
 
 def _answer_phrase(text: str) -> Optional[str]:
-    """Text after the last 'answer is' / 'answer:' up to the end of the line (None when nothing follows)."""
-    last = None
-    for m in _ANSWER_PHRASE.finditer(text):
-        last = m
-    if last is None:
-        return None
-    rest = text[last.end():].split("\n", 1)[0].strip()
-    return rest or None
+    """Text after the last answer phrase THAT HAS SOMETHING AFTER IT, up to the end of the line.
+    A line-initial 'Answer: ...' (the requested format) wins over one buried in prose."""
+    for rx in (_ANSWER_LINE, _ANSWER_PHRASE):
+        best = None
+        for m in rx.finditer(text):
+            rest = text[m.end():].split("\n", 1)[0].strip()
+            if rest:
+                best = rest
+        if best:
+            return best
+    return None
 
 
 def extract_candidate(visible: str) -> tuple[Optional[str], str]:
@@ -935,6 +947,13 @@ def _score_numeric(expected: str, visible: str, key: Optional[str] = None) -> Ve
         method = "last_numbers"
     if not nums:
         return Verdict.unparsed(expected, {"method": method, "candidate": cand[:120]}, ["no_number"])
+    negated = [n for m in _NEGATED_NUM.finditer(cand) for n in _numbers(m.group(1))]
+    if negated:
+        kept = [n for n in nums if not any(_num_equal(n, x) for x in negated)]
+        if not kept:
+            return Verdict(False, extracted=nums[0], expected=expected,
+                           detail={"method": method, "numbers": nums[:6], "reason": "negated"}, flags=["negated"])
+        nums = kept
     long_nums = [n for n in nums if len(re.sub(r"\D", "", n)) >= _MIN_ANSWER_DIGITS]
     if long_nums and len(long_nums) < len(nums):
         nums = long_nums
@@ -947,6 +966,12 @@ def _score_numeric(expected: str, visible: str, key: Optional[str] = None) -> Ve
             pick, detail["pick"] = kn, "key_attribution"
         elif _HEDGE_NUM.search(cand):
             return Verdict(False, extracted=nums[0], expected=expected, detail=dict(detail, reason="hedged"), flags=flags + ["hedged"])
+        else:
+            # several candidate numbers, none attributed to the asked key: the model enumerated the needles
+            # instead of answering.  Crediting the first one would score "all the codes are A, B, C, D, E"
+            # correct whenever the target happens to be listed first (RULER credit without retrieval).
+            return Verdict(False, extracted=nums[0], expected=expected, detail=dict(detail, reason="uncommitted"),
+                           flags=flags + ["uncommitted"])
     ok = _num_equal(pick, expected)
     return Verdict(ok, extracted=pick, expected=expected, detail=detail, flags=flags)
 
@@ -971,8 +996,14 @@ def _score_text(answers: list[str], visible: str) -> Verdict:
     # containment: the gold as a whole-word span inside a SHORT candidate that commits to it - no hedge / negation /
     # refusal words (unless the gold itself has them), no extra numbers when the gold is numeric
     n_cand = len(cn.split())
+    reject: Optional[str] = None
     for g in golds:
-        if not re.search(r"(?<!\S)" + re.escape(g) + r"(?!\S)", cn) or n_cand > len(g.split()) + 5:
+        m = re.search(r"(?<!\S)" + re.escape(g) + r"(?!\S)", cn)
+        if not m or n_cand > len(g.split()) + 5:
+            continue
+        tail = cn[m.end():].split()
+        if tail[:1] == ["s"] and len(tail) > 1:   # "the mortgage banker's assistant" is not "the mortgage banker"
+            reject = "possessive"
             continue
         hedges = {h for h in _HEDGE_TEXT.findall(cn)} - set(_HEDGE_TEXT.findall(g))
         if re.search(r"\w\s*/\s*\w", cand) and "/" not in expected:
@@ -982,6 +1013,8 @@ def _score_text(answers: list[str], visible: str) -> Verdict:
         if _numbers(g) and set(_numbers(cn)) != set(_numbers(g)):     # both SQuAD-normalised ('29 7' vs '29 7 percent')
             return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason="extra_numbers"), flags=["hedged"])
         return Verdict(True, extracted=cand, expected=expected, detail=dict(detail, match="containment"), flags=["containment"])
+    if reject:
+        return Verdict(False, extracted=cand, expected=expected, detail=dict(detail, reason=reject), flags=["hedged"])
     return Verdict(False, extracted=cand, expected=expected, detail=detail)
 
 

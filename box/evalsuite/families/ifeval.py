@@ -65,6 +65,10 @@ NOTES = [
     "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
     "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
     "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+    "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) "
+    "are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+    "ifeval: number_sentences uses a regex splitter, so abbreviations ('Dr.', 'e.g.', 'U.S.') over-count vs nltk punkt "
+    "and terminator-free bullet lines under-count; 19 of the 132 instruction instances are number_sentences",
 ]
 
 PIN_COMMIT = "26d8ccdab6fec61b5c83ad6327ea8bda9e580288"   # google-research/google-research, 2024-06-11 "Fix an eval prompt"
@@ -220,7 +224,7 @@ def check(inst_id: str, kw: dict, value: str) -> bool:
         first = toks[0].lstrip("'").lstrip('"')
         w = ""
         for ch in first:
-            if ch in ".,?!'\"":
+            if ch in string.punctuation:   # the reference breaks the first word at ANY punctuation
                 break
             w += ch.lower()
         return w == str(kw.get("first_word", "")).lower()

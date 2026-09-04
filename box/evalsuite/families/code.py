@@ -37,6 +37,7 @@ import math
 import os
 import pickle
 import re
+import secrets
 import shutil
 import subprocess
 import sys
@@ -65,6 +66,11 @@ NOTES = [
     "this is not the official LiveCodeBench scorer (which runs every private test)",
     "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; "
     "no network isolation (the tests do not need network)",
+    "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is "
+    "'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it "
+    "consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); "
+    "expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and "
+    "stdout must match the expected line structure",
 ]
 
 # ---- sources ---------------------------------------------------------------------------------
@@ -398,6 +404,9 @@ _FENCE_RE = re.compile(r"```[ \t]*([A-Za-z0-9_+#.-]*)[^\n]*\n(.*?)(?:(```)|\Z)",
 _PY_LANGS = {"", "python", "py", "python3", "py3", "python2"}
 _CODE_LINE_RE = re.compile(r"^(?:from\s+[\w.]+\s+import\b|import\s+\w|def\s+\w+\s*\(|class\s+\w+\b|@\w|#|"
                            r"if\s+__name__|print\s*\(|input\s*\(|[A-Za-z_]\w*(?:\[[^\]]*\])?\s*=[^=])")
+# a line that only real code produces - used to tell a broken program ('wrong') from prose ('unparsed')
+_STRONG_CODE_RE = re.compile(r"^[ \t]*(?:def\s+\w+\s*\(|class\s+\w+\b|import\s+\w|from\s+[\w.]+\s+import\b|@\w|"
+                             r"return\b|print\s*\(|[A-Za-z_]\w*(?:\[[^\]]*\])?\s*=[^=])", re.M)
 
 
 def _dedent_block(body: str, indent: str) -> str:
@@ -576,6 +585,12 @@ class testing:
 
 _DRIVER_SRC = r'''import json, os, sys
 mode, mem, cpu = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+try:                                  # per-run completion token, consumed before the candidate is exec'd
+    with open("_nonce.txt", encoding="utf-8") as _f:
+        DONE = "_done_" + _f.read().strip()
+    os.remove("_nonce.txt")
+except OSError:
+    DONE = "_done_missing"
 try:
     import resource
     resource.setrlimit(resource.RLIMIT_AS, (mem, mem))
@@ -588,7 +603,6 @@ sys.setrecursionlimit(20000)
 with open("sol.py", encoding="utf-8") as f:
     src = f.read()
 code = compile(src, "sol.py", "exec")
-DONE = "_evalsuite_done"
 if mode == "stdin":
     exec(code, {"__name__": "__main__", "__builtins__": __builtins__})
 elif mode == "evalplus":
@@ -633,6 +647,9 @@ elif mode == "functional":
 '''
 
 
+NONCE_FILE = "_nonce.txt"            # per-run token; the driver consumes it before exec'ing the candidate
+
+
 def _write(path: str, text: str) -> None:
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
@@ -647,11 +664,9 @@ def _run_process(tmpdir: str, argv: list[str], stdin_bytes: Optional[bytes], tim
     """One sandboxed execution: python3 -I -X utf8 _run.py <argv...> in tmpdir; stdout to a file when asked."""
     out_path = os.path.join(tmpdir, "stdout.txt")
     err_path = os.path.join(tmpdir, "stderr.txt")
-    done_path = os.path.join(tmpdir, DONE_SENTINEL)
-    try:
-        os.remove(done_path)
-    except OSError:
-        pass
+    nonce = secrets.token_hex(8)
+    _write(os.path.join(tmpdir, NONCE_FILE), nonce)
+    done_path = os.path.join(tmpdir, "_done_" + nonce)
     env = {"PATH": os.environ.get("PATH", ""), "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8", "HOME": tmpdir, "TMPDIR": tmpdir}
     t0 = time.monotonic()
     timed_out = False
@@ -693,12 +708,15 @@ def _run_process(tmpdir: str, argv: list[str], stdin_bytes: Optional[bytes], tim
         size = f.tell()
         f.seek(max(0, size - STDERR_TAIL * 2))
         stderr = f.read().decode("utf-8", "replace")[-STDERR_TAIL:]
-    return {"rc": proc.returncode, "timed_out": timed_out, "stdout": stdout, "stderr": stderr, "elapsed": round(elapsed, 3)}
+    return {"rc": proc.returncode, "timed_out": timed_out, "stdout": stdout, "stderr": stderr,
+            "done": os.path.exists(done_path), "elapsed": round(elapsed, 3)}
 
 
 def _err_kind(res: dict) -> str:
     if res["timed_out"]:
         return "timeout"
+    if res["rc"] == 0 and not res.get("done", True):
+        return "early_exit"      # the candidate ended the process (sys.exit/os._exit) before the tests ran
     err = res["stderr"]
     if "AssertionError" in err:
         return "assertion"
@@ -710,24 +728,39 @@ def _err_kind(res: dict) -> str:
     return m[-1] if m else ("exception" if res["rc"] else "ok")
 
 
+def _token_matches(a: str, b: str) -> bool:
+    """One output token against the expected one.  An expected INTEGER must be reproduced exactly
+    (1e-6 relative tolerance on 10^9 would accept an off-by-1000 answer); floats keep the tolerance."""
+    if a == b:
+        return True
+    try:
+        int(b)
+        return False
+    except ValueError:
+        pass
+    try:
+        fa, fb = float(a), float(b)
+    except ValueError:
+        return False
+    if math.isnan(fa) or math.isnan(fb):
+        return False
+    return math.isclose(fa, fb, rel_tol=1e-6, abs_tol=1e-6)
+
+
 def _stdout_matches(got: str, exp: str) -> bool:
+    """Line structure must match (a judge does not accept three answers on one line); inside a line
+    whitespace is free and float tokens are compared with a tolerance."""
     g = [ln.rstrip() for ln in got.strip().splitlines()]
     e = [ln.rstrip() for ln in exp.strip().splitlines()]
     if g == e:
         return True
-    gt, et = got.split(), exp.split()
-    if gt == et:
-        return True
-    if len(gt) != len(et):
+    if len(g) != len(e):
         return False
-    for a, b in zip(gt, et):
-        if a == b:
+    for gl, el in zip(g, e):
+        gt, et = gl.split(), el.split()
+        if gt == et:
             continue
-        try:
-            fa, fb = float(a), float(b)
-        except ValueError:
-            return False
-        if math.isnan(fa) or math.isnan(fb) or not math.isclose(fa, fb, rel_tol=1e-6, abs_tol=1e-6):
+        if len(gt) != len(et) or not all(_token_matches(a, b) for a, b in zip(gt, et)):
             return False
     return True
 
@@ -772,7 +805,7 @@ def run_candidate(item: dict, code: str) -> dict:
         if sub in ("humanevalplus", "mbppplus"):
             _write(os.path.join(tmpdir, "sol.py"), _assemble_evalplus(item, code))
             res = _run_process(tmpdir, ["evalplus"] + base, b"", TEST_TIMEOUT_S, capture_stdout=False)
-            ok = res["rc"] == 0 and not res["timed_out"]
+            ok = res["rc"] == 0 and not res["timed_out"] and res["done"]
             return {"passed": ok, "n_tests": 1, "n_passed": int(ok), "kind": "ok" if ok else _err_kind(res),
                     "stderr": res["stderr"], "elapsed": res["elapsed"], "test_index": None if ok else 0}
         # ---- LiveCodeBench
@@ -791,9 +824,10 @@ def run_candidate(item: dict, code: str) -> dict:
             if mode == "functional":
                 res = _run_process(tmpdir, ["functional"] + base + [str(i), str(item.get("func_name"))], b"",
                                    TEST_TIMEOUT_S, capture_stdout=False)
-                ok = res["rc"] == 0 and not res["timed_out"]
+                ok = res["rc"] == 0 and not res["timed_out"] and res["done"]
             else:
                 res = _run_process(tmpdir, ["stdin"] + base, t["input"].encode("utf-8"), TEST_TIMEOUT_S, capture_stdout=True)
+                res["done"] = True     # stdin programs are judged on stdout; the sentinel does not apply
                 ok = res["rc"] == 0 and not res["timed_out"] and _stdout_matches(res["stdout"], t["output"])
                 if not ok and res["rc"] == 0 and not res["timed_out"]:
                     res["stderr"] = (res["stderr"] + f"\nMISMATCH got={res['stdout'][:300]!r} exp={t['output'][:300]!r}").strip()
@@ -831,6 +865,9 @@ def score(item: dict, response_text: str, meta: Optional[dict] = None) -> Verdic
     code, syntax_err = _trim_to_compilable(code, prefix)
     extracted = f"{len(code)} chars via {method}" + (" (body only)" if prefix else "")
     if syntax_err is not None:
+        if method in ("whole", "whole_body") and not _STRONG_CODE_RE.search(code):
+            # unfenced prose that merely started a line with a python keyword ("if you have..."): no code at all
+            return Verdict.unparsed(expected, {"method": method, "error": syntax_err}, ["no_code"])
         return Verdict(False, "wrong", 0.0, extracted, expected, {"method": method, "kind": "syntax_error", "error": syntax_err},
                        ["syntax_error"])
     res = run_candidate(item, code)

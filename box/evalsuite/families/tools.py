@@ -21,7 +21,8 @@ Modes (--family-opt tools.mode=prompt|native, default prompt):
            `[]` / plain text = no call.  Works on any endpoint.
   native   the schemas are sent as OpenAI `tools` (tool_choice auto) and message.tool_calls is scored;
            text is NOT scored (a parseable call list left in the text is flagged text_calls_ignored so a
-           misconfigured tool parser is visible in aggregate()).
+           misconfigured tool parser is visible in aggregate()) - except on irrelevance items, where a call
+           left in the text is still a spurious call and must not be credited as "no call".
 
 Scoring = BFCL AST checker semantics: function name equality (dotted names are sanitised for the API and
 mapped back), every expected parameter present unless its possible-answer list contains "" (optional),
@@ -385,7 +386,10 @@ def _as_call(obj: Any) -> Optional[dict]:
         try:
             args = json.loads(args)
         except Exception:  # ValueError, RecursionError on absurd nesting
-            return {"name": name.strip(), "arguments": args, "_bad_args": True}
+            try:
+                args = ast.literal_eval(args)   # a single-quoted python dict is a common model spelling
+            except Exception:
+                return {"name": name.strip(), "arguments": args, "_bad_args": True}
     if args is None:
         args = {}
     return {"name": name.strip(), "arguments": args}
@@ -524,8 +528,11 @@ def calls_from_message(message: Optional[dict]) -> tuple[list[dict], list[str]]:
             try:
                 args = json.loads(args) if args.strip() else {}
             except Exception:  # ValueError, RecursionError on absurd nesting
-                flags.append("bad_arguments_json")
-                args = {"_raw": args}
+                try:
+                    args = ast.literal_eval(args)   # single-quoted python dict
+                except Exception:
+                    flags.append("bad_arguments_json")
+                    args = {"_raw": args}
         calls.append({"name": str(fn.get("name") or ""), "arguments": args if args is not None else {}})
     return calls, flags
 
@@ -555,6 +562,19 @@ def _num(v: Any) -> Optional[float]:
     return None
 
 
+def _num_eq(v: float, a: float) -> bool:
+    """Numeric equality against a possible answer.  BFCL compares numbers exactly; an integer-valued
+    ground truth therefore has to be hit exactly (a relative tolerance would accept 8000008 for
+    8000000).  Genuine floats keep a 1e-9 relative tolerance, which covers binary round-trip noise
+    (0.30000000000000004 for 0.3) and nothing a model could plausibly mean differently."""
+    try:
+        if float(a).is_integer() and float(v).is_integer():
+            return int(v) == int(a)
+        return abs(v - a) <= 1e-9 * max(1.0, abs(a))
+    except (OverflowError, ValueError):     # inf / nan
+        return False
+
+
 def value_matches(v: Any, alt: Any) -> bool:
     """Model value v vs ONE possible answer alt, with type coercion (BFCL checker semantics)."""
     if isinstance(alt, dict):
@@ -571,7 +591,7 @@ def value_matches(v: Any, alt: Any) -> bool:
         return isinstance(v, str) and v.strip().lower() == str(alt).lower()
     if _is_num(alt):
         n = _num(v)
-        return n is not None and abs(n - float(alt)) <= 1e-6 * max(1.0, abs(float(alt)))
+        return n is not None and _num_eq(n, float(alt))
     if isinstance(alt, str):
         na = _num(alt)
         if isinstance(v, str):
@@ -579,13 +599,13 @@ def value_matches(v: Any, alt: Any) -> bool:
             if na is not None and nv is not None:
                 # both numeric-looking: compare as numbers ONLY - the BFCL string standardisation would also
                 # strip the '.' and accept "15" for "1.5"
-                return abs(na - nv) <= 1e-6 * max(1.0, abs(na))
+                return _num_eq(nv, na)
             return _std(v) == _std(alt)
         if isinstance(v, bool):
             return _std(alt) == str(v).lower()
         if _is_num(v):
             if na is not None:
-                return abs(na - float(v)) <= 1e-6 * max(1.0, abs(na))
+                return _num_eq(float(v), na)
             return _std(str(v)) == _std(alt)
         return False
     return v == alt
@@ -725,7 +745,14 @@ def score(item: dict, response_text: str, meta: Optional[dict] = None) -> Verdic
             flags.append("tool_calls_in_prompt_mode")
     if calls is None:
         if item.get("subfamily") == "irrelevance":
-            v = Verdict(True, extracted=None, expected="no call", detail={"errors": [], "method": method})
+            if text_calls:
+                # native mode without a server-side tool parser: the model DID produce a call, in the text.
+                # Crediting it as "no call was made" would be a false positive, so irrelevance is judged on
+                # the text calls even when the AST sub-families ignore them.
+                v = score_calls(text_calls, item)
+                v.detail["method"], v.detail["mode"] = method, mode
+            else:
+                v = Verdict(True, extracted=None, expected="no call", detail={"errors": [], "method": method})
         else:
             v = Verdict.unparsed(item.get("answer"), {"errors": ["no_calls"], "method": method}, ["no_calls"])
         v.flags = list(dict.fromkeys(list(v.flags) + flags))
