@@ -69,7 +69,7 @@ run_eval_for(){ # tag
   # Sampling is Z.AI's own recipe (T=0.95, top_p=0.95, min_p=0) with reasoning_effort at its default max,
   # not the suite's house T=0.6 - the same class of error that cost every other model on this roster.
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls http://127.0.0.1:8000 --model m \
-    --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-5400}" --concurrency "${EVAL_CONC:-32}" \
+    --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-5400}" --concurrency "${EVAL_CONC:-96}" \
     --reasoning --max-tokens "${EVAL_MAXTOK:-32768}" \
     --max-tokens-family "${EVAL_CAPS:-math=32768,code=20480,knowledge=20480,ifeval=16384,tools=8192,longctx=6144}" \
     --temperature "${GLM_T:-0.95}" --top-p "${GLM_TOPP:-0.95}" --extra-body '{"min_p":0.0}' \

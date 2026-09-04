@@ -178,7 +178,7 @@ evalrun(){ # tag n dir  - the six-family quality suite against the servers that 
   local caps="${EVAL_CAPS:-math=32768,code=20480,knowledge=20480,ifeval=16384,tools=8192,longctx=6144}"
   [ "$MAXLEN" -lt 40000 ] && caps="${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=4096}"
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
-    --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency $(( 16 * n )) \
+    --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency "${EVAL_CONC:-$(( 32 * n ))}" \
     ${EVAL_REASONING:---reasoning} --max-tokens "${EVAL_MAXTOK:-32768}" --max-tokens-family "$caps" \
     $esamp ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
   # $esamp is the vendor's own sampling recipe from lists/profiles.tsv and it comes after --reasoning on
