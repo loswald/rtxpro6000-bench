@@ -1,0 +1,17 @@
+[03:55:57] ########## A: vLLM DP4 + EP, TP1 -- vLLM's own recommended layout ##########
+[03:58:28]   vLLM DP4 healthy 140s | GPU KV cache size: 192,946 tokens
+  CUDA graphs: Graph capturing finished in 27 secs, took 2.69 GiB
+  router     C256    148.2s     622 req/min     1326 out/s     10610 in/s     11937 tot/s  TTFT   6607/  17436 ms  TPOT 142.2/ 193.7 ms  ITL 142.2  E2E  24.7/ 34.7 s
+  router     C512    266.6s     691 req/min     1475 out/s     11798 in/s     13273 tot/s  TTFT   8332/  32264 ms  TPOT 283.7/ 351.6 ms  ITL 283.7  E2E  44.4/ 76.1 s
+  promptopt  C512    213.5s     863 req/min     3683 out/s     51562 in/s     55245 tot/s  TTFT   6973/  20059 ms  TPOT 112.1/ 134.7 ms  ITL 112.1  E2E  35.5/ 48.0 s
+[04:10:49] ########## B: SGLang 0.5.18, DP-attention + EP4 (the ombori layout) ##########
+[04:21:15]   SGLang FAILED to start -- capturing why
+[95/97]  /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile -MF /root/.cache/sglang/.cache/flashinfer/0.6.17/120f/cached_ops/fused_moe_120/moe_gemm_moe_gemm_kernels_fp16_uint8.cuda.o.d -DPy
+[96/97]  /usr/local/cuda/bin/nvcc --generate-dependencies-with-compile -MF /root/.cache/sglang/.cache/flashinfer/0.6.17/120f/cached_ops/fused_moe_120/moe_gemm_moe_gemm_kernels_fp8_uint4.cuda.o.d -DPy_
+Traceback (most recent call last):
+    raise EOFError
+EOFError
+Traceback (most recent call last):
+    raise _scheduler_died_error(i, scheduler_procs[i])
+RuntimeError: Rank 0 scheduler died during initialization (exit code: -3). If exit code is -9 (SIGKILL), a common cause is the OS OOM killer. Run `dmesg -T | grep -i oom` to check.
+[04:21:15] SGL-DS4 DONE

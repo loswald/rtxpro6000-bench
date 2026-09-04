@@ -10,11 +10,16 @@
    "http://127.0.0.1:8006",
    "http://127.0.0.1:8007"
   ],
-  "chat_template_kwargs": null,
+  "chat_template_kwargs": "{\"reasoning_effort\":\"high\"}",
   "concurrency": 128,
   "data_dir": "/workspace/bench/evalsuite/data",
   "dry_run": false,
-  "extra_body": {},
+  "extra_body": {
+   "chat_template_kwargs": {
+    "reasoning_effort": "high"
+   },
+   "top_k": 0
+  },
   "families": null,
   "family_names": null,
   "family_opt": [],
@@ -23,8 +28,15 @@
   "grace": 120.0,
   "limit": null,
   "list_families": false,
-  "max_tokens": 4096,
-  "max_tokens_family": {},
+  "max_tokens": 24576,
+  "max_tokens_family": {
+   "code": 14336,
+   "ifeval": 10240,
+   "knowledge": 14336,
+   "longctx": 2048,
+   "math": 20480,
+   "tools": 8192
+  },
   "model": "m",
   "no_manifest_check": false,
   "notes": "",
@@ -39,8 +51,8 @@
   "save_responses": "tail",
   "seed": 20260903,
   "tag": "gptoss20_--flashinfer_cutlass",
-  "temperature": 0.6,
-  "time_budget": 1200.0,
+  "temperature": 1.0,
+  "time_budget": 2400.0,
   "top_p": 0.95
  },
  "endpoint": {
@@ -74,5 +86,5 @@
  "hostname": "46521c2bbd9c",
  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
  "python": "3.12.3",
- "started_at": "2026-09-04T10:50:09Z"
+ "started_at": "2026-09-04T13:42:48Z"
 }

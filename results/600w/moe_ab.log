@@ -1,0 +1,20 @@
+[00:26:04] MoE backend A/B on gpt-oss-120b x4 (baseline: default = MARLIN, 6,860 out tok/s router C256 on host A)
+[00:26:15] === default ===  
+[00:27:46] default healthy in 90s — server selected: unknown
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/moe_default_quality20.json
+  -> router C256: 5099 out tok/s | promptopt C256: 6815 out tok/s | judge C64: 2888 out tok/s | 
+[00:30:03] === marlin === --moe-backend marlin 
+[00:31:23] marlin healthy in 80s — server selected: unknown
+quality20: 20 answers, 0 suspicious -> /workspace/results/probe/moe_marlin_quality20.json
+  -> router C256: 5181 out tok/s | promptopt C256: 6883 out tok/s | judge C64: 2961 out tok/s | 
+[00:33:36] === flashinfer_cutlass === --moe-backend flashinfer_cutlass 
+[00:34:16] flashinfer_cutlass REJECTED after 40s
+[00:34:27] === b12x === --moe-backend b12x 
+[00:35:07] b12x REJECTED after 40s
+[00:35:18] === flashinfer_b12x === --moe-backend flashinfer_b12x 
+[00:35:58] flashinfer_b12x REJECTED after 40s
+[00:36:09] === triton === --moe-backend triton 
+[00:36:49] triton REJECTED after 40s
+[00:37:01] === flashinfer_cutedsl === --moe-backend flashinfer_cutedsl 
+[00:37:41] flashinfer_cutedsl REJECTED after 40s
+[00:37:41] MOE-AB DONE

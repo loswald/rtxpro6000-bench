@@ -1,0 +1,17 @@
+# Comprehensive quality pass on the 600 W Server Edition box - the one whose numbers transfer to an actual
+# purchase, since everything measured since it was stopped ran on a 400 W-capped Workstation card.
+# Every model it already holds, four TP1 replicas wherever the model fits a 96 GB card.
+#
+# The three Qwen3.8-27B four-bit rows are the quantiser question asked properly: the same weights through
+# three independent quantisers, plus the FP8 release, on one box with one recipe and one seed.
+q27_nvfp4|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-
+q27_fp8|/workspace/models/Qwen3.8-27B-FP8|1|b12x:-
+q27_nvfp4_redhat|/workspace/models/Qwen27B-NVFP4-RedHat|1|-:-
+q27_nvfp4_unsloth|/workspace/models/Qwen27B-NVFP4-unsloth|1|-:-
+nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:flashinfer_cutlass
+muse30|/workspace/models/Muse-Glimmer-30B|1|-:-
+gemma26|/workspace/models/gemma-4-26B-A4B-it|1|-:-
+qwen36_fp8|/workspace/models/Qwen3.6-35B-A3B-FP8|1|b12x:-
+minimaxm3|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager
+inkling|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager
+qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-|--kv-cache-dtype|auto

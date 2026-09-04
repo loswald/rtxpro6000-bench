@@ -1,0 +1,16 @@
+[05:30:27] vendor site-packages: /workspace/glmimg/usr/local/lib/python3.12/dist-packages
+[05:30:27]   vendor vllm version: 0.7.4 and the
+[05:30:27]   glm5 model files: 0 present
+[05:30:27] does the vendor build import against our torch?
+  imported vllm 0.1.dev20051+g487ecf187 from /workspace/glmimg/usr/local/lib/python3.12/dist-packages/vll
+  glm5 archs: ['Glm5NextForCausalLM', 'Glm5NextForConditionalGeneration', 'Glm5NextMTPModel']
+[05:30:33] launching GLM-5.3-Flash TP4 with MTP speculation
+[05:33:39] GLM FAILED after 180s
+(EngineCore pid=254725) ERROR 09-03 05:33:22 [core.py:1355] RuntimeError: Worker failed with error 'concat_and_cache_mla, /workspace/csrc/libtorch_stable/cache_kernels.cu:866, pe_dim must be 64 for fp
+(EngineCore pid=254725) ERROR 09-03 05:33:25 [multiproc_executor.py:310] Worker proc VllmWorker-0 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=254725) Traceback (most recent call last):
+(EngineCore pid=254725)     raise RuntimeError(
+(EngineCore pid=254725) RuntimeError: Worker failed with error 'concat_and_cache_mla, /workspace/csrc/libtorch_stable/cache_kernels.cu:866, pe_dim must be 64 for fp8_ds_mla', please check the stack tr
+(APIServer pid=254257) Traceback (most recent call last):
+(APIServer pid=254257)     raise RuntimeError(
+(APIServer pid=254257) RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}

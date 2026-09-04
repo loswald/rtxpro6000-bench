@@ -1,0 +1,17 @@
+[08:17:10] ===== Qwen3.8-27B : NVFP4 vs FP8, same session, same shapes =====
+[08:17:10] --- FP8 control ---
+[08:17:15]   launch n_fp8 :: Qwen3.8-27B-FP8 --kernel-config.linear_backend b12x
+[08:18:55]   n_fp8 healthy 100s | GPU KV cache size: 1,524,208 tokens
+    kernel: Selected B12xFp8BlockScaledMMKernel
+  router     C256     99.8s    1238 req/min     2642 out/s     21137 in/s     23779 tot/s  TTFT   2616/   8060 ms  TPOT  76.9/  92.2 ms  ITL  76.9  E2E  12.4/ 18.5 s
+  router     C1024   335.7s    1475 req/min     3146 out/s     25170 in/s     28316 tot/s  TTFT   4378/  30517 ms  TPOT 292.7/ 319.4 ms  ITL 292.7  E2E  41.6/ 69.6 s
+  promptopt  C1024   706.3s     701 req/min     2992 out/s     41881 in/s     44873 tot/s  TTFT  11306/  61222 ms  TPOT 295.4/ 321.6 ms  ITL 295.4  E2E  86.6/138.0 s
+  judge      C512    753.6s     328 req/min     2799 out/s     22395 in/s     25194 tot/s  TTFT   7501/  59776 ms  TPOT 168.2/ 179.1 ms  ITL 168.2  E2E  93.5/150.1 s
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/n_fp8_quality20.json
+[08:52:36] --- NVFP4, sm_120 build ---
+[08:52:42]   launch n_nvfp4 :: Qwen27B-NVFP4-RTX5090 
+[08:54:32]   n_nvfp4 healthy 110s | GPU KV cache size: 1,815,893 tokens
+  router     C256    163.5s     753 req/min     1607 out/s     12859 in/s     14466 tot/s  TTFT   5352/  15877 ms  TPOT 118.3/ 151.6 ms  ITL 118.3  E2E  20.4/ 31.9 s
+  router     C1024   628.9s     783 req/min     1670 out/s     13363 in/s     15034 tot/s  TTFT   8928/  61847 ms  TPOT 546.6/ 601.3 ms  ITL 546.6  E2E  78.3/135.0 s
+  promptopt  C1024  1282.7s     384 req/min     1638 out/s     22925 in/s     24563 tot/s  TTFT  15837/ 125822 ms  TPOT 564.7/ 607.4 ms  ITL 564.7  E2E 159.8/270.9 s
+[09:31:48] NVTIER DONE (cut: W4A16 kernel mis-selected; explicit sweep in nvtier2)

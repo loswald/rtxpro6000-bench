@@ -93,8 +93,12 @@ day; see "GLM-5.3-Flash" below.
 
 ### 4× RTX PRO 6000 Blackwell, Workstation Edition, 400 W cap
 
-A second host, deliberately measured against the first. Absolute numbers here are ~25% lower for the power
-cap alone, so read them relatively; the controls are `c6_*` in `results/`.
+**These throughput numbers do not transfer to a purchase.** Scan sells the Server Edition; this host caps
+the same silicon at 400 W and loses 23% on NVFP4 and 34% on FP8 for that alone. The rows below are kept
+because they are internally consistent — same box, same session, same controls (`c6_*` in `results/`) — so
+they rank configurations and prove models feasible. For anything absolute, use the 600 W section above.
+Quality scores are the exception: accuracy does not depend on the power limit, so eval results from either
+box are directly comparable, which is why both hosts run the quality suite.
 
 | model (AA) | shape | out tok/s | in tok/s | TTFT p50 | tripwire |
 |---|---|---:|---:|---:|---|

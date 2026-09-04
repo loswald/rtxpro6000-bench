@@ -1,0 +1,17 @@
+[10:02:03] runtime: /workspace/sglimg2/usr/bin/python3.12  (python3.12)  site=/workspace/sglimg2/opt/sglang/lib/python3.12/site-packages
+[10:02:03] does the image's SGLang import and know glm5_next?
+  torch 2.13.0+cu130 | cuda ok: True | cap: (12, 0)
+  sglang 0.0.0.dev1+gf609d677b
+  glm5 archs: ['Glm5NextForConditionalGeneration', 'Glm5NextForConditionalGenerationNextN']
+  sgl_kernel 0.4.6.post1
+  tilelang 0.1.12
+  flashinfer 0.6.17
+[10:02:16] ===== GLM-5.3-Flash on SGLang, sm_120 =====
+[10:02:16] --- A: baseline, no speculation ---
+[10:02:21]   launch sglglm_base :: 
+[10:04:37]   sglglm_base healthy in 135s
+    KV Cache is allocated. dtype: torch.bfloat16, #tokens
+    KV Cache is allocated. dtype: torch.bfloat16, #tokens
+quality20[chat]: ok=0 degenerate=20 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[10:05:06]   quality only, skipping throughput
+[10:05:06] SGLGLM DONE

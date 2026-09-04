@@ -43,3 +43,60 @@
 2026-09-04T11:05:57Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
 2026-09-04T11:05:57Z   aggregate  acc_micro=0.712 acc_macro=0.7232 n=403/403 ci95=[0.6661, 0.7542] requests=403 retries=0 out_tok/s=3997.1
 2026-09-04T11:05:57Z wrote /workspace/results/eval/gemma26_nvfp4_---.json, /workspace/results/eval/gemma26_nvfp4_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+2026-09-04T14:00:05Z run gemma26_nvfp4_---: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['http://127.0.0.1:8000', 'http://127.0.0.1:8001', 'http://127.0.0.1:8002', 'http://127.0.0.1:8003', 'http://127.0.0.1:8004', 'http://127.0.0.1:8005', 'http://127.0.0.1:8006', 'http://127.0.0.1:8007'], concurrency 128, budget 2400s
+2026-09-04T14:00:05Z longctx: prepare_run ...
+2026-09-04T14:00:06Z longctx: calibrated -> {"budgets": {"16k": 16384, "32k": 29184, "8k": 8192}, "chars_per_token": {"docs": 4.5739, "filler": 4.3867}, "checks": {"niah_multikey": {"budget": 29184, "item": "longctx-niah-32k-d85-11", "prompt_tokens": 28270}, "qa_multi_doc": {"budget": 29184, "item": "longctx-qa-32k-d10-08", "prompt_tokens": 28557}, "var_tracking": {"budget": 29184, "item": "longctx-vt-32k-05", "prompt_tokens": 27960}}, "fixed_tokens": {"niah_multikey": 135, "qa_multi_doc": 33, "var_tracking": 203}, "max_model_len": 32768, "max_tokens": 2048, "method": "tokenize", "tokenize_calls": 12}
+2026-09-04T14:00:06Z ifeval: prepare_run ...
+2026-09-04T14:00:06Z ifeval: reasoning allowance on 60 items (caps now 10240..10240)
+2026-09-04T14:00:16Z [    10s] tools=24/70 code=0/75 math=0/80 longctx=0/48 knowledge=1/70 ifeval=0/60 inflight=128 req=153 retries=0 err=0 out_tok/s=1024 budget_left=2390s
+2026-09-04T14:00:26Z [    20s] tools=28/70 code=0/75 math=0/80 longctx=11/48 knowledge=3/70 ifeval=2/60 inflight=128 req=172 retries=0 err=0 out_tok/s=1016 budget_left=2380s
+2026-09-04T14:00:36Z [    30s] tools=30/70 code=4/75 math=0/80 longctx=16/48 knowledge=7/70 ifeval=4/60 inflight=128 req=189 retries=0 err=0 out_tok/s=1234 budget_left=2370s
+2026-09-04T14:00:46Z [    40s] tools=34/70 code=9/75 math=0/80 longctx=21/48 knowledge=7/70 ifeval=9/60 inflight=128 req=208 retries=0 err=0 out_tok/s=1508 budget_left=2360s
+2026-09-04T14:00:56Z [    50s] tools=36/70 code=9/75 math=1/80 longctx=31/48 knowledge=7/70 ifeval=12/60 inflight=128 req=224 retries=0 err=0 out_tok/s=1800 budget_left=2350s
+2026-09-04T14:01:06Z [    60s] tools=40/70 code=10/75 math=2/80 longctx=35/48 knowledge=9/70 ifeval=13/60 inflight=128 req=237 retries=0 err=0 out_tok/s=1824 budget_left=2340s
+2026-09-04T14:01:16Z [    70s] tools=40/70 code=11/75 math=2/80 longctx=37/48 knowledge=9/70 ifeval=16/60 inflight=128 req=243 retries=0 err=0 out_tok/s=1771 budget_left=2330s
+2026-09-04T14:01:26Z [    80s] tools=41/70 code=15/75 math=4/80 longctx=40/48 knowledge=10/70 ifeval=17/60 inflight=128 req=255 retries=0 err=0 out_tok/s=1921 budget_left=2320s
+2026-09-04T14:01:36Z [    90s] tools=44/70 code=18/75 math=6/80 longctx=43/48 knowledge=10/70 ifeval=19/60 inflight=128 req=268 retries=0 err=0 out_tok/s=2099 budget_left=2310s
+2026-09-04T14:01:46Z [   100s] tools=45/70 code=19/75 math=7/80 longctx=45/48 knowledge=10/70 ifeval=21/60 inflight=128 req=275 retries=0 err=0 out_tok/s=2149 budget_left=2300s
+2026-09-04T14:01:56Z [   110s] tools=47/70 code=20/75 math=8/80 longctx=46/48 knowledge=11/70 ifeval=21/60 inflight=128 req=281 retries=0 err=0 out_tok/s=2133 budget_left=2290s
+2026-09-04T14:02:06Z [   120s] tools=48/70 code=20/75 math=11/80 longctx=47/48 knowledge=13/70 ifeval=23/60 inflight=128 req=290 retries=0 err=0 out_tok/s=2471 budget_left=2280s
+2026-09-04T14:02:16Z [   130s] tools=50/70 code=23/75 math=13/80 longctx=48/48 knowledge=15/70 ifeval=28/60 inflight=128 req=305 retries=0 err=0 out_tok/s=2970 budget_left=2270s
+2026-09-04T14:02:26Z [   140s] tools=53/70 code=25/75 math=14/80 longctx=48/48 knowledge=16/70 ifeval=28/60 inflight=128 req=312 retries=0 err=0 out_tok/s=3011 budget_left=2260s
+2026-09-04T14:02:36Z [   150s] tools=56/70 code=28/75 math=15/80 longctx=48/48 knowledge=17/70 ifeval=37/60 inflight=128 req=329 retries=0 err=0 out_tok/s=3647 budget_left=2250s
+2026-09-04T14:02:46Z [   160s] tools=58/70 code=29/75 math=18/80 longctx=48/48 knowledge=18/70 ifeval=40/60 inflight=128 req=339 retries=0 err=0 out_tok/s=3806 budget_left=2240s
+2026-09-04T14:02:56Z [   170s] tools=62/70 code=32/75 math=19/80 longctx=48/48 knowledge=28/70 ifeval=41/60 inflight=128 req=358 retries=0 err=0 out_tok/s=4705 budget_left=2230s
+2026-09-04T14:03:06Z [   180s] tools=64/70 code=34/75 math=23/80 longctx=48/48 knowledge=36/70 ifeval=42/60 inflight=128 req=375 retries=0 err=0 out_tok/s=5421 budget_left=2220s
+2026-09-04T14:03:16Z [   190s] tools=67/70 code=36/75 math=26/80 longctx=48/48 knowledge=36/70 ifeval=44/60 inflight=128 req=513 retries=256 err=0 out_tok/s=5480 budget_left=2210s
+2026-09-04T14:03:26Z [   200s] tools=67/70 code=36/75 math=26/80 longctx=48/48 knowledge=36/70 ifeval=44/60 inflight=128 req=641 retries=384 err=0 out_tok/s=5206 budget_left=2200s
+2026-09-04T14:03:36Z [   210s] tools=67/70 code=36/75 math=26/80 longctx=48/48 knowledge=36/70 ifeval=44/60 inflight=128 req=641 retries=384 err=0 out_tok/s=4958 budget_left=2190s
+2026-09-04T14:03:46Z [   220s] tools=69/70 code=70/75 math=70/80 longctx=48/48 knowledge=68/70 ifeval=60/60 inflight=18 req=803 retries=418 err=128 out_tok/s=4733 budget_left=2180s
+2026-09-04T14:03:56Z [   230s] tools=69/70 code=70/75 math=70/80 longctx=48/48 knowledge=68/70 ifeval=60/60 inflight=18 req=823 retries=438 err=128 out_tok/s=4527 budget_left=2170s
+2026-09-04T14:04:06Z [   240s] tools=69/70 code=70/75 math=70/80 longctx=48/48 knowledge=68/70 ifeval=60/60 inflight=18 req=823 retries=438 err=128 out_tok/s=4339 budget_left=2160s
+2026-09-04T14:04:16Z == gemma26_nvfp4_--- model=m wall=249.9s truncated=False valid=False ['error rate 146/403 > 5%']
+2026-09-04T14:04:16Z   tools      acc=0.866 n=67/70 ci95=[0.764,0.928] out_tok=420.4 trunc=0.0 err=3 
+2026-09-04T14:04:16Z     parallel_multiple acc=0.700 n=10/10 ci95=[0.397,0.892]
+2026-09-04T14:04:16Z     parallel         acc=1.000 n=15/15 ci95=[0.796,1.000]
+2026-09-04T14:04:16Z     multiple         acc=0.867 n=15/15 ci95=[0.621,0.963]
+2026-09-04T14:04:16Z     simple           acc=1.000 n=17/20 ci95=[0.816,1.000]
+2026-09-04T14:04:16Z     irrelevance      acc=0.600 n=10/10 ci95=[0.313,0.832]
+2026-09-04T14:04:16Z   code       acc=0.639 n=36/75 ci95=[0.476,0.775] out_tok=4696.8 trunc=0.1389 err=39 
+2026-09-04T14:04:16Z     lcb_easy_medium  acc=0.167 n=6/30 ci95=[0.030,0.564]
+2026-09-04T14:04:16Z     humanevalplus    acc=0.917 n=12/25 ci95=[0.646,0.985]
+2026-09-04T14:04:16Z     mbppplus         acc=0.611 n=18/20 ci95=[0.386,0.797]
+2026-09-04T14:04:16Z   math       acc=0.962 n=26/80 ci95=[0.811,0.993] out_tok=8518.1 trunc=0.0 err=54 
+2026-09-04T14:04:16Z     aime25           acc=1.000 n=8/30 ci95=[0.676,1.000]
+2026-09-04T14:04:16Z     hmmt25           acc=0.833 n=6/30 ci95=[0.436,0.970]
+2026-09-04T14:04:16Z     math500_hard     acc=1.000 n=12/20 ci95=[0.757,1.000]
+2026-09-04T14:04:16Z   longctx    acc=0.667 n=48/48 ci95=[0.525,0.783] out_tok=1011.0 trunc=0.2917 err=0 
+2026-09-04T14:04:16Z     niah_multikey    acc=0.958 n=24/24 ci95=[0.798,0.993]
+2026-09-04T14:04:16Z     var_tracking     acc=0.000 n=12/12 ci95=[0.000,0.242]
+2026-09-04T14:04:16Z     qa_multi_doc     acc=0.750 n=12/12 ci95=[0.468,0.911]
+2026-09-04T14:04:16Z   knowledge  acc=0.278 n=36/70 ci95=[0.159,0.440] out_tok=8976.3 trunc=0.4722 err=34 
+2026-09-04T14:04:16Z     mmlu_pro_hard    acc=0.588 n=17/40 ci95=[0.360,0.784]
+2026-09-04T14:04:16Z     simpleqa         acc=0.000 n=19/30 ci95=[0.000,0.168]
+2026-09-04T14:04:16Z   ifeval     acc=0.614 n=44/60 ci95=[0.466,0.743] out_tok=5709.3 trunc=0.3636 err=16 
+2026-09-04T14:04:16Z     triple           acc=0.438 n=16/24 ci95=[0.231,0.668]
+2026-09-04T14:04:16Z     double           acc=0.500 n=16/24 ci95=[0.280,0.720]
+2026-09-04T14:04:16Z     single           acc=1.000 n=12/12 ci95=[0.757,1.000]
+2026-09-04T14:04:16Z   aggregate  acc_micro=0.681 acc_macro=0.6707 n=257/403 ci95=[0.6216, 0.7349] requests=841 retries=438 out_tok/s=4168.0
+2026-09-04T14:04:16Z wrote /workspace/results/eval/gemma26_nvfp4_---.json, /workspace/results/eval/gemma26_nvfp4_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 1

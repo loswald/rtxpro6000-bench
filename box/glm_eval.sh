@@ -33,7 +33,7 @@ exec python3 -m vllm.entrypoints.openai.api_server \\
   --tensor-parallel-size 4 --attention-backend FLASHINFER_MLA_SPARSE_SM90 \\
   --kv-cache-dtype auto --block-size 1024 --max-model-len 40960 --max-num-seqs 256 \\
   --max-num-batched-tokens 8192 --gpu-memory-utilization 0.90 \\
-  --reasoning-parser glm47 --tool-call-parser glm47 --enable-auto-tool-choice \\
+  --reasoning-parser glm45 --tool-call-parser glm47 --enable-auto-tool-choice \\
   --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \\
   --no-enable-flashinfer-autotune \\
   ${SPEC:+--speculative-config '$SPEC'} \\
@@ -61,14 +61,19 @@ L
 run_eval_for(){ # tag
   local tag="$1"
   [ -f "$R/eval/$tag.json" ] && { log "  $tag already evaluated"; return 0; }
-  # This model reasons, and the server strips it into the reasoning field via deepseek_r1, so the scorers
-  # see only the answer. No meaningful token cap: at the old budget half the maths items finished on it,
-  # which measured the cap rather than the model. Time is the only limit, and running out of time marks an
-  # item skipped (excluded from accuracy) where running out of tokens marked it wrong.
+  # The server separates thinking into the reasoning field via --reasoning-parser glm45, so the scorers see
+  # only the answer. No meaningful token cap: at the old budget half the maths items finished on it, which
+  # measured the cap rather than the model. Time is the only limit, and running out of time marks an item
+  # skipped (excluded from accuracy) where running out of tokens marked it wrong.
+  #
+  # Sampling is Z.AI's own recipe (T=0.95, top_p=0.95, min_p=0) with reasoning_effort at its default max,
+  # not the suite's house T=0.6 - the same class of error that cost every other model on this roster.
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls http://127.0.0.1:8000 --model m \
     --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-5400}" --concurrency "${EVAL_CONC:-32}" \
     --reasoning --max-tokens "${EVAL_MAXTOK:-24576}" \
     --max-tokens-family "${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=2048}" \
+    --temperature "${GLM_T:-0.95}" --top-p "${GLM_TOPP:-0.95}" --extra-body '{"min_p":0.0}' \
+    --chat-template-kwargs '{"reasoning_effort":"max"}' \
     ${EVAL_ARGS:-} 2>&1 | tail -12 | sed 's/^/    eval: /'
 }
 

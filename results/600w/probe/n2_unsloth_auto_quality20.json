@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "We need answer user's request: \"What is 17*23? Reply with just the number.\" Need final just number. Compute 17*23 = 391. Ensure no extra.\n</think>\n\n391",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.962,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "We need answer user's simple math. Need final just number. Compute: 60 km in 45 min = 0.75 h. speed = 60/0.75 = 80 km/h. Reply just 80.\n</think>\n\n80",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.867,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "We need answer user: \"Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.\" Need provide code likely concise. Need final. Need consider indexing: n-th Fibonacci number ambiguous. Usually fib(0)=0, fib(1)=1. Iterative. Could include validation. Need maybe mention if 1-indexed adjust. Provide function.\n</think>\n\n```python\ndef fib(n):\n    \"\"\"Return the n-th Fibonacci number, with fib(0) = 0 and fib(1) = 1.\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nExample:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(10)) # 55\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.765,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "We need answer user: \"Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\"\nNeed provide SQL. Need likely include join, group by, sum, order desc, limit 3. Maybe handle customers with no orders? Top 3 by total order value; if no orders total 0? Usually only customers with orders. Could use INNER JOIN. If want include customers with no orders, LEFT JOIN and COALESCE. But top 3 by total order value likely customers with orders. Need maybe tie handling? Could mention if ties, use window function or LIMIT may be arbitrary. Simple answer.\nNeed final concise with query. Ensure SQL standard? LIMIT is common; for SQL Server use TOP 3. Could provide both. User didn't specify dialect. Provide generic with LIMIT and note TOP for SQL Server. Maybe:\nSELECT c.id, c.name, SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n\nIf SQL Server:\nSELECT TOP 3 ...\n\nNeed maybe include customers with no orders:\nLEFT JOIN ... GROUP BY ... ORDER BY COALESCE(SUM(o.amount),0) DESC LIMIT 3;\nBut if top by total order value, customers with no orders could be top if all negative? Amount likely positive. If include no orders, they'd have 0 and may appear if fewer than 3 customers with orders. But \"top 3 customers by total order value\" from orders likely only those with orders. Could mention optional.\nFinal with code block.\n</think>\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON o.customer_id = c.id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC\nLIMIT 3;\n```\n\nIf you are using SQL Server, use `TOP 3` instead of `LIMIT 3`:\n\n```sql\nSELECT TOP 3\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON o.customer_id = c.id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC;\n```",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.467,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "We need to answer user: \"Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.\"\n\nNeed final: rate 1-5 and brief explanation. Correct capital is Canberra, Sydney is not capital. So answer incorrect. Rate likely 1. Need maybe 1/5. Brief.\n</think>\n\n1/5 \u2014 The capital of Australia is Canberra, not Sydney.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.778,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "We need answer user's request: \"Translate to French: The meeting has been moved to Thursday afternoon.\" Simple. Need final only translation likely. Need ensure French: \"La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" Or \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" In French, meeting moved/postponed: report\u00e9e. If moved to another time, \"report\u00e9e \u00e0 jeudi apr\u00e8s-midi\" is natural. \"d\u00e9plac\u00e9e\" possible but less idiomatic. Need maybe include article? \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\" Good.\n</think>\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.647,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "We need to respond to user: \"Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\"\n\nNeed produce one sentence summary. Keep concise. Final only one sentence.\n</think>\n\nLarge language models, trained on massive text corpora, can handle many tasks without task-specific training but may occasionally generate false facts.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.797,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "We need answer user: \"List three differences between TCP and UDP.\" Simple. Need final concise. Ensure no hidden issues. Provide three differences: connection-oriented vs connectionless, reliability/ordering vs best-effort, overhead/flow control vs low latency.\n</think>\n\n1. **Connection-oriented vs. connectionless**: TCP establishes a connection before sending data; UDP does not.\n2. **Reliability**: TCP guarantees delivery, ordering, and error checking; UDP is best-effort and may lose or reorder packets.\n3. **Overhead and speed**: TCP has more overhead due to handshakes and flow control; UDP is lighter and faster.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.835,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "We need to respond to user: \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\"\n\nNeed produce final answer likely just rewritten sentence. Need ensure outcome opposite: training converged slower? Original cause larger batch size led faster convergence. Counterfactual rewrite so outcome opposite. Could be \"Because the experiment used a larger batch size, training converged slower.\" But is that logically opposite? They ask rewrite sentence so outcome is opposite. Keep cause? Counterfactual maybe change outcome only. \"Because the experiment used a larger batch size, training converged slower.\" That's direct. Could also \"Because the experiment used a smaller batch size, training converged slower\"? But outcome opposite means faster -> slower. The cause maybe unchanged? Counterfactual often flips outcome while keeping antecedent? Let's parse: \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\" They want sentence with opposite outcome. So: \"Because the experiment used a larger batch size, training converged slower.\" That's enough. Maybe \"Although the experiment used a larger batch size, training converged slower.\" But original causal because. Keep structure. Final concise.\n</think>\n\nBecause the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 7,
+  "distinct": 0.422,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "We need answer user's request: \"Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.\" Need final only JSON. Need ensure valid JSON. Fields name, age, city. age likely number 34. name \"Maria Lopez\", city \"Lisbon\". No extra text.\n</think>\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.839,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "We need to answer user: \"Explain why the sky is blue in two sentences.\" Need final exactly two sentences. Keep concise.\n</think>\n\nSunlight contains all colors, and when it enters Earth's atmosphere, shorter blue wavelengths scatter more strongly than longer red wavelengths. This scattered blue light reaches our eyes from all directions, making the sky appear blue.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.895,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "We need answer simple derivative. Need final. Compute derivative of x^3 sin x using product rule: 3x^2 sin x + x^3 cos x. Could mention.\n</think>\n\nThe derivative of \\(x^3 \\sin(x)\\) is:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right) = 3x^2 \\sin x + x^3 \\cos x\n\\]\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}(uv) = u'v + uv'\n\\]\n\nwhere \\(u = x^3\\) and \\(v = \\sin x\\).",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.692,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "We need answer user: \"Give a regex that matches a UK postcode.\" Need provide regex. Need think about UK postcode formats. Need likely concise but maybe include explanation. Need final. Need decide regex. UK postcodes: formats:\nA9 9AA, A9A 9AA, A9 9AB, AA9 9AA, AA9A 9AA, AA9 9AB.\nOutward code: 1-2 letters, then either digit+letter? Let's recall official:\n- A9 9AA\n- A9A 9AA\n- A9 9AB\n- AA9 9AA\n- AA9A 9AA\n- AA9 9AB\nWhere A is letter, 9 digit.\nNo spaces? Usually include optional space. Need regex matching UK postcode. Could be:\n^(?:[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2})$\nBut need ensure not match A9 9A? Let's test: [A-Z]{1,2}\\d[A-Z\\d]? then space then \\d[A-Z]{2}. This allows outward: A9, A9A, AA9, AA9A. Inward: 9AA. It also allows A9 9AA, A9A 9AA, AA9 9AA, AA9A 9AA. It also allows A9 9AB? inward \\d[A-Z]{2} yes. It allows AA9 9AB. Good. But does it allow A99 9AA? No because after first digit optional one char then space, so A99 would have second digit before space? [A-Z]{1,2}\\d[A-Z\\d]? then space: A99 -> A, 9, optional 9, then space? Actually A99 9AA: [A-Z]{1,2}=A, \\d=9, [A-Z\\d]?=9, then space, yes it would match A99 9AA, which is invalid? Outward code can be A9 or A9A, not A99. So optional [A-Z\\d] allows digit, invalid. Need restrict optional char to letter? But formats include A9A, AA9A, not A99. So optional should be [A-Z]? But what about A9 9AA: optional absent. AA9 9AA: [A-Z]{1,2}=AA, \\d=9, optional absent. AA9A: optional A. So regex: ^[A-Z]{1,2}\\d[A-Z]? ?\\d[A-Z]{2}$ (case-insensitive). But does it allow A9A 9AA yes. Does it allow A9 9AA yes. Does it allow AA9 9AA yes. Does it allow AA9A 9AA yes. Does it allow A9 9AB yes. Does it allow AA9 9AB yes. Does it allow A9A 9AB yes. Does it allow AA9A 9AB yes. Good.\nBut is there format A9 9AA with no space? Usually can omit space. Regex with optional space. Could also allow lowercase with i flag.\nNeed maybe more precise: ^(?i:[A-Z]{1,2}\\d[A-Z]? ?\\d[A-Z]{2})$ but Python? Use re.I.\nBut there are edge cases: UK postcode letters exclude C, I, K, M, O, V? Actually postcodes do not use C, I, K, M, O, V? Let's verify: UK postcode letters: A-Z except C, I, K, M, O, V? I think postcodes do not use C, I, K, M, O, V? Wait: UK postcodes: letters A-Z except C, I, K, M, O, V? Let's recall: \"Postcodes do not use the letters C, I, K, M, O, V\" maybe yes? Actually Royal Mail: letters used are A-Z except C, I, K, M, O, V? Let's check memory: UK postcode: \"The letters C, I, K, M, O and V are not used in postcodes.\" I think yes. But many regexes just use A-Z. If user asks simple, likely acceptable. Could provide robust with excluded letters: [ABDEFGHJLNPRSTUWXYZ]? Need list: A B D E F G H J L N P R S T U W X Y Z? Let's derive: alphabet A-Z excluding C,I,K,M,O,V. A, B, C excluded, D, E, F, G, H, I excluded, J, K excluded, L, M excluded, N, O excluded",
+  "reasoning_chars": 0,
+  "finish": "length",
+  "top6gram": 6,
+  "distinct": 0.478,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "We need answer user's riddle. Need final just number. Bat + ball = 1.10. Bat = ball + 1.00. Let ball x, bat x+1. 2x+1=1.10 => 2x=0.10 => x=0.05. Reply just number likely 0.05. Ensure no extra.\n</think>\n\n0.05",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.821,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "We need to answer user: \"Complete the proverb and explain it: A stitch in time\". Need final answer. Simple. Need maybe complete: \"A stitch in time saves nine.\" Explain meaning: small timely effort prevents bigger problem later. Could mention origin? Keep concise. Ensure no analysis outside? final only.\n</think>\n\n**A stitch in time saves nine.**\n\n**Explanation:**  \nThis proverb means that dealing with a small problem early can prevent it from becoming a much bigger problem later. For example, fixing a small tear in clothing right away can stop it from growing into a large tear that requires more work to repair.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.752,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "We need to respond to user: \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?\" Simple. Need final answer. Need maybe concise. Ensure judge tone. Answer A correct because Paris is capital; Lyon is major city but not capital.\n</think>\n\nAnswer A: **Paris** is correct.\n\n**Why:** Paris is the official capital of France. Lyon is a major French city, but it is not the capital.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.659,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "We need to respond to user: \"Write a haiku about GPUs.\" Need final only haiku likely 5-7-5. Need ensure about GPUs. Could be:\n\"Green pixels bloom fast\" 5? Green(1) pix(1) els(1) bloom(1) fast(1) =5.\n\"thousands of cores hum in heat\" thousands(2?) let's count syllables: thou-sands (2) of(1) cores(1) hum(1) in(1) heat(1) =7? 2+1+1+1+1+1=7. Good.\n\"frames render in light\" frames(1) ren-der(2) in(1) light(1)=5. Total 5-7-5. About GPUs. Final just haiku.\n</think>\n\nGreen pixels bloom fast\nthousands of cores hum in heat\nframes render in light",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.81,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "We need answer user: Convert 98.6 Fahrenheit to Celsius, show formula. Simple. Need final with formula and calculation. 98.6 F is normal body temp = 37 C. Formula C = (F - 32) * 5/9. (98.6-32)=66.6; *5/9 = 33.333...? Wait 66.6*5=333; /9=37. Yes.\n</think>\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nSubstitute \\(F = 98.6\\):\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 37\n\\]\n\nSo, **98.6\u00b0F = 37\u00b0C**.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.651,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "We need answer user: \"Name the process by which plants make food and give its chemical equation.\" Simple biology/chemistry. Need final concise. Process: photosynthesis. Chemical equation: 6CO2 + 6H2O -> C6H12O6 + 6O2 in presence of sunlight/chlorophyll. Could mention light energy. Ensure balanced. Maybe word equation: carbon dioxide + water -> glucose + oxygen. Need final.\n</think>\n\nThe process is **photosynthesis**.\n\nChemical equation:\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight/chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nCarbon dioxide + water \u2192 glucose + oxygen.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.787,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "We need to respond to user: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need final only valid JSON. Ensure no markdown. Keys a,b,c values 1,2,3. JSON: {\"a\":1,\"b\":2,\"c\":3}\n</think>\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.812,
+  "verdict": "ok"
+ }
+]

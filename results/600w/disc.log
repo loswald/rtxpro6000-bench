@@ -1,0 +1,9 @@
+[07:35:44] === graphs_off :: EXTRA_ARGS=--disable-cuda-graph
+[08:12:15]     graphs_off -> healthy in 135s | quality20[chat]: ok=0 degenerate=20 wrong=0 error=0 -> /workspace/results/probe/sglglm_mtp_quality20.json
+[08:12:20] === moe_cutedsl :: MOE_BACKEND=flashinfer_cutedsl
+[08:13:18]     moe_cutedsl -> FAILED after 15s | no verdict
+      Traceback (most recent call last):
+      AssertionError: Invalid quantization 'None'. 
+[08:13:23] === moe_triton :: MOE_BACKEND=triton
+[08:16:41]     moe_triton -> healthy in 135s | quality20[chat]: ok=1 degenerate=19 wrong=0 error=0 -> /workspace/results/probe/sglglm_base_quality20.json
+[08:16:41] DISC DONE

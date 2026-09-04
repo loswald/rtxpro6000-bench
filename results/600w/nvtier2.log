@@ -1,0 +1,77 @@
+[10:14:29] ===== Qwen3.8-27B NVFP4 (W4A4 checkpoint) : explicit kernel backends on sm_120 =====
+[10:14:29] --- modelopt build, linear_backend=b12x ---
+[10:14:34]   launch n2_b12x :: --kernel-config.linear_backend b12x
+[10:16:25]   n2_b12x healthy 110s | GPU KV cache size: 1,818,375 tokens
+    kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/n2_b12x_quality20.json
+  router     C256     61.3s    2010 req/min     4288 out/s     34304 in/s     38592 tot/s  TTFT   1431/   4240 ms  TPOT  48.8/  56.6 ms  ITL  48.8  E2E   7.6/ 10.8 s
+  router     C1024   203.7s    2419 req/min     5161 out/s     41286 in/s     46446 tot/s  TTFT   2403/  16686 ms  TPOT 180.4/ 193.8 ms  ITL 180.4  E2E  25.3/ 40.8 s
+  promptopt  C1024   437.6s    1126 req/min     4804 out/s     67260 in/s     72064 tot/s  TTFT   4453/  33576 ms  TPOT 195.8/ 209.2 ms  ITL 195.8  E2E  54.4/ 82.9 s
+  judge      C512    477.7s     516 req/min     4400 out/s     35203 in/s     39603 tot/s  TTFT   4048/  32105 ms  TPOT 108.4/ 113.9 ms  ITL 108.4  E2E  59.4/ 89.7 s
+[10:38:18] --- modelopt build, linear_backend=flashinfer_b12x ---
+[10:38:23]   launch n2_flashinfer_b12x :: --kernel-config.linear_backend flashinfer_b12x
+[10:41:44]   n2_flashinfer_b12x healthy 200s | GPU KV cache size: 1,812,169 tokens
+    kernel: Using FlashInferB12xNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/n2_flashinfer_b12x_quality20.json
+[11:54:01] ===== Qwen3.8-27B NVFP4 (W4A4 checkpoint) : explicit kernel backends on sm_120 =====
+[11:54:01] --- modelopt build, linear_backend=b12x ---
+[11:54:01]   n2_b12x already measured, skipping
+[11:54:01] --- modelopt build, linear_backend=flashinfer_b12x ---
+[11:54:06]   launch n2_flashinfer_b12x :: --kernel-config.linear_backend flashinfer_b12x
+[11:55:56]   n2_flashinfer_b12x healthy 110s | GPU KV cache size: 1,812,169 tokens
+    kernel: Using FlashInferB12xNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/n2_flashinfer_b12x_quality20.json
+  router     C256     61.3s    2018 req/min     4304 out/s     34435 in/s     38739 tot/s  TTFT   1397/   4258 ms  TPOT  48.9/  56.4 ms  ITL  48.9  E2E   7.6/ 10.7 s
+  router     C1024   202.8s    2429 req/min     5182 out/s     41459 in/s     46641 tot/s  TTFT   2379/  16531 ms  TPOT 179.8/ 193.1 ms  ITL 179.8  E2E  25.2/ 40.6 s
+  promptopt  C1024   434.0s    1135 req/min     4842 out/s     67784 in/s     72625 tot/s  TTFT   4426/  33222 ms  TPOT 194.3/ 206.9 ms  ITL 194.3  E2E  54.0/ 82.5 s
+  judge      C512    472.7s     521 req/min     4448 out/s     35582 in/s     40030 tot/s  TTFT   4076/  31781 ms  TPOT 107.1/ 112.6 ms  ITL 107.1  E2E  58.8/ 88.8 s
+[12:17:41] --- modelopt build, linear_backend=flashinfer_cutedsl ---
+[12:17:46]   launch n2_flashinfer_cutedsl :: --kernel-config.linear_backend flashinfer_cutedsl
+[12:20:57]   n2_flashinfer_cutedsl healthy 190s | GPU KV cache size: 1,815,893 tokens
+    kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/n2_flashinfer_cutedsl_quality20.json
+  router     C256    163.5s     754 req/min     1608 out/s     12863 in/s     14471 tot/s  TTFT   5308/  15873 ms  TPOT 118.6/ 151.6 ms  ITL 118.6  E2E  20.4/ 31.9 s
+  router     C1024   628.6s     783 req/min     1671 out/s     13365 in/s     15036 tot/s  TTFT   8926/  61473 ms  TPOT 546.5/ 594.9 ms  ITL 546.5  E2E  78.3/134.6 s
+  promptopt  C1024  1283.7s     384 req/min     1637 out/s     22918 in/s     24555 tot/s  TTFT  15834/ 125807 ms  TPOT 564.9/ 607.2 ms  ITL 564.9  E2E 159.9/270.8 s
+  judge      C512   1295.7s     190 req/min     1621 out/s     12965 in/s     14585 tot/s  TTFT  15013/ 120148 ms  TPOT 286.8/ 308.0 ms  ITL 286.8  E2E 161.6/274.9 s
+[13:19:24] --- modelopt build, linear_backend=cutlass ---
+[13:19:29]   launch n2_cutlass :: --kernel-config.linear_backend cutlass
+[13:22:29]   n2_cutlass healthy 180s | GPU KV cache size: 1,817,134 tokens
+    kernel: Using CutlassNvFp4LinearKernel for NVFP4 GEMM
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/n2_cutlass_quality20.json
+  router     C256     62.7s    1964 req/min     4191 out/s     33527 in/s     37718 tot/s  TTFT   1360/   4084 ms  TPOT  50.8/  58.3 ms  ITL  50.8  E2E   7.8/ 10.9 s
+  router     C1024   203.3s    2425 req/min     5173 out/s     41386 in/s     46559 tot/s  TTFT   2365/  16156 ms  TPOT 180.2/ 193.0 ms  ITL 180.2  E2E  25.2/ 40.0 s
+  promptopt  C1024   434.4s    1135 req/min     4841 out/s     67776 in/s     72617 tot/s  TTFT   4347/  33116 ms  TPOT 194.5/ 207.0 ms  ITL 194.5  E2E  54.0/ 82.7 s
+  judge      C512    477.4s     515 req/min     4398 out/s     35186 in/s     39584 tot/s  TTFT   3917/  31587 ms  TPOT 108.7/ 113.9 ms  ITL 108.7  E2E  59.5/ 89.2 s
+[13:44:27] --- RedHat build, auto ---
+[13:44:32]   launch n2_RedHat_auto :: 
+[13:48:13]   n2_RedHat_auto healthy 220s | GPU KV cache size: 1,707,907 tokens
+    kernel: Selected CutlassFP8ScaledMMLinearKernel
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/n2_RedHat_auto_quality20.json
+  router     C256    136.4s     903 req/min     1926 out/s     15405 in/s     17331 tot/s  TTFT   4239/  12706 ms  TPOT 100.5/ 126.0 ms  ITL 100.5  E2E  17.0/ 26.3 s
+  router     C1024   513.1s     960 req/min     2048 out/s     16382 in/s     18430 tot/s  TTFT   7120/  48975 ms  TPOT 447.0/ 491.8 ms  ITL 447.0  E2E  63.9/108.6 s
+  promptopt  C1024  1052.5s     468 req/min     1996 out/s     27940 in/s     29935 tot/s  TTFT  12786/ 100742 ms  TPOT 464.0/ 502.5 ms  ITL 464.0  E2E 131.1/219.3 s
+  judge      C512   1070.9s     230 req/min     1963 out/s     15705 in/s     17668 tot/s  TTFT  11718/  95614 ms  TPOT 238.1/ 254.7 ms  ITL 238.1  E2E 133.4/223.7 s
+[14:36:47] --- RedHat build, b12x ---
+[14:36:52]   launch n2_RedHat_b12x :: --kernel-config.linear_backend b12x
+[14:37:53]   n2_RedHat_b12x FAILED after 40s
+(EngineCore pid=510388) ERROR 09-03 14:37:26 [core.py:1374] EngineCore failed to start.
+(EngineCore pid=510388) ERROR 09-03 14:37:26 [core.py:1374] Traceback (most recent call last):
+(EngineCore pid=510388) ERROR 09-03 14:37:26 [core.py:1374]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1336, in run_engine_core
+[14:37:53] --- unsloth build, auto ---
+[14:37:58]   launch n2_unsloth_auto :: 
+[14:41:39]   n2_unsloth_auto healthy 220s | GPU KV cache size: 1,707,907 tokens
+    kernel: Selected CutlassFP8ScaledMMLinearKernel
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/n2_unsloth_auto_quality20.json
+  router     C256    136.2s     904 req/min     1928 out/s     15421 in/s     17348 tot/s  TTFT   4294/  12719 ms  TPOT  99.9/ 125.7 ms  ITL  99.9  E2E  17.0/ 26.3 s
+  router     C1024   513.4s     960 req/min     2048 out/s     16384 in/s     18431 tot/s  TTFT   7128/  49147 ms  TPOT 446.9/ 484.2 ms  ITL 446.9  E2E  63.9/108.9 s
+  promptopt  C1024  1053.4s     468 req/min     1996 out/s     27938 in/s     29933 tot/s  TTFT  12686/ 100592 ms  TPOT 464.5/ 498.2 ms  ITL 464.5  E2E 131.1/219.8 s
+  judge      C512   1072.7s     230 req/min     1961 out/s     15689 in/s     17650 tot/s  TTFT  11855/  95644 ms  TPOT 238.1/ 255.2 ms  ITL 238.1  E2E 133.5/223.8 s
+[15:30:14] --- unsloth build, b12x ---
+[15:30:19]   launch n2_unsloth_b12x :: --kernel-config.linear_backend b12x
+[15:31:19]   n2_unsloth_b12x FAILED after 40s
+(EngineCore pid=525121) ERROR 09-03 15:30:52 [core.py:1374] EngineCore failed to start.
+(EngineCore pid=525121) ERROR 09-03 15:30:52 [core.py:1374] Traceback (most recent call last):
+(EngineCore pid=525121) ERROR 09-03 15:30:52 [core.py:1374]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1336, in run_engine_core
+[15:31:19] --- modelopt build, b12x + DSpark drafter ---
+[15:31:24]   launch n2_b12x_dspark :: --kernel-config.linear_backend b12x --speculative-config {"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":7,"draft_tensor_parallel_size":1}

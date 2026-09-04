@@ -1,76 +1,92 @@
 {
  "aggregate": {
-  "acc_macro": 0.7232,
-  "acc_micro": 0.7122,
-  "acc_strict": 0.7122,
+  "acc_macro": 0.6707,
+  "acc_micro": 0.6809,
+  "acc_strict": 0.4342,
   "answer_from_reasoning": 0,
   "ci95": [
-   0.6661,
-   0.7542
+   0.6216,
+   0.7349
   ],
-  "degenerate_rate": 0.0347,
-  "gpu_minutes": 17.056,
-  "mean_out_tokens": 1268.7,
-  "mean_prompt_tokens": 2340.9,
-  "mean_score": 0.7345,
+  "degenerate_rate": 0.1634,
+  "gpu_minutes": 33.321,
+  "mean_out_tokens": 4052.9,
+  "mean_prompt_tokens": 3471.0,
+  "mean_score": 0.6877,
   "n_attempted": 403,
   "n_cancelled": 0,
-  "n_correct": 287,
-  "n_error": 0,
+  "n_correct": 175,
+  "n_error": 146,
   "n_planned": 403,
-  "n_scored": 403,
+  "n_scored": 257,
   "n_skipped": 0,
-  "out_tokens_per_s": 3997.1,
-  "p50_item_s": 11.26,
-  "p50_out_tokens": 331,
-  "p90_item_s": 44.84,
+  "out_tokens_per_s": 4168.0,
+  "p50_item_s": 44.98,
+  "p50_out_tokens": 1602,
+  "p90_item_s": 173.87,
   "per_url": {
    "http://127.0.0.1:8000": {
-    "completion_tokens": 88831,
-    "requests": 51
+    "completion_tokens": 166094,
+    "errors": 76,
+    "requests": 108,
+    "retries": 57
    },
    "http://127.0.0.1:8001": {
-    "completion_tokens": 35082,
-    "requests": 51
+    "completion_tokens": 143816,
+    "errors": 78,
+    "requests": 112,
+    "retries": 61
    },
    "http://127.0.0.1:8002": {
-    "completion_tokens": 63703,
-    "requests": 51
+    "completion_tokens": 142512,
+    "errors": 74,
+    "requests": 107,
+    "retries": 56
    },
    "http://127.0.0.1:8003": {
-    "completion_tokens": 46345,
-    "requests": 50
+    "completion_tokens": 137161,
+    "errors": 68,
+    "requests": 104,
+    "retries": 54
    },
    "http://127.0.0.1:8004": {
-    "completion_tokens": 105187,
-    "requests": 50
+    "completion_tokens": 153788,
+    "errors": 70,
+    "requests": 99,
+    "retries": 49
    },
    "http://127.0.0.1:8005": {
-    "completion_tokens": 28662,
-    "requests": 50
+    "completion_tokens": 132664,
+    "errors": 68,
+    "requests": 103,
+    "retries": 53
    },
    "http://127.0.0.1:8006": {
-    "completion_tokens": 76738,
-    "requests": 50
+    "completion_tokens": 109156,
+    "errors": 72,
+    "requests": 100,
+    "retries": 50
    },
    "http://127.0.0.1:8007": {
-    "completion_tokens": 66742,
-    "requests": 50
+    "completion_tokens": 56414,
+    "errors": 78,
+    "requests": 108,
+    "retries": 58
    }
   },
-  "request_errors": 0,
-  "requests": 403,
-  "retries": 0,
+  "request_errors": 146,
+  "requests": 841,
+  "retries": 438,
   "status_counts": {
-   "correct": 287,
-   "truncated": 29,
-   "unparsed": 1,
-   "wrong": 86
+   "correct": 175,
+   "error": 146,
+   "truncated": 52,
+   "wrong": 30
   },
-  "total_out_tokens": 511290,
-  "total_prompt_tokens": 943363,
-  "trunc_rate": 0.0868,
-  "wall_s": 127.9
+  "total_out_tokens": 1041605,
+  "total_prompt_tokens": 892057,
+  "trunc_rate": 0.2023,
+  "wall_s": 249.9
  },
  "base_urls": [
   "http://127.0.0.1:8000",
@@ -83,9 +99,13 @@
   "http://127.0.0.1:8007"
  ],
  "config": {
-  "chat_template_kwargs": null,
+  "chat_template_kwargs": {
+   "enable_thinking": true
+  },
   "concurrency": 128,
-  "extra_body": null,
+  "extra_body": {
+   "top_k": 64
+  },
   "families": [
    "tools",
    "code",
@@ -98,13 +118,14 @@
   "gpus": 8,
   "grace_s": 120.0,
   "limit": null,
-  "max_tokens": 4096,
+  "max_tokens": 24576,
   "max_tokens_family": {
-   "code": 8192,
-   "ifeval": 5376,
-   "longctx": 1024,
-   "math": 8192,
-   "tools": 2048
+   "code": 14336,
+   "ifeval": 10240,
+   "knowledge": 14336,
+   "longctx": 2048,
+   "math": 20480,
+   "tools": 8192
   },
   "notes": "",
   "profile": "default",
@@ -113,12 +134,12 @@
   "resume": false,
   "retries": 3,
   "seed": 20260903,
-  "temperature": 0.6,
-  "time_budget_s": 1200.0,
+  "temperature": 0.0,
+  "time_budget_s": 2400.0,
   "top_p": 0.95
  },
  "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
- "ended_at": "2026-09-04T11:05:57Z",
+ "ended_at": "2026-09-04T14:04:16Z",
  "endpoint": {
   "max_model_len": 32768,
   "served_models": [
@@ -131,429 +152,928 @@
  "evalsuite_git_sha": null,
  "families": {
   "code": {
-   "acc": 0.8,
-   "acc_strict": 0.8,
+   "acc": 0.6389,
+   "acc_strict": 0.3067,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6959,
-    0.8749
+    0.4758,
+    0.7752
    ],
    "degenerate_ids": [
-    "lcb-leetcode-3754"
+    "lcb-atcoder-abc390_d",
+    "lcb-atcoder-abc392_c",
+    "lcb-atcoder-abc395_c",
+    "lcb-leetcode-3677",
+    "lcb-leetcode-3785"
    ],
-   "degenerate_rate": 0.0133,
-   "error_ids": [],
+   "degenerate_rate": 0.1389,
+   "error_ids": [
+    "heplus-026",
+    "heplus-033",
+    "heplus-038",
+    "heplus-041",
+    "heplus-065",
+    "heplus-070",
+    "heplus-076",
+    "heplus-095",
+    "heplus-099",
+    "heplus-103",
+    "heplus-129",
+    "heplus-137",
+    "heplus-154",
+    "lcb-atcoder-abc388_d",
+    "lcb-atcoder-abc389_a",
+    "lcb-atcoder-abc393_b",
+    "lcb-atcoder-abc396_d",
+    "lcb-atcoder-abc397_b",
+    "lcb-atcoder-abc399_b",
+    "lcb-atcoder-abc399_c",
+    "lcb-atcoder-abc400_a",
+    "lcb-atcoder-abc400_b",
+    "lcb-atcoder-arc192_a",
+    "lcb-atcoder-arc194_a",
+    "lcb-atcoder-arc195_a",
+    "lcb-leetcode-3705",
+    "lcb-leetcode-3708",
+    "lcb-leetcode-3721",
+    "lcb-leetcode-3743",
+    "lcb-leetcode-3751",
+    "lcb-leetcode-3754",
+    "lcb-leetcode-3760",
+    "lcb-leetcode-3764",
+    "lcb-leetcode-3776",
+    "lcb-leetcode-3791",
+    "lcb-leetcode-3793",
+    "lcb-leetcode-3794",
+    "mbppplus-074",
+    "mbppplus-137"
+   ],
    "extra": {
     "fail_kinds": {
      "IndexError": 1,
-     "assertion": 8,
-     "ok": 1,
-     "syntax_error": 3,
-     "timeout": 1,
-     "wrong_output": 1
+     "TypeError": 1,
+     "assertion": 6,
+     "truncated": 5
     },
-    "lcb_mean_test_pass_frac": 0.8361,
-    "syntax_error_rate": 0.04,
-    "timeout_rate": 0.0133,
+    "lcb_mean_test_pass_frac": 0.1667,
+    "syntax_error_rate": 0.0,
+    "timeout_rate": 0.0,
     "unparsed_rate": 0.0
    },
    "failed_ids": [
-    "heplus-076",
-    "heplus-095",
-    "heplus-103",
-    "lcb-atcoder-arc192_a",
-    "lcb-atcoder-arc194_a",
-    "lcb-leetcode-3751",
-    "lcb-leetcode-3754",
-    "lcb-leetcode-3793",
-    "mbppplus-074",
+    "heplus-141",
+    "lcb-atcoder-abc390_d",
+    "lcb-atcoder-abc392_c",
+    "lcb-atcoder-abc395_c",
+    "lcb-leetcode-3677",
+    "lcb-leetcode-3785",
     "mbppplus-223",
     "mbppplus-311",
     "mbppplus-446",
+    "mbppplus-563",
     "mbppplus-576",
     "mbppplus-577",
     "mbppplus-739"
    ],
    "failures": [
     {
-     "error": null,
-     "expected": "is_simple_power passes base+plus tests",
-     "extracted": "726 chars via fence",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-026",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-033",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-038",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-041",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-065",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-070",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "heplus-076",
-     "out_tokens": 263,
-     "response_tail": "f n <= 0:\n        return False\n    if n == 1:\n        return x == 1\n    \n    # A power of n must be at least 1 (since n >= 2 and exponent >= 0)\n    if x < 1:\n        return False\n        \n    current_val = 1\n    while current_val < x:\n        current_val *= n\n        \n    return current_val == x\n```",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "humanevalplus"
     },
     {
-     "error": null,
-     "expected": "check_dict_case passes base+plus tests",
-     "extracted": "1096 chars via fence",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "heplus-095",
-     "out_tokens": 327,
-     "response_tail": "        if not isinstance(key, str):\n            return False\n            \n    # Check if all keys are lower case\n    all_lower = all(k.lower() == k for k in keys)\n    \n    # Check if all keys are upper case\n    all_upper = all(k.upper() == k for k in keys)\n    \n    return all_lower or all_upper\n```",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "humanevalplus"
     },
     {
-     "error": null,
-     "expected": "rounded_avg passes base+plus tests",
-     "extracted": "1031 chars via fence",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-099",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "heplus-103",
-     "out_tokens": 355,
-     "response_tail": "s rounding).\n    # For standard mathematical rounding (round 0.5 up), we can use:\n    # int(average + 0.5)\n    # However, in most competitive programming contexts for this specific problem,\n    # standard rounding is expected.\n    rounded_val = int(average + 0.5)\n    \n    return bin(rounded_val)\n```",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-129",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-137",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "humanevalplus"
     },
     {
      "error": null,
-     "expected": "pass 24 tests (stdin)",
-     "extracted": "19632 chars via fence_unterminated",
-     "finish_reason": "length",
-     "flags": [
-      "syntax_error"
-     ],
-     "id": "lcb-atcoder-arc192_a",
-     "out_tokens": 8192,
-     "response_tail": "the condition.\n    So if we pick pair (i, i+1), we use up S_i, S_{i+1}, S_{i+2}.\n    If we pick another pair (k, k+1), we use up S_k, S_{k+1}, S_{k+2}.\n    The sets {i, i+1, i+2} and {k, k+1, k+2} must be disjoint?\n    No, they can overlap, but the characters must be consistent.\n    If they overlap,",
-     "status": "truncated",
-     "sub": "lcb_easy_medium"
-    },
-    {
-     "error": null,
-     "expected": "pass 24 tests (stdin)",
-     "extracted": "24938 chars via fence_unterminated",
-     "finish_reason": "length",
-     "flags": [
-      "syntax_error"
-     ],
-     "id": "lcb-atcoder-arc194_a",
-     "out_tokens": 8192,
-     "response_tail": " $\\ge 0$.\n    This is a classic problem that can be solved with a \n    priority queue.\n    We want to maximize the sum.\n    For each $i$, we add $A_i$ to the stack.\n    If the stack is not empty, we can \"Delete\" the top element.\n    A \"Delete\" operation at step $i$ is equivalent to \n    changing the",
-     "status": "truncated",
-     "sub": "lcb_easy_medium"
-    },
-    {
-     "error": null,
-     "expected": "pass 24 tests (functional)",
-     "extracted": "2396 chars via fence",
+     "expected": "file_name_check passes base+plus tests",
+     "extracted": "1649 chars via fence",
      "finish_reason": "stop",
      "flags": [],
-     "id": "lcb-leetcode-3751",
-     "out_tokens": 644,
-     "response_tail": "t_gain < 0:\n                    current_gain = 0\n                if current_gain > local_max_gain:\n                    local_max_gain = current_gain\n            \n            if local_max_gain > max_gain:\n                max_gain = local_max_gain\n                \n        return base_k + max_gain\n\n```",
+     "id": "heplus-141",
+     "out_tokens": 5072,
+     "response_tail": "  if ext_part not in ['txt', 'exe', 'dll']:\n        return 'No'\n        \n    # Check if there are no more than three digits ('0'-'9') in the entire file name\n    digit_count = sum(1 for char in file_name if '0' <= char <= '9')\n    if digit_count > 3:\n        return 'No'\n        \n    return 'Yes'\n```",
      "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "heplus-154",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc388_d",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc389_a",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "lcb_easy_medium"
     },
     {
      "error": null,
-     "expected": "pass 23 tests (functional)",
-     "extracted": "1370 chars via fence",
+     "expected": null,
+     "extracted": null,
      "finish_reason": "length",
      "flags": [
       "degenerate"
      ],
-     "id": "lcb-leetcode-3754",
-     "out_tokens": 8192,
-     "response_tail": " - nS) = -nE + nW - nN + nS. (Correct)\n\nOne more check:\nIf s = \"N\", k = 1.\nnN = 1. x=0, y=1.\nv1 = 1, v2 = -1, v3 = 1, v4 = -1.\nv1 + 2*min(1, 0) = 1.\nv2 + 2*min(1, 1) = 1.\nv3 + 2*min(1, 0) = 1.\nv4 + 2*min(1, 1) = 1.\nMax is 1. Correct.\n\nIf s = \"N\", k = 1, and we change 'N' to 'S'.\nnN=0, nS=1. x=0, y=-",
+     "id": "lcb-atcoder-abc390_d",
+     "out_tokens": 14336,
+     "response_tail": "",
      "status": "truncated",
      "sub": "lcb_easy_medium"
     },
     {
      "error": null,
-     "expected": "pass 24 tests (functional)",
-     "extracted": "170 chars via fence_unterminated",
+     "expected": null,
+     "extracted": null,
      "finish_reason": "length",
      "flags": [
-      "syntax_error"
+      "degenerate"
      ],
-     "id": "lcb-leetcode-3793",
-     "out_tokens": 8192,
-     "response_tail": "     max_len = len(combined)\n        return max_len\n```\nFinal decision: $O(N^5)$ is the most direct and passes $N=30$.\n\n```python\nclass Solution:\n    def longestPalindrome(self, s: str, t: str) -> int:\n        n, m = len(s), len(t)\n        max_len = 0\n        for i in range(n + 1):\n            for j",
+     "id": "lcb-atcoder-abc392_c",
+     "out_tokens": 14336,
+     "response_tail": "",
      "status": "truncated",
      "sub": "lcb_easy_medium"
     },
     {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc393_b",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
      "error": null,
-     "expected": "is_samepatterns passes base+plus tests",
-     "extracted": "1515 chars via fence",
-     "finish_reason": "stop",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "lcb-atcoder-abc395_c",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc396_d",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc397_b",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc399_b",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc399_c",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc400_a",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-abc400_b",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-arc194_a",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-atcoder-arc195_a",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "lcb-leetcode-3677",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3705",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3708",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3721",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3743",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3751",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3754",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3760",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3764",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3776",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "lcb-leetcode-3785",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3791",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3793",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "lcb-leetcode-3794",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "mbppplus-074",
-     "out_tokens": 422,
-     "response_tail": "epatterns([\"a\", \"b\", \"a\"], [\"1\", \"2\", \"1\"]) == True\n    assert is_samepatterns([\"a\", \"b\", \"c\"], [\"1\", \"2\", \"1\"]) == False\n    assert is_samepatterns([\"a\", \"a\", \"b\"], [\"1\", \"1\", \"2\"]) == True\n    assert is_samepatterns([\"a\", \"b\", \"b\"], [\"1\", \"2\", \"3\"]) == False\n    \n    print(\"All tests passed!\")\n```",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mbppplus"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mbppplus-137",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "mbppplus"
     },
     {
      "error": null,
      "expected": "is_majority passes base+plus tests",
-     "extracted": "1464 chars via fence",
+     "extracted": "1371 chars via fence",
      "finish_reason": "stop",
      "flags": [],
      "id": "mbppplus-223",
-     "out_tokens": 540,
-     "response_tail": "> 2\n    assert is_majority([1, 1, 1, 2], 4, 1) == True   # 1 occurs 3 times, which is > 2\n    assert is_majority([1, 2, 3], 3, 2) == False      # 2 occurs 1 time, not > 1.5\n    assert is_majority([1, 2, 3], 3, 3) == False      # 3 occurs 1 time, not > 1.5\n    \n    print(\"All assertions passed!\")\n```",
+     "out_tokens": 6504,
+     "response_tail": " (idx, idx+1, idx+2, idx+3), and 4 > 7/2.\n    if idx < n and arr[idx] == target:\n        if idx + n // 2 < n and arr[idx + n // 2] == target:\n            return True\n            \n    return False\n\n# Example assertion provided in the prompt\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\n```",
      "status": "wrong",
      "sub": "mbppplus"
     },
     {
      "error": null,
      "expected": "set_left_most_unset_bit passes base+plus tests",
-     "extracted": "1443 chars via fence",
+     "extracted": "1217 chars via fence",
      "finish_reason": "stop",
      "flags": [],
      "id": "mbppplus-311",
-     "out_tokens": 475,
-     "response_tail": "f all bits are already 1 (e.g., n=7 (111)), \n    # the \"leftmost unset bit\" would be the bit to the left of the MSB.\n    return n | (1 << msb_pos)\n\n# Test the function with the provided example\nif __name__ == \"__main__\":\n    assert set_left_most_unset_bit(10) == 14\n    print(\"Assertion passed!\")\n```",
+     "out_tokens": 9917,
+     "response_tail": "leftmost unset bit is the one just above the MSB\n        pos = bit_len\n        \n    # Set the bit at the found position\n    return n | (1 << pos)\n\nif __name__ == \"__main__\":\n    # Example assertion provided in the prompt\n    assert set_left_most_unset_bit(10) == 14\n    print(\"Assertion passed!\")\n```",
      "status": "wrong",
      "sub": "mbppplus"
     },
     {
      "error": null,
      "expected": "count_Occurrence passes base+plus tests",
-     "extracted": "541 chars via fence",
+     "extracted": "895 chars via fence",
      "finish_reason": "stop",
      "flags": [],
      "id": "mbppplus-446",
-     "out_tokens": 165,
-     "response_tail": "um 1 for every item in the tuple that exists in the lookup set\n    return sum(1 for item in tup if item in lookup_set)\n\nif __name__ == \"__main__\":\n    # Example assertion provided in the prompt\n    assert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\n    print(\"Assertion passed!\")\n```",
+     "out_tokens": 4187,
+     "response_tail": "# Iterate through the tuple and count how many items exist in the target_set.\n    return sum(1 for item in data_tuple if item in target_set)\n\n# Test the function with the provided example assertion\nif __name__ == \"__main__\":\n    assert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "extract_values passes base+plus tests",
+     "extracted": "611 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-563",
+     "out_tokens": 1558,
+     "response_tail": "quote character and taking every second element\n    # effectively captures the content between the quotes.\n    return s.split('\"')[1::2]\n\nif __name__ == \"__main__\":\n    # Test the function with the provided example\n    assert extract_values('\"Python\", \"PHP\", \"Java\"') == ['Python', 'PHP', 'Java']\n```",
      "status": "wrong",
      "sub": "mbppplus"
     },
     {
      "error": null,
      "expected": "is_Sub_Array passes base+plus tests",
-     "extracted": "1002 chars via fence",
+     "extracted": "885 chars via fence",
      "finish_reason": "stop",
      "flags": [],
      "id": "mbppplus-576",
-     "out_tokens": 348,
-     "response_tail": "me__ == \"__main__\":\n    assert is_Sub_Array([1, 4, 3, 5], [1, 2]) == False\n    # Additional test cases\n    assert is_Sub_Array([1, 2], [1, 2, 3, 4]) == True\n    assert is_Sub_Array([2, 3], [1, 2, 3, 4]) == True\n    assert is_Sub_Array([1, 3], [1, 2, 3, 4]) == False\n    print(\"All tests passed!\")\n```",
+     "out_tokens": 2264,
+     "response_tail": "g elements \n    # in list1 are at least as many as the elements in list2.\n    for i in range(n - m + 1):\n        if list1[i : i + m] == list2:\n            return True\n            \n    return False\n\n# Test the function with the provided assertion\nassert is_Sub_Array([1, 4, 3, 5], [1, 2]) == False\n```",
      "status": "wrong",
      "sub": "mbppplus"
     },
     {
      "error": null,
      "expected": "last_Digit_Factorial passes base+plus tests",
-     "extracted": "1036 chars via fence",
+     "extracted": "643 chars via fence",
      "finish_reason": "stop",
      "flags": [],
      "id": "mbppplus-577",
-     "out_tokens": 393,
-     "response_tail": "ditional test cases\n    assert last_Digit_Factorial(0) == 1\n    assert last_Digit_Factorial(1) == 1\n    assert last_Digit_Factorial(2) == 2\n    assert last_Digit_Factorial(3) == 6\n    assert last_Digit_Factorial(5) == 0\n    assert last_Digit_Factorial(10) == 0\n    \n    print(\"All tests passed!\")\n```",
+     "out_tokens": 2633,
+     "response_tail": "nd 4!\n        # 0! = 1\n        # 1! = 1\n        # 2! = 2\n        # 3! = 6\n        # 4! = 24 (last digit is 4)\n        return [1, 1, 2, 6, 4][n]\n    else:\n        # For any n >= 5, the last digit is always 0.\n        return 0\n\n# Satisfying the example assertion\nassert last_Digit_Factorial(4) == 4\n```",
      "status": "wrong",
      "sub": "mbppplus"
     },
     {
      "error": null,
      "expected": "find_Index passes base+plus tests",
-     "extracted": "1441 chars via fence",
+     "extracted": "1550 chars via fence",
      "finish_reason": "stop",
-     "flags": [
-      "timeout"
-     ],
+     "flags": [],
      "id": "mbppplus-739",
-     "out_tokens": 502,
-     "response_tail": "dx + 1)) // 2 < target:\n        idx += 1\n        \n    return idx\n\nif __name__ == \"__main__\":\n    # Test cases\n    assert find_Index(2) == 4  # T_4 = (4*5)/2 = 10 (Smallest 2-digit number)\n    assert find_Index(3) == 14 # T_14 = (14*15)/2 = 105 (Smallest 3-digit number)\n    print(\"Tests passed!\")\n```",
+     "out_tokens": 6503,
+     "response_tail": "          # If the current triangular number has fewer than n digits,\n            # we need a larger index.\n            low = mid + 1\n            \n    return ans\n\n# Test the function with the provided example\nif __name__ == \"__main__\":\n    assert find_Index(2) == 4\n    print(\"Assertion passed!\")\n```",
      "status": "wrong",
      "sub": "mbppplus"
     }
    ],
-   "gpu_minutes": 2.931,
-   "info_per_gpu_min": 4.094,
-   "max_tokens": 8192,
-   "mean_out_tokens": 1399.0,
-   "mean_prompt_tokens": 340.1,
-   "mean_score": 0.8011,
+   "gpu_minutes": 4.916,
+   "info_per_gpu_min": 1.689,
+   "max_tokens": 14336,
+   "mean_out_tokens": 4696.8,
+   "mean_prompt_tokens": 233.7,
+   "mean_score": 0.6389,
    "n_attempted": 75,
    "n_cancelled": 0,
-   "n_correct": 60,
-   "n_error": 0,
+   "n_correct": 23,
+   "n_error": 39,
    "n_planned": 75,
-   "n_scored": 75,
+   "n_scored": 36,
    "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 17.08,
-   "p50_out_tokens": 392,
-   "p90_item_s": 57.7,
+   "p50_item_s": 55.71,
+   "p50_out_tokens": 3596,
+   "p90_item_s": 200.13,
    "status_counts": {
-    "correct": 60,
-    "truncated": 4,
-    "wrong": 11
+    "correct": 23,
+    "error": 39,
+    "truncated": 5,
+    "wrong": 8
    },
    "sub": {
     "humanevalplus": {
-     "acc": 0.88,
-     "acc_strict": 0.88,
+     "acc": 0.9167,
+     "acc_strict": 0.44,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.7004,
-      0.9583
+      0.6461,
+      0.9851
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 330.2,
-     "mean_prompt_tokens": 228.4,
-     "mean_score": 0.88,
+     "mean_out_tokens": 3481.8,
+     "mean_prompt_tokens": 235.4,
+     "mean_score": 0.9167,
      "n_attempted": 25,
      "n_cancelled": 0,
-     "n_correct": 22,
-     "n_error": 0,
+     "n_correct": 11,
+     "n_error": 13,
      "n_planned": 25,
-     "n_scored": 25,
+     "n_scored": 12,
      "n_skipped": 0,
-     "p50_item_s": 9.0,
-     "p50_out_tokens": 263,
-     "p90_item_s": 26.04,
+     "p50_item_s": 59.16,
+     "p50_out_tokens": 3643,
+     "p90_item_s": 200.13,
      "status_counts": {
-      "correct": 22,
-      "wrong": 3
-     },
-     "total_out_tokens": 8254,
-     "total_prompt_tokens": 5709,
-     "trunc_rate": 0.0,
-     "wall_s": 41.8
-    },
-    "lcb_easy_medium": {
-     "acc": 0.8333,
-     "acc_strict": 0.8333,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.6644,
-      0.9266
-     ],
-     "degenerate_rate": 0.0333,
-     "mean_out_tokens": 3007.5,
-     "mean_prompt_tokens": 582.4,
-     "mean_score": 0.8361,
-     "n_attempted": 30,
-     "n_cancelled": 0,
-     "n_correct": 25,
-     "n_error": 0,
-     "n_planned": 30,
-     "n_scored": 30,
-     "n_skipped": 0,
-     "p50_item_s": 24.72,
-     "p50_out_tokens": 771,
-     "p90_item_s": 83.72,
-     "status_counts": {
-      "correct": 25,
-      "truncated": 4,
+      "correct": 11,
+      "error": 13,
       "wrong": 1
      },
-     "total_out_tokens": 90226,
-     "total_prompt_tokens": 17473,
-     "trunc_rate": 0.2333,
-     "wall_s": 127.6
+     "total_out_tokens": 41781,
+     "total_prompt_tokens": 2825,
+     "trunc_rate": 0.0,
+     "wall_s": 219.1
     },
-    "mbppplus": {
-     "acc": 0.65,
-     "acc_strict": 0.65,
+    "lcb_easy_medium": {
+     "acc": 0.1667,
+     "acc_strict": 0.0333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.4329,
-      0.8188
+      0.0301,
+      0.5635
+     ],
+     "degenerate_rate": 0.8333,
+     "mean_out_tokens": 12616.7,
+     "mean_prompt_tokens": 573.8,
+     "mean_score": 0.1667,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 1,
+     "n_error": 24,
+     "n_planned": 30,
+     "n_scored": 6,
+     "n_skipped": 0,
+     "p50_item_s": 99.98,
+     "p50_out_tokens": 14336,
+     "p90_item_s": 217.68,
+     "status_counts": {
+      "correct": 1,
+      "error": 24,
+      "truncated": 5
+     },
+     "total_out_tokens": 75700,
+     "total_prompt_tokens": 3443,
+     "trunc_rate": 0.8333,
+     "wall_s": 249.2
+    },
+    "mbppplus": {
+     "acc": 0.6111,
+     "acc_strict": 0.55,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3862,
+      0.7969
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 322.4,
-     "mean_prompt_tokens": 116.2,
-     "mean_score": 0.65,
+     "mean_out_tokens": 2866.8,
+     "mean_prompt_tokens": 119.2,
+     "mean_score": 0.6111,
      "n_attempted": 20,
      "n_cancelled": 0,
-     "n_correct": 13,
-     "n_error": 0,
+     "n_correct": 11,
+     "n_error": 2,
      "n_planned": 20,
-     "n_scored": 20,
+     "n_scored": 18,
      "n_skipped": 0,
-     "p50_item_s": 11.47,
-     "p50_out_tokens": 266,
-     "p90_item_s": 24.95,
+     "p50_item_s": 30.81,
+     "p50_out_tokens": 1558,
+     "p90_item_s": 93.2,
      "status_counts": {
-      "correct": 13,
+      "correct": 11,
+      "error": 2,
       "wrong": 7
      },
-     "total_out_tokens": 6448,
-     "total_prompt_tokens": 2323,
+     "total_out_tokens": 51603,
+     "total_prompt_tokens": 2145,
      "trunc_rate": 0.0,
-     "wall_s": 42.9
+     "wall_s": 218.5
     }
    },
-   "total_out_tokens": 104928,
-   "total_prompt_tokens": 25505,
-   "trunc_rate": 0.0933,
-   "wall_s": 127.6
+   "total_out_tokens": 169084,
+   "total_prompt_tokens": 8413,
+   "trunc_rate": 0.1389,
+   "wall_s": 249.2
   },
   "ifeval": {
-   "acc": 0.75,
-   "acc_strict": 0.75,
+   "acc": 0.6136,
+   "acc_strict": 0.45,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6277,
-    0.8422
+    0.4662,
+    0.7428
    ],
-   "degenerate_ids": [],
-   "degenerate_rate": 0.0,
-   "error_ids": [],
+   "degenerate_ids": [
+    "ifeval-1174",
+    "ifeval-1203",
+    "ifeval-1233",
+    "ifeval-1300",
+    "ifeval-1880",
+    "ifeval-1928",
+    "ifeval-2216",
+    "ifeval-2439",
+    "ifeval-2583",
+    "ifeval-296",
+    "ifeval-331",
+    "ifeval-3327",
+    "ifeval-3534",
+    "ifeval-3633"
+   ],
+   "degenerate_rate": 0.3182,
+   "error_ids": [
+    "ifeval-1040",
+    "ifeval-1127",
+    "ifeval-1418",
+    "ifeval-1653",
+    "ifeval-1879",
+    "ifeval-1964",
+    "ifeval-2069",
+    "ifeval-2275",
+    "ifeval-2416",
+    "ifeval-2571",
+    "ifeval-2713",
+    "ifeval-2739",
+    "ifeval-3276",
+    "ifeval-332",
+    "ifeval-3335",
+    "ifeval-3724"
+   ],
    "extra": {
     "by_n_instructions": {
      "1": {
       "n": 12,
-      "prompt_loose": 0.9167,
-      "prompt_strict": 0.9167
+      "prompt_loose": 1.0,
+      "prompt_strict": 1.0
      },
      "2": {
-      "n": 24,
-      "prompt_loose": 0.625,
-      "prompt_strict": 0.5833
+      "n": 9,
+      "prompt_loose": 1.0,
+      "prompt_strict": 0.8889
      },
      "3": {
-      "n": 24,
-      "prompt_loose": 0.9167,
-      "prompt_strict": 0.8333
+      "n": 7,
+      "prompt_loose": 1.0,
+      "prompt_strict": 1.0
      }
     },
-    "instruction_loose": 0.9015,
-    "instruction_strict": 0.8788,
-    "loose_only_rate": 0.05,
-    "n_instructions": 132,
+    "instruction_loose": 1.0,
+    "instruction_strict": 0.9804,
+    "loose_only_rate": 0.0357,
+    "n_instructions": 51,
     "per_type": {
      "change_case:capital_word_frequency": {
-      "loose": 1.0,
-      "n": 9,
-      "strict": 0.7778
-     },
-     "change_case:english_capital": {
-      "loose": 1.0,
-      "n": 3,
-      "strict": 1.0
-     },
-     "change_case:english_lowercase": {
       "loose": 1.0,
       "n": 3,
       "strict": 1.0
      },
      "combination:repeat_prompt": {
-      "loose": 0.25,
-      "n": 8,
-      "strict": 0.25
-     },
-     "combination:two_responses": {
       "loose": 1.0,
-      "n": 1,
+      "n": 4,
       "strict": 1.0
      },
      "detectable_content:number_placeholders": {
-      "loose": 1.0,
-      "n": 2,
-      "strict": 1.0
-     },
-     "detectable_content:postscript": {
       "loose": 1.0,
       "n": 1,
       "strict": 1.0
@@ -565,7 +1085,7 @@
      },
      "detectable_format:multiple_sections": {
       "loose": 1.0,
-      "n": 3,
+      "n": 2,
       "strict": 1.0
      },
      "detectable_format:number_bullet_lists": {
@@ -575,42 +1095,32 @@
      },
      "detectable_format:number_highlighted_sections": {
       "loose": 1.0,
-      "n": 4,
+      "n": 1,
       "strict": 1.0
      },
      "detectable_format:title": {
-      "loose": 1.0,
-      "n": 2,
-      "strict": 1.0
-     },
-     "keywords:existence": {
       "loose": 1.0,
       "n": 1,
       "strict": 1.0
      },
      "keywords:forbidden_words": {
-      "loose": 0.5,
+      "loose": 1.0,
       "n": 2,
-      "strict": 0.5
+      "strict": 1.0
      },
      "keywords:frequency": {
       "loose": 1.0,
-      "n": 18,
+      "n": 9,
       "strict": 1.0
      },
      "keywords:letter_frequency": {
-      "loose": 0.5,
-      "n": 6,
-      "strict": 0.5
-     },
-     "language:response_language": {
       "loose": 1.0,
       "n": 1,
       "strict": 1.0
      },
      "length_constraints:nth_paragraph_first_word": {
       "loose": 1.0,
-      "n": 2,
+      "n": 1,
       "strict": 1.0
      },
      "length_constraints:number_paragraphs": {
@@ -619,378 +1129,670 @@
       "strict": 1.0
      },
      "length_constraints:number_sentences": {
-      "loose": 0.8947,
-      "n": 19,
-      "strict": 0.8421
+      "loose": 1.0,
+      "n": 6,
+      "strict": 1.0
      },
      "length_constraints:number_words": {
-      "loose": 0.9444,
-      "n": 18,
-      "strict": 0.9444
+      "loose": 1.0,
+      "n": 9,
+      "strict": 1.0
      },
      "punctuation:no_comma": {
       "loose": 1.0,
-      "n": 17,
-      "strict": 1.0
+      "n": 3,
+      "strict": 0.6667
      },
      "startend:end_checker": {
       "loose": 1.0,
-      "n": 7,
+      "n": 4,
       "strict": 1.0
      },
      "startend:quotation": {
       "loose": 1.0,
-      "n": 2,
+      "n": 1,
       "strict": 1.0
      }
     },
-    "prompt_loose": 0.8,
-    "prompt_strict": 0.75
+    "prompt_loose": 1.0,
+    "prompt_strict": 0.9643
    },
    "failed_ids": [
-    "ifeval-1040",
     "ifeval-1174",
+    "ifeval-1203",
+    "ifeval-1233",
     "ifeval-1300",
-    "ifeval-1691",
-    "ifeval-1879",
-    "ifeval-1964",
-    "ifeval-2192",
-    "ifeval-2713",
-    "ifeval-2739",
+    "ifeval-1834",
+    "ifeval-1880",
+    "ifeval-1928",
+    "ifeval-2216",
+    "ifeval-2439",
+    "ifeval-2583",
+    "ifeval-296",
     "ifeval-3089",
-    "ifeval-332",
-    "ifeval-3414",
-    "ifeval-3429",
+    "ifeval-331",
+    "ifeval-3327",
     "ifeval-3505",
+    "ifeval-3534",
     "ifeval-3633"
    ],
    "failures": [
     {
-     "error": null,
-     "expected": "change_case:capital_word_frequency+change_case:capital_word_frequency+startend:quotation",
-     "extracted": "2/3 strict, 3/3 loose",
-     "finish_reason": "stop",
-     "flags": [
-      "loose_only"
-     ],
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "ifeval-1040",
-     "out_tokens": 224,
-     "response_tail": " TechStream Corp\nJune 2014 \u2013 December 2017\n* Optimized supply chain processes to reduce costs.\n* Facilitated seamless COMMUNICATION between departments.\n* Maintained high standards of quality control across all deliverables.\n\nEducation\nBachelor of Science in Business Administration\nState University\"",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "triple"
     },
     {
-     "error": null,
-     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
-     "extracted": "2/3 strict, 2/3 loose",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
-     "id": "ifeval-1174",
-     "out_tokens": 59,
-     "response_tail": "[**o**peration: start]\n**o**btain user *location* via **o**utput.\n**o**rganize **o**bservations and **o**ptimize *weather forecast* display.\n[**o**peration: end]",
-     "status": "wrong",
-     "sub": "triple"
-    },
-    {
-     "error": null,
-     "expected": "punctuation:no_comma+keywords:letter_frequency+length_constraints:number_words",
-     "extracted": "2/3 strict, 2/3 loose",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "ifeval-1300",
-     "out_tokens": 314,
-     "response_tail": " will be used in the future. This is a deep study of human thought and way of life. We will look at how history shapes the way we talk. We will find the links between old ways and new ways. Our work will help us understand the human mind. We will build a bridge between past and future through words.",
-     "status": "wrong",
-     "sub": "triple"
-    },
-    {
-     "error": null,
-     "expected": "detectable_format:json_format+keywords:forbidden_words",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "ifeval-1691",
-     "out_tokens": 396,
-     "response_tail": "e\",\n        \"style\": \"Boutique/Modern\"\n      },\n      {\n        \"name\": \"Hotel Zepyr\u00edn\",\n        \"location\": \"\u010cesk\u00fd Krumlov\",\n        \"style\": \"Classic/Comfort\"\n      },\n      {\n        \"name\": \"Grand Hotel Pupp\",\n        \"location\": \"Regional/Luxury\",\n        \"style\": \"High-end\"\n      }\n    ]\n  }\n}",
-     "status": "wrong",
+     "id": "ifeval-1127",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "double"
     },
     {
      "error": null,
-     "expected": "length_constraints:number_sentences+length_constraints:number_words",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1174",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1203",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1233",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1300",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-1418",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-1653",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-1834",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "ifeval-1879",
-     "out_tokens": 534,
-     "response_tail": ". Applause thunders through the hall like heavy rain. He opens his eyes to the sea of faces. He bows deeply, humbled by the warmth. The spotlight feels warmer now, less clinical. He exhales a long, shaky breath. The performance is over, but the magic remains. He steps back into the shadows, smiling.",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "double"
     },
     {
      "error": null,
-     "expected": "keywords:letter_frequency+length_constraints:number_words",
-     "extracted": "0/2 strict, 0/2 loose",
-     "finish_reason": "stop",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1880",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-1928",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "ifeval-1964",
-     "out_tokens": 115,
-     "response_tail": " modern beast, our arena is the best home for your machine. Watch intense battles for glory and hear the roar of raw force. Join our crew today to race, win, and live fast. Do not wait! Visit us soon for a wild ride. Drags and Races: where heat meets the road. Drive hard, win big, and feel the fire!",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "double"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-2069",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "double"
     },
     {
      "error": null,
-     "expected": "combination:repeat_prompt",
-     "extracted": "0/1 strict, 0/1 loose",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "ifeval-2192",
-     "out_tokens": 46,
-     "response_tail": "You should use a different font.\n\nIt\u2019s interesting that you chose that particular font, though I suppose it\u2019s your prerogative to use whatever you want, regardless of how distracting it is for the rest of us.",
-     "status": "wrong",
-     "sub": "single"
-    },
-    {
-     "error": null,
-     "expected": "combination:repeat_prompt+punctuation:no_comma",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "ifeval-2713",
-     "out_tokens": 166,
-     "response_tail": "s your journey by bringing the finest hotels directly to your fingertips. Whether you need a luxury suite or a cozy boutique stay we handle the hard work for you. Travel more and stress less with the smartest booking tool available.\n\n**Call to Action**\nDownload the app today to book your next escape",
-     "status": "wrong",
-     "sub": "double"
-    },
-    {
-     "error": null,
-     "expected": "combination:repeat_prompt+punctuation:no_comma",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "ifeval-2739",
-     "out_tokens": 78,
-     "response_tail": "bout the word \"limerick\" and make sure it is funny and includes the words \"limerick\" and \"funny\" and does not use any commas\n\nA silly old word called a limerick\nWas written by someone quite clever and quick\nIt sounds rather funny\nLike bright summer sunny\nBut reading it fast makes you feel quite sick",
-     "status": "wrong",
-     "sub": "double"
-    },
-    {
-     "error": null,
-     "expected": "detectable_format:number_highlighted_sections+length_constraints:number_sentences+length_constraints:number_sentences",
-     "extracted": "2/3 strict, 3/3 loose",
-     "finish_reason": "stop",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
      "flags": [
-      "loose_only"
+      "degenerate"
      ],
-     "id": "ifeval-3089",
-     "out_tokens": 450,
-     "response_tail": ". He learned that even when things are lost, they can be found. *A new chapter was beginning for the little tabby.* He was no longer just a wanderer in the dark. He was a survivor with a second chance. The woman named him Biscuit and gave him a sunny windowsill. *He finally found a place to belong.*",
-     "status": "wrong",
+     "id": "ifeval-2216",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-2275",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-2416",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "triple"
     },
     {
      "error": null,
-     "expected": "combination:repeat_prompt+length_constraints:number_words",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-2439",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
-     "id": "ifeval-332",
-     "out_tokens": 57,
-     "response_tail": "TLDR the article \"How to dress like a football manager: waistcoats and the style lessons from the Premier League\".\n\nThe article explores how Premier League managers use smart-casual attire, like waistcoats and designer knitwear, to project authority, professionalism, and modern sophistication.",
-     "status": "wrong",
+     "id": "ifeval-2571",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-2583",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-2713",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "double"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-2739",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "double"
     },
     {
      "error": null,
-     "expected": "change_case:capital_word_frequency+change_case:capital_word_frequency",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-296",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "ifeval-3089",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-3276",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-331",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "double"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-332",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-3327",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-3335",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+combination:repeat_prompt",
      "extracted": "1/2 strict, 2/2 loose",
      "finish_reason": "stop",
      "flags": [
       "loose_only"
      ],
-     "id": "ifeval-3414",
-     "out_tokens": 170,
-     "response_tail": "ED by pure TERROR. My legs felt like they were made of stone, and I could not move a single muscle. It was an ABSOLUTE nightmare to be caught so vulnerable in the middle of my workout. Fortunately, it was only a large deer, but the SHOCK of the moment left me trembling for several minutes afterward.",
-     "status": "wrong",
-     "sub": "double"
-    },
-    {
-     "error": null,
-     "expected": "detectable_format:multiple_sections+length_constraints:number_sentences",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "ifeval-3429",
-     "out_tokens": 1767,
-     "response_tail": "He loved her because she was her, in all her beautiful, unpredictable, and breathtaking glory. He knew that to love her was to love the movement, the sound, and the soul that drove it all. And in that moment, under the vast, silent sky, he knew he had never been more certain of anything in his life.",
-     "status": "wrong",
-     "sub": "double"
-    },
-    {
-     "error": null,
-     "expected": "punctuation:no_comma+combination:repeat_prompt",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
-     "flags": [],
      "id": "ifeval-3505",
-     "out_tokens": 299,
-     "response_tail": "ul of the machine is guarded by a jealous sentinel that forbids the free exchange of information and stifles the spirit of true liberty. Furthermore the battery of these portable wonders fades with the speed of a dying ember in a winter gale leaving the traveler stranded in a wilderness of darkness.",
+     "out_tokens": 7662,
+     "response_tail": "d\n- The prestige of the brand offers a certain social standing to the owner\n\nThe Vices\n- The exorbitant cost is a heavy burden upon the modest laborer\n- The closed nature of the system acts as a gilded cage for the spirit\n- The lack of freedom to alter the machine brings much frustration to the soul",
      "status": "wrong",
      "sub": "double"
     },
     {
      "error": null,
-     "expected": "combination:repeat_prompt+punctuation:no_comma",
-     "extracted": "1/2 strict, 1/2 loose",
-     "finish_reason": "stop",
-     "flags": [],
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "ifeval-3534",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "ifeval-3633",
-     "out_tokens": 119,
-     "response_tail": "of high achievement in identical siblings. Researchers will appreciate the nuanced discussion regarding heritability versus plasticity within the context of intellectual excellence. It serves as a compelling case study for understanding how multifaceted variables shape the human intellect over time.",
-     "status": "wrong",
+     "out_tokens": 10240,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "double"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "ifeval-3724",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "triple"
     }
    ],
-   "gpu_minutes": 0.676,
-   "info_per_gpu_min": 16.642,
-   "max_tokens": 5376,
-   "mean_out_tokens": 407.3,
-   "mean_prompt_tokens": 64.7,
-   "mean_score": 0.8694,
+   "gpu_minutes": 7.269,
+   "info_per_gpu_min": 1.435,
+   "max_tokens": 10240,
+   "mean_out_tokens": 5709.3,
+   "mean_prompt_tokens": 65.1,
+   "mean_score": 0.625,
    "n_attempted": 60,
    "n_cancelled": 0,
-   "n_correct": 45,
-   "n_error": 0,
+   "n_correct": 27,
+   "n_error": 16,
    "n_planned": 60,
-   "n_scored": 60,
+   "n_scored": 44,
    "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 10.71,
-   "p50_out_tokens": 216,
-   "p90_item_s": 32.23,
+   "p50_item_s": 71.92,
+   "p50_out_tokens": 4117,
+   "p90_item_s": 141.83,
    "status_counts": {
-    "correct": 45,
-    "wrong": 15
+    "correct": 27,
+    "error": 16,
+    "truncated": 16,
+    "wrong": 1
    },
    "sub": {
     "double": {
-     "acc": 0.5833,
-     "acc_strict": 0.5833,
+     "acc": 0.5,
+     "acc_strict": 0.3333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3883,
-      0.7553
+      0.28,
+      0.72
      ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 520.3,
-     "mean_prompt_tokens": 65.0,
-     "mean_score": 0.7708,
+     "degenerate_rate": 0.375,
+     "mean_out_tokens": 7131.9,
+     "mean_prompt_tokens": 65.9,
+     "mean_score": 0.5312,
      "n_attempted": 24,
      "n_cancelled": 0,
-     "n_correct": 14,
-     "n_error": 0,
+     "n_correct": 8,
+     "n_error": 8,
      "n_planned": 24,
-     "n_scored": 24,
+     "n_scored": 16,
      "n_skipped": 0,
-     "p50_item_s": 7.88,
-     "p50_out_tokens": 170,
-     "p90_item_s": 39.06,
+     "p50_item_s": 94.28,
+     "p50_out_tokens": 7662,
+     "p90_item_s": 141.83,
      "status_counts": {
-      "correct": 14,
-      "wrong": 10
+      "correct": 8,
+      "error": 8,
+      "truncated": 7,
+      "wrong": 1
      },
-     "total_out_tokens": 12487,
-     "total_prompt_tokens": 1559,
-     "trunc_rate": 0.0417,
-     "wall_s": 78.9
+     "total_out_tokens": 114110,
+     "total_prompt_tokens": 1055,
+     "trunc_rate": 0.4375,
+     "wall_s": 219.2
     },
     "single": {
-     "acc": 0.9167,
-     "acc_strict": 0.9167,
+     "acc": 1.0,
+     "acc_strict": 1.0,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6461,
-      0.9851
+      0.7575,
+      1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 453.2,
-     "mean_prompt_tokens": 45.6,
-     "mean_score": 0.9167,
+     "mean_out_tokens": 1677.9,
+     "mean_prompt_tokens": 48.6,
+     "mean_score": 1.0,
      "n_attempted": 12,
      "n_cancelled": 0,
-     "n_correct": 11,
+     "n_correct": 12,
      "n_error": 0,
      "n_planned": 12,
      "n_scored": 12,
      "n_skipped": 0,
-     "p50_item_s": 19.14,
-     "p50_out_tokens": 490,
-     "p90_item_s": 33.6,
+     "p50_item_s": 30.35,
+     "p50_out_tokens": 1602,
+     "p90_item_s": 48.59,
      "status_counts": {
-      "correct": 11,
-      "wrong": 1
+      "correct": 12
      },
-     "total_out_tokens": 5439,
-     "total_prompt_tokens": 547,
+     "total_out_tokens": 20135,
+     "total_prompt_tokens": 583,
      "trunc_rate": 0.0,
-     "wall_s": 35.1
+     "wall_s": 74.4
     },
     "triple": {
-     "acc": 0.8333,
-     "acc_strict": 0.8333,
+     "acc": 0.4375,
+     "acc_strict": 0.2917,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6415,
-      0.9332
+      0.231,
+      0.6682
      ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 271.3,
-     "mean_prompt_tokens": 74.0,
-     "mean_score": 0.9444,
+     "degenerate_rate": 0.5,
+     "mean_out_tokens": 7310.3,
+     "mean_prompt_tokens": 76.8,
+     "mean_score": 0.4375,
      "n_attempted": 24,
      "n_cancelled": 0,
-     "n_correct": 20,
-     "n_error": 0,
+     "n_correct": 7,
+     "n_error": 8,
      "n_planned": 24,
-     "n_scored": 24,
+     "n_scored": 16,
      "n_skipped": 0,
-     "p50_item_s": 5.8,
-     "p50_out_tokens": 214,
-     "p90_item_s": 28.02,
+     "p50_item_s": 90.58,
+     "p50_out_tokens": 10240,
+     "p90_item_s": 145.75,
      "status_counts": {
-      "correct": 20,
-      "wrong": 4
+      "correct": 7,
+      "error": 8,
+      "truncated": 9
      },
-     "total_out_tokens": 6512,
-     "total_prompt_tokens": 1777,
-     "trunc_rate": 0.0,
-     "wall_s": 39.3
+     "total_out_tokens": 116965,
+     "total_prompt_tokens": 1228,
+     "trunc_rate": 0.5625,
+     "wall_s": 218.5
     }
    },
-   "total_out_tokens": 24438,
-   "total_prompt_tokens": 3883,
-   "trunc_rate": 0.0167,
-   "wall_s": 78.9
+   "total_out_tokens": 251210,
+   "total_prompt_tokens": 2866,
+   "trunc_rate": 0.3636,
+   "wall_s": 219.2
   },
   "knowledge": {
-   "acc": 0.4571,
-   "acc_strict": 0.4571,
+   "acc": 0.2778,
+   "acc_strict": 0.1429,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.3457,
-    0.573
+    0.1585,
+    0.4399
    ],
    "degenerate_ids": [
-    "mmlupro-9249"
+    "mmlupro-3818",
+    "mmlupro-9739",
+    "mmlupro-9806",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0673",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2905",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4255",
+    "simpleqa-4322"
    ],
-   "degenerate_rate": 0.0143,
-   "error_ids": [],
+   "degenerate_rate": 0.3611,
+   "error_ids": [
+    "mmlupro-10075",
+    "mmlupro-10275",
+    "mmlupro-11314",
+    "mmlupro-1147",
+    "mmlupro-11605",
+    "mmlupro-11606",
+    "mmlupro-12174",
+    "mmlupro-1328",
+    "mmlupro-3699",
+    "mmlupro-3883",
+    "mmlupro-3917",
+    "mmlupro-4055",
+    "mmlupro-4405",
+    "mmlupro-4612",
+    "mmlupro-8205",
+    "mmlupro-8643",
+    "mmlupro-8836",
+    "mmlupro-8946",
+    "mmlupro-899",
+    "mmlupro-9249",
+    "mmlupro-937",
+    "mmlupro-9497",
+    "mmlupro-954",
+    "simpleqa-0762",
+    "simpleqa-1012",
+    "simpleqa-1166",
+    "simpleqa-1295",
+    "simpleqa-2306",
+    "simpleqa-2392",
+    "simpleqa-2558",
+    "simpleqa-2784",
+    "simpleqa-3127",
+    "simpleqa-3247",
+    "simpleqa-4082"
+   ],
    "extra": {
     "extraction_methods": {
-     "answer_phrase": 39,
-     "none": 1,
-     "phrase": 30
+     "answer_phrase": 10,
+     "phrase": 9
     },
     "mmlu_pro_hard_hedged": 0,
     "mmlu_pro_hard_weak_extraction": 0,
@@ -999,128 +1801,226 @@
     "unparsed_rate": 0.0
    },
    "failed_ids": [
+    "mmlupro-11407",
     "mmlupro-1157",
-    "mmlupro-11606",
     "mmlupro-1401",
     "mmlupro-3818",
-    "mmlupro-3917",
     "mmlupro-4284",
-    "mmlupro-899",
-    "mmlupro-9249",
-    "mmlupro-954",
+    "mmlupro-9739",
+    "mmlupro-9806",
     "simpleqa-0409",
     "simpleqa-0492",
     "simpleqa-0672",
     "simpleqa-0673",
-    "simpleqa-0762",
-    "simpleqa-1012",
-    "simpleqa-1295",
     "simpleqa-1312",
     "simpleqa-1314",
     "simpleqa-1443",
     "simpleqa-1619",
     "simpleqa-2174",
-    "simpleqa-2306",
-    "simpleqa-2392",
     "simpleqa-2417",
-    "simpleqa-2558",
     "simpleqa-2706",
     "simpleqa-2782",
-    "simpleqa-2784",
     "simpleqa-2905",
-    "simpleqa-3127",
     "simpleqa-3211",
-    "simpleqa-3247",
     "simpleqa-3339",
     "simpleqa-3342",
     "simpleqa-4044",
-    "simpleqa-4082",
     "simpleqa-4255",
     "simpleqa-4322"
    ],
    "failures": [
     {
-     "error": null,
-     "expected": "D",
-     "extracted": "H",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
-     "id": "mmlupro-1157",
-     "out_tokens": 576,
-     "response_tail": " the legislature/party structure) is interfering with his right to assemble/associate.\n\nComparing the options provided, **H (The right of assembly)** is the most direct constitutional principle related to the act of being barred from a meeting (a caucus) based on political belief.\n\nThe answer is (H)",
-     "status": "wrong",
+     "id": "mmlupro-10075",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-10275",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-11314",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "mmlu_pro_hard"
     },
     {
      "error": null,
-     "expected": "C",
-     "extracted": "H",
-     "finish_reason": "stop",
+     "expected": "E",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-11407",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-1147",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-1157",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-11605",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "mmlupro-11606",
-     "out_tokens": 2992,
-     "response_tail": "7 \\cdot 5} = 673.5$.\nIs it possible $T_b = \\frac{3 \\cdot 242.5^2 \\cdot 2}{104.7 \\cdot 5} \\cdot \\frac{1}{3} = 224.5$? Then $t = 1.34$.\nLet's try $T_b = \\frac{3 \\cdot 242.5^2 \\cdot 2}{104.7 \\cdot 5} \\cdot \\frac{1}{10} = 67.35$. $t = 4.47$.\nLooking at the options, $4.5\\text{s}$ is H.\n\nThe answer is (H)",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-12174",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-1328",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "mmlu_pro_hard"
     },
     {
      "error": null,
      "expected": "G",
-     "extracted": "I",
-     "finish_reason": "stop",
+     "extracted": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "mmlupro-1401",
-     "out_tokens": 1497,
-     "response_tail": "a formal \"statement\" or if the exception is not met, it is excluded. However, the most common correct legal answer for this specific prompt is that it is **Hearsay** and the judge should rule it **inadmissible** because the plaintiff is testifying to the son's statement (Hearsay).\n\nThe answer is (I)",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-3699",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "mmlu_pro_hard"
     },
     {
      "error": null,
      "expected": "A",
-     "extracted": "H",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "mmlupro-3818",
-     "out_tokens": 1355,
-     "response_tail": "pproximation: $T \\approx 0.485$.\nIf we use the exact formula: $T \\approx 0.845$.\n\nChecking the options: A=0.8, B=0.4, C=0.7, D=0.3, E=0.95, F=0.9, G=0.2, H=0.5, I=0.1, J=0.6.\nGiven the standard textbook approach for such problems, if $T \\approx 0.485$, the closest option is $0.5$.\n\nThe answer is (H)",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "mmlu_pro_hard"
     },
     {
-     "error": null,
-     "expected": "B",
-     "extracted": "F",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-3883",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "mmlupro-3917",
-     "out_tokens": 2102,
-     "response_tail": "check the options again. Option F is methane < neopentane < n-hexane < 2,3-dimethylbutane < n-undecane.\nWait, I see it now. If I look at the options, Option F is the only one that places methane first and n-undecane last while keeping the relative order of the others mostly correct.\n\nThe answer is F",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "mmlu_pro_hard"
     },
     {
-     "error": null,
-     "expected": "J",
-     "extracted": "E",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
-     "id": "mmlupro-4284",
-     "out_tokens": 597,
-     "response_tail": " Grignard reagent is the destruction/consumption of the reagent. \n\n    Looking closely at the options provided, **Option E** specifically identifies the chemical product of the side reaction (a hydrocarbon), which is the classic textbook explanation for why water must be excluded.\n\nThe answer is (E)",
-     "status": "wrong",
-     "sub": "mmlu_pro_hard"
-    },
-    {
-     "error": null,
-     "expected": "G",
-     "extracted": "B",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "mmlupro-899",
-     "out_tokens": 720,
-     "response_tail": ", because it does not disclose a privileged communication and it is hearsay within a recognized exception.\n\nUnder FRE 801(d)(2), an admission by a party-opponent is **not hearsay**. Since the wife is a willing witness, the testimonial privilege is not invoked. \n\nThe answer is (B).\n\nThe answer is (B)",
-     "status": "wrong",
+     "id": "mmlupro-4055",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "mmlu_pro_hard"
     },
     {
@@ -1128,110 +2028,273 @@
      "expected": "J",
      "extracted": null,
      "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_letter"
-     ],
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-4405",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-4612",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-8205",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-8643",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-8836",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-8946",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-899",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "mmlupro-9249",
-     "out_tokens": 4096,
-     "response_tail": "c{1}{\\bar{\\nu} \\cdot \\Delta\\bar{\\nu}}$ is not it.\n$\\Delta\\lambda = \\frac{1}{\\bar{\\nu} \\cdot \\Delta\\bar{\\nu}}$ is not it.\n$\\Delta\\lambda = \\frac{1}{\\bar{\\nu} \\cdot \\Delta\\bar{\\nu}}$ is not it.\n$\\Delta\\lambda = \\frac{1}{\\bar{\\nu} \\cdot \\Delta\\bar{\\nu}}$ is not it.\n$\\Delta\\lambda = \\frac{1}{\\bar{\\nu} \\",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-937",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-9497",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "mmlupro-954",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "mmlupro-9739",
+     "out_tokens": 14336,
+     "response_tail": "",
      "status": "truncated",
      "sub": "mmlu_pro_hard"
     },
     {
      "error": null,
-     "expected": "E",
-     "extracted": "H",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "mmlupro-954",
-     "out_tokens": 551,
-     "response_tail": "s is incorrect because it doesn't address the hearsay nature of the second portion.\n    *   **H:** This correctly identifies that the opinion is admissible (as it is a direct opinion on character for truthfulness) but the report of the neighbors' comments is inadmissible hearsay.\n\nThe answer is (H).",
-     "status": "wrong",
+     "expected": "H",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "mmlupro-9806",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "mmlu_pro_hard"
     },
     {
      "error": null,
      "expected": "Joseph Jean Pierre Laurent",
-     "extracted": "Laurentia",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-0409",
-     "out_tokens": 15,
-     "response_tail": "Answer: Laurentia (or Laurentia of the Laurentian Observatory)",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "2002 September 30",
-     "extracted": "1994-04-04",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-0492",
-     "out_tokens": 14,
-     "response_tail": "Answer: 1994-04-04",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "10,423",
-     "extracted": "1,127",
+     "extracted": "3,111",
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-0672",
-     "out_tokens": 9,
-     "response_tail": "Answer: 1,127",
+     "out_tokens": 324,
+     "response_tail": "Answer: 3,111",
      "status": "wrong",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Long Island",
-     "extracted": "Ellis Island",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-0673",
-     "out_tokens": 5,
-     "response_tail": "Answer: Ellis Island",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "20 Jun 2005",
-     "extracted": "Unknown",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-0762",
-     "out_tokens": 39,
-     "response_tail": "I am sorry, but I do not have information regarding a specific date for when the character Sicily Sewell was released or written off the television show \"One on One.\"\n\nAnswer: Unknown",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "Woofles",
-     "extracted": "Buster",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-1012",
-     "out_tokens": 4,
-     "response_tail": "Answer: Buster",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "13 May 2004",
-     "extracted": "12 December 2011",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "simpleqa-1166",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "simpleqa"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-1295",
-     "out_tokens": 12,
-     "response_tail": "Answer: 12 December 2011",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
@@ -1241,7 +2304,7 @@
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-1312",
-     "out_tokens": 6,
+     "out_tokens": 225,
      "response_tail": "Answer: University of Chicago",
      "status": "wrong",
      "sub": "simpleqa"
@@ -1253,7 +2316,7 @@
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-1314",
-     "out_tokens": 8,
+     "out_tokens": 542,
      "response_tail": "Answer: Asia Society Changemaker Award",
      "status": "wrong",
      "sub": "simpleqa"
@@ -1265,7 +2328,7 @@
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-1443",
-     "out_tokens": 8,
+     "out_tokens": 1344,
      "response_tail": "Answer: 1971",
      "status": "wrong",
      "sub": "simpleqa"
@@ -1277,7 +2340,7 @@
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-1619",
-     "out_tokens": 9,
+     "out_tokens": 278,
      "response_tail": "Answer: October 2021",
      "status": "wrong",
      "sub": "simpleqa"
@@ -1285,335 +2348,360 @@
     {
      "error": null,
      "expected": "Lloyd Hopkins Field",
-     "extracted": "Memorial Park",
+     "extracted": "Blue Mound Park",
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-2174",
-     "out_tokens": 5,
-     "response_tail": "Answer: Memorial Park",
+     "out_tokens": 2632,
+     "response_tail": "Answer: Blue Mound Park",
      "status": "wrong",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "11 March 1979",
-     "extracted": "26 May 1982",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-2306",
-     "out_tokens": 12,
-     "response_tail": "Answer: 26 May 1982",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "University of Geneva",
-     "extracted": "Free University of Berlin",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-2392",
-     "out_tokens": 7,
-     "response_tail": "Answer: Free University of Berlin",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Ghavaniska system",
-     "extracted": "Veskarium",
+     "extracted": "Vesk system",
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-2417",
-     "out_tokens": 6,
-     "response_tail": "Answer: Veskarium",
+     "out_tokens": 431,
+     "response_tail": "Answer: Vesk system",
      "status": "wrong",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "Stoke Ladies",
-     "extracted": "Dunfermline Athletic",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-2558",
-     "out_tokens": 7,
-     "response_tail": "Answer: Dunfermline Athletic",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Sarvepalli Radhakrishnan",
-     "extracted": "B. K. Nehru",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-2706",
-     "out_tokens": 8,
-     "response_tail": "Answer: B. K. Nehru",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Punkature",
-     "extracted": "Swetched",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-2782",
-     "out_tokens": 14,
-     "response_tail": "Answer: Swetched (or The Swetched Collection)",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "November 18, 2023",
-     "extracted": "May 18, 2019",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-2784",
-     "out_tokens": 13,
-     "response_tail": "Answer: May 18, 2019",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Colegio Lacordaire",
-     "extracted": "Colegio San Jos\u00e9 de Calasanz",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-2905",
-     "out_tokens": 10,
-     "response_tail": "Answer: Colegio San Jos\u00e9 de Calasanz",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "Puyallup",
-     "extracted": "Atlanta",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-3127",
-     "out_tokens": 4,
-     "response_tail": "Answer: Atlanta",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "8",
-     "extracted": "Unknown",
+     "extracted": "5",
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-3211",
-     "out_tokens": 48,
-     "response_tail": "I am sorry, but I cannot provide an answer to this question because the specific information regarding the age at which Miya Masaoka began studying classical music is not available in my current knowledge base or the provided context.\n\nAnswer: Unknown",
+     "out_tokens": 1164,
+     "response_tail": "Answer: 5",
      "status": "wrong",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "Karachi, Pakistan",
-     "extracted": "Lucknow, India",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-3247",
-     "out_tokens": 6,
-     "response_tail": "Answer: Lucknow, India",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Carlotta Cardana",
-     "extracted": "David Kelland",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-3339",
-     "out_tokens": 6,
-     "response_tail": "Answer: David Kelland",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "St David.",
-     "extracted": "The *Lady Mary",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-3342",
-     "out_tokens": 8,
-     "response_tail": "Answer: The *Lady Mary*",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "1642-1644",
-     "extracted": "1714\u20131716",
+     "extracted": "1736\u20131745",
      "finish_reason": "stop",
      "flags": [],
      "id": "simpleqa-4044",
-     "out_tokens": 13,
-     "response_tail": "Answer: 1714\u20131716",
+     "out_tokens": 1021,
+     "response_tail": "Answer: 1736\u20131745",
      "status": "wrong",
      "sub": "simpleqa"
     },
     {
-     "error": null,
-     "expected": "Leopard",
-     "extracted": "The Lugbara drum",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "simpleqa-4082",
-     "out_tokens": 13,
-     "response_tail": "Answer: The Lugbara drum (or \"Odu\")",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Drepano",
-     "extracted": "Orak",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-4255",
-     "out_tokens": 5,
-     "response_tail": "Answer: Orak",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
      "error": null,
      "expected": "Jodelle Ferland",
-     "extracted": "Jennifer Hale",
-     "finish_reason": "stop",
-     "flags": [],
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
      "id": "simpleqa-4322",
-     "out_tokens": 5,
-     "response_tail": "Answer: Jennifer Hale",
-     "status": "wrong",
+     "out_tokens": 14336,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     }
    ],
-   "gpu_minutes": 1.135,
-   "info_per_gpu_min": 15.305,
-   "max_tokens": 4096,
-   "mean_out_tokens": 573.3,
-   "mean_prompt_tokens": 200.7,
-   "mean_score": 0.4571,
+   "gpu_minutes": 9.361,
+   "info_per_gpu_min": 0.772,
+   "max_tokens": 14336,
+   "mean_out_tokens": 8976.3,
+   "mean_prompt_tokens": 182.6,
+   "mean_score": 0.2778,
    "n_attempted": 70,
    "n_cancelled": 0,
-   "n_correct": 32,
-   "n_error": 0,
+   "n_correct": 10,
+   "n_error": 34,
    "n_planned": 70,
-   "n_scored": 70,
+   "n_scored": 36,
    "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 7.07,
-   "p50_out_tokens": 516,
-   "p90_item_s": 17.82,
+   "p50_item_s": 97.62,
+   "p50_out_tokens": 10745,
+   "p90_item_s": 174.36,
    "status_counts": {
-    "correct": 32,
-    "truncated": 1,
-    "wrong": 37
+    "correct": 10,
+    "error": 34,
+    "truncated": 17,
+    "wrong": 9
    },
    "sub": {
     "mmlu_pro_hard": {
-     "acc": 0.775,
-     "acc_strict": 0.775,
+     "acc": 0.5882,
+     "acc_strict": 0.25,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.625,
-      0.8768
+      0.3601,
+      0.7839
      ],
-     "degenerate_rate": 0.025,
-     "mean_out_tokens": 995.2,
-     "mean_prompt_tokens": 308.2,
-     "mean_score": 0.775,
+     "degenerate_rate": 0.1765,
+     "mean_out_tokens": 10107.4,
+     "mean_prompt_tokens": 318.7,
+     "mean_score": 0.5882,
      "n_attempted": 40,
      "n_cancelled": 0,
-     "n_correct": 31,
-     "n_error": 0,
+     "n_correct": 10,
+     "n_error": 23,
      "n_planned": 40,
-     "n_scored": 40,
+     "n_scored": 17,
      "n_skipped": 0,
-     "p50_item_s": 8.53,
-     "p50_out_tokens": 720,
-     "p90_item_s": 20.77,
+     "p50_item_s": 96.0,
+     "p50_out_tokens": 10745,
+     "p90_item_s": 174.94,
      "status_counts": {
-      "correct": 31,
-      "truncated": 1,
-      "wrong": 8
+      "correct": 10,
+      "error": 23,
+      "truncated": 7
      },
-     "total_out_tokens": 39808,
-     "total_prompt_tokens": 12327,
-     "trunc_rate": 0.025,
-     "wall_s": 59.8
+     "total_out_tokens": 171825,
+     "total_prompt_tokens": 5418,
+     "trunc_rate": 0.4118,
+     "wall_s": 248.8
     },
     "simpleqa": {
-     "acc": 0.0333,
-     "acc_strict": 0.0333,
+     "acc": 0.0,
+     "acc_strict": 0.0,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.0059,
-      0.1667
+      0.0,
+      0.1682
      ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 10.8,
-     "mean_prompt_tokens": 57.3,
-     "mean_score": 0.0333,
+     "degenerate_rate": 0.5263,
+     "mean_out_tokens": 7964.3,
+     "mean_prompt_tokens": 60.8,
+     "mean_score": 0.0,
      "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 1,
-     "n_error": 0,
+     "n_correct": 0,
+     "n_error": 11,
      "n_planned": 30,
-     "n_scored": 30,
+     "n_scored": 19,
      "n_skipped": 0,
-     "p50_item_s": 0.17,
-     "p50_out_tokens": 8,
-     "p90_item_s": 11.06,
+     "p50_item_s": 120.22,
+     "p50_out_tokens": 14336,
+     "p90_item_s": 166.3,
      "status_counts": {
-      "correct": 1,
-      "wrong": 29
+      "error": 11,
+      "truncated": 10,
+      "wrong": 9
      },
-     "total_out_tokens": 324,
-     "total_prompt_tokens": 1719,
-     "trunc_rate": 0.0,
-     "wall_s": 31.6
+     "total_out_tokens": 151321,
+     "total_prompt_tokens": 1155,
+     "trunc_rate": 0.5263,
+     "wall_s": 218.6
     }
    },
-   "total_out_tokens": 40132,
-   "total_prompt_tokens": 14046,
-   "trunc_rate": 0.0143,
-   "wall_s": 59.8
+   "total_out_tokens": 323146,
+   "total_prompt_tokens": 6573,
+   "trunc_rate": 0.4722,
+   "wall_s": 248.8
   },
   "longctx": {
-   "acc": 0.875,
-   "acc_strict": 0.875,
+   "acc": 0.6667,
+   "acc_strict": 0.6667,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.753,
-    0.9414
+    0.5254,
+    0.7832
    ],
    "degenerate_ids": [
-    "longctx-vt-16k-04"
+    "longctx-qa-32k-d85-11",
+    "longctx-vt-16k-01",
+    "longctx-vt-16k-07",
+    "longctx-vt-16k-10",
+    "longctx-vt-32k-02",
+    "longctx-vt-32k-05",
+    "longctx-vt-32k-11",
+    "longctx-vt-8k-00",
+    "longctx-vt-8k-03",
+    "longctx-vt-8k-09"
    ],
-   "degenerate_rate": 0.0208,
+   "degenerate_rate": 0.2083,
    "error_ids": [],
    "extra": {
     "acc_by_len": {
-     "16k": 0.8125,
-     "32k": 0.875,
-     "8k": 0.9375
+     "16k": 0.625,
+     "32k": 0.625,
+     "8k": 0.75
     },
     "calibration": {
      "budgets": {
       "16k": 16384,
-      "32k": 30208,
+      "32k": 29184,
       "8k": 8192
      },
      "chars_per_token": {
@@ -1622,19 +2710,19 @@
      },
      "checks": {
       "niah_multikey": {
-       "budget": 30208,
+       "budget": 29184,
        "item": "longctx-niah-32k-d85-11",
-       "prompt_tokens": 29238
+       "prompt_tokens": 28270
       },
       "qa_multi_doc": {
-       "budget": 30208,
+       "budget": 29184,
        "item": "longctx-qa-32k-d10-08",
-       "prompt_tokens": 29609
+       "prompt_tokens": 28557
       },
       "var_tracking": {
-       "budget": 30208,
+       "budget": 29184,
        "item": "longctx-vt-32k-05",
-       "prompt_tokens": 28918
+       "prompt_tokens": 27960
       }
      },
      "fixed_tokens": {
@@ -1643,44 +2731,54 @@
       "var_tracking": 203
      },
      "max_model_len": 32768,
-     "max_tokens": 1024,
+     "max_tokens": 2048,
      "method": "tokenize",
      "tokenize_calls": 12
     },
     "context_length_errors": 0,
     "mean_prompt_tokens_by_len": {
-     "16k": 15931.1,
-     "32k": 29294.6,
-     "8k": 7913.7
+     "16k": 15934.1,
+     "32k": 28336.8,
+     "8k": 7916.7
     },
     "niah_acc_by_depth": {
      "0.10": 1.0,
      "0.35": 1.0,
      "0.60": 1.0,
-     "0.85": 1.0
+     "0.85": 0.8333
     },
     "unparsed_rate": 0.0
    },
    "failed_ids": [
-    "longctx-qa-16k-d35-01",
+    "longctx-niah-16k-d85-10",
     "longctx-qa-16k-d85-07",
     "longctx-qa-32k-d60-02",
     "longctx-qa-32k-d85-11",
-    "longctx-qa-8k-d35-09",
-    "longctx-vt-16k-04"
+    "longctx-vt-16k-01",
+    "longctx-vt-16k-04",
+    "longctx-vt-16k-07",
+    "longctx-vt-16k-10",
+    "longctx-vt-32k-02",
+    "longctx-vt-32k-05",
+    "longctx-vt-32k-08",
+    "longctx-vt-32k-11",
+    "longctx-vt-8k-00",
+    "longctx-vt-8k-03",
+    "longctx-vt-8k-06",
+    "longctx-vt-8k-09"
    ],
    "failures": [
     {
      "error": null,
-     "expected": "29.7%",
-     "extracted": "7.9%",
-     "finish_reason": "stop",
+     "expected": "5402837",
+     "extracted": null,
+     "finish_reason": "length",
      "flags": [],
-     "id": "longctx-qa-16k-d35-01",
-     "out_tokens": 41,
-     "response_tail": "Based on Document 32, in 2010, 7.9% of all households in Jacksonville were made up of individuals living alone.\n\nAnswer: 7.9%",
-     "status": "wrong",
-     "sub": "qa_multi_doc"
+     "id": "longctx-niah-16k-d85-10",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "niah_multikey"
     },
     {
      "error": null,
@@ -1691,233 +2789,363 @@
       "context_mismatch"
      ],
      "id": "longctx-qa-16k-d85-07",
-     "out_tokens": 39,
-     "response_tail": "According to Document 76, the Energiprojekt AB steam engine consumes approximately 4 kg (8.8 lb) of steam per kWh.\n\nAnswer: 8.8 lb",
+     "out_tokens": 1874,
+     "response_tail": "The Energiprojekt AB engine consumes approximately 8.8 lb of steam per kWh.\n\nAnswer: 8.8 lb",
      "status": "wrong",
      "sub": "qa_multi_doc"
     },
     {
      "error": null,
      "expected": "In bays",
-     "extracted": "summer months in some coastal locations",
+     "extracted": "some coastal locations and bays",
      "finish_reason": "stop",
-     "flags": [],
+     "flags": [
+      "hedged"
+     ],
      "id": "longctx-qa-32k-d60-02",
-     "out_tokens": 37,
-     "response_tail": "Based on the provided documents, ctenophores may be abundant during the summer months in some coastal locations (Document 101).\n\nAnswer: summer months in some coastal locations",
+     "out_tokens": 872,
+     "response_tail": "Based on the documents provided, ctenophores may be abundant during the summer months in some coastal locations and in bays where they occur in very high numbers.\n\nAnswer: some coastal locations and bays",
      "status": "wrong",
      "sub": "qa_multi_doc"
     },
     {
      "error": null,
      "expected": "simple majority vote",
-     "extracted": "Through the Commission, Council, and Parliament",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "longctx-qa-32k-d85-11",
-     "out_tokens": 269,
-     "response_tail": "ncil:** This body, composed of the heads of government of the member states, defines the general political directions and priorities and provides the \"necessary impetus\" for the Union's development, but it does not have legislative functions.\n\nAnswer: Through the Commission, Council, and Parliament.",
-     "status": "wrong",
-     "sub": "qa_multi_doc"
-    },
-    {
-     "error": null,
-     "expected": "melanocytes",
-     "extracted": "melanomas",
-     "finish_reason": "stop",
-     "flags": [],
-     "id": "longctx-qa-8k-d35-09",
-     "out_tokens": 34,
-     "response_tail": "Based on Document 17, the enzyme tyrosinase can transform certain skin cells (specifically melanocytes) into tumors called melanomas.\n\nAnswer: melanomas",
-     "status": "wrong",
-     "sub": "qa_multi_doc"
-    },
-    {
-     "error": null,
-     "expected": "55120",
-     "extracted": "5512",
+     "extracted": null,
      "finish_reason": "length",
      "flags": [
       "degenerate"
      ],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "64894",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-16k-01",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "55120",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
      "id": "longctx-vt-16k-04",
-     "out_tokens": 1024,
-     "response_tail": "\n- `VAR MXAK = 55120` is found in the section: \"VAR MXAK = 55120. In practice, the phrase 'studying for a test' was almost redundant...\"\n\nTracing back:\n`ZKXE` $\\rightarrow$ `EDHK` $\\rightarrow$ `WCVF` $\\rightarrow$ `UPKV` $\\rightarrow$ `UBGK` $\\rightarrow$ `MXAK` $\\rightarrow$ `55120`.\n\nAnswer: 5512",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "35506",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-16k-07",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "13620",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-16k-10",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "16634",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-32k-02",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "24290",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-32k-05",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "67949",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_number"
+     ],
+     "id": "longctx-vt-32k-08",
+     "out_tokens": 2048,
+     "response_tail": "\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758\uc11c\ubbfc\uc758",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "35595",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-32k-11",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "73628",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-8k-00",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "82617",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-8k-03",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "27424",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-8k-06",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "99040",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-8k-09",
+     "out_tokens": 2048,
+     "response_tail": "",
      "status": "truncated",
      "sub": "var_tracking"
     }
    ],
-   "gpu_minutes": 3.204,
-   "info_per_gpu_min": 1.639,
-   "max_tokens": 1024,
-   "mean_out_tokens": 248.2,
-   "mean_prompt_tokens": 17713.1,
-   "mean_score": 0.875,
+   "gpu_minutes": 4.418,
+   "info_per_gpu_min": 2.414,
+   "max_tokens": 2048,
+   "mean_out_tokens": 1011.0,
+   "mean_prompt_tokens": 17395.9,
+   "mean_score": 0.6667,
    "n_attempted": 48,
    "n_cancelled": 0,
-   "n_correct": 42,
+   "n_correct": 32,
    "n_error": 0,
    "n_planned": 48,
    "n_scored": 48,
    "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 16.41,
-   "p50_out_tokens": 153,
-   "p90_item_s": 32.34,
+   "p50_item_s": 15.22,
+   "p50_out_tokens": 529,
+   "p90_item_s": 43.43,
    "status_counts": {
-    "correct": 42,
-    "truncated": 1,
-    "wrong": 5
+    "correct": 32,
+    "truncated": 14,
+    "wrong": 2
    },
    "sub": {
     "niah_multikey": {
-     "acc": 1.0,
-     "acc_strict": 1.0,
+     "acc": 0.9583,
+     "acc_strict": 0.9583,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.862,
-      1.0
+      0.7976,
+      0.9926
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 143.2,
-     "mean_prompt_tokens": 17625.5,
-     "mean_score": 1.0,
+     "mean_out_tokens": 484.8,
+     "mean_prompt_tokens": 17311.2,
+     "mean_score": 0.9583,
      "n_attempted": 24,
      "n_cancelled": 0,
-     "n_correct": 24,
+     "n_correct": 23,
      "n_error": 0,
      "n_planned": 24,
      "n_scored": 24,
      "n_skipped": 0,
-     "p50_item_s": 5.52,
-     "p50_out_tokens": 152,
-     "p90_item_s": 23.47,
+     "p50_item_s": 8.0,
+     "p50_out_tokens": 426,
+     "p90_item_s": 15.31,
      "status_counts": {
-      "correct": 24
-     },
-     "total_out_tokens": 3438,
-     "total_prompt_tokens": 423013,
-     "trunc_rate": 0.0,
-     "wall_s": 31.6
-    },
-    "qa_multi_doc": {
-     "acc": 0.5833,
-     "acc_strict": 0.5833,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.3195,
-      0.8067
-     ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 56.0,
-     "mean_prompt_tokens": 17960.0,
-     "mean_score": 0.5833,
-     "n_attempted": 12,
-     "n_cancelled": 0,
-     "n_correct": 7,
-     "n_error": 0,
-     "n_planned": 12,
-     "n_scored": 12,
-     "n_skipped": 0,
-     "p50_item_s": 16.64,
-     "p50_out_tokens": 37,
-     "p90_item_s": 19.23,
-     "status_counts": {
-      "correct": 7,
-      "wrong": 5
-     },
-     "total_out_tokens": 672,
-     "total_prompt_tokens": 215520,
-     "trunc_rate": 0.0,
-     "wall_s": 27.2
-    },
-    "var_tracking": {
-     "acc": 0.9167,
-     "acc_strict": 0.9167,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.6461,
-      0.9851
-     ],
-     "degenerate_rate": 0.0833,
-     "mean_out_tokens": 650.4,
-     "mean_prompt_tokens": 17641.4,
-     "mean_score": 0.9167,
-     "n_attempted": 12,
-     "n_cancelled": 0,
-     "n_correct": 11,
-     "n_error": 0,
-     "n_planned": 12,
-     "n_scored": 12,
-     "n_skipped": 0,
-     "p50_item_s": 31.82,
-     "p50_out_tokens": 616,
-     "p90_item_s": 34.29,
-     "status_counts": {
-      "correct": 11,
+      "correct": 23,
       "truncated": 1
      },
-     "total_out_tokens": 7805,
-     "total_prompt_tokens": 211697,
+     "total_out_tokens": 11636,
+     "total_prompt_tokens": 415470,
+     "trunc_rate": 0.0417,
+     "wall_s": 122.2
+    },
+    "qa_multi_doc": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4677,
+      0.9111
+     ],
+     "degenerate_rate": 0.0833,
+     "mean_out_tokens": 1026.5,
+     "mean_prompt_tokens": 17640.6,
+     "mean_score": 0.75,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 18.72,
+     "p50_out_tokens": 914,
+     "p90_item_s": 41.7,
+     "status_counts": {
+      "correct": 9,
+      "truncated": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 12318,
+     "total_prompt_tokens": 211687,
      "trunc_rate": 0.0833,
-     "wall_s": 42.5
+     "wall_s": 54.4
+    },
+    "var_tracking": {
+     "acc": 0.0,
+     "acc_strict": 0.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0,
+      0.2425
+     ],
+     "degenerate_rate": 0.75,
+     "mean_out_tokens": 2048.0,
+     "mean_prompt_tokens": 17320.3,
+     "mean_score": 0.0,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 0,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 40.41,
+     "p50_out_tokens": 2048,
+     "p90_item_s": 44.9,
+     "status_counts": {
+      "truncated": 12
+     },
+     "total_out_tokens": 24576,
+     "total_prompt_tokens": 207844,
+     "trunc_rate": 1.0,
+     "wall_s": 70.7
     }
    },
-   "total_out_tokens": 11915,
-   "total_prompt_tokens": 850230,
-   "trunc_rate": 0.0208,
-   "wall_s": 42.5
+   "total_out_tokens": 48530,
+   "total_prompt_tokens": 835001,
+   "trunc_rate": 0.2917,
+   "wall_s": 122.2
   },
   "math": {
-   "acc": 0.6,
-   "acc_strict": 0.6,
+   "acc": 0.9615,
+   "acc_strict": 0.3125,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.4905,
-    0.7004
+    0.8111,
+    0.9932
    ],
-   "degenerate_ids": [
-    "aime25-I-7",
-    "aime25-I-9",
-    "aime25-II-14",
-    "aime25-II-15",
-    "aime25-II-5",
-    "hmmt25-feb-11",
-    "hmmt25-feb-16",
-    "hmmt25-feb-17",
-    "hmmt25-feb-24",
-    "hmmt25-feb-25",
-    "hmmt25-feb-7"
-   ],
-   "degenerate_rate": 0.1375,
-   "error_ids": [],
-   "extra": {
-    "ambiguous_boxed": 0,
-    "boxed_rate": 0.6875,
-    "match_methods": {
-     "numeric": 3,
-     "set": 1,
-     "string": 44
-    },
-    "unparsed_rate": 0.0
-   },
-   "failed_ids": [
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [
+    "aime25-I-10",
     "aime25-I-11",
+    "aime25-I-12",
     "aime25-I-13",
     "aime25-I-14",
     "aime25-I-15",
+    "aime25-I-4",
+    "aime25-I-5",
     "aime25-I-7",
     "aime25-I-8",
     "aime25-I-9",
+    "aime25-II-10",
+    "aime25-II-11",
+    "aime25-II-12",
     "aime25-II-13",
     "aime25-II-14",
     "aime25-II-15",
     "aime25-II-3",
+    "aime25-II-4",
     "aime25-II-5",
+    "aime25-II-6",
+    "aime25-II-8",
+    "hmmt25-feb-1",
     "hmmt25-feb-10",
     "hmmt25-feb-11",
     "hmmt25-feb-12",
-    "hmmt25-feb-13",
     "hmmt25-feb-14",
     "hmmt25-feb-15",
     "hmmt25-feb-16",
@@ -1925,655 +3153,876 @@
     "hmmt25-feb-18",
     "hmmt25-feb-19",
     "hmmt25-feb-20",
+    "hmmt25-feb-21",
+    "hmmt25-feb-22",
+    "hmmt25-feb-23",
     "hmmt25-feb-24",
     "hmmt25-feb-25",
+    "hmmt25-feb-26",
+    "hmmt25-feb-28",
     "hmmt25-feb-29",
+    "hmmt25-feb-3",
     "hmmt25-feb-30",
     "hmmt25-feb-4",
     "hmmt25-feb-6",
     "hmmt25-feb-7",
-    "hmmt25-feb-9",
-    "math500-hard-geometry-817"
+    "math500-hard-geometry-183",
+    "math500-hard-geometry-817",
+    "math500-hard-intermediate-algebra-1166",
+    "math500-hard-intermediate-algebra-582",
+    "math500-hard-intermediate-algebra-955",
+    "math500-hard-intermediate-algebra-966",
+    "math500-hard-prealgebra-1558",
+    "math500-hard-precalculus-44"
+   ],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 1.0,
+    "match_methods": {
+     "numeric": 3,
+     "set": 1,
+     "string": 21
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "hmmt25-feb-13"
    ],
    "failures": [
     {
-     "error": null,
-     "expected": "259",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
-     "id": "aime25-I-11",
-     "out_tokens": 8192,
-     "response_tail": "3265} \\approx 57.1 \\implies y \\approx \\frac{58.1}{68}, \\frac{-56.1}{68}$ (Both in $[-1, 1]$)\n14. $\\frac{-1 \\pm \\sqrt{3537}}{68}$: $\\sqrt{3537} \\approx 59.4 \\implies y \\approx \\frac{58.4}{68}, \\frac{-60.4}{68}$ (Both in $[-1, 1]$)\n15. $\\frac{1 \\pm \\sqrt{3817}}{68}$: $\\sqrt{3817} \\approx 61.7 \\implies",
-     "status": "truncated",
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-10",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "204",
-     "extracted": "487/3",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-11",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-12",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "aime25-I-13",
-     "out_tokens": 3222,
-     "response_tail": "(1/3) = 1 + 50/3 + 50/3 + 100 = 101 + 100/3 = 403/3$.\n$E[R] = 28 + 403/3 = 487/3$.\n\nActually, the probability of two chords intersecting is $1/3$ for any two chords whose endpoints are chosen independently and uniformly. The quadrant restriction is just a way to define the segments.\n\n$\\boxed{487/3}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "60",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-I-14",
-     "out_tokens": 8192,
-     "response_tail": " r_4, r_5$ be the distances $XA, XB, XC, XD, XE$.\n$f(X) = r_1+r_2+r_3+r_4+r_5$.\nThe condition $\\sum \\frac{\\vec{XP_i}}{r_i} = 0$ means $\\sum (\\cos \\theta_i, \\sin \\theta_i) = 0$.\nLet the angles be $\\theta_1, \\theta_2, \\theta_3, \\theta_4, \\theta_5$.\n$\\cos \\theta_1 + \\cos \\theta_2 + \\cos \\theta_3 + \\cos",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "735",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-I-15",
-     "out_tokens": 8192,
-     "response_tail": "cos(2\\pi j/27)$ is not quite right.\n$j=9 \\implies 1+1+1=3$. $j=18 \\implies 1+1+1=3$.\n$j=3 \\implies 1+\\omega^3+\\omega^{24} = 1+\\omega^3+\\omega^{-3} = 1+2\\cos(2\\pi/9)$.\n$j=6 \\implies 1+\\omega^6+\\omega^{21} = 1+2\\cos(4\\pi/9)$.\nThe sum is $\\sum_{k=1}^4 (1+2\\cos(2\\pi k/9))^3 \\times 2$ (for $j=3, 6, 12, 1",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "821",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
-     "id": "aime25-I-7",
-     "out_tokens": 8192,
-     "response_tail": "ing 5 $b_i$'s are $\\{x\\} \\cup \\{8, \\dots, 12\\} \\setminus \\{b_6\\}$.\nOne of these $b_i$ is $x$. Let it be $b_j$.\nWe must have $a_j < x$.\nThe number of ways to choose $x$ and the $a_i$'s:\n$x$ is the element in $\\{1, \\dots, 6\\}$ not in $\\{a_1, \\dots, a_5\\}$.\nThe number of ways to choose $a_1, \\dots, a_5",
-     "status": "truncated",
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-4",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "77",
-     "extracted": "35",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-5",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-7",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "aime25-I-8",
-     "out_tokens": 844,
-     "response_tail": "mplies k = \\frac{58}{4} = \\frac{29}{2}$\n\nThe sum of all possible values of $k$ is:\n$k_1 + k_2 = 2 + \\frac{29}{2} = \\frac{4 + 29}{2} = \\frac{33}{2}$\n\nWe have $\\frac{m}{n} = \\frac{33}{2}$.\nSince 33 and 2 are relatively prime positive integers, $m = 33$ and $n = 2$.\n$m + n = 33 + 2 = 35$.\n\n$\\boxed{35}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "62",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-I-9",
-     "out_tokens": 8192,
-     "response_tail": "sin \\theta - 4 = 0 \\implies 1 - \\sin^2 \\theta + \\sin \\theta - 4 = 0 \\implies \\sin^2 \\theta - \\sin \\theta + 3 = 0$.\nThis has no real solutions for $\\sin \\theta$.\nLet's re-calculate the subtraction $r^2(\\sin^2(\\theta - 60^\\circ) - \\sin^2 \\theta) - r(\\sin(\\theta - 60^\\circ) - \\sin \\theta) = 0$.\n$\\sin \\",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "248",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-10",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-11",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-12",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-II-13",
-     "out_tokens": 8192,
-     "response_tail": " 1/4 + 1/2 \\cos \\theta_k + 1/4 \\cos^2 \\theta_k - 3/4 = 1/2 \\cos \\theta_k + 1/4 \\cos 2\\theta_k - 1/2$.\nThis is not working. Let's look at $c_k$ again.\n$c_1 = 7/12$. $c_2 = -59/144$. $c_3 = -12071/20736$.\nIs there a way to express $c_k$ in terms of $k$?\nLet $c_k = \\frac{1}{2} \\cos \\theta_k + \\dots$ No",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "104",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-II-14",
-     "out_tokens": 8192,
-     "response_tail": "rea(ABC) - Area(ABK) - Area(ACL) + Area(AKL)$ is actually correct if $K, L$ are such that $A$ is \"outside\" the quadrilateral.\n$Area(ABK) = \\frac{1}{2} |0(b/2) - b(x_1)| = \\frac{1}{2} b x_1$.\n$Area(ACL) = \\frac{1}{2} |c(y_2) - 0(c/2)| = \\frac{1}{2} c y_2$.\n$Area(AKL) = \\frac{1}{2} |x_1 y_2 - x_2 y_1|",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "240",
-     "extracted": "188",
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed"
-     ],
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-II-15",
-     "out_tokens": 8192,
-     "response_tail": "The sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\nThe sum is $18+72+98 = 188$.\n\n",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "82",
-     "extracted": "70",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "aime25-II-3",
-     "out_tokens": 1753,
-     "response_tail": "d. 7 segments. 2 squares.\n$S_1: a+b+c+d=2, S_2: d+e+f+g=2$.\nThis is more complex. Let's use the result for a $2 \\times 2$ grid.\nThe number of ways to color a $n \\times m$ grid such that each square has 2 red and 2 blue is a known combinatorial problem.\nFor $n=2, m=2$, the answer is 70.\n\n$\\boxed{70}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "336",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-4",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "aime25-II-5",
-     "out_tokens": 8192,
-     "response_tail": ".\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is wrong.\nThe arc $HJ = 2(180-A)$ is",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "aime25"
     },
     {
-     "error": null,
-     "expected": "\\frac{-1+\\sqrt{17}}{2},\\frac{-1-\\sqrt{17}}{2}",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-6",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-8",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "aime25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-1",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-10",
-     "out_tokens": 8192,
-     "response_tail": "12=0$?\n$2(-125/8) - 25/4 + 55/2 + 12 = -125/4 - 25/4 + 110/4 + 48/4 = 8/4 = 2 \\neq 0$.\nWhere is the mistake? Let's re-calculate $P^2-P = 6Q+36S+216$.\n$P = SQ-1$.\n$(SQ-1)^2 - (SQ-1) = 6Q+36S+216 \\implies S^2Q^2 - 3SQ + 2 = 6Q+36S+216$.\n$S^2Q^2 - (3S+6)Q - 36S - 214 = 0$.\n$Q = \\frac{S^2-S-18}{2}$.\n$S^",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "56",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-11",
-     "out_tokens": 8192,
-     "response_tail": " be adjacent to 1 and 2.\nSo 6 must be adjacent to 3 and (1 or 2).\nIf 6 is adjacent to 1, its neighbors are $\\{1, 3\\}$.\nIf 6 is adjacent to 2, its neighbors are $\\{2, 3\\}$.\nIf 6 is adjacent to 3, its other neighbor is 1 or 2.\nThis is what I used to find the 4 arrangements.\nAre there any other numbers",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "29",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-12",
-     "out_tokens": 8192,
-     "response_tail": "4 elements from $P_2$, which is impossible.\nSo if $E \\notin S$, the path is ALWAYS blocked.\nWait, let's check $S = \\{B, C, D, G\\}$. $E \\notin S$.\n$P_1 = \\{B, C, F\\}$. $S \\cap P_1 = \\{B, C\\}$. $P_1$ is blocked.\n$P_2 = \\{D, G, H\\}$. $S \\cap P_2 = \\{D, G\\}$. $P_2$ is blocked.\nIs there any path? $A-B-C-",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
      "error": null,
      "expected": "105",
-     "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "extracted": "266",
+     "finish_reason": "stop",
+     "flags": [],
      "id": "hmmt25-feb-13",
-     "out_tokens": 8192,
-     "response_tail": " of 2 is $(2y-1)!! = \\frac{(2y)!}{y! 2^y}$.\n- $x=4, y=0: (0-1)!! = 1$. Total $1 \\times 1 = 1$.\n- $x=3, y=1: (2-1)!! = 1$. Total $10 \\times 1 = 10$.\n- $x=2, y=2: (4-1)!! = 3$. Total $15 \\times 3 = 45$.\n- $x=1, y=3: (6-1)!! = 15$. Total $7 \\times 15 = 105$.\n- $x=0, y=4: (8-1)!! = 105$. Total $1 \\times",
-     "status": "truncated",
+     "out_tokens": 15102,
+     "response_tail": ".\n- Case 5: $m_1 = 0, m_2 = 4 \\implies K = 8, n_4 = 0, n_2 = 8$.\n  Number of sequences: $\\binom{8}{0} = 1$. $W(L) = \\frac{1}{4!} \\binom{8}{2} \\binom{6}{2} \\binom{4}{2} \\binom{2}{2} = 105$. Total: $1 \\times 105 = 105$.\n\nSumming the results from all cases:\n$1 + 10 + 45 + 105 + 105 = 266$.\n\n\\boxed{266}",
+     "status": "wrong",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "2304",
-     "extracted": "22",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "hmmt25-feb-14",
-     "out_tokens": 2987,
-     "response_tail": "ore efficient way. Let's use the property that $x+y$ or $x-y$ changes.\nActually, a simple recursion with memoization (keeping track of visited) works.\nRunning a quick manual check on paths:\nThe number of paths is 22.\n\nLet's re-verify the path count carefully.\nThe number of paths is 22.\n\n$\\boxed{22}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "200",
-     "extracted": "202",
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed"
-     ],
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8000 ssl:default [Connect call failed ('127.0.0.1', 8000)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-15",
-     "out_tokens": 8192,
-     "response_tail": "   (0,0)-(0,1)-(0,2)-(1,2)-(1,1)-(1,0)-(0,0) is 6.\n    (1,1)-(2,1)-(2,2)-(1,2) - 3.\n    6 + 3 = 9.\n    Wait, the 10 edges are (0,0)-(0,1), (0,1)-(0,2), (0,2)-(1,2), (1,2)-(2,2), (2,2)-(2,1), (2,1)-(1,1), (1,1)-(1,0), (1,0)-(0,0) (8 edges)\n    and (1,1)-(0,1) and (1,1)-(1,2) is not possible because (",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "6300",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-16",
-     "out_tokens": 8192,
-     "response_tail": "\\cap C| = 2 \\times 15 \\times 15 = 450$.\n$3375 + 3375 - 450 = 6300$.\n\nWait, I should re-verify $|A|$.\n$A$ is the set of pairs $\\{R_1, R_2\\}$ such that $x_{1,2} < x_{2,1}$ OR $x_{2,2} < x_{1,1}$.\nThe number of ways to choose $x_{1,1} < x_{1,2} < x_{2,1} < x_{2,2}$ is $\\binom{6}{4} = 15$.\nFor each such",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "2^25*26!",
-     "extracted": "n! \\times 3^n$ is not it",
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed"
-     ],
-     "id": "hmmt25-feb-17",
-     "out_tokens": 8192,
-     "response_tail": "$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\nThe answer is $n! \\times 3^n$ is not it.\n",
-     "status": "truncated",
-     "sub": "hmmt25"
-    },
-    {
-     "error": null,
-     "expected": "\\frac{2025}{101}",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
-     "id": "hmmt25-feb-18",
-     "out_tokens": 8192,
-     "response_tail": " j+T]$.\nSo we need $[j-T, j+T] \\cap (k_1+T, k_2-T) \\neq \\emptyset$.\nThis is $\\max(j-T, k_1+T+1) \\le \\min(j+T, k_2-T-1)$.\nWait, I've already done this. The condition is $\\max(j-T, k_1+T) < \\min(j+T, k_2-T)$.\nThis is equivalent to: $j-T < k_2-T \\implies j < k_2$ (always true)\nand $k_1+T < j+T \\implies",
-     "status": "truncated",
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\frac{4}{9}",
-     "extracted": "1/3",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "hmmt25-feb-19",
-     "out_tokens": 1114,
-     "response_tail": ". For a regular $n$-gon, the probability is $\\frac{1}{3}$ if $n$ is a multiple of 3? No.\nThe probability that the line through two points in a regular $n$-gon intersects opposite edges is $\\frac{1}{3}$ for a hexagon.\n\nFinal calculation: For a regular hexagon, the probability is $1/3$.\n\n$\\boxed{1/3}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\frac{448}{3}",
-     "extracted": "45",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "hmmt25-feb-20",
-     "out_tokens": 3142,
-     "response_tail": "ake to the next.\n$D = g_i + 1$. If $g_i=2$, $D=3$.\nThe expected time for $n$ particles to merge is $E[T] = \\frac{1}{2} \\sum_{i=1}^{n} g_i(g_i+1)$.\nFor $n=15, g_i=2$, $E[T] = \\frac{1}{2} (15 \\times 2 \\times 3) = 45$.\n\nActually, the sum of $g_i(g_i+1)$ is $15 \\times 6 = 90$. $90/2 = 45$.\n\n$\\boxed{45}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "20",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-21",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-22",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-23",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-24",
-     "out_tokens": 8192,
-     "response_tail": "C = 10$.\nThe general relation was $2r_{n-1}^2 = 100 - (x_C-10)^2$? No.\nFrom $r_2^2 + (x-10)^2 = 100$ (where $x$ is the $x$-coordinate of $O_2$), and $O_2 = (x, r_2)$ because $C$ is the projection of $O_2$ onto $AB$ and $C$ is the tangency point.\nWait, $C$ is the tangency point of $S_2$ on $AB$. So $",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\sqrt{23}-2\\sqrt{3}",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-25",
-     "out_tokens": 8192,
-     "response_tail": "25} (R+y_P)^2 \\frac{1}{x_X^2}$ is not it.\n$x_P^2 = \\frac{4R^2}{625} (R+y_P)^2 \\frac{1}{x_X^2}$ is not it.\n$x_P^2 = \\frac{4R^2}{625} (R+y_P)^2 \\frac{1}{x_X^2}$ is not it.\n$x_P^2 = \\frac{4R^2}{625} (R+y_P)^2 \\frac{1}{x_X^2}$ is not it.\n$x_P^2 = \\frac{4R^2}{625} (R+y_P)^2 \\frac{1}{x_X^2}$ is not it.\n$x",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "14+4\\sqrt{37}",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-26",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-28",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-29",
-     "out_tokens": 8192,
-     "response_tail": "$.\n$1152w^2 - 1751616 = (w^2 \\pm 20w + 676)(w^2-900) = w^4 \\pm 20w^3 + 676w^2 - 900w^2 \\mp 18000w - 608400$.\n$w^4 \\pm 20w^3 - 1176w^2 \\mp 18000w + 1143216 = 0$.\nLet's try the minus sign: $w^4 - 20w^3 - 1176w^2 + 18000w + 1143216 = 0$.\nIf $w=32$, $1048576 - 20(32768) - 1176(1024) + 18000(32) + 114321",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\sqrt{\\frac{95}{24}}",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8006 ssl:default [Connect call failed ('127.0.0.1', 8006)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-3",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-30",
-     "out_tokens": 8192,
-     "response_tail": "ance $d$ from the center to the plane $Ax+By+Cz=D$ is $d = \\frac{|D|}{\\sqrt{A^2+B^2+C^2}}$.\nFor a plane $Ax+By+Cz=D$, the side lengths are $s_1^2, \\dots, s_6^2$.\nA known result is $s_1^2+s_4^2 = s_2^2+s_5^2 = s_3^2+s_6^2$ if $D=0$.\nIf $D \\neq 0$, then $s_1^2+s_4^2 = 2(a^2+b^2) + \\dots$ no.\nActually,",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "-984",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8003 ssl:default [Connect call failed ('127.0.0.1', 8003)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "no_boxed",
-      "no_answer"
-     ],
+     "finish_reason": null,
+     "flags": [],
      "id": "hmmt25-feb-4",
-     "out_tokens": 8192,
-     "response_tail": "x$ values again.\n$x \\in \\{0.5, 1.5, \\dots, 999.5\\}$.\n$2x \\in \\{1, 3, \\dots, 1999\\}$.\nThe number of $x$ such that $2x$ is a divisor of 4050 is the number of odd divisors of 4050 that are $\\le 1999$.\nThe odd divisors of 4050 are the divisors of 2025.\nThe divisors of 2025 are $\\{1, 3, 5, 9, 15, 25, 27,",
-     "status": "truncated",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\frac{1311}{2017}",
-     "extracted": "0",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "hmmt25-feb-6",
-     "out_tokens": 3034,
-     "response_tail": "5$, so $p-1 \\mid 2025!$.\nAlso $p^{e_1-1}$ is a factor of $2025!$ by definition of $e_1$.\nThus $\\lambda(2025!) \\mid 2025!$.\nSince $\\lambda(2025!) \\mid 2025!$, $2017^{2025!} \\equiv 1 \\pmod{2025!}$.\nSo $r = 0$.\n\nFinal check: $2017^{2025!} - 1 \\equiv 0 \\pmod{2025!}$.\n\n$\\frac{r}{2025!} = 0$.\n\n$\\boxed{0}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\frac{9\\sqrt{23}}{23}",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
      "extracted": null,
-     "finish_reason": "length",
-     "flags": [
-      "degenerate",
-      "no_boxed",
-      "no_answer"
-     ],
-     "id": "hmmt25-feb-7",
-     "out_tokens": 8192,
-     "response_tail": "^2+1) = 3(\\frac{1}{3} \\tan^2 \\phi + 1) = \\tan^2 \\phi + 3$. No.\nWait! $2(a^2+1) = \\sec^2 \\theta$.\n$3(b^2+1) = 3(\\frac{1}{3} \\tan^2 \\phi + 1) = \\tan^2 \\phi + 3$. No.\nIf $2(a^2+1) = \\sec^2 \\theta$, then $a^2+1 = \\frac{1}{2} \\sec^2 \\theta$, so $a^2 = \\frac{1}{2} \\tan^2 \\theta$.\nThen $a = \\frac{1}{\\sqrt{",
-     "status": "truncated",
-     "sub": "hmmt25"
-    },
-    {
-     "error": null,
-     "expected": "1037",
-     "extracted": "1015",
-     "finish_reason": "stop",
+     "finish_reason": null,
      "flags": [],
-     "id": "hmmt25-feb-9",
-     "out_tokens": 2618,
-     "response_tail": "uiv 1015$, $r = 1015$.\n\nCheck: $S = \\sum_{j=1}^{2027} j = \\frac{2027 \\cdot 2028}{2} = 2027 \\cdot 1014 \\equiv 0 \\pmod{2027}$.\nSum of $k$ for $k \\in \\{1, 4, \\dots, 44^2\\}$ is $29370$.\n$29370 = 14 \\cdot 2027 + 1012$.\n$C_{N-1} \\equiv -1012 \\equiv 1015 \\pmod{2027}$.\n\nFinal answer is 1015.\n\n$\\boxed{1015}$",
-     "status": "wrong",
+     "id": "hmmt25-feb-7",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "hmmt25"
     },
     {
-     "error": null,
-     "expected": "\\frac{14}{3}",
-     "extracted": "7",
-     "finish_reason": "stop",
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-geometry-183",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8007 ssl:default [Connect call failed ('127.0.0.1', 8007)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
      "flags": [],
      "id": "math500-hard-geometry-817",
-     "out_tokens": 3540,
-     "response_tail": "\nAnd $r=7$ is a common fraction.\n\nFinal check: If $r=7$, the semicircle is tangent to $AQ$ and $BQ$ and its diameter lies on $AB$.\nThe distance from $M(7,7)$ to the $x$-axis is 7. The distance from $M(7,7)$ to the $y$-axis is 7.\nSo the semicircle is tangent to the axes.\nThe radius is 7.\n\n$\\boxed{7}$",
-     "status": "wrong",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8004 ssl:default [Connect call failed ('127.0.0.1', 8004)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-intermediate-algebra-1166",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-intermediate-algebra-582",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-intermediate-algebra-955",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-intermediate-algebra-966",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8002 ssl:default [Connect call failed ('127.0.0.1', 8002)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-prealgebra-1558",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "math500_hard"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "math500-hard-precalculus-44",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
      "sub": "math500_hard"
     }
    ],
-   "gpu_minutes": 8.813,
-   "info_per_gpu_min": 2.179,
-   "max_tokens": 8192,
-   "mean_out_tokens": 4044.4,
-   "mean_prompt_tokens": 155.6,
-   "mean_score": 0.6,
+   "gpu_minutes": 6.412,
+   "info_per_gpu_min": 0.15,
+   "max_tokens": 20480,
+   "mean_out_tokens": 8518.1,
+   "mean_prompt_tokens": 130.8,
+   "mean_score": 0.9615,
    "n_attempted": 80,
    "n_cancelled": 0,
-   "n_correct": 48,
-   "n_error": 0,
+   "n_correct": 25,
+   "n_error": 54,
    "n_planned": 80,
-   "n_scored": 80,
+   "n_scored": 26,
    "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 25.34,
-   "p50_out_tokens": 2751,
-   "p90_item_s": 73.89,
+   "p50_item_s": 94.29,
+   "p50_out_tokens": 8587,
+   "p90_item_s": 217.25,
    "status_counts": {
-    "correct": 48,
-    "truncated": 23,
-    "wrong": 9
+    "correct": 25,
+    "error": 54,
+    "wrong": 1
    },
    "sub": {
     "aime25": {
-     "acc": 0.6,
+     "acc": 1.0,
+     "acc_strict": 0.2667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6756,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 7743.5,
+     "mean_prompt_tokens": 108.1,
+     "mean_score": 1.0,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 22,
+     "n_planned": 30,
+     "n_scored": 8,
+     "n_skipped": 0,
+     "p50_item_s": 74.05,
+     "p50_out_tokens": 5271,
+     "p90_item_s": 217.93,
+     "status_counts": {
+      "correct": 8,
+      "error": 22
+     },
+     "total_out_tokens": 61948,
+     "total_prompt_tokens": 865,
+     "trunc_rate": 0.0,
+     "wall_s": 249.9
+    },
+    "hmmt25": {
+     "acc": 0.8333,
+     "acc_strict": 0.1667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4365,
+      0.9699
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 11351.0,
+     "mean_prompt_tokens": 131.8,
+     "mean_score": 0.8333,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 5,
+     "n_error": 24,
+     "n_planned": 30,
+     "n_scored": 6,
+     "n_skipped": 0,
+     "p50_item_s": 113.44,
+     "p50_out_tokens": 11529,
+     "p90_item_s": 216.89,
+     "status_counts": {
+      "correct": 5,
+      "error": 24,
+      "wrong": 1
+     },
+     "total_out_tokens": 68106,
+     "total_prompt_tokens": 791,
+     "trunc_rate": 0.0,
+     "wall_s": 249.1
+    },
+    "math500_hard": {
+     "acc": 1.0,
      "acc_strict": 0.6,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.4232,
-      0.7541
-     ],
-     "degenerate_rate": 0.1667,
-     "mean_out_tokens": 4251.9,
-     "mean_prompt_tokens": 196.5,
-     "mean_score": 0.6,
-     "n_attempted": 30,
-     "n_cancelled": 0,
-     "n_correct": 18,
-     "n_error": 0,
-     "n_planned": 30,
-     "n_scored": 30,
-     "n_skipped": 0,
-     "p50_item_s": 33.45,
-     "p50_out_tokens": 2468,
-     "p90_item_s": 73.89,
-     "status_counts": {
-      "correct": 18,
-      "truncated": 9,
-      "wrong": 3
-     },
-     "total_out_tokens": 127558,
-     "total_prompt_tokens": 5895,
-     "trunc_rate": 0.3667,
-     "wall_s": 127.9
-    },
-    "hmmt25": {
-     "acc": 0.3667,
-     "acc_strict": 0.3667,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.2187,
-      0.5449
-     ],
-     "degenerate_rate": 0.2,
-     "mean_out_tokens": 5525.6,
-     "mean_prompt_tokens": 128.0,
-     "mean_score": 0.3667,
-     "n_attempted": 30,
-     "n_cancelled": 0,
-     "n_correct": 11,
-     "n_error": 0,
-     "n_planned": 30,
-     "n_scored": 30,
-     "n_skipped": 0,
-     "p50_item_s": 52.83,
-     "p50_out_tokens": 6431,
-     "p90_item_s": 78.13,
-     "status_counts": {
-      "correct": 11,
-      "truncated": 14,
-      "wrong": 5
-     },
-     "total_out_tokens": 165769,
-     "total_prompt_tokens": 3840,
-     "trunc_rate": 0.4667,
-     "wall_s": 112.1
-    },
-    "math500_hard": {
-     "acc": 0.95,
-     "acc_strict": 0.95,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.7639,
-      0.9911
+      0.7575,
+      1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 1511.5,
-     "mean_prompt_tokens": 135.5,
-     "mean_score": 0.95,
+     "mean_out_tokens": 7618.1,
+     "mean_prompt_tokens": 145.3,
+     "mean_score": 1.0,
      "n_attempted": 20,
      "n_cancelled": 0,
-     "n_correct": 19,
-     "n_error": 0,
+     "n_correct": 12,
+     "n_error": 8,
      "n_planned": 20,
-     "n_scored": 20,
+     "n_scored": 12,
      "n_skipped": 0,
-     "p50_item_s": 11.53,
-     "p50_out_tokens": 1127,
-     "p90_item_s": 33.41,
+     "p50_item_s": 105.85,
+     "p50_out_tokens": 7900,
+     "p90_item_s": 184.14,
      "status_counts": {
-      "correct": 19,
-      "wrong": 1
+      "correct": 12,
+      "error": 8
      },
-     "total_out_tokens": 30229,
-     "total_prompt_tokens": 2710,
+     "total_out_tokens": 91417,
+     "total_prompt_tokens": 1744,
      "trunc_rate": 0.0,
-     "wall_s": 49.2
+     "wall_s": 218.4
     }
    },
-   "total_out_tokens": 323556,
-   "total_prompt_tokens": 12445,
-   "trunc_rate": 0.3125,
-   "wall_s": 127.9
+   "total_out_tokens": 221471,
+   "total_prompt_tokens": 3400,
+   "trunc_rate": 0.0,
+   "wall_s": 249.9
   },
   "tools": {
-   "acc": 0.8571,
-   "acc_strict": 0.8571,
+   "acc": 0.8657,
+   "acc_strict": 0.8286,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.7566,
-    0.9205
+    0.764,
+    0.9277
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
-   "error_ids": [],
+   "error_ids": [
+    "bfcl3-simple_211",
+    "bfcl3-simple_337",
+    "bfcl3-simple_46"
+   ],
    "extra": {
-    "acc_ast_micro": 0.9,
+    "acc_ast_micro": 0.9123,
     "acc_by_sub": {
      "irrelevance": 0.6,
      "multiple": 0.8667,
-     "parallel": 0.9333,
+     "parallel": 1.0,
      "parallel_multiple": 0.7,
      "simple": 1.0
     },
     "acc_irrelevance": 0.6,
-    "acc_official": 0.875,
-    "declined_rate_ast": 0.0167,
+    "acc_official": 0.8917,
+    "declined_rate_ast": 0.0,
     "error_codes": {
-     "call_count": 2,
-     "declined": 1,
-     "no_calls": 1,
      "spurious_call": 4,
-     "value_mismatch": 5,
+     "value_mismatch": 4,
      "wrong_function": 5
     },
-    "mean_score_ast": 0.9292,
+    "mean_score_ast": 0.9342,
     "mode": "prompt",
     "parse_methods": {
-     "json_list": 68,
-     "json_objects": 1,
-     "none": 1
+     "json_list": 67
     },
     "text_calls_ignored": 0,
     "tool_calls_in_prompt_mode": 0,
-    "unparsed_rate": 0.0143
+    "unparsed_rate": 0.0
    },
    "failed_ids": [
     "bfcl3-irrelevance_26",
     "bfcl3-irrelevance_27",
     "bfcl3-irrelevance_33",
     "bfcl3-irrelevance_68",
-    "bfcl3-multiple_26",
-    "bfcl3-multiple_92",
-    "bfcl3-parallel_114",
+    "bfcl3-multiple_10",
+    "bfcl3-multiple_191",
     "bfcl3-parallel_multiple_127",
-    "bfcl3-parallel_multiple_191",
+    "bfcl3-parallel_multiple_151",
     "bfcl3-parallel_multiple_69"
    ],
    "failures": [
@@ -2595,7 +4044,7 @@
       "spurious_call"
      ],
      "id": "bfcl3-irrelevance_26",
-     "out_tokens": 44,
+     "out_tokens": 292,
      "response_tail": "[{\"name\": \"thermodynamics_calc_gas_pressure\", \"arguments\": {\"final_temperature\": 100, \"initial_temperature\": 25, \"volume\": 2}}]",
      "status": "wrong",
      "sub": "irrelevance"
@@ -2608,7 +4057,7 @@
        "arguments": {
         "change_in_temp": 4,
         "mass": 3,
-        "specific_heat": 4.184
+        "specific_heat": 4184
        },
        "name": "calculate_heat"
       }
@@ -2618,8 +4067,8 @@
       "spurious_call"
      ],
      "id": "bfcl3-irrelevance_27",
-     "out_tokens": 41,
-     "response_tail": "[{\"name\": \"calculate_heat\", \"arguments\": {\"change_in_temp\": 4, \"mass\": 3, \"specific_heat\": 4.184}}]",
+     "out_tokens": 933,
+     "response_tail": "```json\n[\n  {\"name\": \"calculate_heat\", \"arguments\": {\"change_in_temp\": 4, \"mass\": 3, \"specific_heat\": 4184}}\n]\n```",
      "status": "wrong",
      "sub": "irrelevance"
     },
@@ -2639,7 +4088,7 @@
       "spurious_call"
      ],
      "id": "bfcl3-irrelevance_33",
-     "out_tokens": 21,
+     "out_tokens": 116,
      "response_tail": "[{\"name\": \"identify_species\", \"arguments\": {\"sequence\": \"ATCG\"}}]",
      "status": "wrong",
      "sub": "irrelevance"
@@ -2663,8 +4112,8 @@
       "spurious_call"
      ],
      "id": "bfcl3-irrelevance_68",
-     "out_tokens": 60,
-     "response_tail": "[{\"name\": \"statistics_calculate_p_value\", \"arguments\": {\"population_mean\": 98.6, \"sample_mean\": 98.2, \"sample_size\": 40, \"sample_std_dev\": 1.4}}]",
+     "out_tokens": 294,
+     "response_tail": "```json\n[\n  {\n    \"name\": \"statistics_calculate_p_value\",\n    \"arguments\": {\n      \"population_mean\": 98.6,\n      \"sample_mean\": 98.2,\n      \"sample_size\": 40,\n      \"sample_std_dev\": 1.4\n    }\n  }\n]\n```",
      "status": "wrong",
      "sub": "irrelevance"
     },
@@ -2672,147 +4121,41 @@
      "error": null,
      "expected": [
       {
-       "game_rewards.get": {
-        "game": [
-         "Fortnite"
-        ],
-        "mission": [
-         ""
-        ],
-        "platform": [
-         "Playstation",
-         "PS"
-        ],
-        "trophy": [
-         ""
-        ]
-       }
-      }
-     ],
-     "extracted": null,
-     "finish_reason": "stop",
-     "flags": [
-      "no_calls"
-     ],
-     "id": "bfcl3-multiple_26",
-     "out_tokens": 24,
-     "response_tail": "_call:game_rewards_get{game: \"Fortnite\", platform: \"Playstation\"}",
-     "status": "unparsed",
-     "sub": "multiple"
-    },
-    {
-     "error": null,
-     "expected": [
-      {
-       "walmart.vegan_products": {
-        "categories": [
+       "database.modify_columns": {
+        "columns": [
          [
-          "vegan",
-          "gluten-free"
+          "email",
+          "ssn"
          ],
          [
-          "gluten-free",
-          "vegan"
+          "ssn",
+          "email"
+         ],
+         [
+          "email",
+          "social_security_number"
+         ],
+         [
+          "social_security_number",
+          "email"
+         ],
+         [
+          "email",
+          "social security number"
+         ],
+         [
+          "social security number",
+          "email"
          ]
         ],
-        "location": [
-         "Denver, CO",
-         "Denver"
-        ]
-       }
-      }
-     ],
-     "extracted": [],
-     "finish_reason": "stop",
-     "flags": [
-      "declined"
-     ],
-     "id": "bfcl3-multiple_92",
-     "out_tokens": 70,
-     "response_tail": "[] I'm sorry, I can only search for products that are specifically categorized as \"vegan\" or \"gluten-free\" and do not have a specific \"vegetarian\" category in my search parameters. However, I can search for gluten-free products at the Walmart in Denver, CO for you. Would you like me to do that?",
-     "status": "wrong",
-     "sub": "multiple"
-    },
-    {
-     "error": null,
-     "expected": [
-      {
-       "analyze_dna_sequence": {
-        "mutation_type": [
-         "insertion",
-         ""
+        "db_name": [
+         "employees"
         ],
-        "reference_sequence": [
-         "AGCTTAGCTA"
+        "operation": [
+         "delete"
         ],
-        "sequence": [
-         "AGCTTAGCTA"
-        ]
-       }
-      },
-      {
-       "analyze_dna_sequence": {
-        "mutation_type": [
-         "insertion",
-         ""
-        ],
-        "reference_sequence": [
-         "AGCTTAGCTA"
-        ],
-        "sequence": [
-         "AGCTTAGGCTA"
-        ]
-       }
-      },
-      {
-       "analyze_dna_sequence": {
-        "mutation_type": [
-         "deletion"
-        ],
-        "reference_sequence": [
-         "AGCTTAGCTA"
-        ],
-        "sequence": [
-         "AGCTTAGCTA"
-        ]
-       }
-      },
-      {
-       "analyze_dna_sequence": {
-        "mutation_type": [
-         "deletion"
-        ],
-        "reference_sequence": [
-         "AGCTTAGCTA"
-        ],
-        "sequence": [
-         "AGCTTAGGCTA"
-        ]
-       }
-      },
-      {
-       "analyze_dna_sequence": {
-        "mutation_type": [
-         "substitution"
-        ],
-        "reference_sequence": [
-         "AGCTTAGCTA"
-        ],
-        "sequence": [
-         "AGCTTAGCTA"
-        ]
-       }
-      },
-      {
-       "analyze_dna_sequence": {
-        "mutation_type": [
-         "substitution"
-        ],
-        "reference_sequence": [
-         "AGCTTAGCTA"
-        ],
-        "sequence": [
-         "AGCTTAGGCTA"
+        "table": [
+         "personal_data"
         ]
        }
       }
@@ -2820,38 +4163,83 @@
      "extracted": [
       {
        "arguments": {
-        "mutation_type": "insertion",
-        "reference_sequence": "AGCTTAGCTA",
-        "sequence": "AGCTTAGGCTA"
+        "columns": [
+         "email addresses",
+         "social security numbers"
+        ],
+        "db_name": "employees",
+        "operation": "delete",
+        "table": "personal_data"
        },
-       "name": "analyze_dna_sequence"
-      },
-      {
-       "arguments": {
-        "mutation_type": "deletion",
-        "reference_sequence": "AGCTTAGCTA",
-        "sequence": "AGCTTAGGCTA"
-       },
-       "name": "analyze_dna_sequence"
-      },
-      {
-       "arguments": {
-        "mutation_type": "substitution",
-        "reference_sequence": "AGCTTAGCTA",
-        "sequence": "AGCTTAGGCTA"
-       },
-       "name": "analyze_dna_sequence"
+       "name": "database_modify_columns"
       }
      ],
      "finish_reason": "stop",
      "flags": [
       "mismatch"
      ],
-     "id": "bfcl3-parallel_114",
-     "out_tokens": 131,
-     "response_tail": "GCTTAGGCTA\"}}, {\"name\": \"analyze_dna_sequence\", \"arguments\": {\"mutation_type\": \"deletion\", \"reference_sequence\": \"AGCTTAGCTA\", \"sequence\": \"AGCTTAGGCTA\"}}, {\"name\": \"analyze_dna_sequence\", \"arguments\": {\"mutation_type\": \"substitution\", \"reference_sequence\": \"AGCTTAGCTA\", \"sequence\": \"AGCTTAGGCTA\"}}]",
+     "id": "bfcl3-multiple_10",
+     "out_tokens": 239,
+     "response_tail": "[{\"name\": \"database_modify_columns\", \"arguments\": {\"columns\": [\"email addresses\", \"social security numbers\"], \"db_name\": \"employees\", \"operation\": \"delete\", \"table\": \"personal_data\"}}]",
      "status": "wrong",
-     "sub": "parallel"
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Paradise"
+        ],
+        "location": [
+         "Las Vegas",
+         "Las Vegas, NV",
+         "LV"
+        ],
+        "room_type": [
+         "luxury",
+         "Luxury"
+        ],
+        "start_date": [
+         "05-12-2022",
+         "2022-05-12",
+         "12/05/2022",
+         "May.12,2022",
+         "May 12, 2022"
+        ],
+        "stay_duration": [
+         3
+        ],
+        "view": [
+         "city",
+         "city view"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Paradise",
+        "location": "Las Vegas",
+        "room_type": "luxury room",
+        "start_date": "05-12-2022",
+        "stay_duration": 3,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_191",
+     "out_tokens": 427,
+     "response_tail": "```json\n[\n  {\n    \"name\": \"book_hotel\",\n    \"arguments\": {\n      \"hotel_name\": \"Hotel Paradise\",\n      \"location\": \"Las Vegas\",\n      \"room_type\": \"luxury room\",\n      \"start_date\": \"05-12-2022\",\n      \"stay_duration\": 3,\n      \"view\": \"city view\"\n    }\n  }\n]\n```",
+     "status": "wrong",
+     "sub": "multiple"
     },
     {
      "error": null,
@@ -2982,8 +4370,8 @@
       "mismatch"
      ],
      "id": "bfcl3-parallel_multiple_127",
-     "out_tokens": 168,
-     "response_tail": "on\": \"Paris\", \"pick_up\": \"airport\"}}, {\"name\": \"hotel_book\", \"arguments\": {\"additional_services\": [\"airport transfer service\"], \"location\": \"Rome\", \"nights\": 3, \"roomType\": \"suite\"}}, {\"name\": \"car_rental\", \"arguments\": {\"car_type\": \"compact car\", \"days\": 5, \"location\": \"Rome\", \"pick_up\": \"hotel\"}}]",
+     "out_tokens": 733,
+     "response_tail": "is\", \"pick_up\": \"airport\"}},\n  {\"name\": \"hotel_book\", \"arguments\": {\"additional_services\": [\"airport transfer service\"], \"location\": \"Rome\", \"nights\": 3, \"roomType\": \"suite\"}},\n  {\"name\": \"car_rental\", \"arguments\": {\"car_type\": \"compact car\", \"days\": 5, \"location\": \"Rome\", \"pick_up\": \"hotel\"}}\n]\n```",
      "status": "wrong",
      "sub": "parallel_multiple"
     },
@@ -2991,65 +4379,79 @@
      "error": null,
      "expected": [
       {
-       "find_card_in_deck": {
-        "deck": [
-         ""
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Le Bristol Paris"
         ],
-        "rank": [
-         "King"
+        "location": [
+         "Paris, France",
+         "Paris"
         ],
-        "suit": [
-         "Hearts",
-         "hearts"
+        "room_type": [
+         "suite",
+         "Suite"
+        ],
+        "start_date": [
+         "12-01-2022",
+         "2022-12-01",
+         "Dec 1, 2022"
+        ],
+        "stay_duration": [
+         10
+        ],
+        "view": [
+         "city view",
+         "city"
         ]
        }
       },
       {
-       "currency_exchange.convert": {
+       "latest_exchange_rate": {
         "amount": [
-         100
+         1000
         ],
-        "base_currency": [
-         "Euros",
-         "EUR"
+        "source_currency": [
+         "USD",
+         "US Dollars",
+         "US Dollar"
         ],
         "target_currency": [
-         "US dollars",
-         "USD"
+         "EUR",
+         "Euro"
         ]
        }
       },
       {
-       "recipe.unit_conversion": {
-        "from_unit": [
-         "cups",
-         "cup"
-        ],
-        "precision": [
-         0,
-         ""
-        ],
-        "to_unit": [
-         "tablespoons",
-         "tablespoon"
-        ],
-        "value": [
-         2
-        ]
-       }
-      },
-      {
-       "local_nursery.find": {
-        "location": [
-         "San Francisco",
-         "San Francisco, California",
-         "SF"
-        ],
-        "plant_types": [
+       "safeway.order": {
+        "items": [
          [
-          "Annual",
-          "Tree"
+          "water",
+          "apples",
+          "bread"
          ]
+        ],
+        "location": [
+         "Palo Alto, CA",
+         "Palo Alto",
+         "CA"
+        ],
+        "quantity": [
+         [
+          2,
+          3,
+          1
+         ]
+        ]
+       }
+      },
+      {
+       "light_travel_time": {
+        "distance_in_light_years": [
+         4.24
+        ],
+        "speed_of_light": [
+         299792458,
+         ""
         ]
        }
       }
@@ -3057,37 +4459,54 @@
      "extracted": [
       {
        "arguments": {
-        "rank": "King",
-        "suit": "Hearts"
+        "hotel_name": "Hotel Le Bristol Paris",
+        "location": "Paris, France",
+        "room_type": "suite",
+        "start_date": "12-01-2022",
+        "stay_duration": 10,
+        "view": "city view"
        },
-       "name": "find_card_in_deck"
+       "name": "book_hotel"
       },
       {
        "arguments": {
-        "from_unit": "cup",
-        "to_unit": "tablespoon",
-        "value": 2
+        "amount": 1000,
+        "source_currency": "USD",
+        "target_currency": "EUR"
        },
-       "name": "recipe_unit_conversion"
+       "name": "latest_exchange_rate"
       },
       {
        "arguments": {
-        "location": "San Francisco",
-        "plant_types": [
-         "Annual",
-         "Tree"
+        "items": [
+         "bottles of water",
+         "apples",
+         "loaf of bread"
+        ],
+        "location": "Palo Alto, CA",
+        "quantity": [
+         2,
+         3,
+         1
         ]
        },
-       "name": "local_nursery_find"
+       "name": "safeway_order"
+      },
+      {
+       "arguments": {
+        "distance_in_light_years": 4.24,
+        "speed_of_light": 299792458
+       },
+       "name": "light_travel_time"
       }
      ],
      "finish_reason": "stop",
      "flags": [
       "mismatch"
      ],
-     "id": "bfcl3-parallel_multiple_191",
-     "out_tokens": 136,
-     "response_tail": "arguments\": {\"from_unit\": \"cup\", \"to_unit\": \"tablespoon\", \"value\": 2}}, {\"name\": \"currency_exchange_convert\", \"arguments\": {\"amount\": 100, \"base_currency\": \"EUR\", \"target_currency\": \"USD}}, {\"name\": \"local_nursery_find\", \"arguments\": {\"location\": \"San Francisco\", \"plant_types\": [\"Annual\", \"Tree\"]}}]",
+     "id": "bfcl3-parallel_multiple_151",
+     "out_tokens": 791,
+     "response_tail": " \"USD\", \"target_currency\": \"EUR\"}},\n  {\"name\": \"safeway_order\", \"arguments\": {\"items\": [\"bottles of water\", \"apples\", \"loaf of bread\"], \"location\": \"Palo Alto, CA\", \"quantity\": [2, 3, 1]}},\n  {\"name\": \"light_travel_time\", \"arguments\": {\"distance_in_light_years\": 4.24, \"speed_of_light\": 299792458}}\n]",
      "status": "wrong",
      "sub": "parallel_multiple"
     },
@@ -3193,32 +4612,68 @@
       "mismatch"
      ],
      "id": "bfcl3-parallel_multiple_69",
-     "out_tokens": 175,
-     "response_tail": "flation_rate\": 3, \"initial_sum\": 200000, \"years\": 5}}, {\"name\": \"finance_loan_repayment\", \"arguments\": {\"interest_rate\": 4, \"loan_amount\": 300000, \"loan_term\": 10}}, {\"name\": \"finance_property_depreciation\", \"arguments\": {\"depreciation_rate\": 2, \"initial_cost\": 500000, \"monthly\": true, \"years\": 5}}]",
+     "out_tokens": 873,
+     "response_tail": "on_rate\": 3, \"initial_sum\": 200000, \"years\": 5}},\n  {\"name\": \"finance_loan_repayment\", \"arguments\": {\"interest_rate\": 4, \"loan_amount\": 300000, \"loan_term\": 10}},\n  {\"name\": \"finance_property_depreciation\", \"arguments\": {\"depreciation_rate\": 2, \"initial_cost\": 500000, \"monthly\": true, \"years\": 5}}\n]",
      "status": "wrong",
      "sub": "parallel_multiple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "bfcl3-simple_211",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "simple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8001 ssl:default [Connect call failed ('127.0.0.1', 8001)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "bfcl3-simple_337",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "simple"
+    },
+    {
+     "error": "ClientConnectorError: Cannot connect to host 127.0.0.1:8005 ssl:default [Connect call failed ('127.0.0.1', 8005)]",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "bfcl3-simple_46",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "simple"
     }
    ],
-   "gpu_minutes": 0.298,
-   "info_per_gpu_min": 28.77,
-   "max_tokens": 2048,
-   "mean_out_tokens": 90.3,
-   "mean_prompt_tokens": 532.2,
-   "mean_score": 0.8821,
+   "gpu_minutes": 0.943,
+   "info_per_gpu_min": 8.261,
+   "max_tokens": 8192,
+   "mean_out_tokens": 420.4,
+   "mean_prompt_tokens": 534.4,
+   "mean_score": 0.8843,
    "n_attempted": 70,
    "n_cancelled": 0,
-   "n_correct": 60,
-   "n_error": 0,
+   "n_correct": 58,
+   "n_error": 3,
    "n_planned": 70,
-   "n_scored": 70,
+   "n_scored": 67,
    "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 1.28,
-   "p50_out_tokens": 62,
-   "p90_item_s": 12.12,
+   "p50_item_s": 3.75,
+   "p50_out_tokens": 351,
+   "p90_item_s": 9.02,
    "status_counts": {
-    "correct": 60,
-    "unparsed": 1,
+    "correct": 58,
+    "error": 3,
     "wrong": 9
    },
    "sub": {
@@ -3231,8 +4686,8 @@
       0.8318
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 33.9,
-     "mean_prompt_tokens": 373.8,
+     "mean_out_tokens": 372.8,
+     "mean_prompt_tokens": 371.8,
      "mean_score": 0.6,
      "n_attempted": 10,
      "n_cancelled": 0,
@@ -3241,17 +4696,17 @@
      "n_planned": 10,
      "n_scored": 10,
      "n_skipped": 0,
-     "p50_item_s": 0.34,
-     "p50_out_tokens": 27,
-     "p90_item_s": 11.29,
+     "p50_item_s": 3.04,
+     "p50_out_tokens": 292,
+     "p90_item_s": 6.76,
      "status_counts": {
       "correct": 6,
       "wrong": 4
      },
-     "total_out_tokens": 339,
-     "total_prompt_tokens": 3738,
+     "total_out_tokens": 3728,
+     "total_prompt_tokens": 3718,
      "trunc_rate": 0.0,
-     "wall_s": 27.5
+     "wall_s": 120.9
     },
     "multiple": {
      "acc": 0.8667,
@@ -3262,8 +4717,8 @@
       0.9626
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 48.2,
-     "mean_prompt_tokens": 666.3,
+     "mean_out_tokens": 292.9,
+     "mean_prompt_tokens": 664.3,
      "mean_score": 0.8667,
      "n_attempted": 15,
      "n_cancelled": 0,
@@ -3272,49 +4727,47 @@
      "n_planned": 15,
      "n_scored": 15,
      "n_skipped": 0,
-     "p50_item_s": 0.61,
-     "p50_out_tokens": 44,
-     "p90_item_s": 11.46,
+     "p50_item_s": 2.56,
+     "p50_out_tokens": 239,
+     "p90_item_s": 6.46,
      "status_counts": {
       "correct": 13,
-      "unparsed": 1,
-      "wrong": 1
+      "wrong": 2
      },
-     "total_out_tokens": 723,
-     "total_prompt_tokens": 9994,
+     "total_out_tokens": 4393,
+     "total_prompt_tokens": 9964,
      "trunc_rate": 0.0,
-     "wall_s": 32.2
+     "wall_s": 173.6
     },
     "parallel": {
-     "acc": 0.9333,
-     "acc_strict": 0.9333,
+     "acc": 1.0,
+     "acc_strict": 1.0,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.7018,
-      0.9881
+      0.7961,
+      1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 166.9,
-     "mean_prompt_tokens": 436.2,
-     "mean_score": 0.9667,
+     "mean_out_tokens": 601.3,
+     "mean_prompt_tokens": 434.2,
+     "mean_score": 1.0,
      "n_attempted": 15,
      "n_cancelled": 0,
-     "n_correct": 14,
+     "n_correct": 15,
      "n_error": 0,
      "n_planned": 15,
      "n_scored": 15,
      "n_skipped": 0,
-     "p50_item_s": 1.81,
-     "p50_out_tokens": 154,
-     "p90_item_s": 12.69,
+     "p50_item_s": 7.09,
+     "p50_out_tokens": 559,
+     "p90_item_s": 9.57,
      "status_counts": {
-      "correct": 14,
-      "wrong": 1
+      "correct": 15
      },
-     "total_out_tokens": 2503,
-     "total_prompt_tokens": 6543,
+     "total_out_tokens": 9020,
+     "total_prompt_tokens": 6513,
      "trunc_rate": 0.0,
-     "wall_s": 33.8
+     "wall_s": 183.3
     },
     "parallel_multiple": {
      "acc": 0.7,
@@ -3325,8 +4778,8 @@
       0.8922
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 161.4,
-     "mean_prompt_tokens": 850.7,
+     "mean_out_tokens": 624.5,
+     "mean_prompt_tokens": 848.7,
      "mean_score": 0.825,
      "n_attempted": 10,
      "n_cancelled": 0,
@@ -3335,56 +4788,59 @@
      "n_planned": 10,
      "n_scored": 10,
      "n_skipped": 0,
-     "p50_item_s": 1.86,
-     "p50_out_tokens": 163,
-     "p90_item_s": 12.81,
+     "p50_item_s": 6.37,
+     "p50_out_tokens": 554,
+     "p90_item_s": 7.81,
      "status_counts": {
       "correct": 7,
       "wrong": 3
      },
-     "total_out_tokens": 1614,
-     "total_prompt_tokens": 8507,
+     "total_out_tokens": 6245,
+     "total_prompt_tokens": 8487,
      "trunc_rate": 0.0,
-     "wall_s": 26.9
+     "wall_s": 104.8
     },
     "simple": {
      "acc": 1.0,
-     "acc_strict": 1.0,
+     "acc_strict": 0.85,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.8389,
+      0.8157,
       1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 57.1,
-     "mean_prompt_tokens": 423.6,
+     "mean_out_tokens": 281.1,
+     "mean_prompt_tokens": 418.9,
      "mean_score": 1.0,
      "n_attempted": 20,
      "n_cancelled": 0,
-     "n_correct": 20,
-     "n_error": 0,
+     "n_correct": 17,
+     "n_error": 3,
      "n_planned": 20,
-     "n_scored": 20,
+     "n_scored": 17,
      "n_skipped": 0,
-     "p50_item_s": 0.64,
-     "p50_out_tokens": 53,
-     "p90_item_s": 11.45,
+     "p50_item_s": 3.31,
+     "p50_out_tokens": 263,
+     "p90_item_s": 31.5,
      "status_counts": {
-      "correct": 20
+      "correct": 17,
+      "error": 3
      },
-     "total_out_tokens": 1142,
-     "total_prompt_tokens": 8472,
+     "total_out_tokens": 4778,
+     "total_prompt_tokens": 7122,
      "trunc_rate": 0.0,
-     "wall_s": 33.7
+     "wall_s": 248.4
     }
    },
-   "total_out_tokens": 6321,
-   "total_prompt_tokens": 37254,
+   "total_out_tokens": 28164,
+   "total_prompt_tokens": 35804,
    "trunc_rate": 0.0,
-   "wall_s": 33.8
+   "wall_s": 248.4
   }
  },
- "invalid_reasons": [],
+ "invalid_reasons": [
+  "error rate 146/403 > 5%"
+ ],
  "lcb_window": {
   "after": "2025-01-11",
   "before": "2025-04-05",
@@ -3435,9 +4891,9 @@
  "partial": false,
  "schema_version": 1,
  "skipped_ids": [],
- "started_at": "2026-09-04T11:03:49Z",
+ "started_at": "2026-09-04T14:00:05Z",
  "tag": "gemma26_nvfp4_---",
  "truncated": false,
- "valid": true,
- "wall_s": 127.9
+ "valid": false,
+ "wall_s": 249.9
 }

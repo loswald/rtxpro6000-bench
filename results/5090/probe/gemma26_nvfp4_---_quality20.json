@@ -19,66 +19,66 @@
  },
  {
   "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
-  "text": "Here is the iterative implementation of the Fibonacci function in Python.\n\n```python\ndef fib(n):\n    \"\"\"\n    Returns the n-th Fibonacci number using an iterative approach.\n    \n    Sequence: 0, 1, 1, 2, 3, 5, 8, 13, ...\n    fib(0) = 0\n    fib(1) = 1\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer.\")\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    a, b = 0, 1\n    \n    # We iterate from 2 up to n (inclusive)\n    for _ in range(2, n + 1):\n        # Update a and b: \n        # 'a' becomes the old 'b', and 'b' becomes the sum of both\n        a, b = b, a + b\n        \n    return b\n\n# --- Test Cases ---\nif __name__ == \"__main__\":\n    print(f\"fib(0): {fib(0)}\")   # Expected: 0\n    print(f\"fib(1): {fib(1)}\")   # Expected: 1\n    print(f\"fib(7): {fib(7)}\")   # Expected: 13\n    print(f\"fib(10): {fib(10)}\") # Expected: 55\n```\n\n### Explanation:\n\n1.  **Base Cases:** The function first handles $n=0$ and $n=1$ directly, as these are the starting points of the Fibonacci sequence.\n2.  **Variables:** We use two variables, `a` and `b`, to keep track of the two most recent numbers in the sequence. \n    *   `a` represents $F_{n-2}$\n    *   `b` represents $F_{n-1}$\n3.  **The Loop:** Instead of using recursion (which is slow and can cause a stack overflow), we use a `for` loop to calculate the next number by adding the previous two.\n4.  **Tuple Unpacking:** The line `a, b = b, a + b` is a Pythonic way to update both variables simultaneously. It calculates the new sum (`a + b`) using the *old* values before updating `a` to the value of `b`.\n5.  **Complexity:**\n    *   **Time Complexity:** $O(n)$, because we loop through the numbers exactly once.\n    *   **Space Complexity:** $O(1)$, because we only store two integers regardless of how large $n$ is.",
+  "text": "Here is the iterative implementation of the Fibonacci function in Python.\n\n```python\ndef fib(n):\n    \"\"\"\n    Returns the n-th Fibonacci number using an iterative approach.\n    Sequence: 0, 1, 1, 2, 3, 5, 8, 13, ...\n    \"\"\"\n    # Handle negative input\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    # Base cases: 0 and 1\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    a, b = 0, 1\n    \n    # Iterate from 2 up to n\n    for _ in range(2, n + 1):\n        # Calculate the next number and update variables\n        a, b = b, a + b\n        \n    return b\n\n# --- Testing the function ---\nif __name__ == \"__main__\":\n    test_cases = [0, 1, 2, 3, 5, 10]\n    for n in test_cases:\n        print(f\"Fibonacci({n}) = {fib(n)}\")\n```\n\n### Explanation:\n\n1.  **Base Cases:** The function first checks if $n$ is 0 or 1, as these are the starting points of the Fibonacci sequence.\n2.  **Variable Initialization:** We use two variables, `a` and `b`. \n    *   `a` represents the $(n-2)$ term.\n    *   `b` represents the $(n-1)$ term.\n3.  **The Loop:** Instead of using recursion (which is slow and can cause a stack overflow), we use a `for` loop to calculate the next number by adding the previous two.\n4.  **Tuple Unpacking:** The line `a, b = b, a + b` is a Pythonic way to update both variables simultaneously. It calculates the new sum (`a + b`) and then assigns the old value of `b` to `a` in a single atomic step.\n5.  **Complexity:**\n    *   **Time Complexity:** $O(n)$, because we loop through the numbers exactly once.\n    *   **Space Complexity:** $O(1)$, because we only store two integers regardless of how large $n$ is.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.628,
+  "distinct": 0.613,
   "verdict": "ok"
  },
  {
   "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
-  "text": "To get the top 3 customers by total order value, you need to join the two tables, group the results by the customer, and then sort them in descending order.\n\nHere is the SQL query:\n\n```sql\nSELECT \n    c.name, \n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n### Explanation:\n1.  **`SELECT c.name, SUM(o.amount)`**: We select the customer's name and use the aggregate function `SUM` to calculate the total of all their order amounts.\n2.  **`JOIN orders o ON c.id = o.customer_id`**: We link the `customers` table to the `orders` table using the common ID field.\n3.  **`GROUP BY c.id, c.name`**: We group the results by the customer. Including `c.id` in the group by is a best practice to ensure that if two customers have the same name, they are treated as distinct individuals.\n4.  **`ORDER BY total_order_value DESC`**: This sorts the list from the highest spending customer to the lowest.\n5.  **`LIMIT 3`**: This restricts the final output to only the top 3 records.",
+  "text": "To get the top 3 customers by total order value, you need to join the two tables, group the results by the customer, and then sort them in descending order.\n\nHere is the SQL query:\n\n```sql\nSELECT \n    c.name, \n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n### Explanation:\n1.  **`SELECT c.name, SUM(o.amount)`**: We select the customer's name and use the `SUM` aggregate function to calculate the total of all their order amounts.\n2.  **`JOIN orders o ON c.id = o.customer_id`**: We link the `customers` table to the `orders` table using the common ID field.\n3.  **`GROUP BY c.id, c.name`**: We group the results by the customer. Including `c.id` in the group by is a best practice to ensure that if two customers have the same name, they are treated as distinct individuals.\n4.  **`ORDER BY total_order_value DESC`**: This sorts the list from the highest spending customer to the lowest.\n5.  **`LIMIT 3`**: This restricts the final output to only the top three records.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.687,
+  "distinct": 0.693,
   "verdict": "ok"
  },
  {
   "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
-  "text": "**Rating: 1/5**\n\n**Explanation:**\nThe answer is incorrect. The capital of Australia is **Canberra**. Sydney is the largest city in Australia, which is a common misconception, but it does not hold the status of the capital.",
+  "text": "**Rating: 1/5**\n\n**Explanation:**\nThe answer is incorrect. The capital of Australia is **Canberra**. Sydney is the largest city in Australia, but it does not hold the status of the national capital.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.8,
+  "distinct": 0.806,
   "verdict": "ok"
  },
  {
   "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
-  "text": "Depending on the level of formality you want, here are a few ways to translate this:\n\n**1. Most common/Standard:**\n> **La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e au jeudi apr\u00e8s-midi.**\n\n**2. More formal (often used in professional emails):**\n> **La r\u00e9union a \u00e9t\u00e9 report\u00e9e au jeudi apr\u00e8s-midi.**\n*(Note: \"Report\u00e9e\" specifically implies it has been postponed/rescheduled to a later time.)*\n\n**3. Slightly more casual/Natural in speech:**\n> **La r\u00e9union a \u00e9t\u00e9 d\u00e9cal\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n\n**Key Vocabulary:**\n*   *La r\u00e9union* = The meeting\n*   *A \u00e9t\u00e9 d\u00e9plac\u00e9e* = Has been moved\n*   *Jeudi apr\u00e8s-midi* = Thursday afternoon",
+  "text": "Depending on the level of formality you need, here are a few ways to translate this:\n\n**1. Most common/Standard:**\n> **La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n\n**2. More formal (often used in professional emails):**\n> **La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n*(Note: \"Report\u00e9e\" specifically implies it has been postponed/rescheduled to a later time.)*\n\n**3. Slightly more casual/spoken:**\n> **La r\u00e9union a \u00e9t\u00e9 chang\u00e9e pour jeudi apr\u00e8s-midi.**\n\n**Key Vocabulary:**\n*   *La r\u00e9union* = The meeting\n*   *A \u00e9t\u00e9 d\u00e9plac\u00e9e* = Has been moved\n*   *Jeudi apr\u00e8s-midi* = Thursday afternoon",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.734,
+  "distinct": 0.739,
   "verdict": "ok"
  },
  {
   "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
-  "text": "While large language models are versatile, general-purpose tools trained on massive datasets, they are prone to generating factual inaccuracies.",
+  "text": "While large language models are versatile and capable of performing diverse tasks through extensive training, they are prone to generating factual inaccuracies known as hallucinations.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.947,
+  "distinct": 0.96,
   "verdict": "ok"
  },
  {
   "prompt": "List three differences between TCP and UDP.",
-  "text": "Here are three fundamental differences between **TCP** (Transmission Control Protocol) and **UDP** (User Datagram Protocol):\n\n### 1. Reliability and Error Checking\n*   **TCP is Reliable:** It uses a process called an \"acknowledgment\" system. When a packet is sent, the receiver must send back a confirmation that it arrived. If a packet is lost or corrupted, TCP will automatically retransmit it.\n*   **UDP is Unreliable:** It is a \"fire and forget\" protocol. It sends data without checking if the receiver actually got it. If a packet is lost in transit, it is simply gone; there is no automatic retransmission.\n\n### 2. Connection Method\n*   **TCP is Connection-Oriented:** Before any data can be sent, TCP must establish a formal connection between the sender and the receiver through a process called a **\"three-way handshake\"** (SYN, SYN-ACK, ACK). This ensures both parties are ready to communicate.\n*   **UDP is Connectionless:** There is no formal setup or handshake required. The sender simply starts streaming data to the destination IP and port without verifying if the receiver is active or ready to listen.\n\n### 3. Speed and Overhead\n*   **TCP is Slower (Higher Overhead):** Because TCP has to manage connections, track sequence numbers, and wait for acknowledgments, it consumes more bandwidth and introduces more \"latency\" (delay). It prioritizes **accuracy** over speed.\n*   **UDP is Faster (Lower Overhead):** Because it lacks the complex management and error-checking of TCP, it is much faster and more efficient. It prioritizes **speed** and real-time delivery over perfect accuracy.\n\n***\n\n**Summary Table:**\n\n| Feature | TCP | UDP |\n| :--- | :--- | :--- |\n| **Reliability** | Guaranteed delivery | Best-effort (no guarantee) |\n| **Connection** | Connection-oriented (Handshake) | Connectionless |\n| **Best Use Case** | Web browsing, Email, File transfers | Video streaming, Online gaming, VoIP |",
+  "text": "Here are three fundamental differences between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol):\n\n### 1. Reliability and Error Recovery\n*   **TCP is reliable:** It uses a system of acknowledgments and retransmissions. If a packet is lost or arrives corrupted during transmission, TCP will detect the error and resend the data until it is successfully received.\n*   **UDP is unreliable:** It is a \"best-effort\" protocol. It sends packets without checking if they actually arrived at the destination. If a packet is lost or corrupted, it is simply gone; the protocol does not attempt to recover it.\n\n### 2. Connection State\n*   **TCP is connection-oriented:** Before any data can be sent, TCP must establish a formal connection between the sender and the receiver through a process called a \"three-way handshake\" (SYN, SYN-ACK, ACK). This ensures both parties are ready to communicate.\n*   **UDP is connectionless:** There is no formal setup or \"handshake\" required. A device can simply start sending packets to a destination IP and port without verifying if the receiver is active or ready to listen.\n\n### 3. Speed and Overhead\n*   **TCP is slower (Higher Overhead):** Because TCP must manage connections, track sequence numbers, and wait for acknowledgments, it has a higher \"overhead.\" This makes it more complex and slightly slower, as it prioritizes accuracy over speed.\n*   **UDP is faster (Lower Overhead):** Because it lacks the complex management and constant \"checking back\" of TCP, UDP is much faster and more efficient. It is ideal for tasks where speed is critical and losing a small amount of data is acceptable.\n\n***\n\n**Summary Table:**\n\n| Feature | TCP | UDP |\n| :--- | :--- | :--- |\n| **Reliability** | Guaranteed delivery | No guarantee |\n| **Connection** | Connection-oriented (Handshake) | Connectionless |\n| **Best Use Case** | Web browsing, Email, File transfers | Video streaming, Online gaming, VoIP |",
   "reasoning_chars": 0,
   "finish": "stop",
-  "top6gram": 1,
-  "distinct": 0.612,
+  "top6gram": 2,
+  "distinct": 0.617,
   "verdict": "ok"
  },
  {
   "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
-  "text": "Depending on which part of the causality you want to reverse, here are a few ways to rewrite the sentence:\n\n**Option 1: Reversing the outcome (The most direct counterfactual)**\n> \"Because the experiment used a larger batch size, training converged **more slowly**.\"\n\n**Option 2: Reversing the cause (Changing the reason for the speed)**\n> \"Because the experiment used a **smaller** batch size, training converged faster.\"\n\n**Option 3: Reversing both (The complete opposite scenario)**\n> \"Because the experiment used a **smaller** batch size, training converged **more slowly**.\"",
+  "text": "Depending on which part of the causality you want to reverse, here are a few ways to rewrite the sentence:\n\n**Option 1: Reversing the cause (The batch size was smaller)**\n> \"Because the experiment used a **smaller** batch size, training converged **slower**.\"\n\n**Option 2: Reversing the outcome (The training was slower despite the large batch)**\n> \"Despite the experiment using a larger batch size, training converged **slower**.\"\n\n**Option 3: Reversing the entire logical relationship (The batch size was small, so it was slow)**\n> \"Because the experiment used a **smaller** batch size, training converged **more slowly**.\"\n\n**Note on technical accuracy:** In deep learning, increasing batch size often leads to fewer updates per epoch (which can feel \"slower\" in terms of steps), even if the gradient is more stable. If you are looking for the most natural \"opposite\" in a scientific context, **Option 1** is the most direct counterfactual.",
   "reasoning_chars": 0,
   "finish": "stop",
-  "top6gram": 3,
-  "distinct": 0.581,
-  "verdict": "wrong"
+  "top6gram": 2,
+  "distinct": 0.622,
+  "verdict": "ok"
  },
  {
   "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
@@ -91,29 +91,29 @@
  },
  {
   "prompt": "Explain why the sky is blue in two sentences.",
-  "text": "As sunlight reaches Earth's atmosphere, it is scattered in all directions by the gases and particles in the air. Blue light travels in shorter, smaller waves and is scattered more strongly than other colors, making the sky appear blue to our eyes.",
+  "text": "The sky appears blue because of a phenomenon called Rayleigh scattering, where sunlight interacts with the Earth's atmosphere. As sunlight reaches the atmosphere, shorter wavelengths of light\u2014specifically blue and violet\u2014are scattered in all directions by gas molecules more effectively than longer wavelengths like red.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.833,
+  "distinct": 0.886,
   "verdict": "ok"
  },
  {
   "prompt": "What is the derivative of x^3 * sin(x)?",
-  "text": "To find the derivative of $x^3 \\sin(x)$, you must use the **Product Rule**.\n\nThe Product Rule states that if you have a function $f(x) = u(x)v(x)$, its derivative is:\n$$\\frac{d}{dx}[u(x)v(x)] = u'(x)v(x) + u(x)v'(x)$$\n\n### Step 1: Identify the parts\nLet:\n*   $u(x) = x^3$\n*   $v(x) = \\sin(x)$\n\n### Step 2: Find the derivatives of the parts\n*   The derivative of $u(x)$ is $u'(x) = 3x^2$ (using the Power Rule).\n*   The derivative of $v(x)$ is $v'(x) = \\cos(x)$ (standard trigonometric derivative).\n\n### Step 3: Apply the Product Rule formula\nSubstitute the parts into the formula:\n$$\\frac{d}{dx}[x^3 \\sin(x)] = (3x^2)(\\sin(x)) + (x^3)(\\cos(x))$$\n\n### Final Answer:\nThe derivative is:\n$$3x^2 \\sin(x) + x^3 \\cos(x)$$\n\n*(Note: You can also factor out $x^2$ to write it as $x^2(3\\sin(x) + x\\cos(x))$, but the version above is the standard expanded form.)*",
+  "text": "To find the derivative of $x^3 \\sin(x)$, you must use the **Product Rule**.\n\n### 1. The Formula\nThe Product Rule states that if you have a function $f(x) = u(x)v(x)$, its derivative is:\n$$\\frac{d}{dx}[u(x)v(x)] = u'(x)v(x) + u(x)v'(x)$$\n\n### 2. Identify the parts\nLet:\n*   $u(x) = x^3$\n*   $v(x) = \\sin(x)$\n\nNow, find the derivatives of each part:\n*   $u'(x) = 3x^2$ (using the Power Rule)\n*   $v'(x) = \\cos(x)$ (the derivative of sine is cosine)\n\n### 3. Apply the Product Rule\nPlug these parts into the formula:\n$$\\frac{d}{dx}[x^3 \\sin(x)] = (3x^2)(\\sin(x)) + (x^3)(\\cos(x))$$\n\n### Final Answer:\nThe derivative is:\n$$\\mathbf{3x^2 \\sin(x) + x^3 \\cos(x)}$$\n\n*(Note: You can also factor out $x^2$ to write it as $x^2(3\\sin(x) + x\\cos(x))$, but the first form is the standard expanded answer.)*",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.672,
+  "distinct": 0.713,
   "verdict": "ok"
  },
  {
   "prompt": "Give a regex that matches a UK postcode.",
-  "text": "Because UK postcodes have a complex, non-uniform structure (e.g., `SW1A 1AA`, `W1A 0AX`, `M1 1AA`, `CR2 6XH`), there is no single \"simple\" regex.\n\nDepending on your needs, I have provided three versions: **Strict** (Official), **Standard** (Practical), and **Loose** (Flexible).\n\n### 1. The \"Strict\" Regex (Official Government Standard)\nThis is the most accurate version. It follows the official rules for the different formats (AN NAA, ANN NAA, AAN NAA, AANN NAA, ANA NAA, AANA NAA).\n\n```regex\n^(([A-Z]{1,2}[0-9][A-Z0-9]?|ASCN|STHL|TDCU) ?[0-9][A-Z]{2}|GIR ?0AA)$\n```\n\n*   **Best for:** Data validation in production environments where you want to prevent typos.\n*   **Pros:** Extremely accurate; handles special cases like `GIR 0AA`.\n*   **Cons:** Very hard to read/maintain; might reject a valid postcode if the government adds a new format.\n\n---\n\n### 2. The \"Standard\" Regex (Recommended)\nThis is the most common version used by developers. It is slightly more forgiving but covers 99.9% of all real-world UK postcodes.\n\n```regex\n^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$\n```\n\n*   **Best for:** Most web forms and general applications.\n*   **Explanation:**\n    *   `^[A-Z]{1,2}`: Starts with 1 or 2 letters.\n    *   `[0-9][A-Z0-9]?`: Followed by a number, optionally followed by another letter/number (for formats like `W1A`).\n    *   ` ?`: An optional space.\n    *   `[0-9][A-Z]{2}$`: Ends with a number and exactly two letters.\n\n---\n\n### 3. The \"Loose\" Regex (The \"Don't Break My User\" version)\nIf you are worried about users typing in lowercase or adding extra spaces, use this version.\n\n```regex\n^[a-z]{1,2}[0-9][a-z0-9]?\\s?[0-9][a-z]{2}$\n```\n*(Note: Ensure you use a **case-insensitive** flag `/i` in your code when using this).*\n\n---\n\n### Summary Table of Formats Matched\nAll the regexes above are designed to match these common patterns:\n\n| Format Type | Example |\n| :--- | :--- |\n| **AN NAA** (1 letter, 1 digit) | `M1 1AA` |\n| **ANN NAA** (1 letter, 2 digits) | `M11 1AA` |\n| **AAN NAA** (2 letters, 1 digit) | `CR2 6XH` |\n| **AANN NAA** (2 letters, 2 digits) | `DN16 7AL` |\n| **ANA NAA** (1 letter, 1 digit, 1 letter) | `W1A 0AX` |\n| **AANA NAA** (2 letters, 1 digit, 1 letter) | `EC1A 1BB` |\n\n### Implementation Tip (JavaScript Example)\nWhen using these in code, always remember to **trim** the input and decide if you want to force uppercase:\n\n```javascript\nconst postcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/;\nconst input = \" sw1a 1aa \";\n\n// Clean the input: remove whitespace and make uppercase\nconst cleanInput = input.trim().toUpperCase();\n\nif (postcodeRegex.test(cleanInput)) {\n    console.log(\"Valid UK Postcode\");\n} else {\n    console.log(\"Invalid Postcode\");\n}\n```",
+  "text": "Because UK postcodes have a complex, non-uniform structure (e.g., `SW1A 1AA`, `W1 1AA`, `M1 1AA`), there is no single \"simple\" regex.\n\nDepending on your needs, you should choose one of the three levels of strictness below.\n\n### 1. The \"Practical\" Regex (Recommended)\nThis is the best balance for most web forms. It ensures the postcode follows the general pattern of UK postcodes without being so strict that it rejects valid (but rare) formats.\n\n```regex\n^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$\n```\n*   **What it matches:** `SW1A 1AA`, `M1 1AA`, `CR2 6XH`, `W1A 0AX`.\n*   **Pros:** Very reliable for user input; handles the optional space.\n*   **Cons:** Might allow a few non-existent combinations (like `Z1 1ZZ`), but is generally safe for 99% of use cases.\n\n---\n\n### 2. The \"Strict\" Regex (Official Standard)\nIf you are building a system that requires high data integrity (like a shipping or tax engine), use this. It follows the official UK government rules for the alphanumeric structure.\n\n```regex\n^(([A-Z]{1,2}[0-9][A-Z0-9]?|ASCN|STCN|TN..|GD..|GIR..) ?[0-9][A-Z]{2})$\n```\n*   **What it does:** It accounts for specific rules, such as the fact that certain letters (like Q, V, X) are not used in certain positions, and handles specific historical/special formats.\n*   **Pros:** Extremely accurate.\n*   **Cons:** Harder to read and maintain.\n\n---\n\n### 3. The \"Loose\" Regex (For Search/Filtering)\nIf you just want to find a postcode inside a large block of text (like a long address string), use this. It removes the \"start\" (`^`) and \"end\" (`$`) anchors.\n\n```regex\n[A-Z]{1,2}[0-9][A-Z0-9]?\\s?[0-9][A-Z]{2}\n```\n\n---\n\n### Breakdown of the Logic\nIf you want to customize your own, here is how the \"Practical\" regex is built:\n\n1.  `^[A-Z]{1,2}`: Starts with 1 or 2 letters (the Area).\n2.  `[0-9][A-Z0-9]?`: Followed by a number and an optional letter/number (the District).\n3.  ` ?`: An optional space.\n4.  `[0-9]`: A single number (the Sector).\n5.  `[A-Z]{2}$`: Ends with two letters (the Unit).\n\n### Implementation Tips:\n*   **Case Sensitivity:** Always convert the user's input to **Uppercase** before testing the regex, or use the case-insensitive flag (`/i`).\n*   **Whitespace:** Users often type postcodes with or without spaces. The ` ?` in the regex handles this, but it is often cleaner to **strip all spaces** from the input first, then validate against a version of the regex that doesn't require a space.\n*   **Example (JavaScript):**\n    ```javascript\n    const postcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;\n    const isValid = postcodeRegex.test(\"sw1a 1aa\"); // true\n    ```",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.65,
+  "distinct": 0.634,
   "verdict": "ok"
  },
  {
@@ -127,20 +127,20 @@
  },
  {
   "prompt": "Complete the proverb and explain it: A stitch in time",
-  "text": "The complete proverb is: **\"A stitch in time saves nine.\"**\n\n### Explanation:\n\n**The Literal Meaning:**\nThe phrase comes from the world of sewing. If you notice a small tear or a loose thread in a piece of clothing, taking a moment to sew one single stitch right away will fix it. However, if you ignore that small hole and continue wearing the garment, the tear will grow larger, and you will eventually have to sew many more stitches (nine instead of one) to repair it.\n\n**The Figurative Meaning:**\nThe proverb is a piece of advice about **procrastination and prevention**. It means that if you deal with a problem immediately while it is still small, you will save yourself a lot of extra work, time, and trouble in the future.\n\n**Common Applications:**\n* **Health:** Going to the doctor for a minor ache now can prevent a major illness later.\n* **Maintenance:** Fixing a small leak in a roof today prevents a massive flood and structural damage next month.\n* **Work/School:** Addressing a small misunderstanding in a project immediately prevents a massive failure at the deadline.\n\n**In short: Solve problems early to prevent them from becoming disasters.**",
+  "text": "The complete proverb is: **\"A stitch in time saves nine.\"**\n\n### Explanation:\n\n**The Literal Meaning:**\nThe phrase comes from the world of sewing. If you notice a small tear or a loose thread in a piece of clothing, taking a moment to sew one single stitch right away will fix it. However, if you ignore that small hole and continue wearing the garment, the tear will grow larger, and eventually, you will have to sew nine stitches (or many more) to repair the damage.\n\n**The Figurative Meaning:**\nThe proverb is a piece of advice about **procrastination and prevention**. It means that if you deal with a problem immediately while it is still small, you will save yourself a lot of time, effort, and trouble in the future.\n\n**Key Lessons:**\n1.  **Prevention is better than cure:** It is much easier to prevent a disaster than to fix one after it has happened.\n2.  **Don't procrastinate:** Addressing a minor issue now prevents it from becoming a major crisis later.\n\n**Examples of use:**\n*   **In health:** \"I felt a slight pain in my knee, so I went to the doctor immediately. A stitch in time saves nine!\"\n*   **In business:** \"We should fix this small bug in the software code now before we launch the product; a stitch in time saves nine.\"\n*   **In home maintenance:** \"Fix that leaking pipe today before it ruins the floor; a stitch in time saves nine.\"",
   "reasoning_chars": 0,
   "finish": "stop",
-  "top6gram": 1,
-  "distinct": 0.667,
+  "top6gram": 2,
+  "distinct": 0.632,
   "verdict": "ok"
  },
  {
   "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
-  "text": "As a judge evaluating these two answers based on factual accuracy:\n\n**The correct answer is A: Paris.**\n\n**Reasoning:**\nUnder the Constitution of the French Republic, **Paris** is the official capital of France. It serves as the seat of the French government, the residence of the President, and the location of the National Assembly and the Senate.\n\n**Lyon (Answer B)** is a major French city and a significant economic and historical center, but it holds no status as the national capital. Therefore, Answer B is factually incorrect in the context of this question.",
+  "text": "As a judge evaluating these two answers based on factual accuracy:\n\n**The Verdict: Answer A is correct.**\n\n**Reasoning:**\nThe question asks for the capital of France. Under the French Constitution and international recognition, **Paris** is the seat of the government, the residence of the President, and the administrative center of the country.\n\n**Answer B (Lyon)** is incorrect. While Lyon is a major French city, a significant economic hub, and the historical capital of the Gauls during the Roman era, it does not hold the status of the current national capital of France.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.707,
+  "distinct": 0.685,
   "verdict": "ok"
  },
  {
@@ -154,7 +154,7 @@
  },
  {
   "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
-  "text": "To convert Fahrenheit to Celsius, you use the following formula:\n\n### **The Formula**\n$$C = (F - 32) \\times \\frac{5}{9}$$\n\n*(Where **C** is Celsius and **F** is Fahrenheit)*\n\n---\n\n### **The Calculation**\n\n1.  **Subtract 32 from the Fahrenheit temperature:**\n    $98.6 - 32 = 66.6$\n\n2.  **Multiply the result by 5:**\n    $66.6 \\times 5 = 333$\n\n3.  **Divide by 9:**\n    $333 / 9 = 37$\n\n**Result:** 98.6\u00b0F is equal to **37\u00b0C**.",
+  "text": "To convert Fahrenheit to Celsius, you use the following formula:\n\n### **The Formula**\n$$C = (F - 32) \\times \\frac{5}{9}$$\n\n*(Where **C** is Celsius and **F** is Fahrenheit)*\n\n---\n\n### **The Calculation**\n\n1.  **Subtract 32 from the Fahrenheit temperature:**\n    $98.6 - 32 = 66.6$\n\n2.  **Multiply the result by 5:**\n    $66.6 \\times 5 = 333$\n\n3.  **Divide by 9:**\n    $333 \\div 9 = 37$\n\n**Result:**\n98.6\u00b0F is equal to **37\u00b0C**.",
   "reasoning_chars": 0,
   "finish": "stop",
   "top6gram": 1,

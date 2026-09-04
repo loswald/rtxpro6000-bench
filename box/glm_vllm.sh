@@ -30,7 +30,7 @@ exec python3 -m vllm.entrypoints.openai.api_server \\
   --tensor-parallel-size 4 --attention-backend FLASHINFER_MLA_SPARSE_SM90 \\
   --kv-cache-dtype ${KV_DTYPE:-auto} --max-model-len 40960 --max-num-seqs 256 \\
   --max-num-batched-tokens 8192 --gpu-memory-utilization 0.90 \\
-  --reasoning-parser glm47 --tool-call-parser glm47 \\
+  --reasoning-parser glm45 --tool-call-parser glm47 \\
   --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \\
   --no-enable-flashinfer-autotune \\
   ${SPEC:+--speculative-config '$SPEC'} \\
