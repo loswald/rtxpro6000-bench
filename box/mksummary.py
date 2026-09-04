@@ -59,9 +59,12 @@ def main() -> None:
             if not r or not r[0].strip():
                 continue
             row = (r if tagged else [tag] + r) + [host]
-            # (tag, shape, concurrency, host) identifies a measurement; the same run reachable through two
-            # trees must not be counted twice
-            key = (row[0], row[1] if len(row) > 1 else "", row[2] if len(row) > 2 else "", host)
+            # De-duplicate on the WHOLE row, not on (tag, shape, concurrency). A run reachable through two
+            # trees produces byte-identical rows and must be counted once; a genuine repeat of the same
+            # configuration produces different numbers and must be kept, because the spread between repeats
+            # is the only run-to-run variance estimate this campaign has. FP8 at concurrency 1,024 was
+            # measured three times: 3,037 / 3,146 / 3,148 out tok/s, a 3.6% spread worth not hiding.
+            key = tuple(row)
             if key in seen:
                 continue
             seen.add(key)
