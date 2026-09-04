@@ -1,0 +1,5 @@
+# DeepSeek-V4-Flash native: MXFP4 experts + FP8 attention, so the released weights ARE the trained artefact
+# - no post-training quantisation to account for. It ships no Jinja chat template at all, hence the
+# --tokenizer-mode deepseek_v4 in its serving profile.
+ds4flash|/workspace/models/DeepSeek-V4-Flash|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--enable-expert-parallel|--attention_config.use_fp4_indexer_cache|False
+ds4flash_dspark|/workspace/models/DeepSeek-V4-Flash|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--enable-expert-parallel|--attention_config.use_fp4_indexer_cache|False|--speculative-config|{"method":"dspark","num_speculative_tokens":7,"draft_sample_method":"greedy"}
