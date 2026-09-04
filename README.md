@@ -261,6 +261,27 @@ sampling), applied by the harness to both the server and the eval client. Every 
 `results/eval/capped/`, `no_parser/` and `pre_profiles/` so the size of each artefact stays measurable.
 The full re-run is in flight; the corrected table will replace this section rather than sit beside it.
 
+### Does four-bit cost quality? On this model, no — and it is 3× cheaper to run
+
+The first, buggy round suggested NVFP4 lost about five points to FP8. Served correctly, on the same 403
+items and seed, that gap disappears:
+
+| Qwen3.8-27B, vendor recipe, 8× RTX 5090 | overall | maths | code | tools | long ctx | knowledge | instructions | GPU-min |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **NVFP4**, `b12x`, one replica per card | **0.732** | 0.625 | 0.733 | 0.900 | 0.979 | 0.429 | 0.833 | **78** |
+| **FP8**, `b12x`, TP2 × 4 | 0.740 | 0.700 | 0.733 | 0.814 | 0.979 | 0.443 | 0.867 | 260 |
+
+0.008 apart, against a 95% interval of roughly ±0.045 — statistically indistinguishable, with each format
+ahead on three of six families. And the four-bit configuration did it in **a third of the GPU-minutes**,
+because it fits one card and the FP8 build does not. On intelligence per pound that is not a close call.
+
+Two honest limits on this pair: the layouts differ (the FP8 checkpoint cannot fit a 32 GB card, which is
+itself part of the answer), and this is one model family. The professional box is running the full ladder —
+native BF16, FP8, the community PTQ build, a quantisation-aware-trained build and a second independent PTQ
+build, all at TP1 with the same items and seed — plus logit-level divergence of every rung against the BF16
+parent. That separates "four-bit is lossy" from "that particular upload is bad", which is the question
+worth answering before standardising on a checkpoint.
+
 ### Which four-bit releases are lossless
 
 Worth separating before reading any quantisation comparison. These are **natively quantised** — the
