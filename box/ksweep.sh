@@ -50,6 +50,18 @@ weights_ok(){ # dir
   local d="$1"
   [ -f "$d/config.json" ] || return 1
   find "$d" \( -name '*.incomplete' -o -name '*.part' \) 2>/dev/null | grep -q . && return 1
+  # A checkpoint without a tokenizer is not servable, and it does not announce itself: Laguna-S-2.1 had all
+  # ten weight shards and no tokenizer file, and died 20 s into the launch with "Couldn.t instantiate the
+  # backend tokenizer". Draft models are the exception - they are loaded beside a target and use ITS
+  # tokenizer, so requiring one of them would have deleted every drafter on the box.
+  case "$(basename "$d")" in
+    *DSpark*|*DFlash*|*MTP*|*MTPv2*|*assistant*|*draft*|*Draft*|*EAGLE*|*eagle*|*speculator*) : ;;
+    *)
+      if ! compgen -G "$d/tokenizer*" >/dev/null && ! compgen -G "$d/*.model" >/dev/null \
+         && ! compgen -G "$d/vocab*" >/dev/null && ! grep -qs '"tokenizer_mode"' "$d/config.json"; then
+        return 1
+      fi ;;
+  esac
   [ -f "$d/.dl_complete" ] && return 0
   local idx="$d/model.safetensors.index.json"
   if [ -f "$idx" ]; then

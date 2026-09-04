@@ -9,10 +9,22 @@
 export HF_HUB_ENABLE_HF_TRANSFER=1
 L=${L:-/workspace/results/dl6000.log}
 
-_shards_present(){ # dir -> 0 when every shard the index names is on disk
+_shards_present(){ # dir -> 0 when every shard the index names is on disk AND a tokenizer came with it
   local d="$1"
   [ -f "$d/config.json" ] || return 1
   find "$d" \( -name '*.incomplete' -o -name '*.part' \) 2>/dev/null | grep -q . && return 1
+  # weights without a tokenizer is a half-formed download that looks complete: Laguna-S-2.1 arrived with
+  # all ten shards and nothing to tokenise with, and only said so 20 s into a launch an hour later
+  # Draft models are the exception: they load beside a target and use ITS tokenizer, so requiring one here
+  # would mark every drafter on the box FAILED and delete it.
+  case "$(basename "$d")" in
+    *DSpark*|*DFlash*|*MTP*|*MTPv2*|*assistant*|*draft*|*Draft*|*EAGLE*|*eagle*|*speculator*) : ;;
+    *)
+      if ! compgen -G "$d/tokenizer*" >/dev/null && ! compgen -G "$d/*.model" >/dev/null \
+         && ! compgen -G "$d/vocab*" >/dev/null && ! grep -qs '"tokenizer_mode"' "$d/config.json"; then
+        return 1
+      fi ;;
+  esac
   if [ -f "$d/model.safetensors.index.json" ]; then
     python3 - "$d" <<'PY'
 import json, os, sys
@@ -33,7 +45,16 @@ get(){ # repo dirname
   local d=/workspace/models/$2
   if [ -f "$d/.dl_complete" ]; then echo "[$(date +%H:%M:%S)] have $2" | tee -a "$L"; return 0; fi
   echo "[$(date +%H:%M:%S)] downloading $1" | tee -a "$L"
-  if hf download "$1" --local-dir "$d" > "/workspace/dl_$2.log" 2>&1 && _shards_present "$d"; then
+  # Two passes. hf_transfer is much faster but its content-addressed path drops individual files without
+  # failing the command: Laguna-S-2.1 arrived with all ten weight shards and no tokenizer.json, and the
+  # same file downloaded first time over plain HTTP. So: fast path, then a plain-HTTP pass to fill gaps,
+  # and only then judge the result.
+  HF_HUB_ENABLE_HF_TRANSFER=1 hf download "$1" --local-dir "$d" > "/workspace/dl_$2.log" 2>&1
+  if ! _shards_present "$d"; then
+    echo "[$(date +%H:%M:%S)] retrying $2 without hf_transfer" | tee -a "$L"
+    HF_HUB_ENABLE_HF_TRANSFER=0 hf download "$1" --local-dir "$d" >> "/workspace/dl_$2.log" 2>&1
+  fi
+  if _shards_present "$d"; then
     : > "$d/.dl_complete"
     echo "[$(date +%H:%M:%S)] done $2 ($(du -sh "$d" | cut -f1))" | tee -a "$L"
     return 0
