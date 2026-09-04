@@ -224,6 +224,34 @@ knowledge questions and short-answer factuality, and instruction following with 
 re-implemented from the reference. Ungated public sources, programmatic scoring, no model judging another
 model, Wilson intervals, and the same items and seed across configurations so arms are directly pairable.
 
+### Task accuracy, served the way each vendor says to
+
+Six capability families, 403 items, one seed, no token cap, each model with its own reasoning parser,
+chat-template flags and sampling recipe. Accuracy does not depend on the power limit, so results from both
+4× RTX PRO 6000 hosts are pooled; the host is noted where it matters.
+
+| model (AA index) · configuration | overall | maths | code | tools | long ctx | knowledge | instructions |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **GLM-5.3-Flash (57)** · NVFP4, TP4 | **0.823** | **0.981** | 0.778 | 0.886 | 0.958 | **0.614** | 0.800 |
+| Qwen3.8-27B (52) · **FP8**, 4 replicas | 0.787 | 0.871 | 0.720 | 0.857 | 0.979 | 0.471 | **0.917** |
+| Nemotron-3-Super (26) · **native** NVFP4 | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
+| Muse-Glimmer-30B (35) · NVFP4 | 0.749 | 0.825 | 0.773 | 0.814 | 0.729 | 0.486 | 0.867 |
+| Qwen3.8-27B (52) · NVFP4 (community PTQ) | 0.747 | 0.662 | 0.733 | 0.871 | 0.958 | 0.486 | 0.867 |
+| gpt-oss-120b (24) · native MXFP4 | 0.742 | 0.731 | **0.933** | **0.923** | 0.857 | 0.385 | 0.700 |
+| gpt-oss-20b (24) · native MXFP4 | 0.712 | 0.650 | 0.760 | 0.871 | 0.854 | 0.386 | 0.817 |
+
+**The published intelligence index does predict this.** GLM-5.3-Flash at index 57 leads, and it leads on the
+families that separate models rather than saturate: maths, knowledge and long context. An earlier version of
+this file claimed the opposite — that small models beat it and the index was useless for our workloads. That
+claim was an artefact of a broken harness, not a finding, and it is withdrawn. What survives is narrower and
+more useful: **gpt-oss is disproportionately good at code and tool calling for its size**, which is what an
+agent harness spends most of its time doing, and index 24 buys 0.933 on code where index 57 buys 0.778.
+
+Caveats kept with the numbers: GLM scored 373 of 403 items, the remainder skipped on the time budget rather
+than marked wrong; the two Qwen rows differ only in quantisation and are discussed below; per-family
+intervals at these counts are roughly ±0.10, so family-level ordering is indicative and the aggregate is
+where the ±0.045 applies.
+
 ### How to serve a model without accidentally measuring your own harness
 
 The first round of quality numbers here was wrong, and the way it was wrong is the most useful thing in
