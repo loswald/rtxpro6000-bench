@@ -232,7 +232,7 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 
 | model (AA index) · configuration | overall | maths | code | tools | long ctx | knowledge | instructions |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| **GLM-5.3-Flash (57)** · NVFP4, TP4 | **0.823** | **0.981** | 0.778 | 0.886 | 0.958 | **0.614** | 0.800 |
+| **GLM-5.3-Flash (57)** · NVFP4, TP4 | **0.800** | 0.847 | 0.747 | 0.886 | 0.958 | **0.614** | 0.800 |
 | Qwen3.8-27B (52) · **FP8**, 4 replicas | 0.787 | 0.871 | 0.720 | 0.857 | 0.979 | 0.471 | **0.917** |
 | Nemotron-3-Super (26) · **native** NVFP4 | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
 | Muse-Glimmer-30B (35) · NVFP4 | 0.749 | 0.825 | 0.773 | 0.814 | 0.729 | 0.486 | 0.867 |
@@ -292,6 +292,41 @@ Three independent errors, each worth more than any kernel choice in this reposit
 sampling), applied by the harness to both the server and the eval client. Every pre-fix run is kept under
 `results/eval/capped/`, `no_parser/` and `pre_profiles/` so the size of each artefact stays measurable.
 The full re-run is in flight; the corrected table will replace this section rather than sit beside it.
+
+### Four quantisers of one model, on both axes at once
+
+Throughput and quality are not a choice to make separately, so here they are together: the same
+Qwen3.8-27B weights through four quantisers, four TP1 replicas on the 600 W box, router at concurrency
+1,024 for speed and the 403-item suite for accuracy, one recipe and one seed throughout.
+
+| build | quantiser | kernel the engine used | out tok/s | quality | maths |
+|---|---|---|---:|---:|---:|
+| NVFP4 · gittensor (ModelOpt) | post-training | B12xNvFp4 **W4A4** | **5,161** | 0.725 | 0.650 |
+| **FP8 · Qwen's own release** | vendor | B12xFp8BlockScaledMM | 3,148 | **0.789** | **0.939** |
+| NVFP4 · RedHatAI | post-training | auto: FP8 attention + dequant MLP | 2,048 | 0.772 | 0.750 |
+| NVFP4 · unsloth | post-training | auto: same | 2,048 | 0.752 | 0.738 |
+
+Three things fall out, and only the first was expected.
+
+**The frontier has exactly two points.** The gittensor build (5,161 tok/s, 0.725) and the official FP8
+build (3,148, 0.789). The other two four-bit builds are **dominated on both axes** — slower *and* weaker
+than FP8 — because compressed-tensors mixed-precision checkpoints cannot use the fast W4A4 kernel and fall
+back to an FP8 attention path with a dequantised MLP. Choosing them is never right.
+
+**The four-bit build we benchmarked everything on is the weakest of the three four-bit builds.** 0.725
+against RedHat's 0.772, and 0.650 against 0.750 on maths. We picked it for kernel compatibility, not for
+measured quality, and that choice cost accuracy we did not know we were paying for. The honest statement
+is that our *throughput* numbers and our *quality* numbers come from the best and worst ends of the same
+format.
+
+**The cost is concentrated in mathematics.** 0.650 against FP8's 0.939 — a 0.29 gap, where code, tools,
+long context and instruction following are all within noise. Whatever four-bit post-training quantisation
+damages, it is the part that does arithmetic reliably.
+
+So: if the workload is routing, tool calls and code, take the four-bit build and the 64% throughput. If it
+has to do maths, FP8 is not a close call at any concurrency. The remaining question — whether a
+quantisation-*aware*-trained build gets FP8 accuracy at W4A4 speed, which would collapse the trade-off
+entirely — is what the QAT rung of the ladder is running to answer.
 
 ### Does four-bit cost quality? Not in aggregate — but watch maths
 
