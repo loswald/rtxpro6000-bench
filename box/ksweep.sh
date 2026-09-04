@@ -135,13 +135,18 @@ evalrun(){ # tag n   — the six-family quality suite against the servers that a
   local tag=$1 n=$2 urls="" i
   for i in $(seq 0 $((n-1))); do urls="${urls}${urls:+,}http://127.0.0.1:$((8000+i))"; done
   mkdir -p "$R/eval"
-  # --reasoning is not optional on this roster. Measured on Qwen3.8-27B at the 2,048-token default: 181 of
-  # 403 items finished on the cap (52 of 80 maths items), so the score was reading the budget, not the
-  # model. These are hybrid reasoners that think in the visible channel with no <think> tags for the
-  # normaliser to strip, so the only fix is room: --reasoning gives 4,096 plus each family's own cap.
+  # No meaningful token cap. A truncated answer is not a wrong answer, it is a broken measurement, and it
+  # was corrupting these scores: GLM-5.3-Flash lost 51% of the maths items to the cap and Qwen3.8-27B 45%
+  # of everything. Caps are now set just under what the context window allows, so the only limit is the
+  # TIME budget - and running out of time marks an item skipped, which is excluded from the accuracy, where
+  # running out of tokens marked it wrong. Long-context is the one exception: its prompts are up to 32k so
+  # its output cap has to stay small, and its answers are a few tokens anyway.
+  local caps="${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=2048}"
+  [ "$MAXLEN" -lt 40000 ] && caps="${EVAL_CAPS:-math=20480,code=14336,knowledge=14336,ifeval=10240,tools=8192,longctx=2048}"
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
     --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency $(( 16 * n )) \
-    ${EVAL_REASONING:---reasoning} ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
+    ${EVAL_REASONING:---reasoning} --max-tokens "${EVAL_MAXTOK:-24576}" --max-tokens-family "$caps" \
+    ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
 }
 
 shapes(){ # tag dir n

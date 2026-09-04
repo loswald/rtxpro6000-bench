@@ -666,10 +666,18 @@ async def prepare_run(items: list[dict], ctx: Any) -> None:
     for it in items:
         if it.get("_think_allowance"):
             continue
-        it["max_tokens"] = int(it.get("max_tokens", BUDGET_BASE_TOK)) + BUDGET_THINK_TOK
+        # A per-item value can only LOWER the family cap (run_eval takes the min), so a fixed thinking
+        # allowance turns into a ceiling the moment the run is given a generous cap - which is exactly what
+        # happened: GLM-5.3-Flash truncated a quarter of these items while the run's cap was 12k, because
+        # each item was pinned to 4k. The item's own budget is a floor for the ANSWER; the thinking
+        # allowance is whatever the run has left above it.
+        fam_cap = int(getattr(ctx, "max_tokens", 0) or 0)
+        allow = max(BUDGET_THINK_TOK, fam_cap - BUDGET_BASE_TOK)
+        want = int(it.get("max_tokens", BUDGET_BASE_TOK)) + allow
+        it["max_tokens"] = min(want, fam_cap) if fam_cap else want
         it["_think_allowance"] = True
         n += 1
-    log(f"{NAME}: +{BUDGET_THINK_TOK} reasoning tokens on {n} items "
+    log(f"{NAME}: reasoning allowance on {n} items "
         f"(caps now {min(it['max_tokens'] for it in items)}..{max(it['max_tokens'] for it in items)})")
 
 

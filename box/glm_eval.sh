@@ -62,10 +62,14 @@ run_eval_for(){ # tag
   local tag="$1"
   [ -f "$R/eval/$tag.json" ] && { log "  $tag already evaluated"; return 0; }
   # This model reasons, and the server strips it into the reasoning field via deepseek_r1, so the scorers
-  # see only the answer. --reasoning still matters: it sets the budget that stops long chains being cut off.
+  # see only the answer. No meaningful token cap: at the old budget half the maths items finished on it,
+  # which measured the cap rather than the model. Time is the only limit, and running out of time marks an
+  # item skipped (excluded from accuracy) where running out of tokens marked it wrong.
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls http://127.0.0.1:8000 --model m \
-    --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-3000}" --concurrency "${EVAL_CONC:-32}" \
-    --reasoning ${EVAL_ARGS:-} 2>&1 | tail -12 | sed 's/^/    eval: /'
+    --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-5400}" --concurrency "${EVAL_CONC:-32}" \
+    --reasoning --max-tokens "${EVAL_MAXTOK:-24576}" \
+    --max-tokens-family "${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=2048}" \
+    ${EVAL_ARGS:-} 2>&1 | tail -12 | sed 's/^/    eval: /'
 }
 
 log "===== GLM-5.3-Flash (AA 57): quality ====="
@@ -75,13 +79,9 @@ for arm in ${ARMS:-base mtp}; do
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_base_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             run_eval_for glm53f_base
           fi;;
-    long) # GLM truncated 51% of the maths items and 25% of the instruction items even at the reasoning
-          # budget, so those two scores are reading the cap rather than the model. This arm reruns the base
-          # server with room for its full chain, and the gap between the two runs is the size of the artefact.
-          if launch glm53f_long; then
-            EVAL_ARGS="--max-tokens-family math=16384,ifeval=8192,knowledge=8192" \
-            EVAL_BUDGET=5400 run_eval_for glm53f_long
-          fi;;
+    long) # kept as a named arm so the capped and uncapped runs can be compared directly; the defaults above
+          # are already uncapped, so this differs from `base` only in giving the run more wall-clock time.
+          if launch glm53f_long; then EVAL_BUDGET=7200 run_eval_for glm53f_long; fi;;
     mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             # speculation verifies against the same model, so this arm must score the same as the base one;
