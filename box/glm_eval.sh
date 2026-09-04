@@ -75,6 +75,13 @@ for arm in ${ARMS:-base mtp}; do
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_base_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             run_eval_for glm53f_base
           fi;;
+    long) # GLM truncated 51% of the maths items and 25% of the instruction items even at the reasoning
+          # budget, so those two scores are reading the cap rather than the model. This arm reruns the base
+          # server with room for its full chain, and the gap between the two runs is the size of the artefact.
+          if launch glm53f_long; then
+            EVAL_ARGS="--max-tokens-family math=16384,ifeval=8192,knowledge=8192" \
+            EVAL_BUDGET=5400 run_eval_for glm53f_long
+          fi;;
     mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             # speculation verifies against the same model, so this arm must score the same as the base one;
