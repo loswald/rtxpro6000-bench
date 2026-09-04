@@ -135,9 +135,13 @@ evalrun(){ # tag n   — the six-family quality suite against the servers that a
   local tag=$1 n=$2 urls="" i
   for i in $(seq 0 $((n-1))); do urls="${urls}${urls:+,}http://127.0.0.1:$((8000+i))"; done
   mkdir -p "$R/eval"
+  # --reasoning is not optional on this roster. Measured on Qwen3.8-27B at the 2,048-token default: 181 of
+  # 403 items finished on the cap (52 of 80 maths items), so the score was reading the budget, not the
+  # model. These are hybrid reasoners that think in the visible channel with no <think> tags for the
+  # normaliser to strip, so the only fix is room: --reasoning gives 4,096 plus each family's own cap.
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
     --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency $(( 16 * n )) \
-    ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
+    ${EVAL_REASONING:---reasoning} ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
 }
 
 shapes(){ # tag dir n
