@@ -3,6 +3,7 @@
 # default routing under the vendor's own sampling recipe (lists/profiles.tsv), so the leaderboard can say whether
 # the endpoint a customer gets at list price scores what the weights score on our node.
 #
+# The eval client appends /v1/... itself, so the base URL is https://openrouter.ai/api, not .../api/v1.
 # The key never passes through the assistant or the chat: put it on the box yourself, one line, mode 600:
 #   ssh -i ~/.ssh/id_ed25519 -p <port> root@<host> 'umask 077; cat > /workspace/.openrouter_key'   (paste, Ctrl-D)
 # This script reads that file into EVAL_API_KEY for the eval client (evalsuite/common.py adds the bearer header)
@@ -35,14 +36,15 @@ CAPS="math=32768,code=20480,knowledge=20480,ifeval=16384,tools=8192,longctx=6144
 for w in $want; do
   line=$(printf '%s\n' "$MODELS" | grep "^$w|") || { log "unknown model key $w"; continue; }
   IFS='|' read -r key slug dirname <<< "$line"
-  esamp=$(profile_field "$dirname" 3)
+  # the vendor sampling recipe minus the vLLM-only chat-template switches, which a remote API would reject
+  esamp=$(profile_field "$dirname" 3 | sed -E "s/--chat-template-kwargs [^ ]+//g")
   tag="or_${key}"
   if [ -f "$OUT/$tag.json" ] && python3 -c "import json,sys; d=json.load(open('$OUT/$tag.json')); sys.exit(0 if d.get('partial') is False else 1)" 2>/dev/null; then
     log "$tag already complete"; continue
   fi
   log "$tag: $slug via OpenRouter, sampling: ${esamp:-default reasoning recipe}"
   # shellcheck disable=SC2086
-  env -u PYTHONHOME -u PYTHONPATH python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls https://openrouter.ai/api/v1 \
+  env -u PYTHONHOME -u PYTHONPATH python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls https://openrouter.ai/api \
     --model "$slug" --out "$OUT" --concurrency "${OR_CONC:-24}" --time-budget "${OR_BUDGET:-2700}" \
     --reasoning --request-timeout 3600 --max-tokens 32768 --max-tokens-family "$CAPS" $esamp \
     ${OR_RESUME:+--resume} > "$OUT/$tag.log" 2>&1
