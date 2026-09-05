@@ -862,6 +862,12 @@ notes/        failure analyses that did not fit anywhere else
 and TTFT/TPOT/ITL/E2E at p50 and p99. `results/kernels_by_server.tsv` records the kernel line each server
 actually selected, which is the only way to know what was measured.
 
+## Resuming the campaign
+
+State of the rented boxes, where every script and result lives, how to restart each thread, the pitfalls that cost
+time, and the ranked list of open gaps: [docs/RESUME.md](docs/RESUME.md). Operational helpers (push, pull,
+Vast status/destroy, watchers) are in `ops/`.
+
 ## Reproducing
 
 ```bash
