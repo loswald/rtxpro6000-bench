@@ -1,14 +1,16 @@
-# The five tensor-parallel arms the fleet tier lost, with the cause fixed rather than the flag repeated.
-# Qwen3.8-Flash-Next: "Qwen4Exp QSA requires a BF16 main KV cache" - the campaign's blanket --kv-cache-dtype
-# fp8 is illegal for this architecture, so it gets auto (bf16) and pays for it in cache size.
-qwen38fn_bf16kv|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-,b12x:cutlass|--kv-cache-dtype|auto
-qwen38fn_bf16kv_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-|--kv-cache-dtype|auto|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
-# MiniMax-M3 and Inkling died with a shared-memory KeyError, which is what a worker segfault looks like from
-# the parent: the known sm_120 CUDA-graph fault in hybrid attention. Eager avoids it; MiniMax also needs a
-# 128-token block for its sparse attention.
-minimaxm3_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass,-:flashinfer_trtllm|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager
-minimaxm3_dspark_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_cutlass|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager|--speculative-config|{"method":"dspark","model":"/workspace/models/MiniMax-M3-DSpark","num_speculative_tokens":8}
-inkling_eager|/workspace/models/Inkling-Small-NVFP4|4|b12x:-,b12x:cutlass|--enforce-eager
-inkling_eager_mtp|/workspace/models/Inkling-Small-NVFP4|4|b12x:-|--enforce-eager|--speculative-config|{"method":"inkling_mtp","num_speculative_tokens":2}
-# Muse Glimmer's DFlash drafter ran the box out of memory at 0.94; ksweep uses 0.94 on 96 GB cards, so cap it.
+# The tensor-parallel arms the fleet lost, with the cause of each loss fixed - and, since 5 Sept, the kernel
+# choices that lost them AGAIN in the eval pass corrected too:
+#   Qwen3.8-Flash-Next : QSA needs a BF16 KV cache (never fp8); b12x cannot quantise its n-gram embedding
+#                        ("no parameter named ngram_embedding.weight_scale") - auto linear kernel
+#   MiniMax-M3         : worker segfault under CUDA graphs (vLLM #54331) - --enforce-eager; block 128 for MSA;
+#                        flashinfer_cutlass fails "No common block size for 128" - trtllm, marlin, auto instead
+#   Inkling-Small      : same segfault - --enforce-eager; b12x linear fails "inputs must be float16, bfloat16,
+#                        fp8" at TP4 - auto linear kernel
+#   Muse + DFlash      : the drafter costs real VRAM - 0.86 utilisation instead of 0.94
+qwen38fn_bf16kv|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:-,-:flashinfer_cutlass|--kv-cache-dtype|auto
+qwen38fn_bf16kv_mtp|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:-|--kv-cache-dtype|auto|--speculative-config|{"method":"mtp","num_speculative_tokens":3}
+minimaxm3_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_trtllm,-:marlin,-:-|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager
+minimaxm3_dspark_eager|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_trtllm,-:marlin,-:-|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager|--speculative-config|{"method":"dspark","model":"/workspace/models/MiniMax-M3-DSpark","num_speculative_tokens":8}
+inkling_eager|/workspace/models/Inkling-Small-NVFP4|4|-:-,-:cutlass|--enforce-eager
+inkling_eager_mtp|/workspace/models/Inkling-Small-NVFP4|4|-:-|--enforce-eager|--speculative-config|{"method":"inkling_mtp","num_speculative_tokens":2}
 muse30_dflash_lowmem|/workspace/models/Muse-Glimmer-30B|1|-:-|--gpu-memory-utilization|0.86|--speculative-config|{"method":"dflash","model":"/workspace/models/Muse-Glimmer-30B-assistant","num_speculative_tokens":15}

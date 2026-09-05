@@ -1,0 +1,8 @@
+# Quality runs the 400 W box can add while the 600 W box is busy (accuracy does not depend on the power cap).
+#   Ling-3.0-flash : throughput measured, quality never - its first arms died on the hard-coded MoE backend
+#                    (the profile row supplies --mamba-cache-mode align and the ling3 parsers)
+#   gemma-4-31B    : the dense sibling, BF16, never evaluated; both thinking modes, because on the 26B the
+#                    vendor default (thinking off) and thinking on trade maths against everything else
+ling3|/workspace/models/Ling-3.0-flash-NVFP4|1|b12x:-,-:-
+gemma31_nothink|/workspace/models/gemma-4-31B-it|1|-:-
+gemma31_think|/workspace/models/gemma-4-31B-it|1|-:-

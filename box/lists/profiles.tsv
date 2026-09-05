@@ -38,6 +38,8 @@ granite	--reasoning-parser granite --enable-auto-tool-choice	--temperature 0.0 -
 # following. Both modes get measured rather than assumed.
 ^gemma26_nothink	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":false}
 ^gemma26_think	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":true}
+^gemma31_nothink	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":false}
+^gemma31_think	--reasoning-parser gemma4 --tool-call-parser gemma4 --enable-auto-tool-choice	--temperature 0.0 --top-p 0.95 --extra-body {"top_k":64} --chat-template-kwargs {"enable_thinking":true}
 # Laguna-S-2.1 scored 0.000 with 100% truncation: it emitted 2,048 tokens of unbroken chain-of-thought and
 # never closed the block, so the parser handed the scorers an empty answer and every item was marked
 # truncated. Two arms now: thinking on with room to finish, and thinking off, which is what a retrieval or
