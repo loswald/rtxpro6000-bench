@@ -442,14 +442,6 @@ drafting and rejection sampling the target distribution is preserved by construc
 temperature 1.0 is a reading of the **suite's own run-to-run noise** at vendor sampling, not of speculation.
 The next section measures that noise.
 
-### The API endpoint, scored on the same suite
-
-The same 403 items, same sampling recipe, against OpenRouter's default routing for GLM-5.3-Flash (5 September,
-21:00 UTC): **0.824**, against 0.794 for the NVFP4 build at TP4 on this node. The gap (0.030) is just outside the
-suite's repeat spread (0.022); the provider serves the weights at a higher precision than our four-bit build,
-and the difference is the size of the quantisation cost the ladder measured on Qwen. The other seven models we
-serve are being scored the same way (`box/or_eval.sh`).
-
 ### The suite's noise floor
 
 Four configurations were evaluated on both PRO 6000 hosts under byte-identical recipes — same items, same
