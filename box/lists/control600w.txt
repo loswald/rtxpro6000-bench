@@ -4,3 +4,11 @@
 # evaluated again under the same recipe and seed, so every paired claim can be read against a measured floor
 # instead of a Wilson interval on a single run. Same directory, new tag; the profile row matches the directory.
 q27_nvfp4_rep|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-
+# The gittensor build does not ship Qwen's chat template. Its chat_template.jinja is a 14 KB rewrite (the
+# official one is 9 KB, byte-identical across the BF16, FP8, QUASAR and MTP checkpoints): it injects an extra
+# instruction sentence whenever tools are present, adds <|think_on|>/<|think_off|> toggles, and re-derives the
+# reasoning block from the message content. So the gap between this build and the official ones conflates the
+# WEIGHTS with the PROMPT. This arm serves the gittensor weights under the official template (the FP8
+# checkpoint's copy) - paired against q27_nvfp4_b12x-- it isolates the template; paired against FP8 it is the
+# quantisation cost on its own.
+q27_nvfp4_offtpl|/workspace/models/Qwen27B-NVFP4-RTX5090|1|b12x:-|--chat-template|/workspace/models/Qwen3.8-27B-FP8/chat_template.jinja

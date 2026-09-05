@@ -437,6 +437,13 @@ build (3,148). The other two four-bit builds were served under the auto kernel, 
 path for compressed-tensors checkpoints and falls back to FP8 attention with a dequantised MLP — slower than
 FP8 itself. As measured, choosing them is never right on speed.
 
+**One more thing the fast build changes: the prompt.** Its `chat_template.jinja` is a 14 KB rewrite of Qwen's
+9 KB template (which is byte-identical across the BF16, FP8, QUASAR and MTP checkpoints): it injects an extra
+instruction sentence whenever tools are present, adds `<|think_on|>`/`<|think_off|>` toggles and re-derives
+the reasoning block from message content. So every comparison against that build so far conflates its
+*weights* with its *prompt*. An arm serving the gittensor weights under the official template is queued
+(`box/lists/control600w.txt`); until it lands, "gittensor" below means weights *and* template.
+
 **On quality, RedHat's four-bit build is at parity with FP8** — 0.801 against 0.802 on the common items —
 while the build every throughput number in this repository was measured on is the weakest of the three:
 0.762, and the FP8-vs-gittensor pair is a real difference (29 items only FP8 got right against 14 only
