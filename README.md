@@ -91,7 +91,10 @@ Other models on the same box:
 | Muse-Glimmer-30B (35) | 4 replicas, BF16, vendor recipe | router C1024 | 3,029 | 24,232 | 3.5 s |
 | | | promptopt C1024 | 7,751 | 108,514 | 4.8 s |
 | | | judge C512 | 2,627 | 21,016 | 4.7 s |
-| DeepSeek-V4-Flash (52) | TP1 × DP4 + expert parallel | promptopt C512 | 3,683 | 51,562 | 6.6 s |
+| DeepSeek-V4-Flash (52) | TP4, `b12x` W4A4 experts, 256 seqs (this box) | router C256 | 1,107 | 8,855 | 3.7 s |
+| | | promptopt C1024 | 2,387 | 33,411 | 45.7 s ⁱ |
+| | | judge C512 | 1,082 | 8,656 | 121 s ⁱ |
+| DeepSeek-V4-Flash (52) | TP1 × DP4 + expert parallel (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **GLM-5.3-Flash (57)** | TP4, ported vendor vLLM | promptopt C256 | 1,002 | 14,030 | 2.7 s |
 | | | router C256 | 920 | 7,362 | 2.2 s |
