@@ -28,11 +28,6 @@ pair kl600_unsloth_auto_vs_fp8 "$US" 2 --kv-cache-dtype auto  "$Q8" 4 "${B12[@]}
 # activations: the same weights under W4A4 and under W4A16
 pair kl600_redhat_w4a4_vs_w4a16 "$RH" 4 "${B12[@]}" --kv-cache-dtype auto  "$RH" 2 --kv-cache-dtype auto
 pair kl600_gittensor_w4a4_vs_w4a16 "$Q4" 4 "${B12[@]}" --kv-cache-dtype auto  "$Q4" 2 --kv-cache-dtype auto
-# speculation must leave the distribution alone; DFlash2 is the drafter that loads
-if [ -f "$MD/Qwen3.8-27B-DFlash2/config.json" ]; then
-  pair kl600_spec_dflash2 "$Q4" 4 "${B12[@]}" --kv-cache-dtype fp8 \
-       "$Q4" 6 "${B12[@]}" --kv-cache-dtype fp8 \
-       --speculative-config "{\"method\":\"dflash\",\"model\":\"$MD/Qwen3.8-27B-DFlash2\",\"num_speculative_tokens\":7}"
-fi
+# the DFlash2 speculation pair runs on the third box (kldiff.sh), not twice
 log "KLDIFF600W DONE"
 kill_all

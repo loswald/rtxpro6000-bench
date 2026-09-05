@@ -57,7 +57,6 @@ step "the roster models that never had a quality run: Nemotron-3-Super, Hy3, Orn
 MODE=eval FIRST_ONLY=1 EVAL_BUDGET=5400 bash $B/ksweep.sh $B/lists/tierc_c.txt > $R/keval_tierc.log 2>&1
 bash $B/ksweep.sh $B/lists/tierc_c.txt > $R/ksweep_tierc.log 2>&1
 
-step "soak: Qwen3.8-27B NVFP4 (QAT build) and FP8, four replicas, 120 min each"
+step "soak: Qwen3.8-27B NVFP4 (QAT build), four replicas, 120 min - the configuration the node would run"
 TAG=soak_q27_qat DIR=$MD/Qwen27B-QUASAR-NVFP4 LIN=b12x MINUTES=120 bash $B/soak.sh > $R/soak_q27_qat.log 2>&1
-TAG=soak_q27_fp8 DIR=$MD/Qwen3.8-27B-FP8 LIN=b12x MINUTES=120 bash $B/soak.sh > $R/soak_q27_fp8.log 2>&1
 step "CHAINC DONE"
