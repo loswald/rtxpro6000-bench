@@ -1,0 +1,11 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[17:51:12] ===== GLM-5.3-Flash throughput ceiling =====
+[17:51:17]   launch glm53f_s1024: 
+[17:53:18]   glm53f_s1024 FAILED after 120s: RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}|RuntimeError: Worker failed with error 'max_num_seqs (1024) exceeds available Mamba cache blocks (512). Each decode sequence requires 
+[17:53:28]   launch glm53f_s1024_moeb12x: --moe-backend b12x
+[17:53:43]   glm53f_s1024_moeb12x FAILED after 15s: 
+[17:53:54]   launch glm53f_tp4ep4_s1024: --enable-expert-parallel
+[17:55:39]   glm53f_tp4ep4_s1024 FAILED after 105s: RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}|RuntimeError: Worker failed with error 'max_num_seqs (1024) exceeds available Mamba cache blocks (512). Each decode sequence requires 
+[17:55:49]   launch glm53f_dp4ep4_s1024: --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel

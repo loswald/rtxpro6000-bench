@@ -98,9 +98,23 @@ Other models on the same box:
 | | | promptopt C1024 | 735 | 10,293 | 125 s ⁱ |
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
-| **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM | promptopt C256 | 1,002 | 14,030 | 2.7 s |
+| **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM, 256 seqs | promptopt C256 | 1,002 | 14,030 | 2.7 s |
 | | | router C256 | 920 | 7,362 | 2.2 s |
 | | | judge C128 | 771 | 6,165 | 2.1 s |
+| | TP4, **512 seqs**, 16k prefill batch | router C1024 | 911 | 7,288 | 64 s ⁱ |
+| | | promptopt C1024 | 992 | 13,887 | 115 s ⁱ |
+| | TP4 + **expert parallel**, 512 seqs | router C1024 | 931 | 7,449 | 62 s ⁱ |
+
+ⁱ Time-to-first-token here is queueing: the server admits 256 or 512 sequences and the shape offers 1,024.
+
+**GLM's ceiling is a step-time ceiling, not a batch ceiling.** Doubling the sequence budget from 256 to 512 and
+sharding the experts instead of tensor-splitting them changed output throughput by 1% and 2%. The decode step
+takes about 200 ms at every setting — four times a one-card dense model's — and that time is the four-way
+tensor-parallel all-reduce over PCIe with no NVLink, plus a Hopper attention backend ported to sm_120 and a
+1,024-token DeepGEMM indexer block. The vendor build refuses the W4A4 MoE kernel for this model (`swiglu_limit`
+clamp not implemented in `flashinfer_b12x`) and caps the sequence budget at 512 (its linear-attention cache). The
+two arms that can still move it — DP4 with expert parallelism, which removes the per-layer all-reduce, and the
+MTP head — are measuring now.
 
 GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — four points below the top
 open score (Kimi K3, 50), which only 750B–2.8T models reach. Getting it to produce *correct* output on this card took a
@@ -488,13 +502,21 @@ independent community post-training NVFP4 builds and a **quantisation-aware-trai
 throughput is relative — the 600 W run of the QAT build is queued). Every row is **paired against the parent
 on identical items**; the noise floor measured above is a split of up to 11-to-20 between *identical* runs.
 
-| Qwen3.8-27B build | how the weights were made | kernel | out tok/s (400 W, router C1024) | overall | maths | code | vs BF16 parent: items only parent / only this got right |
-|---|---|---|---:|---:|---:|---:|---:|
-| **BF16** (Qwen release) | — | BF16 | 1,560 | **0.806** | 0.800 | 0.813 | — |
-| **NVFP4 · QUASAR-QAT** | **quantisation-aware training** | b12x **W4A4** | **3,893** | 0.792 | **0.812** | 0.813 | 16 / 10 — **inside the noise floor** |
-| FP8 (Qwen release) | post-training, 8-bit | b12x | 2,071 | 0.787 ¹ | 0.871 ¹ | 0.720 | 18 / 4 on 385 — outside it, code −0.09 |
-| NVFP4 · gittensor (ModelOpt) | post-training, 4-bit | b12x W4A4 | 3,965 | 0.747 | 0.662 | 0.733 | 30 / 6 — far outside |
-| NVFP4 · QUASAR-QAT, auto kernel | same weights | CuTeDSL **W4A16** | 1,160 | — | — | — | slower than BF16: dequant, not compute |
+| Qwen3.8-27B build | how the weights were made | kernel | out tok/s, router C1024 (600 W · 400 W) | overall | maths | code | vs BF16 parent: items only parent / only this got right | KL from parent (control 0.006) |
+|---|---|---|---:|---:|---:|---:|---:|---:|
+| **BF16** (Qwen release) | — | BF16 | 2,367 · 1,560 | **0.806** | 0.800 | 0.813 | — | — |
+| **NVFP4 · QUASAR-QAT** | **quantisation-aware training** | b12x **W4A4** | **5,194** · 3,893 | 0.792 | **0.812** | 0.813 | 16 / 10 — **inside the noise floor** | 0.082 |
+| FP8 (Qwen release) | post-training, 8-bit | b12x | 3,148 · 2,071 | 0.787 ¹ | 0.871 ¹ | 0.720 | 18 / 4 on 385 — outside it, code −0.09 | 0.018 |
+| NVFP4 · gittensor (ModelOpt) | post-training, 4-bit | b12x W4A4 | 5,161 · 3,965 | 0.747 | 0.662 | 0.733 | 30 / 6 — far outside | 0.097 |
+| NVFP4 · QUASAR-QAT, auto kernel | same weights | CuTeDSL **W4A16** | — · 1,160 | — | — | — | slower than BF16: dequant, not compute | — |
+
+The last column is the logit-level divergence of each rung from the BF16 parent (mean KL over ~94 positions,
+identical contexts; the parent against itself gives 0.006). It says something the task suite cannot: **the QAT
+build's next-token distribution is almost as far from the parent's as the post-training build's (0.082 against
+0.097), yet its answers are the parent's.** Quantisation-aware training does not preserve the distribution; it
+preserves the *decisions*. FP8 sits three times above the floor and still loses paired items on code. So neither
+instrument alone ranks these builds correctly: the task suite says QAT ≈ BF16 > FP8 > PTQ, the logit pass says
+FP8 ≫ QAT ≈ PTQ, and what you buy hardware for is the first ordering.
 
 ¹ FP8 is the one row still missing items to the request timeout (385 of 403); its maths is flattered by that
 and its code is not (0.720 on both hosts, 0.813 for the parent).
@@ -502,9 +524,12 @@ and its code is not (0.720 on both hosts, 0.813 for the parent).
 Three conclusions, each of which changes what to buy or run.
 
 **Quantisation-aware training recovers the parent.** The QAT build is indistinguishable from BF16 on paired
-items — 16 against 10 is a split identical configurations produce — at **2.5× the parent's throughput** and
-1.9× FP8's, with the parent's maths and code. That is the Pareto point this campaign was looking for: four-bit
-speed with no measurable quality cost. The remaining check is its throughput at 600 W, queued.
+items — 16 against 10 is a split identical configurations produce — with the parent's maths and code, and at
+600 W it does **5,194 output tokens a second on the router shape** (4,822 on the shared-prefix shape, 4,409 on
+the judge shape) against the parent's 2,367 and FP8's 3,148. That is the Pareto point this campaign was looking
+for, now with a number that transfers to a purchase: 2.2× the parent's throughput and 1.65× FP8's, at no
+measurable quality cost. It is also faster than the gittensor build it replaces (5,161) while scoring 0.045
+higher.
 
 **Qwen's own FP8 release is not lossless either.** 18 against 4 on 385 paired items, driven by code (0.720
 against 0.813 on both hosts). Eight-bit post-training quantisation by the vendor costs something real here;

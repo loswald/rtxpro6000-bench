@@ -7,7 +7,7 @@
    "http://127.0.0.1:8003"
   ],
   "chat_template_kwargs": "{\"enable_thinking\":true}",
-  "concurrency": 64,
+  "concurrency": 128,
   "data_dir": "/workspace/bench/evalsuite/data",
   "dry_run": false,
   "extra_body": {
@@ -26,13 +26,13 @@
   "grace": 120.0,
   "limit": null,
   "list_families": false,
-  "max_tokens": 24576,
+  "max_tokens": 32768,
   "max_tokens_family": {
-   "code": 16384,
-   "ifeval": 12288,
-   "knowledge": 16384,
-   "longctx": 2048,
-   "math": 24576,
+   "code": 20480,
+   "ifeval": 16384,
+   "knowledge": 20480,
+   "longctx": 6144,
+   "math": 32768,
    "tools": 8192
   },
   "model": "m",
@@ -42,15 +42,15 @@
   "profile": "default",
   "quiet": false,
   "reasoning": true,
-  "request_timeout": 600.0,
-  "resume": false,
+  "request_timeout": 3600.0,
+  "resume": true,
   "retries": 3,
   "retry_backoff": "(2.0, 8.0, 20.0)",
   "save_responses": "tail",
   "seed": 20260903,
   "tag": "q27_fp8_b12x--",
   "temperature": 1.0,
-  "time_budget": 3000.0,
+  "time_budget": 2400.0,
   "top_p": 0.95
  },
  "endpoint": {
@@ -76,5 +76,5 @@
  "hostname": "39646ca8d68d",
  "platform": "Linux-5.15.0-174-generic-x86_64-with-glibc2.39",
  "python": "3.12.3",
- "started_at": "2026-09-04T14:57:09Z"
+ "started_at": "2026-09-05T16:43:52Z"
 }

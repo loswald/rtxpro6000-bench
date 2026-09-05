@@ -1,0 +1,2476 @@
+{
+ "aggregate": {
+  "acc_macro": 0.8475,
+  "acc_micro": 0.8363,
+  "acc_strict": 0.8363,
+  "answer_from_reasoning": 1,
+  "ci95": [
+   0.793,
+   0.872
+  ],
+  "degenerate_rate": 0.0,
+  "gpu_minutes": 24.009,
+  "mean_out_tokens": 2284.1,
+  "mean_prompt_tokens": 2892.0,
+  "mean_score": 0.8472,
+  "n_attempted": 336,
+  "n_cancelled": 0,
+  "n_correct": 281,
+  "n_error": 0,
+  "n_planned": 403,
+  "n_scored": 336,
+  "n_skipped": 67,
+  "out_tokens_per_s": 2131.0,
+  "p50_item_s": 28.51,
+  "p50_out_tokens": 733,
+  "p90_item_s": 184.88,
+  "per_url": {
+   "http://127.0.0.1:8000": {
+    "completion_tokens": 159950,
+    "requests": 101
+   },
+   "http://127.0.0.1:8001": {
+    "completion_tokens": 210523,
+    "requests": 101
+   },
+   "http://127.0.0.1:8002": {
+    "completion_tokens": 208981,
+    "requests": 101
+   },
+   "http://127.0.0.1:8003": {
+    "completion_tokens": 188009,
+    "requests": 100
+   }
+  },
+  "request_errors": 0,
+  "requests": 403,
+  "retries": 0,
+  "status_counts": {
+   "correct": 281,
+   "wrong": 55
+  },
+  "total_out_tokens": 767463,
+  "total_prompt_tokens": 971706,
+  "trunc_rate": 0.0,
+  "wall_s": 359.5
+ },
+ "base_urls": [
+  "http://127.0.0.1:8000",
+  "http://127.0.0.1:8001",
+  "http://127.0.0.1:8002",
+  "http://127.0.0.1:8003"
+ ],
+ "config": {
+  "chat_template_kwargs": {
+   "enable_thinking": true
+  },
+  "concurrency": 128,
+  "extra_body": {
+   "min_p": 0.0,
+   "presence_penalty": 0.0,
+   "top_k": 20
+  },
+  "families": [
+   "tools",
+   "code",
+   "math",
+   "longctx",
+   "knowledge",
+   "ifeval"
+  ],
+  "family_opts": {},
+  "gpus": 4,
+  "grace_s": 120.0,
+  "limit": null,
+  "max_tokens": 32768,
+  "max_tokens_family": {
+   "code": 20480,
+   "ifeval": 16384,
+   "knowledge": 20480,
+   "longctx": 6144,
+   "tools": 8192
+  },
+  "notes": "",
+  "profile": "default",
+  "reasoning": true,
+  "request_timeout_s": 3600.0,
+  "resume": false,
+  "retries": 3,
+  "seed": 20260903,
+  "temperature": 1.0,
+  "time_budget_s": 2400.0,
+  "top_p": 0.95
+ },
+ "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
+ "ended_at": "2026-09-05T17:51:03Z",
+ "endpoint": {
+  "max_model_len": 40960,
+  "served_models": [
+   "m"
+  ],
+  "urls_alive": 4,
+  "urls_dead": [],
+  "vllm_version": "0.28.1rc1.dev332+gad127d9a0"
+ },
+ "evalsuite_git_sha": null,
+ "families": {
+  "code": {
+   "acc": 0.871,
+   "acc_strict": 0.871,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7655,
+    0.9331
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "fail_kinds": {
+     "IndexError": 1,
+     "TypeError": 1,
+     "assertion": 6
+    },
+    "lcb_mean_test_pass_frac": 1.0,
+    "syntax_error_rate": 0.0,
+    "timeout_rate": 0.0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "heplus-141",
+    "mbppplus-074",
+    "mbppplus-129",
+    "mbppplus-137",
+    "mbppplus-223",
+    "mbppplus-576",
+    "mbppplus-577",
+    "mbppplus-753"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "file_name_check passes base+plus tests",
+     "extracted": "1222 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-141",
+     "out_tokens": 3759,
+     "response_tail": "  return \"No\"\n\n    if extension not in [\"txt\", \"exe\", \"dll\"]:\n        return \"No\"\n\n    if sum(1 for char in file_name if \"0\" <= char <= \"9\") > 3:\n        return \"No\"\n\n    first_char = name[0]\n    if not (\"a\" <= first_char <= \"z\" or \"A\" <= first_char <= \"Z\"):\n        return \"No\"\n\n    return \"Yes\"\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "is_samepatterns passes base+plus tests",
+     "extracted": "931 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-074",
+     "out_tokens": 7426,
+     "response_tail": "_value[pattern] = value\n\n        if value in value_to_pattern:\n            if value_to_pattern[value] != pattern:\n                return False\n        else:\n            value_to_pattern[value] = pattern\n\n    return True\n\n\nassert is_samepatterns([\"red\", \"green\", \"green\"], [\"a\", \"b\", \"b\"]) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "magic_square_test passes base+plus tests",
+     "extracted": "1374 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-129",
+     "out_tokens": 13919,
+     "response_tail": ":\n                    if value in seen:\n                        return False\n                    seen.add(value)\n                except TypeError:\n                    return False\n\n    return True\n\n\nassert magic_square_test([[7, 12, 1, 14], [2, 13, 8, 11], [16, 3, 10, 5], [9, 6, 15, 4]]) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "zero_count passes base+plus tests",
+     "extracted": "367 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-137",
+     "out_tokens": 1475,
+     "response_tail": " for value in arr:\n        if value == 0:\n            zeros += 1\n        else:\n            non_zeros += 1\n\n    if non_zeros == 0:\n        return 0.0\n\n    return zeros / non_zeros\n\n\nassert math.isclose(\n    zero_count([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8]),\n    0.181818,\n    rel_tol=0.001\n)\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_majority passes base+plus tests",
+     "extracted": "898 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-223",
+     "out_tokens": 1863,
+     "response_tail": " occurrences of x.\n    low, high = first, n\n    while low < high:\n        mid = (low + high) // 2\n        if arr[mid] <= x:\n            low = mid + 1\n        else:\n            high = mid\n    last = low\n\n    return (last - first) > n // 2\n\n\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_Sub_Array passes base+plus tests",
+     "extracted": "441 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-576",
+     "out_tokens": 5295,
+     "response_tail": " return True\n\n    if len(main_list) < len(sub_list):\n        return False\n\n    sub_len = len(sub_list)\n    for i in range(len(main_list) - sub_len + 1):\n        if main_list[i:i + sub_len] == sub_list:\n            return True\n\n    return False\n\n\nassert is_Sub_Array([1, 4, 3, 5], [1, 2]) == False\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "last_Digit_Factorial passes base+plus tests",
+     "extracted": "535 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-577",
+     "out_tokens": 584,
+     "response_tail": "pute the factorial modulo 10.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"Factorial is not defined for negative numbers\")\n\n    if n >= 5:\n        return 0\n\n    result = 1\n    for i in range(2, n + 1):\n        result = (result * i) % 10\n\n    return result\n\n\nassert last_Digit_Factorial(4) == 4\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "min_k passes base+plus tests",
+     "extracted": "435 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-753",
+     "out_tokens": 1384,
+     "response_tail": "ndex 1).\n    The result is sorted in ascending order of that element.\n    \"\"\"\n    if k <= 0:\n        return []\n\n    return sorted(records, key=lambda record: record[1])[:k]\n\n\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [\n    ('Akash', 2),\n    ('Akshat', 4)\n]\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    }
+   ],
+   "gpu_minutes": 4.884,
+   "info_per_gpu_min": 1.426,
+   "max_tokens": 20480,
+   "mean_out_tokens": 2875.2,
+   "mean_prompt_tokens": 330.6,
+   "mean_score": 0.871,
+   "n_attempted": 62,
+   "n_cancelled": 0,
+   "n_correct": 54,
+   "n_error": 0,
+   "n_planned": 75,
+   "n_scored": 62,
+   "n_skipped": 13,
+   "opts": {},
+   "p50_item_s": 49.8,
+   "p50_out_tokens": 1325,
+   "p90_item_s": 232.74,
+   "status_counts": {
+    "correct": 54,
+    "wrong": 8
+   },
+   "sub": {
+    "humanevalplus": {
+     "acc": 0.9583,
+     "acc_strict": 0.9583,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7976,
+      0.9926
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2434.3,
+     "mean_prompt_tokens": 259.5,
+     "mean_score": 0.9583,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 23,
+     "n_error": 0,
+     "n_planned": 25,
+     "n_scored": 24,
+     "n_skipped": 1,
+     "p50_item_s": 37.41,
+     "p50_out_tokens": 807,
+     "p90_item_s": 193.92,
+     "status_counts": {
+      "correct": 23,
+      "wrong": 1
+     },
+     "total_out_tokens": 58423,
+     "total_prompt_tokens": 6228,
+     "trunc_rate": 0.0,
+     "wall_s": 312.2
+    },
+    "lcb_easy_medium": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.8389,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3394.2,
+     "mean_prompt_tokens": 575.2,
+     "mean_score": 1.0,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 20,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 20,
+     "n_skipped": 10,
+     "p50_item_s": 69.24,
+     "p50_out_tokens": 1786,
+     "p90_item_s": 232.74,
+     "status_counts": {
+      "correct": 20
+     },
+     "total_out_tokens": 67884,
+     "total_prompt_tokens": 11504,
+     "trunc_rate": 0.0,
+     "wall_s": 332.6
+    },
+    "mbppplus": {
+     "acc": 0.6111,
+     "acc_strict": 0.6111,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3862,
+      0.7969
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2886.4,
+     "mean_prompt_tokens": 153.8,
+     "mean_score": 0.6111,
+     "n_attempted": 18,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 18,
+     "n_skipped": 2,
+     "p50_item_s": 48.12,
+     "p50_out_tokens": 731,
+     "p90_item_s": 246.13,
+     "status_counts": {
+      "correct": 11,
+      "wrong": 7
+     },
+     "total_out_tokens": 51956,
+     "total_prompt_tokens": 2768,
+     "trunc_rate": 0.0,
+     "wall_s": 346.1
+    }
+   },
+   "total_out_tokens": 178263,
+   "total_prompt_tokens": 20500,
+   "trunc_rate": 0.0,
+   "wall_s": 346.1
+  },
+  "ifeval": {
+   "acc": 0.9138,
+   "acc_strict": 0.9138,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.8136,
+    0.9626
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "by_n_instructions": {
+     "1": {
+      "n": 12,
+      "prompt_loose": 0.9167,
+      "prompt_strict": 0.9167
+     },
+     "2": {
+      "n": 24,
+      "prompt_loose": 0.875,
+      "prompt_strict": 0.875
+     },
+     "3": {
+      "n": 22,
+      "prompt_loose": 1.0,
+      "prompt_strict": 0.9545
+     }
+    },
+    "instruction_loose": 0.9683,
+    "instruction_strict": 0.9603,
+    "loose_only_rate": 0.0172,
+    "n_instructions": 126,
+    "per_type": {
+     "change_case:capital_word_frequency": {
+      "loose": 1.0,
+      "n": 8,
+      "strict": 1.0
+     },
+     "change_case:english_capital": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "change_case:english_lowercase": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "combination:repeat_prompt": {
+      "loose": 0.875,
+      "n": 8,
+      "strict": 0.875
+     },
+     "combination:two_responses": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_content:number_placeholders": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "detectable_content:postscript": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:json_format": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:multiple_sections": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "detectable_format:number_bullet_lists": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:number_highlighted_sections": {
+      "loose": 1.0,
+      "n": 4,
+      "strict": 1.0
+     },
+     "detectable_format:title": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:existence": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "keywords:forbidden_words": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:frequency": {
+      "loose": 0.9412,
+      "n": 17,
+      "strict": 0.9412
+     },
+     "keywords:letter_frequency": {
+      "loose": 1.0,
+      "n": 5,
+      "strict": 0.8
+     },
+     "language:response_language": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:nth_paragraph_first_word": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "length_constraints:number_paragraphs": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:number_sentences": {
+      "loose": 1.0,
+      "n": 19,
+      "strict": 1.0
+     },
+     "length_constraints:number_words": {
+      "loose": 1.0,
+      "n": 17,
+      "strict": 1.0
+     },
+     "punctuation:no_comma": {
+      "loose": 0.8667,
+      "n": 15,
+      "strict": 0.8667
+     },
+     "startend:end_checker": {
+      "loose": 1.0,
+      "n": 7,
+      "strict": 1.0
+     },
+     "startend:quotation": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     }
+    },
+    "prompt_loose": 0.931,
+    "prompt_strict": 0.9138
+   },
+   "failed_ids": [
+    "ifeval-1174",
+    "ifeval-1393",
+    "ifeval-332",
+    "ifeval-3505",
+    "ifeval-3633"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
+     "extracted": "2/3 strict, 3/3 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-1174",
+     "out_tokens": 1780,
+     "response_tail": "\n\n*Use this template*: `o location: {city} o forecast: {weather}`.\n*The o keyword* reads the location and reports the forecast.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "keywords:frequency",
+     "extracted": "0/1 strict, 0/1 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1393",
+     "out_tokens": 350,
+     "response_tail": "n who is being addressed.\n\nCons:\n- When **synonyms** are used without clear context, they can create confusion or make it harder to know which term is being used.\n- Relying on multiple names for the same thing can weaken consistency, searchability, and shared understanding across teams or documents.",
+     "status": "wrong",
+     "sub": "single"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-332",
+     "out_tokens": 7322,
+     "response_tail": "\n\nTLDRthearticle\"Howtodresslikeafootballmanager:waistcoatsandthestylelessonsfromthePremierLeague\".Yourentireresponse(includingtherepeatedrequest)shouldhave45orlesswords.Firstrepeattherequestabovewithoutchangingasingleletter,thengiveyouranswer.\nTLDR: Waistcoats signal calm authority.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+combination:repeat_prompt",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3505",
+     "out_tokens": 4873,
+     "response_tail": "st estates and its shining face may tempt the user into vanity\nThe AirPods are delicate things and they are easily lost in the lapel or the pocket or the careless fold of a coat\nThe Macintosh circle may shut the wanderer within its polished walls and offer him little that lies beyond the garden gate",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3633",
+     "out_tokens": 2236,
+     "response_tail": " determinism and it rewards attention to study design and ethical inference.\nThe pacing is brisk and the clinical language is accessible without being reductive.\nIt is well worth watching for researchers who study intelligence and talent and for clinicians who need to understand heritability claims.",
+     "status": "wrong",
+     "sub": "double"
+    }
+   ],
+   "gpu_minutes": 4.903,
+   "info_per_gpu_min": 0.932,
+   "max_tokens": 16384,
+   "mean_out_tokens": 3117.0,
+   "mean_prompt_tokens": 103.2,
+   "mean_score": 0.9511,
+   "n_attempted": 58,
+   "n_cancelled": 0,
+   "n_correct": 53,
+   "n_error": 0,
+   "n_planned": 60,
+   "n_scored": 58,
+   "n_skipped": 2,
+   "opts": {},
+   "p50_item_s": 69.69,
+   "p50_out_tokens": 2236,
+   "p90_item_s": 217.82,
+   "status_counts": {
+    "correct": 53,
+    "wrong": 5
+   },
+   "sub": {
+    "double": {
+     "acc": 0.875,
+     "acc_strict": 0.875,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.69,
+      0.9566
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3858.3,
+     "mean_prompt_tokens": 104.3,
+     "mean_score": 0.9375,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 21,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 83.56,
+     "p50_out_tokens": 2753,
+     "p90_item_s": 217.82,
+     "status_counts": {
+      "correct": 21,
+      "wrong": 3
+     },
+     "total_out_tokens": 92599,
+     "total_prompt_tokens": 2503,
+     "trunc_rate": 0.0,
+     "wall_s": 262.8
+    },
+    "single": {
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6461,
+      0.9851
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2163.4,
+     "mean_prompt_tokens": 84.8,
+     "mean_score": 0.9167,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 43.21,
+     "p50_out_tokens": 629,
+     "p90_item_s": 150.94,
+     "status_counts": {
+      "correct": 11,
+      "wrong": 1
+     },
+     "total_out_tokens": 25961,
+     "total_prompt_tokens": 1017,
+     "trunc_rate": 0.0,
+     "wall_s": 330.8
+    },
+    "triple": {
+     "acc": 0.9545,
+     "acc_strict": 0.9545,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.782,
+      0.9919
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2828.5,
+     "mean_prompt_tokens": 112.2,
+     "mean_score": 0.9848,
+     "n_attempted": 22,
+     "n_cancelled": 0,
+     "n_correct": 21,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 22,
+     "n_skipped": 2,
+     "p50_item_s": 58.17,
+     "p50_out_tokens": 1563,
+     "p90_item_s": 170.86,
+     "status_counts": {
+      "correct": 21,
+      "wrong": 1
+     },
+     "total_out_tokens": 62226,
+     "total_prompt_tokens": 2468,
+     "trunc_rate": 0.0,
+     "wall_s": 328.9
+    }
+   },
+   "total_out_tokens": 180786,
+   "total_prompt_tokens": 5988,
+   "trunc_rate": 0.0,
+   "wall_s": 330.8
+  },
+  "knowledge": {
+   "acc": 0.4915,
+   "acc_strict": 0.4915,
+   "answer_from_reasoning": 1,
+   "ci95": [
+    0.3684,
+    0.6156
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "extraction_methods": {
+     "answer_phrase": 32,
+     "phrase": 27
+    },
+    "mmlu_pro_hard_hedged": 0,
+    "mmlu_pro_hard_weak_extraction": 0,
+    "simpleqa_no_answer_phrase": 0,
+    "simpleqa_superset_only": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mmlupro-3917",
+    "mmlupro-4284",
+    "mmlupro-954",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-0673",
+    "simpleqa-1012",
+    "simpleqa-1166",
+    "simpleqa-1295",
+    "simpleqa-1312",
+    "simpleqa-1314",
+    "simpleqa-1443",
+    "simpleqa-2174",
+    "simpleqa-2306",
+    "simpleqa-2392",
+    "simpleqa-2417",
+    "simpleqa-2558",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2784",
+    "simpleqa-2905",
+    "simpleqa-3127",
+    "simpleqa-3211",
+    "simpleqa-3247",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4044",
+    "simpleqa-4082",
+    "simpleqa-4322"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": "F",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-3917",
+     "out_tokens": 7765,
+     "response_tail": "ighest boiling point.\n\nSo the chemically correct increasing order is:\n\nmethane < neopentane < 2,3-dimethylbutane < n-hexane < n-undecane\n\nThat exact order is not listed as written; option F is the closest and likely intended choice, though it swaps n-hexane and 2,3-dimethylbutane.\n\nThe answer is (F)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": "E",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 1170,
+     "response_tail": "um species and converting it into a hydrocarbon (an alkane), thereby consuming the reagent and preventing it from reacting with the aldehyde.\n\nFor example:\n\n\\[\n\\ce{RMgX + H2O -> RH + Mg(OH)X}\n\\]\n\nThus, the aldehyde must be scrupulously dry to avoid destroying the Grignard reagent.\n\nThe answer is (E)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": "C",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-954",
+     "out_tokens": 9882,
+     "response_tail": " as reputation evidence.\n\nBoth portions are admissible, but only to support the engineer\u2019s **credibility/truthfulness**, not to establish his expertise or engineering qualifications. The witness\u2019s acquaintance with the engineer may affect weight, but it does not bar the testimony.\n\nThe answer is (C)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "Joseph Jean Pierre Laurent",
+     "extracted": "M. Laurent",
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning"
+     ],
+     "id": "simpleqa-0409",
+     "out_tokens": 2834,
+     "response_tail": "",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "2002 September 30",
+     "extracted": "Unknown",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0492",
+     "out_tokens": 893,
+     "response_tail": "\n\nAnswer: Unknown",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "10,423",
+     "extracted": "4,849",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0672",
+     "out_tokens": 402,
+     "response_tail": "\n\nAnswer: 4,849",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "Staten Island",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 12024,
+     "response_tail": "\n\nAnswer: Staten Island",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Woofles",
+     "extracted": "Bongo",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1012",
+     "out_tokens": 9883,
+     "response_tail": "\n\nAnswer: Bongo",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Deprived",
+     "extracted": "Knight",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1166",
+     "out_tokens": 8361,
+     "response_tail": "\n\nAnswer: Knight",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "13 May 2004",
+     "extracted": "1 January 1995",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1295",
+     "out_tokens": 9934,
+     "response_tail": "\n\nAnswer: 1 January 1995",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St. John's College, Annapolis",
+     "extracted": "University of Chicago",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1312",
+     "out_tokens": 204,
+     "response_tail": "\n\nAnswer: University of Chicago",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Game Changer Award",
+     "extracted": "Global Citizen Award",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1314",
+     "out_tokens": 554,
+     "response_tail": "\n\nAnswer: Global Citizen Award",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1970",
+     "extracted": "1974",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1443",
+     "out_tokens": 7593,
+     "response_tail": "\n\nAnswer: 1974",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Lloyd Hopkins Field",
+     "extracted": "Mowery Field",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2174",
+     "out_tokens": 9034,
+     "response_tail": "\n\nAnswer: Mowery Field",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "11 March 1979",
+     "extracted": "12 March 1974",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2306",
+     "out_tokens": 12152,
+     "response_tail": "\n\nAnswer: 12 March 1974",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "University of Geneva",
+     "extracted": "Freie Universit\u00e4t Berlin",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2392",
+     "out_tokens": 928,
+     "response_tail": "\n\nAnswer: Freie Universit\u00e4t Berlin",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Ghavaniska system",
+     "extracted": "Vesk",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2417",
+     "out_tokens": 5704,
+     "response_tail": "\n\nAnswer: Vesk",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Stoke Ladies",
+     "extracted": "Doncaster Women F.C",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2558",
+     "out_tokens": 4198,
+     "response_tail": "\n\nAnswer: Doncaster Women F.C.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Sarvepalli Radhakrishnan",
+     "extracted": "Ruknuddin Ahmad",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2706",
+     "out_tokens": 384,
+     "response_tail": "\n\nAnswer: Ruknuddin Ahmad",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Punkature",
+     "extracted": "Punk Hooligan",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2782",
+     "out_tokens": 1355,
+     "response_tail": "\n\nAnswer: Punk Hooligan",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "November 18, 2023",
+     "extracted": "Unknown",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2784",
+     "out_tokens": 591,
+     "response_tail": "\n\nAnswer: Unknown",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Colegio Lacordaire",
+     "extracted": "San D\u00e1maso College",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2905",
+     "out_tokens": 8544,
+     "response_tail": "\n\nAnswer: San D\u00e1maso College",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Puyallup",
+     "extracted": "Toronto",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3127",
+     "out_tokens": 557,
+     "response_tail": "\n\nAnswer: Toronto",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "8",
+     "extracted": "10",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3211",
+     "out_tokens": 3151,
+     "response_tail": "\n\nAnswer: 10",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Karachi, Pakistan",
+     "extracted": "Toronto, Canada",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3247",
+     "out_tokens": 291,
+     "response_tail": "\n\nAnswer: Toronto, Canada",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Carlotta Cardana",
+     "extracted": "Mads Mikkelsen",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3339",
+     "out_tokens": 8302,
+     "response_tail": "\n\nAnswer: Mads Mikkelsen",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St David.",
+     "extracted": "Caledonia",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3342",
+     "out_tokens": 4577,
+     "response_tail": "\n\nAnswer: Caledonia",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1642-1644",
+     "extracted": "1652\u20131656",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4044",
+     "out_tokens": 297,
+     "response_tail": "\n\nAnswer: 1652\u20131656",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Leopard",
+     "extracted": "Crocodile",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4082",
+     "out_tokens": 4740,
+     "response_tail": "\n\nAnswer: Crocodile",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Jodelle Ferland",
+     "extracted": "Lily Gao",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4322",
+     "out_tokens": 526,
+     "response_tail": "\n\nAnswer: Lily Gao",
+     "status": "wrong",
+     "sub": "simpleqa"
+    }
+   ],
+   "gpu_minutes": 5.152,
+   "info_per_gpu_min": 2.862,
+   "max_tokens": 20480,
+   "mean_out_tokens": 3204.1,
+   "mean_prompt_tokens": 229.5,
+   "mean_score": 0.4915,
+   "n_attempted": 59,
+   "n_cancelled": 0,
+   "n_correct": 29,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 59,
+   "n_skipped": 11,
+   "opts": {},
+   "p50_item_s": 28.5,
+   "p50_out_tokens": 1202,
+   "p90_item_s": 213.76,
+   "status_counts": {
+    "correct": 29,
+    "wrong": 30
+   },
+   "sub": {
+    "mmlu_pro_hard": {
+     "acc": 0.9062,
+     "acc_strict": 0.9062,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7578,
+      0.9676
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2219.7,
+     "mean_prompt_tokens": 341.8,
+     "mean_score": 0.9062,
+     "n_attempted": 32,
+     "n_cancelled": 0,
+     "n_correct": 29,
+     "n_error": 0,
+     "n_planned": 40,
+     "n_scored": 32,
+     "n_skipped": 8,
+     "p50_item_s": 23.42,
+     "p50_out_tokens": 1085,
+     "p90_item_s": 125.76,
+     "status_counts": {
+      "correct": 29,
+      "wrong": 3
+     },
+     "total_out_tokens": 71029,
+     "total_prompt_tokens": 10936,
+     "trunc_rate": 0.0,
+     "wall_s": 315.3
+    },
+    "simpleqa": {
+     "acc": 0.0,
+     "acc_strict": 0.0,
+     "answer_from_reasoning": 1,
+     "ci95": [
+      0.0,
+      0.1246
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 4370.9,
+     "mean_prompt_tokens": 96.6,
+     "mean_score": 0.0,
+     "n_attempted": 27,
+     "n_cancelled": 0,
+     "n_correct": 0,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 27,
+     "n_skipped": 3,
+     "p50_item_s": 71.4,
+     "p50_out_tokens": 3151,
+     "p90_item_s": 240.37,
+     "status_counts": {
+      "wrong": 27
+     },
+     "total_out_tokens": 118013,
+     "total_prompt_tokens": 2607,
+     "trunc_rate": 0.0,
+     "wall_s": 337.9
+    }
+   },
+   "total_out_tokens": 189042,
+   "total_prompt_tokens": 13543,
+   "trunc_rate": 0.0,
+   "wall_s": 337.9
+  },
+  "longctx": {
+   "acc": 0.9375,
+   "acc_strict": 0.9375,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.8316,
+    0.9785
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_by_len": {
+     "16k": 0.9375,
+     "32k": 0.875,
+     "8k": 1.0
+    },
+    "calibration": {
+     "budgets": {
+      "16k": 16384,
+      "32k": 32768,
+      "8k": 8192
+     },
+     "chars_per_token": {
+      "docs": 4.4693,
+      "filler": 4.4376
+     },
+     "checks": {
+      "niah_multikey": {
+       "budget": 32768,
+       "item": "longctx-niah-32k-d85-11",
+       "prompt_tokens": 31378
+      },
+      "qa_multi_doc": {
+       "budget": 32768,
+       "item": "longctx-qa-32k-d10-08",
+       "prompt_tokens": 32229
+      },
+      "var_tracking": {
+       "budget": 32768,
+       "item": "longctx-vt-32k-05",
+       "prompt_tokens": 31332
+      }
+     },
+     "fixed_tokens": {
+      "niah_multikey": 182,
+      "qa_multi_doc": 75,
+      "var_tracking": 255
+     },
+     "max_model_len": 40960,
+     "max_tokens": 6144,
+     "method": "tokenize",
+     "tokenize_calls": 12
+    },
+    "context_length_errors": 0,
+    "mean_prompt_tokens_by_len": {
+     "16k": 15868.6,
+     "32k": 31603.7,
+     "8k": 7894.1
+    },
+    "niah_acc_by_depth": {
+     "0.10": 1.0,
+     "0.35": 1.0,
+     "0.60": 1.0,
+     "0.85": 1.0
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "longctx-qa-16k-d85-07",
+    "longctx-qa-32k-d60-02",
+    "longctx-qa-32k-d85-11"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "8.8",
+     "extracted": "8.8 lb",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-16k-d85-07",
+     "out_tokens": 138,
+     "response_tail": "\n\nAnswer: 8.8 lb",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "In bays",
+     "extracted": "In some coastal locations and bays",
+     "finish_reason": "stop",
+     "flags": [
+      "hedged"
+     ],
+     "id": "longctx-qa-32k-d60-02",
+     "out_tokens": 478,
+     "response_tail": "ora), the document states that \"Ctenophores may be abundant during the summer months in some coastal locations\" and that \"In bays where they occur in very high numbers, predation by ctenophores may control the populations of small zooplanktonic organisms.\"\n\nAnswer: In some coastal locations and bays",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "simple majority vote",
+     "extracted": "By a simple majority vote, usually through a written procedure",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 2146,
+     "response_tail": "\n\nAnswer: By a simple majority vote, usually through a written procedure.",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    }
+   ],
+   "gpu_minutes": 3.479,
+   "info_per_gpu_min": 0.808,
+   "max_tokens": 6144,
+   "mean_out_tokens": 376.2,
+   "mean_prompt_tokens": 18455.5,
+   "mean_score": 0.9375,
+   "n_attempted": 48,
+   "n_cancelled": 0,
+   "n_correct": 45,
+   "n_error": 0,
+   "n_planned": 48,
+   "n_scored": 48,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 23.61,
+   "p50_out_tokens": 180,
+   "p90_item_s": 51.16,
+   "status_counts": {
+    "correct": 45,
+    "wrong": 3
+   },
+   "sub": {
+    "niah_multikey": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.862,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 166.9,
+     "mean_prompt_tokens": 18327.2,
+     "mean_score": 1.0,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 24,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 9.26,
+     "p50_out_tokens": 146,
+     "p90_item_s": 25.25,
+     "status_counts": {
+      "correct": 24
+     },
+     "total_out_tokens": 4005,
+     "total_prompt_tokens": 439853,
+     "trunc_rate": 0.0,
+     "wall_s": 86.3
+    },
+    "qa_multi_doc": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4677,
+      0.9111
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 356.8,
+     "mean_prompt_tokens": 18774.1,
+     "mean_score": 0.75,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 23.82,
+     "p50_out_tokens": 156,
+     "p90_item_s": 29.98,
+     "status_counts": {
+      "correct": 9,
+      "wrong": 3
+     },
+     "total_out_tokens": 4281,
+     "total_prompt_tokens": 225289,
+     "trunc_rate": 0.0,
+     "wall_s": 102.4
+    },
+    "var_tracking": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7575,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 814.3,
+     "mean_prompt_tokens": 18393.4,
+     "mean_score": 1.0,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 46.19,
+     "p50_out_tokens": 607,
+     "p90_item_s": 64.66,
+     "status_counts": {
+      "correct": 12
+     },
+     "total_out_tokens": 9772,
+     "total_prompt_tokens": 220721,
+     "trunc_rate": 0.0,
+     "wall_s": 91.0
+    }
+   },
+   "total_out_tokens": 18058,
+   "total_prompt_tokens": 885863,
+   "trunc_rate": 0.0,
+   "wall_s": 102.4
+  },
+  "math": {
+   "acc": 1.0,
+   "acc_strict": 1.0,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.9103,
+    1.0
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 1.0,
+    "match_methods": {
+     "set": 1,
+     "string": 38
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [],
+   "failures": [],
+   "gpu_minutes": 4.864,
+   "info_per_gpu_min": 0.0,
+   "max_tokens": 32768,
+   "mean_out_tokens": 4596.2,
+   "mean_prompt_tokens": 170.0,
+   "mean_score": 1.0,
+   "n_attempted": 39,
+   "n_cancelled": 0,
+   "n_correct": 39,
+   "n_error": 0,
+   "n_planned": 80,
+   "n_scored": 39,
+   "n_skipped": 41,
+   "opts": {},
+   "p50_item_s": 67.52,
+   "p50_out_tokens": 3121,
+   "p90_item_s": 238.89,
+   "status_counts": {
+    "correct": 39
+   },
+   "sub": {
+    "aime25": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7719,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3378.4,
+     "mean_prompt_tokens": 184.6,
+     "mean_score": 1.0,
+     "n_attempted": 13,
+     "n_cancelled": 0,
+     "n_correct": 13,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 13,
+     "n_skipped": 17,
+     "p50_item_s": 58.13,
+     "p50_out_tokens": 2454,
+     "p90_item_s": 137.33,
+     "status_counts": {
+      "correct": 13
+     },
+     "total_out_tokens": 43919,
+     "total_prompt_tokens": 2400,
+     "trunc_rate": 0.0,
+     "wall_s": 284.8
+    },
+    "hmmt25": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6756,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 4776.1,
+     "mean_prompt_tokens": 141.4,
+     "mean_score": 1.0,
+     "n_attempted": 8,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 8,
+     "n_skipped": 22,
+     "p50_item_s": 63.12,
+     "p50_out_tokens": 2934,
+     "p90_item_s": 238.89,
+     "status_counts": {
+      "correct": 8
+     },
+     "total_out_tokens": 38209,
+     "total_prompt_tokens": 1131,
+     "trunc_rate": 0.0,
+     "wall_s": 264.3
+    },
+    "math500_hard": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.8241,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 5395.7,
+     "mean_prompt_tokens": 172.2,
+     "mean_score": 1.0,
+     "n_attempted": 18,
+     "n_cancelled": 0,
+     "n_correct": 18,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 18,
+     "n_skipped": 2,
+     "p50_item_s": 81.22,
+     "p50_out_tokens": 3690,
+     "p90_item_s": 287.45,
+     "status_counts": {
+      "correct": 18
+     },
+     "total_out_tokens": 97122,
+     "total_prompt_tokens": 3100,
+     "trunc_rate": 0.0,
+     "wall_s": 359.5
+    }
+   },
+   "total_out_tokens": 179250,
+   "total_prompt_tokens": 6631,
+   "trunc_rate": 0.0,
+   "wall_s": 359.5
+  },
+  "tools": {
+   "acc": 0.8714,
+   "acc_strict": 0.8714,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7734,
+    0.9309
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_ast_micro": 0.8833,
+    "acc_by_sub": {
+     "irrelevance": 0.8,
+     "multiple": 0.8667,
+     "parallel": 1.0,
+     "parallel_multiple": 0.7,
+     "simple": 0.9
+    },
+    "acc_irrelevance": 0.8,
+    "acc_official": 0.8667,
+    "declined_rate_ast": 0.0167,
+    "error_codes": {
+     "declined": 1,
+     "spurious_call": 2,
+     "value_mismatch": 4,
+     "wrong_function": 5
+    },
+    "mean_score_ast": 0.9083,
+    "mode": "prompt",
+    "parse_methods": {
+     "json_list": 70
+    },
+    "text_calls_ignored": 0,
+    "tool_calls_in_prompt_mode": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "bfcl3-irrelevance_27",
+    "bfcl3-irrelevance_33",
+    "bfcl3-multiple_191",
+    "bfcl3-multiple_92",
+    "bfcl3-parallel_multiple_151",
+    "bfcl3-parallel_multiple_153",
+    "bfcl3-parallel_multiple_69",
+    "bfcl3-simple_358",
+    "bfcl3-simple_50"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "change_in_temp": 4,
+        "mass": 3,
+        "specific_heat": 4.184
+       },
+       "name": "calculate_heat"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_27",
+     "out_tokens": 266,
+     "response_tail": "\n\n[{\"name\": \"calculate_heat\", \"arguments\": {\"mass\": 3, \"specific_heat\": 4.184, \"change_in_temp\": 4}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "sequence": "ATCG"
+       },
+       "name": "identify_species"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_33",
+     "out_tokens": 88,
+     "response_tail": "\n\n[{\"name\": \"identify_species\", \"arguments\": {\"sequence\": \"ATCG\"}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Paradise"
+        ],
+        "location": [
+         "Las Vegas",
+         "Las Vegas, NV",
+         "LV"
+        ],
+        "room_type": [
+         "luxury",
+         "Luxury"
+        ],
+        "start_date": [
+         "05-12-2022",
+         "2022-05-12",
+         "12/05/2022",
+         "May.12,2022",
+         "May 12, 2022"
+        ],
+        "stay_duration": [
+         3
+        ],
+        "view": [
+         "city",
+         "city view"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Paradise",
+        "location": "Las Vegas",
+        "room_type": "luxury room",
+        "start_date": "05-12-2022",
+        "stay_duration": 3,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_191",
+     "out_tokens": 207,
+     "response_tail": "\n\n[{\"name\": \"book_hotel\", \"arguments\": {\"hotel_name\": \"Hotel Paradise\", \"location\": \"Las Vegas\", \"room_type\": \"luxury room\", \"start_date\": \"05-12-2022\", \"stay_duration\": 3, \"view\": \"city view\"}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "walmart.vegan_products": {
+        "categories": [
+         [
+          "vegan",
+          "gluten-free"
+         ],
+         [
+          "gluten-free",
+          "vegan"
+         ]
+        ],
+        "location": [
+         "Denver, CO",
+         "Denver"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_92",
+     "out_tokens": 258,
+     "response_tail": "\n\n[]\nThe available Walmart function only retrieves vegan products, not vegetarian and gluten-free foods.",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Le Bristol Paris"
+        ],
+        "location": [
+         "Paris, France",
+         "Paris"
+        ],
+        "room_type": [
+         "suite",
+         "Suite"
+        ],
+        "start_date": [
+         "12-01-2022",
+         "2022-12-01",
+         "Dec 1, 2022"
+        ],
+        "stay_duration": [
+         10
+        ],
+        "view": [
+         "city view",
+         "city"
+        ]
+       }
+      },
+      {
+       "latest_exchange_rate": {
+        "amount": [
+         1000
+        ],
+        "source_currency": [
+         "USD",
+         "US Dollars",
+         "US Dollar"
+        ],
+        "target_currency": [
+         "EUR",
+         "Euro"
+        ]
+       }
+      },
+      {
+       "safeway.order": {
+        "items": [
+         [
+          "water",
+          "apples",
+          "bread"
+         ]
+        ],
+        "location": [
+         "Palo Alto, CA",
+         "Palo Alto",
+         "CA"
+        ],
+        "quantity": [
+         [
+          2,
+          3,
+          1
+         ]
+        ]
+       }
+      },
+      {
+       "light_travel_time": {
+        "distance_in_light_years": [
+         4.24
+        ],
+        "speed_of_light": [
+         299792458,
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Le Bristol Paris",
+        "location": "Paris, France",
+        "room_type": "suite",
+        "start_date": "12-01-2022",
+        "stay_duration": 10,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      },
+      {
+       "arguments": {
+        "amount": 1000,
+        "source_currency": "USD",
+        "target_currency": "EUR"
+       },
+       "name": "latest_exchange_rate"
+      },
+      {
+       "arguments": {
+        "items": [
+         "bottles of water",
+         "apples",
+         "loaf of bread"
+        ],
+        "location": "Palo Alto, CA",
+        "quantity": [
+         2,
+         3,
+         1
+        ]
+       },
+       "name": "safeway_order"
+      },
+      {
+       "arguments": {
+        "distance_in_light_years": 4.24,
+        "speed_of_light": 299792458
+       },
+       "name": "light_travel_time"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_151",
+     "out_tokens": 847,
+     "response_tail": "items\": [\n        \"bottles of water\",\n        \"apples\",\n        \"loaf of bread\"\n      ],\n      \"quantity\": [\n        2,\n        3,\n        1\n      ]\n    }\n  },\n  {\n    \"name\": \"light_travel_time\",\n    \"arguments\": {\n      \"distance_in_light_years\": 4.24,\n      \"speed_of_light\": 299792458\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "run_linear_regression": {
+        "predictors": [
+         [
+          "age",
+          "income",
+          "education level"
+         ]
+        ],
+        "standardize": [
+         true
+        ],
+        "target": [
+         "job satisfaction"
+        ]
+       }
+      },
+      {
+       "travel_itinerary_generator": {
+        "daily_budget": [
+         200
+        ],
+        "days": [
+         7
+        ],
+        "destination": [
+         "Paris",
+         "Paris, France"
+        ],
+        "exploration_type": [
+         "urban",
+         ""
+        ]
+       }
+      },
+      {
+       "find_recipe": {
+        "maxCalories": [
+         800
+        ],
+        "recipeName": [
+         "Chicken Alfredo"
+        ]
+       }
+      },
+      {
+       "cooking_conversion.convert": {
+        "from_unit": [
+         "cups",
+         "cup",
+         "c"
+        ],
+        "item": [
+         "flour"
+        ],
+        "quantity": [
+         2
+        ],
+        "to_unit": [
+         "grams",
+         "gram",
+         "g"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "daily_budget": 200,
+        "days": 7,
+        "destination": "Paris",
+        "exploration_type": "urban"
+       },
+       "name": "travel_itinerary_generator"
+      },
+      {
+       "arguments": {
+        "maxCalories": 799,
+        "recipeName": "Chicken Alfredo"
+       },
+       "name": "find_recipe"
+      },
+      {
+       "arguments": {
+        "from_unit": "cups",
+        "item": "flour",
+        "quantity": 2,
+        "to_unit": "grams"
+       },
+       "name": "cooking_conversion_convert"
+      },
+      {
+       "arguments": {
+        "predictors": [
+         "age",
+         "income",
+         "education level"
+        ],
+        "standardize": true,
+        "target": "job satisfaction"
+       },
+       "name": "run_linear_regression"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_153",
+     "out_tokens": 594,
+     "response_tail": "om_unit\": \"cups\",\n      \"to_unit\": \"grams\",\n      \"item\": \"flour\"\n    }\n  },\n  {\n    \"name\": \"run_linear_regression\",\n    \"arguments\": {\n      \"predictors\": [\n        \"age\",\n        \"income\",\n        \"education level\"\n      ],\n      \"target\": \"job satisfaction\",\n      \"standardize\": true\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         ""
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.inflation_adjustment": {
+        "inflation_rate": [
+         0.03
+        ],
+        "initial_sum": [
+         200000.0
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.loan_repayment": {
+        "interest_rate": [
+         0.04
+        ],
+        "loan_amount": [
+         300000.0
+        ],
+        "loan_term": [
+         10
+        ]
+       }
+      },
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         true
+        ],
+        "years": [
+         5
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      },
+      {
+       "arguments": {
+        "inflation_rate": 3,
+        "initial_sum": 200000,
+        "years": 5
+       },
+       "name": "finance_inflation_adjustment"
+      },
+      {
+       "arguments": {
+        "interest_rate": 4,
+        "loan_amount": 300000,
+        "loan_term": 10
+       },
+       "name": "finance_loan_repayment"
+      },
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "monthly": true,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_69",
+     "out_tokens": 340,
+     "response_tail": "itial_sum\": 200000, \"years\": 5, \"inflation_rate\": 3}}, {\"name\": \"finance_loan_repayment\", \"arguments\": {\"loan_amount\": 300000, \"interest_rate\": 4, \"loan_term\": 10}}, {\"name\": \"finance_property_depreciation\", \"arguments\": {\"initial_cost\": 500000, \"depreciation_rate\": 2, \"years\": 5, \"monthly\": true}}]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "recipe_search": {
+        "diet": [
+         [
+          "Gluten Free"
+         ],
+         [
+          "GF"
+         ],
+         [
+          "gluten free"
+         ]
+        ],
+        "dish": [
+         "cookie"
+        ],
+        "time_limit": [
+         30
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "diet": [
+         "Gluten Free"
+        ],
+        "dish": "cookie",
+        "time_limit": 29
+       },
+       "name": "recipe_search"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_358",
+     "out_tokens": 234,
+     "response_tail": "\n\n[{\"name\": \"recipe_search\", \"arguments\": {\"dish\": \"cookie\", \"diet\": [\"Gluten Free\"], \"time_limit\": 29}}]",
+     "status": "wrong",
+     "sub": "simple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "entropy_change.calculate": {
+        "final_temperature": [
+         100
+        ],
+        "initial_temperature": [
+         0
+        ],
+        "mass": [
+         1
+        ],
+        "pressure": [
+         "",
+         1
+        ],
+        "substance": [
+         "ice"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "final_temperature": 100,
+        "initial_temperature": 0,
+        "mass": 1,
+        "pressure": 1,
+        "substance": "water"
+       },
+       "name": "entropy_change_calculate"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_50",
+     "out_tokens": 1029,
+     "response_tail": "\n\n[{\"name\":\"entropy_change_calculate\",\"arguments\":{\"substance\":\"water\",\"mass\":1,\"initial_temperature\":0,\"final_temperature\":100,\"pressure\":1}}]",
+     "status": "wrong",
+     "sub": "simple"
+    }
+   ],
+   "gpu_minutes": 0.728,
+   "info_per_gpu_min": 10.775,
+   "max_tokens": 8192,
+   "mean_out_tokens": 315.2,
+   "mean_prompt_tokens": 559.7,
+   "mean_score": 0.8929,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 61,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 5.85,
+   "p50_out_tokens": 237,
+   "p90_item_s": 14.34,
+   "status_counts": {
+    "correct": 61,
+    "wrong": 9
+   },
+   "sub": {
+    "irrelevance": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4902,
+      0.9433
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 329.9,
+     "mean_prompt_tokens": 403.0,
+     "mean_score": 0.8,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 4.45,
+     "p50_out_tokens": 202,
+     "p90_item_s": 8.3,
+     "status_counts": {
+      "correct": 8,
+      "wrong": 2
+     },
+     "total_out_tokens": 3299,
+     "total_prompt_tokens": 4030,
+     "trunc_rate": 0.0,
+     "wall_s": 91.2
+    },
+    "multiple": {
+     "acc": 0.8667,
+     "acc_strict": 0.8667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6212,
+      0.9626
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 206.6,
+     "mean_prompt_tokens": 689.0,
+     "mean_score": 0.8667,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 13,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 4.56,
+     "p50_out_tokens": 187,
+     "p90_item_s": 9.71,
+     "status_counts": {
+      "correct": 13,
+      "wrong": 2
+     },
+     "total_out_tokens": 3099,
+     "total_prompt_tokens": 10335,
+     "trunc_rate": 0.0,
+     "wall_s": 144.5
+    },
+    "parallel": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7961,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 399.7,
+     "mean_prompt_tokens": 468.1,
+     "mean_score": 1.0,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 8.38,
+     "p50_out_tokens": 345,
+     "p90_item_s": 15.11,
+     "status_counts": {
+      "correct": 15
+     },
+     "total_out_tokens": 5996,
+     "total_prompt_tokens": 7021,
+     "trunc_rate": 0.0,
+     "wall_s": 163.4
+    },
+    "parallel_multiple": {
+     "acc": 0.7,
+     "acc_strict": 0.7,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3968,
+      0.8922
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 537.2,
+     "mean_prompt_tokens": 874.3,
+     "mean_score": 0.85,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 9.24,
+     "p50_out_tokens": 456,
+     "p90_item_s": 16.09,
+     "status_counts": {
+      "correct": 7,
+      "wrong": 3
+     },
+     "total_out_tokens": 5372,
+     "total_prompt_tokens": 8743,
+     "trunc_rate": 0.0,
+     "wall_s": 80.9
+    },
+    "simple": {
+     "acc": 0.9,
+     "acc_strict": 0.9,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.699,
+      0.9721
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 214.9,
+     "mean_prompt_tokens": 452.6,
+     "mean_score": 0.9,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 18,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 3.82,
+     "p50_out_tokens": 167,
+     "p90_item_s": 6.02,
+     "status_counts": {
+      "correct": 18,
+      "wrong": 2
+     },
+     "total_out_tokens": 4298,
+     "total_prompt_tokens": 9052,
+     "trunc_rate": 0.0,
+     "wall_s": 163.1
+    }
+   },
+   "total_out_tokens": 22064,
+   "total_prompt_tokens": 39181,
+   "trunc_rate": 0.0,
+   "wall_s": 163.4
+  }
+ },
+ "invalid_reasons": [],
+ "lcb_window": {
+  "after": "2025-01-11",
+  "before": "2025-04-05",
+  "counts": {
+   "easy": 8,
+   "medium": 22
+  },
+  "difficulties": [
+   "easy",
+   "medium"
+  ],
+  "file": "test6.jsonl",
+  "hard_available": false,
+  "n_seen": {
+   "easy": 43,
+   "hard": 80,
+   "medium": 52
+  },
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+ },
+ "model": "m",
+ "notes": [
+  "tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)",
+  "tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others",
+  "code: HumanEval+ items are a seeded sample of a curated 60-task hard pool (not the whole benchmark); MBPP+ items are a seeded sample of tasks with >= 3-line canonical solutions",
+  "code: HumanEval/32 (find_zero) is excluded: the HF test.jsonl assertion is malformed (unpacks a float) and even the canonical solution violates the find_zero oracle on 7/886 plus inputs, so the task is unpassable as shipped",
+  "code: LCB items are easy+medium problems of the newest release window (test6.jsonl), scored on the public tests plus a seeded sample of private tests (<= 24 per problem, first failure stops) with a 10 s wall limit per test; this is not the official LiveCodeBench scorer (which runs every private test)",
+  "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; no network isolation (the tests do not need network)",
+  "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is 'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and stdout must match the expected line structure",
+  "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
+  "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
+  "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+  "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
+  "longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers",
+  "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), 10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of MMLU-Pro keys are known to be noisy and are not corrected here",
+  "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged ('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; stricter than the official LLM grader on partial names, so absolute numbers are not comparable with published SimpleQA scores - use it for paired comparisons",
+  "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
+  "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
+  "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
+  "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
+  "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
+  "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+  "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+  "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/'et al.', deliberately not protected because protecting a form means never splitting after it again; 19 of the 132 instruction instances are number_sentences",
+  "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+  "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
+ ],
+ "partial": true,
+ "schema_version": 1,
+ "skipped_ids": [],
+ "started_at": "2026-09-05T17:45:02Z",
+ "tag": "q27_nvfp4_rep_b12x--",
+ "truncated": false,
+ "valid": true,
+ "wall_s": 360.1
+}

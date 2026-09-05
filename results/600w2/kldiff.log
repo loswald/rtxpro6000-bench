@@ -1,0 +1,29 @@
+[17:50:03] ===== logit-level quality, Qwen3.8-27B =====
+[17:50:08] ########## kl_spec_dflash2 ##########
+[17:50:08]   A: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[17:50:08]   B: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8 --speculative-config {"method":"dflash","model":"/workspace/models/Qwen3.8-27B-DFlash2","num_speculative_tokens":7}
+[17:54:08]   both healthy in 240s
+    LOGIT-DIFF {"positions": 104, "top1_agreement": 0.9423, "top5_overlap": 0.9673, "mean_kl": 0.022938, "p95_kl": 0.127786, "max_kl": 0.317979, "mean_top1_prob_delta": 0.013005, "errors": 0}
+[17:54:23] KLDIFF DONE
+[17:54:28] ===== loss from the native BF16 parent =====
+[17:54:34] ########## kl_bf16_control ##########
+[17:54:34]   A: Qwen3.8-27B --kv-cache-dtype auto
+[17:54:34]   B: Qwen3.8-27B --kv-cache-dtype auto
+[17:57:14]   both healthy in 160s
+    LOGIT-DIFF {"positions": 94, "top1_agreement": 1.0, "top5_overlap": 0.9915, "mean_kl": 0.006289, "p95_kl": 0.040213, "max_kl": 0.124741, "mean_top1_prob_delta": 0.004272, "errors": 0}
+[17:57:39] ########## kl_bf16_vs_fp8 ##########
+[17:57:39]   A: Qwen3.8-27B --kv-cache-dtype auto
+[17:57:39]   B: Qwen3.8-27B-FP8 --kernel-config.linear_backend b12x --kv-cache-dtype auto
+[17:59:59]   both healthy in 140s
+    LOGIT-DIFF {"positions": 94, "top1_agreement": 0.9574, "top5_overlap": 0.9638, "mean_kl": 0.017884, "p95_kl": 0.068695, "max_kl": 0.255123, "mean_top1_prob_delta": 0.011226, "errors": 0}
+[18:00:23] ########## kl_bf16_vs_nvfp4 ##########
+[18:00:23]   A: Qwen3.8-27B --kv-cache-dtype auto
+[18:00:23]   B: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype auto
+[18:02:33]   both healthy in 130s
+    LOGIT-DIFF {"positions": 92, "top1_agreement": 0.9239, "top5_overlap": 0.8804, "mean_kl": 0.096515, "p95_kl": 0.378192, "max_kl": 0.935071, "mean_top1_prob_delta": 0.049685, "errors": 0}
+[18:02:57] ########## kl_bf16_vs_qat ##########
+[18:02:57]   A: Qwen3.8-27B --kv-cache-dtype auto
+[18:02:57]   B: Qwen27B-QUASAR-NVFP4 --kernel-config.linear_backend b12x --kv-cache-dtype auto
+[18:04:57]   both healthy in 120s
+    LOGIT-DIFF {"positions": 94, "top1_agreement": 0.9574, "top5_overlap": 0.8872, "mean_kl": 0.082344, "p95_kl": 0.395648, "max_kl": 0.778091, "mean_top1_prob_delta": 0.034468, "errors": 0}
+[18:05:15] KLDIFF-BF16 DONE

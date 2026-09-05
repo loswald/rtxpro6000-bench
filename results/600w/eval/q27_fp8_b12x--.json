@@ -1,67 +1,52 @@
 {
  "aggregate": {
-  "acc_macro": 0.8031,
-  "acc_micro": 0.7887,
-  "acc_strict": 0.7593,
+  "acc_macro": 0.7904,
+  "acc_micro": 0.7792,
+  "acc_strict": 0.7792,
   "answer_from_reasoning": 3,
   "ci95": [
-   0.7453,
-   0.8264
+   0.7361,
+   0.8169
   ],
-  "degenerate_rate": 0.0052,
-  "gpu_minutes": 203.797,
-  "mean_out_tokens": 4015.1,
-  "mean_prompt_tokens": 2546.6,
-  "mean_score": 0.8024,
+  "degenerate_rate": 0.005,
+  "gpu_minutes": 58.609,
+  "mean_out_tokens": 4905.6,
+  "mean_prompt_tokens": 2460.8,
+  "mean_score": 0.7924,
   "n_attempted": 403,
   "n_cancelled": 0,
-  "n_correct": 306,
-  "n_error": 15,
+  "n_correct": 314,
+  "n_error": 0,
   "n_planned": 403,
-  "n_scored": 388,
+  "n_scored": 403,
   "n_skipped": 0,
-  "out_tokens_per_s": 509.6,
+  "out_tokens_per_s": 476.7,
   "p50_item_s": 38.63,
-  "p50_out_tokens": 1029,
-  "p90_item_s": 493.86,
+  "p50_out_tokens": 1166,
+  "p90_item_s": 491.85,
   "per_url": {
    "http://127.0.0.1:8000": {
-    "completion_tokens": 378505,
-    "errors": 24,
-    "requests": 111,
-    "retries": 10
+    "completion_tokens": 249509,
+    "requests": 9
    },
-   "http://127.0.0.1:8001": {
-    "completion_tokens": 319940,
-    "errors": 23,
-    "requests": 125,
-    "retries": 24
-   },
+   "http://127.0.0.1:8001": {},
    "http://127.0.0.1:8002": {
-    "completion_tokens": 479407,
-    "errors": 19,
-    "requests": 118,
-    "retries": 17
+    "completion_tokens": 169603,
+    "requests": 6
    },
-   "http://127.0.0.1:8003": {
-    "completion_tokens": 380007,
-    "errors": 19,
-    "requests": 119,
-    "retries": 19
-   }
+   "http://127.0.0.1:8003": {}
   },
-  "request_errors": 15,
-  "requests": 473,
-  "retries": 70,
+  "request_errors": 0,
+  "requests": 15,
+  "retries": 0,
   "status_counts": {
-   "correct": 306,
-   "error": 15,
-   "truncated": 23,
+   "correct": 314,
+   "truncated": 30,
    "wrong": 59
   },
-  "total_out_tokens": 1557859,
-  "total_prompt_tokens": 988076,
-  "trunc_rate": 0.0593,
+  "total_out_tokens": 1976971,
+  "total_prompt_tokens": 991693,
+  "trunc_rate": 0.0744,
   "wall_s": 3056.9
  },
  "base_urls": [
@@ -74,7 +59,7 @@
   "chat_template_kwargs": {
    "enable_thinking": true
   },
-  "concurrency": 64,
+  "concurrency": 128,
   "extra_body": {
    "min_p": 0.0,
    "presence_penalty": 0.0,
@@ -92,27 +77,27 @@
   "gpus": 4,
   "grace_s": 120.0,
   "limit": null,
-  "max_tokens": 24576,
+  "max_tokens": 32768,
   "max_tokens_family": {
-   "code": 16384,
-   "ifeval": 12288,
-   "knowledge": 16384,
-   "longctx": 2048,
+   "code": 20480,
+   "ifeval": 16384,
+   "knowledge": 20480,
+   "longctx": 6144,
    "tools": 8192
   },
   "notes": "",
   "profile": "default",
   "reasoning": true,
-  "request_timeout_s": 600.0,
-  "resume": false,
+  "request_timeout_s": 3600.0,
+  "resume": true,
   "retries": 3,
   "seed": 20260903,
   "temperature": 1.0,
-  "time_budget_s": 3000.0,
+  "time_budget_s": 2400.0,
   "top_p": 0.95
  },
  "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
- "ended_at": "2026-09-04T15:48:06Z",
+ "ended_at": "2026-09-05T16:58:31Z",
  "endpoint": {
   "max_model_len": 40960,
   "served_models": [
@@ -424,9 +409,9 @@
      "sub": "mbppplus"
     }
    ],
-   "gpu_minutes": 40.813,
-   "info_per_gpu_min": 0.37,
-   "max_tokens": 16384,
+   "gpu_minutes": 9.393,
+   "info_per_gpu_min": 1.61,
+   "max_tokens": 20480,
    "mean_out_tokens": 4443.0,
    "mean_prompt_tokens": 372.5,
    "mean_score": 0.72,
@@ -816,9 +801,9 @@
      "sub": "double"
     }
    ],
-   "gpu_minutes": 21.349,
-   "info_per_gpu_min": 0.325,
-   "max_tokens": 12288,
+   "gpu_minutes": 4.913,
+   "info_per_gpu_min": 1.411,
+   "max_tokens": 16384,
    "mean_out_tokens": 2922.6,
    "mean_prompt_tokens": 104.0,
    "mean_score": 0.9306,
@@ -1455,9 +1440,9 @@
      "sub": "simpleqa"
     }
    ],
-   "gpu_minutes": 48.651,
-   "info_per_gpu_min": 0.359,
-   "max_tokens": 16384,
+   "gpu_minutes": 11.197,
+   "info_per_gpu_min": 1.558,
+   "max_tokens": 20480,
    "mean_out_tokens": 5704.0,
    "mean_prompt_tokens": 240.7,
    "mean_score": 0.4714,
@@ -1600,7 +1585,7 @@
       "var_tracking": 255
      },
      "max_model_len": 40960,
-     "max_tokens": 2048,
+     "max_tokens": 6144,
      "method": "tokenize",
      "tokenize_calls": 12
     },
@@ -1637,9 +1622,9 @@
      "sub": "qa_multi_doc"
     }
    ],
-   "gpu_minutes": 15.417,
-   "info_per_gpu_min": 0.063,
-   "max_tokens": 2048,
+   "gpu_minutes": 3.548,
+   "info_per_gpu_min": 0.276,
+   "max_tokens": 6144,
    "mean_out_tokens": 343.0,
    "mean_prompt_tokens": 18455.5,
    "mean_score": 0.9792,
@@ -1757,94 +1742,61 @@
    "wall_s": 357.7
   },
   "math": {
-   "acc": 0.9385,
-   "acc_strict": 0.7625,
+   "acc": 0.8625,
+   "acc_strict": 0.8625,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.8522,
-    0.9758
+    0.7703,
+    0.9215
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
-   "error_ids": [
-    "aime25-I-11",
-    "aime25-I-13",
-    "aime25-I-14",
-    "aime25-I-15",
-    "aime25-II-15",
-    "hmmt25-feb-10",
-    "hmmt25-feb-14",
-    "hmmt25-feb-17",
-    "hmmt25-feb-18",
-    "hmmt25-feb-19",
-    "hmmt25-feb-20",
-    "hmmt25-feb-24",
-    "hmmt25-feb-27",
-    "hmmt25-feb-29",
-    "hmmt25-feb-30"
-   ],
+   "error_ids": [],
    "extra": {
     "ambiguous_boxed": 0,
-    "boxed_rate": 0.9692,
+    "boxed_rate": 0.8875,
     "match_methods": {
      "set": 1,
-     "string": 60
+     "string": 68
     },
     "unparsed_rate": 0.0
    },
    "failed_ids": [
+    "aime25-I-14",
+    "aime25-I-15",
     "aime25-II-1",
+    "aime25-II-15",
     "aime25-II-5",
     "hmmt25-feb-1",
-    "hmmt25-feb-15"
+    "hmmt25-feb-15",
+    "hmmt25-feb-17",
+    "hmmt25-feb-19",
+    "hmmt25-feb-20",
+    "hmmt25-feb-30"
    ],
    "failures": [
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "60",
      "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "aime25-I-11",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "aime25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "aime25-I-13",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "aime25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "aime25-I-14",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "aime25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "735",
      "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "aime25-I-15",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "aime25"
     },
     {
@@ -1860,15 +1812,15 @@
      "sub": "aime25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "240",
      "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "aime25-II-15",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "aime25"
     },
     {
@@ -1896,30 +1848,6 @@
      "sub": "hmmt25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "hmmt25-feb-10",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "hmmt25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "hmmt25-feb-14",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "hmmt25"
-    },
-    {
      "error": null,
      "expected": "200",
      "extracted": null,
@@ -1932,190 +1860,139 @@
      "sub": "hmmt25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "2^{25} \\cdot 26!",
      "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "hmmt25-feb-17",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "hmmt25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "\\frac{4}{9}",
      "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "hmmt25-feb-18",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "hmmt25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "hmmt25-feb-19",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "hmmt25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "\\frac{448}{3}",
      "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "hmmt25-feb-20",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "hmmt25"
     },
     {
-     "error": "timeout after 600s",
-     "expected": null,
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
      "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "hmmt25-feb-24",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "hmmt25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "hmmt25-feb-27",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "hmmt25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
-     "flags": [],
-     "id": "hmmt25-feb-29",
-     "out_tokens": 0,
-     "response_tail": "",
-     "status": "error",
-     "sub": "hmmt25"
-    },
-    {
-     "error": "timeout after 600s",
-     "expected": null,
-     "extracted": null,
-     "finish_reason": null,
+     "finish_reason": "length",
      "flags": [],
      "id": "hmmt25-feb-30",
-     "out_tokens": 0,
+     "out_tokens": 32768,
      "response_tail": "",
-     "status": "error",
+     "status": "truncated",
      "sub": "hmmt25"
     }
    ],
-   "gpu_minutes": 73.341,
-   "info_per_gpu_min": 0.051,
-   "max_tokens": 24576,
-   "mean_out_tokens": 9285.9,
-   "mean_prompt_tokens": 184.7,
-   "mean_score": 0.9385,
+   "gpu_minutes": 28.584,
+   "info_per_gpu_min": 0.332,
+   "max_tokens": 32768,
+   "mean_out_tokens": 12783.7,
+   "mean_prompt_tokens": 195.3,
+   "mean_score": 0.8625,
    "n_attempted": 80,
    "n_cancelled": 0,
-   "n_correct": 61,
-   "n_error": 15,
+   "n_correct": 69,
+   "n_error": 0,
    "n_planned": 80,
-   "n_scored": 65,
+   "n_scored": 80,
    "n_skipped": 0,
    "opts": {},
    "p50_item_s": 329.05,
-   "p50_out_tokens": 8802,
-   "p90_item_s": 2431.33,
+   "p50_out_tokens": 10785,
+   "p90_item_s": 1527.53,
    "status_counts": {
-    "correct": 61,
-    "error": 15,
-    "truncated": 2,
+    "correct": 69,
+    "truncated": 9,
     "wrong": 2
    },
    "sub": {
     "aime25": {
-     "acc": 0.92,
-     "acc_strict": 0.7667,
+     "acc": 0.8333,
+     "acc_strict": 0.8333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.7503,
-      0.9778
+      0.6644,
+      0.9266
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 10098.5,
-     "mean_prompt_tokens": 222.3,
-     "mean_score": 0.92,
+     "mean_out_tokens": 13550.8,
+     "mean_prompt_tokens": 234.9,
+     "mean_score": 0.8333,
      "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 23,
-     "n_error": 5,
+     "n_correct": 25,
+     "n_error": 0,
      "n_planned": 30,
-     "n_scored": 25,
+     "n_scored": 30,
      "n_skipped": 0,
      "p50_item_s": 394.05,
-     "p50_out_tokens": 9593,
-     "p90_item_s": 2431.56,
+     "p50_out_tokens": 13812,
+     "p90_item_s": 1702.28,
      "status_counts": {
-      "correct": 23,
-      "error": 5,
-      "truncated": 1,
+      "correct": 25,
+      "truncated": 4,
       "wrong": 1
      },
-     "total_out_tokens": 252463,
-     "total_prompt_tokens": 5557,
-     "trunc_rate": 0.04,
+     "total_out_tokens": 406523,
+     "total_prompt_tokens": 7047,
+     "trunc_rate": 0.1333,
      "wall_s": 3036.1
     },
     "hmmt25": {
-     "acc": 0.9,
-     "acc_strict": 0.6,
+     "acc": 0.8,
+     "acc_strict": 0.8,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.699,
-      0.9721
+      0.6269,
+      0.9049
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 12351.6,
-     "mean_prompt_tokens": 148.2,
-     "mean_score": 0.9,
+     "mean_out_tokens": 17069.5,
+     "mean_prompt_tokens": 169.7,
+     "mean_score": 0.8,
      "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 18,
-     "n_error": 10,
+     "n_correct": 24,
+     "n_error": 0,
      "n_planned": 30,
-     "n_scored": 20,
+     "n_scored": 30,
      "n_skipped": 0,
-     "p50_item_s": 1043.52,
-     "p50_out_tokens": 12529,
-     "p90_item_s": 2431.46,
+     "p50_item_s": 534.03,
+     "p50_out_tokens": 16766,
+     "p90_item_s": 1527.53,
      "status_counts": {
-      "correct": 18,
-      "error": 10,
-      "truncated": 1,
+      "correct": 24,
+      "truncated": 5,
       "wrong": 1
      },
-     "total_out_tokens": 247033,
-     "total_prompt_tokens": 2964,
-     "trunc_rate": 0.05,
+     "total_out_tokens": 512085,
+     "total_prompt_tokens": 5091,
+     "trunc_rate": 0.1667,
      "wall_s": 3056.9
     },
     "math500_hard": {
@@ -2149,9 +2026,9 @@
      "wall_s": 1621.3
     }
    },
-   "total_out_tokens": 603583,
-   "total_prompt_tokens": 12005,
-   "trunc_rate": 0.0308,
+   "total_out_tokens": 1022695,
+   "total_prompt_tokens": 15622,
+   "trunc_rate": 0.1125,
    "wall_s": 3056.9
   },
   "tools": {
@@ -2975,8 +2852,8 @@
      "sub": "simple"
     }
    ],
-   "gpu_minutes": 4.225,
-   "info_per_gpu_min": 2.194,
+   "gpu_minutes": 0.972,
+   "info_per_gpu_min": 9.536,
    "max_tokens": 8192,
    "mean_out_tokens": 428.0,
    "mean_prompt_tokens": 559.7,
@@ -3210,9 +3087,9 @@
  "partial": false,
  "schema_version": 1,
  "skipped_ids": [],
- "started_at": "2026-09-04T14:57:09Z",
+ "started_at": "2026-09-05T16:43:52Z",
  "tag": "q27_fp8_b12x--",
  "truncated": false,
  "valid": true,
- "wall_s": 3056.9
+ "wall_s": 879.1
 }

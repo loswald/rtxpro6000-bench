@@ -328,3 +328,169 @@
 2026-09-04T17:47:50Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
 2026-09-04T17:47:50Z   aggregate  acc_micro=0.794 acc_macro=0.7979 n=389/403 ci95=[0.7514, 0.8315] requests=451 retries=48 out_tok/s=297.6
 2026-09-04T17:47:50Z wrote /workspace/results/eval/muse30_---.json, /workspace/results/eval/muse30_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+2026-09-05T17:01:08Z run muse30_---: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['http://127.0.0.1:8000', 'http://127.0.0.1:8001', 'http://127.0.0.1:8002', 'http://127.0.0.1:8003'], concurrency 128, budget 2400s
+2026-09-05T17:01:08Z longctx: prepare_run ...
+2026-09-05T17:01:08Z longctx: calibrated -> {"budgets": {"16k": 16384, "32k": 32768, "8k": 8192}, "chars_per_token": {"docs": 4.6761, "filler": 4.645}, "checks": {"niah_multikey": {"budget": 32768, "item": "longctx-niah-32k-d85-11", "prompt_tokens": 31632}, "qa_multi_doc": {"budget": 32768, "item": "longctx-qa-32k-d10-08", "prompt_tokens": 31935}, "var_tracking": {"budget": 32768, "item": "longctx-vt-32k-05", "prompt_tokens": 31706}}, "fixed_tokens": {"niah_multikey": 162, "qa_multi_doc": 63, "var_tracking": 235}, "max_model_len": 40960, "max_tokens": 6144, "method": "tokenize", "tokenize_calls": 12}
+2026-09-05T17:01:08Z ifeval: prepare_run ...
+2026-09-05T17:01:08Z ifeval: reasoning allowance on 60 items (caps now 16384..16384)
+2026-09-05T17:01:08Z resume: 389 items already done
+2026-09-05T17:01:18Z [    10s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2390s
+2026-09-05T17:01:28Z [    20s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2380s
+2026-09-05T17:01:38Z [    30s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2370s
+2026-09-05T17:01:48Z [    40s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2360s
+2026-09-05T17:01:58Z [    50s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2350s
+2026-09-05T17:02:08Z [    60s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2340s
+2026-09-05T17:02:18Z [    70s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2330s
+2026-09-05T17:02:28Z [    80s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2320s
+2026-09-05T17:02:38Z [    90s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2310s
+2026-09-05T17:02:48Z [   100s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2300s
+2026-09-05T17:02:58Z [   110s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2290s
+2026-09-05T17:03:08Z [   120s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2280s
+2026-09-05T17:03:18Z [   130s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2270s
+2026-09-05T17:03:28Z [   140s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2260s
+2026-09-05T17:03:38Z [   150s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2250s
+2026-09-05T17:03:48Z [   160s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2240s
+2026-09-05T17:03:58Z [   170s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2230s
+2026-09-05T17:04:08Z [   180s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2220s
+2026-09-05T17:04:18Z [   190s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2210s
+2026-09-05T17:04:28Z [   200s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2200s
+2026-09-05T17:04:38Z [   210s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2190s
+2026-09-05T17:04:48Z [   220s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2180s
+2026-09-05T17:04:58Z [   230s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2170s
+2026-09-05T17:05:08Z [   240s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2160s
+2026-09-05T17:05:18Z [   250s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2150s
+2026-09-05T17:05:28Z [   260s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2140s
+2026-09-05T17:05:38Z [   270s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2130s
+2026-09-05T17:05:48Z [   280s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2120s
+2026-09-05T17:05:58Z [   290s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2110s
+2026-09-05T17:06:08Z [   300s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2100s
+2026-09-05T17:06:18Z [   310s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2090s
+2026-09-05T17:06:28Z [   320s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2080s
+2026-09-05T17:06:38Z [   330s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2070s
+2026-09-05T17:06:48Z [   340s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2060s
+2026-09-05T17:06:58Z [   350s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2050s
+2026-09-05T17:07:08Z [   360s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2040s
+2026-09-05T17:07:18Z [   370s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2030s
+2026-09-05T17:07:28Z [   380s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2020s
+2026-09-05T17:07:38Z [   390s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2010s
+2026-09-05T17:07:48Z [   400s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=2000s
+2026-09-05T17:07:58Z [   410s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=1990s
+2026-09-05T17:08:08Z [   420s] tools=70/70 code=73/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=14 req=14 retries=0 err=0 out_tok/s=0 budget_left=1980s
+2026-09-05T17:08:18Z [   430s] tools=70/70 code=74/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=13 req=14 retries=0 err=0 out_tok/s=25 budget_left=1970s
+2026-09-05T17:08:28Z [   440s] tools=70/70 code=74/75 math=68/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=13 req=14 retries=0 err=0 out_tok/s=24 budget_left=1960s
+2026-09-05T17:08:38Z [   450s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=48 budget_left=1950s
+2026-09-05T17:08:48Z [   460s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=47 budget_left=1940s
+2026-09-05T17:08:58Z [   470s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=46 budget_left=1930s
+2026-09-05T17:09:08Z [   480s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=45 budget_left=1920s
+2026-09-05T17:09:18Z [   490s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=44 budget_left=1910s
+2026-09-05T17:09:28Z [   500s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=43 budget_left=1900s
+2026-09-05T17:09:38Z [   510s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=42 budget_left=1890s
+2026-09-05T17:09:48Z [   520s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=42 budget_left=1880s
+2026-09-05T17:09:58Z [   530s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=41 budget_left=1870s
+2026-09-05T17:10:08Z [   540s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=40 budget_left=1860s
+2026-09-05T17:10:18Z [   550s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=39 budget_left=1850s
+2026-09-05T17:10:28Z [   560s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=39 budget_left=1840s
+2026-09-05T17:10:39Z [   570s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=38 budget_left=1830s
+2026-09-05T17:10:49Z [   580s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=37 budget_left=1820s
+2026-09-05T17:10:59Z [   590s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=37 budget_left=1810s
+2026-09-05T17:11:09Z [   600s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=36 budget_left=1800s
+2026-09-05T17:11:19Z [   610s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=35 budget_left=1790s
+2026-09-05T17:11:29Z [   620s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=35 budget_left=1780s
+2026-09-05T17:11:39Z [   630s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=34 budget_left=1770s
+2026-09-05T17:11:49Z [   640s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=34 budget_left=1760s
+2026-09-05T17:11:59Z [   650s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=33 budget_left=1750s
+2026-09-05T17:12:09Z [   660s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=33 budget_left=1740s
+2026-09-05T17:12:19Z [   671s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=32 budget_left=1729s
+2026-09-05T17:12:29Z [   681s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=32 budget_left=1719s
+2026-09-05T17:12:39Z [   691s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=31 budget_left=1709s
+2026-09-05T17:12:49Z [   701s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=31 budget_left=1699s
+2026-09-05T17:12:59Z [   711s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=30 budget_left=1689s
+2026-09-05T17:13:09Z [   721s] tools=70/70 code=74/75 math=69/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=12 req=14 retries=0 err=0 out_tok/s=30 budget_left=1679s
+2026-09-05T17:13:19Z [   731s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=54 budget_left=1669s
+2026-09-05T17:13:29Z [   741s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=54 budget_left=1659s
+2026-09-05T17:13:39Z [   751s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=53 budget_left=1649s
+2026-09-05T17:13:49Z [   761s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=52 budget_left=1639s
+2026-09-05T17:13:59Z [   771s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=52 budget_left=1629s
+2026-09-05T17:14:09Z [   781s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=51 budget_left=1619s
+2026-09-05T17:14:19Z [   791s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=50 budget_left=1609s
+2026-09-05T17:14:29Z [   801s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=50 budget_left=1599s
+2026-09-05T17:14:39Z [   811s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=49 budget_left=1589s
+2026-09-05T17:14:49Z [   821s] tools=70/70 code=74/75 math=70/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=11 req=14 retries=0 err=0 out_tok/s=48 budget_left=1579s
+2026-09-05T17:14:59Z [   831s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=97 budget_left=1569s
+2026-09-05T17:15:09Z [   841s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=96 budget_left=1559s
+2026-09-05T17:15:19Z [   851s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=95 budget_left=1549s
+2026-09-05T17:15:29Z [   861s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=94 budget_left=1539s
+2026-09-05T17:15:39Z [   871s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=93 budget_left=1529s
+2026-09-05T17:15:49Z [   881s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=92 budget_left=1519s
+2026-09-05T17:15:59Z [   891s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=91 budget_left=1509s
+2026-09-05T17:16:09Z [   901s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=90 budget_left=1499s
+2026-09-05T17:16:19Z [   911s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=89 budget_left=1489s
+2026-09-05T17:16:29Z [   921s] tools=70/70 code=75/75 math=71/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=9 req=14 retries=0 err=0 out_tok/s=88 budget_left=1479s
+2026-09-05T17:16:39Z [   931s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=111 budget_left=1469s
+2026-09-05T17:16:49Z [   941s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=110 budget_left=1459s
+2026-09-05T17:16:59Z [   951s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=109 budget_left=1449s
+2026-09-05T17:17:09Z [   961s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=108 budget_left=1439s
+2026-09-05T17:17:19Z [   971s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=107 budget_left=1429s
+2026-09-05T17:17:29Z [   981s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=106 budget_left=1419s
+2026-09-05T17:17:39Z [   991s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=105 budget_left=1409s
+2026-09-05T17:17:49Z [  1001s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=104 budget_left=1399s
+2026-09-05T17:17:59Z [  1011s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=103 budget_left=1389s
+2026-09-05T17:18:09Z [  1021s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=102 budget_left=1379s
+2026-09-05T17:18:19Z [  1031s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=101 budget_left=1369s
+2026-09-05T17:18:29Z [  1041s] tools=70/70 code=75/75 math=72/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=8 req=14 retries=0 err=0 out_tok/s=100 budget_left=1359s
+2026-09-05T17:18:39Z [  1051s] tools=70/70 code=75/75 math=73/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=7 req=14 retries=0 err=0 out_tok/s=123 budget_left=1349s
+2026-09-05T17:18:49Z [  1061s] tools=70/70 code=75/75 math=73/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=7 req=14 retries=0 err=0 out_tok/s=122 budget_left=1339s
+2026-09-05T17:18:59Z [  1071s] tools=70/70 code=75/75 math=74/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=6 req=14 retries=0 err=0 out_tok/s=146 budget_left=1329s
+2026-09-05T17:19:09Z [  1081s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=169 budget_left=1319s
+2026-09-05T17:19:19Z [  1091s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=168 budget_left=1309s
+2026-09-05T17:19:29Z [  1101s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=166 budget_left=1299s
+2026-09-05T17:19:39Z [  1111s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=165 budget_left=1289s
+2026-09-05T17:19:49Z [  1121s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=163 budget_left=1279s
+2026-09-05T17:19:59Z [  1131s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=162 budget_left=1269s
+2026-09-05T17:20:09Z [  1141s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=160 budget_left=1259s
+2026-09-05T17:20:19Z [  1151s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=159 budget_left=1249s
+2026-09-05T17:20:29Z [  1161s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=158 budget_left=1239s
+2026-09-05T17:20:39Z [  1171s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=156 budget_left=1229s
+2026-09-05T17:20:49Z [  1181s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=155 budget_left=1219s
+2026-09-05T17:20:59Z [  1191s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=154 budget_left=1209s
+2026-09-05T17:21:09Z [  1201s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=152 budget_left=1199s
+2026-09-05T17:21:19Z [  1211s] tools=70/70 code=75/75 math=75/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=5 req=14 retries=0 err=0 out_tok/s=151 budget_left=1189s
+2026-09-05T17:21:29Z [  1221s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=174 budget_left=1179s
+2026-09-05T17:21:39Z [  1231s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=173 budget_left=1169s
+2026-09-05T17:21:49Z [  1241s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=172 budget_left=1159s
+2026-09-05T17:21:59Z [  1251s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=170 budget_left=1149s
+2026-09-05T17:22:09Z [  1261s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=169 budget_left=1139s
+2026-09-05T17:22:19Z [  1271s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=168 budget_left=1129s
+2026-09-05T17:22:29Z [  1281s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=166 budget_left=1119s
+2026-09-05T17:22:39Z [  1291s] tools=70/70 code=75/75 math=76/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=4 req=14 retries=0 err=0 out_tok/s=165 budget_left=1109s
+2026-09-05T17:22:49Z [  1301s] tools=70/70 code=75/75 math=77/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=3 req=14 retries=0 err=0 out_tok/s=188 budget_left=1099s
+2026-09-05T17:22:59Z [  1311s] tools=70/70 code=75/75 math=77/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=3 req=14 retries=0 err=0 out_tok/s=187 budget_left=1089s
+2026-09-05T17:23:09Z [  1321s] tools=70/70 code=75/75 math=78/80 longctx=48/48 knowledge=70/70 ifeval=60/60 inflight=2 req=14 retries=0 err=0 out_tok/s=210 budget_left=1079s
+2026-09-05T17:23:11Z == muse30_--- model=m wall=1322.9s truncated=False valid=True 
+2026-09-05T17:23:11Z   tools      acc=0.814 n=70/70 ci95=[0.708,0.888] out_tok=684.4 trunc=0.0 err=0 
+2026-09-05T17:23:11Z     parallel_multiple acc=0.700 n=10/10 ci95=[0.397,0.892]
+2026-09-05T17:23:11Z     parallel         acc=1.000 n=15/15 ci95=[0.796,1.000]
+2026-09-05T17:23:11Z     multiple         acc=0.667 n=15/15 ci95=[0.417,0.848]
+2026-09-05T17:23:11Z     simple           acc=0.850 n=20/20 ci95=[0.640,0.948]
+2026-09-05T17:23:11Z     irrelevance      acc=0.800 n=10/10 ci95=[0.490,0.943]
+2026-09-05T17:23:11Z   code       acc=0.800 n=75/75 ci95=[0.696,0.875] out_tok=2837.5 trunc=0.0133 err=0 
+2026-09-05T17:23:11Z     lcb_easy_medium  acc=0.900 n=30/30 ci95=[0.744,0.965]
+2026-09-05T17:23:11Z     humanevalplus    acc=0.880 n=25/25 ci95=[0.700,0.958]
+2026-09-05T17:23:11Z     mbppplus         acc=0.550 n=20/20 ci95=[0.342,0.742]
+2026-09-05T17:23:11Z   math       acc=0.938 n=80/80 ci95=[0.862,0.973] out_tok=8268.9 trunc=0.0375 err=0 
+2026-09-05T17:23:11Z     aime25           acc=0.900 n=30/30 ci95=[0.744,0.965]
+2026-09-05T17:23:11Z     hmmt25           acc=0.933 n=30/30 ci95=[0.787,0.982]
+2026-09-05T17:23:11Z     math500_hard     acc=1.000 n=20/20 ci95=[0.839,1.000]
+2026-09-05T17:23:11Z   longctx    acc=0.812 n=48/48 ci95=[0.681,0.898] out_tok=675.9 trunc=0.125 err=0 
+2026-09-05T17:23:11Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+2026-09-05T17:23:11Z     var_tracking     acc=0.500 n=12/12 ci95=[0.254,0.746]
+2026-09-05T17:23:11Z     qa_multi_doc     acc=0.750 n=12/12 ci95=[0.468,0.911]
+2026-09-05T17:23:11Z   knowledge  acc=0.486 n=70/70 ci95=[0.372,0.601] out_tok=2055.6 trunc=0.0 err=0 
+2026-09-05T17:23:11Z     mmlu_pro_hard    acc=0.825 n=40/40 ci95=[0.680,0.912]
+2026-09-05T17:23:11Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+2026-09-05T17:23:11Z   ifeval     acc=0.867 n=60/60 ci95=[0.758,0.931] out_tok=2184.0 trunc=0.0 err=0 
+2026-09-05T17:23:11Z     triple           acc=0.875 n=24/24 ci95=[0.690,0.957]
+2026-09-05T17:23:11Z     double           acc=0.833 n=24/24 ci95=[0.641,0.933]
+2026-09-05T17:23:11Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+2026-09-05T17:23:11Z   aggregate  acc_micro=0.787 acc_macro=0.7861 n=403/403 ci95=[0.744, 0.8238] requests=14 retries=0 out_tok/s=259.6
+2026-09-05T17:23:11Z wrote /workspace/results/eval/muse30_---.json, /workspace/results/eval/muse30_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0

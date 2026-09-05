@@ -2,7 +2,7 @@
  {
   "prompt": "What is 17*23? Reply with just the number.",
   "text": "\n\n391",
-  "reasoning_chars": 138,
+  "reasoning_chars": 99,
   "finish": "stop",
   "top6gram": 0,
   "distinct": 1.0,
@@ -19,26 +19,26 @@
  },
  {
   "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
-  "text": "\n\n```python\ndef fib(n):\n    \"\"\"Return the n-th Fibonacci number, where fib(0) = 0 and fib(1) = 1.\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nExample:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(10)) # 55\n```",
-  "reasoning_chars": 327,
+  "text": "\n\n```python\ndef fib(n):\n    \"\"\"Return the n-th Fibonacci number, where fib(0) = 0 and fib(1) = 1.\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+  "reasoning_chars": 380,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.759,
+  "distinct": 0.826,
   "verdict": "ok"
  },
  {
   "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
-  "text": "\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nIf you\u2019re using SQL Server, replace `LIMIT 3` with:\n\n```sql\nSELECT TOP 3\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC;\n```",
-  "reasoning_chars": 548,
+  "text": "\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nIf you need to include customers with no orders, use a `LEFT JOIN` and `COALESCE`:\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    COALESCE(SUM(o.amount), 0) AS total_order_value\nFROM customers c\nLEFT JOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```",
+  "reasoning_chars": 728,
   "finish": "stop",
   "top6gram": 2,
-  "distinct": 0.569,
+  "distinct": 0.575,
   "verdict": "ok"
  },
  {
   "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
-  "text": "\n\n1/5. The capital of Australia is Canberra, not Sydney.",
-  "reasoning_chars": 319,
+  "text": "\n\n1 \u2014 The capital of Australia is Canberra, not Sydney.",
+  "reasoning_chars": 270,
   "finish": "stop",
   "top6gram": 0,
   "distinct": 1.0,
@@ -47,7 +47,7 @@
  {
   "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
   "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
-  "reasoning_chars": 599,
+  "reasoning_chars": 528,
   "finish": "stop",
   "top6gram": 0,
   "distinct": 1.0,
@@ -55,7 +55,7 @@
  },
  {
   "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
-  "text": "\n\nLarge language models, trained on extensive data, can handle diverse tasks without specialized training but may occasionally generate false information.",
+  "text": "\n\nLarge language models, trained on massive datasets, can handle many tasks without specialized training but may occasionally generate false information.",
   "reasoning_chars": 265,
   "finish": "stop",
   "top6gram": 1,
@@ -73,10 +73,10 @@
  },
  {
   "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
-  "text": "\n\nBecause the experiment used a larger batch size, training converged more slowly.",
-  "reasoning_chars": 1293,
+  "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 1024,
   "finish": "stop",
-  "top6gram": 1,
+  "top6gram": 0,
   "distinct": 1.0,
   "verdict": "ok"
  },
@@ -92,7 +92,7 @@
  {
   "prompt": "Explain why the sky is blue in two sentences.",
   "text": "\n\nSunlight contains all colors, but shorter blue wavelengths scatter more strongly off air molecules than longer red wavelengths. This scattered blue light reaches our eyes from all directions, making the sky appear blue.",
-  "reasoning_chars": 400,
+  "reasoning_chars": 390,
   "finish": "stop",
   "top6gram": 1,
   "distinct": 0.939,
@@ -100,20 +100,20 @@
  },
  {
   "prompt": "What is the derivative of x^3 * sin(x)?",
-  "text": "\n\nThe derivative of \\(x^3 \\sin(x)\\) is:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)=3x^2\\sin x + x^3\\cos x\n\\]",
+  "text": "\n\nThe derivative of \\(x^3 \\sin(x)\\) is\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)=3x^2\\sin x + x^3\\cos x\n\\]\n\nusing the product rule.",
   "reasoning_chars": 141,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.933,
+  "distinct": 0.947,
   "verdict": "ok"
  },
  {
   "prompt": "Give a regex that matches a UK postcode.",
   "text": "",
-  "reasoning_chars": 6110,
+  "reasoning_chars": 3404,
   "finish": "length",
-  "top6gram": 3,
-  "distinct": 0.375,
+  "top6gram": 195,
+  "distinct": 0.35,
   "verdict": "degenerate"
  },
  {
@@ -127,17 +127,17 @@
  },
  {
   "prompt": "Complete the proverb and explain it: A stitch in time",
-  "text": "\n\n**A stitch in time saves nine.**\n\nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later. For example, fixing a small tear in clothing right away can stop it from growing into a large tear that needs much more repair.",
+  "text": "\n\n**A stitch in time saves nine.**\n\nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later. For example, fixing a small tear in clothing right away can stop it from growing into a large hole.",
   "reasoning_chars": 262,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.755,
+  "distinct": 0.795,
   "verdict": "ok"
  },
  {
   "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
   "text": "\n\nAnswer A: **Paris** is correct.\n\n**Why:** Paris is the official capital of France. Lyon is a major French city, but it is not the capital.",
-  "reasoning_chars": 298,
+  "reasoning_chars": 276,
   "finish": "stop",
   "top6gram": 1,
   "distinct": 0.84,
@@ -145,12 +145,12 @@
  },
  {
   "prompt": "Write a haiku about GPUs.",
-  "text": "",
-  "reasoning_chars": 6515,
-  "finish": "length",
-  "top6gram": 109,
-  "distinct": 0.163,
-  "verdict": "degenerate"
+  "text": "\n\nSilicon streams flow\nthousands of cores compute light\npixels bloom anew",
+  "reasoning_chars": 515,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
  },
  {
   "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",

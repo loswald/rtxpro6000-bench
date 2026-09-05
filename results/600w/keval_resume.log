@@ -1,0 +1,27 @@
+[16:41:08] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[16:41:08] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[16:43:03]     v lin=b12x moe=- healthy 110s | GPU KV cache size: 1,475,801 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_fp8_b12x--_quality20.json
+    eval: 2026-09-05T16:58:31Z     mmlu_pro_hard    acc=0.800 n=40/40 ci95=[0.652,0.895]
+    eval: 2026-09-05T16:58:31Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+    eval: 2026-09-05T16:58:31Z   ifeval     acc=0.867 n=60/60 ci95=[0.758,0.931] out_tok=2922.6 trunc=0.0167 err=0 
+    eval: 2026-09-05T16:58:31Z     triple           acc=0.917 n=24/24 ci95=[0.742,0.977]
+    eval: 2026-09-05T16:58:31Z     double           acc=0.750 n=24/24 ci95=[0.551,0.880]
+    eval: 2026-09-05T16:58:31Z     single           acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-05T16:58:31Z   aggregate  acc_micro=0.779 acc_macro=0.7904 n=403/403 ci95=[0.7361, 0.8169] requests=15 retries=0 out_tok/s=476.7
+    eval: 2026-09-05T16:58:31Z wrote /workspace/results/eval/q27_fp8_b12x--.json, /workspace/results/eval/q27_fp8_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[16:58:37] ########## muse30 (56G, tp=1 x4) : -:- ##########
+[16:59:53]     v lin=- moe=- healthy 70s | GPU KV cache size: 2,056,193 tokens
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/muse30_---_quality20.json
+    eval: 2026-09-05T17:23:11Z     mmlu_pro_hard    acc=0.825 n=40/40 ci95=[0.680,0.912]
+    eval: 2026-09-05T17:23:11Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+    eval: 2026-09-05T17:23:11Z   ifeval     acc=0.867 n=60/60 ci95=[0.758,0.931] out_tok=2184.0 trunc=0.0 err=0 
+    eval: 2026-09-05T17:23:11Z     triple           acc=0.875 n=24/24 ci95=[0.690,0.957]
+    eval: 2026-09-05T17:23:11Z     double           acc=0.833 n=24/24 ci95=[0.641,0.933]
+    eval: 2026-09-05T17:23:11Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-05T17:23:11Z   aggregate  acc_micro=0.787 acc_macro=0.7861 n=403/403 ci95=[0.744, 0.8238] requests=14 retries=0 out_tok/s=259.6
+    eval: 2026-09-05T17:23:11Z wrote /workspace/results/eval/muse30_---.json, /workspace/results/eval/muse30_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[17:23:16] KSWEEP DONE

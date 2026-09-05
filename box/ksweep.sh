@@ -27,6 +27,9 @@ mkdir -p "$P" "$S"
 log(){ echo "[$(date +%H:%M:%S)] $*"; }
 source "$B/hardkill.sh"
 CLEAN="env -u PYTHONHOME -u PYTHONPATH -u LD_LIBRARY_PATH"
+# A fresh container's file-descriptor limit is 1,024, and a benchmark at concurrency 1,024 opens that many sockets: the
+# client died with "Too many open files" and took a DP coordinator with it. Raise it for the sweep and every server.
+ulimit -n 65536 2>/dev/null || ulimit -n 8192 2>/dev/null
 
 NGPU=$(nvidia-smi --query-gpu=index --format=csv,noheader | wc -l)
 VRAM=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits | head -1)
@@ -109,6 +112,7 @@ serve(){ # tag dir tp linear moe [extra...]
     echo 'export FLASHINFER_CUDA_ARCH_LIST=12.0f TORCH_CUDA_ARCH_LIST=12.0 CUTE_DSL_ARCH=sm_120a'
     echo 'export VLLM_ENGINE_READY_TIMEOUT_S=3600 MAX_JOBS=4 NVCC_THREADS=2'
     [ -n "${EXTRA_ENV:-}" ] && echo "export $EXTRA_ENV"
+    echo 'ulimit -n 65536 2>/dev/null || ulimit -n 8192 2>/dev/null'
     for i in $(seq 0 $((n-1))); do
       local gpus; gpus=$(seq -s, $((i*tp)) $((i*tp+tp-1)))
       printf 'CUDA_VISIBLE_DEVICES=%s vllm serve %q --served-model-name m --host 0.0.0.0 --port %d --tensor-parallel-size %d --kv-cache-dtype fp8 --max-model-len %d --max-num-seqs %d --max-num-batched-tokens 8192 --gpu-memory-utilization %s --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce --no-enable-flashinfer-autotune --disable-uvicorn-access-log' \

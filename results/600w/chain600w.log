@@ -19,3 +19,23 @@
 [00:36:21] 600W-3: DeepSeek-V4-Flash, third attempt: quality on the first MoE backend that serves, then throughput on every one that does
 [00:40:04] 600W-3: chain600w3c stopped by hand: the DeepSeek failure is the o_proj DeepGEMM einsum, fixed by VLLM_DSV4_OPROJ_SM120_FALLBACK=1; re-issued as chain600w3d
 [00:40:59] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
+[16:07:44] 600W-3: re-armed after the Vast stop (balance threshold); every step resumes where it left off
+[16:07:44] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
+[16:35:27] 600W-3: restarted so the patched sweep takes effect (FIRST_ONLY now stops at an already-evaluated combo; the second DSpark quality arm is not worth its hour)
+[16:35:35] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
+[16:40:53] 600W-3/4: replaced by chain600w5 - the five-hour programme (Nish, 16:40 UTC)
+[16:41:06] 600W-5 (279min left): free space for GLM's FP8 release and start its download in the background
+  freed gemma-4-31B-it
+  freed MiniMax-M3-DSpark
+  freed Inkling-Small-DSpark
+  freed Qwen27B-DSpark-NVFP4
+  freed Nemotron-3.5-Lightning-DSpark
+  disk: 415G free
+[16:41:07] 600W-5 (279min left): finish the rows that lost items to the request timeout: Qwen FP8 (15), Muse-Glimmer (14)
+[17:23:22] 600W-5 (237min left): Qwen3.8-Flash-Next (index 46, 6B active): quality, then throughput - two TP2 replicas, auto kernel, BF16 KV
+[17:42:20] 600W-5 (218min left): noise floor (Qwen NVFP4 a second time) and the gittensor weights under the official chat template
+[17:42:25] 600W-6 (217min left): chain600w5 stopped after its Qwen3.8-Flash-Next step; continuing as chain600w6
+[17:42:34] 600W-6 (217min left): noise floor (Qwen NVFP4 a second time) and the gittensor weights under the official chat template
+[17:51:12] 600W-6 (208min left): GLM-5.3-Flash throughput ceiling: five layout/kernel arms at 1,024 sequences, then MTP
+[17:57:32] 600W-6: GLM arms relaunched at 512 sequences with the vendor build's kernel names (1,024 exceeds its Mamba cache; the W4A4 MoE kernel is flashinfer_b12x)
+[17:57:49] 600W-6 (202min left): GLM-5.3-Flash throughput ceiling: five layout/kernel arms at 1,024 sequences, then MTP
