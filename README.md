@@ -473,6 +473,42 @@ has to do maths, FP8 is not a close call at any concurrency. The remaining quest
 quantisation-*aware*-trained build gets FP8 accuracy at W4A4 speed, which would collapse the trade-off
 entirely — is what the QAT rung of the ladder is running to answer.
 
+### The quantisation ladder, anchored on the native parent
+
+The question was never "is four-bit lossy" but "lossy *from what*, and does the way the four-bit weights were
+made matter". So the same Qwen3.8-27B was run as its native BF16 release, Qwen's own FP8 release, two
+independent community post-training NVFP4 builds and a **quantisation-aware-trained** NVFP4 build
+(QUASAR-QAT), every rung with the same 403 items, recipe and seed, on the same box (the 400 W one, so its
+throughput is relative — the 600 W run of the QAT build is queued). Every row is **paired against the parent
+on identical items**; the noise floor measured above is a split of up to 11-to-20 between *identical* runs.
+
+| Qwen3.8-27B build | how the weights were made | kernel | out tok/s (400 W, router C1024) | overall | maths | code | vs BF16 parent: items only parent / only this got right |
+|---|---|---|---:|---:|---:|---:|---:|
+| **BF16** (Qwen release) | — | BF16 | 1,560 | **0.806** | 0.800 | 0.813 | — |
+| **NVFP4 · QUASAR-QAT** | **quantisation-aware training** | b12x **W4A4** | **3,893** | 0.792 | **0.812** | 0.813 | 16 / 10 — **inside the noise floor** |
+| FP8 (Qwen release) | post-training, 8-bit | b12x | 2,071 | 0.787 ¹ | 0.871 ¹ | 0.720 | 18 / 4 on 385 — outside it, code −0.09 |
+| NVFP4 · gittensor (ModelOpt) | post-training, 4-bit | b12x W4A4 | 3,965 | 0.747 | 0.662 | 0.733 | 30 / 6 — far outside |
+| NVFP4 · QUASAR-QAT, auto kernel | same weights | CuTeDSL **W4A16** | 1,160 | — | — | — | slower than BF16: dequant, not compute |
+
+¹ FP8 is the one row still missing items to the request timeout (385 of 403); its maths is flattered by that
+and its code is not (0.720 on both hosts, 0.813 for the parent).
+
+Three conclusions, each of which changes what to buy or run.
+
+**Quantisation-aware training recovers the parent.** The QAT build is indistinguishable from BF16 on paired
+items — 16 against 10 is a split identical configurations produce — at **2.5× the parent's throughput** and
+1.9× FP8's, with the parent's maths and code. That is the Pareto point this campaign was looking for: four-bit
+speed with no measurable quality cost. The remaining check is its throughput at 600 W, queued.
+
+**Qwen's own FP8 release is not lossless either.** 18 against 4 on 385 paired items, driven by code (0.720
+against 0.813 on both hosts). Eight-bit post-training quantisation by the vendor costs something real here;
+"the vendor made it" is not the same as "it was trained that way".
+
+**Post-training four-bit by a third party is the expensive one.** 30 against 6, maths 0.662 against 0.800, and
+35% of maths answers running to the cap against 19% for the parent: the model reasons longer and converges
+less. This is the build every throughput headline in this file was taken on, and it also ships a rewritten
+chat template (above), so the template arm will say how much of this is the weights.
+
 ### Does four-bit cost quality? Not in aggregate — but watch maths
 
 This section has already been wrong once. An early, buggy round showed NVFP4 five points behind FP8; when
