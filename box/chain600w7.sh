@@ -11,19 +11,19 @@ for i in $(seq 1 720); do grep -q "GLMPERF DONE" $R/glm_perf.log 2>/dev/null && 
 tmux kill-session -t =q600i 2>/dev/null && step "$(left)" "chain600w6 stopped after the GLM arms; continuing as chain600w7"
 sleep 3; source $B/hardkill.sh; kill_all >/dev/null 2>&1
 
-best=$(python3 $B/pick_best.py "$P/glm53f_*s1024*" router 1024 mtp 2>$R/glm_best.tps)
+best=$(python3 $B/pick_best.py "$P/glm53f_*s512*" router 1024 mtp 2>$R/glm_best.tps)
 case "$best" in
-  glm53f_s1024)             flags="";;
-  glm53f_s1024_moeb12x)     flags="--moe-backend b12x";;
-  glm53f_tp4ep4_s1024)      flags="--enable-expert-parallel";;
-  glm53f_dp4ep4_s1024)      flags="--tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel";;
-  *)                        flags=""; best="glm53f_s1024 (fallback)";;
+  glm53f_s512)              flags="";;
+  glm53f_s512_fib12x)       flags="--moe-backend flashinfer_b12x";;
+  glm53f_tp4ep4_s512)       flags="--enable-expert-parallel";;
+  glm53f_dp4ep4_s512)       flags="--tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel";;
+  *)                        flags=""; best="glm53f_s512 (fallback: no arm served)";;
 esac
 L=$(left)
 if [ "$L" -gt 55 ]; then
-  step "$L" "GLM quality on the fastest layout: $best ($(cat $R/glm_best.tps 2>/dev/null) out tok/s at router C1024), 1,024 sequences, budget $(( (L - 15) * 60 ))s"
+  step "$L" "GLM quality on the fastest layout: $best ($(cat $R/glm_best.tps 2>/dev/null) out tok/s at router C1024), 512 sequences, budget $(( (L - 15) * 60 ))s"
   echo "$flags" > $R/glm_best.flags
-  BEST_FLAGS="$flags --max-num-seqs 1024 --max-num-batched-tokens 16384" BEST_BUDGET=$(( (L - 15) * 60 )) ARMS=best bash $B/glm_eval.sh > $R/glm_eval_best.log 2>&1
+  BEST_FLAGS="$flags --max-num-seqs 512 --max-num-batched-tokens 16384" BEST_BUDGET=$(( (L - 15) * 60 )) ARMS=best bash $B/glm_eval.sh > $R/glm_eval_best.log 2>&1
 else
   step "$L" "no time for the quality run on the fastest GLM layout"
 fi

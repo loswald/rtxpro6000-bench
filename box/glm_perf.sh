@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # GLM-5.3-Flash: how fast can it go on this node? Every GLM throughput row so far was TP4 at 256 sequences with
 # the vendor build's default kernels and the MTP head off, while the server holds 2.1M KV tokens. Levers, as arms:
-#   s1024        the same TP4 layout at 1,024 sequences and a 16k prefill batch (batch is free on this KV cache)
-#   moeb12x      TP4 with the W4A4 MoE kernel (b12x) for the NVFP4 experts instead of the vendor default
+#   s512         the same TP4 layout at 512 sequences (the vendor build's Mamba cache allows at most 512 - "max_num_seqs
+#                (1024) exceeds available Mamba cache blocks (512)") and a 16k prefill batch
+#   fib12x       TP4 with the W4A4 MoE kernel for the NVFP4 experts - the vendor build names it flashinfer_b12x
 #   tp4ep4       TP4 with expert parallelism: experts sharded, not tensor-split
 #   dp4ep4       TP1 x DP4 + EP: attention replicated on every card, experts sharded - no per-layer all-reduce
 #                over PCIe, which is where a four-way tensor-parallel decode step spends most of its time here
-#   mtp          the best-guess layout with the MTP head (lossless on paired items; 67% of drafts accepted)
-# Two shapes per arm (router C1024, shared-prefix C1024) so every arm fits in the window; a launch that the vendor
-# build rejects fails in a minute and the sweep moves on. Same vendor build and sm_120 port as glm_eval.sh.
+#   mtp          the TP4 layout with the MTP head (lossless on paired items; 67% of drafts accepted)
+# Two shapes per arm (router C1024, shared-prefix C1024) so every arm fits in the window; a launch the vendor build
+# rejects fails in a minute or two and the sweep moves on. Same vendor build and sm_120 port as glm_eval.sh.
 set -u
 B=/workspace/bench; R=/workspace/results; P=$R/probe; S=$R/smoke
 MD=${MD:-/workspace/models/GLM-5.3-Flash-NVFP4}
@@ -34,7 +35,7 @@ export VLLM_ENGINE_READY_TIMEOUT_S=3600 MAX_JOBS=6 NVCC_THREADS=2
 exec python3 -m vllm.entrypoints.openai.api_server \\
   --model $MD --served-model-name m --host 0.0.0.0 --port 8000 \\
   --tensor-parallel-size 4 --attention-backend FLASHINFER_MLA_SPARSE_SM90 \\
-  --kv-cache-dtype auto --block-size 1024 --max-model-len 40960 --max-num-seqs 1024 \\
+  --kv-cache-dtype auto --block-size 1024 --max-model-len 40960 --max-num-seqs 512 \\
   --max-num-batched-tokens 16384 --gpu-memory-utilization 0.90 \\
   --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce \\
   --no-enable-flashinfer-autotune \\
@@ -51,7 +52,7 @@ L
     tmux has-session -t =srv 2>/dev/null || break
     sleep 15; t=$((t+15))
   done
-  [ "$ok" = 1 ] || { log "  $tag FAILED after ${t}s: $(grep -ohE 'ValueError: [^"]{0,120}|RuntimeError: [^"]{0,120}|NotImplementedError: [^"]{0,120}|error: unrecognized arguments: [^"]{0,80}|CUDA out of memory[^"]{0,40}' "$S/${tag}.log" | sort -u | head -2 | paste -sd'|')"; kill_all; return 1; }
+  [ "$ok" = 1 ] || { log "  $tag FAILED after ${t}s: $(grep -ohE "Worker failed with error '[^']{0,160}|ValueError: [^\"]{0,140}|error: argument [^\"]{0,120}|NotImplementedError: [^\"]{0,120}|CUDA out of memory[^\"]{0,40}" "$S/${tag}.log" | sort -u | head -2 | paste -sd'|')"; kill_all; return 1; }
   log "  $tag healthy in ${t}s | $(grep -m1 -oE 'GPU KV cache size: [0-9,]+ tokens' "$S/${tag}.log") | $(grep -m1 -oE 'Using [A-Za-z0-9_]+ .{0,30}MoE backend' "$S/${tag}.log")"
 }
 pt(){ # tag label in out prefix conc
@@ -76,11 +77,11 @@ arm(){ # tag [extra...]  - two shapes, then the tripwire once
     $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1
   fi
 }
-log "===== GLM-5.3-Flash throughput ceiling ====="
-arm glm53f_s1024
-arm glm53f_s1024_moeb12x   --moe-backend b12x
-arm glm53f_tp4ep4_s1024    --enable-expert-parallel
-arm glm53f_dp4ep4_s1024    --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
-SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' arm glm53f_s1024_mtp
+log "===== GLM-5.3-Flash throughput ceiling (512 sequences) ====="
+arm glm53f_s512
+arm glm53f_s512_fib12x    --moe-backend flashinfer_b12x
+arm glm53f_tp4ep4_s512    --enable-expert-parallel
+arm glm53f_dp4ep4_s512    --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
+SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' arm glm53f_s512_mtp
 log "GLMPERF DONE"
 kill_all
