@@ -3,3 +3,17 @@
   vllm sm_120 NoPE port applied
 [21:56:44] ===== GLM-5.3-Flash (AA 57): quality =====
 [21:56:49]   launch glm53f_dp4long
+[22:00:20]   glm53f_dp4long healthy in 210s | GPU KV cache size: 705,076 tokens
+    eval: 2026-09-05T23:02:23Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+    eval: 2026-09-05T23:02:23Z     var_tracking     acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-05T23:02:23Z     qa_multi_doc     acc=0.667 n=12/12 ci95=[0.391,0.862]
+    eval: 2026-09-05T23:02:23Z   knowledge  acc=0.571 n=70/70 ci95=[0.455,0.681] out_tok=4866.2 trunc=0.0571 err=0 
+    eval: 2026-09-05T23:02:23Z     mmlu_pro_hard    acc=0.825 n=40/40 ci95=[0.680,0.912]
+    eval: 2026-09-05T23:02:23Z     simpleqa         acc=0.233 n=30/30 ci95=[0.118,0.409]
+    eval: 2026-09-05T23:02:23Z   ifeval     acc=0.833 n=60/60 ci95=[0.720,0.907] out_tok=4852.5 trunc=0.0333 err=0 
+    eval: 2026-09-05T23:02:23Z     triple           acc=0.875 n=24/24 ci95=[0.690,0.957]
+    eval: 2026-09-05T23:02:23Z     double           acc=0.792 n=24/24 ci95=[0.595,0.908]
+    eval: 2026-09-05T23:02:23Z     single           acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-05T23:02:23Z   aggregate  acc_micro=0.777 acc_macro=0.7868 n=403/403 ci95=[0.7335, 0.8146] requests=403 retries=0 out_tok/s=831.8
+    eval: 2026-09-05T23:02:23Z wrote /workspace/results/eval/glm53f_dp4long.json, /workspace/results/eval/glm53f_dp4long.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[23:02:23] GLMEVAL DONE
