@@ -8,10 +8,16 @@ recovered 600 W tree altogether, which is how both compressed-tensors quantiser 
 the comparison they were run for.
 
 Three trees, three hosts:
-  results/600w/probe   the original 4x RTX PRO 6000 Server Edition, 600 W  (recovered after it was stopped)
+  results/600w/probe   the 4x RTX PRO 6000 Server Edition, 600 W
   results/5090/probe   the 8x RTX 5090 box                                 (destroyed; results kept)
   results/probe        pulled from whichever PRO 6000 box was current, so it holds BOTH the original 600 W
                        runs (before the outage) and the 400 W replacement's runs (after). Split by tag.
+
+The per-tag summary files do not all share one header: agg.py grew columns over the campaign (summary.tsv
+with 10, summary_full.tsv with 18). The first version of this script took the FIRST file's header as the
+header for all of them, so every row from a wider file was written mis-aligned - its host label landed in a
+latency column and a 400 W quantisation-ladder row read as a 600 W one. Each file is now read with its own
+header and written into the union of columns, blanks where a file lacks one.
 
 Runs present in more than one tree are counted once, preferring the copy under its own host's tree.
 """
@@ -43,7 +49,8 @@ def main() -> None:
     for sub in ("600w/probe", "5090/probe", "probe"):
         files += sorted(glob.glob(os.path.join(ROOT, sub, "*", "summary*.tsv")))
 
-    header, rows, seen = None, [], set()
+    columns: list[str] = ["tag"]
+    records: list[dict] = []
     for f in files:
         tag = os.path.basename(os.path.dirname(f))
         host = host_for(f, tag)
@@ -53,33 +60,45 @@ def main() -> None:
             continue
         head, body = rd[0], rd[1:]
         tagged = head[0].strip().lower() in ("tag", "model", "run")
-        if header is None:
-            header = (head if tagged else ["tag"] + head) + ["host"]
+        cols = head if tagged else ["tag"] + head
+        for c in cols:
+            if c not in columns:
+                columns.append(c)
         for r in body:
             if not r or not r[0].strip():
                 continue
-            row = (r if tagged else [tag] + r) + [host]
-            # De-duplicate on the WHOLE row, not on (tag, shape, concurrency). A run reachable through two
-            # trees produces byte-identical rows and must be counted once; a genuine repeat of the same
-            # configuration produces different numbers and must be kept, because the spread between repeats
-            # is the only run-to-run variance estimate this campaign has. FP8 at concurrency 1,024 was
-            # measured three times: 3,037 / 3,146 / 3,148 out tok/s, a 3.6% spread worth not hiding.
-            key = tuple(row)
-            if key in seen:
-                continue
-            seen.add(key)
-            rows.append(row)
+            vals = r if tagged else [tag] + r
+            rec = dict(zip(cols, vals))
+            rec["host"] = host
+            records.append(rec)
+    if "host" not in columns:
+        columns.append("host")
+
+    # De-duplicate on the WHOLE row, not on (tag, shape, concurrency). A run reachable through two trees
+    # produces byte-identical rows and must be counted once; a genuine repeat of the same configuration
+    # produces different numbers and must be kept, because the spread between repeats is the only run-to-run
+    # variance estimate this campaign has. FP8 at concurrency 1,024 was measured three times: 3,037 / 3,146 /
+    # 3,148 out tok/s, a 3.6% spread worth not hiding.
+    rows, seen = [], set()
+    for rec in records:
+        row = [rec.get(c, "") for c in columns]
+        key = tuple(row)
+        if key in seen:
+            continue
+        seen.add(key)
+        rows.append(row)
 
     out = os.path.join(ROOT, "summary_all.tsv")
     with open(out, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh, delimiter="\t", lineterminator="\n")
-        w.writerow(header)
+        w.writerow(columns)
         w.writerows(rows)
 
+    hi = columns.index("host")
     by_host: dict[str, int] = {}
     for r in rows:
-        by_host[r[-1]] = by_host.get(r[-1], 0) + 1
-    print(f"{len(rows)} rows from {len(files)} files -> summary_all.tsv")
+        by_host[r[hi]] = by_host.get(r[hi], 0) + 1
+    print(f"{len(rows)} rows from {len(files)} files -> summary_all.tsv ({len(columns)} columns)")
     print("  by host:", ", ".join(f"{k} {v}" for k, v in sorted(by_host.items())))
     print(f"  {len({r[0] for r in rows})} distinct tags")
 

@@ -85,6 +85,12 @@ Other models on the same box:
 | gpt-oss-20b (24) | 4 replicas, mxfp8 activations | router C2048 | 13,752 | 110,017 | 0.7 s |
 | | | judge C1024 | 9,152 | 73,217 | 1.0 s |
 | | 4 replicas, Marlin (the default) | router C2048 | 9,956 | 79,649 | 1.0 s |
+| gemma-4-26B-A4B (26) | 4 replicas, BF16, vendor recipe | router C1024 | 9,119 | 72,952 | 1.1 s |
+| | | promptopt C1024 | 15,502 | 217,028 | 1.2 s |
+| | | judge C512 | 7,229 | 57,832 | 1.4 s |
+| Muse-Glimmer-30B (35) | 4 replicas, BF16, vendor recipe | router C1024 | 3,029 | 24,232 | 3.5 s |
+| | | promptopt C1024 | 7,751 | 108,514 | 4.8 s |
+| | | judge C512 | 2,627 | 21,016 | 4.7 s |
 | DeepSeek-V4-Flash (52) | TP1 × DP4 + expert parallel | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **GLM-5.3-Flash (57)** | TP4, ported vendor vLLM | promptopt C256 | 1,002 | 14,030 | 2.7 s |
