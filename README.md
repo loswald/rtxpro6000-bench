@@ -135,7 +135,7 @@ The MTP head makes it *worse* at saturation — 592 against 911, because only 10
 1,024 streams and every rejected draft is a wasted slot in a batch that was already full. The 403-item quality
 run must apply to the exact accepted layout. The baseline uses NVFP4 expert weights and BF16 KV; the proposed
 BF16 SSM-state and FP8 KV arms in `box/glm_perf3.sh` change precision and require their own paired quality gate.
-The reversible FA2 planned-length diagnostic is documented in [patches/glm_fa2_plan_audit.md](patches/glm_fa2_plan_audit.md).
+The reversible FA2 planned-length diagnostic is documented in [patches/glm_fa2_plan_audit.md](patches/glm_fa2_plan_audit.md). Its 403-item run has since landed: **0.792, paired against TP4 16 to 15 — identical** — so DP4 + EP at 1,073 tokens a second is the qualified fast layout.
 
 **DeepSeek's ceiling was a layout ceiling, and it moved.** Tensor-parallel across four cards gave 1,107 output
 tokens a second. Four independent engines with the experts sharded across them (TP1 × DP4 + EP), each admitting
@@ -779,7 +779,7 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 accuracy and must be excluded from the quality/cost frontier; the chart has not yet been regenerated. DeepSeek's landed: 0.844. ¹ gpt-oss-20b has no
 prompt-optimisation measurement at 600 W, so its point is the router shape alone — the dearer of the two per
 token, which flatters the API side of its ratio. Multiply any "API ÷ node" by 2.5 for the fully-loaded cost
-basis ($1.77 an hour).
+basis ($1.77 an hour). The DP4 + EP layout's own run has since landed at 0.792 (paired against TP4, 16 to 15), and DeepSeek's at 0.844; neither point is provisional any more.
 
 What the chart says. **Priced on the same tokens at the same mix, the API is 4–22× the node for every model that
 fits one card, 1.3× for DeepSeek-V4-Flash, and 0.5× for GLM-5.3-Flash on its fastest layout that produces
