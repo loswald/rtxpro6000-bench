@@ -1,0 +1,3 @@
+# Qwen3.8-Flash-Next, second attempt: the PLE tables are FP8 in this checkpoint and need VLLM_QWEN4EXP_PLE_FP8=1
+# (box/patch_ple.py). DP4+EP loads the whole 95 GB per rank and OOMs, so two TP2 replicas.
+qwen38fn_tp2x2|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:-|--kv-cache-dtype|auto|--gpu-memory-utilization|0.90
