@@ -14,3 +14,8 @@ quality20[chat]: ok=11 degenerate=8 wrong=1 error=0 -> /workspace/results/probe/
 [19:44:22]   launch glm53f_s512_moecutlass: --max-num-seqs 512 --tensor-parallel-size 4 --moe-backend cutlass
 [19:47:53]   glm53f_s512_moecutlass healthy in 210s | GPU KV cache size: 1,755,630 tokens
   router     C1024   631.5s     389 req/min      830 out/s      6642 in/s      7472 tot/s  TTFT 115507/ 146312 ms  TPOT 221.4/ 236.9 ms  ITL 221.4  E2E 143.6/174.8 s
+  promptopt  C1024  1145.1s     215 req/min      916 out/s     12820 in/s     13735 tot/s  TTFT 207727/ 261786 ms  TPOT 207.8/ 221.3 ms  ITL 207.8  E2E 260.7/315.5 s
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/glm53f_s512_moecutlass_quality20.json
+[20:19:26]   skip moeficutlass: past 20:15 UTC, the quality run on the fastest layout takes priority
+[20:19:26]   skip moemarlin: past 20:15 UTC, the quality run on the fastest layout takes priority
+[20:19:26] GLMPERF2 DONE

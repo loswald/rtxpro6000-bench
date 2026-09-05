@@ -333,7 +333,12 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, Marlin experts, no speculation | 403 | 0.814 ⁴ | 0.912 | 0.707 | 0.871 | 0.938 | 0.643 | 0.850 |
 | DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (46) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
+| GLM-5.3-Flash (46) · NVFP4, **DP2 × TP2 + EP** — the 1,300 tok/s layout | 403 | **0.643** ⁶ | 0.562 | 0.640 | 0.714 | 0.917 | 0.543 | 0.567 |
 | Qwen3.8-27B (41) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
+⁶ The fast expert-parallel layout's outputs are degraded on this vendor build: truncation 16% against 8% at TP4,
+2.7% degenerate answers, mean answer 6,320 tokens against 4,138. Every family fell, instruction-following most
+(0.567 against 0.867). Same weights, same kernels, different parallel layout — the layout is the variable, and
+two isolation runs (TP4 + EP alone; DP2 × TP2 without EP) are measuring which half of it breaks the model.
 | Muse-Glimmer-30B (24) · BF16 | 403 | 0.787 | 0.938 | 0.800 | 0.814 | 0.812 | 0.486 | 0.867 |
 | Qwen3.8-27B (41) · **FP8**, 4 replicas | 403 | 0.779 | 0.863 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
 | Nemotron-3-Super (–) · **native** NVFP4 | 379 ¹ | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |

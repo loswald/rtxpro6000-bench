@@ -122,6 +122,12 @@ for arm in ${ARMS:-base mtp}; do
     best) # the fastest layout from glm_perf.sh, evaluated in full so throughput and quality are measured on the
           # same configuration; BEST_FLAGS carries its launch flags (layout, MoE kernel, sequence budget)
           if EXTRA_ARGS="${BEST_FLAGS:-}" launch glm53f_best; then EVAL_BUDGET="${BEST_BUDGET:-3600}" run_eval_for glm53f_best; fi;;
+    tp4ep) # isolate expert parallelism: TP4 + EP at 512 sequences (931 out tok/s), full quality run
+          if EXTRA_ARGS="--enable-expert-parallel --max-num-seqs 512 --max-num-batched-tokens 16384" launch glm53f_tp4ep; then
+            EVAL_BUDGET="${ISO_BUDGET:-3600}" run_eval_for glm53f_tp4ep; fi;;
+    dp2)   # isolate data parallelism: two TP2 replicas WITHOUT expert parallelism, 384 sequences each
+          if EXTRA_ARGS="--tensor-parallel-size 2 --data-parallel-size 2 --max-num-seqs 384 --max-num-batched-tokens 16384" launch glm53f_dp2; then
+            EVAL_BUDGET="${ISO_BUDGET:-3600}" run_eval_for glm53f_dp2; fi;;
     bestlong) # the fastest layout with 65k tokens of output room: what the 32k cap cost the 29 items that hit it
           if EXTRA_ARGS="${BEST_FLAGS:-} --max-model-len 98304" launch glm53f_bestlong; then
             EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288"             EVAL_CONC="${LONG_CONC:-64}" EVAL_BUDGET="${BEST_BUDGET:-7200}" run_eval_for glm53f_bestlong; fi;;
