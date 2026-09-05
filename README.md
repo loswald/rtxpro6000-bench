@@ -103,6 +103,7 @@ Other models on the same box:
 | | TP4, `b12x` W4A4 experts, **512 seqs** (the control) | router C1024 | 1,245 | 9,962 | 53 s ⁱ |
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel, 256 seqs (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
+| **Qwen3.8-Flash-Next (46)** | TP4, Marlin MoE, FP8 n-gram tables (`patch_ple.py`), auto linear kernel | router C1024 | **1,442** | 11,538 | 70 s ⁱ |
 | **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM, 256 seqs | promptopt C256 | 1,002 | 14,030 | 2.7 s |
 | | | router C256 | 920 | 7,362 | 2.2 s |
 | | | judge C128 | 771 | 6,165 | 2.1 s |
@@ -112,7 +113,7 @@ Other models on the same box:
 | | | promptopt C1024 | 1,008 | 14,108 | 120 s ⁱ |
 | | TP4, 512 seqs, **MTP speculation** (3 draft tokens, 10% accepted at this batch) | router C1024 | 592 | 4,738 | 101 s ⁱ |
 | | TP1 × DP4 + expert parallel, 192 seqs per rank (the build's cap at TP1) | router C1024 | 1,073 | 8,585 | 97 s ⁱ |
-| | **DP2 × TP2 + expert parallel, 384 seqs per rank** (the cap at TP2) | router C1024 | **1,300** | 10,397 | 72 s ⁱ |
+| | DP2 × TP2 + expert parallel, 384 seqs per rank — **rejected by quality tripwire** | router C1024 | 1,300 (diagnostic only) | 10,397 | 72 s ⁱ |
 
 ⁱ Time-to-first-token here is queueing: the server admits 256 or 512 sequences and the shape offers 1,024.
 
@@ -123,12 +124,16 @@ Hopper attention backend ported to sm_120 and a 1,024-token DeepGEMM indexer blo
 four independent engines with the experts sharded across them (TP1 × DP4 + EP) — and the step drops to 93 ms
 and output rises to 1,073 tokens a second, +15%. It is not more because the vendor build caps a TP1 rank at 192
 sequences (its linear-attention state cache), so the batch is shallower even though each step is twice as fast.
-**Two engines of two cards each (DP2 × TP2 + EP) is the sweet spot: 152 ms a step, 384 sequences per rank, 1,300
-tokens a second — +40% over TP4.** A build that let the Mamba cache grow would take the DP4 layout past it. The
-build also refuses the W4A4 MoE kernel for this model (`swiglu_limit` clamp not implemented in `flashinfer_b12x`).
+**The faster DP2 × TP2 + EP run is not a usable winner:** its own 20-item tripwire reports eight degenerate
+outputs and one wrong answer. Its 1,300 tokens/s cannot be combined with quality measured at TP4. DP4 × TP1 + EP
+passed all 20 tripwire items and is the candidate for a fresh full evaluation. Growing its Mamba cache remains
+an unmeasured throughput opportunity. The build refuses the `flashinfer_b12x` expert kernel for this model
+(`swiglu_limit` clamp not implemented); the captured DP runs actually selected `FLASHINFER_CUTLASS` NVFP4 MoE.
 The MTP head makes it *worse* at saturation — 592 against 911, because only 10% of drafted tokens are accepted at
 1,024 streams and every rejected draft is a wasted slot in a batch that was already full. The 403-item quality
-run on the DP2 × TP2 layout follows the remaining kernel arms.
+run must apply to the exact accepted layout. The baseline uses NVFP4 expert weights and BF16 KV; the proposed
+BF16 SSM-state and FP8 KV arms in `box/glm_perf3.sh` change precision and require their own paired quality gate.
+The reversible FA2 planned-length diagnostic is documented in [patches/glm_fa2_plan_audit.md](patches/glm_fa2_plan_audit.md).
 
 **DeepSeek's ceiling was a layout ceiling, and it moved.** Tensor-parallel across four cards gave 1,107 output
 tokens a second. Four independent engines with the experts sharded across them (TP1 × DP4 + EP), each admitting
@@ -677,10 +682,10 @@ utilisation, $1.77 fully loaded.
 | Qwen3.8-27B · NVFP4 QUASAR-QAT, b12x W4A4, 4 replicas | router C1024 | 150 + 19 | 0.42 · 3.00 | $119 | 27× | 67× |
 | DeepSeek-V4-Flash · native MXFP4 + FP8, **TP1 × DP4 + EP**, 512 seqs/engine | router C1024 | 47 + 6 | 0.065 · 0.18 | $4.1 | 0.9× | 2.3× |
 | DeepSeek-V4-Flash · native MXFP4 + FP8, TP4 | router C256 | 32 + 4 | 0.065 · 0.18 | $2.8 | 0.6× | 1.6× |
-| GLM-5.3-Flash · NVFP4, **DP2 × TP2 + EP**, 384 seqs/rank | router C1024 | 37 + 5 | 0.075 · 0.25 | $4.0 | 0.9× | 2.2× |
+| GLM-5.3-Flash · NVFP4, DP2 × TP2 + EP, 384 seqs/rank — **quality rejected** | router C1024 | 37 + 5 (diagnostic) | 0.075 · 0.25 | — | — | — |
 | GLM-5.3-Flash · NVFP4, TP1 × DP4 + EP, 192 seqs/rank | router C1024 | 31 + 4 | 0.075 · 0.25 | $3.3 | 0.7× | 1.9× |
 | GLM-5.3-Flash · NVFP4, TP4 + EP, 512 seqs | router C1024 | 27 + 3 | 0.075 · 0.25 | $2.8 | 0.6× | 1.6× |
-| Qwen3.8-Flash-Next · NVFP4, 2 × TP2 | router | not run — needs the newer vLLM build | 0.15 · 0.47 | | | |
+| Qwen3.8-Flash-Next · NVFP4, TP4, Marlin MoE (index 46) | router C1024 | 42 + 5 | 0.15 · 0.47 | $8.7 | 2.0× | 4.9× |
 | MiniMax-M3 · MXFP4, TP4 | router | not run in the window | 0.30 · 1.20 | | | |
 
 ¹ The shared-prefix shape bills all input at full price. Providers discount cached input by 80–90%; at a 90%
@@ -715,14 +720,14 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 | Qwen3.8-27B BF16 | 0.806 (403) | 2,304 · 192 | $0.042 | $0.412 | 9.9× | |
 | Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 2,304 · 192 | $0.047 | $0.412 | 8.8× | |
 | Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 2,304 · 192 | $0.047 | $0.412 | 8.8× | |
-| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP * | 0.794 (403, same kernels at TP4) | 2,304 · 192 | $0.054 | $0.052 | 1.0× | |
+| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP * | **Rejected: 8 degenerate + 1 wrong / 20** | 2,304 · 192 | — | $0.052 | — | |
 | DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 2,304 · 192 | $0.055 | $0.044 | 0.8× | |
 | GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 2,304 · 192 | $0.096 | $0.052 | 0.5× | |
 | DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 2,304 · 192 | $0.128 | $0.044 | 0.3× | |
 | GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 2,304 · 192 | $0.209 | $0.052 | 0.2× | |
 
-\* GLM's expert-parallel layout's own 403-item run is in progress; until it lands the point carries the accuracy
-measured on the same weights and kernels at TP4, and is drawn with a dashed ring. DeepSeek's landed: 0.844. ¹ gpt-oss-20b has no
+\* GLM's DP2 × TP2 layout failed its own corruption tripwire. Its historical dashed-ring point borrows TP4
+accuracy and must be excluded from the quality/cost frontier; the chart has not yet been regenerated. DeepSeek's landed: 0.844. ¹ gpt-oss-20b has no
 prompt-optimisation measurement at 600 W, so its point is the router shape alone — the dearer of the two per
 token, which flatters the API side of its ratio. Multiply any "API ÷ node" by 2.5 for the fully-loaded cost
 basis ($1.77 an hour).
@@ -736,8 +741,8 @@ precision plus one quantisation-aware four-bit build** — gpt-oss-120b, Muse, t
 expert-parallel layout at the top — and every post-training four-bit build sits below it. **On blended
 tokens DeepSeek-V4-Flash's DP4 layout is cheaper than Qwen3.8-27B BF16 and scores higher**, because a sparse MoE
 prefills and reads a cached prefix far faster than a dense 27B: it takes Qwen BF16 off the frontier. **GLM-5.3-Flash
-is off the frontier on this suite's aggregate at every layout**: its best, DP2 × TP2 + EP at $0.054 per million
-tokens, is dominated by DeepSeek's DP4 at $0.033 and 0.814, and the API sells GLM for $0.047. Speculation
+is not yet qualified on its faster expert-parallel layouts**: the DP2 × TP2 point is excluded by its tripwire
+failure, and DP4 needs its own complete paired quality result before entering the frontier. Speculation
 (DSpark, MTP) no longer buys anything on the frontier: DeepSeek's DP4 layout without a drafter is both cheaper
 (4×) and better (0.844 against 0.831) than the DSpark run, and GLM's MTP head costs 4× per token for +0.015.
 
@@ -751,8 +756,9 @@ for these. This is the class of model — "non-huge" open weights — where the 
 
 **For the two frontier-class models that need all four cards, the API is priced at our cost.** On the averaged
 workload at Scan list and 70% utilisation, DeepSeek-V4-Flash on its fastest layout is 1.3× — the API costs 30%
-more than the node — and GLM-5.3-Flash is 1.0×, parity. The day's layout work moved them from 0.8× and 0.5×; the
-remaining GLM levers (CUDA graphs, batch depth, prefill chunk, FP8 KV) are measuring now. Their providers run them on eight-way B200-class hardware at
+more than the node. GLM-5.3-Flash's former parity claim used a layout that failed its quality tripwire and is
+withdrawn pending a valid paired result. Its remaining levers include CUDA graphs, batch depth, prefill chunk,
+and FP8 KV; precision-changing arms require independent quality checks. Their providers run them on eight-way B200-class hardware at
 scale and price aggressively (DeepSeek's own API sits under everyone else). Self-hosting those two is a decision
 about fidelity, data and control, not about savings — unless the fully-loaded stack holds, where they are
 2.5–3.2× cheaper than the API, or the API prices move (DeepSeek's rose 2.4–4.7× in one step in August).

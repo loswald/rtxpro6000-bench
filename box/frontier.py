@@ -49,8 +49,8 @@ POINTS = [
     ("gemma-4-26B-A4B BF16 (thinking, T=0)",   "native", "gemma26_---",              "gemma26_---",               "gemma-4-26B-A4B"),
     ("gpt-oss-120b MXFP4 (native)",            "native", "gptoss120_tp4_--flashinfer_cutlass", "full_gptoss",     "gpt-oss-120b"),
     ("gpt-oss-20b MXFP4 (native)",             "native", "gptoss20_--flashinfer_cutlass", "sw_gptoss_ficutlass_mxfp8", "gpt-oss-20b"),
-    ("Qwen3.8-Flash-Next NVFP4 · DP4 + EP",    "ptq4",   "qwen38fn_dp4ep4_---",      "qwen38fn_dp4ep4_---",       "Qwen3.8-Flash-Next"),
-    ("Qwen3.8-Flash-Next NVFP4 · 2 × TP2",     "ptq4",   "qwen38fn_tp2x2_---",       "qwen38fn_tp2x2_---",        "Qwen3.8-Flash-Next"),
+    ("Qwen3.8-Flash-Next NVFP4 · TP4",         "ptq4",   "qwen38fn_tp4m_--marlin|qwen38fn_tp4mb_b12x-marlin", "qwen38fn_tp4m_--marlin", "Qwen3.8-Flash-Next"),
+    ("Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears", "ptq4", "qwen38fn_tp4mb_b12x-marlin|qwen38fn_tp4m_--marlin", "qwen38fn_tp4mb_b12x-marlin", "Qwen3.8-Flash-Next"),
 ]
 # shorter on-chart names for the crowded top of the plane; the table keeps the full labels
 SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
@@ -58,7 +58,7 @@ SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NV
          "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · DP4 + EP": "DeepSeek-V4-Flash · DP4+EP",
          "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP": "GLM-5.3-Flash · DP2×TP2+EP", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
          "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)",
-         "Qwen3.8-Flash-Next NVFP4 · DP4 + EP": "Qwen3.8-Flash-Next · DP4+EP", "Qwen3.8-Flash-Next NVFP4 · 2 × TP2": "Qwen3.8-Flash-Next · 2×TP2"}
+         "Qwen3.8-Flash-Next NVFP4 · TP4": "Qwen3.8-Flash-Next · TP4", "Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears": "Qwen3.8-Flash-Next · TP4 W4A4"}
 CLASS = {"native": ("native precision", "#2a78d6", "circle"), "qat4": ("quantisation-aware 4-bit", "#1baf7a", "circle"),
          "ptq4": ("post-training 4-bit", "#eb6834", "circle"), "ptq8": ("post-training 8-bit (FP8)", "#eb6834", "square")}
 
