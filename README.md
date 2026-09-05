@@ -35,7 +35,11 @@ v4.1.1.
 6. **Per-architecture flags that are not optional.** Qwen3.8-Flash-Next rejects an fp8 KV cache outright
    (`Qwen4Exp QSA requires a BF16 main KV cache`). MiniMax-M3 and Inkling need `--enforce-eager` on sm_120 —
    a `KeyError: '/psm_…'` is a worker *segfault* seen from the parent, not a config error. MiniMax also needs
-   `--block-size 128`; GLM-5.3-Flash needs `--block-size 1024` for the DeepGEMM indexer.
+   `--block-size 128`; GLM-5.3-Flash needs `--block-size 1024` for the DeepGEMM indexer. DeepSeek-V4-Flash
+   needs `VLLM_DSV4_OPROJ_SM120_FALLBACK=1` in the server's environment: vLLM routes its attention output
+   projection through DeepGEMM's `fp8_einsum`, which has no sm_120 path and asserts during memory profiling
+   for *every* MoE backend (`box/patch_oproj.py` adds the BF16 fallback that flag enables). Three sweeps
+   died blaming the MoE backend and the sequence budget before the traceback's frames were read.
 7. **Check `power.limit` against `power.max_limit` before trusting any host.** The same cards at 400 W
    instead of 600 W lose 23% on NVFP4 and 34% on FP8.
 8. **On consumer cards, the container's CUDA must match the host driver.** The cu130 image ships a
