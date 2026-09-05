@@ -1,0 +1,5 @@
+# Qwen3.8-Flash-Next, further arms once 2 x TP2 serves with the FP8 PLE fix: the W4A4 linear kernel that the loader
+# bug had blocked, two engines of two cards with expert parallelism (the GLM lesson), and one TP4 engine.
+qwen38fn_tp2x2b12x|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-|--kv-cache-dtype|auto|--gpu-memory-utilization|0.90
+qwen38fn_dp2tp2ep2|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--data-parallel-size|2|--tensor-parallel-size|2|--enable-expert-parallel|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.90
+qwen38fn_tp4|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.90

@@ -1,0 +1,5 @@
+# Qwen3.8-Flash-Next after the FP8 PLE fix: the loader now passes, but at TP2 an autotuning step materialises the
+# rank's PLE table in BF16 (47.7 GiB) on top of 63 GB of weights and dies. One TP4 engine halves both: try it,
+# then the W4A4 linear kernel on the same layout.
+qwen38fn_tp4|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92
+qwen38fn_tp4b12x|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92

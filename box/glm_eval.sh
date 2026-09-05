@@ -122,6 +122,9 @@ for arm in ${ARMS:-base mtp}; do
     best) # the fastest layout from glm_perf.sh, evaluated in full so throughput and quality are measured on the
           # same configuration; BEST_FLAGS carries its launch flags (layout, MoE kernel, sequence budget)
           if EXTRA_ARGS="${BEST_FLAGS:-}" launch glm53f_best; then EVAL_BUDGET="${BEST_BUDGET:-3600}" run_eval_for glm53f_best; fi;;
+    bestlong) # the fastest layout with 65k tokens of output room: what the 32k cap cost the 29 items that hit it
+          if EXTRA_ARGS="${BEST_FLAGS:-} --max-model-len 98304" launch glm53f_bestlong; then
+            EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288"             EVAL_CONC="${LONG_CONC:-64}" EVAL_BUDGET="${BEST_BUDGET:-7200}" run_eval_for glm53f_bestlong; fi;;
     mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             # speculation verifies against the same model, so this arm must score the same as the base one
