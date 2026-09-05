@@ -11,13 +11,17 @@ for i in $(seq 1 720); do grep -q "GLMPERF DONE" $R/glm_perf.log 2>/dev/null && 
 tmux kill-session -t =q600i 2>/dev/null && step "$(left)" "chain600w6 stopped after the GLM arms; continuing as chain600w8"
 sleep 3; source $B/hardkill.sh; kill_all >/dev/null 2>&1
 
-step "$(left)" "GLM-5.3-Flash: DP4+EP at 192 sequences and DP2xTP2+EP at 384 - the layouts without the all-reduce"
+step "$(left)" "GLM-5.3-Flash: four MoE kernels at TP4, then DP4+EP at 192 sequences and DP2xTP2+EP at 384"
 bash $B/glm_perf2.sh > $R/glm_perf2.log 2>&1
 
 best=$(python3 $B/pick_best.py "$P/glm53f_*" router 1024 mtp 2>$R/glm_best.tps)
 case "$best" in
   glm53f_s512)              flags="--max-num-seqs 512";;
   glm53f_tp4ep4_s512)       flags="--enable-expert-parallel --max-num-seqs 512";;
+  glm53f_s512_moecutlass)   flags="--moe-backend cutlass --max-num-seqs 512";;
+  glm53f_s512_moeficutlass) flags="--moe-backend flashinfer_cutlass --max-num-seqs 512";;
+  glm53f_s512_moetrtllm)    flags="--moe-backend flashinfer_trtllm --max-num-seqs 512";;
+  glm53f_s512_moemarlin)    flags="--moe-backend marlin --max-num-seqs 512";;
   glm53f_dp4ep4_s192)       flags="--tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel --max-num-seqs 192";;
   glm53f_dp2tp2ep2_s384)    flags="--tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel --max-num-seqs 384";;
   *)                        flags="--max-num-seqs 512"; best="glm53f_s512 (fallback: ${best:-none})";;

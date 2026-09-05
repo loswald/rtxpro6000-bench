@@ -67,7 +67,13 @@ arm(){ # tag seqs [extra...]
     $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1
   fi
 }
-log "===== GLM-5.3-Flash: layouts without the per-layer all-reduce ====="
+log "===== GLM-5.3-Flash: the MoE kernel, then the layouts without the per-layer all-reduce ====="
+# The vendor build's default ("auto") routes this checkpoint's experts through a TRITON FP8 MoE kernel. Every other
+# backend it lists is tried at TP4 / 512 sequences; one that this model rejects fails in a minute and the sweep moves on.
+arm glm53f_s512_moecutlass    512 --tensor-parallel-size 4 --moe-backend cutlass
+arm glm53f_s512_moeficutlass  512 --tensor-parallel-size 4 --moe-backend flashinfer_cutlass
+arm glm53f_s512_moetrtllm     512 --tensor-parallel-size 4 --moe-backend flashinfer_trtllm
+arm glm53f_s512_moemarlin     512 --tensor-parallel-size 4 --moe-backend marlin
 arm glm53f_dp4ep4_s192     192 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
 arm glm53f_dp2tp2ep2_s384  384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel
 log "GLMPERF2 DONE"
