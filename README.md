@@ -336,6 +336,7 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (46) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
 | GLM-5.3-Flash (46) · NVFP4, **TP1 × DP4 + EP**, no speculation — the fast usable layout | 403 | 0.792 | 0.700 | 0.787 | 0.914 | 0.958 | 0.600 | 0.867 |
+| **Qwen3.8-Flash-Next (46)** · NVFP4 (RadixArk), TP4, Marlin MoE, `b12x` linears, FP8 n-gram tables | 403 | 0.801 ⁷ | 0.800 | 0.733 | 0.886 | 0.958 | 0.586 | 0.917 |
 | GLM-5.3-Flash (46) · NVFP4, **DP2 × TP2 + EP** — the 1,300 tok/s layout | 403 | **0.643** ⁶ | 0.562 | 0.640 | 0.714 | 0.917 | 0.543 | 0.567 |
 | Qwen3.8-27B (41) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
 | Muse-Glimmer-30B (24) · BF16 | 403 | 0.787 | 0.938 | 0.800 | 0.814 | 0.812 | 0.486 | 0.867 |
@@ -355,6 +356,9 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 under the same tag and caps moved every affected row down, as predicted: GLM 0.861 → 0.794 (see ³), Qwen FP8
 0.789 → 0.779 (maths 0.939 → 0.863), Muse 0.794 → 0.787 (maths 1.000 → 0.938). Nemotron-3-Super is the one row
 still short (379 of 403); it was on the box that could not restart. Every eval now runs with an hour per request.
+⁷ Qwen3.8-Flash-Next served on this GPU class for the first time tonight (a loader fix for its FP8 n-gram tables,
+`box/patch_ple.py`); 7.7% of its answers hit the 32k caps, so a 65k-room run is queued. Paired against GLM at TP4 it is
+23 to 20 — a tie at index 46 — and against DeepSeek's DP4 layout 10 to 27.
 ² 28.5% of gemma's answers were truncated at the cap: at T=0 with thinking on it does not converge. The
 vendor default is thinking *off*; both modes are being measured (`box/lists/thinkmode6000.txt`).
 ³ GLM without speculation scored **0.872 on the 367 items it finished** in its first pass; completing the 36
@@ -403,16 +407,19 @@ box, never in the repository or this chat). One model has finished; the others f
 |---|---:|---:|---:|---|
 | GLM-5.3-Flash | 0.794 · NVFP4, TP4 (0.809 with MTP) | **0.824** | +0.030 (+0.015 vs MTP) | maths 0.812 vs 0.738, code 0.813 vs 0.760, knowledge 0.657 vs 0.600; ifeval and tools slightly lower |
 | DeepSeek-V4-Flash | 0.844 · native, DP4 + EP | **0.784** | −0.060 | long context 0.833 vs 0.938, maths 0.875 vs 0.938, knowledge 0.571 vs 0.643, code 0.707 vs 0.747; the endpoint truncates 9.2% of answers against 4.2% here and 3.0% degenerate into repetition against 0.25% |
-| DeepSeek-V4-Flash · **DeepSeek's own endpoint**, provider pinned | 0.844 · native, DP4 + EP | **0.789** | −0.055 | code 0.640 vs 0.747, instructions 0.817 vs 0.933, tools 0.843 vs 0.900; 7.9% truncated against 4.2%, mean answer 4,717 tokens against 3,376; degenerate output 0.25%, same as ours — a 65k-cap re-run is in progress |
+| DeepSeek-V4-Flash · **DeepSeek's own endpoint**, provider pinned, same 32k caps | 0.844 · native, DP4 + EP | 0.789 | −0.055 | the endpoint writes 4,717 tokens an answer against our 3,376 and 7.9% of its answers hit the caps against 4.2% of ours |
+| DeepSeek-V4-Flash · **DeepSeek's own endpoint**, 65k tokens of room | 0.844 · native, DP4 + EP, 32k caps | **0.854** | +0.010 (paired 12 to 16 — a tie) | maths 1.000, knowledge 0.686, code 0.773; truncation 2.7%. The 32k gap was a cap effect, not a model gap: given room, the maker's endpoint and the node's native-precision run score the same. Our own 65k run is queued |
 | Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | **0.772** | −0.034 (−0.020 vs QAT) | maths 0.775 vs 0.800, code 0.760 vs 0.813, knowledge 0.486 vs 0.500; default routing lands on FP8 and FP4 hosts — the endpoint scores like our FP8 and RedHat four-bit rows (0.779, 0.772), 7.0% truncated against none for BF16 |
 | gpt-oss-120b, gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | queued | | |
 
 OpenRouter's public endpoint list explains the DeepSeek row and changes the price it should be read against: 29
 providers serve DeepSeek-V4-Flash-0731, the $0.065 / $0.18 tier the economics used is FP4 (Relace, Sail
 Research), Baidu's FP8 is $0.05 / $0.10, and DeepSeek's own endpoint is $0.22 / $0.66. Pinning to DeepSeek
-itself scored 0.789 — the same as default routing (paired 26 to 24), so the cheap provider is not the
-difference; the endpoint reasons longer than our server (4,717 tokens a answer against 3,376) and truncates at
-the same caps, and only the cheap tier's 3% degenerate output was provider-specific. At DeepSeek's own price the
+itself scored 0.789 at our 32k caps — the same as default routing (paired 26 to 24) — and **0.854 with 65k
+tokens of room** (paired 32 to 6 against its own 32k run, 12 to 16 against our node: a tie). The maker's endpoint
+reasons longer than our server (4,717 tokens an answer against 3,376) and was being cut off at the caps; only
+the cheap tier's 3% degenerate output was provider-specific. Read across the three DeepSeek rows: the API at the
+model's own quality costs 3.7× the cheap tier's price and ties the node; the cheap tier is a different product. At DeepSeek's own price the
 averaged workload costs about $0.13 per million tokens against $0.033 on the node: 4× in the node's favour for
 the model at its released quality, 10× fully loaded.
 
@@ -759,16 +766,16 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 | gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | — | router + promptopt | 2,304 · 192 | $0.007 | $0.091 | 12.1× |  |
 | gpt-oss-20b MXFP4 (native) | 0.712 (403) | — | router | 1,024 · 128 | $0.010 | $0.041 | 4.2× |  |
 | Muse-Glimmer-30B BF16 | 0.787 (403) | — | router + promptopt | 2,304 · 192 | $0.018 | $0.202 | 10.9× | yes |
-| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | — | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.7× | yes |
-| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | — | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.4× |  |
-| Qwen3.8-27B FP8 | 0.779 (403) | — | router + promptopt | 2,304 · 192 | $0.031 | $0.412 | 13.3× |  |
+| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.7× | yes |
+| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.4× |  |
+| Qwen3.8-27B FP8 | 0.779 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.031 | $0.412 | 13.3× |  |
 | DeepSeek-V4-Flash native · DP4 + EP | 0.844 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.033 | $0.044 | 1.3× | yes |
-| Qwen3.8-27B BF16 | 0.806 (403) | — | router + promptopt | 2,304 · 192 | $0.042 | $0.412 | 9.9× |  |
-| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | — | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
-| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | — | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
+| Qwen3.8-27B BF16 | 0.806 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.042 | $0.412 | 9.9× |  |
+| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
+| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
 | GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output) | 0.643 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.054 | $0.052 | 1.0× |  |
-| Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears | 0.866 (216) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× | yes |
-| Qwen3.8-Flash-Next NVFP4 · TP4 | 0.866 (216, same kernels in another layout) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× |  |
+| Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears | 0.801 (403) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× |  |
+| Qwen3.8-Flash-Next NVFP4 · TP4, auto linears | 0.801 (403, same kernels in another layout) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× |  |
 | DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.055 | $0.044 | 0.8× |  |
 | GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.096 | $0.052 | 0.5× |  |
 | GLM-5.3-Flash NVFP4 · DP4 + EP | 0.792 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.100 | $0.052 | 0.5× |  |

@@ -1,32 +1,32 @@
 {
  "aggregate": {
-  "acc_macro": 0.8567,
-  "acc_micro": 0.8459,
-  "acc_strict": 0.8459,
+  "acc_macro": 0.8133,
+  "acc_micro": 0.8015,
+  "acc_strict": 0.8015,
   "answer_from_reasoning": 1,
   "ci95": [
-   0.8056,
-   0.8792
+   0.7598,
+   0.8375
   ],
-  "degenerate_rate": 0.0027,
-  "gpu_minutes": 56.017,
-  "mean_out_tokens": 3368.0,
-  "mean_prompt_tokens": 2653.8,
-  "mean_score": 0.8525,
-  "n_attempted": 370,
+  "degenerate_rate": 0.0025,
+  "gpu_minutes": 77.78,
+  "mean_out_tokens": 5233.0,
+  "mean_prompt_tokens": 2460.8,
+  "mean_score": 0.8075,
+  "n_attempted": 403,
   "n_cancelled": 0,
-  "n_correct": 313,
+  "n_correct": 323,
   "n_error": 0,
   "n_planned": 403,
-  "n_scored": 370,
-  "n_skipped": 33,
-  "out_tokens_per_s": 1483.1,
-  "p50_item_s": 34.86,
-  "p50_out_tokens": 907,
-  "p90_item_s": 302.49,
+  "n_scored": 403,
+  "n_skipped": 0,
+  "out_tokens_per_s": 1807.6,
+  "p50_item_s": 39.05,
+  "p50_out_tokens": 1164,
+  "p90_item_s": 476.79,
   "per_url": {
    "http://127.0.0.1:8000": {
-    "completion_tokens": 1246166,
+    "completion_tokens": 2108914,
     "requests": 403
    }
   },
@@ -34,14 +34,14 @@
   "requests": 403,
   "retries": 0,
   "status_counts": {
-   "correct": 313,
-   "truncated": 10,
-   "wrong": 47
+   "correct": 323,
+   "truncated": 31,
+   "wrong": 49
   },
-  "total_out_tokens": 1246166,
-  "total_prompt_tokens": 981892,
-  "trunc_rate": 0.027,
-  "wall_s": 832.2
+  "total_out_tokens": 2108914,
+  "total_prompt_tokens": 991693,
+  "trunc_rate": 0.0769,
+  "wall_s": 1166.7
  },
  "base_urls": [
   "http://127.0.0.1:8000"
@@ -88,7 +88,7 @@
   "top_p": 0.95
  },
  "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
- "ended_at": "2026-09-05T22:06:35Z",
+ "ended_at": "2026-09-05T22:12:02Z",
  "endpoint": {
   "max_model_len": 40960,
   "served_models": [
@@ -101,12 +101,12 @@
  "evalsuite_git_sha": null,
  "families": {
   "code": {
-   "acc": 0.7857,
-   "acc_strict": 0.7857,
+   "acc": 0.7333,
+   "acc_strict": 0.7333,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6761,
-    0.8656
+    0.6237,
+    0.8202
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
@@ -115,9 +115,9 @@
     "fail_kinds": {
      "TypeError": 1,
      "assertion": 8,
-     "truncated": 6
+     "truncated": 11
     },
-    "lcb_mean_test_pass_frac": 0.88,
+    "lcb_mean_test_pass_frac": 0.7333,
     "syntax_error_rate": 0.0,
     "timeout_rate": 0.0,
     "unparsed_rate": 0.0
@@ -129,8 +129,13 @@
     "heplus-141",
     "heplus-154",
     "lcb-atcoder-abc390_d",
+    "lcb-atcoder-arc192_a",
+    "lcb-atcoder-arc194_a",
     "lcb-leetcode-3743",
+    "lcb-leetcode-3751",
     "lcb-leetcode-3776",
+    "lcb-leetcode-3793",
+    "lcb-leetcode-3794",
     "mbppplus-074",
     "mbppplus-137",
     "mbppplus-311",
@@ -218,6 +223,30 @@
      "extracted": null,
      "finish_reason": "length",
      "flags": [],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-arc194_a",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
      "id": "lcb-leetcode-3743",
      "out_tokens": 20480,
      "response_tail": "",
@@ -230,7 +259,43 @@
      "extracted": null,
      "finish_reason": "length",
      "flags": [],
+     "id": "lcb-leetcode-3751",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
      "id": "lcb-leetcode-3776",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3793",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3794",
      "out_tokens": 20480,
      "response_tail": "",
      "status": "truncated",
@@ -321,26 +386,26 @@
      "sub": "mbppplus"
     }
    ],
-   "gpu_minutes": 11.857,
-   "info_per_gpu_min": 0.994,
+   "gpu_minutes": 13.675,
+   "info_per_gpu_min": 1.073,
    "max_tokens": 20480,
-   "mean_out_tokens": 4095.5,
-   "mean_prompt_tokens": 351.3,
-   "mean_score": 0.7857,
-   "n_attempted": 70,
+   "mean_out_tokens": 5187.8,
+   "mean_prompt_tokens": 372.5,
+   "mean_score": 0.7333,
+   "n_attempted": 75,
    "n_cancelled": 0,
    "n_correct": 55,
    "n_error": 0,
    "n_planned": 75,
-   "n_scored": 70,
-   "n_skipped": 5,
+   "n_scored": 75,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 36.11,
-   "p50_out_tokens": 1164,
-   "p90_item_s": 452.54,
+   "p50_item_s": 39.75,
+   "p50_out_tokens": 1256,
+   "p90_item_s": 497.44,
    "status_counts": {
     "correct": 55,
-    "truncated": 6,
+    "truncated": 11,
     "wrong": 9
    },
    "sub": {
@@ -377,35 +442,35 @@
      "wall_s": 789.8
     },
     "lcb_easy_medium": {
-     "acc": 0.88,
-     "acc_strict": 0.88,
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.7004,
-      0.9583
+      0.5555,
+      0.8582
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 6775.4,
-     "mean_prompt_tokens": 603.4,
-     "mean_score": 0.88,
-     "n_attempted": 25,
+     "mean_out_tokens": 9059.5,
+     "mean_prompt_tokens": 614.4,
+     "mean_score": 0.7333,
+     "n_attempted": 30,
      "n_cancelled": 0,
      "n_correct": 22,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 25,
-     "n_skipped": 5,
-     "p50_item_s": 153.16,
-     "p50_out_tokens": 5098,
-     "p90_item_s": 556.75,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 156.77,
+     "p50_out_tokens": 6133,
+     "p90_item_s": 505.97,
      "status_counts": {
       "correct": 22,
-      "truncated": 3
+      "truncated": 8
      },
-     "total_out_tokens": 169386,
-     "total_prompt_tokens": 15084,
-     "trunc_rate": 0.12,
-     "wall_s": 773.9
+     "total_out_tokens": 271786,
+     "total_prompt_tokens": 18431,
+     "trunc_rate": 0.2667,
+     "wall_s": 1011.6
     },
     "mbppplus": {
      "acc": 0.65,
@@ -439,10 +504,10 @@
      "wall_s": 523.7
     }
    },
-   "total_out_tokens": 286686,
-   "total_prompt_tokens": 24593,
-   "trunc_rate": 0.0857,
-   "wall_s": 789.8
+   "total_out_tokens": 389086,
+   "total_prompt_tokens": 27940,
+   "trunc_rate": 0.1467,
+   "wall_s": 1011.6
   },
   "ifeval": {
    "acc": 0.9167,
@@ -675,8 +740,8 @@
      "sub": "double"
     }
    ],
-   "gpu_minutes": 7.318,
-   "info_per_gpu_min": 0.626,
+   "gpu_minutes": 6.229,
+   "info_per_gpu_min": 0.736,
    "max_tokens": 16384,
    "mean_out_tokens": 2967.4,
    "mean_prompt_tokens": 104.0,
@@ -796,22 +861,22 @@
    "wall_s": 684.8
   },
   "knowledge": {
-   "acc": 0.6119,
-   "acc_strict": 0.6119,
+   "acc": 0.5857,
+   "acc_strict": 0.5857,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.4922,
-    0.7195
+    0.4688,
+    0.6937
    ],
    "degenerate_ids": [
     "simpleqa-3127"
    ],
-   "degenerate_rate": 0.0149,
+   "degenerate_rate": 0.0143,
    "error_ids": [],
    "extra": {
     "extraction_methods": {
      "answer_phrase": 38,
-     "phrase": 25
+     "phrase": 27
     },
     "mmlu_pro_hard_hedged": 0,
     "mmlu_pro_hard_weak_extraction": 0,
@@ -828,6 +893,7 @@
     "simpleqa-0492",
     "simpleqa-0673",
     "simpleqa-0762",
+    "simpleqa-1012",
     "simpleqa-1166",
     "simpleqa-1295",
     "simpleqa-1312",
@@ -837,7 +903,9 @@
     "simpleqa-2174",
     "simpleqa-2392",
     "simpleqa-2417",
+    "simpleqa-2558",
     "simpleqa-2782",
+    "simpleqa-2784",
     "simpleqa-2905",
     "simpleqa-3127",
     "simpleqa-3211",
@@ -941,6 +1009,18 @@
      "id": "simpleqa-0762",
      "out_tokens": 9681,
      "response_tail": "\n\nAnswer: February 28, 2005",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Woofles",
+     "extracted": "Patch",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1012",
+     "out_tokens": 16449,
+     "response_tail": "\n\nAnswer: Patch",
      "status": "wrong",
      "sub": "simpleqa"
     },
@@ -1056,6 +1136,18 @@
     },
     {
      "error": null,
+     "expected": "Stoke Ladies",
+     "extracted": "Dick, Kerr Ladies",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2558",
+     "out_tokens": 18705,
+     "response_tail": "\n\nAnswer: Dick, Kerr Ladies",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
      "expected": "Punkature",
      "extracted": "Witches",
      "finish_reason": "stop",
@@ -1064,6 +1156,18 @@
      "out_tokens": 3327,
      "response_tail": "\n\nAnswer: Witches",
      "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "November 18, 2023",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-2784",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "simpleqa"
     },
     {
@@ -1165,27 +1269,27 @@
      "sub": "simpleqa"
     }
    ],
-   "gpu_minutes": 13.135,
-   "info_per_gpu_min": 1.211,
+   "gpu_minutes": 13.12,
+   "info_per_gpu_min": 1.295,
    "max_tokens": 20480,
-   "mean_out_tokens": 4759.8,
-   "mean_prompt_tokens": 247.1,
-   "mean_score": 0.6119,
-   "n_attempted": 67,
+   "mean_out_tokens": 5350.6,
+   "mean_prompt_tokens": 240.7,
+   "mean_score": 0.5857,
+   "n_attempted": 70,
    "n_cancelled": 0,
    "n_correct": 41,
    "n_error": 0,
    "n_planned": 70,
-   "n_scored": 67,
-   "n_skipped": 3,
+   "n_scored": 70,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 50.62,
-   "p50_out_tokens": 1755,
+   "p50_item_s": 57.01,
+   "p50_out_tokens": 1826,
    "p90_item_s": 491.76,
    "status_counts": {
     "correct": 41,
-    "truncated": 4,
-    "wrong": 22
+    "truncated": 5,
+    "wrong": 24
    },
    "sub": {
     "mmlu_pro_hard": {
@@ -1221,42 +1325,42 @@
      "wall_s": 815.5
     },
     "simpleqa": {
-     "acc": 0.2222,
-     "acc_strict": 0.2222,
+     "acc": 0.2,
+     "acc_strict": 0.2,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.1061,
-      0.4076
+      0.0951,
+      0.3731
      ],
-     "degenerate_rate": 0.037,
-     "mean_out_tokens": 4952.8,
-     "mean_prompt_tokens": 95.8,
-     "mean_score": 0.2222,
-     "n_attempted": 27,
+     "degenerate_rate": 0.0333,
+     "mean_out_tokens": 6312.0,
+     "mean_prompt_tokens": 95.9,
+     "mean_score": 0.2,
+     "n_attempted": 30,
      "n_cancelled": 0,
      "n_correct": 6,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 27,
-     "n_skipped": 3,
-     "p50_item_s": 58.79,
-     "p50_out_tokens": 1755,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 98.12,
+     "p50_out_tokens": 3210,
      "p90_item_s": 491.76,
      "status_counts": {
       "correct": 6,
-      "truncated": 2,
-      "wrong": 19
+      "truncated": 3,
+      "wrong": 21
      },
-     "total_out_tokens": 133725,
-     "total_prompt_tokens": 2587,
-     "trunc_rate": 0.0741,
-     "wall_s": 790.9
+     "total_out_tokens": 189359,
+     "total_prompt_tokens": 2877,
+     "trunc_rate": 0.1,
+     "wall_s": 921.5
     }
    },
-   "total_out_tokens": 318909,
-   "total_prompt_tokens": 16558,
-   "trunc_rate": 0.0597,
-   "wall_s": 815.5
+   "total_out_tokens": 374543,
+   "total_prompt_tokens": 16848,
+   "trunc_rate": 0.0714,
+   "wall_s": 921.5
   },
   "longctx": {
    "acc": 0.9583,
@@ -1360,8 +1464,8 @@
      "sub": "qa_multi_doc"
     }
    ],
-   "gpu_minutes": 5.483,
-   "info_per_gpu_min": 0.35,
+   "gpu_minutes": 4.667,
+   "info_per_gpu_min": 0.411,
    "max_tokens": 6144,
    "mean_out_tokens": 484.6,
    "mean_prompt_tokens": 18455.5,
@@ -1480,29 +1584,81 @@
    "wall_s": 315.6
   },
   "math": {
-   "acc": 0.9818,
-   "acc_strict": 0.9818,
+   "acc": 0.8,
+   "acc_strict": 0.8,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.9039,
-    0.9968
+    0.6995,
+    0.873
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
     "ambiguous_boxed": 0,
-    "boxed_rate": 1.0,
+    "boxed_rate": 0.8125,
     "match_methods": {
+     "numeric": 1,
      "set": 1,
-     "string": 53
+     "string": 62
     },
     "unparsed_rate": 0.0
    },
    "failed_ids": [
-    "aime25-II-1"
+    "aime25-I-13",
+    "aime25-I-14",
+    "aime25-I-15",
+    "aime25-II-1",
+    "aime25-II-13",
+    "aime25-II-14",
+    "aime25-II-15",
+    "aime25-II-5",
+    "hmmt25-feb-10",
+    "hmmt25-feb-15",
+    "hmmt25-feb-17",
+    "hmmt25-feb-18",
+    "hmmt25-feb-19",
+    "hmmt25-feb-20",
+    "hmmt25-feb-25",
+    "hmmt25-feb-30"
    ],
    "failures": [
+    {
+     "error": null,
+     "expected": "204",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-13",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "60",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-14",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "735",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-15",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
     {
      "error": null,
      "expected": "468",
@@ -1514,90 +1670,240 @@
      "response_tail": "8-26)^2+y^2=1600,\n\\]\n\\[\n32^2+y^2=1600,\n\\]\n\\[\n1024+y^2=1600,\n\\]\n\\[\ny^2=576,\n\\]\n\\[\n|y|=24.\n\\]\n\nThe height from \\(G\\) to the line containing \\(B\\) and \\(E\\) is therefore \\(24\\). Hence the area of \\(\\triangle BGE\\) is\n\n\\[\n\\frac12 \\cdot BE \\cdot 24\n=\n\\frac12 \\cdot 39 \\cdot 24\n=\n456.\n\\]\n\n\\[\n\\boxed{456}\n\\]",
      "status": "wrong",
      "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "248",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-II-13",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "104",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "aime25-II-14",
+     "out_tokens": 32768,
+     "response_tail": "irc.\n\\]\nIf \\(\\beta=\\alpha-60^\\circ\\), then \\(\\alpha>60^\\circ\\) and \\(\\beta<30^\\circ\\), forcing \\(AB<14\\) and \\(AC<14\\), so \\(BC<14\\sqrt2<38\\), impossible. Thus\n\\[\n\\beta=\\alpha+60^\\circ.\n\\]\n\nNow use \\(BC=38\\):\n\\[\n38^2=(28\\cos\\alpha)^2+(28\\sin(\\alpha+60^\\circ))^2.\n\\]\nDividing by \\(28^2=784\\),\n\\[\n\\frac",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "240",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-II-15",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "336",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-II-5",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{-1+\\sqrt{17}}{2}, \\frac{-1-\\sqrt{17}}{2}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-10",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "200",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-15",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2^{25} \\cdot 26!",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{2025}{101}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{4}{9}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-19",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{448}{3}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-20",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{23}-2 \\sqrt{3}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-25",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-30",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
     }
    ],
-   "gpu_minutes": 17.018,
-   "info_per_gpu_min": 0.058,
+   "gpu_minutes": 39.061,
+   "info_per_gpu_min": 0.328,
    "max_tokens": 32768,
-   "mean_out_tokens": 7539.7,
-   "mean_prompt_tokens": 172.0,
-   "mean_score": 0.9818,
-   "n_attempted": 55,
+   "mean_out_tokens": 13992.4,
+   "mean_prompt_tokens": 195.3,
+   "mean_score": 0.8,
+   "n_attempted": 80,
    "n_cancelled": 0,
-   "n_correct": 54,
+   "n_correct": 64,
    "n_error": 0,
    "n_planned": 80,
-   "n_scored": 55,
-   "n_skipped": 25,
+   "n_scored": 80,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 139.09,
-   "p50_out_tokens": 4529,
-   "p90_item_s": 523.44,
+   "p50_item_s": 294.51,
+   "p50_out_tokens": 11027,
+   "p90_item_s": 731.15,
    "status_counts": {
-    "correct": 54,
+    "correct": 64,
+    "truncated": 15,
     "wrong": 1
    },
    "sub": {
     "aime25": {
-     "acc": 0.9474,
-     "acc_strict": 0.9474,
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.7536,
-      0.9906
+      0.5555,
+      0.8582
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 7256.4,
-     "mean_prompt_tokens": 185.1,
-     "mean_score": 0.9474,
-     "n_attempted": 19,
+     "mean_out_tokens": 15064.5,
+     "mean_prompt_tokens": 234.9,
+     "mean_score": 0.7333,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 18,
+     "n_correct": 22,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 19,
-     "n_skipped": 11,
-     "p50_item_s": 98.45,
-     "p50_out_tokens": 4003,
-     "p90_item_s": 684.7,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 289.92,
+     "p50_out_tokens": 11048,
+     "p90_item_s": 731.15,
      "status_counts": {
-      "correct": 18,
+      "correct": 22,
+      "truncated": 7,
       "wrong": 1
      },
-     "total_out_tokens": 137871,
-     "total_prompt_tokens": 3516,
-     "trunc_rate": 0.0,
-     "wall_s": 832.2
+     "total_out_tokens": 451935,
+     "total_prompt_tokens": 7047,
+     "trunc_rate": 0.2333,
+     "wall_s": 1165.0
     },
     "hmmt25": {
-     "acc": 1.0,
-     "acc_strict": 1.0,
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.8064,
-      1.0
+      0.5555,
+      0.8582
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 11297.6,
-     "mean_prompt_tokens": 153.6,
-     "mean_score": 1.0,
-     "n_attempted": 16,
+     "mean_out_tokens": 19047.0,
+     "mean_prompt_tokens": 169.7,
+     "mean_score": 0.7333,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 16,
+     "n_correct": 22,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 16,
-     "n_skipped": 14,
-     "p50_item_s": 302.49,
-     "p50_out_tokens": 11027,
-     "p90_item_s": 618.59,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 467.77,
+     "p50_out_tokens": 18252,
+     "p90_item_s": 819.24,
      "status_counts": {
-      "correct": 16
+      "correct": 22,
+      "truncated": 8
      },
-     "total_out_tokens": 180761,
-     "total_prompt_tokens": 2458,
-     "trunc_rate": 0.0,
-     "wall_s": 763.2
+     "total_out_tokens": 571411,
+     "total_prompt_tokens": 5091,
+     "trunc_rate": 0.2667,
+     "wall_s": 1166.7
     },
     "math500_hard": {
      "acc": 1.0,
@@ -1630,10 +1936,10 @@
      "wall_s": 653.3
     }
    },
-   "total_out_tokens": 414681,
-   "total_prompt_tokens": 9458,
-   "trunc_rate": 0.0,
-   "wall_s": 832.2
+   "total_out_tokens": 1119395,
+   "total_prompt_tokens": 15622,
+   "trunc_rate": 0.1875,
+   "wall_s": 1166.7
   },
   "tools": {
    "acc": 0.8857,
@@ -2141,8 +2447,8 @@
      "sub": "simple"
     }
    ],
-   "gpu_minutes": 1.206,
-   "info_per_gpu_min": 5.876,
+   "gpu_minutes": 1.027,
+   "info_per_gpu_min": 6.9,
    "max_tokens": 8192,
    "mean_out_tokens": 351.2,
    "mean_prompt_tokens": 559.7,
@@ -2372,12 +2678,12 @@
   "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
   "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
  ],
- "partial": true,
+ "partial": false,
  "schema_version": 1,
  "skipped_ids": [],
  "started_at": "2026-09-05T21:52:35Z",
  "tag": "qwen38fn_tp4mb_b12x-marlin",
  "truncated": false,
  "valid": true,
- "wall_s": 840.3
+ "wall_s": 1166.7
 }
