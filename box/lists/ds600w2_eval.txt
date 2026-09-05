@@ -1,0 +1,6 @@
+# Quality pass for DeepSeek-V4-Flash: the plain server and the speculating one (a second model on which
+# speculation must show itself lossless, as GLM's MTP did on the paired items). The expert-parallel variant is a
+# throughput arm only - same kernels, same weights - so it is not evaluated twice. Run with FIRST_ONLY=1: the
+# first MoE backend that serves is the one measured, quality being a property of the weights, not the kernel.
+ds4flash|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-,b12x:marlin|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}
+ds4flash_dspark|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--speculative-config|{"method":"dspark","num_speculative_tokens":7,"draft_sample_method":"probabilistic"}

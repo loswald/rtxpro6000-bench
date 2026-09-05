@@ -9,6 +9,7 @@
 set -u
 B=/workspace/bench; R=/workspace/results; P=$R/probe; S=$R/smoke
 MD=${MD:-/workspace/models/GLM-5.3-Flash-NVFP4}
+TOK=/workspace/models/glm53f_tok
 mkdir -p "$P" "$S" "$R/eval" /workspace/glmvllm
 log(){ echo "[$(date +%H:%M:%S)] $*"; }
 source "$B/hardkill.sh"
@@ -19,7 +20,7 @@ VEND=/workspace/glmimg/usr/local/lib/python3.12/dist-packages/vllm
 [ -e /workspace/glmvllm/vllm ] || ln -s "$VEND" /workspace/glmvllm/vllm
 python3 "$B/vllm_sm120_nope.py" "$VEND" 2>&1 | sed 's/^/  /'
 
-launch(){ # tag [extra...]
+launch(){ # tag [extra...]   - EXTRA_ARGS come after the defaults, so a flag repeated there wins
   local tag="$1"; shift
   kill_all
   cat > "$B/l_ge.sh" <<L
@@ -51,7 +52,7 @@ L
   done
   [ "$ok" = 1 ] || {
     log "  $tag FAILED after ${t}s"
-    grep -ohE "ValueError: [^\"]{0,140}|RuntimeError: [^\"]{0,140}|NotImplementedError: [^\"]{0,140}" "$S/${tag}.log" | sort -u | head -3 | sed 's/^/    /'
+    grep -ohE "ValueError: [^\"]{0,140}|RuntimeError: [^\"]{0,140}|NotImplementedError: [^\"]{0,140}|CUDA out of memory[^\"]{0,60}" "$S/${tag}.log" | sort -u | head -3 | sed 's/^/    /'
     return 1
   }
   log "  $tag healthy in ${t}s | $(grep -m1 -oE 'GPU KV cache size: [0-9,]+ tokens' "$S/${tag}.log")"
@@ -60,21 +61,47 @@ L
 
 run_eval_for(){ # tag
   local tag="$1"
-  [ -f "$R/eval/$tag.json" ] && { log "  $tag already evaluated"; return 0; }
+  [ -z "${FORCE:-}" ] && [ -f "$R/eval/$tag.json" ] && { log "  $tag already evaluated"; return 0; }
   # The server separates thinking into the reasoning field via --reasoning-parser glm45, so the scorers see
   # only the answer. No meaningful token cap: at the old budget half the maths items finished on it, which
   # measured the cap rather than the model. Time is the only limit, and running out of time marks an item
   # skipped (excluded from accuracy) where running out of tokens marked it wrong.
   #
+  # One hour per request, not the runner's ten-minute default. At 96 concurrent streams a 32k-token
+  # reasoning trace takes longer than ten minutes here, and the first pass lost 36 of 403 items - the
+  # hardest ones, since they are the ones that run long - to "error: timeout". Each was then retried three
+  # times, which is where most of that pass's wall-clock went.
+  #
   # Sampling is Z.AI's own recipe (T=0.95, top_p=0.95, min_p=0) with reasoning_effort at its default max,
   # not the suite's house T=0.6 - the same class of error that cost every other model on this roster.
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls http://127.0.0.1:8000 --model m \
     --out "$R/eval" --gpus 4 --time-budget "${EVAL_BUDGET:-5400}" --concurrency "${EVAL_CONC:-96}" \
-    --reasoning --max-tokens "${EVAL_MAXTOK:-32768}" \
+    --reasoning --request-timeout "${EVAL_REQ_TIMEOUT:-3600}" --max-tokens "${EVAL_MAXTOK:-32768}" \
     --max-tokens-family "${EVAL_CAPS:-math=32768,code=20480,knowledge=20480,ifeval=16384,tools=8192,longctx=6144}" \
     --temperature "${GLM_T:-0.95}" --top-p "${GLM_TOPP:-0.95}" --extra-body '{"min_p":0.0}' \
     --chat-template-kwargs '{"reasoning_effort":"max"}' \
     ${EVAL_ARGS:-} 2>&1 | tail -12 | sed 's/^/    eval: /'
+}
+
+pt(){ # tag label in out prefix conc   - the same shapes every other model gets, against this server
+  local tag=$1 label=$2 in=$3 out=$4 pre=$5 c=$6
+  mkdir -p "$P/$tag"
+  $CLEAN vllm bench serve --backend openai --base-url http://127.0.0.1:8000 --endpoint /v1/completions \
+    --model m --tokenizer "$TOK" --trust-remote-code \
+    --dataset-name random --random-input-len "$in" --random-output-len "$out" \
+    --random-prefix-len "$pre" --random-range-ratio 0 \
+    --request-rate inf --max-concurrency "$c" --num-prompts $((c*6)) --ignore-eos --seed $((9300+c+in)) \
+    --percentile-metrics ttft,tpot,itl,e2el --metric-percentiles 50,90,99 --disable-tqdm \
+    --save-result --result-dir "$P/$tag" --result-filename "${tag}__${label}__c${c}__p8000.json" \
+    > "$P/$tag/${label}_c${c}.log" 2>&1
+  $CLEAN python3 "$B/agg.py" "$P/$tag" "${tag}__${label}__c${c}__p" "$label" "$c" "$tag"
+}
+bench_shapes(){ # tag maxconc   - concurrency clamped to what the server was launched with
+  local tag="$1" mc="$2" c
+  for c in 64 256; do [ "$c" -le "$mc" ] && pt "$tag" router 1024 128 0 "$c"; done
+  [ "$mc" -lt 64 ] && pt "$tag" router 1024 128 0 "$mc"
+  c=256; [ "$mc" -lt "$c" ] && c="$mc"; pt "$tag" promptopt 512 256 3072 "$c"
+  c=128; [ "$mc" -lt "$c" ] && c="$mc"; pt "$tag" judge 4096 512 0 "$c"
 }
 
 log "===== GLM-5.3-Flash (AA 57): quality ====="
@@ -84,34 +111,45 @@ for arm in ${ARMS:-base mtp}; do
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_base_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             run_eval_for glm53f_base
           fi;;
-    long) # kept as a named arm so the capped and uncapped runs can be compared directly; the defaults above
-          # are already uncapped, so this differs from `base` only in giving the run more wall-clock time.
-          if launch glm53f_long; then EVAL_BUDGET=7200 run_eval_for glm53f_long; fi;;
+    resume) # Finish glm53f_base. The first pass scored 367 of 403; the other 36 (24 maths, 9 code, 2
+          # instruction-following, 1 knowledge) hit the runner's 600 s request timeout, and they are the
+          # hardest items because they are the ones that reason longest. Excluding them flatters the model
+          # (0.861 on 367, where the MTP arm that finished them all scored 0.809 on 403). --resume re-runs
+          # only the timed-out records and rewrites the summary over all 403, same caps, so the number is
+          # like for like with every other row.
+          if launch glm53f_base_resume; then FORCE=1 EVAL_ARGS="--resume" run_eval_for glm53f_base; fi;;
+    long) if launch glm53f_long; then EVAL_BUDGET=7200 run_eval_for glm53f_long; fi;;
+    mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
+            $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
+            # speculation verifies against the same model, so this arm must score the same as the base one
+            # on the items both scored - and it did: 0.872 vs 0.864 on 367, paired 13 vs 10, noise
+            run_eval_for glm53f_mtp
+          fi;;
+    mtp64k) # 21 of 403 items ran past 32,768 output tokens and were marked wrong as truncated. A model
+          # that needed more room, or one that loops? Same MTP server (lossless, and faster), the context
+          # window raised to 98k, every family cap doubled. Whatever fraction of the truncated items resolve
+          # is the cost the 32k cap was imposing on the best model here.
+          if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' EXTRA_ARGS="--max-model-len 98304" launch glm53f_mtp64k; then
+            EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288" \
+              EVAL_BUDGET=10800 run_eval_for glm53f_mtp64k
+          fi;;
     fp8)  # Fidelity arm. Everything else here serves RedHatAI's NVFP4 build, which is a post-training
           # quantisation of this model; Z.AI's own FP8 release is the precision it was trained at, and at
-          # 330 GB it fits 4x96 GB with ~13 GB of KV left. That is a poor throughput configuration and the
-          # right quality reference: the gap between this arm and the NVFP4 one IS the cost of our
-          # quantisation on the highest-intelligence model that fits the node.
+          # ~330 GB it fits 4x96 GB with a few tens of GB left for KV. The gap between this arm and the NVFP4
+          # one IS the cost of quantisation on the highest-intelligence model that fits the node. Same context
+          # window and the same caps as every other arm - a reduced cap would measure the cap, not the model;
+          # fewer concurrent sequences is the only concession the memory forces. Its throughput is measured
+          # too, on the shapes every other model gets, so the price of native precision is a number.
           MD=${MD_FP8:-/workspace/models/GLM-5.3-Flash-FP8}
           if [ ! -f "$MD/.dl_complete" ]; then log "SKIP glm53f_fp8 (native FP8 checkpoint not downloaded)"; continue; fi
-          if EXTRA_ARGS="--max-model-len 16384 --max-num-seqs 32" launch glm53f_fp8; then
+          if EXTRA_ARGS="--gpu-memory-utilization 0.94 --max-num-seqs 32" launch glm53f_fp8; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_fp8_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
-            EVAL_CONC=8 EVAL_BUDGET=9000 EVAL_CAPS="math=12288,code=10240,knowledge=10240,ifeval=8192,tools=6144,longctx=1024" \
-              run_eval_for glm53f_fp8
+            EVAL_CONC=32 EVAL_BUDGET=10800 run_eval_for glm53f_fp8
+            bench_shapes glm53f_fp8 32
           fi;;
-    spec) # Is the MTP head lossless? Greedy completions from the base server and from the speculating
-          # server must be bit-identical, because speculation verifies every proposed token against the
-          # full model. GLM scored 0.800 without it and 0.740 with it, and the entire gap tracked
-          # truncation (28 of 80 maths items hit the ceiling with speculation, 10 without) - a
-          # distribution-preserving speculator cannot make a model ramble further. This settles it without
-          # sampling noise or a token cap in the way.
-          # A CONTROL FIRST. Speculation verifies k tokens in one forward pass where the base model does one
-          # at a time, so the two run different kernel shapes and different reduction orders. Floating-point
-          # results differ in the last bits, and at greedy argmax a near-tie between two tokens then flips -
-          # after which the texts diverge completely. That is numerics, not a speculator bug. The only way
-          # to tell them apart is to capture the base model TWICE, once with a batch shape that mimics
-          # verification, and see whether it reproduces itself. Skipping this control is how a numerical
-          # artefact gets published as an engine defect.
+    spec) # Kept for the record: the greedy-sequence test and its control. The control (the same server
+          # captured twice) matched on 4 of 12, so this test cannot attribute anything on this stack; the
+          # paired task comparison and the logit pass are what settled the question.
           if launch glm53f_specbase; then
             $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_base.json" 2>&1 | tail -14 | sed 's/^/    base: /'
             $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_base2.json" 2>&1 | tail -3 | sed 's/^/    base2: /'
@@ -121,14 +159,8 @@ for arm in ${ARMS:-base mtp}; do
           if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_specmtp; then
             $CLEAN python3 "$B/specdiff.py" capture http://127.0.0.1:8000 m "$P/specdiff_glm_mtp.json" 2>&1 | tail -14 | sed 's/^/    mtp:  /'
           fi
-          $CLEAN python3 "$B/specdiff.py" compare "$P/specdiff_glm_base.json" "$P/specdiff_glm_mtp.json" 2>&1 | sed 's/^/    /'
+          $CLEAN python3 "$B/specdiff.py" judge "$P/specdiff_glm_base.json" "$P/specdiff_glm_base2.json" "$P/specdiff_glm_mtp.json" 2>&1 | sed 's/^/    /'
           ;;
-    mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
-            $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
-            # speculation verifies against the same model, so this arm must score the same as the base one;
-            # a gap is a bug in the speculator, not a trade-off
-            run_eval_for glm53f_mtp
-          fi;;
   esac
 done
 log "GLMEVAL DONE"

@@ -179,8 +179,8 @@ evalrun(){ # tag n dir  - the six-family quality suite against the servers that 
   [ "$MAXLEN" -lt 40000 ] && caps="${EVAL_CAPS:-math=24576,code=16384,knowledge=16384,ifeval=12288,tools=8192,longctx=4096}"
   $CLEAN python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls "$urls" --model m \
     --out "$R/eval" --gpus "$NGPU" --time-budget "${EVAL_BUDGET:-900}" --concurrency "${EVAL_CONC:-$(( 32 * n ))}" \
-    ${EVAL_REASONING:---reasoning} --max-tokens "${EVAL_MAXTOK:-32768}" --max-tokens-family "$caps" \
-    $esamp ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
+    ${EVAL_REASONING:---reasoning} --request-timeout "${EVAL_REQ_TIMEOUT:-3600}" --max-tokens "${EVAL_MAXTOK:-32768}" --max-tokens-family "$caps" \
+    $esamp ${EVAL_RESUME:+--resume} ${EVAL_ARGS:-} 2>&1 | tail -8 | sed 's/^/    eval: /'
   # $esamp is the vendor's own sampling recipe from lists/profiles.tsv and it comes after --reasoning on
   # purpose: --reasoning sets a house default of T=0.6/top_p=0.95 for every model, and not one vendor here
   # recommends that. Qwen wants T=1.0/top_p=0.95/top_k=20/min_p=0, gemma T=0.0/top_k=64, Ling T=0.85,
@@ -217,7 +217,7 @@ sweep(){ # tag dir tp combos [extra...]
     local lin="${c%%:*}" moe="${c##*:}" atag
     atag="${tag}_$(echo "$c" | tr ':' '-' | tr -d '.')"
     case "${MODE:-bench}" in
-      eval) [ -f "$R/eval/$atag.json" ] && { log "  $atag already evaluated"; any=1; continue; };;
+      eval) [ -z "${EVAL_RESUME:-}" ] && [ -f "$R/eval/$atag.json" ] && { log "  $atag already evaluated"; any=1; continue; };;
       *)    [ "$(ls "$P/$atag"/*__judge__*.json 2>/dev/null | wc -l)" -ge "$n" ] && { log "  $atag already measured"; any=1; continue; };;
     esac
     if serve "$atag" "$dir" "$tp" "$lin" "$moe" "$@"; then

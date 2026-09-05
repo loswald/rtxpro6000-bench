@@ -1,0 +1,14 @@
+# The five configurations the 600 W quality pass lost, each with its cause read from keval600w.log, plus the
+# two community four-bit builds under the W4A4 kernel they were never given (they were measured under auto,
+# which dequantises to W4A16 - slower than FP8 - so their throughput numbers were never a fair ladder rung).
+#   nemo35   : the list hard-coded moe=flashinfer_cutlass, which this build's vLLM rejects for the shape;
+#              the MoE backend is auto-selected now, as the rules say it must be
+#   qwen38fn : b12x cannot quantise Qwen4ExpNGramEmbedding ("no parameter named ngram_embedding.weight_scale");
+#              auto linear kernel, BF16 KV (QSA needs it)
+#   qwen36   : no header in the log at all - weights or disk; re-fetched before this list runs
+#   inkling and minimax were freed for DeepSeek before their cause could be fixed; they stay on the 400 W box
+nemo35|/workspace/models/Nemotron-3.5-Lightning-30B|1|b12x:-
+qwen36_fp8|/workspace/models/Qwen3.6-35B-A3B-FP8|1|b12x:-
+qwen38fn|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--kv-cache-dtype|auto
+q27_nvfp4_redhat|/workspace/models/Qwen27B-NVFP4-RedHat|1|b12x:-
+q27_nvfp4_unsloth|/workspace/models/Qwen27B-NVFP4-unsloth|1|b12x:-

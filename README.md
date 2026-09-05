@@ -259,27 +259,62 @@ Six capability families, 403 items, one seed, no token cap, each model with its 
 chat-template flags and sampling recipe. Accuracy does not depend on the power limit, so results from both
 4× RTX PRO 6000 hosts are pooled; the host is noted where it matters.
 
-| model (AA index) · configuration | overall | maths | code | tools | long ctx | knowledge | instructions |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| **GLM-5.3-Flash (57)** · NVFP4, TP4 | **0.800** | 0.847 | 0.747 | 0.886 | 0.958 | **0.614** | 0.800 |
-| Qwen3.8-27B (52) · **FP8**, 4 replicas | 0.787 | 0.871 | 0.720 | 0.857 | 0.979 | 0.471 | **0.917** |
-| Nemotron-3-Super (26) · **native** NVFP4 | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
-| Muse-Glimmer-30B (35) · NVFP4 | 0.749 | 0.825 | 0.773 | 0.814 | 0.729 | 0.486 | 0.867 |
-| Qwen3.8-27B (52) · NVFP4 (community PTQ) | 0.747 | 0.662 | 0.733 | 0.871 | 0.958 | 0.486 | 0.867 |
-| gpt-oss-120b (24) · native MXFP4 | 0.742 | 0.731 | **0.933** | **0.923** | 0.857 | 0.385 | 0.700 |
-| gpt-oss-20b (24) · native MXFP4 | 0.712 | 0.650 | 0.760 | 0.871 | 0.854 | 0.386 | 0.817 |
+| model (AA index) · configuration | items | overall | maths | code | tools | long ctx | knowledge | instructions |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **GLM-5.3-Flash (57)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
+| GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 367 ¹ | 0.861 | **0.982** | 0.864 | **0.914** | 0.958 | 0.609 | 0.897 |
+| Muse-Glimmer-30B (35) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
+| Qwen3.8-27B (52) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
+| Nemotron-3-Super (26) · **native** NVFP4 | 379 ¹ | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
+| Qwen3.8-27B (52) · NVFP4, RedHatAI | 403 | 0.772 | 0.750 | 0.760 | 0.857 | 0.938 | 0.486 | **0.917** |
+| Step-3.7-Flash · NVFP4 | 403 | 0.767 | 0.688 | 0.760 | 0.871 | 0.958 | 0.529 | 0.883 |
+| Qwen3.8-27B (52) · NVFP4, unsloth | 403 | 0.752 | 0.738 | 0.760 | 0.814 | 0.938 | 0.471 | 0.867 |
+| gpt-oss-120b (24) · native MXFP4 | 403 | 0.742 | 0.731 | **0.933** | **0.923** | 0.857 | 0.385 | 0.700 |
+| Qwen3.8-27B (52) · NVFP4, gittensor (the fast build) | 403 | 0.725 | 0.650 | 0.680 | 0.843 | 0.917 | 0.471 | 0.883 |
+| gpt-oss-20b (24) · native MXFP4 | 403 | 0.712 | 0.700 | 0.773 | 0.857 | 0.833 | 0.429 | 0.717 |
+| Qwen3.6-35B-A3B · FP8 | 403 | 0.702 | 0.537 | 0.627 | 0.871 | 0.958 | 0.543 | 0.800 |
+| gemma-4-26B-A4B · BF16, thinking on, T=0 | 403 | 0.628 ² | 0.812 | 0.560 | 0.843 | 0.604 | 0.286 | 0.633 |
+
+¹ The first pass of these runs lost items to the eval runner's default **600-second request timeout**: 36 for
+GLM (24 maths, 9 code), 15 for Qwen FP8, 14 for Muse, 24 for Nemotron. A model that reasons for 30,000 tokens
+at 96 concurrent streams takes longer than ten minutes per request here. Those are the *hardest* items — they
+are the ones that run long — so a row missing them is flattered: GLM's no-speculation arm scores 0.872 on the
+367 items it finished and its MTP arm, which finished all 403, scores 0.864 on the same 367 and 0.809 overall.
+Every eval now runs with an hour per request, and the missing items are being completed under the same tag
+and caps; these rows will be replaced by 403-item numbers, not sit beside them.
+² 28.5% of gemma's answers were truncated at the cap: at T=0 with thinking on it does not converge. The
+vendor default is thinking *off*; both modes are being measured (`box/lists/thinkmode6000.txt`).
 
 **The published intelligence index does predict this.** GLM-5.3-Flash at index 57 leads, and it leads on the
 families that separate models rather than saturate: maths, knowledge and long context. An earlier version of
 this file claimed the opposite — that small models beat it and the index was useless for our workloads. That
 claim was an artefact of a broken harness, not a finding, and it is withdrawn. What survives is narrower and
 more useful: **gpt-oss is disproportionately good at code and tool calling for its size**, which is what an
-agent harness spends most of its time doing, and index 24 buys 0.933 on code where index 57 buys 0.778.
+agent harness spends most of its time doing, and index 24 buys 0.933 on code where index 57 buys 0.864.
 
-Caveats kept with the numbers: GLM scored 373 of 403 items, the remainder skipped on the time budget rather
-than marked wrong; the two Qwen rows differ only in quantisation and are discussed below; per-family
-intervals at these counts are roughly ±0.10, so family-level ordering is indicative and the aggregate is
-where the ±0.045 applies.
+Per-family intervals at these counts are roughly ±0.10, so family-level ordering is indicative and the
+aggregate is where the ±0.045 applies. Rows are comparable only on the items both scored, which is why every
+paired claim below is made on the common item set rather than on the headline column.
+
+### Speculation is lossless — measured properly this time
+
+GLM-5.3-Flash scored 0.800 without its MTP head and 0.740 with it on the 400 W box, and the previous version
+of this file called that a bug in the speculator. It was not. A greedy sequence test could not settle it — its
+own control, the same server captured twice, matched on only 4 of 12 — so the question was put to the task
+suite as a **paired comparison on the items both arms actually scored**, same 600 W box, same recipe, same seed:
+
+| GLM-5.3-Flash, 367 common items | accuracy | truncated | mean output tokens |
+|---|---:|---:|---:|
+| no speculation | 0.872 | 0.000 | 1,996 |
+| MTP, 3 speculative tokens | 0.864 | 0.003 | 2,254 |
+| items only one arm got right | 13 base · 10 MTP | | |
+
+Thirteen against ten is a coin toss. The earlier gap came from comparing arms scored on **different item
+sets** under a cap that marked truncation wrong — and the MTP arm, being faster, was the one that finished the
+36 items the base arm timed out on. Speculation did not cost GLM anything; it bought the hardest items within
+the same wall-clock. The logit-level pass (above) is the other half of the answer: two identical servers
+differ on 3.8% of top-1 tokens, so no test that demands bit-exact output can attribute anything on this
+stack, and `box/specdiff.py` now refuses to.
 
 ### How to serve a model without accidentally measuring your own harness
 
@@ -320,7 +355,7 @@ Three independent errors, each worth more than any kernel choice in this reposit
 `box/lists/profiles.tsv` carries the researched recipe per model (parser, tool parser, template kwargs,
 sampling), applied by the harness to both the server and the eval client. Every pre-fix run is kept under
 `results/eval/capped/`, `no_parser/` and `pre_profiles/` so the size of each artefact stays measurable.
-The full re-run is in flight; the corrected table will replace this section rather than sit beside it.
+The re-run under these recipes is what the table above reports.
 
 ### Four quantisers of one model, on both axes at once
 
@@ -328,29 +363,34 @@ Throughput and quality are not a choice to make separately, so here they are tog
 Qwen3.8-27B weights through four quantisers, four TP1 replicas on the 600 W box, router at concurrency
 1,024 for speed and the 403-item suite for accuracy, one recipe and one seed throughout.
 
-| build | quantiser | kernel the engine used | out tok/s | quality | maths |
-|---|---|---|---:|---:|---:|
-| NVFP4 · gittensor (ModelOpt) | post-training | B12xNvFp4 **W4A4** | **5,161** | 0.725 | 0.650 |
-| **FP8 · Qwen's own release** | vendor | B12xFp8BlockScaledMM | 3,148 | **0.789** | **0.939** |
-| NVFP4 · RedHatAI | post-training | auto: FP8 attention + dequant MLP | 2,048 | 0.772 | 0.750 |
-| NVFP4 · unsloth | post-training | auto: same | 2,048 | 0.752 | 0.738 |
+Quality is given two ways: over every item the run scored, and over the **388 items all four runs scored**
+(the FP8 run lost 15 to the request timeout), which is the only column on which the builds are comparable.
+
+| build | quantiser | kernel the engine used | out tok/s | quality (all scored) | quality (388 common) | maths (common) |
+|---|---|---|---:|---:|---:|---:|
+| NVFP4 · gittensor (ModelOpt) | post-training | B12xNvFp4 **W4A4** | **5,161** | 0.725 | 0.762 | 0.785 |
+| **FP8 · Qwen's own release** | vendor | B12xFp8BlockScaledMM | 3,148 | 0.789 | **0.802** | **0.938** |
+| NVFP4 · RedHatAI | post-training | auto: FP8 attention + dequant MLP | 2,048 | 0.772 | **0.801** | 0.862 |
+| NVFP4 · unsloth | post-training | auto: same | 2,048 | 0.752 | 0.786 | 0.862 |
 
 Three things fall out, and only the first was expected.
 
-**The frontier has exactly two points.** The gittensor build (5,161 tok/s, 0.725) and the official FP8
-build (3,148, 0.789). The other two four-bit builds are **dominated on both axes** — slower *and* weaker
-than FP8 — because compressed-tensors mixed-precision checkpoints cannot use the fast W4A4 kernel and fall
-back to an FP8 attention path with a dequantised MLP. Choosing them is never right.
+**On throughput the frontier has exactly two points.** The gittensor build (5,161 tok/s) and the official FP8
+build (3,148). The other two four-bit builds were served under the auto kernel, which cannot use the W4A4
+path for compressed-tensors checkpoints and falls back to FP8 attention with a dequantised MLP — slower than
+FP8 itself. As measured, choosing them is never right on speed.
 
-**The four-bit build we benchmarked everything on is the weakest of the three four-bit builds.** 0.725
-against RedHat's 0.772, and 0.650 against 0.750 on maths. We picked it for kernel compatibility, not for
-measured quality, and that choice cost accuracy we did not know we were paying for. The honest statement
-is that our *throughput* numbers and our *quality* numbers come from the best and worst ends of the same
-format.
+**On quality, RedHat's four-bit build is at parity with FP8** — 0.801 against 0.802 on the common items —
+while the build every throughput number in this repository was measured on is the weakest of the three:
+0.762, and the FP8-vs-gittensor pair is a real difference (29 items only FP8 got right against 14 only
+NVFP4 got right, on 388 paired items). We picked the gittensor build for kernel compatibility, not for
+measured quality. So the open question is now sharp: **does RedHat's build load under the W4A4 kernel?** If
+it does, it is the Pareto point — FP8 accuracy at 5,000 tok/s — and that run is queued (`box/lists/fix600w.txt`).
 
-**The cost is concentrated in mathematics.** 0.650 against FP8's 0.939 — a 0.29 gap, where code, tools,
-long context and instruction following are all within noise. Whatever four-bit post-training quantisation
-damages, it is the part that does arithmetic reliably.
+**The cost that remains is concentrated in mathematics.** Even the parity build gives up 0.076 on maths
+(0.862 against 0.938); the gittensor build gives up 0.153. Code, tools, long context and instruction
+following are within noise for all three. Whatever four-bit post-training quantisation damages, it is the
+part that does arithmetic reliably.
 
 So: if the workload is routing, tool calls and code, take the four-bit build and the 64% throughput. If it
 has to do maths, FP8 is not a close call at any concurrency. The remaining question — whether a
@@ -369,10 +409,13 @@ the serving was fixed the aggregate gap collapsed, and I wrote that four-bit was
 | FP8 (official), TP2, 8× RTX 5090 | 0.740 | 0.700 | 0.733 | 0.814 | 0.979 | 0.443 | 0.867 | 0.114 |
 | NVFP4 (community PTQ), 4× PRO 6000 | 0.747 | 0.662 | 0.733 | 0.871 | 0.958 | 0.486 | 0.867 | 0.122 |
 | **FP8 (official), 4× PRO 6000** | **0.787** | **0.871** | 0.720 | 0.857 | 0.979 | 0.471 | 0.917 | 0.062 |
+| NVFP4 (community PTQ), 600 W box, 388 paired items | 0.762 | 0.785 | 0.680 | 0.865 | 0.917 | 0.471 | 0.933 | 0.103 |
+| **FP8 (official), 600 W box, 388 paired items** | **0.802** | **0.938** | 0.720 | 0.864 | 0.979 | 0.471 | 0.931 | 0.059 |
 
-Aggregate: 0.008 apart in one pair, 0.040 in the other — the second is at the edge of a ±0.045 interval.
-But **maths favours FP8 in both pairs, by 0.075 and 0.209**, and the four-bit build also truncates about
-twice as often, which is what a model that reasons longer without converging looks like.
+Aggregate: 0.008 apart in one pair, 0.040 in the next, 0.040 in the third, where the last is a paired
+comparison on identical items and comes out 29 to 14 in FP8's favour on the items only one side got right.
+**Maths favours FP8 in all three pairs, by 0.075, 0.209 and 0.153**, and the four-bit build also truncates
+about twice as often, which is what a model that reasons longer without converging looks like.
 
 A third row points at the mechanism. Nemotron-3-Super is **natively** NVFP4 — pre-trained in the format
 rather than compressed into it — and scores **0.946 on maths**, the highest of anything measured. So the

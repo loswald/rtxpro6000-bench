@@ -1,0 +1,11 @@
+# DeepSeek-V4-Flash-0731 (304B, native MXFP4 experts + FP8 attention), 4x TP, 600 W box.
+#
+# The first 600 W pass hard-coded moe=flashinfer_cutlass with mxfp8 activations and both arms died on
+# "Mxfp4 MoE backend FLASHINFER_CUTLASS_MXFP4_BF16 does not support the deployment configuration" - the same
+# mistake the rules already name (never hard-code a MoE backend). These are the recipes that actually served
+# this model on this GPU in the first campaign (launch_ds4flash_tp4_b12xmoe.sh, launch_ds4flash_tp4ep4.sh),
+# expressed as combos so the sweep keeps whichever this build accepts and measures every one that serves.
+# b12x MoE is W4A4 on the experts, auto is whatever this nightly picks, marlin is the W4A16 fallback.
+ds4flash|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-,b12x:marlin|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}
+ds4flash_ep|/workspace/models/DeepSeek-V4-Flash|4|b12x:-,b12x:marlin|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}
+ds4flash_dspark|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--speculative-config|{"method":"dspark","num_speculative_tokens":7,"draft_sample_method":"probabilistic"}
