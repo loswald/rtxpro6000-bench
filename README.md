@@ -12,7 +12,7 @@ prompts as concurrent slots, a unique seed per run, and controls launched minute
 **Workload shapes** (chosen for agent harnesses, not for leaderboards): `router` 1,024 in / 128 out ·
 `promptopt` 3,072-token shared prefix + 512 in / 256 out · `judge` 4,096 in / 512 out · `short` 256 / 64 ·
 `rollout` 8,192 / 2,048. Intelligence figures in brackets are the Artificial Analysis Intelligence Index
-v4.1.1.
+v4.2 (5 September 2026); a dash marks a model absent from its open-source view.
 
 ---
 
@@ -78,30 +78,30 @@ Other models on the same box:
 
 | model (AA index) | configuration | shape | out tok/s | in tok/s | TTFT p50 |
 |---|---|---|---:|---:|---:|
-| gpt-oss-120b (24) | 4 replicas, FlashInfer CUTLASS + mxfp8 | promptopt C2048 | **19,689** | 275,653 | 1.5 s |
+| gpt-oss-120b (16) | 4 replicas, FlashInfer CUTLASS + mxfp8 | promptopt C2048 | **19,689** | 275,653 | 1.5 s |
 | | | router C2048 | 9,948 | 79,581 | 1.0 s |
 | | | short C2048 | 16,017 | 64,066 | 1.3 s |
 | | | judge C1024 | 7,468 | 59,745 | 1.4 s |
-| gpt-oss-20b (24) | 4 replicas, mxfp8 activations | router C2048 | 13,752 | 110,017 | 0.7 s |
+| gpt-oss-20b (–) | 4 replicas, mxfp8 activations | router C2048 | 13,752 | 110,017 | 0.7 s |
 | | | judge C1024 | 9,152 | 73,217 | 1.0 s |
 | | 4 replicas, Marlin (the default) | router C2048 | 9,956 | 79,649 | 1.0 s |
-| gemma-4-26B-A4B (26) | 4 replicas, BF16, vendor recipe | router C1024 | 9,119 | 72,952 | 1.1 s |
+| gemma-4-26B-A4B (–) | 4 replicas, BF16, vendor recipe | router C1024 | 9,119 | 72,952 | 1.1 s |
 | | | promptopt C1024 | 15,502 | 217,028 | 1.2 s |
 | | | judge C512 | 7,229 | 57,832 | 1.4 s |
-| Muse-Glimmer-30B (35) | 4 replicas, BF16, vendor recipe | router C1024 | 3,029 | 24,232 | 3.5 s |
+| Muse-Glimmer-30B (24) | 4 replicas, BF16, vendor recipe | router C1024 | 3,029 | 24,232 | 3.5 s |
 | | | promptopt C1024 | 7,751 | 108,514 | 4.8 s |
 | | | judge C512 | 2,627 | 21,016 | 4.7 s |
-| DeepSeek-V4-Flash (52) | TP4, `b12x` W4A4 experts, 256 seqs (this box) | router C256 | 1,107 | 8,855 | 3.7 s |
+| DeepSeek-V4-Flash (41) | TP4, `b12x` W4A4 experts, 256 seqs (this box) | router C256 | 1,107 | 8,855 | 3.7 s |
 | | | promptopt C1024 | 2,387 | 33,411 | 45.7 s ⁱ |
 | | | judge C512 | 1,082 | 8,656 | 121 s ⁱ |
-| DeepSeek-V4-Flash (52) | TP1 × DP4 + expert parallel (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
+| DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
-| **GLM-5.3-Flash (57)** | TP4, ported vendor vLLM | promptopt C256 | 1,002 | 14,030 | 2.7 s |
+| **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM | promptopt C256 | 1,002 | 14,030 | 2.7 s |
 | | | router C256 | 920 | 7,362 | 2.2 s |
 | | | judge C128 | 771 | 6,165 | 2.1 s |
 
-GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — three points below the
-60-point ceiling only 750B–2.8T models reach. Getting it to produce *correct* output on this card took a
+GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — four points below the top
+open score (Kimi K3, 50), which only 750B–2.8T models reach. Getting it to produce *correct* output on this card took a
 day; see "GLM-5.3-Flash" below.
 
 ### 4× RTX PRO 6000 Blackwell, Workstation Edition, 400 W cap
@@ -115,22 +115,22 @@ box are directly comparable, which is why both hosts run the quality suite.
 
 | model (AA) | shape | out tok/s | in tok/s | TTFT p50 | tripwire |
 |---|---|---:|---:|---:|---|
-| gpt-oss-20b (24), 4 replicas | promptopt C256 | **13,442** | 188,192 | 0.6 s | 20/20 |
+| gpt-oss-20b (–), 4 replicas | promptopt C256 | **13,442** | 188,192 | 0.6 s | 20/20 |
 | | router C256 | 10,291 | 82,332 | 0.7 s | |
-| Nemotron-3.5-Lightning-30B (24) | router C256 | 8,037 | 64,296 | 1.2 s | 18/20 |
+| Nemotron-3.5-Lightning-30B (16, estimate) | router C256 | 8,037 | 64,296 | 1.2 s | 18/20 |
 | | judge C128 | 6,317 | 50,533 | 1.0 s | |
-| Qwen3.6-35B-A3B (32) | promptopt C256 | 7,680 | 107,518 | 1.2 s | 16/20 |
+| Qwen3.6-35B-A3B (–) | promptopt C256 | 7,680 | 107,518 | 1.2 s | 16/20 |
 | | router C256 | 6,903 | 55,220 | 0.8 s | |
-| gemma-4-26B-A4B (26) | promptopt C256 | 7,705 | 107,870 | 1.1 s | 19/20 |
+| gemma-4-26B-A4B (–) | promptopt C256 | 7,705 | 107,870 | 1.1 s | 19/20 |
 | gemma-4-26B-A4B **+ official MTP** | promptopt C256 | **9,560** | 133,834 | **0.22 s** | 20/20 |
 | | judge C128 | 4,720 | 37,764 | 0.47 s | |
 | Laguna-S-2.1 (agentic coder) | promptopt C256 | 4,527 | 63,382 | 1.6 s | 20/20 |
 | | router C256 | 2,850 | 22,803 | 1.2 s | |
 | Laguna-S-2.1 **+ DFlash drafter** | judge C128 | **2,455** | 19,643 | **0.63 s** | 20/20 |
-| Nemotron-3-Super-120B (26) | router C256 | 2,845 | 22,761 | 1.9 s | 20/20 |
+| Nemotron-3-Super-120B (–) | router C256 | 2,845 | 22,761 | 1.9 s | 20/20 |
 | Qwen3.8-27B **+ DFlash2 drafter** | judge C128 | 2,682 | 21,458 | 1.0 s | 20/20 |
 | Ornith-1.5-397B | router C256 | 877 | 7,017 | 2.4 s | 20/20 |
-| Hy3 (42) | promptopt C256 | 1,821 | 25,488 | 3.6 s | 20/20 |
+| Hy3 (–) | promptopt C256 | 1,821 | 25,488 | 3.6 s | 20/20 |
 
 **Speculative decoding buys latency, not throughput.** Every drafter measured loses output tokens per second
 at saturation and cuts time-to-first-token by 2–5×: Nemotron-3.5 with NVIDIA's DSpark drafter goes from
@@ -189,7 +189,7 @@ put a number on it rather than an inference.
 
 ---
 
-## GLM-5.3-Flash: getting the index-57 model to work
+## GLM-5.3-Flash: getting the index-46 model to work
 
 Neither vLLM 0.28.1 nor SGLang 0.5.18 knows the `glm5_next` architecture; both vendors ship it as a
 per-model Docker image. `box/pull_image.py` lifts those images' Python trees over the registry API without
@@ -274,20 +274,20 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 
 | model (AA index) · configuration | items | overall | maths | code | tools | long ctx | knowledge | instructions |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| **GLM-5.3-Flash (57)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
-| **DeepSeek-V4-Flash (52)** · native MXFP4 + FP8, TP4, **DSpark speculation** | 403 | **0.831** ⁴ | 0.938 | 0.720 | 0.871 | 0.958 | **0.657** | 0.883 |
-| DeepSeek-V4-Flash (52) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
-| GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
-| Qwen3.8-27B (52) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
-| Muse-Glimmer-30B (35) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
-| Qwen3.8-27B (52) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
-| Nemotron-3-Super (26) · **native** NVFP4 | 379 ¹ | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
-| Qwen3.8-27B (52) · NVFP4, RedHatAI | 403 | 0.772 | 0.750 | 0.760 | 0.857 | 0.938 | 0.486 | **0.917** |
+| **GLM-5.3-Flash (46)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
+| **DeepSeek-V4-Flash (41)** · native MXFP4 + FP8, TP4, **DSpark speculation** | 403 | **0.831** ⁴ | 0.938 | 0.720 | 0.871 | 0.958 | **0.657** | 0.883 |
+| DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
+| GLM-5.3-Flash (46) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
+| Qwen3.8-27B (41) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
+| Muse-Glimmer-30B (24) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
+| Qwen3.8-27B (41) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
+| Nemotron-3-Super (–) · **native** NVFP4 | 379 ¹ | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
+| Qwen3.8-27B (41) · NVFP4, RedHatAI | 403 | 0.772 | 0.750 | 0.760 | 0.857 | 0.938 | 0.486 | **0.917** |
 | Step-3.7-Flash · NVFP4 | 403 | 0.767 | 0.688 | 0.760 | 0.871 | 0.958 | 0.529 | 0.883 |
-| Qwen3.8-27B (52) · NVFP4, unsloth | 403 | 0.752 | 0.738 | 0.760 | 0.814 | 0.938 | 0.471 | 0.867 |
-| gpt-oss-120b (24) · native MXFP4 | 403 | 0.742 | 0.731 | **0.933** | **0.923** | 0.857 | 0.385 | 0.700 |
-| Qwen3.8-27B (52) · NVFP4, gittensor (the fast build) | 403 | 0.725 | 0.650 | 0.680 | 0.843 | 0.917 | 0.471 | 0.883 |
-| gpt-oss-20b (24) · native MXFP4 | 403 | 0.712 | 0.700 | 0.773 | 0.857 | 0.833 | 0.429 | 0.717 |
+| Qwen3.8-27B (41) · NVFP4, unsloth | 403 | 0.752 | 0.738 | 0.760 | 0.814 | 0.938 | 0.471 | 0.867 |
+| gpt-oss-120b (16) · native MXFP4 | 403 | 0.742 | 0.731 | **0.933** | **0.923** | 0.857 | 0.385 | 0.700 |
+| Qwen3.8-27B (41) · NVFP4, gittensor (the fast build) | 403 | 0.725 | 0.650 | 0.680 | 0.843 | 0.917 | 0.471 | 0.883 |
+| gpt-oss-20b (–) · native MXFP4 | 403 | 0.712 | 0.700 | 0.773 | 0.857 | 0.833 | 0.429 | 0.717 |
 | Qwen3.6-35B-A3B · FP8 | 403 | 0.702 | 0.537 | 0.627 | 0.871 | 0.958 | 0.543 | 0.800 |
 | gemma-4-26B-A4B · BF16, thinking on, T=0 | 403 | 0.628 ² | 0.812 | 0.560 | 0.843 | 0.604 | 0.286 | 0.633 |
 
@@ -309,16 +309,20 @@ It lost no items to the timeout, but **17% of its code answers ran past the 20,4
 past 32,768): like GLM, it reasons past the caps that were generous for every smaller model. A 65k-token arm
 is queued for it too. Statistically it ties GLM — the two are inside each other's intervals.
 
-**The published intelligence index does predict this.** GLM-5.3-Flash at index 57 leads, and it leads on the
+**The published intelligence index does predict this.** GLM-5.3-Flash at index 46 leads, and it leads on the
 families that separate models rather than saturate: maths, knowledge and long context. An earlier version of
 this file claimed the opposite — that small models beat it and the index was useless for our workloads. That
 claim was an artefact of a broken harness, not a finding, and it is withdrawn. What survives is narrower and
 more useful: **gpt-oss is disproportionately good at code and tool calling for its size**, which is what an
-agent harness spends most of its time doing, and index 24 buys 0.933 on code where index 57 buys 0.864.
+agent harness spends most of its time doing, and index 16 buys 0.933 on code where index 46 buys 0.864.
 
-Two candidates named for this node are not on the table. **Kimi K3 is 2.78 trillion parameters** (a community
-W4A4 build exists, at ~1.4 TB); it does not fit 384 GB at any precision and belongs to the 7-GPU node or an
-API. DeepSeek-V4-Flash does fit — 156 GB, native MXFP4 experts and FP8 attention — and scores 0.801 above,
+The v4.2 chart, sized against 384 GB: every model above GLM-5.3-Flash overflows the node — **Kimi K3 (50) is
+2.78 trillion parameters** (a community W4A4 build exists, at ~1.4 TB), GLM-5.3 (49) is 753B and ~450 GB at
+four-bit, Qwen3.8-2.4T-A95B (47) and DeepSeek V4 Pro 0813 (42, 1.65T) are larger still. So 46 stays the
+ceiling: 92% of the top open score. Below it, the one fittable model not yet measured is **K2 Horizon
+375B-A23B (38)** — MBZUAI's IFM, released 1 September, Apache-2.0, 23B active. Its FP8 release is 375 GB and
+does not fit; a four-bit build (~225 GB) would, and none exists yet; the `k2_horizon` architecture is custom
+code with no engine support confirmed. It is on the roster as blocked on a quantisation. DeepSeek-V4-Flash does fit — 156 GB, native MXFP4 experts and FP8 attention — and scores 0.801 above,
 after three failed launches: one hard-coded a MoE backend this build rejects, two blamed the wrong flag for a
 DeepGEMM assertion that was the attention output projection needing its sm_120 fallback (rule 6).
 
