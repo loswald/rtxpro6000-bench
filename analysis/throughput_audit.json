@@ -1,0 +1,508 @@
+{
+  "date": "2026-09-05",
+  "scope": [
+    "DeepSeek-V4-Flash",
+    "Qwen3.8-Flash-Next",
+    "GLM-5.3-Flash"
+  ],
+  "runs": [
+    {
+      "path": "results/probe/ds4flash_dp4ep4/ds4flash_dp4ep4____c.json",
+      "sha256": "8019875e7186ca14446f9b884f7b589967e2a4175c2bbb61d643b88ad752ed9d",
+      "log": "results/probe/ds4flash_dp4ep4/ds4flash_dp4ep4____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "rollout",
+      "concurrency": 32,
+      "completed": 32,
+      "requested": 32,
+      "failed": 0,
+      "output_tok_s": 946.2501127456086,
+      "total_tok_s": 4731.250563728043,
+      "duration_s": 69.25864432379603,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 65536,
+      "params": {
+        "seed": 9483,
+        "random_input_len": 8192,
+        "random_output_len": 2048,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds4flash_tp4_b12xmoe/ds4flash_tp4_b12xmoe____c.json",
+      "sha256": "0a2ba8b814dd29bf16e1f6d5eb91d4205ebdfe79b802dab8a2413e029d672f4a",
+      "log": "results/probe/ds4flash_tp4_b12xmoe/ds4flash_tp4_b12xmoe____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "rollout",
+      "concurrency": 64,
+      "completed": 64,
+      "requested": 64,
+      "failed": 0,
+      "output_tok_s": 1004.1402969406053,
+      "total_tok_s": 5020.701484703026,
+      "duration_s": 130.531560579082,
+      "total_input_tokens": 524288,
+      "total_output_tokens": 131072,
+      "params": {
+        "seed": 9515,
+        "random_input_len": 8192,
+        "random_output_len": 2048,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds4flash_tp4_b12xmoe_dspark/ds4flash_tp4_b12xmoe_dspark____c.json",
+      "sha256": "ee201434397eab1c521aceef673bd1d4bb9580fc61ee1b5c950f775f8b56aaff",
+      "log": "results/probe/ds4flash_tp4_b12xmoe_dspark/ds4flash_tp4_b12xmoe_dspark____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "rollout",
+      "concurrency": 16,
+      "completed": 32,
+      "requested": 32,
+      "failed": 0,
+      "output_tok_s": 458.2759443450951,
+      "total_tok_s": 2291.3797217254755,
+      "duration_s": 143.0055424219463,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 65536,
+      "params": {
+        "seed": 9467,
+        "random_input_len": 8192,
+        "random_output_len": 2048,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds4flash_tp4_router_c64.json",
+      "sha256": "a8297078763b1ee31e0517d9a270fe8f2ad462ad1a0409037694e69c2acc98b1",
+      "log": null,
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 64,
+      "completed": 256,
+      "requested": 256,
+      "failed": 0,
+      "output_tok_s": 564.7855559964388,
+      "total_tok_s": 5083.07000396795,
+      "duration_s": 58.01848091208376,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 32768,
+      "params": {},
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds4flash_tp4ep4/ds4flash_tp4ep4____c.json",
+      "sha256": "9f337d3ed9281b3b74824d8e4830b7c3752cbc76cc25fec93b909f0032da3910",
+      "log": "results/probe/ds4flash_tp4ep4/ds4flash_tp4ep4____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 256,
+      "completed": 256,
+      "requested": 256,
+      "failed": 0,
+      "output_tok_s": 1543.6756814621785,
+      "total_tok_s": 13893.081133159607,
+      "duration_s": 21.227256731130183,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 32768,
+      "params": {
+        "seed": 1234,
+        "random_input_len": 512,
+        "random_output_len": 256,
+        "random_prefix_len": 3072
+      },
+      "status": "invalid",
+      "reasons": [
+        "legacy metadata and cache reset verification absent",
+        "same seed reused at different concurrency with prefix cache enabled",
+        "generated token count differs from fixed output target"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds4flash_tp4ep4_marlin/ds4flash_tp4ep4____c.json",
+      "sha256": "9f337d3ed9281b3b74824d8e4830b7c3752cbc76cc25fec93b909f0032da3910",
+      "log": "results/probe/ds4flash_tp4ep4_marlin/ds4flash_tp4ep4____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 256,
+      "completed": 256,
+      "requested": 256,
+      "failed": 0,
+      "output_tok_s": 1543.6756814621785,
+      "total_tok_s": 13893.081133159607,
+      "duration_s": 21.227256731130183,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 32768,
+      "params": {
+        "seed": 1234,
+        "random_input_len": 512,
+        "random_output_len": 256,
+        "random_prefix_len": 3072
+      },
+      "status": "invalid",
+      "reasons": [
+        "legacy metadata and cache reset verification absent",
+        "same seed reused at different concurrency with prefix cache enabled",
+        "generated token count differs from fixed output target"
+      ],
+      "quality_evaluated": false,
+      "duplicate_of": "results/probe/ds4flash_tp4ep4/ds4flash_tp4ep4____c.json"
+    },
+    {
+      "path": "results/probe/ds4flash_tp4ep4_marlin/ds4flash_tp4ep4_marlin____c.json",
+      "sha256": "dc498ca63418a70dcfd5bf7e563cd73222dfbaad958c00779d3f94ecc728b87e",
+      "log": "results/probe/ds4flash_tp4ep4_marlin/ds4flash_tp4ep4_marlin____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "rollout",
+      "concurrency": 64,
+      "completed": 64,
+      "requested": 64,
+      "failed": 0,
+      "output_tok_s": 1523.1777225412682,
+      "total_tok_s": 7615.888612706341,
+      "duration_s": 86.05167871108279,
+      "total_input_tokens": 524288,
+      "total_output_tokens": 131072,
+      "params": {
+        "seed": 1234,
+        "random_input_len": 8192,
+        "random_output_len": 2048,
+        "random_prefix_len": 0
+      },
+      "status": "invalid",
+      "reasons": [
+        "legacy metadata and cache reset verification absent",
+        "same seed reused at different concurrency with prefix cache enabled"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds4flash_tp4ep4_marlin_v2/ds4flash_tp4ep4_marlin_v2____c.json",
+      "sha256": "dcb9bac26d585d54a6d22ee0abe3e638708005a46c95f5c18851fb5bdb06768a",
+      "log": "results/probe/ds4flash_tp4ep4_marlin_v2/ds4flash_tp4ep4_marlin_v2____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "rollout",
+      "concurrency": 32,
+      "completed": 32,
+      "requested": 32,
+      "failed": 0,
+      "output_tok_s": 827.8134654365884,
+      "total_tok_s": 4139.067327182942,
+      "duration_s": 79.16759358998388,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 65536,
+      "params": {
+        "seed": 9483,
+        "random_input_len": 8192,
+        "random_output_len": 2048,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds_marlin_ep/ds_marlin_ep__judge__c256__p8000.json",
+      "sha256": "5e125ff9d18e3de2bb5420a1a8078feba8a4e4ca9867d0782743e55068e021bd",
+      "log": "results/probe/ds_marlin_ep/judge_c256.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "judge",
+      "concurrency": 256,
+      "completed": 304,
+      "requested": 2048,
+      "failed": 1744,
+      "output_tok_s": 911.8792420115554,
+      "total_tok_s": 9670.759498770276,
+      "duration_s": 142.16246409341693,
+      "total_input_tokens": 1245184,
+      "total_output_tokens": 129635,
+      "params": {
+        "seed": 11352,
+        "random_input_len": 4096,
+        "random_output_len": 512,
+        "random_prefix_len": 0
+      },
+      "status": "invalid",
+      "reasons": [
+        "legacy metadata and cache reset verification absent",
+        "failed or partial requests",
+        "generated token count differs from fixed output target"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds_marlin_ep/ds_marlin_ep__promptopt__c512__p8000.json",
+      "sha256": "3fce22bdd54fa81ae9598ce67f47ae1cb59ccf763b4dab8d0175459e0d630705",
+      "log": "results/probe/ds_marlin_ep/promptopt_c512.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "promptopt",
+      "concurrency": 512,
+      "completed": 2048,
+      "requested": 2048,
+      "failed": 0,
+      "output_tok_s": 3002.2564061822136,
+      "total_tok_s": 45033.846092733205,
+      "duration_s": 174.63132026977837,
+      "total_input_tokens": 7340032,
+      "total_output_tokens": 524288,
+      "params": {
+        "seed": 8024,
+        "random_input_len": 512,
+        "random_output_len": 256,
+        "random_prefix_len": 3072
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds_marlin_ep/ds_marlin_ep__router__c1024__p8000.json",
+      "sha256": "d5a83263a529acfe4dfbfa6d3aa9e07f3db3b0d77931a491b892448bf084d782",
+      "log": "results/probe/ds_marlin_ep/router_c1024.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 1024,
+      "completed": 976,
+      "requested": 2048,
+      "failed": 1072,
+      "output_tok_s": 1182.1703855939036,
+      "total_tok_s": 10639.533470345132,
+      "duration_s": 105.67681403830647,
+      "total_input_tokens": 999424,
+      "total_output_tokens": 124928,
+      "params": {
+        "seed": 9048,
+        "random_input_len": 1024,
+        "random_output_len": 128,
+        "random_prefix_len": 0
+      },
+      "status": "invalid",
+      "reasons": [
+        "legacy metadata and cache reset verification absent",
+        "failed or partial requests"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds_marlin_ep/ds_marlin_ep__router__c256__p8000.json",
+      "sha256": "134a905c5568e604fb774188580f8bac97117b796194d9745ed5f2f8b940d0fa",
+      "log": "results/probe/ds_marlin_ep/router_c256.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 256,
+      "completed": 2048,
+      "requested": 2048,
+      "failed": 0,
+      "output_tok_s": 1084.345296639729,
+      "total_tok_s": 9759.10766975756,
+      "duration_s": 241.75325038284063,
+      "total_input_tokens": 2097152,
+      "total_output_tokens": 262144,
+      "params": {
+        "seed": 8280,
+        "random_input_len": 1024,
+        "random_output_len": 128,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/ds_marlin_ep/ds_marlin_ep__router__c512__p8000.json",
+      "sha256": "c866ee23b69a1e2e4ed9dd49fbf89fbef5d0a5e6b3a51d9d2adb5533b0956f4c",
+      "log": "results/probe/ds_marlin_ep/router_c512.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 512,
+      "completed": 2048,
+      "requested": 2048,
+      "failed": 0,
+      "output_tok_s": 1206.8115655606039,
+      "total_tok_s": 10861.304090045436,
+      "duration_s": 217.22032459825277,
+      "total_input_tokens": 2097152,
+      "total_output_tokens": 262144,
+      "params": {
+        "seed": 8536,
+        "random_input_len": 1024,
+        "random_output_len": 128,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/gen5_ds4_tp4ep4/gen5_ds4_tp4ep4____c.json",
+      "sha256": "0b0b6bee9e7b81719d259f02d9f104aa49539c8e1010c95873a729ed15954aa1",
+      "log": "results/probe/gen5_ds4_tp4ep4/gen5_ds4_tp4ep4____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "judge",
+      "concurrency": 16,
+      "completed": 64,
+      "requested": 64,
+      "failed": 0,
+      "output_tok_s": 521.8575800363001,
+      "total_tok_s": 4696.7182203267,
+      "duration_s": 62.791077975183725,
+      "total_input_tokens": 262144,
+      "total_output_tokens": 32768,
+      "params": {
+        "seed": 5345,
+        "random_input_len": 4096,
+        "random_output_len": 512,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/n_ds4_tp4_b12x/n_ds4_tp4_b12x____c.json",
+      "sha256": "3818d193f1746d241766fc84199c29ae054a3db484a2891567123ab08d32a97a",
+      "log": "results/probe/n_ds4_tp4_b12x/n_ds4_tp4_b12x____c.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "rollout",
+      "concurrency": 64,
+      "completed": 64,
+      "requested": 64,
+      "failed": 0,
+      "output_tok_s": 1168.0963357794003,
+      "total_tok_s": 5840.481678897002,
+      "duration_s": 112.20992309041321,
+      "total_input_tokens": 524288,
+      "total_output_tokens": 131072,
+      "params": {
+        "seed": 9515,
+        "random_input_len": 8192,
+        "random_output_len": 2048,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/vllm_dp4/vllm_dp4__promptopt__c512__p8000.json",
+      "sha256": "7c70005f512b6f695c0c5fb0b01f119d99472deb321d07b37cc2b1ee4c80a94b",
+      "log": "results/probe/vllm_dp4/promptopt_c512.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "promptopt",
+      "concurrency": 512,
+      "completed": 3072,
+      "requested": 3072,
+      "failed": 0,
+      "output_tok_s": 3682.9965846948435,
+      "total_tok_s": 55244.94877042265,
+      "duration_s": 213.5304722432047,
+      "total_input_tokens": 11010048,
+      "total_output_tokens": 786432,
+      "params": {
+        "seed": 5512,
+        "random_input_len": 512,
+        "random_output_len": 256,
+        "random_prefix_len": 3072
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/vllm_dp4/vllm_dp4__router__c256__p8000.json",
+      "sha256": "153c3d5b34b11ae5ebf1f559fe16b0582bae5c96bde2a706f3757ceba4f4ec90",
+      "log": "results/probe/vllm_dp4/router_c256.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 256,
+      "completed": 1536,
+      "requested": 1536,
+      "failed": 0,
+      "output_tok_s": 1326.2921466461116,
+      "total_tok_s": 11936.629319815005,
+      "duration_s": 148.23883297294378,
+      "total_input_tokens": 1572864,
+      "total_output_tokens": 196608,
+      "params": {
+        "seed": 5256,
+        "random_input_len": 1024,
+        "random_output_len": 128,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    },
+    {
+      "path": "results/probe/vllm_dp4/vllm_dp4__router__c512__p8000.json",
+      "sha256": "486967ae1b0ed772b5ac4077175de63358d9ccc3f8deb5430cd175cfb7bdb982",
+      "log": "results/probe/vllm_dp4/router_c512.log",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "shape": "router",
+      "concurrency": 512,
+      "completed": 3072,
+      "requested": 3072,
+      "failed": 0,
+      "output_tok_s": 1474.7721875768211,
+      "total_tok_s": 13272.94968819139,
+      "duration_s": 266.628299145028,
+      "total_input_tokens": 3145728,
+      "total_output_tokens": 393216,
+      "params": {
+        "seed": 5512,
+        "random_input_len": 1024,
+        "random_output_len": 128,
+        "random_prefix_len": 0
+      },
+      "status": "provenance_unknown",
+      "reasons": [
+        "legacy metadata and cache reset verification absent"
+      ],
+      "quality_evaluated": false
+    }
+  ],
+  "note": "Legacy data are candidate-selection evidence. No retrospective integrity or quality pass is invented.",
+  "scope_note": "Original local snapshot only; live host1 findings supersede no-run claims. See analysis/throughput_audit.md and results/live_20260905_host1.",
+  "not_run_in_original_local_snapshot": [
+    "Qwen3.8-Flash-Next",
+    "GLM-5.3-Flash"
+  ],
+  "live_host1_snapshot": "results/live_20260905_host1/manifest.json",
+  "live_host1_candidate_screen": "analysis/glm_candidate_screen.json"
+}

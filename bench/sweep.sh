@@ -89,6 +89,11 @@ for c in $CONCS; do                        # validate: `abc` would die deep insi
 done
 
 load_cell "$CELL"
+# Reset before each measured point, after warm-up. Preserve caching WITHIN a
+# workload; prevent reuse across warm-up, concurrency points and repeated A/Bs.
+CACHE_POLICY="${CACHE_POLICY:-reset}"
+case "$CACHE_POLICY" in reset|uncontrolled) ;; *) die "CACHE_POLICY must be reset or uncontrolled" ;; esac
+DATASET_SHA256=""
 if [ "$LOADTEST_ONLY" = 1 ]; then die "cell $CELL_NAME is LOADTEST_ONLY (attempt-to-load); nothing to sweep"; fi
 SPEC_DECODING=off; if [ -n "${SPEC_CONFIG:-}" ]; then SPEC_DECODING=on; fi   # same spelling as launch.json
 [ "$DRY" = 1 ] || mkdir -p "$RESULTS_DIR"
@@ -98,6 +103,7 @@ warn_if_no_decisions
 if [ -n "$DATASET_PATH" ]; then
   [ -f "$DATASET_PATH" ] || die "dataset not found: $DATASET_PATH"
   SHAPES="$SHAPE_LABEL"
+  DATASET_SHA256="$(python3 -c 'import hashlib,sys; print(hashlib.sha256(open(sys.argv[1], "rb").read()).hexdigest())' "$DATASET_PATH")"
 fi
 
 # ---- which bench client? -----------------------------------------------------------
@@ -243,6 +249,9 @@ run_one() {
   local ts run_id
   ts="$(date +%Y%m%dT%H%M%S)"
   run_id="${CELL_NAME}${RUN_TAG:+__$RUN_TAG}__${shape}__c${C}__${ts}"
+  # Stable across configurations for paired inputs, distinct across shapes/C.
+  local point_seed cache_verified=0
+  point_seed="$(python3 -c 'import hashlib,sys; print(int.from_bytes(hashlib.sha256("|".join(sys.argv[1:]).encode()).digest()[:4], "big") % 2147483647)' "$BENCH_SEED" "$shape" "$C")"
   bench_common_args "$in_len" "$out_len"
 
   # concurrency split across replicas
@@ -251,6 +260,7 @@ run_one() {
     active=$(( C < REPLICAS ? C : REPLICAS )); base=$(( C / active )); rem=$(( C % active ))
   fi
   local total_np; total_np="$(shape_num_prompts "$shape" "$C")"
+  [ "$total_np" -ge "$C" ] || die "num_prompts=$total_np cannot reach requested concurrency C=$C"
   local est est_meas=""
   est="$(est_run_minutes "$total_np" "$in_len" "$out_len")"
   if [ -n "$LAST_TOTAL_TPS" ]; then est_meas="$(est_run_minutes "$total_np" "$in_len" "$out_len" "$LAST_TOTAL_TPS")"; fi
@@ -262,6 +272,17 @@ run_one() {
         "concurrency=$C" "num_prompts=$total_np" "est_minutes=$est" "max_run_minutes=$MAX_RUN_MINUTES" "reason=time_budget"
     return 0
   fi
+  if [ "$DRY" = 0 ] && [ "$CACHE_POLICY" = reset ]; then
+    python3 "$HERE/cache_control.py" --engine "$ENGINE" --ports "${PORTS[@]}" \
+      --out "$RESULTS_DIR/$run_id.cache.json" || die "cache reset failed; inspect $run_id.cache.json"
+    cache_verified=1
+  fi
+  # High-concurrency historical runs failed with EMFILE. Raise only this process's
+  # soft descriptor limit, within the existing hard limit; the server does likewise.
+  local fd_limit; fd_limit="$(ulimit -Hn)"
+  if [ "$fd_limit" = unlimited ] || [ "$fd_limit" -gt 65536 ]; then fd_limit=65536; fi
+  ulimit -Sn "$fd_limit" || die "could not set benchmark file descriptor limit"
+  if [ "$fd_limit" -lt $((C * 2 + 128)) ]; then die "descriptor limit $fd_limit too small for C=$C"; fi
   local started; started="$(date -Is)"
   RUNS_ATTEMPTED=$((RUNS_ATTEMPTED + 1))
   [ "$DRY" = 1 ] || dmon_start "$RESULTS_DIR/$run_id.dmon.csv"
@@ -269,11 +290,11 @@ run_one() {
   for ((i = 0; i < active; i++)); do
     port=${TARGET_PORTS[$i]}
     ci=$(( base + (i < rem ? 1 : 0) ))
-    npi=$(( (total_np + active - 1) / active ))
+    npi=$(( total_np / active + (i < total_np % active ? 1 : 0) ))
     np_sum=$(( np_sum + npi ))
     if [ "$MODE" = per-port ]; then fname="${run_id}__p${port}.json"; else fname="${run_id}.json"; fi
     ports_used+=( "$port" ); concs_used+=( "$ci" )
-    run_bench "$port" "$ci" "$npi" "$fname" "$((BENCH_SEED + i))" "$run_id" "$shape" "$in_len" "$out_len" "$C" &
+    run_bench "$port" "$ci" "$npi" "$fname" "$((point_seed + i))" "$run_id" "$shape" "$in_len" "$out_len" "$C" &
     pids+=( $! )
   done
   local p
@@ -283,17 +304,30 @@ run_one() {
   local ended; ended="$(date -Is)"
   write_json "$RESULTS_DIR/$run_id.meta.json" \
     "run_id=$run_id" "cell=$CELL_NAME" "run_tag=${RUN_TAG:-}" "engine=$ENGINE" "engine_version=$ENGINE_VERSION" \
-    "model=$MODEL" "model_path=$MODEL_PATH" "model_source=$MODEL_SOURCE" "tp=$TP" "dp=$DP" "replicas=$REPLICAS" \
+    "model=$MODEL" "model_path=$MODEL_PATH" "model_source=$MODEL_SOURCE" "tp=$TP" "dp=$DP" "replicas=$REPLICAS" "enable_ep=$ENABLE_EP" \
     "kv_cache_dtype=$KV_CACHE_DTYPE" "max_num_batched_tokens=$MAX_NUM_BATCHED_TOKENS" "max_num_seqs=$MAX_NUM_SEQS" \
     "max_model_len=$MAX_MODEL_LEN" "shape=$shape" "in_len=$in_len" "out_len=$out_len" "concurrency=$C" "num_prompts=$np_sum" \
     "mode=$MODE" "ports=$(IFS=,; echo "${ports_used[*]}")" "replica_concurrencies=$(IFS=,; echo "${concs_used[*]}")" \
-    "dataset_path=${DATASET_PATH:-}" "gpu_ids=$GPU_IDS" \
+    "dataset_path=${DATASET_PATH:-}" "dataset_sha256=$DATASET_SHA256" "gpu_ids=$GPU_IDS" \
+    "seed=$point_seed" "cache_policy=$CACHE_POLICY" "cache_reset_verified=$cache_verified" \
+    "ignore_eos=1" "output_length_mode=$([ "$out_len" = -1 ] && echo variable || echo fixed)" \
+    "expected_total_output_tokens=${EXPECTED_TOTAL_OUTPUT_TOKENS:-}" \
     "p2p_ok=$P2P_OK" "p2p_disabled=$P2P_DISABLED" "custom_allreduce=$CUSTOM_ALLREDUCE" \
     "acs_suspected=$ACS_SUSPECTED" "pessimistic_tp=$CELL_PESSIMISTIC_TP" "hw_pessimistic_tp=$PESSIMISTIC_TP" \
     "hw_decisions_file=$HW_DECISIONS_SOURCE" "spec_decoding=$SPEC_DECODING" \
     "bench_backend=$BENCH_BACKEND" "bench_endpoint=$BENCH_ENDPOINT" "bench_client=${BENCH_CMD[*]}" \
     "est_minutes=$est" "est_total_tok_s=$EST_TOTAL_TOK_S" \
     "started=$started" "ended=$ended" "bench_exit_code=$rc" "gpu_mem_used_mib_after=$(gpu_mem_now)"
+  local result_files=()
+  for port in "${ports_used[@]}"; do
+    if [ "$MODE" = per-port ]; then result_files+=( "$RESULTS_DIR/${run_id}__p${port}.json" )
+    else result_files+=( "$RESULTS_DIR/${run_id}.json" ); fi
+  done
+  if ! python3 "$HERE/run_integrity.py" --meta "$RESULTS_DIR/$run_id.meta.json" \
+      --out "$RESULTS_DIR/$run_id.integrity.json" "${result_files[@]}" > /dev/null; then
+    log "WARN: run is ineligible for headline/cost claims; see $run_id.integrity.json"
+    rc=1
+  fi
   if [ "$rc" -ne 0 ]; then
     log "WARN: bench exited $rc for $run_id (see $RESULTS_DIR/${run_id}*.bench.log)"
     local bl; bl="$(ls "$RESULTS_DIR/${run_id}"*.bench.log 2>/dev/null | head -n1 || true)"
@@ -307,10 +341,9 @@ run_one() {
   else
     # one-line readout from the JSON(s); also feeds the running time estimate
     local readout tps
-    readout="$(python3 - "$RESULTS_DIR" "$run_id" <<'PY' 2>/dev/null || true
-import glob, json, os, sys
-d, rid = sys.argv[1], sys.argv[2]
-files = [f for f in glob.glob(os.path.join(d, rid + "*.json")) if not (f.endswith(".meta.json") or f.endswith(".skipped.json"))]
+    readout="$(python3 - "${result_files[@]}" <<'PY' 2>/dev/null || true
+import json, sys
+files = sys.argv[1:]
 rq = ot = tt = 0.0; c = n = 0; dur = 0.0
 for f in files:
     j = json.load(open(f))

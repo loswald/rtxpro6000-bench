@@ -1,0 +1,742 @@
+{
+  "generated_utc": "2026-09-05T20:43:33Z",
+  "container_id": null,
+  "public_ip": null,
+  "decision_rules": {
+    "p2p_ok": "peer access supported on all GPU pairs (bandwidth/latency recorded, never used to disable P2P)",
+    "nccl_p2p_disable": "never set automatically; human decision only (HUMAN_DECISION=1 in decisions.env)",
+    "custom_allreduce": "0 by default; A/B with CUSTOM_ALLREDUCE=1 at launch",
+    "acs_suspected": "same-switch pair busbw / cross-switch pair busbw < 0.8, or lspci ACSCtl enabled",
+    "pessimistic_tp": "acs_suspected or not p2p_ok"
+  },
+  "gpus": [
+    {
+      "index": 0,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "edition_guess": "Workstation Edition",
+      "uuid": "GPU-8d95512a-a6f8-e9be-002c-44e88b0ef957",
+      "pci_bus_id": "00000000:01:00.0",
+      "vbios": "98.02.81.00.07",
+      "driver": "580.178.04",
+      "compute_cap": "12.0",
+      "memory_total_mib": 97887.0,
+      "power_limit_w": 600.0,
+      "power_default_limit_w": 600.0,
+      "power_max_limit_w": 600.0,
+      "power_min_limit_w": 150.0,
+      "clocks_max_sm_mhz": 3090.0,
+      "clocks_max_mem_mhz": 14001.0,
+      "pcie_gen_max": "5",
+      "pcie_gen_current_idle": "1",
+      "pcie_width_max": "16",
+      "pcie_width_current_idle": "16",
+      "ecc_mode": "Disabled",
+      "persistence_mode": "Enabled",
+      "bar1_total_mib": 256,
+      "rebar_enabled_guess": false,
+      "sysfs_link": {
+        "cur_speed_idle": "2.5 GT/s PCIe",
+        "cur_width": "16",
+        "max_speed": "32.0 GT/s PCIe",
+        "max_width": "16",
+        "numa_node": "3"
+      },
+      "pcie_gen5_capable": true
+    },
+    {
+      "index": 1,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "edition_guess": "Workstation Edition",
+      "uuid": "GPU-78112035-11df-6c01-8058-989797396766",
+      "pci_bus_id": "00000000:21:00.0",
+      "vbios": "98.02.81.00.07",
+      "driver": "580.178.04",
+      "compute_cap": "12.0",
+      "memory_total_mib": 97887.0,
+      "power_limit_w": 600.0,
+      "power_default_limit_w": 600.0,
+      "power_max_limit_w": 600.0,
+      "power_min_limit_w": 150.0,
+      "clocks_max_sm_mhz": 3090.0,
+      "clocks_max_mem_mhz": 14001.0,
+      "pcie_gen_max": "5",
+      "pcie_gen_current_idle": "1",
+      "pcie_width_max": "16",
+      "pcie_width_current_idle": "16",
+      "ecc_mode": "Disabled",
+      "persistence_mode": "Enabled",
+      "bar1_total_mib": 256,
+      "rebar_enabled_guess": false,
+      "sysfs_link": {
+        "cur_speed_idle": "2.5 GT/s PCIe",
+        "cur_width": "16",
+        "max_speed": "32.0 GT/s PCIe",
+        "max_width": "16",
+        "numa_node": "2"
+      },
+      "pcie_gen5_capable": true
+    },
+    {
+      "index": 2,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "edition_guess": "Workstation Edition",
+      "uuid": "GPU-7bf3f29c-f0af-d7e7-eb28-d7aa04f12ac9",
+      "pci_bus_id": "00000000:41:00.0",
+      "vbios": "98.02.81.00.07",
+      "driver": "580.178.04",
+      "compute_cap": "12.0",
+      "memory_total_mib": 97887.0,
+      "power_limit_w": 600.0,
+      "power_default_limit_w": 600.0,
+      "power_max_limit_w": 600.0,
+      "power_min_limit_w": 150.0,
+      "clocks_max_sm_mhz": 3090.0,
+      "clocks_max_mem_mhz": 14001.0,
+      "pcie_gen_max": "5",
+      "pcie_gen_current_idle": "1",
+      "pcie_width_max": "16",
+      "pcie_width_current_idle": "16",
+      "ecc_mode": "Disabled",
+      "persistence_mode": "Enabled",
+      "bar1_total_mib": 256,
+      "rebar_enabled_guess": false,
+      "sysfs_link": {
+        "cur_speed_idle": "2.5 GT/s PCIe",
+        "cur_width": "16",
+        "max_speed": "32.0 GT/s PCIe",
+        "max_width": "16",
+        "numa_node": "0"
+      },
+      "pcie_gen5_capable": true
+    },
+    {
+      "index": 3,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "edition_guess": "Workstation Edition",
+      "uuid": "GPU-d00c73c8-11fd-f0e2-2793-c1a93b2aaca5",
+      "pci_bus_id": "00000000:61:00.0",
+      "vbios": "98.02.81.00.07",
+      "driver": "580.178.04",
+      "compute_cap": "12.0",
+      "memory_total_mib": 97887.0,
+      "power_limit_w": 600.0,
+      "power_default_limit_w": 600.0,
+      "power_max_limit_w": 600.0,
+      "power_min_limit_w": 150.0,
+      "clocks_max_sm_mhz": 3090.0,
+      "clocks_max_mem_mhz": 14001.0,
+      "pcie_gen_max": "5",
+      "pcie_gen_current_idle": "1",
+      "pcie_width_max": "16",
+      "pcie_width_current_idle": "16",
+      "ecc_mode": "Disabled",
+      "persistence_mode": "Enabled",
+      "bar1_total_mib": 256,
+      "rebar_enabled_guess": false,
+      "sysfs_link": {
+        "cur_speed_idle": "2.5 GT/s PCIe",
+        "cur_width": "16",
+        "max_speed": "32.0 GT/s PCIe",
+        "max_width": "16",
+        "numa_node": "1"
+      },
+      "pcie_gen5_capable": true
+    }
+  ],
+  "gpu_count": 4,
+  "hmm": {
+    "uvm_disable_hmm": "N",
+    "hmm_enabled_guess": true
+  },
+  "topo_raw": "\t\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tSYS\tSYS\tSYS\t72-95\t3\t\tN/A\nGPU1\tSYS\t X \tSYS\tSYS\t48-71\t2\t\tN/A\nGPU2\tSYS\tSYS\t X \tSYS\t0-23\t0\t\tN/A\nGPU3\tSYS\tSYS\tSYS\t X \t24-47\t1\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks\n",
+  "topo_gpu_pairs": {},
+  "topo_link_types_present": [],
+  "same_switch_pairs": [],
+  "cross_switch_pairs": [],
+  "nvlink_pairs": [],
+  "switch_groups": [
+    [
+      0
+    ],
+    [
+      1
+    ],
+    [
+      2
+    ],
+    [
+      3
+    ]
+  ],
+  "tp2_cross_switch_gpu_ids": "0,1,2,3",
+  "tp2_pairing_note": "no 2x2 switch layout detected; natural order kept",
+  "torch_p2p": {
+    "tool": "torch",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "device_count": 4,
+    "names": [
+      "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+      "NVIDIA RTX PRO 6000 Blackwell Workstation Edition"
+    ],
+    "capability": [
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        0
+      ]
+    ],
+    "can_access_peer": [
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true
+      ]
+    ],
+    "unidir_copy_gbps": [
+      [
+        null,
+        52.3,
+        52.41,
+        52.54
+      ],
+      [
+        52.86,
+        null,
+        53.27,
+        52.86
+      ],
+      [
+        52.69,
+        52.59,
+        null,
+        53.18
+      ],
+      [
+        53.07,
+        52.55,
+        53.06,
+        null
+      ]
+    ],
+    "copy_latency_us": [
+      [
+        null,
+        14.48,
+        14.5,
+        14.68
+      ],
+      [
+        14.17,
+        null,
+        14.46,
+        14.52
+      ],
+      [
+        14.2,
+        14.3,
+        null,
+        14.47
+      ],
+      [
+        14.2,
+        14.32,
+        14.27,
+        null
+      ]
+    ],
+    "errors": [],
+    "all_pairs_peer_access": true,
+    "unidir_copy_gbps_min": 52.3,
+    "unidir_copy_gbps_max": 53.27,
+    "copy_latency_us_max": 14.68
+  },
+  "p2p_test": {
+    "available": false
+  },
+  "nccl": {
+    "ring4_baseline": {
+      "available": true,
+      "source": "torch.distributed all_reduce",
+      "rows": [
+        {
+          "size_bytes": 8,
+          "time_us": 21.4,
+          "algbw_gbps": 0.0,
+          "busbw_gbps": 0.001,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1048576,
+          "time_us": 75.8,
+          "algbw_gbps": 13.833,
+          "busbw_gbps": 20.75,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 8388608,
+          "time_us": 405.26,
+          "algbw_gbps": 20.699,
+          "busbw_gbps": 31.049,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 134217728,
+          "time_us": 6055.45,
+          "algbw_gbps": 22.165,
+          "busbw_gbps": 33.247,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1073741824,
+          "time_us": 46137.45,
+          "algbw_gbps": 23.273,
+          "busbw_gbps": 34.909,
+          "wrong": 0
+        }
+      ],
+      "avg_busbw_gbps": null,
+      "busbw_gbps_8MB": 31.049,
+      "busbw_gbps_128MB": 33.247,
+      "busbw_gbps_1GB": 34.909,
+      "busbw_gbps_largest": 34.909,
+      "latency_us_8B": 21.4,
+      "any_wrong": false,
+      "transports_seen": [],
+      "nccl_version": "2.29.7",
+      "cuda_visible_devices": null
+    },
+    "ring4_default_level": {
+      "available": true,
+      "source": "torch.distributed all_reduce",
+      "rows": [
+        {
+          "size_bytes": 8,
+          "time_us": 20.89,
+          "algbw_gbps": 0.0,
+          "busbw_gbps": 0.001,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1048576,
+          "time_us": 75.44,
+          "algbw_gbps": 13.9,
+          "busbw_gbps": 20.85,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 8388608,
+          "time_us": 406.5,
+          "algbw_gbps": 20.636,
+          "busbw_gbps": 30.955,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 134217728,
+          "time_us": 6053.53,
+          "algbw_gbps": 22.172,
+          "busbw_gbps": 33.258,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1073741824,
+          "time_us": 46136.65,
+          "algbw_gbps": 23.273,
+          "busbw_gbps": 34.91,
+          "wrong": 0
+        }
+      ],
+      "avg_busbw_gbps": null,
+      "busbw_gbps_8MB": 30.955,
+      "busbw_gbps_128MB": 33.258,
+      "busbw_gbps_1GB": 34.91,
+      "busbw_gbps_largest": 34.91,
+      "latency_us_8B": 20.89,
+      "any_wrong": false,
+      "transports_seen": [],
+      "nccl_version": "2.29.7",
+      "cuda_visible_devices": null
+    },
+    "pair_same": {
+      "available": true,
+      "source": "torch.distributed all_reduce",
+      "rows": [
+        {
+          "size_bytes": 8,
+          "time_us": 19.41,
+          "algbw_gbps": 0.0,
+          "busbw_gbps": 0.0,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1048576,
+          "time_us": 51.38,
+          "algbw_gbps": 20.408,
+          "busbw_gbps": 20.408,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 8388608,
+          "time_us": 289.84,
+          "algbw_gbps": 28.942,
+          "busbw_gbps": 28.942,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 134217728,
+          "time_us": 4314.2,
+          "algbw_gbps": 31.111,
+          "busbw_gbps": 31.111,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1073741824,
+          "time_us": 32650.39,
+          "algbw_gbps": 32.886,
+          "busbw_gbps": 32.886,
+          "wrong": 0
+        }
+      ],
+      "avg_busbw_gbps": null,
+      "busbw_gbps_8MB": 28.942,
+      "busbw_gbps_128MB": 31.111,
+      "busbw_gbps_1GB": 32.886,
+      "busbw_gbps_largest": 32.886,
+      "latency_us_8B": 19.41,
+      "any_wrong": false,
+      "transports_seen": [],
+      "nccl_version": "2.29.7",
+      "cuda_visible_devices": "0,1"
+    },
+    "pair_cross": {
+      "available": true,
+      "source": "torch.distributed all_reduce",
+      "rows": [
+        {
+          "size_bytes": 8,
+          "time_us": 19.8,
+          "algbw_gbps": 0.0,
+          "busbw_gbps": 0.0,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1048576,
+          "time_us": 51.7,
+          "algbw_gbps": 20.282,
+          "busbw_gbps": 20.282,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 8388608,
+          "time_us": 287.72,
+          "algbw_gbps": 29.156,
+          "busbw_gbps": 29.156,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 134217728,
+          "time_us": 4423.53,
+          "algbw_gbps": 30.342,
+          "busbw_gbps": 30.342,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1073741824,
+          "time_us": 32376.56,
+          "algbw_gbps": 33.164,
+          "busbw_gbps": 33.164,
+          "wrong": 0
+        }
+      ],
+      "avg_busbw_gbps": null,
+      "busbw_gbps_8MB": 29.156,
+      "busbw_gbps_128MB": 30.342,
+      "busbw_gbps_1GB": 33.164,
+      "busbw_gbps_largest": 33.164,
+      "latency_us_8B": 19.8,
+      "any_wrong": false,
+      "transports_seen": [],
+      "nccl_version": "2.29.7",
+      "cuda_visible_devices": "0,2"
+    },
+    "ring4_p2p_disabled": {
+      "available": true,
+      "source": "torch.distributed all_reduce",
+      "rows": [
+        {
+          "size_bytes": 8,
+          "time_us": 20.46,
+          "algbw_gbps": 0.0,
+          "busbw_gbps": 0.001,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1048576,
+          "time_us": 75.38,
+          "algbw_gbps": 13.91,
+          "busbw_gbps": 20.866,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 8388608,
+          "time_us": 403.31,
+          "algbw_gbps": 20.799,
+          "busbw_gbps": 31.199,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 134217728,
+          "time_us": 6054.19,
+          "algbw_gbps": 22.169,
+          "busbw_gbps": 33.254,
+          "wrong": 0
+        },
+        {
+          "size_bytes": 1073741824,
+          "time_us": 46048.2,
+          "algbw_gbps": 23.318,
+          "busbw_gbps": 34.977,
+          "wrong": 0
+        }
+      ],
+      "avg_busbw_gbps": null,
+      "busbw_gbps_8MB": 31.199,
+      "busbw_gbps_128MB": 33.254,
+      "busbw_gbps_1GB": 34.977,
+      "busbw_gbps_largest": 34.977,
+      "latency_us_8B": 20.46,
+      "any_wrong": false,
+      "transports_seen": [],
+      "nccl_version": "2.29.7",
+      "cuda_visible_devices": null
+    }
+  },
+  "nccl_env_baseline": {
+    "NCCL_P2P_LEVEL": "PHB",
+    "NCCL_IB_DISABLE": "1",
+    "NCCL_MIN_NCHANNELS": "8"
+  },
+  "nccl_all_reduce_p2p_default": {
+    "available": true,
+    "source": "torch.distributed all_reduce",
+    "rows": [
+      {
+        "size_bytes": 8,
+        "time_us": 21.4,
+        "algbw_gbps": 0.0,
+        "busbw_gbps": 0.001,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 1048576,
+        "time_us": 75.8,
+        "algbw_gbps": 13.833,
+        "busbw_gbps": 20.75,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 8388608,
+        "time_us": 405.26,
+        "algbw_gbps": 20.699,
+        "busbw_gbps": 31.049,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 134217728,
+        "time_us": 6055.45,
+        "algbw_gbps": 22.165,
+        "busbw_gbps": 33.247,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 1073741824,
+        "time_us": 46137.45,
+        "algbw_gbps": 23.273,
+        "busbw_gbps": 34.909,
+        "wrong": 0
+      }
+    ],
+    "avg_busbw_gbps": null,
+    "busbw_gbps_8MB": 31.049,
+    "busbw_gbps_128MB": 33.247,
+    "busbw_gbps_1GB": 34.909,
+    "busbw_gbps_largest": 34.909,
+    "latency_us_8B": 21.4,
+    "any_wrong": false,
+    "transports_seen": [],
+    "nccl_version": "2.29.7",
+    "cuda_visible_devices": null
+  },
+  "nccl_all_reduce_p2p_disabled": {
+    "available": true,
+    "source": "torch.distributed all_reduce",
+    "rows": [
+      {
+        "size_bytes": 8,
+        "time_us": 20.46,
+        "algbw_gbps": 0.0,
+        "busbw_gbps": 0.001,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 1048576,
+        "time_us": 75.38,
+        "algbw_gbps": 13.91,
+        "busbw_gbps": 20.866,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 8388608,
+        "time_us": 403.31,
+        "algbw_gbps": 20.799,
+        "busbw_gbps": 31.199,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 134217728,
+        "time_us": 6054.19,
+        "algbw_gbps": 22.169,
+        "busbw_gbps": 33.254,
+        "wrong": 0
+      },
+      {
+        "size_bytes": 1073741824,
+        "time_us": 46048.2,
+        "algbw_gbps": 23.318,
+        "busbw_gbps": 34.977,
+        "wrong": 0
+      }
+    ],
+    "avg_busbw_gbps": null,
+    "busbw_gbps_8MB": 31.199,
+    "busbw_gbps_128MB": 33.254,
+    "busbw_gbps_1GB": 34.977,
+    "busbw_gbps_largest": 34.977,
+    "latency_us_8B": 20.46,
+    "any_wrong": false,
+    "transports_seen": [],
+    "nccl_version": "2.29.7",
+    "cuda_visible_devices": null
+  },
+  "acs_lspci": {
+    "ctl_lines": 0,
+    "enabled_ports": 0,
+    "readable": false
+  },
+  "engine_versions": {
+    "vllm": "0.28.1rc1.dev446+g798544433",
+    "sglang": null,
+    "torch": "2.13.0+cu130",
+    "flashinfer": null,
+    "transformers": "5.15.1",
+    "b12x": "present",
+    "triton": "3.7.1",
+    "torch_cuda": "13.0",
+    "torch_cudnn": 92000,
+    "torch_nccl": "2.29.7",
+    "cuda_device_count": 4,
+    "cuda_capability": [
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        0
+      ],
+      [
+        12,
+        0
+      ]
+    ]
+  },
+  "cpu_model": "AMD EPYC 9B14 96-Core Processor",
+  "cpu_threads_visible": 192,
+  "ram_total_gib": 755,
+  "workspace_disk": {
+    "size": "1.2T",
+    "used": "11G",
+    "avail": "1.2T",
+    "use_pct": "1%",
+    "mount": "/"
+  },
+  "models_on_disk": [
+    [
+      "2.5G",
+      "/workspace/models/Qwen3.8-Flash-Next-FP8"
+    ]
+  ],
+  "cuda_toolkit": "Cuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0",
+  "decisions": {
+    "P2P_OK": 1,
+    "CUSTOM_ALLREDUCE": 0,
+    "NCCL_P2P_DISABLE": 0,
+    "ACS_SUSPECTED": 0,
+    "PESSIMISTIC_TP": 0,
+    "HOST_RAM_GB": 755,
+    "NOTES": "4x NVIDIA RTX PRO 6000 Blackwell Workstation Edition (Workstation Edition), cc 12.0, 95 GB each, PCIe gen5 x16, NVLink pairs: 0 | same-switch pairs none; cross-switch pairs none | peer access supported on all 4 GPUs pairwise (torch.cuda.can_device_access_peer) | unidirectional P2P copy 52-53 GB/s (recorded, not a gate) | max P2P copy latency 14.7 us (recorded, not a gate) | same-switch pair ? all_reduce busbw 31.1 GB/s vs cross-switch pair ? 30.3 GB/s (ratio 1.03, threshold 0.8) | 4-GPU ring all_reduce busbw 33.2 GB/s | NCCL_P2P_DISABLE is never set automatically; CUSTOM_ALLREDUCE=1 only as an explicit A/B"
+  },
+  "decisions_env_path": "/workspace/priority/results/hw/decisions.env",
+  "p2p_ok": true,
+  "p2p_status": "ok",
+  "p2p_reasons": [
+    "peer access supported on all 4 GPUs pairwise (torch.cuda.can_device_access_peer)",
+    "unidirectional P2P copy 52-53 GB/s (recorded, not a gate)",
+    "max P2P copy latency 14.7 us (recorded, not a gate)"
+  ],
+  "p2p_source": "torch.cuda.can_device_access_peer",
+  "acs_suspected": false,
+  "acs_evidence": [
+    "same-switch pair ? all_reduce busbw 31.1 GB/s vs cross-switch pair ? 30.3 GB/s (ratio 1.03, threshold 0.8)",
+    "4-GPU ring all_reduce busbw 33.2 GB/s"
+  ],
+  "pessimistic_tp": false,
+  "custom_allreduce_default": 0,
+  "nccl_p2p_disable": 0,
+  "host_ram_gb": 755,
+  "run_flag": "",
+  "recommended_env": {
+    "NCCL_P2P_LEVEL": "PHB",
+    "NCCL_IB_DISABLE": "1",
+    "NCCL_MIN_NCHANNELS": "8",
+    "VLLM_USE_DEEP_GEMM": "0",
+    "FLASHINFER_CUDA_ARCH_LIST": "12.0f",
+    "TORCH_CUDA_ARCH_LIST": "12.0"
+  }
+}

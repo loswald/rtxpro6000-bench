@@ -1,0 +1,26 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[17:57:49] ===== GLM-5.3-Flash throughput ceiling (512 sequences) =====
+[17:57:54]   launch glm53f_s512: 
+[18:01:39]   glm53f_s512 healthy in 225s | GPU KV cache size: 1,932,182 tokens | 
+  router     C1024   137.1s     427 req/min      911 out/s      7288 in/s      8199 tot/s  TTFT  63803/ 130585 ms  TPOT 204.0/ 231.9 ms  ITL 204.0  E2E  89.7/137.0 s
+  promptopt  C1024   251.9s     232 req/min      992 out/s     13887 in/s     14878 tot/s  TTFT 114768/ 239116 ms  TPOT 194.1/ 219.5 ms  ITL 194.2  E2E 164.3/251.7 s
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/glm53f_s512_quality20.json
+[18:10:10]   launch glm53f_s512_fib12x: --moe-backend flashinfer_b12x
+[18:11:25]   glm53f_s512_fib12x FAILED after 75s: ValueError: Model sets swiglu_limit=10.0, but the explicitly requested moe_backend='flashinfer_b12x' does not apply the SwiGLU clamp. Use 'flashinfer_tr
+[18:11:36]   launch glm53f_tp4ep4_s512: --enable-expert-parallel
+[18:14:51]   glm53f_tp4ep4_s512 healthy in 195s | GPU KV cache size: 1,937,831 tokens | 
+  router     C1024   134.2s     436 req/min      931 out/s      7449 in/s      8380 tot/s  TTFT  62401/ 128278 ms  TPOT 200.5/ 227.9 ms  ITL 200.5  E2E  87.9/134.1 s
+  promptopt  C1024   248.0s     236 req/min     1008 out/s     14108 in/s     15115 tot/s  TTFT 112868/ 235129 ms  TPOT 190.9/ 215.9 ms  ITL 191.0  E2E 161.6/247.8 s
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/glm53f_tp4ep4_s512_quality20.json
+[18:23:17]   launch glm53f_dp4ep4_s512: --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
+[18:26:17]   glm53f_dp4ep4_s512 FAILED after 180s: ValueError: max_num_seqs (512) exceeds available Mamba cache blocks (192). Each decode sequence requires one Mamba cache block, so CUDA graph capture ca|Worker failed with error 'max_num_seqs (512) exceeds available Mamba cache blocks (192). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please
+[18:26:27]   launch glm53f_s512_mtp:  + MTP
+[18:30:43]   glm53f_s512_mtp healthy in 255s | GPU KV cache size: 1,328,924 tokens | Using TRITON Fp8 MoE backend
+  router     C1024   210.9s     278 req/min      592 out/s      4738 in/s      5330 tot/s  TTFT 100192/ 201469 ms  TPOT 131.3/ 180.8 ms  ITL 169.1  E2E 116.9/209.8 s
+    spec draft/accepted: tokens. counter 288639.0 tokens. counter 28350.0
+  promptopt  C1024   621.2s      94 req/min      402 out/s      5631 in/s      6034 tot/s  TTFT 298557/ 599341 ms  TPOT 181.9/ 241.3 ms  ITL 222.1  E2E 344.9/619.4 s
+    spec draft/accepted: tokens. counter 900153.0 tokens. counter 73916.0
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/glm53f_s512_mtp_quality20.json
+[18:46:20] GLMPERF DONE

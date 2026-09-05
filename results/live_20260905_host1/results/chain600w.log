@@ -1,0 +1,45 @@
+[14:31:20] 600 W box: comprehensive quality pass, vendor recipes, no token cap
+[18:25:46] 600 W box: throughput at full power for the same set
+[21:57:20] CHAIN600W DONE
+[21:57:22] 600 W: GLM-5.3-Flash quality, correct parser (glm45) and Z.AI's own sampling
+[23:35:48] 600 W: freeing space for DeepSeek-V4-Flash (both these are measured by now)
+  freed MiniMax-M3-MXFP4
+  freed Inkling-Small-NVFP4
+  disk now: 483G free
+[23:36:07] downloading deepseek-ai/DeepSeek-V4-Flash-0731
+[23:59:19] done DeepSeek-V4-Flash (156G)
+[23:59:19] 600 W: DeepSeek-V4-Flash quality
+[00:01:51] 600 W: DeepSeek-V4-Flash throughput at full power
+[00:04:08] CHAIN600W2 DONE
+[00:05:03] 600W-3: GLM-5.3-Flash: finish the 36 items the 600 s request timeout cut off (same caps: like for like)
+[00:28:39] 600W-3: GLM-5.3-Flash: MTP with room to 65k tokens - does the model finish what it truncated at 32k?
+[00:28:46] 600W-3: stopped chain600w3 after its GLM step; continuing as chain600w3b
+[00:28:56] 600W-3: DeepSeek-V4-Flash: quality on the first MoE backend that serves, then throughput on every backend that serves
+[00:35:28] 600W-3: chain600w3b stopped by hand: every DeepSeek backend died in the indexer's fp8_einsum during profiling; re-issued as chain600w3c with the working launch budget pinned
+[00:36:21] 600W-3: DeepSeek-V4-Flash, third attempt: quality on the first MoE backend that serves, then throughput on every one that does
+[00:40:04] 600W-3: chain600w3c stopped by hand: the DeepSeek failure is the o_proj DeepGEMM einsum, fixed by VLLM_DSV4_OPROJ_SM120_FALLBACK=1; re-issued as chain600w3d
+[00:40:59] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
+[16:07:44] 600W-3: re-armed after the Vast stop (balance threshold); every step resumes where it left off
+[16:07:44] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
+[16:35:27] 600W-3: restarted so the patched sweep takes effect (FIRST_ONLY now stops at an already-evaluated combo; the second DSpark quality arm is not worth its hour)
+[16:35:35] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
+[16:40:53] 600W-3/4: replaced by chain600w5 - the five-hour programme (Nish, 16:40 UTC)
+[16:41:06] 600W-5 (279min left): free space for GLM's FP8 release and start its download in the background
+  freed gemma-4-31B-it
+  freed MiniMax-M3-DSpark
+  freed Inkling-Small-DSpark
+  freed Qwen27B-DSpark-NVFP4
+  freed Nemotron-3.5-Lightning-DSpark
+  disk: 415G free
+[16:41:07] 600W-5 (279min left): finish the rows that lost items to the request timeout: Qwen FP8 (15), Muse-Glimmer (14)
+[17:23:22] 600W-5 (237min left): Qwen3.8-Flash-Next (index 46, 6B active): quality, then throughput - two TP2 replicas, auto kernel, BF16 KV
+[17:42:20] 600W-5 (218min left): noise floor (Qwen NVFP4 a second time) and the gittensor weights under the official chat template
+[17:42:25] 600W-6 (217min left): chain600w5 stopped after its Qwen3.8-Flash-Next step; continuing as chain600w6
+[17:42:34] 600W-6 (217min left): noise floor (Qwen NVFP4 a second time) and the gittensor weights under the official chat template
+[17:51:12] 600W-6 (208min left): GLM-5.3-Flash throughput ceiling: five layout/kernel arms at 1,024 sequences, then MTP
+[17:57:32] 600W-6: GLM arms relaunched at 512 sequences with the vendor build's kernel names (1,024 exceeds its Mamba cache; the W4A4 MoE kernel is flashinfer_b12x)
+[17:57:49] 600W-6 (202min left): GLM-5.3-Flash throughput ceiling: five layout/kernel arms at 1,024 sequences, then MTP
+[18:46:25] 600W-6 (153min left): noise floor (Qwen NVFP4 a second time) and the gittensor weights under the official chat template
+[18:46:28] 600W-8 (193min left): chain600w6 stopped after the GLM arms; continuing as chain600w8
+[18:46:36] 600W-8 (193min left): GLM-5.3-Flash: four MoE kernels at TP4, then DP4+EP at 192 sequences and DP2xTP2+EP at 384
+[20:19:32] 600W-8 (100min left): GLM quality on the fastest layout: glm53f_dp2tp2ep2_s384 (1300 out tok/s at router C1024), budget 5100s

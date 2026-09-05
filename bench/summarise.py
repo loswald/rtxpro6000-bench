@@ -19,8 +19,9 @@ results/cotenancy (lora_cotenant.sh serve_*.json), results/probe etc. are skippe
 
 Hardware decision flags (bench/env.sh <- results/hw/decisions.env) travel in every meta /
 bench JSON: p2p_ok, p2p_disabled, custom_allreduce, acs_suspected, pessimistic_tp.
-Rows with pessimistic_tp == 1 (TP>1 on a box where PCIe ACS is suspected) get a dagger (†):
-they are a LOWER BOUND for a node without ACS / with NVLink.  TP1 replica rows never do.
+Rows with pessimistic_tp == 1 (TP>1 on a box where PCIe ACS is suspected) get a dagger (†).
+The impact needs a controlled comparison; it is not a lower-bound guarantee for another node.
+TP1 expert-parallel layouts still communicate between GPUs.
 TP>1 rows whose flags are null / "unknown" (no decisions.env when the run was made) get '?'.
 
 Per cell you get: a compact concurrency x shape table of output tok/s, then one detailed
@@ -38,9 +39,15 @@ import csv
 import datetime as dt
 import glob
 import json
+import math
 import os
 import re
 import sys
+
+try:
+    from .run_integrity import load_result, validate_run
+except ImportError:
+    from run_integrity import load_result, validate_run
 
 SHAPE_ORDER = ["router", "judge", "agent"]
 RUN_RE = re.compile(r"^(?P<run>.+?__c\d+__\d{8}T\d{6})(?:__p(?P<port>\d+))?$")
@@ -60,7 +67,8 @@ def load_json(path):
 
 def fnum(v):
     try:
-        return float(v)
+        n = float(v)
+        return n if math.isfinite(n) else None
     except (TypeError, ValueError):
         return None
 
@@ -185,7 +193,7 @@ def discover(results_dir):
             "loadtest": load_json(os.path.join(cell_dir, "loadtest.json")),
         }
         for p in sorted(glob.glob(os.path.join(cell_dir, "*.meta.json"))):
-            m = load_json(p) or {}
+            m = load_result(p)
             rid = m.get("run_id") or os.path.basename(p)[: -len(".meta.json")]
             info["runs"][rid] = {"meta": m, "bench": [], "dmon": None}
         for p in sorted(glob.glob(os.path.join(cell_dir, "*.skipped.json"))):
@@ -194,14 +202,14 @@ def discover(results_dir):
                 info["skipped"].append(s)
         for p in sorted(glob.glob(os.path.join(cell_dir, "*.json"))):
             b = os.path.basename(p)
-            if b.endswith(".meta.json") or b.endswith(".skipped.json") or b in SKIP_JSON:
-                continue
-            j = load_json(p)
-            if not isinstance(j, dict) or "request_throughput" not in j:
+            if b.endswith((".meta.json", ".skipped.json", ".integrity.json")) or b in SKIP_JSON:
                 continue
             stem = b[:-5]
             mm = RUN_RE.match(stem)
+            j = load_result(p)
             rid = j.get("run_id") or (mm.group("run") if mm else stem)
+            if "request_throughput" not in j and rid not in info["runs"] and not mm:
+                continue
             run = info["runs"].setdefault(rid, {"meta": {}, "bench": [], "dmon": None})
             j["_file"] = b
             run["bench"].append(j)
@@ -218,9 +226,8 @@ def discover(results_dir):
 def aggregate(cell, rid, run, cost_per_hour, launch=None):
     bench, meta = run["bench"], run["meta"] or {}
     launch = launch or {}
-    if not bench:
-        return None
-    b0 = bench[0]
+    integrity = validate_run(bench, meta)
+    b0 = bench[0] if bench else {}
 
     def tot(*keys):
         return sum(fnum(first(j, *keys)) or 0.0 for j in bench)
@@ -268,9 +275,9 @@ def aggregate(cell, rid, run, cost_per_hour, launch=None):
     mean_w = dmon.get("mean_total_w")
     peak_mib = dmon.get("peak_fb_mib")
     cost_out = cost_tot = None
-    if cost_per_hour and out_tps:
+    if integrity["cost_eligible"] and cost_per_hour and out_tps:
         cost_out = cost_per_hour / 3600.0 / out_tps * 1e6
-    if cost_per_hour and tot_tps:
+    if integrity["cost_eligible"] and cost_per_hour and tot_tps:
         cost_tot = cost_per_hour / 3600.0 / tot_tps * 1e6
 
     tp = pick("tp")
@@ -295,14 +302,15 @@ def aggregate(cell, rid, run, cost_per_hour, launch=None):
         "model_path": pick("model_path", ""),
         "tp": tp,
         "dp": pick("dp"),
+        "enable_ep": flag01n(pick("enable_ep")),
         "replicas": pick("replicas"),
         "kv_cache_dtype": pick("kv_cache_dtype", ""),
         "max_num_batched_tokens": pick("max_num_batched_tokens"),
         "mode": first(meta, "mode") or first(b0, "mode") or "",
         "ports": first(meta, "ports") or "",
-        "p2p_ok": flag01(pick("p2p_ok"), 1),
-        "p2p_disabled": flag01(pick("p2p_disabled"), 0),
-        "custom_allreduce": flag01(pick("custom_allreduce"), 0),
+        "p2p_ok": flag01n(pick("p2p_ok")),
+        "p2p_disabled": flag01n(pick("p2p_disabled")),
+        "custom_allreduce": flag01n(pick("custom_allreduce")),
         "acs_suspected": acs,
         "pessimistic_tp": pessimistic,
         "spec_decoding": pick("spec_decoding", "") or "",
@@ -335,6 +343,12 @@ def aggregate(cell, rid, run, cost_per_hour, launch=None):
         "cost_per_1m_total_usd": cost_tot,
         "bench_files": len(bench),
         "bench_exit_code": first(meta, "bench_exit_code"),
+        "integrity": integrity,
+        "integrity_status": integrity["status"],
+        "integrity_reasons": integrity["reasons"],
+        "headline_eligible": integrity["headline_eligible"],
+        "cost_eligible": integrity["cost_eligible"],
+        "cache_status": integrity["cache_status"],
     }
 
 
@@ -420,26 +434,30 @@ def cell_header_lines(info, rows):
         lines.append(f"- server KV capacity: {launch.get('kv_cache_line', '')} {launch.get('max_concurrency_line', '')}".rstrip())
     # hardware decision flags (launch.json first, then the rows)
     flags = []
-    p2p_dis = flag01(launch.get("nccl_p2p_disable", launch.get("p2p_disabled", r0.get("p2p_disabled"))), 0)
-    flags.append("NCCL_P2P_DISABLE=1 (explicit human decision / A/B)" if p2p_dis else "P2P on")
-    car = flag01(launch.get("custom_allreduce", r0.get("custom_allreduce")), 0)
-    flags.append("custom all-reduce ON (A/B)" if car else "custom all-reduce off (default)")
-    if launch.get("enable_ep") in (1, "1"):
+    p2p_dis = flag01n(launch.get("nccl_p2p_disable", launch.get("p2p_disabled", r0.get("p2p_disabled"))))
+    flags.append("P2P setting unknown" if p2p_dis is None else "NCCL_P2P_DISABLE=1" if p2p_dis else "P2P enabled")
+    car = flag01n(launch.get("custom_allreduce", r0.get("custom_allreduce")))
+    flags.append("custom all-reduce unknown" if car is None else "custom all-reduce ON" if car else "custom all-reduce off")
+    enable_ep = flag01n(launch.get("enable_ep", r0.get("enable_ep")))
+    if enable_ep == 1:
         flags.append("expert-parallel ON")
     spec = launch.get("spec_decoding") or r0.get("spec_decoding") or ""
     if spec == "on" or launch.get("spec_config"):
         flags.append(f"speculative decoding ON ({launch.get('spec_config', '')})")
-    else:
+    elif spec == "off":
         flags.append("spec decoding off")
+    else:
+        flags.append("spec decoding unknown")
     acs = flag01n(launch.get("acs_suspected", r0.get("acs_suspected")))
     pess = flag01n(launch.get("pessimistic_tp", r0.get("pessimistic_tp")))
     tp_i = int(fnum(tp) or 1)
     if pess == 1 and tp_i > 1:
-        flags.append(f"{DAGGER} pessimistic: TP{tp_i} on a host with PCIe ACS suspected (lower bound)")
+        flags.append(f"{DAGGER} TP{tp_i} on a host with PCIe ACS suspected; impact requires a same-host comparison")
     elif tp_i > 1 and pess is None and acs is None:
         flags.append(f"{UNKNOWN} TP{tp_i} but acs_suspected/pessimistic_tp unknown (no results/hw/decisions.env at launch)")
     elif acs == 1 and tp_i <= 1:
-        flags.append("TP1 replicas: unaffected by ACS")
+        flags.append("TP1 avoids attention tensor-parallel collectives; expert-parallel communication still depends on the interconnect"
+                     if enable_ep == 1 else "TP1 has no tensor-parallel collectives; other communication depends on layout")
     lines.append("- flags: " + ", ".join(flags))
     if launch.get("ram_warning"):
         lines.append(f"- host RAM warning at launch: {launch['ram_warning']}")
@@ -481,7 +499,8 @@ def main():
     has_cost = a.cost_per_hour is not None
     md = [f"# 4x RTX PRO 6000 Blackwell (sm_120) - serving throughput summary", ""]
     md.append(f"Generated {dt.datetime.now().isoformat(timespec='seconds')} from `{results_dir}`.  ")
-    md.append("Throughput columns are at saturation (`--request-rate inf`, fixed `--max-concurrency`); TTFT/TPOT are logged only.  ")
+    md.append("Throughput is measured at the recorded concurrency. Infinite request rate alone does not establish sustained saturation.  ")
+    md.append("Headline and cost columns require complete requests, exact expected output lengths, all expected shards, successful clients and verified cross-run cache isolation. Invalid and unknown runs remain in the detailed diagnostics. This is measurement integrity, not a task-quality gate.  ")
     if has_cost:
         md.append(f"Cost assumes **${a.cost_per_hour:.2f}/hr** for the whole machine (COST_PER_HOUR).  ")
     else:
@@ -489,8 +508,8 @@ def main():
     md.append("x4 replica cells: throughput summed over ports; TTFT/TPOT p50 = completion-weighted mean, p99 = max over ports.  ")
     if any_acs or any_dagger:
         md.append(f"{DAGGER} = `pessimistic_tp`: TP>1 on a host where PCIe ACS is suspected (switch-local P2P redirected through "
-                  "the root complex; all_reduce ~19-38 GB/s). These rows are a **lower bound** for a Scan node without ACS / with NVLink. "
-                  "TP1 replica cells are unaffected. P2P stays enabled and custom all-reduce is off unless the flags line says otherwise.")
+                  "the root complex). Suspected ACS does not establish a throughput lower bound for another machine. "
+                  "TP1 avoids tensor-parallel collectives; expert-parallel layouts still communicate between GPUs. Use each run's hardware evidence.")
     if any_unknown:
         md.append(f"{UNKNOWN} = TP>1 row recorded without `results/hw/decisions.env` (acs_suspected / pessimistic_tp unknown): "
                   "run `vast/hardware_truth.sh` and re-read these rows as pessimistic if it reports ACS_SUSPECTED=1.")
@@ -508,7 +527,7 @@ def main():
                 continue
             best = {}
             for r in rows:
-                if r["out_tok_s"] and (r["shape"] not in best or r["out_tok_s"] > best[r["shape"]]["out_tok_s"]):
+                if r["headline_eligible"] and r["out_tok_s"] and (r["shape"] not in best or r["out_tok_s"] > best[r["shape"]]["out_tok_s"]):
                     best[r["shape"]] = r
             eng = f"{rows[0]['engine']} {rows[0]['engine_version']}".strip()
             r0 = rows[0]
@@ -552,8 +571,9 @@ def main():
         # compact: concurrency x shape -> output tok/s (latest run wins for duplicates)
         grid = {}
         for r in rows:
-            grid[(r["concurrency"], r["shape"])] = r
-        md.append("### Output tok/s by concurrency")
+            if r["headline_eligible"]:
+                grid[(r["concurrency"], r["shape"])] = r
+        md.append("### Eligible output tok/s by concurrency")
         md.append("")
         trs = []
         for c in concs:
@@ -573,7 +593,7 @@ def main():
                    "mean W", "tok/J", "peak mem GiB"]
             if has_cost:
                 hdr.append("$/1M out tok")
-            hdr.append("done")
+            hdr.extend(["done", "integrity"])
             trs = []
             for r in srows:
                 done = f"{r['completed']}/{r['num_prompts']}"
@@ -590,13 +610,15 @@ def main():
                 if has_cost:
                     line.append(f3(r["cost_per_1m_out_usd"]))
                 line.append(done)
+                line.append(r["integrity_status"] + (": " + "; ".join(r["integrity_reasons"]).replace("|", "\\|")
+                                                      if r["integrity_reasons"] else ""))
                 trs.append(line)
             md.append(md_table(hdr, trs))
             md.append("")
 
     if any_dagger or any_unknown:
         md.append("---")
-        md.append(f"{DAGGER} pessimistic_tp = 1: TP>1 on a host with PCIe ACS suspected -> lower bound. "
+        md.append(f"{DAGGER} pessimistic_tp = 1: TP>1 on a host with PCIe ACS suspected; impact is unmeasured. "
                   f"{UNKNOWN} = TP>1 with the flag unknown (no decisions.env). "
                   "`P2P-off` = NCCL_P2P_DISABLE=1 was set explicitly for that run (human decision / A/B); `CAR-on` = custom all-reduce A/B.")
         md.append("")
@@ -614,7 +636,7 @@ def main():
             "tpot_p50_ms", "tpot_p99_ms", "tpot_mean_ms", "itl_p99_ms", "e2el_p50_ms", "e2el_p99_ms", "mean_gpu_w", "peak_gpu_w",
             "mean_sm_util_pct", "tok_per_joule", "peak_mem_gib", "cost_per_1m_out_usd", "cost_per_1m_total_usd",
             "p2p_ok", "p2p_disabled", "custom_allreduce", "acs_suspected", "pessimistic_tp", "spec_decoding",
-            "bench_exit_code", "run_id"]
+            "enable_ep", "bench_exit_code", "integrity_status", "integrity_reasons", "headline_eligible", "cost_eligible", "cache_status", "run_id"]
     with open(base + ".csv", "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
         w.writeheader()
@@ -622,7 +644,7 @@ def main():
             w.writerow(r)
     with open(base + ".json", "w", encoding="utf-8") as f:
         json.dump({"generated": dt.datetime.now().isoformat(timespec="seconds"), "cost_per_hour": a.cost_per_hour,
-                   "dagger": f"{DAGGER} = pessimistic_tp (TP>1 with PCIe ACS suspected; lower bound); {UNKNOWN} = TP>1, flag unknown (no decisions.env); pessimistic_tp null = unknown",
+                   "dagger": f"{DAGGER} = pessimistic_tp (TP>1 with PCIe ACS suspected; impact unmeasured); {UNKNOWN} = TP>1, flag unknown (no decisions.env); pessimistic_tp null = unknown",
                    "cells": {n: {"launch": i.get("launch"), "loadtest": i.get("loadtest"), "skipped": i.get("skipped")}
                              for n, i in cells.items()},
                    "rows": all_rows}, f, indent=2, default=str)

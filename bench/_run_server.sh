@@ -22,6 +22,12 @@ if [ -f "$ENVFILE" ]; then
   . "$ENVFILE"
   set +a
 fi
+# Avoid the EMFILE failures seen in the C1024 campaign. This changes only the
+# server process tree's soft limit, never the host's hard limit.
+fd_limit="$(ulimit -Hn)"
+if [ "$fd_limit" = unlimited ] || [ "$fd_limit" -gt 65536 ]; then fd_limit=65536; fi
+ulimit -Sn "$fd_limit"
+printf 'file descriptor limit: %s\n' "$(ulimit -Sn)" | tee -a "$LOG"
 {
   echo "[$(date -Is)] HOST=$(hostname) PWD=$PWD BENCH_CELL=${BENCH_CELL:-?} CUDA_VISIBLE_DEVICES(cmd)=$(printf '%s ' "$@" | grep -oE 'CUDA_VISIBLE_DEVICES=[0-9,]+' || true)"
   echo "[$(date -Is)] CMD: $*"

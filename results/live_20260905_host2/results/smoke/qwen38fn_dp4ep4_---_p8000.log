@@ -1,0 +1,80 @@
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/abstract.py", line 110, in __init__
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]     self._init_executor()
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 214, in _init_executor
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 808, in wait_for_ready
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385]     raise e from None
+(EngineCore_DP2 pid=109847) ERROR 09-05 20:14:31 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore_DP2 pid=109847) Traceback (most recent call last):
+(EngineCore_DP2 pid=109847)     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore_DP2 pid=109847)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 808, in wait_for_ready
+(EngineCore_DP2 pid=109847) Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385] EngineCore failed to start.
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385] Traceback (most recent call last):
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1341, in run_engine_core
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     engine_core = DPEngineCoreProc(*args, **kwargs)
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 2055, in __init__
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     super().__init__(
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     return func(*args, **kwargs)
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1104, in __init__
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     super().__init__(
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 134, in __init__
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 116, in __init__
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     return func(*args, **kwargs)
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/abstract.py", line 110, in __init__
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     self._init_executor()
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 214, in _init_executor
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 808, in wait_for_ready
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385]     raise e from None
+(EngineCore_DP1 pid=109846) ERROR 09-05 20:14:31 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore_DP1 pid=109846) Traceback (most recent call last):
+(EngineCore_DP1 pid=109846)     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore_DP1 pid=109846)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 808, in wait_for_ready
+(EngineCore_DP1 pid=109846) Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(ApiServer_3 pid=109852) INFO 09-05 20:14:31 [base.py:264] Readonly multi-modal warmup completed in 0.922s
+(ApiServer_1 pid=109850) INFO 09-05 20:14:31 [base.py:264] Readonly multi-modal warmup completed in 0.910s
+(ApiServer_2 pid=109851) INFO 09-05 20:14:31 [base.py:264] Multi-modal warmup completed in 12.957s
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385] EngineCore failed to start.
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385] Traceback (most recent call last):
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1341, in run_engine_core
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     engine_core = DPEngineCoreProc(*args, **kwargs)
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 2055, in __init__
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     super().__init__(
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     return func(*args, **kwargs)
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 1104, in __init__
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     super().__init__(
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/core.py", line 134, in __init__
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 116, in __init__
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     return func(*args, **kwargs)
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/abstract.py", line 110, in __init__
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     self._init_executor()
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 214, in _init_executor
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 808, in wait_for_ready
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385]     raise e from None
+(EngineCore_DP3 pid=109848) ERROR 09-05 20:14:32 [core.py:1385] Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+(EngineCore_DP3 pid=109848) Traceback (most recent call last):
+(EngineCore_DP3 pid=109848)     self.workers = WorkerProc.wait_for_ready(unready_workers)
+(EngineCore_DP3 pid=109848)   File "/usr/local/lib/python3.12/dist-packages/vllm/v1/executor/multiproc_executor.py", line 808, in wait_for_ready
+(EngineCore_DP3 pid=109848) Exception: WorkerProc initialization failed due to an exception in a background process. See stack trace for root cause.
+Traceback (most recent call last):
+    wait_for_engine_startup(
+  File "/usr/local/lib/python3.12/dist-packages/vllm/v1/engine/utils.py", line 1320, in wait_for_engine_startup
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}
