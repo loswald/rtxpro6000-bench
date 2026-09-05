@@ -347,8 +347,30 @@ The second model says the same thing from the other side. DeepSeek-V4-Flash with
 times, paired 19 to 7 in the *drafter's* favour. A drafter cannot make the model smarter — with probabilistic
 drafting and rejection sampling the target distribution is preserved by construction — so a 19-to-7 split at
 temperature 1.0 is a reading of the **suite's own run-to-run noise** at vendor sampling, not of speculation.
-That noise is now being measured directly: the same configuration evaluated twice under the same recipe and
-seed, so every paired claim in this file can be read against a floor rather than against intuition.
+The next section measures that noise.
+
+### The suite's noise floor
+
+Four configurations were evaluated on both PRO 6000 hosts under byte-identical recipes — same items, same
+seed, same sampling, same caps, same parser — which makes each pair a same-configuration-twice control:
+
+| same configuration, twice | items in common | run A | run B | aggregate gap | items only A / only B got right |
+|---|---:|---:|---:|---:|---:|
+| Qwen3.8-27B NVFP4 (gittensor), b12x | 403 | 0.725 | 0.747 | 0.022 | 11 / 20 |
+| Qwen3.8-27B FP8, b12x | 380 | 0.787 | 0.795 | 0.008 | 6 / 9 |
+| Muse-Glimmer-30B BF16 | 373 | 0.791 | 0.780 | 0.011 | 13 / 9 |
+| gemma-4-26B-A4B BF16, thinking on, **T = 0** | 396 | 0.634 | 0.616 | 0.018 | 28 / 21 |
+
+So a repeat of the *same* configuration moves the aggregate by up to 0.02 and flips 15 to 50 items, with paired
+splits as lopsided as 11 to 20. Read every comparison in this file against that: **DeepSeek's 19-to-7 for its
+drafter and GLM's 13-to-10 for its MTP head are inside the floor** (speculation is lossless, and not better);
+FP8 against the gittensor four-bit build at 29-to-14 and 0.040 is outside it, but not by a wide margin;
+RedHat's "parity" with FP8 (0.801 against 0.802) means *indistinguishable*, not equal; and the order of
+adjacent rows in the leaderboard is not a finding. The gemma pair is the sharpest lesson: at temperature 0 —
+greedy — 49 items still changed verdict between two identical servers, which is the logit-level control's
+3.8% top-1 disagreement cascading through whole answers. Nothing on this stack reproduces bit-for-bit, and
+the eval suite inherits that. A third repeat of the Qwen NVFP4 row is queued on the 600 W box to put a
+second point on the floor.
 
 ### How to serve a model without accidentally measuring your own harness
 
