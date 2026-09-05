@@ -119,6 +119,9 @@ for arm in ${ARMS:-base mtp}; do
           # like for like with every other row.
           if launch glm53f_base_resume; then FORCE=1 EVAL_ARGS="--resume" run_eval_for glm53f_base; fi;;
     long) if launch glm53f_long; then EVAL_BUDGET=7200 run_eval_for glm53f_long; fi;;
+    best) # the fastest layout from glm_perf.sh, evaluated in full so throughput and quality are measured on the
+          # same configuration; BEST_FLAGS carries its launch flags (layout, MoE kernel, sequence budget)
+          if EXTRA_ARGS="${BEST_FLAGS:-}" launch glm53f_best; then EVAL_BUDGET="${BEST_BUDGET:-3600}" run_eval_for glm53f_best; fi;;
     mtp)  if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' launch glm53f_mtp; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_mtp_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
             # speculation verifies against the same model, so this arm must score the same as the base one

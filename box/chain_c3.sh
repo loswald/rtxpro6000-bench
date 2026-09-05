@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
-# Third box: the rest of the five-hour window, re-cut at 17:10 UTC. Waits for chain_c2's logit ladder to finish
-# (the ladder anchors and kldiff are in flight), then replaces it: DeepSeek-V4-Flash's throughput ceiling - the
-# DP4 + expert-parallel layout that was 54% faster in the first campaign, and 512-sequence budgets - then
-# MiniMax-M3 quality and throughput. The soak is dropped for time.
-R=/workspace/results; B=/workspace/bench; MD=/workspace/models
-DEADLINE=$(( $(date -d "2026-09-05 21:20:00" +%s) ))
+# Third box: the rest of the window (Nish: forty minutes over five hours is fine -> 22:00 UTC), re-cut around
+# DeepSeek-V4-Flash, throughput AND quality. Waits for chain_c2's logit ladder, replaces it, then: four DeepSeek
+# layout/kernel/budget arms (two shapes each); a 403-item quality run on whichever arm is fastest, paired against the
+# TP4 baseline on identical items; MiniMax-M3 if time allows. Qwen3.8-Flash-Next fails on the original box's older
+# vLLM build under every kernel and would need this box's newer one; it is not in this window.
+R=/workspace/results; B=/workspace/bench; MD=/workspace/models; P=$R/probe
+DEADLINE=$(( $(date -d "2026-09-05 22:00:00" +%s) ))
 left(){ echo $(( (DEADLINE - $(date +%s)) / 60 )); }
 step(){ echo "[$(date +%H:%M:%S)] CHAINC3 (${1:-}min left): ${*:2}"; }
 source $B/dlget.sh
@@ -16,14 +17,28 @@ sleep 3; source $B/hardkill.sh; kill_all >/dev/null 2>&1
 step "$(left)" "DeepSeek-V4-Flash: waiting for the download, applying the sm_120 o_proj fallback"
 for i in $(seq 1 60); do grep -q "DSDL DONE" $R/dl_c.log 2>/dev/null && break; sleep 30; done
 python3 $B/patch_oproj.py 2>&1 | tail -2 | sed 's/^/  /'
-step "$(left)" "DeepSeek-V4-Flash throughput ceiling: six layout/kernel/budget arms, two shapes each"
-SHAPES=fast EXTRA_ENV="VLLM_DSV4_OPROJ_SM120_FALLBACK=1" bash $B/ksweep.sh $B/lists/ds_perf.txt > $R/ksweep_dsperf.log 2>&1
+export EXTRA_ENV="VLLM_DSV4_OPROJ_SM120_FALLBACK=1"
+step "$(left)" "DeepSeek-V4-Flash throughput: four layout/kernel/budget arms, two shapes each"
+SHAPES=fast bash $B/ksweep.sh $B/lists/ds_perf.txt > $R/ksweep_dsperf.log 2>&1
 
-step "$(left)" "MiniMax-M3: waiting for its download"
-for i in $(seq 1 20); do grep -q "MMDL DONE" $R/dl_c.log 2>/dev/null && break; sleep 30; done
-L=$(left); BUD=$(( (L - 60) * 60 )); [ "$BUD" -lt 1800 ] && BUD=1800
-step "$L" "MiniMax-M3 quality (budget ${BUD}s), then throughput"
-MODE=eval FIRST_ONLY=1 EVAL_BUDGET=$BUD bash $B/ksweep.sh $B/lists/minimax_c.txt > $R/keval_minimax.log 2>&1
-SHAPES=fast bash $B/ksweep.sh $B/lists/minimax_c.txt > $R/ksweep_minimax.log 2>&1
+best=$(python3 $B/pick_best.py "$P/ds4flash_*" router 1024 2>$R/ds_best.tps)
+L=$(left)
+if [ -n "$best" ] && [ "$L" -gt 50 ]; then
+  line=$(grep -E "^${best%%_b12x*}\|" $B/lists/ds_perf.txt | head -1)
+  step "$L" "DeepSeek quality on the fastest layout: $best ($(cat $R/ds_best.tps 2>/dev/null) out tok/s at router C1024), budget $(( (L - 15) * 60 ))s"
+  printf '%s\n' "$line" > $B/lists/ds_best.txt
+  MODE=eval FIRST_ONLY=1 EVAL_CONC=64 EVAL_BUDGET=$(( (L - 15) * 60 )) bash $B/ksweep.sh $B/lists/ds_best.txt > $R/keval_dsbest.log 2>&1
+else
+  step "$L" "no time for the quality run on the fastest DeepSeek layout (best: ${best:-none})"
+fi
+unset EXTRA_ENV
+L=$(left)
+if [ "$L" -gt 45 ]; then
+  step "$L" "MiniMax-M3 quality (budget $(( (L - 20) * 60 ))s), then two throughput shapes"
+  MODE=eval FIRST_ONLY=1 EVAL_BUDGET=$(( (L - 20) * 60 )) bash $B/ksweep.sh $B/lists/minimax_c.txt > $R/keval_minimax.log 2>&1
+  SHAPES=fast bash $B/ksweep.sh $B/lists/minimax_c.txt > $R/ksweep_minimax.log 2>&1
+else
+  step "$L" "MiniMax-M3 not run (time)"
+fi
 step "$(left)" "CHAINC3 DONE"
 kill_all
