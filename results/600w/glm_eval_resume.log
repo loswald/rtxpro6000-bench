@@ -1,0 +1,19 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[00:05:03] ===== GLM-5.3-Flash (AA 57): quality =====
+[00:05:08]   launch glm53f_base_resume
+[00:08:38]   glm53f_base_resume healthy in 210s | GPU KV cache size: 2,139,806 tokens
+    eval: 2026-09-05T00:28:34Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+    eval: 2026-09-05T00:28:34Z     var_tracking     acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-05T00:28:34Z     qa_multi_doc     acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-05T00:28:34Z   knowledge  acc=0.600 n=70/70 ci95=[0.483,0.707] out_tok=1709.6 trunc=0.0143 err=0 
+    eval: 2026-09-05T00:28:34Z     mmlu_pro_hard    acc=0.900 n=40/40 ci95=[0.769,0.960]
+    eval: 2026-09-05T00:28:34Z     simpleqa         acc=0.200 n=30/30 ci95=[0.095,0.373]
+    eval: 2026-09-05T00:28:34Z   ifeval     acc=0.867 n=60/60 ci95=[0.758,0.931] out_tok=3712.6 trunc=0.0333 err=0 
+    eval: 2026-09-05T00:28:34Z     triple           acc=0.917 n=24/24 ci95=[0.742,0.977]
+    eval: 2026-09-05T00:28:34Z     double           acc=0.792 n=24/24 ci95=[0.595,0.908]
+    eval: 2026-09-05T00:28:34Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-05T00:28:34Z   aggregate  acc_micro=0.794 acc_macro=0.8061 n=403/403 ci95=[0.7519, 0.8307] requests=36 retries=0 out_tok/s=782.6
+    eval: 2026-09-05T00:28:34Z wrote /workspace/results/eval/glm53f_base.json, /workspace/results/eval/glm53f_base.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[00:28:34] GLMEVAL DONE

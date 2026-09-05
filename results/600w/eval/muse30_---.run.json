@@ -1,0 +1,78 @@
+{
+ "args": {
+  "base_urls": [
+   "http://127.0.0.1:8000",
+   "http://127.0.0.1:8001",
+   "http://127.0.0.1:8002",
+   "http://127.0.0.1:8003"
+  ],
+  "chat_template_kwargs": "{\"reasoning_strength\":\"high\"}",
+  "concurrency": 64,
+  "data_dir": "/workspace/bench/evalsuite/data",
+  "dry_run": false,
+  "extra_body": {
+   "chat_template_kwargs": {
+    "reasoning_strength": "high"
+   },
+   "top_k": 64
+  },
+  "families": null,
+  "family_names": null,
+  "family_opt": [],
+  "family_opts": {},
+  "gpus": 4,
+  "grace": 120.0,
+  "limit": null,
+  "list_families": false,
+  "max_tokens": 24576,
+  "max_tokens_family": {
+   "code": 16384,
+   "ifeval": 12288,
+   "knowledge": 16384,
+   "longctx": 2048,
+   "math": 24576,
+   "tools": 8192
+  },
+  "model": "m",
+  "no_manifest_check": false,
+  "notes": "",
+  "out": "/workspace/results/eval",
+  "profile": "default",
+  "quiet": false,
+  "reasoning": true,
+  "request_timeout": 600.0,
+  "resume": false,
+  "retries": 3,
+  "retry_backoff": "(2.0, 8.0, 20.0)",
+  "save_responses": "tail",
+  "seed": 20260903,
+  "tag": "muse30_---",
+  "temperature": 1.0,
+  "time_budget": 3000.0,
+  "top_p": 0.95
+ },
+ "endpoint": {
+  "alive": [
+   "http://127.0.0.1:8000",
+   "http://127.0.0.1:8001",
+   "http://127.0.0.1:8002",
+   "http://127.0.0.1:8003"
+  ],
+  "dead": [],
+  "max_model_len": 40960,
+  "served_models": [
+   "m"
+  ],
+  "versions": {
+   "http://127.0.0.1:8000": "0.28.1rc1.dev332+gad127d9a0",
+   "http://127.0.0.1:8001": "0.28.1rc1.dev332+gad127d9a0",
+   "http://127.0.0.1:8002": "0.28.1rc1.dev332+gad127d9a0",
+   "http://127.0.0.1:8003": "0.28.1rc1.dev332+gad127d9a0"
+  }
+ },
+ "evalsuite_git_sha": null,
+ "hostname": "39646ca8d68d",
+ "platform": "Linux-5.15.0-174-generic-x86_64-with-glibc2.39",
+ "python": "3.12.3",
+ "started_at": "2026-09-04T16:58:11Z"
+}

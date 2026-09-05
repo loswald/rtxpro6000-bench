@@ -1,0 +1,35 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[21:57:22] ===== GLM-5.3-Flash (AA 57): quality =====
+[21:57:27]   launch glm53f_base
+[22:00:57]   glm53f_base healthy in 210s | GPU KV cache size: 2,139,806 tokens
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/glm53f_base_quality20.json
+    eval: 2026-09-04T22:50:56Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+    eval: 2026-09-04T22:50:56Z     var_tracking     acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-04T22:50:56Z     qa_multi_doc     acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-04T22:50:56Z   knowledge  acc=0.609 n=69/70 ci95=[0.491,0.715] out_tok=1437.6 trunc=0.0 err=1 
+    eval: 2026-09-04T22:50:56Z     mmlu_pro_hard    acc=0.923 n=39/40 ci95=[0.797,0.974]
+    eval: 2026-09-04T22:50:56Z     simpleqa         acc=0.200 n=30/30 ci95=[0.095,0.373]
+    eval: 2026-09-04T22:50:56Z   ifeval     acc=0.897 n=58/60 ci95=[0.792,0.952] out_tok=3275.6 trunc=0.0 err=2 
+    eval: 2026-09-04T22:50:56Z     triple           acc=0.957 n=23/24 ci95=[0.790,0.992]
+    eval: 2026-09-04T22:50:56Z     double           acc=0.792 n=24/24 ci95=[0.595,0.908]
+    eval: 2026-09-04T22:50:56Z     single           acc=1.000 n=11/12 ci95=[0.741,1.000]
+    eval: 2026-09-04T22:50:56Z   aggregate  acc_micro=0.861 acc_macro=0.8706 n=367/403 ci95=[0.8219, 0.8927] requests=547 retries=144 out_tok/s=247.9
+    eval: 2026-09-04T22:50:56Z wrote /workspace/results/eval/glm53f_base.json, /workspace/results/eval/glm53f_base.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 1
+[22:51:01]   launch glm53f_mtp
+[22:55:17]   glm53f_mtp healthy in 255s | GPU KV cache size: 1,474,560 tokens
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/glm53f_mtp_quality20.json
+    eval: 2026-09-04T23:35:42Z     niah_multikey    acc=0.958 n=24/24 ci95=[0.798,0.993]
+    eval: 2026-09-04T23:35:42Z     var_tracking     acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-04T23:35:42Z     qa_multi_doc     acc=0.750 n=12/12 ci95=[0.468,0.911]
+    eval: 2026-09-04T23:35:42Z   knowledge  acc=0.614 n=70/70 ci95=[0.497,0.720] out_tok=2394.6 trunc=0.0 err=0 
+    eval: 2026-09-04T23:35:42Z     mmlu_pro_hard    acc=0.850 n=40/40 ci95=[0.709,0.929]
+    eval: 2026-09-04T23:35:42Z     simpleqa         acc=0.300 n=30/30 ci95=[0.167,0.479]
+    eval: 2026-09-04T23:35:42Z   ifeval     acc=0.883 n=60/60 ci95=[0.778,0.942] out_tok=3655.4 trunc=0.0167 err=0 
+    eval: 2026-09-04T23:35:42Z     triple           acc=0.833 n=24/24 ci95=[0.641,0.933]
+    eval: 2026-09-04T23:35:42Z     double           acc=0.875 n=24/24 ci95=[0.690,0.957]
+    eval: 2026-09-04T23:35:42Z     single           acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-04T23:35:42Z   aggregate  acc_micro=0.809 acc_macro=0.8167 n=403/403 ci95=[0.7677, 0.8443] requests=475 retries=72 out_tok/s=689.0
+    eval: 2026-09-04T23:35:42Z wrote /workspace/results/eval/glm53f_mtp.json, /workspace/results/eval/glm53f_mtp.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[23:35:42] GLMEVAL DONE

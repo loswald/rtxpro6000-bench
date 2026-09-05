@@ -1,0 +1,70 @@
+[18:25:46] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[18:25:46] ########## q27_nvfp4 (17G, tp=1 x4) : b12x:- ##########
+[18:27:42]     v lin=b12x moe=- healthy 110s | GPU KV cache size: 1,768,727 tokens
+      kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_b12x--_quality20.json
+  router     C256     61.3s    2014 req/min     4297 out/s     34374 in/s     38670 tot/s  TTFT   1466/   4283 ms  TPOT  48.4/  56.4 ms  ITL  48.4  E2E   7.6/ 10.8 s
+  router     C1024   206.2s    2396 req/min     5110 out/s     40884 in/s     45994 tot/s  TTFT   2423/  16725 ms  TPOT 182.2/ 196.0 ms  ITL 182.2  E2E  25.6/ 41.0 s
+  promptopt  C1024   441.7s    1118 req/min     4769 out/s     66761 in/s     71530 tot/s  TTFT   4522/  34411 ms  TPOT 197.1/ 210.3 ms  ITL 197.1  E2E  54.8/ 84.6 s
+  judge      C512    480.0s     514 req/min     4383 out/s     35061 in/s     39444 tot/s  TTFT   4195/  32500 ms  TPOT 108.6/ 114.4 ms  ITL 108.6  E2E  59.7/ 90.4 s
+[18:50:04] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[18:51:50]     v lin=b12x moe=- healthy 100s | GPU KV cache size: 1,475,801 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/q27_fp8_b12x--_quality20.json
+  router     C256     99.3s    1245 req/min     2656 out/s     21251 in/s     23908 tot/s  TTFT   2596/   7877 ms  TPOT  76.6/  92.0 ms  ITL  76.6  E2E  12.3/ 18.2 s
+  router     C1024   335.1s    1477 req/min     3150 out/s     25199 in/s     28349 tot/s  TTFT   4377/  30312 ms  TPOT 292.4/ 319.4 ms  ITL 292.4  E2E  41.5/ 69.2 s
+  promptopt  C1024   707.8s     699 req/min     2984 out/s     41774 in/s     44758 tot/s  TTFT  13607/  60536 ms  TPOT 287.6/ 314.3 ms  ITL 287.6  E2E  86.9/138.1 s
+  judge      C512    753.6s     328 req/min     2801 out/s     22405 in/s     25205 tot/s  TTFT   7377/  59781 ms  TPOT 168.4/ 179.4 ms  ITL 168.4  E2E  93.4/150.0 s
+[19:26:18] ########## q27_nvfp4_redhat (22G, tp=1 x4) : -:- ##########
+[19:28:14]     v lin=- moe=- healthy 110s | GPU KV cache size: 1,658,259 tokens
+      kernel: Selected CutlassFP8ScaledMMLinearKernel
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_redhat_---_quality20.json
+  router     C256    136.1s     905 req/min     1930 out/s     15439 in/s     17369 tot/s  TTFT   4286/  12623 ms  TPOT  99.8/ 125.9 ms  ITL  99.8  E2E  17.0/ 26.2 s
+  router     C1024   512.4s     962 req/min     2053 out/s     16420 in/s     18473 tot/s  TTFT   7101/  49171 ms  TPOT 446.0/ 488.7 ms  ITL 446.0  E2E  63.7/108.8 s
+  promptopt  C1024  1053.1s     468 req/min     1996 out/s     27946 in/s     29942 tot/s  TTFT  12655/ 100292 ms  TPOT 464.4/ 498.3 ms  ITL 464.4  E2E 131.1/219.4 s
+  judge      C512   1073.3s     230 req/min     1960 out/s     15678 in/s     17637 tot/s  TTFT  11918/  95623 ms  TPOT 238.1/ 255.2 ms  ITL 238.1  E2E 133.6/223.7 s
+[20:17:10] ########## q27_nvfp4_unsloth (22G, tp=1 x4) : -:- ##########
+[20:19:06]     v lin=- moe=- healthy 110s | GPU KV cache size: 1,658,259 tokens
+      kernel: Selected CutlassFP8ScaledMMLinearKernel
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_unsloth_---_quality20.json
+  router     C256    136.1s     905 req/min     1931 out/s     15447 in/s     17378 tot/s  TTFT   4223/  12626 ms  TPOT 100.3/ 125.8 ms  ITL 100.3  E2E  17.0/ 26.2 s
+  router     C1024   511.9s     963 req/min     2054 out/s     16428 in/s     18482 tot/s  TTFT   7097/  48705 ms  TPOT 445.8/ 489.3 ms  ITL 445.8  E2E  63.7/108.3 s
+  promptopt  C1024  1052.8s     468 req/min     1997 out/s     27953 in/s     29949 tot/s  TTFT  12654/ 100278 ms  TPOT 464.3/ 498.0 ms  ITL 464.3  E2E 131.1/219.4 s
+  judge      C512   1072.0s     230 req/min     1959 out/s     15672 in/s     17630 tot/s  TTFT  12096/  95630 ms  TPOT 237.9/ 255.0 ms  ITL 237.9  E2E 133.7/223.7 s
+[21:08:01] ########## nemo35 (21G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[21:08:52]     x lin=b12x moe=flashinfer_cutlass : ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not sup
+[21:08:57]   nemo35: NO combination served
+[21:08:57] ########## muse30 (56G, tp=1 x4) : -:- ##########
+[21:10:12]     v lin=- moe=- healthy 70s | GPU KV cache size: 2,056,193 tokens
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/muse30_---_quality20.json
+  router     C256    114.9s    1078 req/min     2299 out/s     18392 in/s     20691 tot/s  TTFT   3163/   9343 ms  TPOT  87.1/ 110.5 ms  ITL  87.1  E2E  14.2/ 20.2 s
+  router     C1024   349.2s    1420 req/min     3029 out/s     24230 in/s     27259 tot/s  TTFT   5493/  35198 ms  TPOT 296.8/ 335.6 ms  ITL 296.8  E2E  43.2/ 74.6 s
+  promptopt  C1024   272.3s    1817 req/min     7751 out/s    108519 in/s    116271 tot/s  TTFT   4685/  19775 ms  TPOT 114.0/ 130.4 ms  ITL 114.0  E2E  33.8/ 49.1 s
+  judge      C512    804.5s     308 req/min     2627 out/s     21018 in/s     23645 tot/s  TTFT   8535/  70179 ms  TPOT 178.2/ 192.7 ms  ITL 178.2  E2E  99.6/165.8 s
+[21:38:45] ########## gemma26 (49G, tp=1 x4) : -:- ##########
+[21:41:11]     v lin=- moe=- healthy 140s | GPU KV cache size: 762,379 tokens
+      kernel: Using FlashInfer CUTLASS Unquantized MoE backend out of potential backends: ['FlashInfer TRTLLM'
+      kernel: Using FlashInferExperts MoE backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gemma26_---_quality20.json
+  router     C256     44.2s    2804 req/min     5982 out/s     47857 in/s     53839 tot/s  TTFT    822/   2338 ms  TPOT  36.6/  42.0 ms  ITL  36.6  E2E   5.5/  6.9 s
+  router     C1024   115.4s    4275 req/min     9119 out/s     72953 in/s     82072 tot/s  TTFT   1411/   8493 ms  TPOT 101.5/ 110.1 ms  ITL 101.5  E2E  14.3/ 21.7 s
+  promptopt  C1024   136.2s    3633 req/min    15502 out/s    217026 in/s    232528 tot/s  TTFT   1421/   5414 ms  TPOT  60.6/  65.4 ms  ITL  60.6  E2E  16.9/ 20.9 s
+  judge      C512    291.0s     847 req/min     7229 out/s     57835 in/s     65065 tot/s  TTFT   2244/  17192 ms  TPOT  66.4/  69.7 ms  ITL  66.4  E2E  36.2/ 52.5 s
+[21:53:08] SKIP qwen36_fp8 (weights absent or incomplete)
+[21:53:08] SKIP minimaxm3 (weights absent or incomplete)
+[21:53:08] ########## inkling (160G, tp=4 x1) : b12x:- ##########
+[21:54:39]     x lin=b12x moe=- : RuntimeError: Worker failed with error 'inputs must be float16, bfloat16, fp8 e4m3fn, or fp8 e5m2', please check the stack t
+[21:54:44]   inkling: NO combination served
+[21:54:44] ########## qwen38fn (126G, tp=4 x1) : b12x:- ##########
+[21:57:15]     x lin=b12x moe=- : ValueError: There is no module or parameter named 'ngram_embedding.weight_scale' in Qwen4ExpNGramEmbedding. The available 
+[21:57:20]   qwen38fn: NO combination served
+/workspace/bench/ksweep.sh: line 245: ne: command not found
+/workspace/bench/ksweep.sh: line 246: syntax error near unexpected token `fi'
+/workspace/bench/ksweep.sh: line 246: `fi'

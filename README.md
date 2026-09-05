@@ -262,7 +262,7 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | model (AA index) · configuration | items | overall | maths | code | tools | long ctx | knowledge | instructions |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLM-5.3-Flash (57)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
-| GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 367 ¹ | 0.861 | **0.982** | 0.864 | **0.914** | 0.958 | 0.609 | 0.897 |
+| GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
 | Muse-Glimmer-30B (35) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
 | Qwen3.8-27B (52) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
 | Nemotron-3-Super (26) · **native** NVFP4 | 379 ¹ | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
@@ -275,15 +275,19 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | Qwen3.6-35B-A3B · FP8 | 403 | 0.702 | 0.537 | 0.627 | 0.871 | 0.958 | 0.543 | 0.800 |
 | gemma-4-26B-A4B · BF16, thinking on, T=0 | 403 | 0.628 ² | 0.812 | 0.560 | 0.843 | 0.604 | 0.286 | 0.633 |
 
-¹ The first pass of these runs lost items to the eval runner's default **600-second request timeout**: 36 for
-GLM (24 maths, 9 code), 15 for Qwen FP8, 14 for Muse, 24 for Nemotron. A model that reasons for 30,000 tokens
-at 96 concurrent streams takes longer than ten minutes per request here. Those are the *hardest* items — they
-are the ones that run long — so a row missing them is flattered: GLM's no-speculation arm scores 0.872 on the
-367 items it finished and its MTP arm, which finished all 403, scores 0.864 on the same 367 and 0.809 overall.
-Every eval now runs with an hour per request, and the missing items are being completed under the same tag
-and caps; these rows will be replaced by 403-item numbers, not sit beside them.
+¹ The first pass of these runs lost items to the eval runner's default **600-second request timeout**: 15 for
+Qwen FP8, 14 for Muse, 24 for Nemotron (and 36 for GLM, since completed — see ³). A model that reasons for
+30,000 tokens at 96 concurrent streams takes longer than ten minutes per request here. Those are the *hardest*
+items — they are the ones that run long — so a row missing them is flattered. Every eval now runs with an hour
+per request, and the missing items are being completed under the same tag and caps; these rows will be
+replaced by 403-item numbers, not sit beside them.
 ² 28.5% of gemma's answers were truncated at the cap: at T=0 with thinking on it does not converge. The
 vendor default is thinking *off*; both modes are being measured (`box/lists/thinkmode6000.txt`).
+³ GLM without speculation scored **0.872 on the 367 items it finished** in its first pass; completing the 36
+timed-out items took it to 0.794, because 20 of 80 maths items and 9 of 75 code items **ran past 32,768
+output tokens** at `reasoning_effort: max` and a truncated answer scores as wrong. That is the cap binding,
+not the model failing: the two GLM rows are within noise of each other (paired 13 vs 10 on the items both
+scored), and a 65k-token arm is queued to measure what the 32k cap costs.
 
 **The published intelligence index does predict this.** GLM-5.3-Flash at index 57 leads, and it leads on the
 families that separate models rather than saturate: maths, knowledge and long context. An earlier version of
