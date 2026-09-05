@@ -1,0 +1,14 @@
+# DeepSeek-V4-Flash-0731 (304B, native MXFP4 experts + FP8 attention), 600 W box, third attempt.
+#
+# Attempt 1 hard-coded moe=flashinfer_cutlass with mxfp8 activations: rejected by this build. Attempt 2 used the
+# recipes that served this model on this GPU in the first campaign, and every MoE backend died in the SAME
+# place - not the MoE at all, but the sparse-attention indexer's fp8_einsum during memory profiling:
+#   RuntimeError: Assertion error (deepgemm .../utils/layout.hpp:40): t.dim()
+# The one launch difference from the recipe that served is the sweep's derived budget: --max-num-seqs 512 and
+# utilisation 0.94 where the working launch had 256 and 0.92. Profiling divides 8,192 batched tokens over
+# max-num-seqs sequences - 16 tokens each at 512, 32 at 256 - and the indexer is a blocked kernel. So this
+# list pins the working launch's budget; a list row's flags come after the sweep's own, and the last wins.
+ds4flash|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-,b12x:marlin|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|256|--gpu-memory-utilization|0.92
+ds4flash_ep|/workspace/models/DeepSeek-V4-Flash|4|b12x:-,b12x:marlin|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|256|--gpu-memory-utilization|0.92
+ds4flash_dp4ep4|/workspace/models/DeepSeek-V4-Flash|4|b12x:-|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|256|--gpu-memory-utilization|0.92
+ds4flash_dspark|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--speculative-config|{"method":"dspark","num_speculative_tokens":7,"draft_sample_method":"probabilistic"}|--max-num-seqs|256|--gpu-memory-utilization|0.92
