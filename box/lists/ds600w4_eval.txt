@@ -1,0 +1,5 @@
+# DeepSeek-V4-Flash with room: 17% of its code answers and 6% of its maths ran past the 20k / 32k family caps
+# in the 403-item pass (0.801). Same server recipe with the window raised to 98k; the chain doubles every cap
+# and halves concurrency (the 280k-token KV cache cannot hold 64 streams of 65k, and preemption would only
+# slow it, not change the answer). Whatever fraction of the truncated items resolve is what the caps cost.
+ds4flash_64k|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|128|--gpu-memory-utilization|0.92|--max-model-len|98304

@@ -272,6 +272,7 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | model (AA index) · configuration | items | overall | maths | code | tools | long ctx | knowledge | instructions |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLM-5.3-Flash (57)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
+| **DeepSeek-V4-Flash (52)** · native MXFP4 + FP8, TP4 | 403 | **0.801** ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
 | Muse-Glimmer-30B (35) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
 | Qwen3.8-27B (52) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
@@ -298,6 +299,10 @@ timed-out items took it to 0.794, because 20 of 80 maths items and 9 of 75 code 
 output tokens** at `reasoning_effort: max` and a truncated answer scores as wrong. That is the cap binding,
 not the model failing: the two GLM rows are within noise of each other (paired 13 vs 10 on the items both
 scored), and a 65k-token arm is queued to measure what the 32k cap costs.
+⁴ DeepSeek-V4-Flash is served at the precision it was trained at, so this row has no quantisation loss in it.
+It lost no items to the timeout, but **17% of its code answers ran past the 20,480-token cap** (6% of maths
+past 32,768): like GLM, it reasons past the caps that were generous for every smaller model. A 65k-token arm
+is queued for it too. Statistically it ties GLM — the two are inside each other's intervals.
 
 **The published intelligence index does predict this.** GLM-5.3-Flash at index 57 leads, and it leads on the
 families that separate models rather than saturate: maths, knowledge and long context. An earlier version of
@@ -308,8 +313,9 @@ agent harness spends most of its time doing, and index 24 buys 0.933 on code whe
 
 Two candidates named for this node are not on the table. **Kimi K3 is 2.78 trillion parameters** (a community
 W4A4 build exists, at ~1.4 TB); it does not fit 384 GB at any precision and belongs to the 7-GPU node or an
-API. DeepSeek-V4-Flash does fit — 156 GB, native MXFP4 experts and FP8 attention — and its quality run is in
-flight on the 600 W box after the first attempt hard-coded a MoE backend this build rejects.
+API. DeepSeek-V4-Flash does fit — 156 GB, native MXFP4 experts and FP8 attention — and scores 0.801 above,
+after three failed launches: one hard-coded a MoE backend this build rejects, two blamed the wrong flag for a
+DeepGEMM assertion that was the attention output projection needing its sm_120 fallback (rule 6).
 
 Per-family intervals at these counts are roughly ±0.10, so family-level ordering is indicative and the
 aggregate is where the ±0.045 applies. Rows are comparable only on the items both scored, which is why every

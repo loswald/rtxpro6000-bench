@@ -15,3 +15,7 @@
 [00:28:39] 600W-3: GLM-5.3-Flash: MTP with room to 65k tokens - does the model finish what it truncated at 32k?
 [00:28:46] 600W-3: stopped chain600w3 after its GLM step; continuing as chain600w3b
 [00:28:56] 600W-3: DeepSeek-V4-Flash: quality on the first MoE backend that serves, then throughput on every backend that serves
+[00:35:28] 600W-3: chain600w3b stopped by hand: every DeepSeek backend died in the indexer's fp8_einsum during profiling; re-issued as chain600w3c with the working launch budget pinned
+[00:36:21] 600W-3: DeepSeek-V4-Flash, third attempt: quality on the first MoE backend that serves, then throughput on every one that does
+[00:40:04] 600W-3: chain600w3c stopped by hand: the DeepSeek failure is the o_proj DeepGEMM einsum, fixed by VLLM_DSV4_OPROJ_SM120_FALLBACK=1; re-issued as chain600w3d
+[00:40:59] 600W-3: DeepSeek-V4-Flash, fourth attempt (o_proj fallback on): quality on the first MoE backend that serves, then throughput on every one that does
