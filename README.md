@@ -97,6 +97,7 @@ Other models on the same box:
 | | same **+ DSpark speculation** (7 draft tokens, 37% accepted) | router C256 | 665 | 5,320 | 4.8 s |
 | | | promptopt C1024 | 735 | 10,293 | 125 s ⁱ |
 | **DeepSeek-V4-Flash (41)** | **TP1 × DP4 + expert parallel, 512 seqs per engine** (this box) | router C1024 | **1,640** | 13,124 | 7.6 s |
+| | | promptopt C1024 | **4,430** | 62,024 | 7.9 s |
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel, 256 seqs (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM, 256 seqs | promptopt C256 | 1,002 | 14,030 | 2.7 s |
@@ -124,9 +125,11 @@ at 192 sequences per rank (768 in flight), and it is measuring now.
 **DeepSeek's ceiling was a layout ceiling, and it moved.** Tensor-parallel across four cards gave 1,107 output
 tokens a second. Four independent engines with the experts sharded across them (TP1 × DP4 + EP), each admitting
 512 sequences, give **1,640 at 1,024 concurrent streams — 48% more from the same weights and kernels**, because
-each card decodes its own batch and only the expert dispatch crosses PCIe. The price is per-stream latency:
-581 ms per token at that load, 7.6 s to first token. At 256 streams the same layout gave 1,289 (first box), so
-the gain is mostly batch depth that TP4 could not reach. Its 403-item quality run on this layout is in progress;
+each card decodes its own batch and only the expert dispatch crosses PCIe. On shared-prefix traffic the gap is
+wider still: **4,430 against 2,387, +86%**, because prefix caching is per engine and four engines each hold the
+whole prefix. The price is per-stream latency: 581 ms per token at that load on the router shape, 7.6 s to first
+token. At 256 streams the same layout gave 1,289 (first box), so the gain is mostly batch depth that TP4 could
+not reach. Its 403-item quality run on this layout is in progress;
 the same weights and MoE kernel scored 0.814 at TP4.
 
 GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — four points below the top
