@@ -94,6 +94,8 @@ Other models on the same box:
 | DeepSeek-V4-Flash (41) | TP4, `b12x` W4A4 experts, 256 seqs (this box) | router C256 | 1,107 | 8,855 | 3.7 s |
 | | | promptopt C1024 | 2,387 | 33,411 | 45.7 s ⁱ |
 | | | judge C512 | 1,082 | 8,656 | 121 s ⁱ |
+| | same **+ DSpark speculation** (7 draft tokens, 37% accepted) | router C256 | 665 | 5,320 | 4.8 s |
+| | | promptopt C1024 | 735 | 10,293 | 125 s ⁱ |
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM | promptopt C256 | 1,002 | 14,030 | 2.7 s |

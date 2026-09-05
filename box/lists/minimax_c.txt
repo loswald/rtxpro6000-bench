@@ -1,0 +1,4 @@
+# MiniMax-M3 (427B, native MXFP4 experts, index 36): the highest-ranked model never given a quality run. Needs
+# --enforce-eager on sm_120 (a worker segfault otherwise) and block 128 for its attention; flashinfer_cutlass fails
+# "No common block size for 128", so the MoE backend is a sweep over what remains.
+minimaxm3|/workspace/models/MiniMax-M3-MXFP4|4|-:flashinfer_trtllm,-:marlin,-:-|--quantization-config.moe.activation|mxfp8|--block-size|128|--enforce-eager

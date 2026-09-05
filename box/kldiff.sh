@@ -16,6 +16,7 @@ BF=$MD/Qwen3.8-27B          # the native parent; every other rung is a loss meas
 B12=(--kernel-config.linear_backend b12x)
 
 log "===== logit-level quality, Qwen3.8-27B ====="
+if [ -z "${LADDER_ONLY:-}" ]; then   # the four pairs below were measured on the 400 W box on 4 Sept; a second box need not repeat them
 
 # 1. The noise floor. Same checkpoint, same flags, two cards. Everything below must be read against this:
 #    two identical servers do not agree perfectly, because reduction order differs with the device.
@@ -32,6 +33,8 @@ pair kl_kv_fp8_vs_auto "$Q4" 4 "${B12[@]}" --kv-cache-dtype fp8 "$Q4" 4 "${B12[@
 #    indistinguishable. If they are not, one of them is wrong.
 pair kl_b12x_vs_fib12x "$Q4" 4 "${B12[@]}" --kv-cache-dtype fp8 \
      "$Q4" 4 --kernel-config.linear_backend flashinfer_b12x --kv-cache-dtype fp8
+
+fi
 
 # 5. Speculative decoding must not change the distribution at all: it proposes tokens and verifies them
 #    against the same model. Divergence above the control is a bug in the speculator, not a trade-off.

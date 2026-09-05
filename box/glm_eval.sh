@@ -131,7 +131,7 @@ for arm in ${ARMS:-base mtp}; do
           # is the cost the 32k cap was imposing on the best model here.
           if SPEC='{"method":"glm5_next_mtp","num_speculative_tokens":3}' EXTRA_ARGS="--max-model-len 98304" launch glm53f_mtp64k; then
             EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288" \
-              EVAL_BUDGET=10800 run_eval_for glm53f_mtp64k
+              EVAL_BUDGET="${MTP64K_BUDGET:-10800}" run_eval_for glm53f_mtp64k
           fi;;
     fp8)  # Fidelity arm. Everything else here serves RedHatAI's NVFP4 build, which is a post-training
           # quantisation of this model; Z.AI's own FP8 release is the precision it was trained at, and at
@@ -144,7 +144,7 @@ for arm in ${ARMS:-base mtp}; do
           if [ ! -f "$MD/.dl_complete" ]; then log "SKIP glm53f_fp8 (native FP8 checkpoint not downloaded)"; continue; fi
           if EXTRA_ARGS="--gpu-memory-utilization 0.94 --max-num-seqs 32" launch glm53f_fp8; then
             $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/glm53f_fp8_quality20.json" --mode chat --max-tokens 2048 2>&1 | tail -1
-            EVAL_CONC=32 EVAL_BUDGET=10800 run_eval_for glm53f_fp8
+            EVAL_CONC=32 EVAL_BUDGET="${FP8_BUDGET:-10800}" run_eval_for glm53f_fp8
             bench_shapes glm53f_fp8 32
           fi;;
     spec) # Kept for the record: the greedy-sequence test and its control. The control (the same server
