@@ -1,0 +1,10 @@
+[21:09:02] ===== GLM-5.3-Flash, TP1 x DP4 + EP: throughput levers (DP2 x TP2 produced degenerate output - TP2 is broken in this port) =====
+[21:09:07]   launch glm53f_dp4_s256: --max-num-seqs 256 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
+[21:11:52]   glm53f_dp4_s256 FAILED after 165s: ValueError: max_num_seqs (256) exceeds available Mamba cache blocks (192). Each decode sequence requires one Mamba cache block, so CUDA graph capture ca|Worker failed with error 'max_num_seqs (256) exceeds available Mamba cache blocks (192). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please
+[21:12:03]   launch glm53f_dp4_ssm16: --max-num-seqs 384 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel --mamba-ssm-cache-dtype bfloat16
+[21:14:48]   glm53f_dp4_ssm16 FAILED after 165s: ValueError: max_num_seqs (384) exceeds available Mamba cache blocks (197). Each decode sequence requires one Mamba cache block, so CUDA graph capture ca|Worker failed with error 'max_num_seqs (384) exceeds available Mamba cache blocks (197). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please
+[21:14:58]   launch glm53f_dp4_mb32k: --max-num-seqs 192 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel --max-num-batched-tokens 32768
+[21:16:58]   glm53f_dp4_mb32k FAILED after 120s: CUDA out of memory. Tried to allocate 16.30 GiB. GPU 0 has|CUDA out of memory. Tried to allocate 16.30 GiB. GPU 1 has
+[21:17:09]   launch glm53f_dp4_kvfp8: --max-num-seqs 192 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel --kv-cache-dtype fp8
+[21:19:09]   glm53f_dp4_kvfp8 FAILED after 120s: ValueError: FP8 kv_data_type for MLA requires an SM90 (Hopper) device, got SM120.|Worker failed with error 'FP8 kv_data_type for MLA requires an SM90 (Hopper) device, got SM120.
+[21:19:14] GLMPERF4 DONE

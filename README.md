@@ -114,7 +114,7 @@ Other models on the same box:
 | | TP4 + **expert parallel**, 512 seqs | router C1024 | 931 | 7,449 | 62 s ⁱ |
 | | | promptopt C1024 | 1,008 | 14,108 | 120 s ⁱ |
 | | TP4, 512 seqs, **MTP speculation** (3 draft tokens, 10% accepted at this batch) | router C1024 | 592 | 4,738 | 101 s ⁱ |
-| | TP1 × DP4 + expert parallel, 192 seqs per rank (the build's cap at TP1) | router C1024 | 1,073 | 8,585 | 97 s ⁱ |
+| | **TP1 × DP4 + expert parallel, 192 seqs per rank** (the build's cap at TP1; quality 0.792, identical to TP4) | router C1024 | **1,073** | 8,585 | 97 s ⁱ |
 | | DP2 × TP2 + expert parallel, 384 seqs per rank — **rejected by quality tripwire** | router C1024 | 1,300 (diagnostic only) | 10,397 | 72 s ⁱ |
 
 ⁱ Time-to-first-token here is queueing: the server admits 256 or 512 sequences and the shape offers 1,024.
@@ -335,6 +335,7 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, Marlin experts, no speculation | 403 | 0.814 ⁴ | 0.912 | 0.707 | 0.871 | 0.938 | 0.643 | 0.850 |
 | DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (46) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
+| GLM-5.3-Flash (46) · NVFP4, **TP1 × DP4 + EP**, no speculation — the fast usable layout | 403 | 0.792 | 0.700 | 0.787 | 0.914 | 0.958 | 0.600 | 0.867 |
 | GLM-5.3-Flash (46) · NVFP4, **DP2 × TP2 + EP** — the 1,300 tok/s layout | 403 | **0.643** ⁶ | 0.562 | 0.640 | 0.714 | 0.917 | 0.543 | 0.567 |
 | Qwen3.8-27B (41) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
 | Muse-Glimmer-30B (24) · BF16 | 403 | 0.787 | 0.938 | 0.800 | 0.814 | 0.812 | 0.486 | 0.867 |
@@ -402,8 +403,18 @@ box, never in the repository or this chat). One model has finished; the others f
 |---|---:|---:|---:|---|
 | GLM-5.3-Flash | 0.794 · NVFP4, TP4 (0.809 with MTP) | **0.824** | +0.030 (+0.015 vs MTP) | maths 0.812 vs 0.738, code 0.813 vs 0.760, knowledge 0.657 vs 0.600; ifeval and tools slightly lower |
 | DeepSeek-V4-Flash | 0.844 · native, DP4 + EP | **0.784** | −0.060 | long context 0.833 vs 0.938, maths 0.875 vs 0.938, knowledge 0.571 vs 0.643, code 0.707 vs 0.747; the endpoint truncates 9.2% of answers against 4.2% here and 3.0% degenerate into repetition against 0.25% |
+| DeepSeek-V4-Flash · **DeepSeek's own endpoint**, provider pinned | 0.844 · native, DP4 + EP | **0.789** | −0.055 | code 0.640 vs 0.747, instructions 0.817 vs 0.933, tools 0.843 vs 0.900; 7.9% truncated against 4.2%, mean answer 4,717 tokens against 3,376; degenerate output 0.25%, same as ours — a 65k-cap re-run is in progress |
 | Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | queued | | |
 | gpt-oss-120b, gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | queued | | |
+
+OpenRouter's public endpoint list explains the DeepSeek row and changes the price it should be read against: 29
+providers serve DeepSeek-V4-Flash-0731, the $0.065 / $0.18 tier the economics used is FP4 (Relace, Sail
+Research), Baidu's FP8 is $0.05 / $0.10, and DeepSeek's own endpoint is $0.22 / $0.66. Pinning to DeepSeek
+itself scored 0.789 — the same as default routing (paired 26 to 24), so the cheap provider is not the
+difference; the endpoint reasons longer than our server (4,717 tokens a answer against 3,376) and truncates at
+the same caps, and only the cheap tier's 3% degenerate output was provider-specific. At DeepSeek's own price the
+averaged workload costs about $0.13 per million tokens against $0.033 on the node: 4× in the node's favour for
+the model at its released quality, 10× fully loaded.
 
 The two results point opposite ways, and both are about the *deployment*, not the weights. GLM's endpoint
 beats our four-bit build by the size of a quantisation cost, because Z.AI serves the model at training
@@ -742,24 +753,27 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 
 ![Cost against quality for every configuration measured at 600 W](report/frontier.svg)
 
-| configuration | accuracy (items) | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | frontier |
-|---|---:|---:|---:|---:|---:|:-:|
-| gpt-oss-120b MXFP4 (native) | 0.742 (124) | 2,304 · 192 | $0.006 | $0.047 | 7.5× | yes |
-| gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | 2,304 · 192 | $0.007 | $0.091 | 12.1× | |
-| gpt-oss-20b MXFP4 (native) ¹ | 0.712 (403) | 1,024 · 128 | $0.010 | $0.041 | 4.2× | |
-| Muse-Glimmer-30B BF16 | 0.787 (403) | 2,304 · 192 | $0.018 | $0.202 | 10.9× | yes |
-| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 2,304 · 192 | $0.019 | $0.412 | 21.7× | yes |
-| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 2,304 · 192 | $0.019 | $0.412 | 21.4× | |
-| Qwen3.8-27B FP8 | 0.779 (403) | 2,304 · 192 | $0.031 | $0.412 | 13.3× | |
-| DeepSeek-V4-Flash native · DP4 + EP | **0.844** (403) | 2,304 · 192 | $0.033 | $0.044 | 1.3× | yes |
-| Qwen3.8-27B BF16 | 0.806 (403) | 2,304 · 192 | $0.042 | $0.412 | 9.9× | |
-| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 2,304 · 192 | $0.047 | $0.412 | 8.8× | |
-| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 2,304 · 192 | $0.047 | $0.412 | 8.8× | |
-| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP * | **Rejected: 8 degenerate + 1 wrong / 20** | 2,304 · 192 | — | $0.052 | — | |
-| DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 2,304 · 192 | $0.055 | $0.044 | 0.8× | |
-| GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 2,304 · 192 | $0.096 | $0.052 | 0.5× | |
-| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 2,304 · 192 | $0.128 | $0.044 | 0.3× | |
-| GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 2,304 · 192 | $0.209 | $0.052 | 0.2× | |
+| configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |
+|---|---:|---:|---|---:|---:|---:|---:|:-:|
+| gpt-oss-120b MXFP4 (native) | 0.742 (124) | — | router + promptopt | 2,304 · 192 | $0.006 | $0.047 | 7.5× | yes |
+| gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | — | router + promptopt | 2,304 · 192 | $0.007 | $0.091 | 12.1× |  |
+| gpt-oss-20b MXFP4 (native) | 0.712 (403) | — | router | 1,024 · 128 | $0.010 | $0.041 | 4.2× |  |
+| Muse-Glimmer-30B BF16 | 0.787 (403) | — | router + promptopt | 2,304 · 192 | $0.018 | $0.202 | 10.9× | yes |
+| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | — | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.7× | yes |
+| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | — | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.4× |  |
+| Qwen3.8-27B FP8 | 0.779 (403) | — | router + promptopt | 2,304 · 192 | $0.031 | $0.412 | 13.3× |  |
+| DeepSeek-V4-Flash native · DP4 + EP | 0.844 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.033 | $0.044 | 1.3× | yes |
+| Qwen3.8-27B BF16 | 0.806 (403) | — | router + promptopt | 2,304 · 192 | $0.042 | $0.412 | 9.9× |  |
+| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | — | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
+| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | — | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
+| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output) | 0.643 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.054 | $0.052 | 1.0× |  |
+| Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears | 0.866 (216) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× | yes |
+| Qwen3.8-Flash-Next NVFP4 · TP4 | 0.866 (216, same kernels in another layout) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× |  |
+| DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.055 | $0.044 | 0.8× |  |
+| GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.096 | $0.052 | 0.5× |  |
+| GLM-5.3-Flash NVFP4 · DP4 + EP | 0.792 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.100 | $0.052 | 0.5× |  |
+| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.128 | $0.044 | 0.3× |  |
+| GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.209 | $0.052 | 0.2× |  |
 
 \* GLM's DP2 × TP2 layout failed its own corruption tripwire. Its historical dashed-ring point borrows TP4
 accuracy and must be excluded from the quality/cost frontier; the chart has not yet been regenerated. DeepSeek's landed: 0.844. ¹ gpt-oss-20b has no

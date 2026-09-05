@@ -19,35 +19,35 @@
  },
  {
   "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
-  "text": "\n\n```python\ndef fib(n):\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nThis returns the Fibonacci sequence starting with `fib(0) = 0`, `fib(1) = 1`.",
-  "reasoning_chars": 335,
+  "text": "\n\n```python\ndef fib(n):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nExample:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(10)) # 55\n```",
+  "reasoning_chars": 328,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.826,
+  "distinct": 0.767,
   "verdict": "ok"
  },
  {
   "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
-  "text": "\n\n```sql\nSELECT\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```",
-  "reasoning_chars": 427,
+  "text": "\n\n```sql\nSELECT\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nFor SQL Server, use:\n\n```sql\nSELECT TOP 3\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC;\n```",
+  "reasoning_chars": 593,
   "finish": "stop",
-  "top6gram": 1,
-  "distinct": 0.893,
+  "top6gram": 2,
+  "distinct": 0.533,
   "verdict": "ok"
  },
  {
   "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
-  "text": "\n\n1/5 \u2014 Sydney is not the capital of Australia; the capital is Canberra.",
+  "text": "\n\n1/5. Sydney is not the capital of Australia; the capital is Canberra.",
   "reasoning_chars": 320,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.769,
+  "distinct": 0.75,
   "verdict": "ok"
  },
  {
   "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
   "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
-  "reasoning_chars": 891,
+  "reasoning_chars": 752,
   "finish": "stop",
   "top6gram": 0,
   "distinct": 1.0,
@@ -56,7 +56,7 @@
  {
   "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
   "text": "\n\nLarge language models are trained on massive datasets and can handle many tasks without specialized training, but they may sometimes generate false information.",
-  "reasoning_chars": 275,
+  "reasoning_chars": 243,
   "finish": "stop",
   "top6gram": 1,
   "distinct": 1.0,
@@ -73,17 +73,17 @@
  },
  {
   "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
-  "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
-  "reasoning_chars": 1248,
+  "text": "\n\nBecause the experiment used a larger batch size, training converged more slowly.",
+  "reasoning_chars": 1107,
   "finish": "stop",
-  "top6gram": 0,
+  "top6gram": 1,
   "distinct": 1.0,
   "verdict": "ok"
  },
  {
   "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
   "text": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
-  "reasoning_chars": 233,
+  "reasoning_chars": 216,
   "finish": "stop",
   "top6gram": 0,
   "distinct": 1.0,
@@ -92,7 +92,7 @@
  {
   "prompt": "Explain why the sky is blue in two sentences.",
   "text": "\n\nSunlight scatters in all directions by gases in Earth\u2019s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. This scattered blue light reaches our eyes from all parts of the sky, making it appear blue.",
-  "reasoning_chars": 129,
+  "reasoning_chars": 126,
   "finish": "stop",
   "top6gram": 1,
   "distinct": 0.921,
@@ -100,21 +100,21 @@
  },
  {
   "prompt": "What is the derivative of x^3 * sin(x)?",
-  "text": "\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= 3x^2 \\sin x + x^3 \\cos x\n\\]\n\nSo the derivative is:\n\n\\[\n\\boxed{3x^2 \\sin x + x^3 \\cos x}\n\\]",
-  "reasoning_chars": 176,
+  "text": "\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= \\frac{d}{dx}(x^3)\\sin x + x^3\\frac{d}{dx}(\\sin x)\n\\]\n\n\\[\n= 3x^2 \\sin x + x^3 \\cos x\n\\]\n\nSo the derivative is:\n\n\\[\n\\boxed{3x^2 \\sin x + x^3 \\cos x}\n\\]",
+  "reasoning_chars": 166,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.667,
+  "distinct": 0.605,
   "verdict": "ok"
  },
  {
   "prompt": "Give a regex that matches a UK postcode.",
-  "text": "",
-  "reasoning_chars": 6656,
-  "finish": "length",
-  "top6gram": 36,
-  "distinct": 0.151,
-  "verdict": "degenerate"
+  "text": "\n\n```regex\n/^[A-Z]{1,2}[0-9][0-9A-Z]?\\s?[0-9][A-Z]{2}$/i\n```\n\nThis matches common UK postcode formats such as:\n\n- `SW1A 1AA`\n- `M1 1AA`\n- `B33 8TH`\n- `EC1A 1BB`\n\nIf you want to require the space, use:\n\n```regex\n/^[A-Z]{1,2}[0-9][0-9A-Z]? [0-9][A-Z]{2}$/i\n```",
+  "reasoning_chars": 3140,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.829,
+  "verdict": "ok"
  },
  {
   "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
@@ -127,11 +127,11 @@
  },
  {
   "prompt": "Complete the proverb and explain it: A stitch in time",
-  "text": "\n\nThe proverb is:\n\n**\u201cA stitch in time saves nine.\u201d**\n\n**Meaning:**  \nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later.\n\n**Explanation:**  \nThe saying comes from sewing: if you fix a small tear with one stitch now, you may avoid needing nine stitches later. In everyday life, it encourages acting promptly to avoid greater trouble, cost, or effort in the future.",
+  "text": "\n\nThe proverb is:\n\n**\u201cA stitch in time saves nine.\u201d**\n\n**Meaning:**  \nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later.\n\n**Explanation:**  \nThe saying comes from sewing: if you fix a small tear with one stitch now, you may avoid needing nine stitches later. In everyday life, it encourages prompt action and prevention rather than waiting until a minor issue becomes serious.",
   "reasoning_chars": 196,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.812,
+  "distinct": 0.829,
   "verdict": "ok"
  },
  {
@@ -145,25 +145,25 @@
  },
  {
   "prompt": "Write a haiku about GPUs.",
-  "text": "\n\nSilicon hearts hum  \nParallel minds awaken  \nRendering light streams",
-  "reasoning_chars": 968,
+  "text": "\n\nSilicon hearts hum  \nParallel dreams bloom in cores  \nPixels learn to think",
+  "reasoning_chars": 448,
   "finish": "stop",
-  "top6gram": 0,
+  "top6gram": 1,
   "distinct": 1.0,
   "verdict": "ok"
  },
  {
   "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
-  "text": "\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nFor \\(F = 98.6\\):\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9} = 37\n\\]\n\n**98.6\u00b0F = 37\u00b0C**",
-  "reasoning_chars": 249,
+  "text": "\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nCalculation:\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9} = 37\n\\]\n\n**98.6\u00b0F = 37\u00b0C**",
+  "reasoning_chars": 231,
   "finish": "stop",
   "top6gram": 1,
-  "distinct": 0.514,
+  "distinct": 0.5,
   "verdict": "ok"
  },
  {
   "prompt": "Name the process by which plants make food and give its chemical equation.",
-  "text": "\n\nThe process is **photosynthesis**.\n\nChemical equation:\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nCarbon dioxide + water \u2192 glucose + oxygen",
+  "text": "\n\nThe process is **photosynthesis**.\n\nChemical equation:\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nCarbon dioxide + water \u2192 glucose + oxygen.",
   "reasoning_chars": 273,
   "finish": "stop",
   "top6gram": 1,
@@ -173,7 +173,7 @@
  {
   "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
   "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
-  "reasoning_chars": 148,
+  "reasoning_chars": 177,
   "finish": "stop",
   "top6gram": 0,
   "distinct": 1.0,

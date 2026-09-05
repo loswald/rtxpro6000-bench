@@ -61,6 +61,20 @@ SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NV
          "GLM-5.3-Flash NVFP4 · DP4 + EP*": "GLM-5.3-Flash · DP4+EP*", "GLM-5.3-Flash NVFP4 · DP4 + EP": "GLM-5.3-Flash · DP4+EP", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
          "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)",
          "Qwen3.8-Flash-Next NVFP4 · TP4": "Qwen3.8-Flash-Next · TP4", "Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears": "Qwen3.8-Flash-Next · TP4 W4A4"}
+# the same 403 items run against the API (box/or_eval.sh): when a model's OpenRouter run is complete, its hollow
+# marker sits at the accuracy the endpoint measured, not at ours
+OR_TAG = {"GLM-5.3-Flash": "or_glm", "DeepSeek-V4-Flash": "or_ds", "Qwen3.8-27B": "or_q27", "gpt-oss-120b": "or_oss120",
+          "gpt-oss-20b": "or_oss20", "Muse-Glimmer-30B": "or_muse", "gemma-4-26B-A4B": "or_gemma", "MiniMax-M3": "or_minimax"}
+def api_acc_for(model):
+    t = OR_TAG.get(model)
+    if not t: return None
+    for tree in ("600w2", "600w", ""):
+        pth = os.path.join(ROOT, "results", tree, "eval_or", t + ".json") if tree else os.path.join(ROOT, "results", "eval_or", t + ".json")
+        if os.path.exists(pth):
+            d = json.load(open(pth, encoding="utf-8"))
+            if d.get("partial") is False and d.get("aggregate", {}).get("acc_micro") is not None:
+                return float(d["aggregate"]["acc_micro"])
+    return None
 CLASS = {"native": ("native precision", "#2a78d6", "circle"), "qat4": ("quantisation-aware 4-bit", "#1baf7a", "circle"),
          "ptq4": ("post-training 4-bit", "#eb6834", "circle"), "ptq8": ("post-training 8-bit (FP8)", "#eb6834", "square")}
 
@@ -128,8 +142,9 @@ def place_labels(pts, X, Y, W, H, ml, mr, mt, mb, keep):
     FS, CW = 11.5, 6.1
     boxes = list(keep)
     for p in pts:
-        for cx in (X(p["cost"]), X(p["api"])):
-            cy = Y(p["acc"]); boxes.append((cx - 8, cy - 8, cx + 8, cy + 8))
+        boxes.append((X(p["cost"]) - 8, Y(p["acc"]) - 8, X(p["cost"]) + 8, Y(p["acc"]) + 8))
+        ya = Y(p["api_acc"]) if p.get("api_acc") is not None else Y(p["acc"])
+        boxes.append((X(p["api"]) - 8, ya - 8, X(p["api"]) + 8, ya + 8))
     def hits(b):
         return any(not (b[2] < o[0] or b[0] > o[2] or b[3] < o[1] or b[1] > o[3]) for o in boxes)
     out = []
@@ -160,7 +175,7 @@ def main():
             continue
         if not prov and label.endswith("*"):      # the point's own run has landed: drop the provisional mark
             label = label[:-1].rstrip()
-        pts.append(dict(label=label, cls=cls, acc=acc, n=n, cost=c["node"], api=c["api"], shapes=c["shapes"],
+        pts.append(dict(label=label, cls=cls, acc=acc, n=n, cost=c["node"], api=c["api"], shapes=c["shapes"], api_acc=api_acc_for(model),
                         avg_in=c["avg_in"], avg_out=c["avg_out"], tput=c["tput"], prov=prov))
     front, best = [], -1
     for p in sorted(pts, key=lambda q: q["cost"]):
@@ -192,10 +207,10 @@ def main():
     o.append(f'<line x1="{ml}" y1="{H-mb}" x2="{W-mr}" y2="{H-mb}" stroke="#c3c2b7"/>')
     o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API list at the same mix, cached input at its own price</text>')
     o.append(f'<text transform="translate(18,{(mt+H-mb)/2:.0f}) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>')
-    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API list price, same model, same workload mix", "#52514e", "hollow")),
+    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API list price, same model, same mix; at the API's own measured accuracy where the suite has run against it", "#52514e", "hollow")),
          ("front", ("frontier: nothing is both cheaper and better", "#898781", "dash")),
          ("prov", ("* quality from the same weights and kernels in another layout; own run in progress", "#52514e", "ring"))]
-    lw, lh = 480, 18 * len(L) + 12
+    lw, lh = 560, 18 * len(L) + 12
     lx0, ly0 = W - mr - lw - 6, H - mb - lh - 6
     o.append(f'<rect x="{lx0}" y="{ly0}" width="{lw}" height="{lh}" fill="#fcfcfb" fill-opacity="0.92" stroke="#e1e0d9"/>')
     for i, (k, (name, col, shp)) in enumerate(L):
@@ -212,9 +227,10 @@ def main():
     for p in pts:
         name, col, shp = CLASS[p["cls"]]
         x, y, xa = X(p["cost"]), Y(p["acc"]), X(p["api"])
-        tip = f'{p["label"]}: {p["acc"]:.3f} on {p["n"]} items · ${p["cost"]:.3f}/M tokens self-hosted · ${p["api"]:.3f}/M API · shapes {", ".join(p["shapes"])}'
-        o.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{xa:.1f}" y2="{y:.1f}" stroke="{col}" stroke-width="1" stroke-opacity="0.45"/>')
-        o.append(f'<circle cx="{xa:.1f}" cy="{y:.1f}" r="5" fill="#fcfcfb" stroke="{col}" stroke-width="2"><title>{tip}</title></circle>')
+        ya = Y(p["api_acc"]) if p.get("api_acc") is not None else y
+        tip = f'{p["label"]}: {p["acc"]:.3f} on {p["n"]} items · ${p["cost"]:.3f}/M tokens self-hosted · ${p["api"]:.3f}/M API' + (f' · API scored {p["api_acc"]:.3f} on the same items' if p.get("api_acc") is not None else '') + f' · shapes {", ".join(p["shapes"])}'
+        o.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{xa:.1f}" y2="{ya:.1f}" stroke="{col}" stroke-width="1" stroke-opacity="0.45"/>')
+        o.append(f'<circle cx="{xa:.1f}" cy="{ya:.1f}" r="5" fill="#fcfcfb" stroke="{col}" stroke-width="2"><title>{tip}</title></circle>')
         if p["prov"]:
             o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="10" fill="none" stroke="{col}" stroke-width="1.5" stroke-dasharray="3 2"/>')
         if shp == "square":
@@ -231,12 +247,13 @@ def main():
     out = os.path.join(ROOT, "report", "frontier.svg")
     open(out, "w", encoding="utf-8").write("\n".join(o))
     print(f"wrote {out} with {len(pts)} points; frontier: " + " → ".join(p["label"] for p in front))
-    print("\n| configuration | accuracy (items) | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |")
-    print("|---|---:|---|---:|---:|---:|---:|:-:|")
+    print("\n| configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |")
+    print("|---|---:|---:|---|---:|---:|---:|---:|:-:|")
     for p in sorted(pts, key=lambda q: q["cost"]):
         note = ", same kernels in another layout" if p["prov"] else ""
         sh = " + ".join(p["shapes"])
-        print(f"| {p['label']} | {p['acc']:.3f} ({p['n']}{note}) | {sh} | {p['avg_in']:,.0f} · {p['avg_out']:.0f} | ${p['cost']:.3f} | ${p['api']:.3f} | {p['api']/p['cost']:.1f}× | {'yes' if p in front else ''} |")
+        aa = f"{p['api_acc']:.3f}" if p.get("api_acc") is not None else "—"
+        print(f"| {p['label']} | {p['acc']:.3f} ({p['n']}{note}) | {aa} | {sh} | {p['avg_in']:,.0f} · {p['avg_out']:.0f} | ${p['cost']:.3f} | ${p['api']:.3f} | {p['api']/p['cost']:.1f}× | {'yes' if p in front else ''} |")
 
 if __name__ == "__main__":
     main()
