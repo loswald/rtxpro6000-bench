@@ -97,7 +97,10 @@ Other models on the same box:
 | | same **+ DSpark speculation** (7 draft tokens, 37% accepted) | router C256 | 665 | 5,320 | 4.8 s |
 | | | promptopt C1024 | 735 | 10,293 | 125 s ⁱ |
 | **DeepSeek-V4-Flash (41)** | **TP1 × DP4 + expert parallel, 512 seqs per engine** (this box) | router C1024 | **1,640** | 13,124 | 7.6 s |
-| | | promptopt C1024 | **4,430** | 62,024 | 7.9 s |
+| | | promptopt C1024 | **4,430** | 62,024 | 6.4 s |
+| | same layout, W4A4 (`b12x`) experts instead of Marlin MXFP4 | router C1024 | 1,245 | 9,962 | 53 s ⁱ |
+| | same layout, 1,024 seqs per engine, 16k prefill batch | router C1024 | 1,584 | 12,674 | 15 s ⁱ |
+| | | promptopt C1024 | 4,293 | 60,106 | 13 s ⁱ |
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel, 256 seqs (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM, 256 seqs | promptopt C256 | 1,002 | 14,030 | 2.7 s |
@@ -133,7 +136,10 @@ each card decodes its own batch and only the expert dispatch crosses PCIe. On sh
 wider still: **4,430 against 2,387, +86%**, because prefix caching is per engine and four engines each hold the
 whole prefix. The price is per-stream latency: 581 ms per token at that load on the router shape, 7.6 s to first
 token. At 256 streams the same layout gave 1,289 (first box), so the gain is mostly batch depth that TP4 could
-not reach. Its 403-item quality run on this layout is in progress;
+not reach. Two things did *not* help. Raising the per-engine budget to 1,024 sequences changed nothing, because
+1,024 streams across four engines is 256 each. And the W4A4 expert kernel that was +5% at TP4 is **−24% under
+expert parallelism** (1,245): each engine now holds a quarter of the experts, the GEMMs are a quarter the size,
+and the Marlin MXFP4 path wins them. The kernel that is right for one layout is wrong for another — sweep both. Its 403-item quality run on this layout is in progress;
 the same weights and MoE kernel scored 0.814 at TP4.
 
 GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — four points below the top
