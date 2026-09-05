@@ -2,9 +2,14 @@
 """Cost / quality frontier for every configuration measured on the 600 W box - each quantisation of a model is
 its own point, because it is its own product.
 
-x: dollars per million OUTPUT tokens, self-hosted, at Scan list and 70% utilisation ($4.40 per node-hour), from
-   our measured 600 W throughput at the router shape (1,024 in / 128 out; the 8x input tokens ride in the same hour).
-   Hollow markers at the same height: the API list price for the same model's output tokens (OpenRouter, 5 Sept 2026).
+x: dollars per million tokens (input + output) for the AVERAGE of the workloads actually measured for that
+   configuration - the router shape (1,024 in / 128 out), the prompt-optimisation shape (3,072-token shared prefix
+   + 512 in / 256 out) and the judge shape (4,096 in / 512 out) where they exist. Node cost is $4.40 per node-hour
+   (Scan list, 70% utilisation) divided by the requests that hour serves at each shape; the API bill prices the
+   same requests at OpenRouter list (5 Sept 2026) with input, cached input (10% of the input price) and output
+   priced separately. Both are averaged per request over the same two shapes (router and prompt-optimisation;
+   the judge shape exists only for some configurations, so it is left out for comparability), so filled (node)
+   and hollow (API) markers are the same workload at the same mix.
 y: task accuracy over the 403-item suite.
 Colour is the precision class (three validated categorical hues); marker shape separates 8-bit from 4-bit
 post-training quantisation within the orange class. The step line is the frontier: no other point is both
@@ -15,32 +20,44 @@ Writes report/frontier.svg and prints a markdown table of the points.
 import csv, json, os, math
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-NODE_USD_H = 4.40   # Scan list, 70% utilisation (README, Economics)
+NODE_USD_H = 4.40    # Scan list, 70% utilisation (README, Economics)
+CACHE_FRAC = 0.10    # cached input billed at this fraction of the input price (OpenAI 10%, DeepSeek ~10%, Z.AI ~20%)
+SHAPE_GEOM = {"router": (1024, 128, 0), "promptopt": (512, 256, 3072), "judge": (4096, 512, 0)}   # in, out, cached prefix
+SHAPES_USED = ("router", "promptopt")   # the two shapes every configuration has; judge exists only for some, and a
+                                        # point averaged over three shapes would not be comparable with one over two
 
-# label, precision class, eval tag (trees searched: 600w, 600w2, top, 5090), throughput tag, shape, C, api $/M out
+# API list prices, $ per million tokens (input, output) - OpenRouter 5 Sept 2026, Qwen3.8-Flash-Next from AA
+API = {"Qwen3.8-27B": (0.42, 3.00), "GLM-5.3-Flash": (0.075, 0.25), "DeepSeek-V4-Flash": (0.065, 0.18),
+       "gpt-oss-120b": (0.037, 0.17), "gpt-oss-20b": (0.03, 0.13), "gemma-4-26B-A4B": (0.07, 0.34),
+       "Muse-Glimmer-30B": (0.30, 1.10), "Qwen3.8-Flash-Next": (0.15, 0.47), "MiniMax-M3": (0.30, 1.20)}
+
+# label, precision class, eval tag (trees searched: 600w, 600w2, top, 5090), throughput tag, API model
 POINTS = [
-    ("GLM-5.3-Flash NVFP4 · TP4",             "ptq4",   "glm53f_base",              "glm53f_tp4ep4_s512",        "router", 1024, 0.25),
-    ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*", "ptq4",   "glm53f_best|glm53f_base",  "glm53f_dp2tp2ep2_s384",     "router", 1024, 0.25),
-    ("GLM-5.3-Flash NVFP4 · TP4 + MTP",       "ptq4",   "glm53f_mtp",               "glm53f_s512_mtp",           "router", 1024, 0.25),
-    ("DeepSeek-V4-Flash native · TP4",        "native", "ds4flash_b12x-b12x",       "ds4flash_b12x-b12x",        "router", 256,  0.18),
-    ("DeepSeek-V4-Flash native · DP4 + EP*",  "native", "ds4flash_dp4ep4_s512_b12x--|ds4flash_b12x--", "ds4flash_dp4ep4_s512_b12x--", "router", 1024, 0.18),
-    ("DeepSeek-V4-Flash native · TP4 + DSpark", "native", "ds4flash_dspark_b12x-b12x", "ds4flash_dspark_b12x-b12x", "router", 256, 0.18),
-    ("Qwen3.8-27B BF16",                      "native", "q27_bf16_---",             "q27_bf16_---",              "router", 1024, 3.00),
-    ("Qwen3.8-27B QAT NVFP4 (W4A4)",          "qat4",   "q27_nvfp4_quasar_qat_b12x--", "q27_nvfp4_quasar_qat_b12x--", "router", 1024, 3.00),
-    ("Qwen3.8-27B FP8",                       "ptq8",   "q27_fp8_b12x--",           "q27_fp8_b12x--",            "router", 1024, 3.00),
-    ("Qwen3.8-27B gittensor NVFP4 (W4A4)",    "ptq4",   "q27_nvfp4_b12x--",         "q27_nvfp4_b12x--",          "router", 1024, 3.00),
-    ("Qwen3.8-27B RedHat NVFP4 (W4A16)",      "ptq4",   "q27_nvfp4_redhat_---",     "q27_nvfp4_redhat_---",      "router", 1024, 3.00),
-    ("Qwen3.8-27B unsloth NVFP4 (W4A16)",     "ptq4",   "q27_nvfp4_unsloth_---",    "q27_nvfp4_unsloth_---",     "router", 1024, 3.00),
-    ("Muse-Glimmer-30B BF16",                 "native", "muse30_---",               "muse30_---",                "router", 1024, 1.10),
-    ("gemma-4-26B-A4B BF16 (thinking, T=0)",  "native", "gemma26_---",              "gemma26_---",               "router", 1024, 0.34),
-    ("gpt-oss-120b MXFP4 (native)",           "native", "gptoss120_tp4_--flashinfer_cutlass", "full_gptoss",     "router", 2048, 0.17),
-    ("gpt-oss-20b MXFP4 (native)",            "native", "gptoss20_--flashinfer_cutlass", "sw_gptoss_ficutlass_mxfp8", "router", 2048, 0.13),
+    ("GLM-5.3-Flash NVFP4 · TP4",              "ptq4",   "glm53f_base",              "glm53f_tp4ep4_s512",        "GLM-5.3-Flash"),
+    ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*",  "ptq4",   "glm53f_best|glm53f_base",  "glm53f_dp2tp2ep2_s384",     "GLM-5.3-Flash"),
+    ("GLM-5.3-Flash NVFP4 · TP4 + MTP",        "ptq4",   "glm53f_mtp",               "glm53f_s512_mtp",           "GLM-5.3-Flash"),
+    ("DeepSeek-V4-Flash native · TP4",         "native", "ds4flash_b12x-b12x",       "ds4flash_b12x-b12x",        "DeepSeek-V4-Flash"),
+    ("DeepSeek-V4-Flash native · DP4 + EP*",   "native", "ds4flash_dp4ep4_s512_b12x--|ds4flash_b12x--", "ds4flash_dp4ep4_s512_b12x--", "DeepSeek-V4-Flash"),
+    ("DeepSeek-V4-Flash native · TP4 + DSpark", "native", "ds4flash_dspark_b12x-b12x", "ds4flash_dspark_b12x-b12x", "DeepSeek-V4-Flash"),
+    ("Qwen3.8-27B BF16",                       "native", "q27_bf16_---",             "q27_bf16_---",              "Qwen3.8-27B"),
+    ("Qwen3.8-27B QAT NVFP4 (W4A4)",           "qat4",   "q27_nvfp4_quasar_qat_b12x--", "q27_nvfp4_quasar_qat_b12x--", "Qwen3.8-27B"),
+    ("Qwen3.8-27B FP8",                        "ptq8",   "q27_fp8_b12x--",           "q27_fp8_b12x--",            "Qwen3.8-27B"),
+    ("Qwen3.8-27B gittensor NVFP4 (W4A4)",     "ptq4",   "q27_nvfp4_b12x--",         "q27_nvfp4_b12x--",          "Qwen3.8-27B"),
+    ("Qwen3.8-27B RedHat NVFP4 (W4A16)",       "ptq4",   "q27_nvfp4_redhat_---",     "q27_nvfp4_redhat_---",      "Qwen3.8-27B"),
+    ("Qwen3.8-27B unsloth NVFP4 (W4A16)",      "ptq4",   "q27_nvfp4_unsloth_---",    "q27_nvfp4_unsloth_---",     "Qwen3.8-27B"),
+    ("Muse-Glimmer-30B BF16",                  "native", "muse30_---",               "muse30_---",                "Muse-Glimmer-30B"),
+    ("gemma-4-26B-A4B BF16 (thinking, T=0)",   "native", "gemma26_---",              "gemma26_---",               "gemma-4-26B-A4B"),
+    ("gpt-oss-120b MXFP4 (native)",            "native", "gptoss120_tp4_--flashinfer_cutlass", "full_gptoss",     "gpt-oss-120b"),
+    ("gpt-oss-20b MXFP4 (native)",             "native", "gptoss20_--flashinfer_cutlass", "sw_gptoss_ficutlass_mxfp8", "gpt-oss-20b"),
+    ("Qwen3.8-Flash-Next NVFP4 · DP4 + EP",    "ptq4",   "qwen38fn_dp4ep4_---",      "qwen38fn_dp4ep4_---",       "Qwen3.8-Flash-Next"),
+    ("Qwen3.8-Flash-Next NVFP4 · 2 × TP2",     "ptq4",   "qwen38fn_tp2x2_---",       "qwen38fn_tp2x2_---",        "Qwen3.8-Flash-Next"),
 ]
 # shorter on-chart names for the crowded top of the plane; the table keeps the full labels
 SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
          "GLM-5.3-Flash NVFP4 · TP4 + MTP": "GLM-5.3-Flash · TP4+MTP", "DeepSeek-V4-Flash native · TP4": "DeepSeek-V4-Flash · TP4",
          "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
-         "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)"}
+         "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)",
+         "Qwen3.8-Flash-Next NVFP4 · DP4 + EP": "Qwen3.8-Flash-Next · DP4+EP", "Qwen3.8-Flash-Next NVFP4 · 2 × TP2": "Qwen3.8-Flash-Next · 2×TP2"}
 CLASS = {"native": ("native precision", "#2a78d6", "circle"), "qat4": ("quantisation-aware 4-bit", "#1baf7a", "circle"),
          "ptq4": ("post-training 4-bit", "#eb6834", "circle"), "ptq8": ("post-training 8-bit (FP8)", "#eb6834", "square")}
 
@@ -62,27 +79,58 @@ def acc_for(tag):
                 return float(v), int(a.get("n_scored") or 0), False
     return None, 0, False
 
-def tput_for(tag, label, conc):
-    best = 0.0
-    for r in csv.DictReader(open(os.path.join(ROOT, "results", "summary_all.tsv"), encoding="utf-8"), delimiter="\t"):
-        if r.get("host") != "pro6000-s600w" or r.get("tag") != tag or r.get("label") != label or str(r.get("C")) != str(conc):
+_ROWS = None
+def rows():
+    global _ROWS
+    if _ROWS is None:
+        _ROWS = [r for r in csv.DictReader(open(os.path.join(ROOT, "results", "summary_all.tsv"), encoding="utf-8"), delimiter="\t")
+                 if r.get("host") == "pro6000-s600w"]
+    return _ROWS
+
+def shapes_for(tag):
+    """Best measured row per shape (router, promptopt, judge) for a throughput tag: {label: out_tps}."""
+    best = {}
+    for r in rows():
+        if r.get("tag") != tag or r.get("label") not in SHAPES_USED:
             continue
-        try: best = max(best, float(r["out_tps"]))
-        except (KeyError, ValueError): pass
-    return best or None
+        try: v = float(r["out_tps"])
+        except (KeyError, ValueError): continue
+        if v > best.get(r["label"], 0):
+            best[r["label"]] = v
+    return best
+
+def cost_avg(tag, model):
+    """Average over the measured shapes of node cost and API bill per request; returns $/M tokens for both,
+    the shapes used and the average tokens per request (input incl. cached, output)."""
+    sh = shapes_for(tag)
+    if not sh:
+        return None
+    p_in, p_out = API[model]
+    node_req, api_req, tok_req, tin, tout = [], [], [], [], []
+    for label, out_tps in sh.items():
+        n_in, n_out, n_pre = SHAPE_GEOM[label]
+        req_s = out_tps / n_out
+        node_req.append(NODE_USD_H / 3600 / req_s)
+        api_req.append((n_in * p_in + n_pre * p_in * CACHE_FRAC + n_out * p_out) / 1e6)
+        tok_req.append(n_in + n_pre + n_out); tin.append(n_in + n_pre); tout.append(n_out)
+    k = len(sh)
+    node_m = sum(node_req) / k / (sum(tok_req) / k) * 1e6
+    api_m = sum(api_req) / k / (sum(tok_req) / k) * 1e6
+    return dict(node=node_m, api=api_m, shapes=sorted(sh, key=lambda l: list(SHAPE_GEOM).index(l)),
+                avg_in=sum(tin) / k, avg_out=sum(tout) / k, tput=sh.get("router"))
 
 def place_labels(pts, X, Y, W, H, ml, mr, mt, mb, keep):
-    """Greedy label placement: try eight anchor positions around each marker, take the first whose text box
-    overlaps neither an already-placed label, nor any marker, nor a reserved rectangle (the legend)."""
-    FS, CW = 11.5, 6.1                    # font size, average glyph width
-    boxes = list(keep)                    # reserved rectangles (x0, y0, x1, y1)
-    for p in pts:                         # every filled and hollow marker is an obstacle
+    """Greedy label placement: try anchor positions around each marker, take the first whose text box overlaps
+    neither an already-placed label, nor any marker, nor a reserved rectangle (the legend)."""
+    FS, CW = 11.5, 6.1
+    boxes = list(keep)
+    for p in pts:
         for cx in (X(p["cost"]), X(p["api"])):
             cy = Y(p["acc"]); boxes.append((cx - 8, cy - 8, cx + 8, cy + 8))
     def hits(b):
         return any(not (b[2] < o[0] or b[0] > o[2] or b[3] < o[1] or b[1] > o[3]) for o in boxes)
     out = []
-    for p in sorted(pts, key=lambda q: -q["acc"]):   # resolve the crowded top of the plane first
+    for p in sorted(pts, key=lambda q: -q["acc"]):
         x, y = X(p["cost"]), Y(p["acc"]); w = len(SHORT.get(p["label"], p["label"])) * CW
         cands = []
         for dy in (-6, 15, -20, 29, -34, 43, -48, 57, -62, 71, -76, 85):
@@ -94,7 +142,7 @@ def place_labels(pts, X, Y, W, H, ml, mr, mt, mb, keep):
             if b[0] < ml - 60 or b[2] > W - 4 or b[1] < mt - 6 or b[3] > H - mb: continue
             if not hits(b):
                 chosen = (tx, ty, anchor, b); break
-        if chosen is None:                # nothing free: right-above, and accept the overlap
+        if chosen is None:
             tx, ty, anchor = cands[0]; chosen = (tx, ty, anchor, (tx, ty - FS, tx + w, ty + 3))
             print(f"  label overlap: {p['label']}")
         boxes.append(chosen[3]); out.append((p, chosen))
@@ -102,13 +150,13 @@ def place_labels(pts, X, Y, W, H, ml, mr, mt, mb, keep):
 
 def main():
     pts = []
-    for label, cls, etag, ttag, shape, conc, api in POINTS:
-        acc, n, prov = acc_for(etag); tp = tput_for(ttag, shape, conc)
-        if acc is None or not tp:
-            print(f"  skip {label}: acc={acc} tput={tp}")
+    for label, cls, etag, ttag, model in POINTS:
+        acc, n, prov = acc_for(etag); c = cost_avg(ttag, model)
+        if acc is None or c is None:
+            print(f"  skip {label}: acc={acc} shapes={None if c is None else c['shapes']}")
             continue
-        cost = NODE_USD_H / (tp * 3600 / 1e6)
-        pts.append(dict(label=label, cls=cls, acc=acc, n=n, tput=tp, cost=cost, api=api, prov=prov))
+        pts.append(dict(label=label, cls=cls, acc=acc, n=n, cost=c["node"], api=c["api"], shapes=c["shapes"],
+                        avg_in=c["avg_in"], avg_out=c["avg_out"], tput=c["tput"], prov=prov))
     front, best = [], -1
     for p in sorted(pts, key=lambda q: q["cost"]):
         if p["acc"] > best:
@@ -128,7 +176,7 @@ def main():
             v = t * k
             if xmin <= v <= xmax:
                 o.append(f'<line x1="{X(v):.1f}" y1="{mt}" x2="{X(v):.1f}" y2="{H-mb}" stroke="#e1e0d9" stroke-width="1"/>')
-                lab = f"${v:g}" if v >= 1 else f"${v:.2f}".rstrip("0")
+                lab = f"${v:g}" if v >= 1 else (f"${v:.2f}".rstrip("0") if v >= 0.01 else f"${v:.3f}")
                 o.append(f'<text x="{X(v):.1f}" y="{H-mb+18}" font-size="12" fill="#898781" text-anchor="middle">{lab}</text>')
         t *= 10
     a = ymin
@@ -137,10 +185,9 @@ def main():
         o.append(f'<text x="{ml-8}" y="{Y(a)+4:.1f}" font-size="12" fill="#898781" text-anchor="end">{a:.2f}</text>')
         a += 0.05
     o.append(f'<line x1="{ml}" y1="{H-mb}" x2="{W-mr}" y2="{H-mb}" stroke="#c3c2b7"/>')
-    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million output tokens · filled = self-hosted at Scan list, 70% utilisation, from measured 600 W throughput · hollow = API list price</text>')
+    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API list at the same mix, cached input at 10%</text>')
     o.append(f'<text transform="translate(18,{(mt+H-mb)/2:.0f}) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>')
-    # legend, bottom-right, where the plane is empty
-    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API list price, same model", "#52514e", "hollow")),
+    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API list price, same model, same workload mix", "#52514e", "hollow")),
          ("front", ("frontier: nothing is both cheaper and better", "#898781", "dash")),
          ("prov", ("* quality from the same weights and kernels in another layout; own run in progress", "#52514e", "ring"))]
     lw, lh = 480, 18 * len(L) + 12
@@ -160,7 +207,7 @@ def main():
     for p in pts:
         name, col, shp = CLASS[p["cls"]]
         x, y, xa = X(p["cost"]), Y(p["acc"]), X(p["api"])
-        tip = f'{p["label"]}: {p["acc"]:.3f} on {p["n"]} items · {p["tput"]:,.0f} out tok/s · ${p["cost"]:.2f}/M self-hosted · ${p["api"]:.2f}/M API'
+        tip = f'{p["label"]}: {p["acc"]:.3f} on {p["n"]} items · ${p["cost"]:.3f}/M tokens self-hosted · ${p["api"]:.3f}/M API · shapes {", ".join(p["shapes"])}'
         o.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{xa:.1f}" y2="{y:.1f}" stroke="{col}" stroke-width="1" stroke-opacity="0.45"/>')
         o.append(f'<circle cx="{xa:.1f}" cy="{y:.1f}" r="5" fill="#fcfcfb" stroke="{col}" stroke-width="2"><title>{tip}</title></circle>')
         if p["prov"]:
@@ -171,7 +218,7 @@ def main():
             o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{col}" stroke="#fcfcfb" stroke-width="2"><title>{tip}</title></circle>')
     for p, (tx, ty, anchor, b) in place_labels(pts, X, Y, W, H, ml, mr, mt, mb, [(lx0, ly0, lx0 + lw, ly0 + lh)]):
         x, y = X(p["cost"]), Y(p["acc"])
-        lx_ = b[0] if anchor == "start" else b[2]          # leader line when the label sits away from its marker
+        lx_ = b[0] if anchor == "start" else b[2]
         if abs(ty - y) > 12 or abs(lx_ - x) > 14:
             o.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{lx_:.1f}" y2="{(b[1]+b[3])/2:.1f}" stroke="#898781" stroke-width="0.8"/>')
         o.append(f'<text x="{tx:.1f}" y="{ty:.1f}" font-size="11.5" fill="#0b0b0b" text-anchor="{anchor}">{SHORT.get(p["label"], p["label"])}</text>')
@@ -179,11 +226,12 @@ def main():
     out = os.path.join(ROOT, "report", "frontier.svg")
     open(out, "w", encoding="utf-8").write("\n".join(o))
     print(f"wrote {out} with {len(pts)} points; frontier: " + " → ".join(p["label"] for p in front))
-    print("\n| configuration | accuracy (items) | out tok/s (600 W) | $/M output, self-hosted | $/M output, API | on the frontier |")
-    print("|---|---:|---:|---:|---:|:-:|")
+    print("\n| configuration | accuracy (items) | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |")
+    print("|---|---:|---|---:|---:|---:|---:|:-:|")
     for p in sorted(pts, key=lambda q: q["cost"]):
         note = ", same kernels in another layout" if p["prov"] else ""
-        print(f"| {p['label']} | {p['acc']:.3f} ({p['n']}{note}) | {p['tput']:,.0f} | ${p['cost']:.3f} | ${p['api']:.2f} | {'yes' if p in front else ''} |")
+        sh = " + ".join(p["shapes"])
+        print(f"| {p['label']} | {p['acc']:.3f} ({p['n']}{note}) | {sh} | {p['avg_in']:,.0f} · {p['avg_out']:.0f} | ${p['cost']:.3f} | ${p['api']:.3f} | {p['api']/p['cost']:.1f}× | {'yes' if p in front else ''} |")
 
 if __name__ == "__main__":
     main()

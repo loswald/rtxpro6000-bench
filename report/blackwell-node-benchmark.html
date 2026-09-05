@@ -292,32 +292,32 @@
     <tr class="dim"><td class="l">Qwen3.8-Flash-Next · MiniMax-M3</td><td class="l">router</td><td colspan="5">not run in the window: Qwen3.8-Flash-Next needs the newer vLLM build; MiniMax-M3 was time-boxed out</td></tr>
   </tbody></table></div>
 <div class="note"><strong>¹ Cached input.</strong> The shared-prefix shape bills all input at full price; providers discount cached input by 80–90%. At a 90% discount on the cached 86% of input the API bill falls to about $21 for gpt-oss-120b and $31 for gemma — still an order of magnitude above the node. The two four-card models are shown on the router shape, which has no shared prefix, so their ratios need no correction.</div>
-<p><strong>For anything that fits one card, self-hosting wins by an order of magnitude</strong>: 9–27× cheaper than the API at Scan list and 70% utilisation, 22–67× fully loaded, and 6–19× even when the box is rented on Vast on-demand. <strong>For the two frontier-class models that need all four cards, the API is priced at our cost</strong>: an hour of DeepSeek-V4-Flash on its fastest layout costs $4.40 from the node at list and $4.10 from the API; GLM-5.3-Flash $4.40 against $4.00. Their providers run them on eight-way B200-class hardware at scale and price aggressively. Self-hosting those two is a decision about fidelity, data and control, not savings — unless the fully-loaded stack holds, where they are still 2.2–2.3× cheaper. <strong>The node is an aggregate-throughput machine, not a latency machine</strong>: providers quote 70–90 output tokens a second per request; at saturation ours gives each stream 20 a second at concurrency 256 and 5 at 1,024 for Qwen3.8-27B. Prices move — DeepSeek raised list prices 2.4–4.7× in one step on 16 August 2026 — and the node's cost is fixed for the term; that asymmetry is part of the case.</p>
+<p><strong>For anything that fits one card, self-hosting wins by an order of magnitude</strong>: on the averaged workload with cached input priced, 4–20× cheaper than the API at Scan list and 70% utilisation and 10–50× fully loaded (9–27× and 22–67× on the uncached per-hour table). <strong>For the two frontier-class models that need all four cards, the API is priced at our cost</strong>: DeepSeek-V4-Flash on its fastest layout is 1.1× and GLM-5.3-Flash 0.9× at list, up from 0.6× and 0.5× before the layout work; nothing left on this build moves them past 1.5×. Their providers run them on eight-way B200-class hardware at scale and price aggressively. Self-hosting those two is a decision about fidelity, data and control, not savings — unless the fully-loaded stack holds (2.2–2.7×) or API prices move, as DeepSeek's did by 2.4–4.7× in August. <strong>The node is an aggregate-throughput machine, not a latency machine</strong>: providers quote 70–90 output tokens a second per request; at saturation ours gives each stream 20 a second at concurrency 256 and 5 at 1,024 for Qwen3.8-27B.</p>
 
-<h3>Every configuration on one chart</h3>
-<p>Each quantisation of a model is its own point, because it is its own product. The x-axis is what a million output tokens cost from the node at Scan list and 70% utilisation, from the measured 600 W throughput at the router shape (the eight-times-larger input volume rides in the same hour); the y-axis is task accuracy over the 403 items; the hollow marker at the same height is the API list price for the same model. The dashed step is the frontier: nothing sits both cheaper and better than a point on it. <code>box/frontier.py</code> in the repository regenerates it.</p>
+<h3>Every configuration on one chart, priced on the workloads we measured</h3>
+<p>Each quantisation of a model is its own point, because it is its own product. The x-axis is dollars per million tokens, input and output together, for the <em>average</em> of the two workloads every configuration was measured on: the router shape (1,024 in / 128 out) and the prompt-optimisation shape (a 3,072-token shared prefix + 512 in / 256 out). Node cost is $4.40 an hour (Scan list, 70% utilisation) divided by the requests that hour serves at each shape; the API bill prices the same requests at OpenRouter list on 5 September with input, cached input (10% of the input price) and output priced separately. Filled marker: node. Hollow marker: API, same work, same mix. The dashed step is the frontier. <code>box/frontier.py</code> regenerates it.</p>
 <div style="background:#fcfcfb;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin:12px 0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="100%" style="max-width:1100px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#fcfcfb" role="img" aria-label="Cost against quality for every configuration measured at 600 W">
 <title>Cost against quality, 4x RTX PRO 6000 at 600 W</title>
 <line x1="70.0" y1="30" x2="70.0" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="70.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.01</text>
+<text x="70.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.001</text>
 <line x1="170.3" y1="30" x2="170.3" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="170.3" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.02</text>
+<text x="170.3" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.002</text>
 <line x1="303.0" y1="30" x2="303.0" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="303.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.05</text>
+<text x="303.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.005</text>
 <line x1="403.3" y1="30" x2="403.3" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="403.3" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.1</text>
+<text x="403.3" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.01</text>
 <line x1="503.7" y1="30" x2="503.7" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="503.7" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.2</text>
+<text x="503.7" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.02</text>
 <line x1="636.3" y1="30" x2="636.3" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="636.3" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.5</text>
+<text x="636.3" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.05</text>
 <line x1="736.7" y1="30" x2="736.7" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="736.7" y="548" font-size="12" fill="#898781" text-anchor="middle">$1</text>
+<text x="736.7" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.1</text>
 <line x1="837.0" y1="30" x2="837.0" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="837.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$2</text>
+<text x="837.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.2</text>
 <line x1="969.7" y1="30" x2="969.7" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="969.7" y="548" font-size="12" fill="#898781" text-anchor="middle">$5</text>
+<text x="969.7" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.5</text>
 <line x1="1070.0" y1="30" x2="1070.0" y2="530" stroke="#e1e0d9" stroke-width="1"/>
-<text x="1070.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$10</text>
+<text x="1070.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$1</text>
 <line x1="70" y1="530.0" x2="1070" y2="530.0" stroke="#e1e0d9" stroke-width="1"/>
 <text x="62" y="534.0" font-size="12" fill="#898781" text-anchor="end">0.60</text>
 <line x1="70" y1="433.8" x2="1070" y2="433.8" stroke="#e1e0d9" stroke-width="1"/>
@@ -331,7 +331,7 @@
 <line x1="70" y1="49.2" x2="1070" y2="49.2" stroke="#e1e0d9" stroke-width="1"/>
 <text x="62" y="53.2" font-size="12" fill="#898781" text-anchor="end">0.85</text>
 <line x1="70" y1="530" x2="1070" y2="530" stroke="#c3c2b7"/>
-<text x="570" y="572" font-size="13" fill="#52514e" text-anchor="middle">$ per million output tokens · filled = self-hosted at Scan list, 70% utilisation, from measured 600 W throughput · hollow = API list price</text>
+<text x="570" y="572" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API list at the same mix, cached input at 10%</text>
 <text transform="translate(18,280) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>
 <rect x="584" y="386" width="480" height="138" fill="#fcfcfb" fill-opacity="0.92" stroke="#e1e0d9"/>
 <circle cx="599" cy="400" r="5" fill="#2a78d6"/>
@@ -343,89 +343,87 @@
 <rect x="594" y="449" width="10" height="10" fill="#eb6834"/>
 <text x="612" y="458" font-size="12" fill="#52514e">post-training 8-bit (FP8)</text>
 <circle cx="599" cy="472" r="5" fill="#fcfcfb" stroke="#52514e" stroke-width="2"/>
-<text x="612" y="476" font-size="12" fill="#52514e">API list price, same model</text>
+<text x="612" y="476" font-size="12" fill="#52514e">API list price, same model, same workload mix</text>
 <line x1="594" y1="490" x2="604" y2="490" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
 <text x="612" y="494" font-size="12" fill="#52514e">frontier: nothing is both cheaper and better</text>
 <circle cx="599" cy="508" r="7" fill="none" stroke="#52514e" stroke-width="1.5" stroke-dasharray="3 2"/>
 <text x="612" y="512" font-size="12" fill="#52514e">* quality from the same weights and kernels in another layout; own run in progress</text>
-<path d="M386.3,314.2 L433.1,257.1 L527.2,161.5 L641.0,132.9 L694.1,118.7 L824.8,85.2" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
-<line x1="776.1" y1="156.9" x2="536.0" y2="156.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="536.0" cy="156.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · 931 out tok/s · $1.31/M self-hosted · $0.25/M API</title></circle>
-<circle cx="776.1" cy="156.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · 931 out tok/s · $1.31/M self-hosted · $0.25/M API</title></circle>
-<line x1="727.7" y1="156.9" x2="536.0" y2="156.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="536.0" cy="156.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*: 0.794 on 403 items · 1,300 out tok/s · $0.94/M self-hosted · $0.25/M API</title></circle>
-<circle cx="727.7" cy="156.9" r="10" fill="none" stroke="#eb6834" stroke-width="1.5" stroke-dasharray="3 2"/>
-<circle cx="727.7" cy="156.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*: 0.794 on 403 items · 1,300 out tok/s · $0.94/M self-hosted · $0.25/M API</title></circle>
-<line x1="841.6" y1="128.3" x2="536.0" y2="128.3" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="536.0" cy="128.3" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4 + MTP: 0.809 on 403 items · 592 out tok/s · $2.06/M self-hosted · $0.25/M API</title></circle>
-<circle cx="841.6" cy="128.3" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4 + MTP: 0.809 on 403 items · 592 out tok/s · $2.06/M self-hosted · $0.25/M API</title></circle>
-<line x1="751.0" y1="142.5" x2="488.4" y2="142.5" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="488.4" cy="142.5" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4: 0.801 on 403 items · 1,107 out tok/s · $1.10/M self-hosted · $0.18/M API</title></circle>
-<circle cx="751.0" cy="142.5" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4: 0.801 on 403 items · 1,107 out tok/s · $1.10/M self-hosted · $0.18/M API</title></circle>
-<line x1="694.1" y1="118.7" x2="488.4" y2="118.7" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="488.4" cy="118.7" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP*: 0.814 on 403 items · 1,640 out tok/s · $0.75/M self-hosted · $0.18/M API</title></circle>
-<circle cx="694.1" cy="118.7" r="10" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-dasharray="3 2"/>
-<circle cx="694.1" cy="118.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP*: 0.814 on 403 items · 1,640 out tok/s · $0.75/M self-hosted · $0.18/M API</title></circle>
-<line x1="824.8" y1="85.2" x2="488.4" y2="85.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="488.4" cy="85.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4 + DSpark: 0.831 on 403 items · 665 out tok/s · $1.84/M self-hosted · $0.18/M API</title></circle>
-<circle cx="824.8" cy="85.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4 + DSpark: 0.831 on 403 items · 665 out tok/s · $1.84/M self-hosted · $0.18/M API</title></circle>
-<line x1="641.0" y1="132.9" x2="895.7" y2="132.9" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="895.7" cy="132.9" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>Qwen3.8-27B BF16: 0.806 on 403 items · 2,367 out tok/s · $0.52/M self-hosted · $3.00/M API</title></circle>
-<circle cx="641.0" cy="132.9" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B BF16: 0.806 on 403 items · 2,367 out tok/s · $0.52/M self-hosted · $3.00/M API</title></circle>
-<line x1="527.2" y1="161.5" x2="895.7" y2="161.5" stroke="#1baf7a" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="895.7" cy="161.5" r="5" fill="#fcfcfb" stroke="#1baf7a" stroke-width="2"><title>Qwen3.8-27B QAT NVFP4 (W4A4): 0.792 on 403 items · 5,194 out tok/s · $0.24/M self-hosted · $3.00/M API</title></circle>
-<circle cx="527.2" cy="161.5" r="6" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B QAT NVFP4 (W4A4): 0.792 on 403 items · 5,194 out tok/s · $0.24/M self-hosted · $3.00/M API</title></circle>
-<line x1="599.6" y1="185.4" x2="895.7" y2="185.4" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="895.7" cy="185.4" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B FP8: 0.779 on 403 items · 3,150 out tok/s · $0.39/M self-hosted · $3.00/M API</title></circle>
-<rect x="594.1" y="179.9" width="11" height="11" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B FP8: 0.779 on 403 items · 3,150 out tok/s · $0.39/M self-hosted · $3.00/M API</title></rect>
-<line x1="529.6" y1="290.4" x2="895.7" y2="290.4" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="895.7" cy="290.4" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B gittensor NVFP4 (W4A4): 0.725 on 403 items · 5,110 out tok/s · $0.24/M self-hosted · $3.00/M API</title></circle>
-<circle cx="529.6" cy="290.4" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B gittensor NVFP4 (W4A4): 0.725 on 403 items · 5,110 out tok/s · $0.24/M self-hosted · $3.00/M API</title></circle>
-<line x1="661.6" y1="199.8" x2="895.7" y2="199.8" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="895.7" cy="199.8" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B RedHat NVFP4 (W4A16): 0.772 on 403 items · 2,053 out tok/s · $0.60/M self-hosted · $3.00/M API</title></circle>
-<circle cx="661.6" cy="199.8" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B RedHat NVFP4 (W4A16): 0.772 on 403 items · 2,053 out tok/s · $0.60/M self-hosted · $3.00/M API</title></circle>
-<line x1="661.5" y1="237.9" x2="895.7" y2="237.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="895.7" cy="237.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B unsloth NVFP4 (W4A16): 0.752 on 403 items · 2,054 out tok/s · $0.60/M self-hosted · $3.00/M API</title></circle>
-<circle cx="661.5" cy="237.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B unsloth NVFP4 (W4A16): 0.752 on 403 items · 2,054 out tok/s · $0.60/M self-hosted · $3.00/M API</title></circle>
-<line x1="605.3" y1="171.2" x2="750.5" y2="171.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="750.5" cy="171.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>Muse-Glimmer-30B BF16: 0.787 on 403 items · 3,029 out tok/s · $0.40/M self-hosted · $1.10/M API</title></circle>
-<circle cx="605.3" cy="171.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Muse-Glimmer-30B BF16: 0.787 on 403 items · 3,029 out tok/s · $0.40/M self-hosted · $1.10/M API</title></circle>
-<line x1="445.7" y1="476.5" x2="580.5" y2="476.5" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="580.5" cy="476.5" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gemma-4-26B-A4B BF16 (thinking, T=0): 0.628 on 403 items · 9,119 out tok/s · $0.13/M self-hosted · $0.34/M API</title></circle>
-<circle cx="445.7" cy="476.5" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gemma-4-26B-A4B BF16 (thinking, T=0): 0.628 on 403 items · 9,119 out tok/s · $0.13/M self-hosted · $0.34/M API</title></circle>
-<line x1="433.1" y1="257.1" x2="480.1" y2="257.1" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="480.1" cy="257.1" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gpt-oss-120b MXFP4 (native): 0.742 on 124 items · 9,948 out tok/s · $0.12/M self-hosted · $0.17/M API</title></circle>
-<circle cx="433.1" cy="257.1" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gpt-oss-120b MXFP4 (native): 0.742 on 124 items · 9,948 out tok/s · $0.12/M self-hosted · $0.17/M API</title></circle>
-<line x1="386.3" y1="314.2" x2="441.3" y2="314.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="441.3" cy="314.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gpt-oss-20b MXFP4 (native): 0.712 on 403 items · 13,752 out tok/s · $0.09/M self-hosted · $0.13/M API</title></circle>
-<circle cx="386.3" cy="314.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gpt-oss-20b MXFP4 (native): 0.712 on 403 items · 13,752 out tok/s · $0.09/M self-hosted · $0.13/M API</title></circle>
-<text x="833.8" y="79.2" font-size="11.5" fill="#0b0b0b" text-anchor="start">DeepSeek-V4-Flash · TP4+DSpark</text>
-<text x="703.1" y="112.7" font-size="11.5" fill="#0b0b0b" text-anchor="start">DeepSeek-V4-Flash · DP4+EP*</text>
-<line x1="841.6" y1="128.3" x2="881.6" y2="104.0" stroke="#898781" stroke-width="0.8"/>
-<text x="881.6" y="108.3" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · TP4+MTP</text>
-<line x1="641.0" y1="132.9" x2="632.0" y2="108.6" stroke="#898781" stroke-width="0.8"/>
-<text x="632.0" y="112.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B BF16</text>
-<line x1="751.0" y1="142.5" x2="711.0" y2="153.2" stroke="#898781" stroke-width="0.8"/>
-<text x="711.0" y="157.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">DeepSeek-V4-Flash · TP4</text>
-<line x1="776.1" y1="156.9" x2="736.1" y2="181.7" stroke="#898781" stroke-width="0.8"/>
-<text x="736.1" y="185.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">GLM-5.3-Flash · TP4</text>
-<line x1="727.7" y1="156.9" x2="718.7" y2="90.7" stroke="#898781" stroke-width="0.8"/>
-<text x="718.7" y="94.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">GLM-5.3-Flash · DP2×TP2+EP*</text>
-<line x1="527.2" y1="161.5" x2="518.2" y2="172.3" stroke="#898781" stroke-width="0.8"/>
-<text x="518.2" y="176.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B QAT NVFP4 (W4A4)</text>
-<line x1="605.3" y1="171.2" x2="565.3" y2="195.9" stroke="#898781" stroke-width="0.8"/>
-<text x="565.3" y="200.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">Muse-Glimmer-30B BF16</text>
-<line x1="599.6" y1="185.4" x2="590.6" y2="224.1" stroke="#898781" stroke-width="0.8"/>
-<text x="590.6" y="228.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B FP8</text>
-<line x1="661.6" y1="199.8" x2="670.6" y2="210.6" stroke="#898781" stroke-width="0.8"/>
-<text x="670.6" y="214.8" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B RedHat NVFP4 (W4A16)</text>
-<text x="670.5" y="231.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B unsloth NVFP4 (W4A16)</text>
-<text x="424.1" y="251.1" font-size="11.5" fill="#0b0b0b" text-anchor="end">gpt-oss-120b MXFP4 (native)</text>
-<text x="538.6" y="284.4" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B gittensor NVFP4 (W4A4)</text>
-<text x="377.3" y="308.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">gpt-oss-20b MXFP4 (native)</text>
-<text x="436.7" y="470.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">gemma-4-26B-A4B BF16 (thinking)</text>
+<path d="M337.2,257.1 L491.9,171.2 L496.5,161.5 L577.3,118.7 L772.4,85.2" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="730.5" y1="156.9" x2="627.1" y2="156.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="627.1" cy="156.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · $0.096/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
+<circle cx="730.5" cy="156.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · $0.096/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
+<line x1="647.1" y1="156.9" x2="627.1" y2="156.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="627.1" cy="156.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*: 0.794 on 403 items · $0.054/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
+<circle cx="647.1" cy="156.9" r="10" fill="none" stroke="#eb6834" stroke-width="1.5" stroke-dasharray="3 2"/>
+<circle cx="647.1" cy="156.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*: 0.794 on 403 items · $0.054/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
+<line x1="843.3" y1="128.3" x2="627.1" y2="128.3" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="627.1" cy="128.3" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4 + MTP: 0.809 on 403 items · $0.209/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
+<circle cx="843.3" cy="128.3" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4 + MTP: 0.809 on 403 items · $0.209/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
+<line x1="649.0" y1="142.5" x2="596.0" y2="142.5" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="596.0" cy="142.5" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4: 0.801 on 403 items · $0.055/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<circle cx="649.0" cy="142.5" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4: 0.801 on 403 items · $0.055/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<line x1="577.3" y1="118.7" x2="596.0" y2="118.7" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="596.0" cy="118.7" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP*: 0.814 on 403 items · $0.033/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<circle cx="577.3" cy="118.7" r="10" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-dasharray="3 2"/>
+<circle cx="577.3" cy="118.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP*: 0.814 on 403 items · $0.033/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<line x1="772.4" y1="85.2" x2="596.0" y2="85.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="596.0" cy="85.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4 + DSpark: 0.831 on 403 items · $0.128/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<circle cx="772.4" cy="85.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4 + DSpark: 0.831 on 403 items · $0.128/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<line x1="610.2" y1="132.9" x2="932.1" y2="132.9" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="932.1" cy="132.9" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>Qwen3.8-27B BF16: 0.806 on 403 items · $0.042/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<circle cx="610.2" cy="132.9" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B BF16: 0.806 on 403 items · $0.042/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<line x1="496.5" y1="161.5" x2="932.1" y2="161.5" stroke="#1baf7a" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="932.1" cy="161.5" r="5" fill="#fcfcfb" stroke="#1baf7a" stroke-width="2"><title>Qwen3.8-27B QAT NVFP4 (W4A4): 0.792 on 403 items · $0.019/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<circle cx="496.5" cy="161.5" r="6" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B QAT NVFP4 (W4A4): 0.792 on 403 items · $0.019/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<line x1="566.9" y1="185.4" x2="932.1" y2="185.4" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="932.1" cy="185.4" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B FP8: 0.779 on 403 items · $0.031/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<rect x="561.4" y="179.9" width="11" height="11" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B FP8: 0.779 on 403 items · $0.031/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></rect>
+<line x1="498.3" y1="290.4" x2="932.1" y2="290.4" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="932.1" cy="290.4" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B gittensor NVFP4 (W4A4): 0.725 on 403 items · $0.019/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<circle cx="498.3" cy="290.4" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B gittensor NVFP4 (W4A4): 0.725 on 403 items · $0.019/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<line x1="626.3" y1="199.8" x2="932.1" y2="199.8" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="932.1" cy="199.8" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B RedHat NVFP4 (W4A16): 0.772 on 403 items · $0.047/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<circle cx="626.3" cy="199.8" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B RedHat NVFP4 (W4A16): 0.772 on 403 items · $0.047/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<line x1="626.3" y1="237.9" x2="932.1" y2="237.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="932.1" cy="237.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>Qwen3.8-27B unsloth NVFP4 (W4A16): 0.752 on 403 items · $0.047/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<circle cx="626.3" cy="237.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>Qwen3.8-27B unsloth NVFP4 (W4A16): 0.752 on 403 items · $0.047/M tokens self-hosted · $0.386/M API · shapes router, promptopt</title></circle>
+<line x1="491.9" y1="171.2" x2="833.6" y2="171.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="833.6" cy="171.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>Muse-Glimmer-30B BF16: 0.787 on 403 items · $0.018/M tokens self-hosted · $0.195/M API · shapes router, promptopt</title></circle>
+<circle cx="491.9" cy="171.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>Muse-Glimmer-30B BF16: 0.787 on 403 items · $0.018/M tokens self-hosted · $0.195/M API · shapes router, promptopt</title></circle>
+<line x1="361.3" y1="476.5" x2="642.0" y2="476.5" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="642.0" cy="476.5" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gemma-4-26B-A4B BF16 (thinking, T=0): 0.628 on 403 items · $0.007/M tokens self-hosted · $0.052/M API · shapes router, promptopt</title></circle>
+<circle cx="361.3" cy="476.5" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gemma-4-26B-A4B BF16 (thinking, T=0): 0.628 on 403 items · $0.007/M tokens self-hosted · $0.052/M API · shapes router, promptopt</title></circle>
+<line x1="337.2" y1="257.1" x2="545.7" y2="257.1" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="545.7" cy="257.1" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gpt-oss-120b MXFP4 (native): 0.742 on 124 items · $0.006/M tokens self-hosted · $0.027/M API · shapes router, promptopt</title></circle>
+<circle cx="337.2" cy="257.1" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gpt-oss-120b MXFP4 (native): 0.742 on 124 items · $0.006/M tokens self-hosted · $0.027/M API · shapes router, promptopt</title></circle>
+<line x1="401.5" y1="314.2" x2="608.0" y2="314.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="608.0" cy="314.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gpt-oss-20b MXFP4 (native): 0.712 on 403 items · $0.010/M tokens self-hosted · $0.041/M API · shapes router</title></circle>
+<circle cx="401.5" cy="314.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gpt-oss-20b MXFP4 (native): 0.712 on 403 items · $0.010/M tokens self-hosted · $0.041/M API · shapes router</title></circle>
+<text x="781.4" y="79.2" font-size="11.5" fill="#0b0b0b" text-anchor="start">DeepSeek-V4-Flash · TP4+DSpark</text>
+<text x="568.3" y="112.7" font-size="11.5" fill="#0b0b0b" text-anchor="end">DeepSeek-V4-Flash · DP4+EP*</text>
+<text x="834.3" y="122.3" font-size="11.5" fill="#0b0b0b" text-anchor="end">GLM-5.3-Flash · TP4+MTP</text>
+<line x1="610.2" y1="132.9" x2="570.2" y2="143.6" stroke="#898781" stroke-width="0.8"/>
+<text x="570.2" y="147.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B BF16</text>
+<line x1="649.0" y1="142.5" x2="658.0" y2="181.2" stroke="#898781" stroke-width="0.8"/>
+<text x="658.0" y="185.5" font-size="11.5" fill="#0b0b0b" text-anchor="start">DeepSeek-V4-Flash · TP4</text>
+<text x="739.5" y="150.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · TP4</text>
+<line x1="647.1" y1="156.9" x2="656.1" y2="209.7" stroke="#898781" stroke-width="0.8"/>
+<text x="656.1" y="213.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · DP2×TP2+EP*</text>
+<line x1="496.5" y1="161.5" x2="456.5" y2="151.3" stroke="#898781" stroke-width="0.8"/>
+<text x="456.5" y="155.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B QAT NVFP4 (W4A4)</text>
+<line x1="491.9" y1="171.2" x2="482.9" y2="181.9" stroke="#898781" stroke-width="0.8"/>
+<text x="482.9" y="186.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">Muse-Glimmer-30B BF16</text>
+<line x1="566.9" y1="185.4" x2="557.9" y2="210.1" stroke="#898781" stroke-width="0.8"/>
+<text x="557.9" y="214.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B FP8</text>
+<line x1="626.3" y1="199.8" x2="635.3" y2="224.6" stroke="#898781" stroke-width="0.8"/>
+<text x="635.3" y="228.8" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B RedHat NVFP4 (W4A16)</text>
+<text x="617.3" y="231.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B unsloth NVFP4 (W4A16)</text>
+<text x="346.2" y="251.1" font-size="11.5" fill="#0b0b0b" text-anchor="start">gpt-oss-120b MXFP4 (native)</text>
+<text x="507.3" y="284.4" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B gittensor NVFP4 (W4A4)</text>
+<text x="392.5" y="308.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">gpt-oss-20b MXFP4 (native)</text>
+<text x="370.3" y="470.5" font-size="11.5" fill="#0b0b0b" text-anchor="start">gemma-4-26B-A4B BF16 (thinking)</text>
 </svg></div>
-<p><strong>The frontier is made of native precision and one quantisation-aware four-bit build.</strong> Every post-training four-bit point is dominated: gittensor's W4A4 build is 2% cheaper than the QAT build and 0.067 worse; the two W4A16 builds are slower than the BF16 parent <em>and</em> worse than it; FP8 is dominated by the QAT build on both axes. <strong>The top of the frontier is flat within the suite's noise floor</strong> from Qwen3.8-27B BF16 at $0.52 per million output tokens to DeepSeek-V4-Flash at $0.75 — a 0.008 gap on a suite whose repeat-run spread is 0.022 — and only DeepSeek with its DSpark drafter (0.831) clears it, at 2.5× the price per token of the DP4 layout. GLM-5.3-Flash, the highest-index model here, is off the frontier on this suite's aggregate — Qwen BF16 is cheaper and scores the same, DeepSeek is cheaper and scores higher — though it still leads the families that separate models (maths, knowledge). GLM's own DP2 × TP2 + EP layout, at $0.94, is 40% faster than its TP4 but still dominated by Qwen BF16 at $0.52 and the same score. The two DP4 + EP points (dashed rings) carry the accuracy measured on the same weights and kernels at TP4 until their own 403-item runs, in progress, land. <strong>The hollow markers tell the buying story</strong>: for every one-card model the API price sits far to the right of the node, 4–13× at list; for the two four-card models it sits to the left.</p>
+<p><strong>Priced on the same tokens at the same mix, the API is 4–20× the node for every model that fits one card, and 0.9–1.1× for the two that need all four</strong> (multiply by 2.5 for the fully-loaded basis). The one-card ratios are smaller than the per-hour table because cached input is now priced at a tenth and the prompt-optimisation shape is mostly cache hits; they are still an order of magnitude, and Qwen3.8-27B's is the largest because its API price is high ($3 per million output tokens), not because the node is unusually good at it. <strong>The frontier is native precision plus one quantisation-aware four-bit build</strong> — gpt-oss-120b, Muse, the QAT Qwen, DeepSeek on its expert-parallel layout, DeepSeek with DSpark — and every post-training four-bit build sits below it. <strong>On blended tokens DeepSeek-V4-Flash's DP4 layout ($0.033 per million) is cheaper than Qwen3.8-27B BF16 ($0.042) and scores higher</strong>, because a sparse MoE prefills and reads a cached prefix far faster than a dense 27B. <strong>GLM-5.3-Flash is off the frontier at every layout</strong>: its best, DP2 × TP2 + EP at $0.054, is dominated by DeepSeek's DP4, and the API sells GLM for $0.047. Speculation buys the top accuracy at 3–4× the token cost of the same model without it. The two expert-parallel points (dashed rings) carry the accuracy measured on the same weights and kernels at TP4 until their own 403-item runs land.</p>
 
 <h2>7 · Selling idle capacity on Vast</h2>
 <p>Live market data from 86 RTX PRO 6000 listings, 3 September 2026: renters pay a median $1.51 per GPU-hour, hosts receive about $1.13 after commission, against a lease cost of $0.77; 74% of the fleet is rented. Subletting plausibly covers <strong>75–100% of the lease</strong>. Interruptible listings clear lower, and hosting needs Docker, root, a public IP and an inbound port range. Vast currently lists <strong>zero</strong> RTX PRO 6000 nodes for rent, which is also why every experiment above ran serialised through one box.</p>

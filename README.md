@@ -682,62 +682,72 @@ discount on the cached 86% of input, the API bill falls to about $21 for gpt-oss
 an order of magnitude above the node. The two four-card models are shown on the router shape, which has no
 shared prefix, so their ratios need no such correction.
 
-**Every configuration on one chart.** Each quantisation of a model is its own point, because it is its own
-product. The x-axis is what a million output tokens cost from the node at Scan list and 70% utilisation, from
-the measured 600 W throughput at the router shape (the eight-times-larger input volume rides in the same hour);
-the y-axis is task accuracy over the 403 items; the hollow marker at the same height is the API list price for
-the same model. The dashed step is the frontier: nothing sits both cheaper and better than a point on it.
+**Every configuration on one chart, priced on the workloads we actually measured.** Each quantisation of a model
+is its own point, because it is its own product. The x-axis is dollars per million tokens, input and output
+together, for the *average* of the two workloads every configuration was measured on: the router shape (1,024
+in / 128 out) and the prompt-optimisation shape (a 3,072-token shared prefix + 512 in / 256 out). The node's
+cost is $4.40 an hour (Scan list, 70% utilisation) divided by the requests that hour serves at each shape; the
+API bill prices the same requests at OpenRouter list on 5 September, with input, cached input (at 10% of the
+input price — the shared prefix is a cache hit) and output priced separately. Both are averaged per request over
+the same two shapes, so the filled marker (node) and the hollow marker (API) are the same work at the same mix,
+and the gap between them is the ratio in the table. The dashed step is the frontier: nothing sits both cheaper
+and better than a point on it. `box/frontier.py` regenerates the chart and the table from `results/`.
 
 ![Cost against quality for every configuration measured at 600 W](report/frontier.svg)
 
-| configuration | accuracy (items) | out tok/s (600 W) | $/M output, self-hosted | $/M output, API | on the frontier |
-|---|---:|---:|---:|---:|:-:|
-| gpt-oss-20b MXFP4 (native) | 0.712 (403) | 13,752 | $0.089 | $0.13 | yes |
-| gpt-oss-120b MXFP4 (native) | 0.742 (124) | 9,948 | $0.123 | $0.17 | yes |
-| gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | 9,119 | $0.134 | $0.34 | |
-| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 5,194 | $0.235 | $3.00 | yes |
-| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 5,110 | $0.239 | $3.00 | |
-| Qwen3.8-27B FP8 | 0.779 (403) | 3,150 | $0.388 | $3.00 | |
-| Muse-Glimmer-30B BF16 | 0.787 (403) | 3,029 | $0.404 | $1.10 | |
-| Qwen3.8-27B BF16 | 0.806 (403) | 2,367 | $0.516 | $3.00 | yes |
-| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 2,054 | $0.595 | $3.00 | |
-| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 2,053 | $0.595 | $3.00 | |
-| DeepSeek-V4-Flash native · DP4 + EP * | 0.814 (403, same kernels at TP4) | 1,640 | $0.745 | $0.18 | yes |
-| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP * | 0.794 (403, same kernels at TP4) | 1,300 | $0.940 | $0.25 | |
-| DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 1,107 | $1.104 | $0.18 | |
-| GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 931 | $1.313 | $0.25 | |
-| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 665 | $1.838 | $0.18 | yes |
-| GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 592 | $2.065 | $0.25 | |
+| configuration | accuracy (items) | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | frontier |
+|---|---:|---:|---:|---:|---:|:-:|
+| gpt-oss-120b MXFP4 (native) | 0.742 (124) | 2,304 · 192 | $0.006 | $0.027 | 4.2× | yes |
+| gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | 2,304 · 192 | $0.007 | $0.052 | 7.0× | |
+| gpt-oss-20b MXFP4 (native) ¹ | 0.712 (403) | 1,024 · 128 | $0.010 | $0.041 | 4.2× | |
+| Muse-Glimmer-30B BF16 | 0.787 (403) | 2,304 · 192 | $0.018 | $0.195 | 10.6× | yes |
+| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 2,304 · 192 | $0.019 | $0.386 | 20.3× | yes |
+| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 2,304 · 192 | $0.019 | $0.386 | 20.0× | |
+| Qwen3.8-27B FP8 | 0.779 (403) | 2,304 · 192 | $0.031 | $0.386 | 12.5× | |
+| DeepSeek-V4-Flash native · DP4 + EP * | 0.814 (403, same kernels at TP4) | 2,304 · 192 | $0.033 | $0.038 | 1.1× | yes |
+| Qwen3.8-27B BF16 | 0.806 (403) | 2,304 · 192 | $0.042 | $0.386 | 9.2× | |
+| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 2,304 · 192 | $0.047 | $0.386 | 8.3× | |
+| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 2,304 · 192 | $0.047 | $0.386 | 8.3× | |
+| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP * | 0.794 (403, same kernels at TP4) | 2,304 · 192 | $0.054 | $0.047 | 0.9× | |
+| DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 2,304 · 192 | $0.055 | $0.038 | 0.7× | |
+| GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 2,304 · 192 | $0.096 | $0.047 | 0.5× | |
+| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 2,304 · 192 | $0.128 | $0.038 | 0.3× | yes |
+| GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 2,304 · 192 | $0.209 | $0.047 | 0.2× | |
 
 \* The expert-parallel layouts' own 403-item runs are in progress; until they land each point carries the accuracy
-measured on the same weights and kernels at TP4, and is drawn with a dashed ring. `box/frontier.py` regenerates the
-chart and this table from `results/`.
+measured on the same weights and kernels at TP4, and is drawn with a dashed ring. ¹ gpt-oss-20b has no
+prompt-optimisation measurement at 600 W, so its point is the router shape alone — the dearer of the two per
+token, which flatters the API side of its ratio. Multiply any "API ÷ node" by 2.5 for the fully-loaded cost
+basis ($1.77 an hour).
 
-What the chart says. **The frontier is made of native precision and one quantisation-aware four-bit build.**
-Every post-training four-bit point is dominated: gittensor's W4A4 build is 2% cheaper than the QAT build and
-0.067 worse; the two W4A16 builds are slower than the BF16 parent *and* worse than it. FP8 is dominated by the QAT
-build on both axes. **The top of the frontier is flat within the suite's noise floor** from Qwen3.8-27B BF16 at
-$0.52 to DeepSeek-V4-Flash at $0.75 — a 0.008 gap on a suite whose repeat-run spread is 0.022 — and only
-DeepSeek with its DSpark drafter (0.831) clears it, at 2.5× the price per token of the DP4 layout. GLM-5.3-Flash,
-the highest-index model here, is off the frontier on this suite's aggregate: Qwen BF16 is cheaper and scores the
-same, and DeepSeek is cheaper and scores higher — its best layout at $0.94 closes most of the gap without
-crossing it — though GLM still leads the families that separate models
-(maths, knowledge — see the leaderboard). **The hollow markers tell the buying story:** for every one-card model
-the API price sits far to the right of the node, 4–13× at list; for the two four-card models it sits to the left.
+What the chart says. **Priced on the same tokens at the same mix, the API is 4–20× the node for every model that
+fits one card, and 0.9–1.1× for the two that need all four.** The one-card ratios are smaller than the per-hour
+table above because cached input is now priced at a tenth and the prompt-optimisation shape is mostly cache
+hits; they are still an order of magnitude. Qwen3.8-27B's ratio is the largest because its API price is high
+($3 per million output tokens), not because the node is unusually good at it. **The frontier is native
+precision plus one quantisation-aware four-bit build** — gpt-oss-120b, Muse, the QAT Qwen, DeepSeek on its
+expert-parallel layout, DeepSeek with DSpark — and every post-training four-bit build sits below it. **On blended
+tokens DeepSeek-V4-Flash's DP4 layout is cheaper than Qwen3.8-27B BF16 and scores higher**, because a sparse MoE
+prefills and reads a cached prefix far faster than a dense 27B: it takes Qwen BF16 off the frontier. **GLM-5.3-Flash
+is off the frontier on this suite's aggregate at every layout**: its best, DP2 × TP2 + EP at $0.054 per million
+tokens, is dominated by DeepSeek's DP4 at $0.033 and 0.814, and the API sells GLM for $0.047. Speculation
+(DSpark, MTP) buys the top accuracy at 3–4× the token cost of the same model without it.
 
 Three conclusions.
 
-**For anything that fits one card, self-hosting wins by an order of magnitude.** Qwen3.8-27B, gemma-4-26B,
-gpt-oss-120b and Muse cost 9–27× more from an API than from the node at Scan's list price and 70% utilisation,
-and 22–66× fully loaded. Even renting the same box on Vast on-demand ($6.20 an hour) beats the API by 6–19× for
-these. This is the class of model — "non-huge" open weights — where the node pays for itself many times over.
+**For anything that fits one card, self-hosting wins by an order of magnitude.** On the averaged workload with
+cached input priced, Qwen3.8-27B, Muse, gemma-4-26B and gpt-oss cost 4–20× more from an API than from the node
+at Scan's list price and 70% utilisation, and 10–50× fully loaded; on the uncached per-hour table above the
+ratios are 9–27× and 22–67×. Even renting the same box on Vast on-demand ($6.20 an hour) beats the API by 3–14×
+for these. This is the class of model — "non-huge" open weights — where the node pays for itself many times over.
 
-**For the two frontier-class models that need all four cards, the API is priced at our cost.** At Scan list and
-70% utilisation, an hour of DeepSeek-V4-Flash on its fastest layout costs $4.40 from the node and $4.10 from the
-API; GLM-5.3-Flash costs $4.40 against $4.00. Their providers run them on eight-way B200-class hardware at scale
-and price aggressively (DeepSeek's own API sits under everyone else). Self-hosting those two is a decision about
-fidelity, data and control, not about savings — unless the fully-loaded stack holds, where they are still
-2.2–2.3× cheaper than the API.
+**For the two frontier-class models that need all four cards, the API is priced at our cost.** On the averaged
+workload at Scan list and 70% utilisation, DeepSeek-V4-Flash on its fastest layout is 1.1× — the API costs 10%
+more than the node — and GLM-5.3-Flash is 0.9×. The day's layout work moved them from 0.6× and 0.5×; no kernel
+or layout left on this build moves them past 1.5×. Their providers run them on eight-way B200-class hardware at
+scale and price aggressively (DeepSeek's own API sits under everyone else). Self-hosting those two is a decision
+about fidelity, data and control, not about savings — unless the fully-loaded stack holds, where they are
+2.2–2.7× cheaper than the API, or the API prices move (DeepSeek's rose 2.4–4.7× in one step in August).
 
 **The node is an aggregate-throughput machine, not a latency machine.** Providers quote 70–90 output tokens a
 second per request (Artificial Analysis: Qwen3.8-Flash-Next 74, MiniMax-M3 89). At saturation our node gives
