@@ -98,9 +98,9 @@ Other models on the same box:
 | | | promptopt C1024 | 735 | 10,293 | 125 s ⁱ |
 | **DeepSeek-V4-Flash (41)** | **TP1 × DP4 + expert parallel, 512 seqs per engine** (this box) | router C1024 | **1,640** | 13,124 | 7.6 s |
 | | | promptopt C1024 | **4,430** | 62,024 | 6.4 s |
-| | same layout, W4A4 (`b12x`) experts instead of Marlin MXFP4 | router C1024 | 1,245 | 9,962 | 53 s ⁱ |
 | | same layout, 1,024 seqs per engine, 16k prefill batch | router C1024 | 1,584 | 12,674 | 15 s ⁱ |
 | | | promptopt C1024 | 4,293 | 60,106 | 13 s ⁱ |
+| | TP4, `b12x` W4A4 experts, **512 seqs** (the control) | router C1024 | 1,245 | 9,962 | 53 s ⁱ |
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel, 256 seqs (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM, 256 seqs | promptopt C256 | 1,002 | 14,030 | 2.7 s |
@@ -136,10 +136,12 @@ each card decodes its own batch and only the expert dispatch crosses PCIe. On sh
 wider still: **4,430 against 2,387, +86%**, because prefix caching is per engine and four engines each hold the
 whole prefix. The price is per-stream latency: 581 ms per token at that load on the router shape, 7.6 s to first
 token. At 256 streams the same layout gave 1,289 (first box), so the gain is mostly batch depth that TP4 could
-not reach. Two things did *not* help. Raising the per-engine budget to 1,024 sequences changed nothing, because
-1,024 streams across four engines is 256 each. And the W4A4 expert kernel that was +5% at TP4 is **−24% under
-expert parallelism** (1,245): each engine now holds a quarter of the experts, the GEMMs are a quarter the size,
-and the Marlin MXFP4 path wins them. The kernel that is right for one layout is wrong for another — sweep both. Its 403-item quality run on this layout is in progress;
+not reach — but not only that: TP4 given the same 512-sequence budget reaches 1,245 (+14% over its 256-sequence
+number), so batch depth helps both layouts and the layout itself is worth **+32% at equal depth**. Raising the
+per-engine budget to 1,024 sequences changed nothing, because 1,024 streams across four engines is 256 each. The
+W4A4 expert kernel that gave TP4 its +5% is not available in this layout: the `b12x` MXFP4 MoE backend refuses
+`dp_size=4, ep_size=4` outright ("does not support the deployment configuration"), so the DP4 + EP numbers are on
+the Marlin MXFP4 path, and a W4A4 expert kernel that shards would be the next lever. Its 403-item quality run on this layout is in progress;
 the same weights and MoE kernel scored 0.814 at TP4.
 
 GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — four points below the top
