@@ -1,0 +1,4 @@
+# MiniMax-M3 retry: the Marlin MoE kernel refused "--block-size 128" ("No common block size for 128" - a hybrid-attention
+# model needs a block size every layer type accepts). Engine default first, then 256; eager either way.
+minimaxm3_auto|/workspace/models/MiniMax-M3-MXFP4|4|-:marlin|--quantization-config.moe.activation|mxfp8|--enforce-eager
+minimaxm3_b256|/workspace/models/MiniMax-M3-MXFP4|4|-:marlin|--quantization-config.moe.activation|mxfp8|--block-size|256|--enforce-eager
