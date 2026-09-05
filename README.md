@@ -108,19 +108,23 @@ Other models on the same box:
 | | TP4 + **expert parallel**, 512 seqs | router C1024 | 931 | 7,449 | 62 s ⁱ |
 | | | promptopt C1024 | 1,008 | 14,108 | 120 s ⁱ |
 | | TP4, 512 seqs, **MTP speculation** (3 draft tokens, 10% accepted at this batch) | router C1024 | 592 | 4,738 | 101 s ⁱ |
+| | **TP1 × DP4 + expert parallel, 192 seqs per rank** (the build's cap at TP1) | router C1024 | **1,073** | 8,585 | 97 s ⁱ |
 
 ⁱ Time-to-first-token here is queueing: the server admits 256 or 512 sequences and the shape offers 1,024.
 
-**GLM's ceiling is a step-time ceiling, not a batch ceiling.** Doubling the sequence budget from 256 to 512 and
-sharding the experts instead of tensor-splitting them changed output throughput by 1% and 2%. The decode step
-takes about 200 ms at every setting — four times a one-card dense model's — and that time is the four-way
-tensor-parallel all-reduce over PCIe with no NVLink, plus a Hopper attention backend ported to sm_120 and a
-1,024-token DeepGEMM indexer block. The vendor build refuses the W4A4 MoE kernel for this model (`swiglu_limit`
-clamp not implemented in `flashinfer_b12x`) and caps the sequence budget at 512 (its linear-attention cache). The
-MTP head makes it *worse* at saturation — 592 against 911, because only 10% of drafted tokens are accepted at
-1,024 streams and every rejected draft is a wasted slot in a batch that was already full. The one arm that can
-still move it is the layout that removes the all-reduce, DP4 with expert parallelism; the vendor build caps that
-at 192 sequences per rank (768 in flight), and it is measuring now.
+**GLM's ceiling was a step-time ceiling, and the step time was tensor parallelism.** At TP4, doubling the
+sequence budget from 256 to 512 and sharding the experts changed output throughput by 1% and 2%: the decode step
+took about 200 ms at every setting, and that time is the four-way all-reduce over PCIe with no NVLink, plus a
+Hopper attention backend ported to sm_120 and a 1,024-token DeepGEMM indexer block. Remove the all-reduce —
+four independent engines with the experts sharded across them (TP1 × DP4 + EP) — and **the step drops to 93 ms
+and output rises to 1,073 tokens a second, +15%**, with only 768 sequences in flight against TP4's 512. It is not
+more because the vendor build caps a TP1 rank at 192 sequences (its linear-attention state cache), so the batch
+is shallower even though each step is twice as fast; a build that lets the Mamba cache grow would take this
+layout well past the TP4 number. The build also refuses the W4A4 MoE kernel for this model (`swiglu_limit` clamp
+not implemented in `flashinfer_b12x`). The MTP head makes it *worse* at saturation — 592 against 911, because only
+10% of drafted tokens are accepted at 1,024 streams and every rejected draft is a wasted slot in a batch that was
+already full. DP2 × TP2 + EP at 384 per rank is measuring now; the 403-item quality run on the fastest layout
+follows.
 
 **DeepSeek's ceiling was a layout ceiling, and it moved.** Tensor-parallel across four cards gave 1,107 output
 tokens a second. Four independent engines with the experts sharded across them (TP1 × DP4 + EP), each admitting
@@ -658,6 +662,7 @@ utilisation, $1.77 fully loaded.
 | Qwen3.8-27B · NVFP4 QUASAR-QAT, b12x W4A4, 4 replicas | router C1024 | 150 + 19 | 0.42 · 3.00 | $119 | 27× | 67× |
 | DeepSeek-V4-Flash · native MXFP4 + FP8, **TP1 × DP4 + EP**, 512 seqs/engine | router C1024 | 47 + 6 | 0.065 · 0.18 | $4.1 | 0.9× | 2.3× |
 | DeepSeek-V4-Flash · native MXFP4 + FP8, TP4 | router C256 | 32 + 4 | 0.065 · 0.18 | $2.8 | 0.6× | 1.6× |
+| GLM-5.3-Flash · NVFP4, **TP1 × DP4 + EP**, 192 seqs/rank | router C1024 | 31 + 4 | 0.075 · 0.25 | $3.3 | 0.7× | 1.9× |
 | GLM-5.3-Flash · NVFP4, TP4 + EP, 512 seqs | router C1024 | 27 + 3 | 0.075 · 0.25 | $2.8 | 0.6× | 1.6× |
 | Qwen3.8-Flash-Next · NVFP4, 2 × TP2 | router | not run — needs the newer vLLM build | 0.15 · 0.47 | | | |
 | MiniMax-M3 · MXFP4, TP4 | router | not run in the window | 0.30 · 1.20 | | | |
@@ -689,12 +694,13 @@ the same model. The dashed step is the frontier: nothing sits both cheaper and b
 | Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 2,053 | $0.595 | $3.00 | |
 | DeepSeek-V4-Flash native · DP4 + EP * | 0.814 (403, same kernels at TP4) | 1,640 | $0.745 | $0.18 | yes |
 | DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 1,107 | $1.104 | $0.18 | |
+| GLM-5.3-Flash NVFP4 · DP4 + EP * | 0.794 (403, same kernels at TP4) | 1,073 | $1.139 | $0.25 | |
 | GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 931 | $1.313 | $0.25 | |
 | DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 665 | $1.838 | $0.18 | yes |
 | GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 592 | $2.065 | $0.25 | |
 
-\* The DP4 + EP layout's own 403-item run is in progress; until it lands the point carries the accuracy measured
-on the same weights and MoE kernel at TP4, and is drawn with a dashed ring. `box/frontier.py` regenerates the
+\* The DP4 + EP layouts' own 403-item runs are in progress; until they land each point carries the accuracy
+measured on the same weights and kernels at TP4, and is drawn with a dashed ring. `box/frontier.py` regenerates the
 chart and this table from `results/`.
 
 What the chart says. **The frontier is made of native precision and one quantisation-aware four-bit build.**
@@ -717,10 +723,10 @@ these. This is the class of model — "non-huge" open weights — where the node
 
 **For the two frontier-class models that need all four cards, the API is priced at our cost.** At Scan list and
 70% utilisation, an hour of DeepSeek-V4-Flash on its fastest layout costs $4.40 from the node and $4.10 from the
-API; GLM-5.3-Flash costs $4.40 against $2.80. Their providers run them on eight-way B200-class hardware at scale
+API; GLM-5.3-Flash costs $4.40 against $3.30. Their providers run them on eight-way B200-class hardware at scale
 and price aggressively (DeepSeek's own API sits under everyone else). Self-hosting those two is a decision about
 fidelity, data and control, not about savings — unless the fully-loaded stack holds, where they are still
-1.6–2.3× cheaper than the API.
+1.9–2.3× cheaper than the API.
 
 **The node is an aggregate-throughput machine, not a latency machine.** Providers quote 70–90 output tokens a
 second per request (Artificial Analysis: Qwen3.8-Flash-Next 74, MiniMax-M3 89). At saturation our node gives
