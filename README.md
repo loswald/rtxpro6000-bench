@@ -275,6 +275,7 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | **DeepSeek-V4-Flash (52)** · native MXFP4 + FP8, TP4, **DSpark speculation** | 403 | **0.831** ⁴ | 0.938 | 0.720 | 0.871 | 0.958 | **0.657** | 0.883 |
 | DeepSeek-V4-Flash (52) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
+| Qwen3.8-27B (52) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
 | Muse-Glimmer-30B (35) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
 | Qwen3.8-27B (52) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
 | Nemotron-3-Super (26) · **native** NVFP4 | 379 ¹ | 0.776 | 0.946 | 0.800 | 0.900 | 0.729 | 0.500 | 0.800 |
@@ -443,10 +444,19 @@ NVFP4 got right, on 388 paired items). We picked the gittensor build for kernel 
 measured quality. So the open question is now sharp: **does RedHat's build load under the W4A4 kernel?** If
 it does, it is the Pareto point — FP8 accuracy at 5,000 tok/s — and that run is queued (`box/lists/fix600w.txt`).
 
-**The cost that remains is concentrated in mathematics.** Even the parity build gives up 0.076 on maths
-(0.862 against 0.938); the gittensor build gives up 0.153. Code, tools, long context and instruction
-following are within noise for all three. Whatever four-bit post-training quantisation damages, it is the
-part that does arithmetic reliably.
+**The cost that remains is concentrated in mathematics — with a caveat the numbers themselves raise.** Even
+the parity build gives up 0.076 on maths (0.862 against 0.938); the gittensor build gives up 0.153. Code,
+tools, long context and instruction following are within noise for all three. But look at how these models
+answer a maths item at Qwen's own sampling: mean output **9,300 tokens for FP8, 12,100 for RedHat, 13,900 for
+gittensor, and 14,300 for the native BF16 parent**, with 3%, 26%, 35% and 19% of items hitting the 32,768
+cap respectively — and a capped item scores as wrong. Two things follow. FP8's low truncation is partly
+because its 15 *longest* items were the ones the request timeout removed, so its maths lead will shrink when
+those are completed. And the native BF16 parent — 0.806 overall, 0.800 on maths, no timeouts — reasons longer
+than any quantised build and truncates more than FP8, so the *parent* is not the maths ceiling either. The
+cleanest reading is that four-bit PTQ makes the model reason longer without converging (35% at the cap
+against 19% for the parent), which is a real cost, and that a 32k cap is too short to measure how much of
+that reasoning would have landed. The ladder is being completed at these caps for comparability, and re-run
+with 65k tokens of room for the arms that hit them.
 
 So: if the workload is routing, tool calls and code, take the four-bit build and the 64% throughput. If it
 has to do maths, FP8 is not a close call at any concurrency. The remaining question — whether a

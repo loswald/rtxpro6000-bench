@@ -1,0 +1,3053 @@
+{
+ "aggregate": {
+  "acc_macro": 0.7865,
+  "acc_micro": 0.7796,
+  "acc_strict": 0.7796,
+  "answer_from_reasoning": 0,
+  "ci95": [
+   0.7347,
+   0.8187
+  ],
+  "degenerate_rate": 0.0,
+  "gpu_minutes": 52.022,
+  "mean_out_tokens": 1966.1,
+  "mean_prompt_tokens": 2637.1,
+  "mean_score": 0.7939,
+  "n_attempted": 372,
+  "n_cancelled": 0,
+  "n_correct": 290,
+  "n_error": 0,
+  "n_planned": 403,
+  "n_scored": 372,
+  "n_skipped": 31,
+  "out_tokens_per_s": 937.3,
+  "p50_item_s": 55.81,
+  "p50_out_tokens": 1232,
+  "p90_item_s": 183.42,
+  "per_url": {
+   "http://127.0.0.1:8000": {
+    "completion_tokens": 205389,
+    "errors": 5,
+    "requests": 102,
+    "retries": 1
+   },
+   "http://127.0.0.1:8001": {
+    "completion_tokens": 162086,
+    "requests": 106,
+    "retries": 5
+   },
+   "http://127.0.0.1:8002": {
+    "completion_tokens": 174376,
+    "errors": 4,
+    "requests": 101
+   },
+   "http://127.0.0.1:8003": {
+    "completion_tokens": 189524,
+    "errors": 1,
+    "requests": 104,
+    "retries": 4
+   }
+  },
+  "request_errors": 0,
+  "requests": 413,
+  "retries": 10,
+  "status_counts": {
+   "correct": 290,
+   "truncated": 9,
+   "wrong": 73
+  },
+  "total_out_tokens": 731375,
+  "total_prompt_tokens": 981000,
+  "trunc_rate": 0.0242,
+  "wall_s": 757.4
+ },
+ "base_urls": [
+  "http://127.0.0.1:8000",
+  "http://127.0.0.1:8001",
+  "http://127.0.0.1:8002",
+  "http://127.0.0.1:8003"
+ ],
+ "config": {
+  "chat_template_kwargs": {
+   "reasoning_strength": "high"
+  },
+  "concurrency": 64,
+  "extra_body": {
+   "top_k": 64
+  },
+  "families": [
+   "tools",
+   "code",
+   "math",
+   "longctx",
+   "knowledge",
+   "ifeval"
+  ],
+  "family_opts": {},
+  "gpus": 4,
+  "grace_s": 120.0,
+  "limit": null,
+  "max_tokens": 24576,
+  "max_tokens_family": {
+   "code": 16384,
+   "ifeval": 12288,
+   "knowledge": 16384,
+   "longctx": 2048,
+   "tools": 8192
+  },
+  "notes": "",
+  "profile": "default",
+  "reasoning": true,
+  "request_timeout_s": 600.0,
+  "resume": false,
+  "retries": 3,
+  "seed": 20260903,
+  "temperature": 1.0,
+  "time_budget_s": 1200.0,
+  "top_p": 0.95
+ },
+ "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
+ "ended_at": "2026-09-04T15:41:42Z",
+ "endpoint": {
+  "max_model_len": 40960,
+  "served_models": [
+   "m"
+  ],
+  "urls_alive": 4,
+  "urls_dead": [],
+  "vllm_version": "0.28.1rc1.dev361+gd4d703caf"
+ },
+ "evalsuite_git_sha": null,
+ "families": {
+  "code": {
+   "acc": 0.7857,
+   "acc_strict": 0.7857,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.6761,
+    0.8656
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "fail_kinds": {
+     "IndexError": 1,
+     "TypeError": 2,
+     "assertion": 10,
+     "timeout": 2
+    },
+    "lcb_mean_test_pass_frac": 0.92,
+    "syntax_error_rate": 0.0,
+    "timeout_rate": 0.0286,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "heplus-076",
+    "heplus-099",
+    "heplus-129",
+    "heplus-141",
+    "heplus-154",
+    "lcb-atcoder-abc390_d",
+    "lcb-leetcode-3677",
+    "mbppplus-074",
+    "mbppplus-137",
+    "mbppplus-223",
+    "mbppplus-311",
+    "mbppplus-576",
+    "mbppplus-577",
+    "mbppplus-739",
+    "mbppplus-753"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "is_simple_power passes base+plus tests",
+     "extracted": "410 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-076",
+     "out_tokens": 3776,
+     "response_tail": "r k>0\n    if n == 0:\n        return x == 0\n    # n == 1 => 1**k == 1, no other value is reachable\n    if n == 1:\n        return False\n    # we only handle positive bases in the simple definition\n    if x <= 0 or n < 0:\n        return False\n\n    while x % n == 0:\n        x //= n\n    return x == 1\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "closest_integer passes base+plus tests",
+     "extracted": "250 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-099",
+     "out_tokens": 1750,
+     "response_tail": "```python\nfrom decimal import Decimal, ROUND_HALF_UP\n\ndef closest_integer(value):\n    d = Decimal(value)\n    sign = 1 if d >= 0 else -1\n    abs_d = abs(d)\n    rounded_abs = abs_d.quantize(Decimal('1'), rounding=ROUND_HALF_UP)\n    return sign * int(rounded_abs)\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "minPath passes base+plus tests",
+     "extracted": "1736 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-129",
+     "out_tokens": 4182,
+     "response_tail": " 1] == best:\n                new_positions.add((i, j - 1))\n            if j + 1 < n and grid[i][j + 1] == best:\n                new_positions.add((i, j + 1))\n        cur_positions = new_positions\n        if not cur_positions:  # safety, should not happen for N>=2\n            break\n    return seq\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "file_name_check passes base+plus tests",
+     "extracted": "389 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-141",
+     "out_tokens": 1659,
+     "response_tail": "rn 'No'\n    name, ext = file_name.split('.', 1)\n    if not name:\n        return 'No'\n    if name[0] not in string.ascii_letters:\n        return 'No'\n    if ext not in ('txt', 'exe', 'dll'):\n        return 'No'\n    if sum(ch.isdigit() for ch in file_name) > 3:\n        return 'No'\n    return 'Yes'\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "cycpattern_check passes base+plus tests",
+     "extracted": "231 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-154",
+     "out_tokens": 798,
+     "response_tail": "```python\ndef cycpattern_check(a , b):\n    if not b or len(b) > len(a):\n        return False\n    # check all rotations of b\n    for i in range(len(b)):\n        rot = b[i:] + b[:i]\n        if rot in a:\n            return True\n    return False\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1611 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "timeout"
+     ],
+     "id": "lcb-atcoder-abc390_d",
+     "out_tokens": 9521,
+     "response_tail": "(1, dtype=np.int64)\n\n    cur_xor = int(A[0])\n    if n > 1:\n        dfs(1, 1, cur_xor, n, A, block_sum, out, cnt)\n    else:\n        out[0] = cur_xor\n        cnt[0] = 1\n\n    vals = out[:cnt[0]]\n    uniq = np.unique(vals)\n    sys.stdout.write(str(uniq.size))\n\n\nif __name__ == \"__main__\":\n    solve()\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "3703 chars via fence",
+     "finish_reason": "stop",
+     "flags": [
+      "timeout"
+     ],
+     "id": "lcb-leetcode-3677",
+     "out_tokens": 11459,
+     "response_tail": "      cand2 = cand_use2\n                    dp2[i, j] = cand2\n\n        solve(arr, dp0, dp1, dp2)\n        ans = dp0[m - 1, n - 1]\n        if dp1[m - 1, n - 1] > ans:\n            ans = dp1[m - 1, n - 1]\n        if dp2[m - 1, n - 1] > ans:\n            ans = dp2[m - 1, n - 1]\n        return int(ans)\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "is_samepatterns passes base+plus tests",
+     "extracted": "981 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-074",
+     "out_tokens": 1662,
+     "response_tail": "mepatterns([\"a\", \"a\", \"b\"], [\"x\", \"x\", \"y\"]) == True\n    assert is_samepatterns([\"a\", \"b\", \"a\"], [\"x\", \"y\", \"x\"]) == True\n    print(\"All tests passed\")\n```\n\nThe function checks for a consistent bijective mapping between the two sequences, which is equivalent to having the same pattern of equalities.",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "zero_count passes base+plus tests",
+     "extracted": "458 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-137",
+     "out_tokens": 1002,
+     "response_tail": "zeros\n    if non_zero == 0:\n        return 0.0  # avoid division by zero\n    return zeros / non_zero\n\n# Example assertion\nassert math.isclose(\n    zero_count([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8]),\n    0.181818,\n    rel_tol=0.001\n)\n\nif __name__ == \"__main__\":\n    print(\"zero_count works\")\n```\n",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_majority passes base+plus tests",
+     "extracted": "514 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-223",
+     "out_tokens": 1026,
+     "response_tail": "ement:\n        return False\n    # last occurrence\n    right = bisect.bisect_right(arr, element, 0, n) - 1\n    count = right - left + 1\n    return count * 2 > n\n\n# Example assertion\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\n\nif __name__ == \"__main__\":\n    print(\"All checks passed\")\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "set_left_most_unset_bit passes base+plus tests",
+     "extracted": "1059 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-311",
+     "out_tokens": 2246,
+     "response_tail": "nset_bit(8) == 12   # 1000 -> 1100\n    assert set_left_most_unset_bit(15) == 31  # 1111 -> 11111\n    assert set_left_most_unset_bit(0) == 1\n    print(\"All assertions passed.\")\n```\n\nThe function finds the most significant zero bit within `n`'s binary length and sets it, e.g. `10 (1010) -> 14 (1110)`.",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_Sub_Array passes base+plus tests",
+     "extracted": "786 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-576",
+     "out_tokens": 3413,
+     "response_tail": "rt is_Sub_Array([1, 3], [1, 2, 3]) == False\n    assert is_Sub_Array([], [1, 2, 3]) == True\n    assert is_Sub_Array([1, 2, 3], [1, 2, 3]) == True\n\n    print(\"All tests passed\")\n```\n\nThe function checks for a contiguous sub-list. `is_Sub_Array(sub, main)` is `True` iff `sub` occurs in `main` in order.",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "last_Digit_Factorial passes base+plus tests",
+     "extracted": "819 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-577",
+     "out_tokens": 974,
+     "response_tail": "[(0, 1), (1, 1), (2, 2), (3, 6), (4, 4), (5, 0), (10, 0)]\n    for n, expected in tests:\n        assert last_Digit_Factorial(n) == expected\n    print(\"All tests passed.\")\n```\n\nThe function returns `n! % 10`. For `n >= 5` it short-circuits to `0` because the factorial always ends with a trailing zero.",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "find_Index passes base+plus tests",
+     "extracted": "913 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-739",
+     "out_tokens": 2690,
+     "response_tail": "d_Index(1) == 1          # T1 = 1\n    assert find_Index(3) == 14         # T14 = 105\n    print(\"All assertions passed.\")\n```\n\nThe function returns the index `k` of the first triangular number with `n` digits, e.g. `find_Index(2)` \u2192 `4` because `4*5//2 = 10` is the smallest 2-digit triangular number.",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "min_k passes base+plus tests",
+     "extracted": "562 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-753",
+     "out_tokens": 1500,
+     "response_tail": "rtion from the problem statement\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [\n    ('Akash', 2), ('Akshat', 4)\n]\n\nif __name__ == \"__main__\":\n    # simple demo\n    data = [('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)]\n    print(min_k(data, 2))\n```\n",
+     "status": "wrong",
+     "sub": "mbppplus"
+    }
+   ],
+   "gpu_minutes": 9.154,
+   "info_per_gpu_min": 1.288,
+   "max_tokens": 16384,
+   "mean_out_tokens": 2105.7,
+   "mean_prompt_tokens": 329.6,
+   "mean_score": 0.7857,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 55,
+   "n_error": 0,
+   "n_planned": 75,
+   "n_scored": 70,
+   "n_skipped": 5,
+   "opts": {},
+   "p50_item_s": 71.0,
+   "p50_out_tokens": 1448,
+   "p90_item_s": 176.46,
+   "status_counts": {
+    "correct": 55,
+    "wrong": 15
+   },
+   "sub": {
+    "humanevalplus": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6087,
+      0.9114
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1432.9,
+     "mean_prompt_tokens": 251.0,
+     "mean_score": 0.8,
+     "n_attempted": 25,
+     "n_cancelled": 0,
+     "n_correct": 20,
+     "n_error": 0,
+     "n_planned": 25,
+     "n_scored": 25,
+     "n_skipped": 0,
+     "p50_item_s": 60.93,
+     "p50_out_tokens": 1203,
+     "p90_item_s": 151.44,
+     "status_counts": {
+      "correct": 20,
+      "wrong": 5
+     },
+     "total_out_tokens": 35822,
+     "total_prompt_tokens": 6274,
+     "trunc_rate": 0.0,
+     "wall_s": 585.6
+    },
+    "lcb_easy_medium": {
+     "acc": 0.92,
+     "acc_strict": 0.92,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7503,
+      0.9778
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3431.8,
+     "mean_prompt_tokens": 553.1,
+     "mean_score": 0.92,
+     "n_attempted": 25,
+     "n_cancelled": 0,
+     "n_correct": 23,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 25,
+     "n_skipped": 5,
+     "p50_item_s": 121.02,
+     "p50_out_tokens": 2459,
+     "p90_item_s": 352.56,
+     "status_counts": {
+      "correct": 23,
+      "wrong": 2
+     },
+     "total_out_tokens": 85796,
+     "total_prompt_tokens": 13827,
+     "trunc_rate": 0.0,
+     "wall_s": 745.7
+    },
+    "mbppplus": {
+     "acc": 0.6,
+     "acc_strict": 0.6,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3866,
+      0.7812
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1289.0,
+     "mean_prompt_tokens": 148.6,
+     "mean_score": 0.6,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 58.3,
+     "p50_out_tokens": 1000,
+     "p90_item_s": 120.15,
+     "status_counts": {
+      "correct": 12,
+      "wrong": 8
+     },
+     "total_out_tokens": 25780,
+     "total_prompt_tokens": 2972,
+     "trunc_rate": 0.0,
+     "wall_s": 557.1
+    }
+   },
+   "total_out_tokens": 147398,
+   "total_prompt_tokens": 23073,
+   "trunc_rate": 0.0,
+   "wall_s": 745.7
+  },
+  "ifeval": {
+   "acc": 0.8833,
+   "acc_strict": 0.8833,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7782,
+    0.9423
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "by_n_instructions": {
+     "1": {
+      "n": 12,
+      "prompt_loose": 0.9167,
+      "prompt_strict": 0.9167
+     },
+     "2": {
+      "n": 24,
+      "prompt_loose": 0.8333,
+      "prompt_strict": 0.8333
+     },
+     "3": {
+      "n": 24,
+      "prompt_loose": 0.9583,
+      "prompt_strict": 0.9167
+     }
+    },
+    "instruction_loose": 0.9545,
+    "instruction_strict": 0.947,
+    "loose_only_rate": 0.0167,
+    "n_instructions": 132,
+    "per_type": {
+     "change_case:capital_word_frequency": {
+      "loose": 1.0,
+      "n": 9,
+      "strict": 1.0
+     },
+     "change_case:english_capital": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "change_case:english_lowercase": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "combination:repeat_prompt": {
+      "loose": 0.875,
+      "n": 8,
+      "strict": 0.875
+     },
+     "combination:two_responses": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_content:number_placeholders": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "detectable_content:postscript": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:json_format": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:multiple_sections": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "detectable_format:number_bullet_lists": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:number_highlighted_sections": {
+      "loose": 1.0,
+      "n": 4,
+      "strict": 1.0
+     },
+     "detectable_format:title": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:existence": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "keywords:forbidden_words": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:frequency": {
+      "loose": 1.0,
+      "n": 18,
+      "strict": 1.0
+     },
+     "keywords:letter_frequency": {
+      "loose": 0.6667,
+      "n": 6,
+      "strict": 0.5
+     },
+     "language:response_language": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:nth_paragraph_first_word": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "length_constraints:number_paragraphs": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:number_sentences": {
+      "loose": 1.0,
+      "n": 19,
+      "strict": 1.0
+     },
+     "length_constraints:number_words": {
+      "loose": 1.0,
+      "n": 18,
+      "strict": 1.0
+     },
+     "punctuation:no_comma": {
+      "loose": 0.8824,
+      "n": 17,
+      "strict": 0.8824
+     },
+     "startend:end_checker": {
+      "loose": 0.8571,
+      "n": 7,
+      "strict": 0.8571
+     },
+     "startend:quotation": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     }
+    },
+    "prompt_loose": 0.9,
+    "prompt_strict": 0.8833
+   },
+   "failed_ids": [
+    "ifeval-1174",
+    "ifeval-1300",
+    "ifeval-1964",
+    "ifeval-2398",
+    "ifeval-332",
+    "ifeval-3505",
+    "ifeval-3633"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
+     "extracted": "2/3 strict, 3/3 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-1174",
+     "out_tokens": 1548,
+     "response_tail": "Use this *Template Syntax* with *o* as the keyword.\n*User Input*: \"weather for {o_location}.\"\n*Bot Response*: \"In {o_location}, today is {o_summary} and {o_temp}\u00b0 with {o_conditions}.\"",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1300",
+     "out_tokens": 10440,
+     "response_tail": "ams to use under fair rules.\n\nBy the end of five years the study will give a plain map of how language moves and why. It will show what forces push shift and what hold forms steady. The results will help teachers writers and plans makers make better options about language use in a fast moving world.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1964",
+     "out_tokens": 3503,
+     "response_tail": "oks that turn heads and win hearts Book a test drive or a glam night out now Call us today and feel the rush of true flair Drags and Races lives loud and keen Visit our site now for deals and insider news Do not wait come live fast and fierce with us every weekend Night is ours Join the movement now",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "startend:end_checker",
+     "extracted": "0/1 strict, 0/1 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2398",
+     "out_tokens": 823,
+     "response_tail": "ke quiet cathedrals inland\n\nDesert sun bakes the Joshua tree valleys\nwhile vineyards hum in Napa's warm breath\nSurfers chase winter swells at Malibu\nand the High Sierras hold snow in their teeth\n\nCalifornia is salt, smoke and endless highway\na promise stitched in light and sand\nyour love, and thanks",
+     "status": "wrong",
+     "sub": "single"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-332",
+     "out_tokens": 2419,
+     "response_tail": "TLDR the article \"How to dress like a football manager: waistcoats and the style lessons from the Premier League\".\nWaistcoats, tailored shirts, smart trousers and polished shoes signal authority, comfort and practicality.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+combination:repeat_prompt",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3505",
+     "out_tokens": 2992,
+     "response_tail": "Cons\nThe price is steep as the cliffs of Dover and the purse doth weep\nThe repair is sealed shut by the makers hand and the common man cannot pry it open\nThe ecosystem doth bind thee with invisible chains and thou canst not easily depart\nThe design changeth little year to year and the novelty fadeth",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3633",
+     "out_tokens": 2223,
+     "response_tail": " concerns which is appreciated by a professional audience. It avoids sensationalism and stays grounded in data. The production quality supports sustained attention. Overall the presentation is balanced and informative. It is well worth watching for anyone who wants a solid introduction to the field.",
+     "status": "wrong",
+     "sub": "double"
+    }
+   ],
+   "gpu_minutes": 7.841,
+   "info_per_gpu_min": 0.789,
+   "max_tokens": 12288,
+   "mean_out_tokens": 2132.0,
+   "mean_prompt_tokens": 106.3,
+   "mean_score": 0.9389,
+   "n_attempted": 60,
+   "n_cancelled": 0,
+   "n_correct": 53,
+   "n_error": 0,
+   "n_planned": 60,
+   "n_scored": 60,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 84.47,
+   "p50_out_tokens": 1521,
+   "p90_item_s": 191.31,
+   "status_counts": {
+    "correct": 53,
+    "wrong": 7
+   },
+   "sub": {
+    "double": {
+     "acc": 0.8333,
+     "acc_strict": 0.8333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6415,
+      0.9332
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2454.6,
+     "mean_prompt_tokens": 106.6,
+     "mean_score": 0.9167,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 20,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 96.3,
+     "p50_out_tokens": 2149,
+     "p90_item_s": 229.04,
+     "status_counts": {
+      "correct": 20,
+      "wrong": 4
+     },
+     "total_out_tokens": 58911,
+     "total_prompt_tokens": 2559,
+     "trunc_rate": 0.0,
+     "wall_s": 572.7
+    },
+    "single": {
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6461,
+      0.9851
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 977.5,
+     "mean_prompt_tokens": 87.9,
+     "mean_score": 0.9167,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 54.9,
+     "p50_out_tokens": 976,
+     "p90_item_s": 74.67,
+     "status_counts": {
+      "correct": 11,
+      "wrong": 1
+     },
+     "total_out_tokens": 11730,
+     "total_prompt_tokens": 1055,
+     "trunc_rate": 0.0,
+     "wall_s": 308.5
+    },
+    "triple": {
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7415,
+      0.9768
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2386.5,
+     "mean_prompt_tokens": 115.3,
+     "mean_score": 0.9722,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 22,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 84.47,
+     "p50_out_tokens": 1548,
+     "p90_item_s": 197.22,
+     "status_counts": {
+      "correct": 22,
+      "wrong": 2
+     },
+     "total_out_tokens": 57277,
+     "total_prompt_tokens": 2767,
+     "trunc_rate": 0.0,
+     "wall_s": 587.7
+    }
+   },
+   "total_out_tokens": 127918,
+   "total_prompt_tokens": 6381,
+   "trunc_rate": 0.0,
+   "wall_s": 587.7
+  },
+  "knowledge": {
+   "acc": 0.5,
+   "acc_strict": 0.5,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.3844,
+    0.6156
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "extraction_methods": {
+     "answer_phrase": 38,
+     "phrase": 30
+    },
+    "mmlu_pro_hard_hedged": 0,
+    "mmlu_pro_hard_weak_extraction": 0,
+    "simpleqa_no_answer_phrase": 0,
+    "simpleqa_superset_only": 1,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mmlupro-1157",
+    "mmlupro-3818",
+    "mmlupro-3917",
+    "mmlupro-4055",
+    "mmlupro-4284",
+    "mmlupro-954",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-0673",
+    "simpleqa-0762",
+    "simpleqa-1012",
+    "simpleqa-1166",
+    "simpleqa-1295",
+    "simpleqa-1312",
+    "simpleqa-1314",
+    "simpleqa-1619",
+    "simpleqa-2174",
+    "simpleqa-2306",
+    "simpleqa-2392",
+    "simpleqa-2417",
+    "simpleqa-2558",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2784",
+    "simpleqa-2905",
+    "simpleqa-3127",
+    "simpleqa-3211",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4044",
+    "simpleqa-4082",
+    "simpleqa-4255",
+    "simpleqa-4322"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "B",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1157",
+     "out_tokens": 4346,
+     "response_tail": "The caucus is a legislative deliberative proceeding and the discipline is sought as a retaliation for the member\u2019s legislative speech/position on the bill.  On that theory the claim is framed as a legislative-immunity / legislative-speech retaliation claim.\n\nThe answer is (B)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": "H",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-3818",
+     "out_tokens": 3699,
+     "response_tail": "der one half of the incident flux is transmitted in the\nexponential WKB estimate.  With the full rectangular\u2013barrier\nprefactor\n\n$T=\\Big[\\,1+\\dfrac{V_{0}^{2}}{4E(V_{0}-E)}\\sinh^{2}(\\kappa L)\\Big]^{-1}\n\\approx0.84\\!-\\!0.85\\approx0.8$\n\non the usual $ \\approx e^{-2\\kappa L}$ estimate.\n\nThe answer is (H)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": "F",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-3917",
+     "out_tokens": 5553,
+     "response_tail": "C < ~69 \u00b0C < ~196 \u00b0C .\n\nThe order CH4 < neopentane < 2,3-dimethylbutane < n-hexane < n-undecane\nis not written out verbatim in the list given.  The list entry which is\nclosest to the chemically correct order is the one which puts methane\nfirst, neopentane next and n-undecane last,\n\nThe answer is (F)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "A",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4055",
+     "out_tokens": 3117,
+     "response_tail": "\n\n$$\\Delta H_{vap}\\approx \\Delta S_{vap}T_{b}\\approx 21\\,T_{b}\\ {\\rm cal\\,mol^{-1}}\n\\approx 21\\times 534\\;{\\rm cal\\,mol^{-1}}\\approx1.12\\times10^{4}\\ {\\rm cal\\,mol^{-1}} $$\n\n$\\approx 11.2\\;{\\rm kcal\\,mol^{-1}}$ at $T_{b}\\approx 260^{\\circ}{\\rm C}$,\ni.e. $T_{b}\\simeq 533\\;{\\rm K}$.\n\nThe answer is (A)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": "E",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 1550,
+     "response_tail": "MgX + H2O \u2192 RH + Mg(OH)X\n\nthe organomagnesium species is quenched to the alkane RH and is therefore lost\nfrom the reaction mixture before it can add to the carbonyl group of the aldehyde.\nHence the carbonyl component, and all of the reaction medium, has to be rigorously\nanhydrous.\n\nThe answer is (E)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": "C",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-954",
+     "out_tokens": 2272,
+     "response_tail": "acter. The character evidence is admissible only to bear on the witness\u2019s truthfulness/credibility, not on the witness\u2019s qualifications as an expert. Both the opinion evidence and the reputation evidence are permitted on rehabilitation; there is no rule of preference between them.\n\nThe answer is (C)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "Joseph Jean Pierre Laurent",
+     "extracted": "Laurentia",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0409",
+     "out_tokens": 3568,
+     "response_tail": "Answer: Laurentia",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "2002 September 30",
+     "extracted": "12 March 1997",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0492",
+     "out_tokens": 928,
+     "response_tail": "Answer: 12 March 1997",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "10,423",
+     "extracted": "9,430",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0672",
+     "out_tokens": 337,
+     "response_tail": "Answer: 9,430",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "Staten Island",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 1650,
+     "response_tail": "Answer: Staten Island",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "20 Jun 2005",
+     "extracted": "No character named Sicily Sewell appears on One on One",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0762",
+     "out_tokens": 2262,
+     "response_tail": "Answer: No character named Sicily Sewell appears on One on One.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Woofles",
+     "extracted": "Rex",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1012",
+     "out_tokens": 1292,
+     "response_tail": "Answer: Rex",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Deprived",
+     "extracted": "Knight",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1166",
+     "out_tokens": 2282,
+     "response_tail": "Answer: Knight",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "13 May 2004",
+     "extracted": "14 December 1982",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1295",
+     "out_tokens": 1199,
+     "response_tail": "Answer: 14 December 1982",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St. John's College, Annapolis",
+     "extracted": "University of Chicago",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1312",
+     "out_tokens": 265,
+     "response_tail": "Answer: University of Chicago",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Game Changer Award",
+     "extracted": "Asia Game Changer Award",
+     "finish_reason": "stop",
+     "flags": [
+      "superset_only"
+     ],
+     "id": "simpleqa-1314",
+     "out_tokens": 605,
+     "response_tail": "Answer: Asia Game Changer Award",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "September 2011",
+     "extracted": "November 2023",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1619",
+     "out_tokens": 643,
+     "response_tail": "Answer: November 2023",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Lloyd Hopkins Field",
+     "extracted": "Washington Park",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2174",
+     "out_tokens": 3840,
+     "response_tail": "Answer: Washington Park",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "11 March 1979",
+     "extracted": "25 February 1982",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2306",
+     "out_tokens": 918,
+     "response_tail": "Answer: 25 February 1982",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "University of Geneva",
+     "extracted": "University of Potsdam",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2392",
+     "out_tokens": 2430,
+     "response_tail": "Answer: University of Potsdam",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Ghavaniska system",
+     "extracted": "Vesk system",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2417",
+     "out_tokens": 922,
+     "response_tail": "Answer: Vesk system",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Stoke Ladies",
+     "extracted": "Bohemians F.C",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2558",
+     "out_tokens": 4511,
+     "response_tail": "Answer: Bohemians F.C.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Sarvepalli Radhakrishnan",
+     "extracted": "K. P. S. Menon",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2706",
+     "out_tokens": 1914,
+     "response_tail": "Answer: K. P. S. Menon",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Punkature",
+     "extracted": "Pirate",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2782",
+     "out_tokens": 1220,
+     "response_tail": "Answer: Pirate",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "November 18, 2023",
+     "extracted": "May 9, 2015",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2784",
+     "out_tokens": 1363,
+     "response_tail": "Answer: May 9, 2015",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Colegio Lacordaire",
+     "extracted": "Colegio San Juan de la Cruz",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2905",
+     "out_tokens": 697,
+     "response_tail": "Answer: Colegio San Juan de la Cruz",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Puyallup",
+     "extracted": "Las Vegas",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3127",
+     "out_tokens": 1637,
+     "response_tail": "Answer: Las Vegas",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "8",
+     "extracted": "5",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3211",
+     "out_tokens": 729,
+     "response_tail": "Answer: 5",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Carlotta Cardana",
+     "extracted": "Mikael Jansson",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3339",
+     "out_tokens": 1579,
+     "response_tail": "Answer: Mikael Jansson",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St David.",
+     "extracted": "Sir Robert Peel",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3342",
+     "out_tokens": 1259,
+     "response_tail": "Answer: Sir Robert Peel",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1642-1644",
+     "extracted": "1706\u20131708",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4044",
+     "out_tokens": 1307,
+     "response_tail": "Answer: 1706\u20131708",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Leopard",
+     "extracted": "the traditional drum",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4082",
+     "out_tokens": 2600,
+     "response_tail": "Answer: the traditional drum",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Drepano",
+     "extracted": "Orcades",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4255",
+     "out_tokens": 3518,
+     "response_tail": "Answer: Orcades",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Jodelle Ferland",
+     "extracted": "Al\u00e9sia Glidewell",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4322",
+     "out_tokens": 3120,
+     "response_tail": "Answer: Al\u00e9sia Glidewell",
+     "status": "wrong",
+     "sub": "simpleqa"
+    }
+   ],
+   "gpu_minutes": 7.933,
+   "info_per_gpu_min": 2.143,
+   "max_tokens": 16384,
+   "mean_out_tokens": 1887.3,
+   "mean_prompt_tokens": 222.8,
+   "mean_score": 0.5,
+   "n_attempted": 68,
+   "n_cancelled": 0,
+   "n_correct": 34,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 68,
+   "n_skipped": 2,
+   "opts": {},
+   "p50_item_s": 56.15,
+   "p50_out_tokens": 1479,
+   "p90_item_s": 150.87,
+   "status_counts": {
+    "correct": 34,
+    "wrong": 34
+   },
+   "sub": {
+    "mmlu_pro_hard": {
+     "acc": 0.8421,
+     "acc_strict": 0.8421,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6958,
+      0.9256
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2075.5,
+     "mean_prompt_tokens": 321.6,
+     "mean_score": 0.8421,
+     "n_attempted": 38,
+     "n_cancelled": 0,
+     "n_correct": 32,
+     "n_error": 0,
+     "n_planned": 40,
+     "n_scored": 38,
+     "n_skipped": 2,
+     "p50_item_s": 60.38,
+     "p50_out_tokens": 1526,
+     "p90_item_s": 183.42,
+     "status_counts": {
+      "correct": 32,
+      "wrong": 6
+     },
+     "total_out_tokens": 78869,
+     "total_prompt_tokens": 12222,
+     "trunc_rate": 0.0,
+     "wall_s": 706.7
+    },
+    "simpleqa": {
+     "acc": 0.0667,
+     "acc_strict": 0.0667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0185,
+      0.2132
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1648.8,
+     "mean_prompt_tokens": 97.6,
+     "mean_score": 0.0667,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 2,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 51.98,
+     "p50_out_tokens": 1292,
+     "p90_item_s": 134.67,
+     "status_counts": {
+      "correct": 2,
+      "wrong": 28
+     },
+     "total_out_tokens": 49465,
+     "total_prompt_tokens": 2929,
+     "trunc_rate": 0.0,
+     "wall_s": 663.6
+    }
+   },
+   "total_out_tokens": 128334,
+   "total_prompt_tokens": 15151,
+   "trunc_rate": 0.0,
+   "wall_s": 706.7
+  },
+  "longctx": {
+   "acc": 0.75,
+   "acc_strict": 0.75,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.6122,
+    0.8508
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_by_len": {
+     "16k": 0.875,
+     "32k": 0.5625,
+     "8k": 0.8125
+    },
+    "calibration": {
+     "budgets": {
+      "16k": 16384,
+      "32k": 32768,
+      "8k": 8192
+     },
+     "chars_per_token": {
+      "docs": 4.6761,
+      "filler": 4.645
+     },
+     "checks": {
+      "niah_multikey": {
+       "budget": 32768,
+       "item": "longctx-niah-32k-d85-11",
+       "prompt_tokens": 31632
+      },
+      "qa_multi_doc": {
+       "budget": 32768,
+       "item": "longctx-qa-32k-d10-08",
+       "prompt_tokens": 31935
+      },
+      "var_tracking": {
+       "budget": 32768,
+       "item": "longctx-vt-32k-05",
+       "prompt_tokens": 31706
+      }
+     },
+     "fixed_tokens": {
+      "niah_multikey": 162,
+      "qa_multi_doc": 63,
+      "var_tracking": 235
+     },
+     "max_model_len": 40960,
+     "max_tokens": 2048,
+     "method": "tokenize",
+     "tokenize_calls": 12
+    },
+    "context_length_errors": 0,
+    "mean_prompt_tokens_by_len": {
+     "16k": 15925.1,
+     "32k": 31757.2,
+     "8k": 7916.9
+    },
+    "niah_acc_by_depth": {
+     "0.10": 1.0,
+     "0.35": 1.0,
+     "0.60": 1.0,
+     "0.85": 0.8333
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "longctx-niah-32k-d85-23",
+    "longctx-qa-16k-d85-07",
+    "longctx-qa-32k-d60-02",
+    "longctx-qa-32k-d85-11",
+    "longctx-vt-16k-07",
+    "longctx-vt-32k-02",
+    "longctx-vt-32k-05",
+    "longctx-vt-32k-08",
+    "longctx-vt-32k-11",
+    "longctx-vt-8k-03",
+    "longctx-vt-8k-06",
+    "longctx-vt-8k-09"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "4052263",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-niah-32k-d85-23",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "niah_multikey"
+    },
+    {
+     "error": null,
+     "expected": "8.8",
+     "extracted": "8.8 lb",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-16k-d85-07",
+     "out_tokens": 486,
+     "response_tail": "The document on steam engines states that Energiprojekt AB\u2019s steam engine consumes approx. 4 kg (8.8 lb) of steam per kWh.\n\nAnswer: 8.8 lb",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "In bays",
+     "extracted": "in bays and some coastal locations during summer months",
+     "finish_reason": "stop",
+     "flags": [
+      "hedged"
+     ],
+     "id": "longctx-qa-32k-d60-02",
+     "out_tokens": 987,
+     "response_tail": "Answer: in bays and some coastal locations during summer months",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "simple majority vote",
+     "extracted": "Commission proposes legislation and Parliament and Council amend or veto it",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 692,
+     "response_tail": "Based on the documents, EU legislative acts may only be adopted on the basis of a Commission proposal and the European Parliament and the Council have powers of amendment and veto during the legislative process.\n\nAnswer: Commission proposes legislation and Parliament and Council amend or veto it",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "35506",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-16k-07",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "16634",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-32k-02",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "24290",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-32k-05",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "67949",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-32k-08",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "35595",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-32k-11",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "82617",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-8k-03",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "27424",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-8k-06",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "99040",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-8k-09",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    }
+   ],
+   "gpu_minutes": 8.963,
+   "info_per_gpu_min": 1.004,
+   "max_tokens": 2048,
+   "mean_out_tokens": 748.9,
+   "mean_prompt_tokens": 18533.1,
+   "mean_score": 0.75,
+   "n_attempted": 48,
+   "n_cancelled": 0,
+   "n_correct": 36,
+   "n_error": 0,
+   "n_planned": 48,
+   "n_scored": 48,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 28.51,
+   "p50_out_tokens": 337,
+   "p90_item_s": 110.69,
+   "status_counts": {
+    "correct": 36,
+    "truncated": 9,
+    "wrong": 3
+   },
+   "sub": {
+    "niah_multikey": {
+     "acc": 0.9583,
+     "acc_strict": 0.9583,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7976,
+      0.9926
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 368.1,
+     "mean_prompt_tokens": 18463.4,
+     "mean_score": 0.9583,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 23,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 16.65,
+     "p50_out_tokens": 294,
+     "p90_item_s": 38.46,
+     "status_counts": {
+      "correct": 23,
+      "truncated": 1
+     },
+     "total_out_tokens": 8834,
+     "total_prompt_tokens": 443122,
+     "trunc_rate": 0.0417,
+     "wall_s": 387.9
+    },
+    "qa_multi_doc": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4677,
+      0.9111
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 459.2,
+     "mean_prompt_tokens": 18695.1,
+     "mean_score": 0.75,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 30.94,
+     "p50_out_tokens": 384,
+     "p90_item_s": 50.05,
+     "status_counts": {
+      "correct": 9,
+      "wrong": 3
+     },
+     "total_out_tokens": 5510,
+     "total_prompt_tokens": 224341,
+     "trunc_rate": 0.0,
+     "wall_s": 286.9
+    },
+    "var_tracking": {
+     "acc": 0.3333,
+     "acc_strict": 0.3333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.1381,
+      0.6094
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1800.1,
+     "mean_prompt_tokens": 18510.4,
+     "mean_score": 0.3333,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 4,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 109.14,
+     "p50_out_tokens": 2048,
+     "p90_item_s": 132.63,
+     "status_counts": {
+      "correct": 4,
+      "truncated": 8
+     },
+     "total_out_tokens": 21601,
+     "total_prompt_tokens": 222125,
+     "trunc_rate": 0.6667,
+     "wall_s": 319.5
+    }
+   },
+   "total_out_tokens": 35945,
+   "total_prompt_tokens": 889588,
+   "trunc_rate": 0.1875,
+   "wall_s": 387.9
+  },
+  "math": {
+   "acc": 1.0,
+   "acc_strict": 1.0,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.9358,
+    1.0
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 1.0,
+    "match_methods": {
+     "set": 1,
+     "string": 55
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [],
+   "failures": [],
+   "gpu_minutes": 14.755,
+   "info_per_gpu_min": 0.0,
+   "max_tokens": 24576,
+   "mean_out_tokens": 4302.7,
+   "mean_prompt_tokens": 180.8,
+   "mean_score": 1.0,
+   "n_attempted": 56,
+   "n_cancelled": 0,
+   "n_correct": 56,
+   "n_error": 0,
+   "n_planned": 80,
+   "n_scored": 56,
+   "n_skipped": 24,
+   "opts": {},
+   "p50_item_s": 145.57,
+   "p50_out_tokens": 3790,
+   "p90_item_s": 374.09,
+   "status_counts": {
+    "correct": 56
+   },
+   "sub": {
+    "aime25": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.8513,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 4574.1,
+     "mean_prompt_tokens": 214.1,
+     "mean_score": 1.0,
+     "n_attempted": 22,
+     "n_cancelled": 0,
+     "n_correct": 22,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 22,
+     "n_skipped": 8,
+     "p50_item_s": 145.57,
+     "p50_out_tokens": 3596,
+     "p90_item_s": 383.56,
+     "status_counts": {
+      "correct": 22
+     },
+     "total_out_tokens": 100630,
+     "total_prompt_tokens": 4711,
+     "trunc_rate": 0.0,
+     "wall_s": 756.0
+    },
+    "hmmt25": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.8157,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 5817.8,
+     "mean_prompt_tokens": 149.1,
+     "mean_score": 1.0,
+     "n_attempted": 17,
+     "n_cancelled": 0,
+     "n_correct": 17,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 17,
+     "n_skipped": 13,
+     "p50_item_s": 222.93,
+     "p50_out_tokens": 5677,
+     "p90_item_s": 404.82,
+     "status_counts": {
+      "correct": 17
+     },
+     "total_out_tokens": 98903,
+     "total_prompt_tokens": 2534,
+     "trunc_rate": 0.0,
+     "wall_s": 757.4
+    },
+    "math500_hard": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.8157,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2436.5,
+     "mean_prompt_tokens": 169.3,
+     "mean_score": 1.0,
+     "n_attempted": 17,
+     "n_cancelled": 0,
+     "n_correct": 17,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 17,
+     "n_skipped": 3,
+     "p50_item_s": 87.24,
+     "p50_out_tokens": 2342,
+     "p90_item_s": 194.68,
+     "status_counts": {
+      "correct": 17
+     },
+     "total_out_tokens": 41420,
+     "total_prompt_tokens": 2878,
+     "trunc_rate": 0.0,
+     "wall_s": 533.6
+    }
+   },
+   "total_out_tokens": 240953,
+   "total_prompt_tokens": 10123,
+   "trunc_rate": 0.0,
+   "wall_s": 757.4
+  },
+  "tools": {
+   "acc": 0.8,
+   "acc_strict": 0.8,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.6918,
+    0.877
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_ast_micro": 0.8,
+    "acc_by_sub": {
+     "irrelevance": 0.8,
+     "multiple": 0.7333,
+     "parallel": 1.0,
+     "parallel_multiple": 0.7,
+     "simple": 0.75
+    },
+    "acc_irrelevance": 0.8,
+    "acc_official": 0.7958,
+    "declined_rate_ast": 0.0333,
+    "error_codes": {
+     "call_count": 1,
+     "declined": 2,
+     "spurious_call": 2,
+     "value_mismatch": 8,
+     "wrong_function": 4
+    },
+    "mean_score_ast": 0.8333,
+    "mode": "prompt",
+    "parse_methods": {
+     "json_list": 70
+    },
+    "text_calls_ignored": 0,
+    "tool_calls_in_prompt_mode": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "bfcl3-irrelevance_27",
+    "bfcl3-irrelevance_33",
+    "bfcl3-multiple_10",
+    "bfcl3-multiple_171",
+    "bfcl3-multiple_26",
+    "bfcl3-multiple_92",
+    "bfcl3-parallel_multiple_127",
+    "bfcl3-parallel_multiple_151",
+    "bfcl3-parallel_multiple_69",
+    "bfcl3-simple_130",
+    "bfcl3-simple_292",
+    "bfcl3-simple_358",
+    "bfcl3-simple_380",
+    "bfcl3-simple_50"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "change_in_temp": 4,
+        "mass": 3,
+        "specific_heat": 4.184
+       },
+       "name": "calculate_heat"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_27",
+     "out_tokens": 833,
+     "response_tail": "[{\"name\": \"calculate_heat\", \"arguments\": {\"change_in_temp\": 4, \"mass\": 3, \"specific_heat\": 4.184}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "sequence": "ATCG"
+       },
+       "name": "identify_species"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_33",
+     "out_tokens": 256,
+     "response_tail": "[{\"name\": \"identify_species\", \"arguments\": {\"sequence\": \"ATCG\"}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "database.modify_columns": {
+        "columns": [
+         [
+          "email",
+          "ssn"
+         ],
+         [
+          "ssn",
+          "email"
+         ],
+         [
+          "email",
+          "social_security_number"
+         ],
+         [
+          "social_security_number",
+          "email"
+         ],
+         [
+          "email",
+          "social security number"
+         ],
+         [
+          "social security number",
+          "email"
+         ]
+        ],
+        "db_name": [
+         "employees"
+        ],
+        "operation": [
+         "delete"
+        ],
+        "table": [
+         "personal_data"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_10",
+     "out_tokens": 772,
+     "response_tail": "[]\nI need the exact column names to delete and a backup location before modifying the employees database.",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "game_result.get_winner": {
+        "date": [
+         "2021-01-28",
+         "01/28/2021",
+         "Jan.28,2021"
+        ],
+        "teams": [
+         [
+          "Lakers",
+          "Clippers"
+         ],
+         [
+          "Clippers",
+          "Lakers"
+         ]
+        ],
+        "venue": [
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "date": "2021-01-28",
+        "teams": [
+         "Los Angeles Lakers",
+         "Los Angeles Clippers"
+        ],
+        "venue": ""
+       },
+       "name": "game_result_get_winner"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_171",
+     "out_tokens": 284,
+     "response_tail": "[{\"name\": \"game_result_get_winner\", \"arguments\": {\"date\": \"2021-01-28\", \"teams\": [\"Los Angeles Lakers\", \"Los Angeles Clippers\"], \"venue\": \"\"}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "game_rewards.get": {
+        "game": [
+         "Fortnite"
+        ],
+        "mission": [
+         ""
+        ],
+        "platform": [
+         "Playstation",
+         "PS"
+        ],
+        "trophy": [
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "game": "Fortnite"
+       },
+       "name": "game_missions_list"
+      },
+      {
+       "arguments": {
+        "game": "Fortnite",
+        "platform": "Playstation"
+       },
+       "name": "game_rewards_get"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_26",
+     "out_tokens": 840,
+     "response_tail": "[{\"name\": \"game_missions_list\", \"arguments\": {\"game\": \"Fortnite\"}}, {\"name\": \"game_rewards_get\", \"arguments\": {\"game\": \"Fortnite\", \"platform\": \"Playstation\"}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "walmart.vegan_products": {
+        "categories": [
+         [
+          "vegan",
+          "gluten-free"
+         ],
+         [
+          "gluten-free",
+          "vegan"
+         ]
+        ],
+        "location": [
+         "Denver, CO",
+         "Denver"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_92",
+     "out_tokens": 932,
+     "response_tail": "[]\nThe available Walmart function only returns vegan products and cannot provide vegetarian-specific items.",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "hotel.book": {
+        "additional_services": [
+         [
+          "breakfast",
+          "spa"
+         ],
+         [
+          "spa",
+          "breakfast"
+         ]
+        ],
+        "location": [
+         "Paris"
+        ],
+        "nights": [
+         5
+        ],
+        "roomType": [
+         "deluxe"
+        ]
+       }
+      },
+      {
+       "car.rental": {
+        "car_type": [
+         "SUV"
+        ],
+        "days": [
+         7
+        ],
+        "location": [
+         "Paris"
+        ],
+        "pick_up": [
+         "airport",
+         ""
+        ]
+       }
+      },
+      {
+       "hotel.book": {
+        "additional_services": [
+         [
+          "airport transfer service"
+         ],
+         [
+          "airport transfer"
+         ]
+        ],
+        "location": [
+         "Rome"
+        ],
+        "nights": [
+         3
+        ],
+        "roomType": [
+         "suite"
+        ]
+       }
+      },
+      {
+       "car.rental": {
+        "car_type": [
+         "compact"
+        ],
+        "days": [
+         5
+        ],
+        "location": [
+         "Rome"
+        ],
+        "pick_up": [
+         "hotel"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "additional_services": [
+         "breakfast",
+         "spa services"
+        ],
+        "location": "Paris",
+        "nights": 5,
+        "roomType": "deluxe"
+       },
+       "name": "hotel_book"
+      },
+      {
+       "arguments": {
+        "car_type": "SUV",
+        "days": 7,
+        "location": "Paris",
+        "pick_up": "airport"
+       },
+       "name": "car_rental"
+      },
+      {
+       "arguments": {
+        "additional_services": [
+         "airport transfer service"
+        ],
+        "location": "Rome",
+        "nights": 3,
+        "roomType": "suite"
+       },
+       "name": "hotel_book"
+      },
+      {
+       "arguments": {
+        "car_type": "compact",
+        "days": 5,
+        "location": "Rome",
+        "pick_up": "hotel"
+       },
+       "name": "car_rental"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_127",
+     "out_tokens": 1346,
+     "response_tail": "car_type\": \"SUV\", \"pick_up\": \"airport\"}}, {\"name\": \"hotel_book\", \"arguments\": {\"location\": \"Rome\", \"roomType\": \"suite\", \"nights\": 3, \"additional_services\": [\"airport transfer service\"]}}, {\"name\": \"car_rental\", \"arguments\": {\"location\": \"Rome\", \"days\": 5, \"car_type\": \"compact\", \"pick_up\": \"hotel\"}}]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Le Bristol Paris"
+        ],
+        "location": [
+         "Paris, France",
+         "Paris"
+        ],
+        "room_type": [
+         "suite",
+         "Suite"
+        ],
+        "start_date": [
+         "12-01-2022",
+         "2022-12-01",
+         "Dec 1, 2022"
+        ],
+        "stay_duration": [
+         10
+        ],
+        "view": [
+         "city view",
+         "city"
+        ]
+       }
+      },
+      {
+       "latest_exchange_rate": {
+        "amount": [
+         1000
+        ],
+        "source_currency": [
+         "USD",
+         "US Dollars",
+         "US Dollar"
+        ],
+        "target_currency": [
+         "EUR",
+         "Euro"
+        ]
+       }
+      },
+      {
+       "safeway.order": {
+        "items": [
+         [
+          "water",
+          "apples",
+          "bread"
+         ]
+        ],
+        "location": [
+         "Palo Alto, CA",
+         "Palo Alto",
+         "CA"
+        ],
+        "quantity": [
+         [
+          2,
+          3,
+          1
+         ]
+        ]
+       }
+      },
+      {
+       "light_travel_time": {
+        "distance_in_light_years": [
+         4.24
+        ],
+        "speed_of_light": [
+         299792458,
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Le Bristol Paris",
+        "location": "Paris, France",
+        "room_type": "suite",
+        "start_date": "12-01-2022",
+        "stay_duration": 10,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      },
+      {
+       "arguments": {
+        "amount": 1000,
+        "source_currency": "USD",
+        "target_currency": "EUR"
+       },
+       "name": "latest_exchange_rate"
+      },
+      {
+       "arguments": {
+        "items": [
+         "bottles of water",
+         "apples",
+         "loaf of bread"
+        ],
+        "location": "Palo Alto, CA",
+        "quantity": [
+         2,
+         3,
+         1
+        ]
+       },
+       "name": "safeway_order"
+      },
+      {
+       "arguments": {
+        "distance_in_light_years": 4.24,
+        "speed_of_light": 299792458
+       },
+       "name": "light_travel_time"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_151",
+     "out_tokens": 1364,
+     "response_tail": "ncy\": \"USD\", \"target_currency\": \"EUR\"}}, {\"name\": \"safeway_order\", \"arguments\": {\"location\": \"Palo Alto, CA\", \"items\": [\"bottles of water\", \"apples\", \"loaf of bread\"], \"quantity\": [2, 3, 1]}}, {\"name\": \"light_travel_time\", \"arguments\": {\"distance_in_light_years\": 4.24, \"speed_of_light\": 299792458}}]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         ""
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.inflation_adjustment": {
+        "inflation_rate": [
+         0.03
+        ],
+        "initial_sum": [
+         200000.0
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.loan_repayment": {
+        "interest_rate": [
+         0.04
+        ],
+        "loan_amount": [
+         300000.0
+        ],
+        "loan_term": [
+         10
+        ]
+       }
+      },
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         true
+        ],
+        "years": [
+         5
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      },
+      {
+       "arguments": {
+        "inflation_rate": 3,
+        "initial_sum": 200000,
+        "years": 5
+       },
+       "name": "finance_inflation_adjustment"
+      },
+      {
+       "arguments": {
+        "interest_rate": 4,
+        "loan_amount": 300000,
+        "loan_term": 10
+       },
+       "name": "finance_loan_repayment"
+      },
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "monthly": true,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_69",
+     "out_tokens": 1520,
+     "response_tail": "itial_sum\": 200000, \"years\": 5, \"inflation_rate\": 3}}, {\"name\": \"finance_loan_repayment\", \"arguments\": {\"loan_amount\": 300000, \"interest_rate\": 4, \"loan_term\": 10}}, {\"name\": \"finance_property_depreciation\", \"arguments\": {\"initial_cost\": 500000, \"depreciation_rate\": 2, \"years\": 5, \"monthly\": true}}]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance_calculator.npv": {
+        "cash_flows": [
+         [
+          -50000,
+          10000,
+          15000,
+          20000,
+          25000,
+          30000
+         ]
+        ],
+        "discount_rate": [
+         0.08
+        ],
+        "years": [
+         "",
+         []
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "cash_flows": [
+         -50000,
+         10000,
+         15000,
+         20000,
+         25000,
+         30000
+        ],
+        "discount_rate": 0.08,
+        "years": [
+         0,
+         1,
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "name": "finance_calculator_npv"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_130",
+     "out_tokens": 4469,
+     "response_tail": " 20 000 / 1.08\u00b3 \u2248 $15 876.64\n* PV\u2084 = 25 000 / 1.08\u2074 \u2248 $18 375.75\n* PV\u2085 = 30 000 / 1.08\u2075 \u2248 $20 417.49\n\nSum of discounted inflows \u2248 $76 789.22\n\nNPV \u2248 $76 789.22 \u2013 $50 000.00 \u2248 $26.8 k\n\n\u2248 $26,790 positive net present value at 8 % per annum, with the \u2013$50 000 initial outlay taken as occurring at year 0.",
+     "status": "wrong",
+     "sub": "simple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "compose_melody": {
+        "instrument": [
+         "Piano",
+         ""
+        ],
+        "measures": [
+         4
+        ],
+        "progression": [
+         [
+          "C",
+          "F",
+          "G"
+         ]
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "instrument": "Piano",
+        "measures": 4,
+        "progression": [
+         "C",
+         "F",
+         "G",
+         "C"
+        ]
+       },
+       "name": "compose_melody"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_292",
+     "out_tokens": 845,
+     "response_tail": "[{\"name\": \"compose_melody\", \"arguments\": {\"instrument\": \"Piano\", \"measures\": 4, \"progression\": [\"C\", \"F\", \"G\", \"C\"]}}]",
+     "status": "wrong",
+     "sub": "simple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "recipe_search": {
+        "diet": [
+         [
+          "Gluten Free"
+         ],
+         [
+          "GF"
+         ],
+         [
+          "gluten free"
+         ]
+        ],
+        "dish": [
+         "cookie"
+        ],
+        "time_limit": [
+         30
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "diet": [
+         "Gluten Free"
+        ],
+        "dish": "cookie",
+        "time_limit": 29
+       },
+       "name": "recipe_search"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_358",
+     "out_tokens": 346,
+     "response_tail": "[{\"name\": \"recipe_search\", \"arguments\": {\"diet\": [\"Gluten Free\"], \"dish\": \"cookie\", \"time_limit\": 29}}]",
+     "status": "wrong",
+     "sub": "simple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "hotel_booking": {
+        "duration": [
+         3
+        ],
+        "location": [
+         "Manhattan, New York",
+         "Manhattan, NY",
+         "NYC",
+         "New York City"
+        ],
+        "preferences": [
+         [
+          "pet_friendly"
+         ]
+        ],
+        "room_type": [
+         "single"
+        ],
+        "start_date": [
+         "2023-03-10",
+         "03/10/2023",
+         "Mar.10,2023",
+         "March 10th, 2023",
+         "March 10th,2023",
+         "March10th, 2023",
+         "March10th,2023"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "duration": 3,
+        "location": "New York",
+        "preferences": [
+         "pet_friendly"
+        ],
+        "room_type": "single",
+        "start_date": "2023-03-10"
+       },
+       "name": "hotel_booking"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_380",
+     "out_tokens": 515,
+     "response_tail": "[{\"name\": \"hotel_booking\", \"arguments\": {\"location\": \"New York\", \"room_type\": \"single\", \"duration\": 3, \"start_date\": \"2023-03-10\", \"preferences\": [\"pet_friendly\"]}}]",
+     "status": "wrong",
+     "sub": "simple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "entropy_change.calculate": {
+        "final_temperature": [
+         100
+        ],
+        "initial_temperature": [
+         0
+        ],
+        "mass": [
+         1
+        ],
+        "pressure": [
+         "",
+         1
+        ],
+        "substance": [
+         "ice"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "final_temperature": 100,
+        "initial_temperature": 0,
+        "mass": 1,
+        "pressure": 1,
+        "substance": "water"
+       },
+       "name": "entropy_change_calculate"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_50",
+     "out_tokens": 1323,
+     "response_tail": "[{\"name\": \"entropy_change_calculate\", \"arguments\": {\"substance\": \"water\", \"mass\": 1, \"initial_temperature\": 0, \"final_temperature\": 100, \"pressure\": 1}}]",
+     "status": "wrong",
+     "sub": "simple"
+    }
+   ],
+   "gpu_minutes": 3.375,
+   "info_per_gpu_min": 3.319,
+   "max_tokens": 8192,
+   "mean_out_tokens": 726.1,
+   "mean_prompt_tokens": 524.1,
+   "mean_score": 0.8286,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 56,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 23.47,
+   "p50_out_tokens": 522,
+   "p90_item_s": 49.59,
+   "status_counts": {
+    "correct": 56,
+    "wrong": 14
+   },
+   "sub": {
+    "irrelevance": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4902,
+      0.9433
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 578.6,
+     "mean_prompt_tokens": 369.7,
+     "mean_score": 0.8,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 19.25,
+     "p50_out_tokens": 479,
+     "p90_item_s": 31.34,
+     "status_counts": {
+      "correct": 8,
+      "wrong": 2
+     },
+     "total_out_tokens": 5786,
+     "total_prompt_tokens": 3697,
+     "trunc_rate": 0.0,
+     "wall_s": 383.0
+    },
+    "multiple": {
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4805,
+      0.891
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 407.7,
+     "mean_prompt_tokens": 655.5,
+     "mean_score": 0.7667,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 14.24,
+     "p50_out_tokens": 321,
+     "p90_item_s": 31.32,
+     "status_counts": {
+      "correct": 11,
+      "wrong": 4
+     },
+     "total_out_tokens": 6116,
+     "total_prompt_tokens": 9833,
+     "trunc_rate": 0.0,
+     "wall_s": 521.9
+    },
+    "parallel": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7961,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 733.4,
+     "mean_prompt_tokens": 431.7,
+     "mean_score": 1.0,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 26.87,
+     "p50_out_tokens": 710,
+     "p90_item_s": 36.54,
+     "status_counts": {
+      "correct": 15
+     },
+     "total_out_tokens": 11001,
+     "total_prompt_tokens": 6475,
+     "trunc_rate": 0.0,
+     "wall_s": 544.0
+    },
+    "parallel_multiple": {
+     "acc": 0.7,
+     "acc_strict": 0.7,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3968,
+      0.8922
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1186.7,
+     "mean_prompt_tokens": 832.7,
+     "mean_score": 0.85,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 46.9,
+     "p50_out_tokens": 1232,
+     "p90_item_s": 59.14,
+     "status_counts": {
+      "correct": 7,
+      "wrong": 3
+     },
+     "total_out_tokens": 11867,
+     "total_prompt_tokens": 8327,
+     "trunc_rate": 0.0,
+     "wall_s": 393.6
+    },
+    "simple": {
+     "acc": 0.75,
+     "acc_strict": 0.75,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5313,
+      0.8881
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 802.9,
+     "mean_prompt_tokens": 417.6,
+     "mean_score": 0.75,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 14.9,
+     "p50_out_tokens": 367,
+     "p90_item_s": 48.82,
+     "status_counts": {
+      "correct": 15,
+      "wrong": 5
+     },
+     "total_out_tokens": 16057,
+     "total_prompt_tokens": 8352,
+     "trunc_rate": 0.0,
+     "wall_s": 586.1
+    }
+   },
+   "total_out_tokens": 50827,
+   "total_prompt_tokens": 36684,
+   "trunc_rate": 0.0,
+   "wall_s": 586.1
+  }
+ },
+ "invalid_reasons": [],
+ "lcb_window": {
+  "after": "2025-01-11",
+  "before": "2025-04-05",
+  "counts": {
+   "easy": 8,
+   "medium": 22
+  },
+  "difficulties": [
+   "easy",
+   "medium"
+  ],
+  "file": "test6.jsonl",
+  "hard_available": false,
+  "n_seen": {
+   "easy": 43,
+   "hard": 80,
+   "medium": 52
+  },
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+ },
+ "model": "m",
+ "notes": [
+  "tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)",
+  "tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others",
+  "code: HumanEval+ items are a seeded sample of a curated 60-task hard pool (not the whole benchmark); MBPP+ items are a seeded sample of tasks with >= 3-line canonical solutions",
+  "code: HumanEval/32 (find_zero) is excluded: the HF test.jsonl assertion is malformed (unpacks a float) and even the canonical solution violates the find_zero oracle on 7/886 plus inputs, so the task is unpassable as shipped",
+  "code: LCB items are easy+medium problems of the newest release window (test6.jsonl), scored on the public tests plus a seeded sample of private tests (<= 24 per problem, first failure stops) with a 10 s wall limit per test; this is not the official LiveCodeBench scorer (which runs every private test)",
+  "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; no network isolation (the tests do not need network)",
+  "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is 'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and stdout must match the expected line structure",
+  "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
+  "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
+  "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+  "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
+  "longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers",
+  "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), 10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of MMLU-Pro keys are known to be noisy and are not corrected here",
+  "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged ('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; stricter than the official LLM grader on partial names, so absolute numbers are not comparable with published SimpleQA scores - use it for paired comparisons",
+  "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
+  "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
+  "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
+  "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
+  "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
+  "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+  "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+  "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/'et al.', deliberately not protected because protecting a form means never splitting after it again; 19 of the 132 instruction instances are number_sentences",
+  "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+  "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
+ ],
+ "partial": true,
+ "schema_version": 1,
+ "skipped_ids": [],
+ "started_at": "2026-09-04T15:28:41Z",
+ "tag": "muse30_---",
+ "truncated": false,
+ "valid": true,
+ "wall_s": 780.3
+}

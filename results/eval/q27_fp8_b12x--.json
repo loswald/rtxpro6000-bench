@@ -1,0 +1,3118 @@
+{
+ "aggregate": {
+  "acc_macro": 0.8026,
+  "acc_micro": 0.787,
+  "acc_strict": 0.7519,
+  "answer_from_reasoning": 1,
+  "ci95": [
+   0.7434,
+   0.825
+  ],
+  "degenerate_rate": 0.0,
+  "gpu_minutes": 88.001,
+  "mean_out_tokens": 3814.4,
+  "mean_prompt_tokens": 2564.9,
+  "mean_score": 0.7976,
+  "n_attempted": 403,
+  "n_cancelled": 18,
+  "n_correct": 303,
+  "n_error": 0,
+  "n_planned": 403,
+  "n_scored": 385,
+  "n_skipped": 0,
+  "out_tokens_per_s": 1112.5,
+  "p50_item_s": 39.63,
+  "p50_out_tokens": 1059,
+  "p90_item_s": 436.29,
+  "per_url": {
+   "http://127.0.0.1:8000": {
+    "completion_tokens": 336646,
+    "errors": 14,
+    "requests": 102,
+    "retries": 1
+   },
+   "http://127.0.0.1:8001": {
+    "completion_tokens": 284036,
+    "errors": 6,
+    "requests": 115,
+    "retries": 14
+   },
+   "http://127.0.0.1:8002": {
+    "completion_tokens": 415845,
+    "errors": 6,
+    "requests": 106,
+    "retries": 6
+   },
+   "http://127.0.0.1:8003": {
+    "completion_tokens": 432016,
+    "errors": 1,
+    "requests": 106,
+    "retries": 6
+   }
+  },
+  "request_errors": 0,
+  "requests": 429,
+  "retries": 27,
+  "status_counts": {
+   "cancelled": 18,
+   "correct": 303,
+   "truncated": 24,
+   "wrong": 58
+  },
+  "total_out_tokens": 1468543,
+  "total_prompt_tokens": 987478,
+  "trunc_rate": 0.0623,
+  "wall_s": 1320.0
+ },
+ "base_urls": [
+  "http://127.0.0.1:8000",
+  "http://127.0.0.1:8001",
+  "http://127.0.0.1:8002",
+  "http://127.0.0.1:8003"
+ ],
+ "config": {
+  "chat_template_kwargs": {
+   "enable_thinking": true
+  },
+  "concurrency": 64,
+  "extra_body": {
+   "min_p": 0.0,
+   "presence_penalty": 0.0,
+   "top_k": 20
+  },
+  "families": [
+   "tools",
+   "code",
+   "math",
+   "longctx",
+   "knowledge",
+   "ifeval"
+  ],
+  "family_opts": {},
+  "gpus": 4,
+  "grace_s": 120.0,
+  "limit": null,
+  "max_tokens": 24576,
+  "max_tokens_family": {
+   "code": 16384,
+   "ifeval": 12288,
+   "knowledge": 16384,
+   "longctx": 2048,
+   "tools": 8192
+  },
+  "notes": "",
+  "profile": "default",
+  "reasoning": true,
+  "request_timeout_s": 600.0,
+  "resume": false,
+  "retries": 3,
+  "seed": 20260903,
+  "temperature": 1.0,
+  "time_budget_s": 1200.0,
+  "top_p": 0.95
+ },
+ "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
+ "ended_at": "2026-09-04T14:33:48Z",
+ "endpoint": {
+  "max_model_len": 40960,
+  "served_models": [
+   "m"
+  ],
+  "urls_alive": 4,
+  "urls_dead": [],
+  "vllm_version": "0.28.1rc1.dev361+gd4d703caf"
+ },
+ "evalsuite_git_sha": null,
+ "families": {
+  "code": {
+   "acc": 0.72,
+   "acc_strict": 0.72,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.6096,
+    0.809
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "fail_kinds": {
+     "IndexError": 1,
+     "TypeError": 1,
+     "assertion": 9,
+     "truncated": 10
+    },
+    "lcb_mean_test_pass_frac": 0.7333,
+    "syntax_error_rate": 0.0,
+    "timeout_rate": 0.0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "heplus-099",
+    "heplus-129",
+    "heplus-141",
+    "lcb-atcoder-abc388_d",
+    "lcb-atcoder-abc390_d",
+    "lcb-atcoder-arc192_a",
+    "lcb-atcoder-arc194_a",
+    "lcb-leetcode-3743",
+    "lcb-leetcode-3776",
+    "lcb-leetcode-3793",
+    "lcb-leetcode-3794",
+    "mbppplus-074",
+    "mbppplus-129",
+    "mbppplus-137",
+    "mbppplus-223",
+    "mbppplus-311",
+    "mbppplus-446",
+    "mbppplus-576",
+    "mbppplus-577",
+    "mbppplus-739",
+    "mbppplus-753"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "closest_integer passes base+plus tests",
+     "extracted": "144 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-099",
+     "out_tokens": 1717,
+     "response_tail": "\n\n```python\nfrom decimal import Decimal, ROUND_HALF_UP\n\ndef closest_integer(value):\n    return int(Decimal(value).to_integral_value(rounding=ROUND_HALF_UP))\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "heplus-129",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "file_name_check passes base+plus tests",
+     "extracted": "1261 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-141",
+     "out_tokens": 990,
+     "response_tail": "me[0]\n    if not ((\"a\" <= first_char <= \"z\") or (\"A\" <= first_char <= \"Z\")):\n        return \"No\"\n\n    if extension not in {\"txt\", \"exe\", \"dll\"}:\n        return \"No\"\n\n    digit_count = sum(1 for char in file_name if \"0\" <= char <= \"9\")\n    if digit_count > 3:\n        return \"No\"\n\n    return \"Yes\"\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-abc388_d",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-abc390_d",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-arc194_a",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3743",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3776",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3793",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3794",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "is_samepatterns passes base+plus tests",
+     "extracted": "904 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-074",
+     "out_tokens": 1114,
+     "response_tail": "to_pattern[word] = pattern\n\n        if pattern in pattern_to_word:\n            if pattern_to_word[pattern] != word:\n                return False\n        else:\n            pattern_to_word[pattern] = word\n\n    return True\n\n\nassert is_samepatterns([\"red\", \"green\", \"green\"], [\"a\", \"b\", \"b\"]) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mbppplus-129",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "zero_count passes base+plus tests",
+     "extracted": "279 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-137",
+     "out_tokens": 835,
+     "response_tail": "\n\n```python\nimport math\n\ndef zero_count(arr):\n    zeros = sum(1 for x in arr if x == 0)\n    non_zeroes = len(arr) - zeros\n    return zeros / non_zeroes if non_zeroes else 0.0\n\nassert math.isclose(\n    zero_count([0, 1, 2, -1, -5, 6, 0, -3, -2, 3, 4, 6, 8]),\n    0.181818,\n    rel_tol=0.001\n)\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_majority passes base+plus tests",
+     "extracted": "906 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-223",
+     "out_tokens": 2780,
+     "response_tail": "t, n\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if arr[mid] <= x:\n            lo = mid + 1\n        else:\n            hi = mid\n    last = lo\n\n    # Check if the count of x is greater than n/2\n    return (last - first) * 2 > n\n\n\nassert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "set_left_most_unset_bit passes base+plus tests",
+     "extracted": "572 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-311",
+     "out_tokens": 14461,
+     "response_tail": "r bit is set.\n    \"\"\"\n    bits = max(n.bit_length(), 1)\n    mask = (1 << bits) - 1\n    unset_bits = mask & ~n\n\n    if unset_bits:\n        bit_to_set = 1 << (unset_bits.bit_length() - 1)\n    else:\n        bit_to_set = 1 << bits\n\n    return n | bit_to_set\n\n\nassert set_left_most_unset_bit(10) == 14\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "count_Occurrence passes base+plus tests",
+     "extracted": "278 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-446",
+     "out_tokens": 3286,
+     "response_tail": "\n\n```python\ndef count_Occurrence(t, elements):\n    \"\"\"\n    Count the total number of occurrences in the tuple `t`\n    whose values appear in the list `elements`.\n    \"\"\"\n    return sum(1 for item in t if item in elements)\n\nassert count_Occurrence(('a', 'a', 'c', 'b', 'd'), ['a', 'b']) == 3\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_Sub_Array passes base+plus tests",
+     "extracted": "408 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-576",
+     "out_tokens": 9564,
+     "response_tail": "f main_list.\n    \"\"\"\n    if len(sub_list) > len(main_list):\n        return False\n\n    n = len(main_list)\n    m = len(sub_list)\n\n    for i in range(n - m + 1):\n        if main_list[i:i + m] == sub_list:\n            return True\n\n    return False\n\n\nassert is_Sub_Array([1, 4, 3, 5], [1, 2]) == False\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "last_Digit_Factorial passes base+plus tests",
+     "extracted": "318 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-577",
+     "out_tokens": 399,
+     "response_tail": "al(n):\n    if n < 0:\n        raise ValueError(\"Factorial is not defined for negative numbers\")\n    \n    last_digit = 1\n    for i in range(2, n + 1):\n        last_digit = (last_digit * i) % 10\n        if last_digit == 0:\n            break\n    return last_digit\n\nassert last_Digit_Factorial(4) == 4\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "find_Index passes base+plus tests",
+     "extracted": "642 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-739",
+     "out_tokens": 1964,
+     "response_tail": "must be a positive integer\")\n\n    lower_bound = 10 ** (n - 1)\n    target = 2 * lower_bound  # Need k * (k + 1) >= target\n\n    k = math.isqrt(target)\n\n    while k * (k + 1) < target:\n        k += 1\n\n    while k > 0 and (k - 1) * k >= target:\n        k -= 1\n\n    return k\n\nassert find_Index(2) == 4\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "min_k passes base+plus tests",
+     "extracted": "524 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-753",
+     "out_tokens": 1006,
+     "response_tail": "inimum records to return.\n\n    Returns:\n        A list of the k minimum records.\n    \"\"\"\n    if k <= 0:\n        return []\n    return sorted(records, key=lambda record: record[1])[:k]\n\n\nassert min_k([('Manjeet', 10), ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2) == [('Akash', 2), ('Akshat', 4)]\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    }
+   ],
+   "gpu_minutes": 18.247,
+   "info_per_gpu_min": 0.829,
+   "max_tokens": 16384,
+   "mean_out_tokens": 4354.7,
+   "mean_prompt_tokens": 372.5,
+   "mean_score": 0.72,
+   "n_attempted": 75,
+   "n_cancelled": 0,
+   "n_correct": 54,
+   "n_error": 0,
+   "n_planned": 75,
+   "n_scored": 75,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 50.79,
+   "p50_out_tokens": 1361,
+   "p90_item_s": 411.31,
+   "status_counts": {
+    "correct": 54,
+    "truncated": 10,
+    "wrong": 11
+   },
+   "sub": {
+    "humanevalplus": {
+     "acc": 0.88,
+     "acc_strict": 0.88,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7004,
+      0.9583
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2234.4,
+     "mean_prompt_tokens": 259.5,
+     "mean_score": 0.88,
+     "n_attempted": 25,
+     "n_cancelled": 0,
+     "n_correct": 22,
+     "n_error": 0,
+     "n_planned": 25,
+     "n_scored": 25,
+     "n_skipped": 0,
+     "p50_item_s": 33.08,
+     "p50_out_tokens": 871,
+     "p90_item_s": 202.96,
+     "status_counts": {
+      "correct": 22,
+      "truncated": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 55860,
+     "total_prompt_tokens": 6488,
+     "trunc_rate": 0.04,
+     "wall_s": 687.7
+    },
+    "lcb_easy_medium": {
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5555,
+      0.8582
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 7051.2,
+     "mean_prompt_tokens": 614.4,
+     "mean_score": 0.7333,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 22,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 100.44,
+     "p50_out_tokens": 3744,
+     "p90_item_s": 445.49,
+     "status_counts": {
+      "correct": 22,
+      "truncated": 8
+     },
+     "total_out_tokens": 211537,
+     "total_prompt_tokens": 18431,
+     "trunc_rate": 0.2667,
+     "wall_s": 971.3
+    },
+    "mbppplus": {
+     "acc": 0.5,
+     "acc_strict": 0.5,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2993,
+      0.7007
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2960.2,
+     "mean_prompt_tokens": 151.1,
+     "mean_score": 0.5,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 10,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 43.16,
+     "p50_out_tokens": 1006,
+     "p90_item_s": 291.92,
+     "status_counts": {
+      "correct": 10,
+      "truncated": 1,
+      "wrong": 9
+     },
+     "total_out_tokens": 59204,
+     "total_prompt_tokens": 3021,
+     "trunc_rate": 0.05,
+     "wall_s": 678.6
+    }
+   },
+   "total_out_tokens": 326601,
+   "total_prompt_tokens": 27940,
+   "trunc_rate": 0.1333,
+   "wall_s": 971.3
+  },
+  "ifeval": {
+   "acc": 0.9167,
+   "acc_strict": 0.9167,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.8193,
+    0.9639
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "by_n_instructions": {
+     "1": {
+      "n": 12,
+      "prompt_loose": 1.0,
+      "prompt_strict": 1.0
+     },
+     "2": {
+      "n": 24,
+      "prompt_loose": 0.875,
+      "prompt_strict": 0.875
+     },
+     "3": {
+      "n": 24,
+      "prompt_loose": 0.9583,
+      "prompt_strict": 0.9167
+     }
+    },
+    "instruction_loose": 0.9697,
+    "instruction_strict": 0.9621,
+    "loose_only_rate": 0.0167,
+    "n_instructions": 132,
+    "per_type": {
+     "change_case:capital_word_frequency": {
+      "loose": 1.0,
+      "n": 9,
+      "strict": 1.0
+     },
+     "change_case:english_capital": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "change_case:english_lowercase": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "combination:repeat_prompt": {
+      "loose": 0.875,
+      "n": 8,
+      "strict": 0.875
+     },
+     "combination:two_responses": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_content:number_placeholders": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "detectable_content:postscript": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:json_format": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:multiple_sections": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "detectable_format:number_bullet_lists": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:number_highlighted_sections": {
+      "loose": 1.0,
+      "n": 4,
+      "strict": 1.0
+     },
+     "detectable_format:title": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:existence": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "keywords:forbidden_words": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:frequency": {
+      "loose": 1.0,
+      "n": 18,
+      "strict": 1.0
+     },
+     "keywords:letter_frequency": {
+      "loose": 0.8333,
+      "n": 6,
+      "strict": 0.6667
+     },
+     "language:response_language": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:nth_paragraph_first_word": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "length_constraints:number_paragraphs": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:number_sentences": {
+      "loose": 1.0,
+      "n": 19,
+      "strict": 1.0
+     },
+     "length_constraints:number_words": {
+      "loose": 1.0,
+      "n": 18,
+      "strict": 1.0
+     },
+     "punctuation:no_comma": {
+      "loose": 0.8824,
+      "n": 17,
+      "strict": 0.8824
+     },
+     "startend:end_checker": {
+      "loose": 1.0,
+      "n": 7,
+      "strict": 1.0
+     },
+     "startend:quotation": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     }
+    },
+    "prompt_loose": 0.9333,
+    "prompt_strict": 0.9167
+   },
+   "failed_ids": [
+    "ifeval-1174",
+    "ifeval-1300",
+    "ifeval-2713",
+    "ifeval-2739",
+    "ifeval-3633"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1174",
+     "out_tokens": 1264,
+     "response_tail": "\n\n*Template*: `o(location)` asks the user's location and returns the *forecast*.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "2/3 strict, 3/3 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-1300",
+     "out_tokens": 7922,
+     "response_tail": "s and software makers. It may also help us understand how human thought adapts. The main question is how stable and how flexible language is. We believe small shifts in everyday talk can lead to big shifts over many years. This proposal asks for support to start the data work and the first analysis.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2713",
+     "out_tokens": 2878,
+     "response_tail": "ne\nThe Smart Way to Find a Great Hotel\n\nSubhead\nSearch compare and book the perfect room in minutes\n\nBody\nTravel far and stay in the best places without the hassle. Our service helps you find rooms you will love and book with ease.\n\nCall to action\nVisit YourWebsiteCom now and reserve your room today",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2739",
+     "out_tokens": 3315,
+     "response_tail": "ve your answer (1. do not say any words or characters before repeating the request; 2. the request you need to repeat does not include this sentence)\nThe word limerick has a funny trick\nThat rhymes with a click or a brick\nIt bounces and jingles\nIn lines that it tangles\nAnd laughs at its own limerick",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3633",
+     "out_tokens": 1532,
+     "response_tail": "f high performance. Mental health professionals will recognize the value of family systems and resilience. The pacing is measured and the clinical detail is grounded. This work is well worth watching for scholars and practitioners who want insight into exceptional talent and its psychological costs.",
+     "status": "wrong",
+     "sub": "double"
+    }
+   ],
+   "gpu_minutes": 9.652,
+   "info_per_gpu_min": 0.475,
+   "max_tokens": 12288,
+   "mean_out_tokens": 2897.3,
+   "mean_prompt_tokens": 104.0,
+   "mean_score": 0.9639,
+   "n_attempted": 60,
+   "n_cancelled": 0,
+   "n_correct": 55,
+   "n_error": 0,
+   "n_planned": 60,
+   "n_scored": 60,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 57.99,
+   "p50_out_tokens": 1656,
+   "p90_item_s": 243.88,
+   "status_counts": {
+    "correct": 55,
+    "wrong": 5
+   },
+   "sub": {
+    "double": {
+     "acc": 0.875,
+     "acc_strict": 0.875,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.69,
+      0.9566
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3388.0,
+     "mean_prompt_tokens": 104.3,
+     "mean_score": 0.9375,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 21,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 73.39,
+     "p50_out_tokens": 2878,
+     "p90_item_s": 212.91,
+     "status_counts": {
+      "correct": 21,
+      "wrong": 3
+     },
+     "total_out_tokens": 81313,
+     "total_prompt_tokens": 2503,
+     "trunc_rate": 0.0,
+     "wall_s": 543.8
+    },
+    "single": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7575,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1781.6,
+     "mean_prompt_tokens": 84.8,
+     "mean_score": 1.0,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 41.45,
+     "p50_out_tokens": 417,
+     "p90_item_s": 147.05,
+     "status_counts": {
+      "correct": 12
+     },
+     "total_out_tokens": 21379,
+     "total_prompt_tokens": 1017,
+     "trunc_rate": 0.0,
+     "wall_s": 427.1
+    },
+    "triple": {
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7415,
+      0.9768
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 2964.3,
+     "mean_prompt_tokens": 113.3,
+     "mean_score": 0.9722,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 22,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 39.02,
+     "p50_out_tokens": 1264,
+     "p90_item_s": 298.08,
+     "status_counts": {
+      "correct": 22,
+      "wrong": 2
+     },
+     "total_out_tokens": 71144,
+     "total_prompt_tokens": 2719,
+     "trunc_rate": 0.0,
+     "wall_s": 673.1
+    }
+   },
+   "total_out_tokens": 173836,
+   "total_prompt_tokens": 6239,
+   "trunc_rate": 0.0,
+   "wall_s": 673.1
+  },
+  "knowledge": {
+   "acc": 0.4714,
+   "acc_strict": 0.4714,
+   "answer_from_reasoning": 1,
+   "ci95": [
+    0.359,
+    0.5868
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "extraction_methods": {
+     "answer_phrase": 36,
+     "phrase": 26
+    },
+    "mmlu_pro_hard_hedged": 0,
+    "mmlu_pro_hard_weak_extraction": 0,
+    "simpleqa_no_answer_phrase": 0,
+    "simpleqa_superset_only": 1,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mmlupro-11407",
+    "mmlupro-1157",
+    "mmlupro-3818",
+    "mmlupro-3917",
+    "mmlupro-4055",
+    "mmlupro-4284",
+    "mmlupro-899",
+    "mmlupro-954",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-0673",
+    "simpleqa-0762",
+    "simpleqa-1012",
+    "simpleqa-1166",
+    "simpleqa-1295",
+    "simpleqa-1312",
+    "simpleqa-1314",
+    "simpleqa-1443",
+    "simpleqa-1619",
+    "simpleqa-2174",
+    "simpleqa-2306",
+    "simpleqa-2392",
+    "simpleqa-2417",
+    "simpleqa-2558",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2784",
+    "simpleqa-2905",
+    "simpleqa-3127",
+    "simpleqa-3211",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4044",
+    "simpleqa-4082",
+    "simpleqa-4255",
+    "simpleqa-4322"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-11407",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-1157",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": "H",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-3818",
+     "out_tokens": 8040,
+     "response_tail": "\u00c5}^{-1}\n\\]\n\nwith energy in eV:\n\n\\[\n\\kappa \\approx 0.512\\sqrt{0.5}\\ \\text{\u00c5}^{-1}\n\\approx 0.362\\ \\text{\u00c5}^{-1}.\n\\]\n\nThe barrier length is\n\n\\[\nL = 100\\ \\text{pm} = 1.00\\ \\text{\u00c5}.\n\\]\n\nThus,\n\n\\[\nT \\approx e^{-2(0.362)(1.00)}\n= e^{-0.724}\n\\approx 0.485.\n\\]\n\nThis is closest to \\(0.5\\).\n\nThe answer is (H)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": "F",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-3917",
+     "out_tokens": 5043,
+     "response_tail": "ir, the exact order should be 2,3-dimethylbutane < n-hexane because branching lowers boiling point, but that exact ordering is not listed.\n\nAmong the given choices, the intended/closest choice is the one with methane lowest and n-undecane highest, with the C\u2086 compounds in between.\n\nThe answer is (F)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "A",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4055",
+     "out_tokens": 14497,
+     "response_tail": "K}^{-1}\\):\n\n\\[\nT_b \\approx \\frac{15960}{30}=532\\ \\text{K}\n\\]\n\n\\[\nT_b \\approx 532-273=259^\\circ\\text{C}\\approx 260^\\circ\\text{C}\n\\]\n\nThen:\n\n\\[\n\\Delta H_{\\text{vap}}=21(532)\\approx 1.12\\times 10^4\\ \\text{cal mol}^{-1}\n\\]\n\n\\[\n\\Delta H_{\\text{vap}}\\approx 11.2\\ \\text{kcal mol}^{-1}\n\\]\n\nThe answer is (A)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": "E",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 4006,
+     "response_tail": "d are destroyed by water. If the aldehyde is not dry, water will protonate the Grignard reagent:\n\n\\[\n\\mathrm{RMgX + H_2O \\rightarrow RH + Mg(OH)X}\n\\]\n\nThis consumes the Grignard reagent and forms a hydrocarbon, preventing it from adding to the aldehyde to form the desired alcohol.\n\nThe answer is (E)",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "G",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-899",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mmlupro-954",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "Joseph Jean Pierre Laurent",
+     "extracted": "Jean-Fran\u00e7ois Laurent",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0409",
+     "out_tokens": 2095,
+     "response_tail": "\n\nAnswer: Jean-Fran\u00e7ois Laurent",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "2002 September 30",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-0492",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "10,423",
+     "extracted": "1,171",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0672",
+     "out_tokens": 614,
+     "response_tail": "\n\nAnswer: 1,171",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "Roosevelt Island",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 14769,
+     "response_tail": "\n\nAnswer: Roosevelt Island",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "20 Jun 2005",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-0762",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Woofles",
+     "extracted": "Wagie",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1012",
+     "out_tokens": 11231,
+     "response_tail": "\n\nAnswer: Wagie",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Deprived",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-1166",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "13 May 2004",
+     "extracted": "17 June 2013",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1295",
+     "out_tokens": 3507,
+     "response_tail": "\n\nAnswer: 17 June 2013",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St. John's College, Annapolis",
+     "extracted": "University of Chicago",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1312",
+     "out_tokens": 197,
+     "response_tail": "\n\nAnswer: University of Chicago",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Game Changer Award",
+     "extracted": "Asia Game Changer Award",
+     "finish_reason": "stop",
+     "flags": [
+      "superset_only"
+     ],
+     "id": "simpleqa-1314",
+     "out_tokens": 1086,
+     "response_tail": "\n\nAnswer: Asia Game Changer Award",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1970",
+     "extracted": "1968",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1443",
+     "out_tokens": 7331,
+     "response_tail": "\n\nAnswer: 1968",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "September 2011",
+     "extracted": "October 2020",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1619",
+     "out_tokens": 1943,
+     "response_tail": "\n\nAnswer: October 2020",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Lloyd Hopkins Field",
+     "extracted": "Custer Field",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2174",
+     "out_tokens": 1429,
+     "response_tail": "\n\nAnswer: Custer Field",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "11 March 1979",
+     "extracted": "12 September 1976",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2306",
+     "out_tokens": 4707,
+     "response_tail": "\n\nAnswer: 12 September 1976",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "University of Geneva",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "simpleqa-2392",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Ghavaniska system",
+     "extracted": "Vesk Prime",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2417",
+     "out_tokens": 1637,
+     "response_tail": "\n\nAnswer: Vesk Prime",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Stoke Ladies",
+     "extracted": "Haddington Athletic",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2558",
+     "out_tokens": 14780,
+     "response_tail": "\n\nAnswer: Haddington Athletic",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Sarvepalli Radhakrishnan",
+     "extracted": "K. P. S. Menon",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2706",
+     "out_tokens": 217,
+     "response_tail": "\n\nAnswer: K. P. S. Menon",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Punkature",
+     "extracted": "Romance",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2782",
+     "out_tokens": 1387,
+     "response_tail": "\n\nAnswer: Romance",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "November 18, 2023",
+     "extracted": "April 22, 2017",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2784",
+     "out_tokens": 6693,
+     "response_tail": "\n\nAnswer: April 22, 2017",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Colegio Lacordaire",
+     "extracted": "Colegio San Luis",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2905",
+     "out_tokens": 16281,
+     "response_tail": "\n\nAnswer: Colegio San Luis",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Puyallup",
+     "extracted": "Seattle",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3127",
+     "out_tokens": 565,
+     "response_tail": "\n\nAnswer: Seattle",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "8",
+     "extracted": "4",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3211",
+     "out_tokens": 1067,
+     "response_tail": "\n\nAnswer: 4",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Carlotta Cardana",
+     "extracted": "Dimitris Karaleos",
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning"
+     ],
+     "id": "simpleqa-3339",
+     "out_tokens": 1124,
+     "response_tail": "",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St David.",
+     "extracted": "General Pike",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3342",
+     "out_tokens": 7518,
+     "response_tail": "\n\nAnswer: General Pike",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1642-1644",
+     "extracted": "1634\u20131640",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4044",
+     "out_tokens": 1731,
+     "response_tail": "\n\nAnswer: 1634\u20131640",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Leopard",
+     "extracted": "Crocodile",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4082",
+     "out_tokens": 4709,
+     "response_tail": "\n\nAnswer: Crocodile",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Drepano",
+     "extracted": "Oracous",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4255",
+     "out_tokens": 7415,
+     "response_tail": "\n\nAnswer: Oracous",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Jodelle Ferland",
+     "extracted": "Tara Strong",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4322",
+     "out_tokens": 1877,
+     "response_tail": "\n\nAnswer: Tara Strong",
+     "status": "wrong",
+     "sub": "simpleqa"
+    }
+   ],
+   "gpu_minutes": 20.973,
+   "info_per_gpu_min": 0.832,
+   "max_tokens": 16384,
+   "mean_out_tokens": 5390.2,
+   "mean_prompt_tokens": 240.7,
+   "mean_score": 0.4714,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 33,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 53.35,
+   "p50_out_tokens": 2095,
+   "p90_item_s": 435.2,
+   "status_counts": {
+    "correct": 33,
+    "truncated": 8,
+    "wrong": 29
+   },
+   "sub": {
+    "mmlu_pro_hard": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6524,
+      0.895
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 4892.3,
+     "mean_prompt_tokens": 349.3,
+     "mean_score": 0.8,
+     "n_attempted": 40,
+     "n_cancelled": 0,
+     "n_correct": 32,
+     "n_error": 0,
+     "n_planned": 40,
+     "n_scored": 40,
+     "n_skipped": 0,
+     "p50_item_s": 41.67,
+     "p50_out_tokens": 1717,
+     "p90_item_s": 432.86,
+     "status_counts": {
+      "correct": 32,
+      "truncated": 4,
+      "wrong": 4
+     },
+     "total_out_tokens": 195693,
+     "total_prompt_tokens": 13971,
+     "trunc_rate": 0.1,
+     "wall_s": 829.7
+    },
+    "simpleqa": {
+     "acc": 0.0333,
+     "acc_strict": 0.0333,
+     "answer_from_reasoning": 1,
+     "ci95": [
+      0.0059,
+      0.1667
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 6054.0,
+     "mean_prompt_tokens": 95.9,
+     "mean_score": 0.0333,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 1,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 53.35,
+     "p50_out_tokens": 2095,
+     "p90_item_s": 438.16,
+     "status_counts": {
+      "correct": 1,
+      "truncated": 4,
+      "wrong": 25
+     },
+     "total_out_tokens": 181621,
+     "total_prompt_tokens": 2877,
+     "trunc_rate": 0.1333,
+     "wall_s": 845.8
+    }
+   },
+   "total_out_tokens": 377314,
+   "total_prompt_tokens": 16848,
+   "trunc_rate": 0.1143,
+   "wall_s": 845.8
+  },
+  "longctx": {
+   "acc": 0.9792,
+   "acc_strict": 0.9792,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.891,
+    0.9963
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_by_len": {
+     "16k": 1.0,
+     "32k": 0.9375,
+     "8k": 1.0
+    },
+    "calibration": {
+     "budgets": {
+      "16k": 16384,
+      "32k": 32768,
+      "8k": 8192
+     },
+     "chars_per_token": {
+      "docs": 4.4693,
+      "filler": 4.4376
+     },
+     "checks": {
+      "niah_multikey": {
+       "budget": 32768,
+       "item": "longctx-niah-32k-d85-11",
+       "prompt_tokens": 31378
+      },
+      "qa_multi_doc": {
+       "budget": 32768,
+       "item": "longctx-qa-32k-d10-08",
+       "prompt_tokens": 32229
+      },
+      "var_tracking": {
+       "budget": 32768,
+       "item": "longctx-vt-32k-05",
+       "prompt_tokens": 31332
+      }
+     },
+     "fixed_tokens": {
+      "niah_multikey": 182,
+      "qa_multi_doc": 75,
+      "var_tracking": 255
+     },
+     "max_model_len": 40960,
+     "max_tokens": 2048,
+     "method": "tokenize",
+     "tokenize_calls": 12
+    },
+    "context_length_errors": 0,
+    "mean_prompt_tokens_by_len": {
+     "16k": 15868.6,
+     "32k": 31603.7,
+     "8k": 7894.1
+    },
+    "niah_acc_by_depth": {
+     "0.10": 1.0,
+     "0.35": 1.0,
+     "0.60": 1.0,
+     "0.85": 1.0
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "longctx-qa-32k-d85-11"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "simple majority vote",
+     "extracted": "By a simple majority vote, usually through a written procedure",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 1101,
+     "response_tail": "\n\nAnswer: By a simple majority vote, usually through a written procedure.",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    }
+   ],
+   "gpu_minutes": 7.106,
+   "info_per_gpu_min": 0.138,
+   "max_tokens": 2048,
+   "mean_out_tokens": 371.0,
+   "mean_prompt_tokens": 18455.5,
+   "mean_score": 0.9792,
+   "n_attempted": 48,
+   "n_cancelled": 0,
+   "n_correct": 47,
+   "n_error": 0,
+   "n_planned": 48,
+   "n_scored": 48,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 12.07,
+   "p50_out_tokens": 178,
+   "p90_item_s": 60.06,
+   "status_counts": {
+    "correct": 47,
+    "wrong": 1
+   },
+   "sub": {
+    "niah_multikey": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.862,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 139.3,
+     "mean_prompt_tokens": 18327.2,
+     "mean_score": 1.0,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 24,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 9.16,
+     "p50_out_tokens": 130,
+     "p90_item_s": 28.11,
+     "status_counts": {
+      "correct": 24
+     },
+     "total_out_tokens": 3344,
+     "total_prompt_tokens": 439853,
+     "trunc_rate": 0.0,
+     "wall_s": 315.3
+    },
+    "qa_multi_doc": {
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6461,
+      0.9851
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 272.7,
+     "mean_prompt_tokens": 18774.1,
+     "mean_score": 0.9167,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 11.7,
+     "p50_out_tokens": 172,
+     "p90_item_s": 38.11,
+     "status_counts": {
+      "correct": 11,
+      "wrong": 1
+     },
+     "total_out_tokens": 3272,
+     "total_prompt_tokens": 225289,
+     "trunc_rate": 0.0,
+     "wall_s": 224.8
+    },
+    "var_tracking": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7575,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 932.8,
+     "mean_prompt_tokens": 18393.4,
+     "mean_score": 1.0,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 39.01,
+     "p50_out_tokens": 707,
+     "p90_item_s": 77.32,
+     "status_counts": {
+      "correct": 12
+     },
+     "total_out_tokens": 11194,
+     "total_prompt_tokens": 220721,
+     "trunc_rate": 0.0,
+     "wall_s": 218.4
+    }
+   },
+   "total_out_tokens": 17810,
+   "total_prompt_tokens": 885863,
+   "trunc_rate": 0.0,
+   "wall_s": 315.3
+  },
+  "math": {
+   "acc": 0.871,
+   "acc_strict": 0.675,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7655,
+    0.9331
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 0.9032,
+    "match_methods": {
+     "set": 1,
+     "string": 53
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "aime25-I-10",
+    "aime25-I-13",
+    "aime25-I-15",
+    "aime25-II-1",
+    "aime25-II-5",
+    "hmmt25-feb-1",
+    "hmmt25-feb-10",
+    "hmmt25-feb-30"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "81",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-10",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-11",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-12",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "204",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-13",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-14",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "735",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-15",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-2",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-I-9",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "468",
+     "extracted": "516",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-1",
+     "out_tokens": 2169,
+     "response_tail": "nding,\n\n\\[\n28u-924=700,\n\\]\n\nso\n\n\\[\nu=58.\n\\]\n\nThen\n\n\\[\n(58-40)^2+h^2=900,\n\\]\n\n\\[\n324+h^2=900,\n\\]\n\n\\[\nh^2=576,\n\\]\n\nso the height of \\(G\\) above the line is \\(24\\).\n\nThe base of \\(\\triangle BGE\\) is\n\n\\[\nBE=61-18=43.\n\\]\n\nTherefore,\n\n\\[\n[ \\triangle BGE ]=\\frac12\\cdot 43\\cdot 24=516.\n\\]\n\n\\[\n\\boxed{516}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-13",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-14",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "aime25-II-15",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "336",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-II-5",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "103",
+     "extracted": "271",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-1",
+     "out_tokens": 1519,
+     "response_tail": "\\equiv 1.\n\\]\n\n- If \\(e=0\\), we need \\(3^b\\equiv 1\\), so \\(b=0\\) or \\(b=4\\), giving \\(1\\) and \\(81\\).\n- If \\(e=1\\), we need \\(3^b\\cdot 7\\equiv 1\\), so \\(3^b\\equiv 7\\), giving \\(b=3\\), i.e. \\(3^3\\cdot 7=189\\).\n\nThus the divisors are \\(1,81,189\\), and their sum is\n\\[\n1+81+189=271.\n\\]\n\n\\[\n\\boxed{271}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{-1+\\sqrt{17}}{2}, \\frac{-1-\\sqrt{17}}{2}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-10",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-13",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-15",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-19",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-20",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-24",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-25",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-27",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": "cancelled at deadline + grace",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "hmmt25-feb-29",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "cancelled",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-30",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    }
+   ],
+   "gpu_minutes": 30.51,
+   "info_per_gpu_min": 0.228,
+   "max_tokens": 24576,
+   "mean_out_tokens": 8879.2,
+   "mean_prompt_tokens": 184.0,
+   "mean_score": 0.871,
+   "n_attempted": 80,
+   "n_cancelled": 18,
+   "n_correct": 54,
+   "n_error": 0,
+   "n_planned": 80,
+   "n_scored": 62,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 254.98,
+   "p50_out_tokens": 7170,
+   "p90_item_s": 1196.96,
+   "status_counts": {
+    "cancelled": 18,
+    "correct": 54,
+    "truncated": 6,
+    "wrong": 2
+   },
+   "sub": {
+    "aime25": {
+     "acc": 0.7727,
+     "acc_strict": 0.5667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5656,
+      0.8988
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 9958.1,
+     "mean_prompt_tokens": 225.4,
+     "mean_score": 0.7727,
+     "n_attempted": 30,
+     "n_cancelled": 8,
+     "n_correct": 17,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 22,
+     "n_skipped": 0,
+     "p50_item_s": 342.6,
+     "p50_out_tokens": 4607,
+     "p90_item_s": 1185.74,
+     "status_counts": {
+      "cancelled": 8,
+      "correct": 17,
+      "truncated": 4,
+      "wrong": 1
+     },
+     "total_out_tokens": 219078,
+     "total_prompt_tokens": 4958,
+     "trunc_rate": 0.1818,
+     "wall_s": 1320.0
+    },
+    "hmmt25": {
+     "acc": 0.85,
+     "acc_strict": 0.5667,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6396,
+      0.9476
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 11586.6,
+     "mean_prompt_tokens": 148.2,
+     "mean_score": 0.85,
+     "n_attempted": 30,
+     "n_cancelled": 10,
+     "n_correct": 17,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 376.98,
+     "p50_out_tokens": 9827,
+     "p90_item_s": 1209.29,
+     "status_counts": {
+      "cancelled": 10,
+      "correct": 17,
+      "truncated": 2,
+      "wrong": 1
+     },
+     "total_out_tokens": 231733,
+     "total_prompt_tokens": 2965,
+     "trunc_rate": 0.1,
+     "wall_s": 1320.0
+    },
+    "math500_hard": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.8389,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 4984.9,
+     "mean_prompt_tokens": 174.2,
+     "mean_score": 1.0,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 20,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 73.84,
+     "p50_out_tokens": 3035,
+     "p90_item_s": 254.98,
+     "status_counts": {
+      "correct": 20
+     },
+     "total_out_tokens": 99697,
+     "total_prompt_tokens": 3484,
+     "trunc_rate": 0.0,
+     "wall_s": 599.5
+    }
+   },
+   "total_out_tokens": 550508,
+   "total_prompt_tokens": 11407,
+   "trunc_rate": 0.0968,
+   "wall_s": 1320.0
+  },
+  "tools": {
+   "acc": 0.8571,
+   "acc_strict": 0.8571,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7566,
+    0.9205
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_ast_micro": 0.8833,
+    "acc_by_sub": {
+     "irrelevance": 0.7,
+     "multiple": 0.8,
+     "parallel": 1.0,
+     "parallel_multiple": 0.7,
+     "simple": 0.95
+    },
+    "acc_irrelevance": 0.7,
+    "acc_official": 0.8625,
+    "declined_rate_ast": 0.0167,
+    "error_codes": {
+     "declined": 1,
+     "spurious_call": 3,
+     "value_mismatch": 4,
+     "wrong_function": 6
+    },
+    "mean_score_ast": 0.9042,
+    "mode": "prompt",
+    "parse_methods": {
+     "json_list": 70
+    },
+    "text_calls_ignored": 0,
+    "tool_calls_in_prompt_mode": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "bfcl3-irrelevance_26",
+    "bfcl3-irrelevance_27",
+    "bfcl3-irrelevance_33",
+    "bfcl3-multiple_10",
+    "bfcl3-multiple_191",
+    "bfcl3-multiple_92",
+    "bfcl3-parallel_multiple_127",
+    "bfcl3-parallel_multiple_151",
+    "bfcl3-parallel_multiple_69",
+    "bfcl3-simple_358"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "final_temperature": 100,
+        "initial_temperature": 25,
+        "volume": 2
+       },
+       "name": "thermodynamics_calc_gas_pressure"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_26",
+     "out_tokens": 817,
+     "response_tail": "\n\n[{\"name\": \"thermodynamics_calc_gas_pressure\", \"arguments\": {\"volume\": 2, \"initial_temperature\": 25, \"final_temperature\": 100}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "change_in_temp": 4,
+        "mass": 3,
+        "specific_heat": 4.184
+       },
+       "name": "calculate_heat"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_27",
+     "out_tokens": 610,
+     "response_tail": "\n\n[{\"name\": \"calculate_heat\", \"arguments\": {\"mass\": 3, \"specific_heat\": 4.184, \"change_in_temp\": 4}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "sequence": "ATCG"
+       },
+       "name": "identify_species"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_33",
+     "out_tokens": 78,
+     "response_tail": "\n\n[{\"name\": \"identify_species\", \"arguments\": {\"sequence\": \"ATCG\"}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "database.modify_columns": {
+        "columns": [
+         [
+          "email",
+          "ssn"
+         ],
+         [
+          "ssn",
+          "email"
+         ],
+         [
+          "email",
+          "social_security_number"
+         ],
+         [
+          "social_security_number",
+          "email"
+         ],
+         [
+          "email",
+          "social security number"
+         ],
+         [
+          "social security number",
+          "email"
+         ]
+        ],
+        "db_name": [
+         "employees"
+        ],
+        "operation": [
+         "delete"
+        ],
+        "table": [
+         "personal_data"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "columns": [
+         "email_addresses",
+         "social_security_numbers"
+        ],
+        "db_name": "employees",
+        "operation": "delete",
+        "table": "personal_data"
+       },
+       "name": "database_modify_columns"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_10",
+     "out_tokens": 971,
+     "response_tail": "\n\n[{\"name\": \"database_modify_columns\", \"arguments\": {\"db_name\": \"employees\", \"table\": \"personal_data\", \"operation\": \"delete\", \"columns\": [\"email_addresses\", \"social_security_numbers\"]}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Paradise"
+        ],
+        "location": [
+         "Las Vegas",
+         "Las Vegas, NV",
+         "LV"
+        ],
+        "room_type": [
+         "luxury",
+         "Luxury"
+        ],
+        "start_date": [
+         "05-12-2022",
+         "2022-05-12",
+         "12/05/2022",
+         "May.12,2022",
+         "May 12, 2022"
+        ],
+        "stay_duration": [
+         3
+        ],
+        "view": [
+         "city",
+         "city view"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Paradise",
+        "location": "Las Vegas",
+        "room_type": "luxury room",
+        "start_date": "05-12-2022",
+        "stay_duration": 3,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_191",
+     "out_tokens": 209,
+     "response_tail": "\n\n[{\"name\": \"book_hotel\", \"arguments\": {\"hotel_name\": \"Hotel Paradise\", \"location\": \"Las Vegas\", \"room_type\": \"luxury room\", \"start_date\": \"05-12-2022\", \"stay_duration\": 3, \"view\": \"city view\"}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "walmart.vegan_products": {
+        "categories": [
+         [
+          "vegan",
+          "gluten-free"
+         ],
+         [
+          "gluten-free",
+          "vegan"
+         ]
+        ],
+        "location": [
+         "Denver, CO",
+         "Denver"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_92",
+     "out_tokens": 230,
+     "response_tail": "\n\n[]\nThe available functions only retrieve vegan products, not vegetarian products, at Walmart.",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "hotel.book": {
+        "additional_services": [
+         [
+          "breakfast",
+          "spa"
+         ],
+         [
+          "spa",
+          "breakfast"
+         ]
+        ],
+        "location": [
+         "Paris"
+        ],
+        "nights": [
+         5
+        ],
+        "roomType": [
+         "deluxe"
+        ]
+       }
+      },
+      {
+       "car.rental": {
+        "car_type": [
+         "SUV"
+        ],
+        "days": [
+         7
+        ],
+        "location": [
+         "Paris"
+        ],
+        "pick_up": [
+         "airport",
+         ""
+        ]
+       }
+      },
+      {
+       "hotel.book": {
+        "additional_services": [
+         [
+          "airport transfer service"
+         ],
+         [
+          "airport transfer"
+         ]
+        ],
+        "location": [
+         "Rome"
+        ],
+        "nights": [
+         3
+        ],
+        "roomType": [
+         "suite"
+        ]
+       }
+      },
+      {
+       "car.rental": {
+        "car_type": [
+         "compact"
+        ],
+        "days": [
+         5
+        ],
+        "location": [
+         "Rome"
+        ],
+        "pick_up": [
+         "hotel"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "additional_services": [
+         "breakfast",
+         "spa services"
+        ],
+        "location": "Paris",
+        "nights": 5,
+        "roomType": "deluxe room"
+       },
+       "name": "hotel_book"
+      },
+      {
+       "arguments": {
+        "car_type": "SUV",
+        "days": 7,
+        "location": "Paris",
+        "pick_up": "airport"
+       },
+       "name": "car_rental"
+      },
+      {
+       "arguments": {
+        "additional_services": [
+         "airport transfer service"
+        ],
+        "location": "Rome",
+        "nights": 3,
+        "roomType": "suite"
+       },
+       "name": "hotel_book"
+      },
+      {
+       "arguments": {
+        "car_type": "compact car",
+        "days": 5,
+        "location": "Rome",
+        "pick_up": "hotel"
+       },
+       "name": "car_rental"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_127",
+     "out_tokens": 876,
+     "response_tail": "\"Rome\",\n      \"roomType\": \"suite\",\n      \"nights\": 3,\n      \"additional_services\": [\n        \"airport transfer service\"\n      ]\n    }\n  },\n  {\n    \"name\": \"car_rental\",\n    \"arguments\": {\n      \"location\": \"Rome\",\n      \"days\": 5,\n      \"car_type\": \"compact car\",\n      \"pick_up\": \"hotel\"\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Le Bristol Paris"
+        ],
+        "location": [
+         "Paris, France",
+         "Paris"
+        ],
+        "room_type": [
+         "suite",
+         "Suite"
+        ],
+        "start_date": [
+         "12-01-2022",
+         "2022-12-01",
+         "Dec 1, 2022"
+        ],
+        "stay_duration": [
+         10
+        ],
+        "view": [
+         "city view",
+         "city"
+        ]
+       }
+      },
+      {
+       "latest_exchange_rate": {
+        "amount": [
+         1000
+        ],
+        "source_currency": [
+         "USD",
+         "US Dollars",
+         "US Dollar"
+        ],
+        "target_currency": [
+         "EUR",
+         "Euro"
+        ]
+       }
+      },
+      {
+       "safeway.order": {
+        "items": [
+         [
+          "water",
+          "apples",
+          "bread"
+         ]
+        ],
+        "location": [
+         "Palo Alto, CA",
+         "Palo Alto",
+         "CA"
+        ],
+        "quantity": [
+         [
+          2,
+          3,
+          1
+         ]
+        ]
+       }
+      },
+      {
+       "light_travel_time": {
+        "distance_in_light_years": [
+         4.24
+        ],
+        "speed_of_light": [
+         299792458,
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Le Bristol Paris",
+        "location": "Paris, France",
+        "room_type": "suite",
+        "start_date": "12-01-2022",
+        "stay_duration": 10,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      },
+      {
+       "arguments": {
+        "amount": 1000,
+        "source_currency": "USD",
+        "target_currency": "EUR"
+       },
+       "name": "latest_exchange_rate"
+      },
+      {
+       "arguments": {
+        "items": [
+         "bottles of water",
+         "apples",
+         "loaf of bread"
+        ],
+        "location": "Palo Alto, CA",
+        "quantity": [
+         2,
+         3,
+         1
+        ]
+       },
+       "name": "safeway_order"
+      },
+      {
+       "arguments": {
+        "distance_in_light_years": 4.24,
+        "speed_of_light": 299792458
+       },
+       "name": "light_travel_time"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_151",
+     "out_tokens": 610,
+     "response_tail": "items\": [\n        \"bottles of water\",\n        \"apples\",\n        \"loaf of bread\"\n      ],\n      \"quantity\": [\n        2,\n        3,\n        1\n      ]\n    }\n  },\n  {\n    \"name\": \"light_travel_time\",\n    \"arguments\": {\n      \"distance_in_light_years\": 4.24,\n      \"speed_of_light\": 299792458\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         ""
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.inflation_adjustment": {
+        "inflation_rate": [
+         0.03
+        ],
+        "initial_sum": [
+         200000.0
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.loan_repayment": {
+        "interest_rate": [
+         0.04
+        ],
+        "loan_amount": [
+         300000.0
+        ],
+        "loan_term": [
+         10
+        ]
+       }
+      },
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         true
+        ],
+        "years": [
+         5
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      },
+      {
+       "arguments": {
+        "inflation_rate": 3,
+        "initial_sum": 200000,
+        "years": 5
+       },
+       "name": "finance_inflation_adjustment"
+      },
+      {
+       "arguments": {
+        "interest_rate": 4,
+        "loan_amount": 300000,
+        "loan_term": 10
+       },
+       "name": "finance_loan_repayment"
+      },
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "monthly": true,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_69",
+     "out_tokens": 441,
+     "response_tail": "_sum\": 200000, \"years\": 5, \"inflation_rate\": 3}},\n  {\"name\": \"finance_loan_repayment\", \"arguments\": {\"loan_amount\": 300000, \"interest_rate\": 4, \"loan_term\": 10}},\n  {\"name\": \"finance_property_depreciation\", \"arguments\": {\"initial_cost\": 500000, \"depreciation_rate\": 2, \"years\": 5, \"monthly\": true}}\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "recipe_search": {
+        "diet": [
+         [
+          "Gluten Free"
+         ],
+         [
+          "GF"
+         ],
+         [
+          "gluten free"
+         ]
+        ],
+        "dish": [
+         "cookie"
+        ],
+        "time_limit": [
+         30
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "diet": [
+         "Gluten Free"
+        ],
+        "dish": "cookie",
+        "time_limit": 29
+       },
+       "name": "recipe_search"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_358",
+     "out_tokens": 298,
+     "response_tail": "\n\n[{\"name\": \"recipe_search\", \"arguments\": {\"dish\": \"cookie\", \"diet\": [\"Gluten Free\"], \"time_limit\": 29}}]",
+     "status": "wrong",
+     "sub": "simple"
+    }
+   ],
+   "gpu_minutes": 1.513,
+   "info_per_gpu_min": 5.667,
+   "max_tokens": 8192,
+   "mean_out_tokens": 321.1,
+   "mean_prompt_tokens": 559.7,
+   "mean_score": 0.875,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 60,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 7.12,
+   "p50_out_tokens": 231,
+   "p90_item_s": 16.68,
+   "status_counts": {
+    "correct": 60,
+    "wrong": 10
+   },
+   "sub": {
+    "irrelevance": {
+     "acc": 0.7,
+     "acc_strict": 0.7,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3968,
+      0.8922
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 304.6,
+     "mean_prompt_tokens": 403.0,
+     "mean_score": 0.7,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 5.94,
+     "p50_out_tokens": 187,
+     "p90_item_s": 14.78,
+     "status_counts": {
+      "correct": 7,
+      "wrong": 3
+     },
+     "total_out_tokens": 3046,
+     "total_prompt_tokens": 4030,
+     "trunc_rate": 0.0,
+     "wall_s": 317.0
+    },
+    "multiple": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5481,
+      0.9295
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 230.0,
+     "mean_prompt_tokens": 689.0,
+     "mean_score": 0.8,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 5.45,
+     "p50_out_tokens": 197,
+     "p90_item_s": 14.29,
+     "status_counts": {
+      "correct": 12,
+      "wrong": 3
+     },
+     "total_out_tokens": 3450,
+     "total_prompt_tokens": 10335,
+     "trunc_rate": 0.0,
+     "wall_s": 517.6
+    },
+    "parallel": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7961,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 428.3,
+     "mean_prompt_tokens": 468.1,
+     "mean_score": 1.0,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 9.34,
+     "p50_out_tokens": 355,
+     "p90_item_s": 21.96,
+     "status_counts": {
+      "correct": 15
+     },
+     "total_out_tokens": 6424,
+     "total_prompt_tokens": 7021,
+     "trunc_rate": 0.0,
+     "wall_s": 537.2
+    },
+    "parallel_multiple": {
+     "acc": 0.7,
+     "acc_strict": 0.7,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3968,
+      0.8922
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 494.0,
+     "mean_prompt_tokens": 874.3,
+     "mean_score": 0.825,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 7,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 11.99,
+     "p50_out_tokens": 441,
+     "p90_item_s": 22.75,
+     "status_counts": {
+      "correct": 7,
+      "wrong": 3
+     },
+     "total_out_tokens": 4940,
+     "total_prompt_tokens": 8743,
+     "trunc_rate": 0.0,
+     "wall_s": 295.6
+    },
+    "simple": {
+     "acc": 0.95,
+     "acc_strict": 0.95,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7639,
+      0.9911
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 230.7,
+     "mean_prompt_tokens": 452.6,
+     "mean_score": 0.95,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 19,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 6.04,
+     "p50_out_tokens": 196,
+     "p90_item_s": 9.02,
+     "status_counts": {
+      "correct": 19,
+      "wrong": 1
+     },
+     "total_out_tokens": 4614,
+     "total_prompt_tokens": 9052,
+     "trunc_rate": 0.0,
+     "wall_s": 559.1
+    }
+   },
+   "total_out_tokens": 22474,
+   "total_prompt_tokens": 39181,
+   "trunc_rate": 0.0,
+   "wall_s": 559.1
+  }
+ },
+ "invalid_reasons": [],
+ "lcb_window": {
+  "after": "2025-01-11",
+  "before": "2025-04-05",
+  "counts": {
+   "easy": 8,
+   "medium": 22
+  },
+  "difficulties": [
+   "easy",
+   "medium"
+  ],
+  "file": "test6.jsonl",
+  "hard_available": false,
+  "n_seen": {
+   "easy": 43,
+   "hard": 80,
+   "medium": 52
+  },
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+ },
+ "model": "m",
+ "notes": [
+  "tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)",
+  "tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others",
+  "code: HumanEval+ items are a seeded sample of a curated 60-task hard pool (not the whole benchmark); MBPP+ items are a seeded sample of tasks with >= 3-line canonical solutions",
+  "code: HumanEval/32 (find_zero) is excluded: the HF test.jsonl assertion is malformed (unpacks a float) and even the canonical solution violates the find_zero oracle on 7/886 plus inputs, so the task is unpassable as shipped",
+  "code: LCB items are easy+medium problems of the newest release window (test6.jsonl), scored on the public tests plus a seeded sample of private tests (<= 24 per problem, first failure stops) with a 10 s wall limit per test; this is not the official LiveCodeBench scorer (which runs every private test)",
+  "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; no network isolation (the tests do not need network)",
+  "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is 'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and stdout must match the expected line structure",
+  "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
+  "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
+  "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+  "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
+  "longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers",
+  "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), 10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of MMLU-Pro keys are known to be noisy and are not corrected here",
+  "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged ('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; stricter than the official LLM grader on partial names, so absolute numbers are not comparable with published SimpleQA scores - use it for paired comparisons",
+  "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
+  "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
+  "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
+  "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
+  "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
+  "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+  "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+  "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/'et al.', deliberately not protected because protecting a form means never splitting after it again; 19 of the 132 instruction instances are number_sentences",
+  "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+  "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
+ ],
+ "partial": false,
+ "schema_version": 1,
+ "skipped_ids": [],
+ "started_at": "2026-09-04T14:11:48Z",
+ "tag": "q27_fp8_b12x--",
+ "truncated": true,
+ "valid": true,
+ "wall_s": 1320.0
+}

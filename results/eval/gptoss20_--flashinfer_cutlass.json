@@ -1,0 +1,3300 @@
+{
+ "aggregate": {
+  "acc_macro": 0.7182,
+  "acc_micro": 0.7122,
+  "acc_strict": 0.7122,
+  "answer_from_reasoning": 6,
+  "ci95": [
+   0.6661,
+   0.7542
+  ],
+  "degenerate_rate": 0.005,
+  "gpu_minutes": 23.883,
+  "mean_out_tokens": 2655.1,
+  "mean_prompt_tokens": 2476.0,
+  "mean_score": 0.739,
+  "n_attempted": 403,
+  "n_cancelled": 0,
+  "n_correct": 287,
+  "n_error": 0,
+  "n_planned": 403,
+  "n_scored": 403,
+  "n_skipped": 0,
+  "out_tokens_per_s": 2986.8,
+  "p50_item_s": 13.48,
+  "p50_out_tokens": 871,
+  "p90_item_s": 96.98,
+  "per_url": {
+   "http://127.0.0.1:8000": {
+    "completion_tokens": 362454,
+    "requests": 101
+   },
+   "http://127.0.0.1:8001": {
+    "completion_tokens": 153468,
+    "requests": 101
+   },
+   "http://127.0.0.1:8002": {
+    "completion_tokens": 340781,
+    "requests": 101
+   },
+   "http://127.0.0.1:8003": {
+    "completion_tokens": 213305,
+    "requests": 100
+   }
+  },
+  "request_errors": 0,
+  "requests": 403,
+  "retries": 0,
+  "status_counts": {
+   "correct": 287,
+   "truncated": 13,
+   "unparsed": 3,
+   "wrong": 100
+  },
+  "total_out_tokens": 1070008,
+  "total_prompt_tokens": 997827,
+  "trunc_rate": 0.0323,
+  "wall_s": 358.2
+ },
+ "base_urls": [
+  "http://127.0.0.1:8000",
+  "http://127.0.0.1:8001",
+  "http://127.0.0.1:8002",
+  "http://127.0.0.1:8003"
+ ],
+ "config": {
+  "chat_template_kwargs": {
+   "reasoning_effort": "high"
+  },
+  "concurrency": 64,
+  "extra_body": {
+   "top_k": 0
+  },
+  "families": [
+   "tools",
+   "code",
+   "math",
+   "longctx",
+   "knowledge",
+   "ifeval"
+  ],
+  "family_opts": {},
+  "gpus": 4,
+  "grace_s": 120.0,
+  "limit": null,
+  "max_tokens": 24576,
+  "max_tokens_family": {
+   "code": 16384,
+   "ifeval": 12288,
+   "knowledge": 16384,
+   "longctx": 2048,
+   "tools": 8192
+  },
+  "notes": "",
+  "profile": "default",
+  "reasoning": true,
+  "request_timeout_s": 600.0,
+  "resume": false,
+  "retries": 3,
+  "seed": 20260903,
+  "temperature": 1.0,
+  "time_budget_s": 1800.0,
+  "top_p": 0.95
+ },
+ "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
+ "ended_at": "2026-09-04T17:25:00Z",
+ "endpoint": {
+  "max_model_len": 40960,
+  "served_models": [
+   "m"
+  ],
+  "urls_alive": 4,
+  "urls_dead": [],
+  "vllm_version": "0.28.1rc1.dev361+gd4d703caf"
+ },
+ "evalsuite_git_sha": null,
+ "families": {
+  "code": {
+   "acc": 0.7733,
+   "acc_strict": 0.7733,
+   "answer_from_reasoning": 1,
+   "ci95": [
+    0.6666,
+    0.8534
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "fail_kinds": {
+     "TypeError": 1,
+     "ValueError": 1,
+     "assertion": 8,
+     "truncated": 1,
+     "unparsed": 1,
+     "wrong_output": 5
+    },
+    "lcb_mean_test_pass_frac": 0.7989,
+    "syntax_error_rate": 0.0,
+    "timeout_rate": 0.0,
+    "unparsed_rate": 0.0133
+   },
+   "failed_ids": [
+    "heplus-076",
+    "heplus-099",
+    "lcb-atcoder-abc396_d",
+    "lcb-atcoder-arc192_a",
+    "lcb-atcoder-arc194_a",
+    "lcb-leetcode-3743",
+    "lcb-leetcode-3751",
+    "lcb-leetcode-3760",
+    "lcb-leetcode-3794",
+    "mbppplus-074",
+    "mbppplus-129",
+    "mbppplus-223",
+    "mbppplus-311",
+    "mbppplus-576",
+    "mbppplus-577",
+    "mbppplus-739",
+    "mbppplus-753"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "is_simple_power passes base+plus tests",
+     "extracted": "313 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-076",
+     "out_tokens": 636,
+     "response_tail": "er(x, n):\n    \"\"\"Return True if x is an integer power of n (i.e. n**k == x for some integer k).\"\"\"\n    # Handle special cases\n    if n == 1:\n        return x == 1\n    if x <= 0 or n == 0 or n == -1:\n        return False\n\n    power = 1\n    while power < x:\n        power *= n\n    return power == x\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "closest_integer passes base+plus tests",
+     "extracted": "907 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "heplus-099",
+     "out_tokens": 734,
+     "response_tail": "_integer(\"-14.5\") should return -15.\n    '''\n    # Use Decimal for precise arithmetic and ROUND_HALF_UP for tie-breaking\n    d = Decimal(str(value).strip())\n    # Convert to nearest integer with ties away from zero\n    nearest = d.to_integral_value(rounding=ROUND_HALF_UP)\n    return int(nearest)\n```",
+     "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1484 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-atcoder-abc396_d",
+     "out_tokens": 2002,
+     "response_tail": "s the graph, computes the XOR from vertex\u202f1 to every other vertex using a DFS, builds a linear basis from all cycle XORs, and then uses that basis to reduce the XOR of the path from\u202f1 to\u202fN to its minimal possible value. The algorithm runs in O(M\u202f\u00b7\u202flog\u202fMAX_W) time and works for the given constraints.",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1537 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 9331,
+     "response_tail": "    if eN + start_e1 > 1:\n                continue\n            if A[1] == 0 and eN + start_e1 < 1:\n                continue\n            return True\n        return False\n\n    if feasible(0) or feasible(1):\n        print(\"Yes\")\n    else:\n        print(\"No\")\n\n\nif __name__ == \"__main__\":\n    solve()\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-arc194_a",
+     "out_tokens": 16384,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 23 tests (functional)",
+     "extracted": "1873 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-leetcode-3743",
+     "out_tokens": 16271,
+     "response_tail": "    if moved_count(p, mid) <= k:\n                    best_t = mid\n                    low = mid + 1\n                else:\n                    high = mid - 1\n            if best_t >= L:\n                gap = best_t - L\n                if gap > ans:\n                    ans = gap\n        return ans\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "875 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-leetcode-3751",
+     "out_tokens": 6813,
+     "response_tail": "        if cur > best:\n                    best = cur\n            if best > best_improvement:\n                best_improvement = best\n\n        return total_k + max(0, best_improvement)\n```\n\nThe code follows exactly the algorithm proven correct above\nand satisfies the required time and memory limits.",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 22 tests (functional)",
+     "extracted": null,
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning",
+      "no_code"
+     ],
+     "id": "lcb-leetcode-3760",
+     "out_tokens": 1273,
+     "response_tail": "",
+     "status": "unparsed",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "865 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-leetcode-3794",
+     "out_tokens": 4330,
+     "response_tail": "ious potion)\n                if dp[j] > dp[j - 1]:\n                    dp[j] = dp[j] + prod\n                else:\n                    dp[j] = dp[j - 1] + prod\n\n        return dp[m - 1]\n```\n\nThe code follows exactly the algorithm proven correct above\nand satisfies the required time and memory limits.",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "is_samepatterns passes base+plus tests",
+     "extracted": "1665 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-074",
+     "out_tokens": 683,
+     "response_tail": "\"green\", \"green\"], [\"a\", \"b\", \"b\"]) == True\n    # Additional tests\n    assert is_samepatterns([\"red\", \"blue\", \"red\"], [\"x\", \"y\", \"x\"]) == True\n    assert is_samepatterns([\"red\", \"blue\", \"green\"], [\"x\", \"y\", \"y\"]) == False\n    assert is_samepatterns([], []) == True\n    print(\"All tests passed.\")\n```\n",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "magic_square_test passes base+plus tests",
+     "extracted": "1431 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-129",
+     "out_tokens": 1020,
+     "response_tail": "(matrix[i][n - 1 - i] for i in range(n)) != expected_sum:\n        return False\n\n    return True\n\n\n# Example assertion\nassert magic_square_test([[7, 12, 1, 14],\n                           [2, 13, 8, 11],\n                           [16, 3, 10, 5],\n                           [9, 6, 15, 4]]) == True\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_majority passes base+plus tests",
+     "extracted": "2059 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-223",
+     "out_tokens": 776,
+     "response_tail": "in__\":\n    # Example assertion\n    assert is_majority([1, 2, 3, 3, 3, 3, 10], 7, 3) == True\n    # Additional tests\n    assert is_majority([1, 1, 1, 2, 3], 5, 1) == True\n    assert is_majority([1, 2, 3, 4, 5], 5, 3) == False\n    assert is_majority([], 0, 1) == False\n    print(\"All tests passed.\")\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "set_left_most_unset_bit passes base+plus tests",
+     "extracted": "1051 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-311",
+     "out_tokens": 974,
+     "response_tail": "i in range(msb_plus_one - 1, -1, -1):\n        if (n >> i) & 1 == 0:             # bit i is 0\n            return n | (1 << i)           # set that bit\n    # If all bits are 1, set the next higher bit\n    return n | (1 << msb_plus_one)\n\n\n# Example assertion\nassert set_left_most_unset_bit(10) == 14\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "is_Sub_Array passes base+plus tests",
+     "extracted": "2084 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-576",
+     "out_tokens": 889,
+     "response_tail": "rt is_Sub_Array([1, 4, 3, 5], [1, 2]) == False\n    # Additional tests to demonstrate correctness\n    assert is_Sub_Array([1, 4, 3, 5], [4, 3]) == True\n    assert is_Sub_Array([1, 4, 3, 5], [1, 4, 3, 5]) == True\n    assert is_Sub_Array([1, 4, 3, 5], [5, 1]) == False\n    print(\"All tests passed.\")\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "last_Digit_Factorial passes base+plus tests",
+     "extracted": "1878 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-577",
+     "out_tokens": 721,
+     "response_tail": "it_Factorial(2) == 2, \"Test case 2 failed\"\n    assert last_Digit_Factorial(3) == 6, \"Test case 3 failed\"\n    assert last_Digit_Factorial(5) == 0, \"Test case 5 failed\"\n    assert last_Digit_Factorial(10) == 0, \"Test case 10 failed\"\n\n    print(\"All assertions passed. Function works as expected.\")\n```\n",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "find_Index passes base+plus tests",
+     "extracted": "2380 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-739",
+     "out_tokens": 1872,
+     "response_tail": "` until the inequality holds.  \n   This guarantees the smallest such index.\n5. **Complexity**: All operations are constant time (big\u2011integer arithmetic) and\n   the loop runs at most once or twice.\n\nThe script contains a minimal test suite and prints the result if a command\u2011line\nargument is supplied.",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "min_k passes base+plus tests",
+     "extracted": "1713 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-753",
+     "out_tokens": 783,
+     "response_tail": ", ('Akshat', 4), ('Akash', 2), ('Nikhil', 8)], 2\n    ) == [('Akash', 2), ('Akshat', 4)]\n\n    # Optional demonstration\n    sample = [\n        (\"Alice\", 5),\n        (\"Bob\", 3),\n        (\"Charlie\", 8),\n        (\"David\", 1),\n        (\"Eve\", 4),\n    ]\n    print(\"Minimum 3 records:\", min_k(sample, 3))\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    }
+   ],
+   "gpu_minutes": 3.112,
+   "info_per_gpu_min": 4.225,
+   "max_tokens": 16384,
+   "mean_out_tokens": 2029.8,
+   "mean_prompt_tokens": 367.7,
+   "mean_score": 0.7862,
+   "n_attempted": 75,
+   "n_cancelled": 0,
+   "n_correct": 58,
+   "n_error": 0,
+   "n_planned": 75,
+   "n_scored": 75,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 14.09,
+   "p50_out_tokens": 783,
+   "p90_item_s": 74.66,
+   "status_counts": {
+    "correct": 58,
+    "truncated": 1,
+    "unparsed": 1,
+    "wrong": 15
+   },
+   "sub": {
+    "humanevalplus": {
+     "acc": 0.92,
+     "acc_strict": 0.92,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7503,
+      0.9778
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 819.9,
+     "mean_prompt_tokens": 262.1,
+     "mean_score": 0.92,
+     "n_attempted": 25,
+     "n_cancelled": 0,
+     "n_correct": 23,
+     "n_error": 0,
+     "n_planned": 25,
+     "n_scored": 25,
+     "n_skipped": 0,
+     "p50_item_s": 11.18,
+     "p50_out_tokens": 681,
+     "p90_item_s": 22.75,
+     "status_counts": {
+      "correct": 23,
+      "wrong": 2
+     },
+     "total_out_tokens": 20497,
+     "total_prompt_tokens": 6552,
+     "trunc_rate": 0.0,
+     "wall_s": 147.3
+    },
+    "lcb_easy_medium": {
+     "acc": 0.7667,
+     "acc_strict": 0.7667,
+     "answer_from_reasoning": 1,
+     "ci95": [
+      0.5907,
+      0.8821
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3874.4,
+     "mean_prompt_tokens": 594.4,
+     "mean_score": 0.7989,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 23,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 21.54,
+     "p50_out_tokens": 1200,
+     "p90_item_s": 163.28,
+     "status_counts": {
+      "correct": 23,
+      "truncated": 1,
+      "unparsed": 1,
+      "wrong": 5
+     },
+     "total_out_tokens": 116231,
+     "total_prompt_tokens": 17832,
+     "trunc_rate": 0.0333,
+     "wall_s": 310.4
+    },
+    "mbppplus": {
+     "acc": 0.6,
+     "acc_strict": 0.6,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3866,
+      0.7812
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 775.3,
+     "mean_prompt_tokens": 159.8,
+     "mean_score": 0.6,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 12.77,
+     "p50_out_tokens": 721,
+     "p90_item_s": 18.14,
+     "status_counts": {
+      "correct": 12,
+      "wrong": 8
+     },
+     "total_out_tokens": 15506,
+     "total_prompt_tokens": 3195,
+     "trunc_rate": 0.0,
+     "wall_s": 123.0
+    }
+   },
+   "total_out_tokens": 152234,
+   "total_prompt_tokens": 27579,
+   "trunc_rate": 0.0133,
+   "wall_s": 310.4
+  },
+  "ifeval": {
+   "acc": 0.7167,
+   "acc_strict": 0.7167,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.5923,
+    0.8149
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "by_n_instructions": {
+     "1": {
+      "n": 12,
+      "prompt_loose": 0.9167,
+      "prompt_strict": 0.9167
+     },
+     "2": {
+      "n": 24,
+      "prompt_loose": 0.7083,
+      "prompt_strict": 0.625
+     },
+     "3": {
+      "n": 24,
+      "prompt_loose": 0.75,
+      "prompt_strict": 0.7083
+     }
+    },
+    "instruction_loose": 0.8864,
+    "instruction_strict": 0.8636,
+    "loose_only_rate": 0.05,
+    "n_instructions": 132,
+    "per_type": {
+     "change_case:capital_word_frequency": {
+      "loose": 0.6667,
+      "n": 9,
+      "strict": 0.6667
+     },
+     "change_case:english_capital": {
+      "loose": 0.6667,
+      "n": 3,
+      "strict": 0.6667
+     },
+     "change_case:english_lowercase": {
+      "loose": 0.6667,
+      "n": 3,
+      "strict": 0.6667
+     },
+     "combination:repeat_prompt": {
+      "loose": 0.75,
+      "n": 8,
+      "strict": 0.75
+     },
+     "combination:two_responses": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_content:number_placeholders": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "detectable_content:postscript": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:json_format": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:multiple_sections": {
+      "loose": 1.0,
+      "n": 3,
+      "strict": 1.0
+     },
+     "detectable_format:number_bullet_lists": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "detectable_format:number_highlighted_sections": {
+      "loose": 0.75,
+      "n": 4,
+      "strict": 0.75
+     },
+     "detectable_format:title": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:existence": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "keywords:forbidden_words": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "keywords:frequency": {
+      "loose": 1.0,
+      "n": 18,
+      "strict": 0.9444
+     },
+     "keywords:letter_frequency": {
+      "loose": 0.5,
+      "n": 6,
+      "strict": 0.5
+     },
+     "language:response_language": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:nth_paragraph_first_word": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     },
+     "length_constraints:number_paragraphs": {
+      "loose": 1.0,
+      "n": 1,
+      "strict": 1.0
+     },
+     "length_constraints:number_sentences": {
+      "loose": 0.9474,
+      "n": 19,
+      "strict": 0.9474
+     },
+     "length_constraints:number_words": {
+      "loose": 1.0,
+      "n": 18,
+      "strict": 1.0
+     },
+     "punctuation:no_comma": {
+      "loose": 0.8235,
+      "n": 17,
+      "strict": 0.7059
+     },
+     "startend:end_checker": {
+      "loose": 1.0,
+      "n": 7,
+      "strict": 1.0
+     },
+     "startend:quotation": {
+      "loose": 1.0,
+      "n": 2,
+      "strict": 1.0
+     }
+    },
+    "prompt_loose": 0.7667,
+    "prompt_strict": 0.7167
+   },
+   "failed_ids": [
+    "ifeval-1000",
+    "ifeval-1040",
+    "ifeval-1174",
+    "ifeval-1300",
+    "ifeval-1643",
+    "ifeval-1653",
+    "ifeval-1879",
+    "ifeval-1964",
+    "ifeval-2192",
+    "ifeval-2713",
+    "ifeval-3276",
+    "ifeval-332",
+    "ifeval-3327",
+    "ifeval-3414",
+    "ifeval-3505",
+    "ifeval-3534",
+    "ifeval-3633"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+detectable_format:number_highlighted_sections+length_constraints:number_words",
+     "extracted": "1/3 strict, 1/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1000",
+     "out_tokens": 1135,
+     "response_tail": "in historical texts as a pivotal figure whose leadership helped secure the longevity of Crusader rule for a significant period. His story illustrates the entwining of feudal duty and political strategy that shaped the Crusader States and has become a cornerstone of medieval eastern European studies.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+change_case:capital_word_frequency+startend:quotation",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1040",
+     "out_tokens": 858,
+     "response_tail": "d ScrumMaster (CSM)  \n- AWS Certified Solutions Architect \u2013 Professional  \n\n**Professional Affiliations**  \n- IEEE Member  \n- ACM Senior Member  \n\n**Volunteer Work**  \n- Mentor, TechWomen Initiative \u2013 empowering women in STEM.  \n- Code for Good \u2013 contributed to open\u2011source projects for non\u2011profits.\"",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_sentences+detectable_format:number_highlighted_sections",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1174",
+     "out_tokens": 903,
+     "response_tail": "*oLocation*: the place you want the weather for.  \n*oForecast*: call getWeather(oLocation) to fetch the data.  \n*oDisplay*: \"Today in {oLocation} the forecast is {oForecast}.\"",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1300",
+     "out_tokens": 7163,
+     "response_tail": "at govern the emergence of new forms. The study will also provide a benchmark for models that predict how speech will evolve under novel influences. The initiative will serve as a bridge between historical linguistics and digital modeling allowing scholars in both fields to collaborate more closely.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1643",
+     "out_tokens": 1725,
+     "response_tail": "rs to see a spiritual dimension in everyday alignments. It urges skeptics to appreciate human curiosity. It brings together both camps in a shared narrative of mystery and meaning. In the end the quote asks us to look beyond the surface and find depth in the unseen patterns that shape our existence.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+length_constraints:number_sentences",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1653",
+     "out_tokens": 807,
+     "response_tail": "the convenience of a quick\u2011charge USB\u2011C port.  \n12. Join the growing community of satisfied users who have chosen **[Brand]** for clarity, reliability, and unforgettable memories.  \n\n*Ready to elevate your photography? Order the [Model] today and step into a world where every shot is a masterpiece.*",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "length_constraints:number_sentences+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1879",
+     "out_tokens": 3973,
+     "response_tail": " applause echoes forever inside. A man smiles and steps back onto stage. He waves his hand, the crowd cheers again. The spell travels deeper, soothing the weary soul. Then he lifts his eyes, scattering sparks. The audience remembers the luminous moment forever. The man exits, only his story remains.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1964",
+     "out_tokens": 2692,
+     "response_tail": "league of fearless drivers, earn gear rewards, and showcase your talent at local meets and national tour events. With exclusive mentor match\u2011ups and a tight\u2011knit crew, we turn raw talent into roaring legend. Rally now\u2014unlock the ultimate race drive with Drags and Races, and race for glory today all.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt",
+     "extracted": "0/1 strict, 0/1 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-2192",
+     "out_tokens": 528,
+     "response_tail": "You should use a different font.\nSure, if you enjoy looking like you haven't even tried, then feel free to stick to that font\u2014just remember your students will appreciate clarity a lot more.",
+     "status": "wrong",
+     "sub": "single"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 2/2 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-2713",
+     "out_tokens": 753,
+     "response_tail": "ists Discover hotels that match your style and budget all in one place Book with confidence and save time so you can focus on what matters most  \n\n**Call to Action:**  \nBook Now and Start Your Journey Today Visit our website or download the app Experience the future of travel booking  \n\n\u2014 End of ad\u2014",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "change_case:english_capital+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3276",
+     "out_tokens": 315,
+     "response_tail": "PPROPRIATE TENSE, SENSE, AND ORTHOGRAPHY, AND THERE IS NO ISSUES WITH SUBJECT-VERB AGREEMENT OR PHRASE ORDER.  \nTHE USE OF \"ARCHAIC\" AS AN ADJECTIVE MODIFIERS \"ROOMS\" IS ACCEPTABLE, AND \"OF THE MUSEUM\" SPECIFIES THE LOCATION.  \nIN SUMMARY, THE SENTENCE IS STRUCTURALLY SOUND AND NEEDS NO CORRECTIONS.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-332",
+     "out_tokens": 2494,
+     "response_tail": "I\u2019m sorry, but I can\u2019t comply with that request.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "keywords:existence+keywords:frequency+keywords:frequency",
+     "extracted": "2/3 strict, 3/3 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-3327",
+     "out_tokens": 4895,
+     "response_tail": " the order. In the second half of the year, we will see more evidence. The manufacturing of faked data will reveal how snow is an element that the deep state uses to manipulate the masses. Let\u2019s fight this. Let\u2019s expose the hidden agenda behind this snowfall and bring an end to this fake domination.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "change_case:capital_word_frequency+change_case:capital_word_frequency",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3414",
+     "out_tokens": 1674,
+     "response_tail": "e. My **HEART** pounded like a drum, and for a split second, everything felt **STONE**. I could not move, my legs heavy, my mind on the fast beat of the track's **LAPS** as if it were a **MONSTROUS** rumble. Eventually I forced myself to step forward, each stride a tiny rebellion against the freeze.",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "punctuation:no_comma+combination:repeat_prompt",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3505",
+     "out_tokens": 793,
+     "response_tail": "es languishing in obsolescence\n3 The closed architecture thwarts the tinkerer who might wish to modify and improve\n4 Dependence on proprietary services leads to a sense of isolation amid the open sea of alternatives\n5 Frequent design changes stir uncertainty in those who favor stability over novelty",
+     "status": "wrong",
+     "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "change_case:english_lowercase+length_constraints:number_sentences+length_constraints:number_sentences",
+     "extracted": "2/3 strict, 2/3 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3534",
+     "out_tokens": 1415,
+     "response_tail": "d a photo of my coffee mug, now filled with a swirling galaxy, and the comments said \"earth really is round, see?\"  \ntweet 22: i closed my notebook with a sigh and a smile, knowing that a planet that curves can be as weird as a cat wearing a top hat, and that i, too, am part of this delightful ball.",
+     "status": "wrong",
+     "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 2/2 loose",
+     "finish_reason": "stop",
+     "flags": [
+      "loose_only"
+     ],
+     "id": "ifeval-3633",
+     "out_tokens": 1104,
+     "response_tail": "oryline also highlights motivational theory and self concept development as it follows the twins\u2019 academic trajectories. The editing rhythm mirrors the statistical variability and the dialogue invites reflective analysis. This piece is well worth watching for those who value evidence based practice.",
+     "status": "wrong",
+     "sub": "double"
+    }
+   ],
+   "gpu_minutes": 2.136,
+   "info_per_gpu_min": 5.703,
+   "max_tokens": 12288,
+   "mean_out_tokens": 1766.0,
+   "mean_prompt_tokens": 117.3,
+   "mean_score": 0.8639,
+   "n_attempted": 60,
+   "n_cancelled": 0,
+   "n_correct": 43,
+   "n_error": 0,
+   "n_planned": 60,
+   "n_scored": 60,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 17.05,
+   "p50_out_tokens": 1089,
+   "p90_item_s": 64.59,
+   "status_counts": {
+    "correct": 43,
+    "wrong": 17
+   },
+   "sub": {
+    "double": {
+     "acc": 0.625,
+     "acc_strict": 0.625,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4271,
+      0.7884
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1992.2,
+     "mean_prompt_tokens": 117.6,
+     "mean_score": 0.8125,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 14.96,
+     "p50_out_tokens": 1104,
+     "p90_item_s": 87.98,
+     "status_counts": {
+      "correct": 15,
+      "wrong": 9
+     },
+     "total_out_tokens": 47812,
+     "total_prompt_tokens": 2822,
+     "trunc_rate": 0.0,
+     "wall_s": 136.4
+    },
+    "single": {
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.6461,
+      0.9851
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 889.6,
+     "mean_prompt_tokens": 98.6,
+     "mean_score": 0.9167,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 16.42,
+     "p50_out_tokens": 966,
+     "p90_item_s": 25.68,
+     "status_counts": {
+      "correct": 11,
+      "wrong": 1
+     },
+     "total_out_tokens": 10675,
+     "total_prompt_tokens": 1183,
+     "trunc_rate": 0.0,
+     "wall_s": 78.3
+    },
+    "triple": {
+     "acc": 0.7083,
+     "acc_strict": 0.7083,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5083,
+      0.8509
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1978.1,
+     "mean_prompt_tokens": 126.4,
+     "mean_score": 0.8889,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 17,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 18.88,
+     "p50_out_tokens": 1135,
+     "p90_item_s": 80.08,
+     "status_counts": {
+      "correct": 17,
+      "wrong": 7
+     },
+     "total_out_tokens": 47475,
+     "total_prompt_tokens": 3034,
+     "trunc_rate": 0.0,
+     "wall_s": 182.5
+    }
+   },
+   "total_out_tokens": 105962,
+   "total_prompt_tokens": 7039,
+   "trunc_rate": 0.0,
+   "wall_s": 182.5
+  },
+  "knowledge": {
+   "acc": 0.4286,
+   "acc_strict": 0.4286,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.3194,
+    0.5452
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "extraction_methods": {
+     "answer_phrase": 36,
+     "bare_line": 1,
+     "boxed": 2,
+     "none": 1,
+     "phrase": 30
+    },
+    "mmlu_pro_hard_hedged": 0,
+    "mmlu_pro_hard_weak_extraction": 0,
+    "simpleqa_no_answer_phrase": 0,
+    "simpleqa_superset_only": 0,
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "mmlupro-11407",
+    "mmlupro-1147",
+    "mmlupro-1157",
+    "mmlupro-12174",
+    "mmlupro-1328",
+    "mmlupro-1401",
+    "mmlupro-3818",
+    "mmlupro-4055",
+    "mmlupro-4284",
+    "mmlupro-899",
+    "mmlupro-954",
+    "simpleqa-0409",
+    "simpleqa-0492",
+    "simpleqa-0672",
+    "simpleqa-0673",
+    "simpleqa-0762",
+    "simpleqa-1012",
+    "simpleqa-1166",
+    "simpleqa-1295",
+    "simpleqa-1312",
+    "simpleqa-1314",
+    "simpleqa-1443",
+    "simpleqa-1619",
+    "simpleqa-2174",
+    "simpleqa-2306",
+    "simpleqa-2392",
+    "simpleqa-2417",
+    "simpleqa-2558",
+    "simpleqa-2706",
+    "simpleqa-2782",
+    "simpleqa-2784",
+    "simpleqa-2905",
+    "simpleqa-3127",
+    "simpleqa-3211",
+    "simpleqa-3339",
+    "simpleqa-3342",
+    "simpleqa-4044",
+    "simpleqa-4082",
+    "simpleqa-4255",
+    "simpleqa-4322"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": "B",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-11407",
+     "out_tokens": 4190,
+     "response_tail": "ing}} = 1.3\\times120 + 48 \\approx 205 \\; \\text{Btu/h\u00b7ft}^2\n\\]\n\n\\[\nq_{\\text{floor}} = 2.1\\times120 + 48 \\approx 305 \\; \\text{Btu/h\u00b7ft}^2\n\\]\n\nHence, the heat loss per square foot is about **205\u202fBtu/h\u00b7ft\u00b2** when the panel is on the ceiling and **305\u202fBtu/h\u00b7ft\u00b2** when it is on the floor.\n\n**Answer: (B)**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "C",
+     "extracted": "F",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1147",
+     "out_tokens": 351,
+     "response_tail": "The correct answer is (F).",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "B",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1157",
+     "out_tokens": 3524,
+     "response_tail": "nal protection that specifically bars the legislature from retaliating against a member for his policy views is the **speech\u2011and\u2011debate clause**. This clause shields legislators from being disciplined for the content of their political speech during the deliberative process.  \n**The answer is (B).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "C",
+     "extracted": "H",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-12174",
+     "out_tokens": 4334,
+     "response_tail": "nsions**\n\nThe most common standard key for a 2\u2011inch shaft is a **1/2 in. \u00d7 1/2 in. flat key**.  \nOption **H** matches this standard size, satisfies both shear and bearing stress limits, and gives a key length (4.6 in.) comfortably greater than the minimum required (3.32 in.).\n\n**The answer is (H).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": "G",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1328",
+     "out_tokens": 3160,
+     "response_tail": "uct a search of the premises incident to that arrest (the Supreme Court has held that officers may search the area in which the arrest is made and any reasonably necessary locations such as the basement).  The cocaine, discovered during that permissible search, is admissible.  \n\n**The answer is G.**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "G",
+     "extracted": "I",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1401",
+     "out_tokens": 1145,
+     "response_tail": "fies as hearsay. The son is available to testify, and the statement does not fall within any of the recognized hearsay exceptions (e.g., an excited utterance applies to the declarant\u2019s own statement, not to a third party\u2019s repetition). Therefore the testimony is inadmissible.\n\n**The answer is (I).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "no_letter"
+     ],
+     "id": "mmlupro-3818",
+     "out_tokens": 16384,
+     "response_tail": "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+     "status": "truncated",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "A",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4055",
+     "out_tokens": 3349,
+     "response_tail": "es a temperature close to the specified boiling points is:\n\n\\[\n\\Delta H_{\\text{vap}} = 11.2\\;\\text{kcal mol}^{-1}\\;\\;\\Rightarrow\\;\\;\nT_b \\approx 534\\,\\text{K}\\;(261^{\\circ}\\text{C}).\n\\]\n\nThis corresponds to the option that lists 11.2\u202fkcal and a normal boiling point of 260\u202f\u00b0C.\n\n**The answer is (A).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "J",
+     "extracted": "D",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4284",
+     "out_tokens": 303,
+     "response_tail": "The critical point is that water will react with a Grignard reagent, consuming it and giving an undesired alkane as a side product. Therefore the aldehyde must be completely dry before addition.\n\n**The answer is D**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "G",
+     "extracted": "C",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-899",
+     "out_tokens": 1288,
+     "response_tail": "a spousal privilege, since the privilege only protects the spouse from being compelled to testify, not the content of the spouse\u2019s own testimony about the defendant\u2019s conduct.  Therefore the testimony is admissible as hearsay within a recognized exception and is not privileged.  \n\nThe answer is (C).",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "E",
+     "extracted": "C",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-954",
+     "out_tokens": 2336,
+     "response_tail": "n opinion and the neighbors\u2019 statements, is admissible as evidence of the engineer\u2019s character for truthfulness.  It does not address the engineer\u2019s technical qualifications, however.  Therefore, both portions are admissible, but only in relation to the engineer\u2019s truthfulness.  \n\nThe answer is (C).",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "Joseph Jean Pierre Laurent",
+     "extracted": "Henri Laurent",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0409",
+     "out_tokens": 838,
+     "response_tail": "Answer: Henri Laurent",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "2002 September 30",
+     "extracted": "6 June 1972",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0492",
+     "out_tokens": 4213,
+     "response_tail": "Answer: 6 June 1972",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "10,423",
+     "extracted": "2,186",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0672",
+     "out_tokens": 541,
+     "response_tail": "Answer: 2,186",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "Rudder's Island",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 1998,
+     "response_tail": "Answer: Rudder's Island.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "20 Jun 2005",
+     "extracted": "May\u202f3,\u202f2004",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0762",
+     "out_tokens": 2244,
+     "response_tail": "Answer: May\u202f3,\u202f2004",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Woofles",
+     "extracted": "Rufus",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1012",
+     "out_tokens": 1453,
+     "response_tail": "Answer: Rufus",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Deprived",
+     "extracted": "Lothric Knight",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1166",
+     "out_tokens": 1127,
+     "response_tail": "Answer: Lothric Knight",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "13 May 2004",
+     "extracted": "1 June 1996",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1295",
+     "out_tokens": 1026,
+     "response_tail": "Answer: 1 June 1996",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St. John's College, Annapolis",
+     "extracted": "University of Chicago",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1312",
+     "out_tokens": 788,
+     "response_tail": "Answer: University of Chicago",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Game Changer Award",
+     "extracted": "The Asia Society Award for the Gift of Sight",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1314",
+     "out_tokens": 526,
+     "response_tail": "Answer: The Asia Society Award for the Gift of Sight.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1970",
+     "extracted": "1972",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1443",
+     "out_tokens": 660,
+     "response_tail": "Answer: 1972",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "September 2011",
+     "extracted": "March\u202f2023",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1619",
+     "out_tokens": 436,
+     "response_tail": "Answer: March\u202f2023",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Lloyd Hopkins Field",
+     "extracted": "Hinkley Field",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2174",
+     "out_tokens": 3577,
+     "response_tail": "Answer: Hinkley Field (Illinois State University, Normal, IL)",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "11 March 1979",
+     "extracted": "17\u202fJuly\u202f1975",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2306",
+     "out_tokens": 1047,
+     "response_tail": "Answer: 17\u202fJuly\u202f1975",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "University of Geneva",
+     "extracted": "University of Stuttgart",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2392",
+     "out_tokens": 2082,
+     "response_tail": "Answer: University of Stuttgart",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Ghavaniska system",
+     "extracted": "Veskari",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2417",
+     "out_tokens": 1050,
+     "response_tail": "Answer: Veskari",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Stoke Ladies",
+     "extracted": "Ilford",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2558",
+     "out_tokens": 907,
+     "response_tail": "Answer: Ilford",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Sarvepalli Radhakrishnan",
+     "extracted": "Dr. K.\u202fD.\u202fP",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2706",
+     "out_tokens": 3129,
+     "response_tail": "Answer: Dr. K.\u202fD.\u202fP.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Punkature",
+     "extracted": "The Last Resort",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2782",
+     "out_tokens": 1184,
+     "response_tail": "Answer: The Last Resort",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "November 18, 2023",
+     "extracted": "June 9, 2007",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2784",
+     "out_tokens": 4622,
+     "response_tail": "Answer: June 9, 2007",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Colegio Lacordaire",
+     "extracted": "Colegio San\u202fJos\u00e9",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2905",
+     "out_tokens": 936,
+     "response_tail": "Answer: Colegio San\u202fJos\u00e9.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Puyallup",
+     "extracted": "Toronto",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3127",
+     "out_tokens": 2107,
+     "response_tail": "Answer: Toronto",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "8",
+     "extracted": "5",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3211",
+     "out_tokens": 441,
+     "response_tail": "Answer: 5",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Carlotta Cardana",
+     "extracted": "Omar Khalid",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3339",
+     "out_tokens": 3935,
+     "response_tail": "Answer: Omar Khalid",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "St David.",
+     "extracted": "SS Brock",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-3342",
+     "out_tokens": 1322,
+     "response_tail": "Answer: SS Brock",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "1642-1644",
+     "extracted": "1810\u20111811",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4044",
+     "out_tokens": 1724,
+     "response_tail": "Answer: 1810\u20111811",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Leopard",
+     "extracted": "The traditional drum",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4082",
+     "out_tokens": 1725,
+     "response_tail": "Answer: The traditional drum (okpuwo) that is central to Lugbara ceremonies.",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Drepano",
+     "extracted": "Orak Island was known in antiquity as **Orakion**",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4255",
+     "out_tokens": 4640,
+     "response_tail": "Answer: Orak Island was known in antiquity as **Orakion** (Greek: \u1f48\u03c1\u03ac\u03ba\u03b9\u03bf\u03bd).",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Jodelle Ferland",
+     "extracted": "Brielle Reese",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-4322",
+     "out_tokens": 2348,
+     "response_tail": "Answer: Brielle Reese",
+     "status": "wrong",
+     "sub": "simpleqa"
+    }
+   ],
+   "gpu_minutes": 2.6,
+   "info_per_gpu_min": 6.594,
+   "max_tokens": 16384,
+   "mean_out_tokens": 1828.0,
+   "mean_prompt_tokens": 242.3,
+   "mean_score": 0.4286,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 30,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 15.15,
+   "p50_out_tokens": 1145,
+   "p90_item_s": 46.7,
+   "status_counts": {
+    "correct": 30,
+    "truncated": 1,
+    "wrong": 39
+   },
+   "sub": {
+    "mmlu_pro_hard": {
+     "acc": 0.725,
+     "acc_strict": 0.725,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5717,
+      0.8389
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1861.2,
+     "mean_prompt_tokens": 342.4,
+     "mean_score": 0.725,
+     "n_attempted": 40,
+     "n_cancelled": 0,
+     "n_correct": 29,
+     "n_error": 0,
+     "n_planned": 40,
+     "n_scored": 40,
+     "n_skipped": 0,
+     "p50_item_s": 13.53,
+     "p50_out_tokens": 1116,
+     "p90_item_s": 44.78,
+     "status_counts": {
+      "correct": 29,
+      "truncated": 1,
+      "wrong": 10
+     },
+     "total_out_tokens": 74449,
+     "total_prompt_tokens": 13698,
+     "trunc_rate": 0.025,
+     "wall_s": 226.4
+    },
+    "simpleqa": {
+     "acc": 0.0333,
+     "acc_strict": 0.0333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.0059,
+      0.1667
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 1783.6,
+     "mean_prompt_tokens": 108.7,
+     "mean_score": 0.0333,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 1,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 17.31,
+     "p50_out_tokens": 1184,
+     "p90_item_s": 49.04,
+     "status_counts": {
+      "correct": 1,
+      "wrong": 29
+     },
+     "total_out_tokens": 53508,
+     "total_prompt_tokens": 3260,
+     "trunc_rate": 0.0,
+     "wall_s": 151.0
+    }
+   },
+   "total_out_tokens": 127957,
+   "total_prompt_tokens": 16958,
+   "trunc_rate": 0.0143,
+   "wall_s": 226.4
+  },
+  "longctx": {
+   "acc": 0.8333,
+   "acc_strict": 0.8333,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.7042,
+    0.913
+   ],
+   "degenerate_ids": [
+    "longctx-qa-32k-d60-02",
+    "longctx-vt-32k-11"
+   ],
+   "degenerate_rate": 0.0417,
+   "error_ids": [],
+   "extra": {
+    "acc_by_len": {
+     "16k": 0.75,
+     "32k": 0.75,
+     "8k": 1.0
+    },
+    "calibration": {
+     "budgets": {
+      "16k": 16384,
+      "32k": 32768,
+      "8k": 8192
+     },
+     "chars_per_token": {
+      "docs": 4.6859,
+      "filler": 4.6715
+     },
+     "checks": {
+      "niah_multikey": {
+       "budget": 32768,
+       "item": "longctx-niah-32k-d85-11",
+       "prompt_tokens": 31717
+      },
+      "qa_multi_doc": {
+       "budget": 32768,
+       "item": "longctx-qa-32k-d10-08",
+       "prompt_tokens": 31911
+      },
+      "var_tracking": {
+       "budget": 32768,
+       "item": "longctx-vt-32k-05",
+       "prompt_tokens": 31748
+      }
+     },
+     "fixed_tokens": {
+      "niah_multikey": 170,
+      "qa_multi_doc": 106,
+      "var_tracking": 248
+     },
+     "max_model_len": 40960,
+     "max_tokens": 2048,
+     "method": "tokenize",
+     "tokenize_calls": 12
+    },
+    "context_length_errors": 0,
+    "mean_prompt_tokens_by_len": {
+     "16k": 15934.2,
+     "32k": 31769.9,
+     "8k": 7917.6
+    },
+    "niah_acc_by_depth": {
+     "0.10": 1.0,
+     "0.35": 1.0,
+     "0.60": 1.0,
+     "0.85": 1.0
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "longctx-qa-16k-d10-04",
+    "longctx-qa-16k-d35-01",
+    "longctx-qa-16k-d60-10",
+    "longctx-qa-16k-d85-07",
+    "longctx-qa-32k-d60-02",
+    "longctx-qa-32k-d85-11",
+    "longctx-vt-32k-08",
+    "longctx-vt-32k-11"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "second-largest",
+     "extracted": "Second\u2011largest city in Australia",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "longctx-qa-16k-d10-04",
+     "out_tokens": 135,
+     "response_tail": "Answer: Second\u2011largest city in Australia",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "29.7%",
+     "extracted": "About 29.7% of households in Jacksonville are single\u2011person households",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-16k-d35-01",
+     "out_tokens": 348,
+     "response_tail": "Answer: About 29.7% of households in Jacksonville are single\u2011person households.",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "blind plea",
+     "extracted": "a not\u2011guilty plea",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "longctx-qa-16k-d60-10",
+     "out_tokens": 493,
+     "response_tail": "Answer: a not\u2011guilty plea",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "8.8",
+     "extracted": "8.8\u202flb per\u202fkWh",
+     "finish_reason": "stop",
+     "flags": [
+      "context_mismatch"
+     ],
+     "id": "longctx-qa-16k-d85-07",
+     "out_tokens": 215,
+     "response_tail": "Answer: 8.8\u202flb per\u202fkWh",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "bays",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-qa-32k-d60-02",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "simple majority vote",
+     "extracted": "By the Commission, Parliament, Council, and Court of Justice",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "longctx-qa-32k-d85-11",
+     "out_tokens": 559,
+     "response_tail": " and can give direction on major issues. Once a proposal is adopted, it becomes law. The European\u202fCourt of\u202fJustice interprets the treaties and EU law and ensures that decisions are applied consistently across all Member States.  \n\nAnswer: By the Commission, Parliament, Council, and Court of Justice.",
+     "status": "wrong",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": null,
+     "expected": "67949",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "longctx-vt-32k-08",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    },
+    {
+     "error": null,
+     "expected": "35595",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "longctx-vt-32k-11",
+     "out_tokens": 2048,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "var_tracking"
+    }
+   ],
+   "gpu_minutes": 2.631,
+   "info_per_gpu_min": 2.534,
+   "max_tokens": 2048,
+   "mean_out_tokens": 424.5,
+   "mean_prompt_tokens": 18540.6,
+   "mean_score": 0.8333,
+   "n_attempted": 48,
+   "n_cancelled": 0,
+   "n_correct": 40,
+   "n_error": 0,
+   "n_planned": 48,
+   "n_scored": 48,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 6.47,
+   "p50_out_tokens": 215,
+   "p90_item_s": 22.06,
+   "status_counts": {
+    "correct": 40,
+    "truncated": 3,
+    "wrong": 5
+   },
+   "sub": {
+    "niah_multikey": {
+     "acc": 1.0,
+     "acc_strict": 1.0,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.862,
+      1.0
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 169.5,
+     "mean_prompt_tokens": 18478.8,
+     "mean_score": 1.0,
+     "n_attempted": 24,
+     "n_cancelled": 0,
+     "n_correct": 24,
+     "n_error": 0,
+     "n_planned": 24,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 2.97,
+     "p50_out_tokens": 154,
+     "p90_item_s": 8.75,
+     "status_counts": {
+      "correct": 24
+     },
+     "total_out_tokens": 4067,
+     "total_prompt_tokens": 443492,
+     "trunc_rate": 0.0,
+     "wall_s": 86.8
+    },
+    "qa_multi_doc": {
+     "acc": 0.5,
+     "acc_strict": 0.5,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2538,
+      0.7462
+     ],
+     "degenerate_rate": 0.0833,
+     "mean_out_tokens": 507.0,
+     "mean_prompt_tokens": 18667.9,
+     "mean_score": 0.5,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 6,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 7.01,
+     "p50_out_tokens": 243,
+     "p90_item_s": 22.06,
+     "status_counts": {
+      "correct": 6,
+      "truncated": 1,
+      "wrong": 5
+     },
+     "total_out_tokens": 6084,
+     "total_prompt_tokens": 224015,
+     "trunc_rate": 0.0833,
+     "wall_s": 74.3
+    },
+    "var_tracking": {
+     "acc": 0.8333,
+     "acc_strict": 0.8333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.552,
+      0.953
+     ],
+     "degenerate_rate": 0.0833,
+     "mean_out_tokens": 852.0,
+     "mean_prompt_tokens": 18536.8,
+     "mean_score": 0.8333,
+     "n_attempted": 12,
+     "n_cancelled": 0,
+     "n_correct": 10,
+     "n_error": 0,
+     "n_planned": 12,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 11.99,
+     "p50_out_tokens": 528,
+     "p90_item_s": 31.56,
+     "status_counts": {
+      "correct": 10,
+      "truncated": 2
+     },
+     "total_out_tokens": 10224,
+     "total_prompt_tokens": 222441,
+     "trunc_rate": 0.1667,
+     "wall_s": 65.7
+    }
+   },
+   "total_out_tokens": 20375,
+   "total_prompt_tokens": 889948,
+   "trunc_rate": 0.0625,
+   "wall_s": 86.8
+  },
+  "math": {
+   "acc": 0.7,
+   "acc_strict": 0.7,
+   "answer_from_reasoning": 0,
+   "ci95": [
+    0.5923,
+    0.7894
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "ambiguous_boxed": 0,
+    "boxed_rate": 0.9,
+    "match_methods": {
+     "set": 1,
+     "string": 55
+    },
+    "unparsed_rate": 0.0
+   },
+   "failed_ids": [
+    "aime25-I-13",
+    "aime25-I-14",
+    "aime25-I-15",
+    "aime25-II-1",
+    "aime25-II-13",
+    "aime25-II-15",
+    "aime25-II-3",
+    "aime25-II-7",
+    "hmmt25-feb-10",
+    "hmmt25-feb-13",
+    "hmmt25-feb-14",
+    "hmmt25-feb-17",
+    "hmmt25-feb-18",
+    "hmmt25-feb-19",
+    "hmmt25-feb-20",
+    "hmmt25-feb-25",
+    "hmmt25-feb-26",
+    "hmmt25-feb-29",
+    "hmmt25-feb-30",
+    "hmmt25-feb-4",
+    "hmmt25-feb-7",
+    "hmmt25-feb-8",
+    "hmmt25-feb-9",
+    "math500-hard-geometry-817"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "204",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-13",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "60",
+     "extracted": "55",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-I-14",
+     "out_tokens": 11270,
+     "response_tail": "\\boxed{55}",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "735",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-15",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "468",
+     "extracted": "\\frac{39\\sqrt{33899}}{14}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-1",
+     "out_tokens": 2604,
+     "response_tail": "\\[\n\\boxed{\\frac{39\\sqrt{33899}}{14}}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "248",
+     "extracted": "314",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-13",
+     "out_tokens": 22753,
+     "response_tail": "\\[\n\\boxed{314}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "240",
+     "extracted": "188",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-15",
+     "out_tokens": 5667,
+     "response_tail": "\\[\n\\boxed{188}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "82",
+     "extracted": "90",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-3",
+     "out_tokens": 4284,
+     "response_tail": "\\[\n\\boxed{90}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "237",
+     "extracted": "225",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-7",
+     "out_tokens": 2500,
+     "response_tail": "  &= 32768 - 2\\cdot 4096 + 256 \\\\\n  &= 24832.\n\\end{aligned}\n\\]\n\nThus the required probability is\n\n\\[\n\\frac{N}{2^{15}}=\\frac{24832}{32768}\n= \\frac{256\\cdot 97}{2^{15}}\n= \\frac{97}{128}.\n\\]\n\nThe fraction is already in lowest terms, so \\(m=97,\\; n=128\\) and\n\n\\[\nm+n = 97+128 = 225.\n\\]\n\n\\[\n\\boxed{225}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{-1+\\sqrt{17}}{2}, \\frac{-1-\\sqrt{17}}{2}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-10",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "105",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-13",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2304",
+     "extracted": "224",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-14",
+     "out_tokens": 17334,
+     "response_tail": "\\boxed{224}",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2^25*26!",
+     "extracted": "13\\,532\\,215\\,908\\,598\\,070\\,178\\,810\\,509\\,248\\,000\\,000",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 21811,
+     "response_tail": "--\n\n### Final count\n\nHence the total number of admissible arrangements of the 78 letters is\n\n\\[\n2^{\\,26-1}\\times 26!=2^{25}\\,26!.\n\\]\n\nNumerically this equals  \n\n\\[\n\\boxed{13\\,532\\,215\\,908\\,598\\,070\\,178\\,810\\,509\\,248\\,000\\,000}\n\\]\n\n(which can also be written compactly as \\(\\;2^{25}\\cdot 26!\\;.\\))\n",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{2025}{101}",
+     "extracted": "\\dfrac{81}{8}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 5796,
+     "response_tail": "{73}{81}\\Bigr)^{2025}\\Bigr).\n\\]\n\nThe factor \\(\\left(\\tfrac{73}{81}\\right)^{2025}\\) is astronomically small\n(\\(\\approx e^{-210}\\)), so it is effectively zero for any practical purpose.\nTherefore the expected number of distinct values after 100 seconds is\n\n\\[\n\\boxed{\\dfrac{81}{8}}\\; \\approx 10.125.\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{4}{9}",
+     "extracted": "\\dfrac{2}{3}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-19",
+     "out_tokens": 9604,
+     "response_tail": "\\[\n\\boxed{\\dfrac{2}{3}}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{448}{3}",
+     "extracted": "1008",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-20",
+     "out_tokens": 16198,
+     "response_tail": "\\boxed{1008}",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{23}-2 \\sqrt{3}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-25",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "9\\sqrt{15}",
+     "extracted": "27\\sqrt{15}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-26",
+     "out_tokens": 3699,
+     "response_tail": "\\[\n\\boxed{27\\sqrt{15}}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "14+4\\sqrt{37}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-29",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-30",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "-984",
+     "extracted": "-983",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-4",
+     "out_tokens": 3167,
+     "response_tail": "\\[\n\\boxed{-983}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{9 \\sqrt{23}}{23}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-7",
+     "out_tokens": 24576,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "1-\\frac{2}{\\pi}",
+     "extracted": "0.28607",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-8",
+     "out_tokens": 3265,
+     "response_tail": "861328125,\n\\end{aligned}\n\\]\n\nand the partial sums stabilize very quickly. Continuing to \\(n=20\\) gives\n\n\\[\nS_{20}\\approx 0.28607099.\n\\]\n\nThe remaining terms are all less than \\(2^{-20}\\) in magnitude, so the\nerror in truncating after the 20\u2011th term is below \\(10^{-6}\\).\n\nHence\n\n\\[\n\\boxed{0.28607}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "1037",
+     "extracted": "0",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-9",
+     "out_tokens": 5200,
+     "response_tail": "\\[\n\\boxed{0}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{14}{3}",
+     "extracted": "\\frac{7(\\sqrt6-\\sqrt2)}{2}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "math500-hard-geometry-817",
+     "out_tokens": 16669,
+     "response_tail": "\n196-98-14\\sqrt2\\, r=2r^2\\quad\\Longrightarrow\\quad\nr^2+7\\sqrt2\\, r-49=0.\n\\]\n\nSolving,\n\n\\[\nr=\\frac{-7\\sqrt2+\\sqrt{(7\\sqrt2)^2+4\\cdot49}}{2}\n   =\\frac{-7\\sqrt2+7\\sqrt6}{2}\n   =\\frac{7}{2}\\,(\\sqrt6-\\sqrt2).\n\\]\n\nThus the two equal semicircles each have radius  \n\n\\[\n\\boxed{\\frac{7(\\sqrt6-\\sqrt2)}{2}}.\n\\]",
+     "status": "wrong",
+     "sub": "math500_hard"
+    }
+   ],
+   "gpu_minutes": 12.895,
+   "info_per_gpu_min": 1.303,
+   "max_tokens": 24576,
+   "mean_out_tokens": 8037.8,
+   "mean_prompt_tokens": 204.8,
+   "mean_score": 0.7,
+   "n_attempted": 80,
+   "n_cancelled": 0,
+   "n_correct": 56,
+   "n_error": 0,
+   "n_planned": 80,
+   "n_scored": 80,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 66.58,
+   "p50_out_tokens": 5273,
+   "p90_item_s": 225.72,
+   "status_counts": {
+    "correct": 56,
+    "truncated": 8,
+    "wrong": 16
+   },
+   "sub": {
+    "aime25": {
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5555,
+      0.8582
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 8202.1,
+     "mean_prompt_tokens": 244.7,
+     "mean_score": 0.7333,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 22,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 70.41,
+     "p50_out_tokens": 5273,
+     "p90_item_s": 209.81,
+     "status_counts": {
+      "correct": 22,
+      "truncated": 2,
+      "wrong": 6
+     },
+     "total_out_tokens": 246062,
+     "total_prompt_tokens": 7342,
+     "trunc_rate": 0.0667,
+     "wall_s": 353.0
+    },
+    "hmmt25": {
+     "acc": 0.5,
+     "acc_strict": 0.5,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.3315,
+      0.6685
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 10794.4,
+     "mean_prompt_tokens": 179.7,
+     "mean_score": 0.5,
+     "n_attempted": 30,
+     "n_cancelled": 0,
+     "n_correct": 15,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 96.98,
+     "p50_out_tokens": 7351,
+     "p90_item_s": 273.33,
+     "status_counts": {
+      "correct": 15,
+      "truncated": 6,
+      "wrong": 9
+     },
+     "total_out_tokens": 323832,
+     "total_prompt_tokens": 5392,
+     "trunc_rate": 0.2,
+     "wall_s": 358.2
+    },
+    "math500_hard": {
+     "acc": 0.95,
+     "acc_strict": 0.95,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.7639,
+      0.9911
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 3656.7,
+     "mean_prompt_tokens": 182.3,
+     "mean_score": 0.95,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 19,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 23.6,
+     "p50_out_tokens": 1679,
+     "p90_item_s": 126.3,
+     "status_counts": {
+      "correct": 19,
+      "wrong": 1
+     },
+     "total_out_tokens": 73133,
+     "total_prompt_tokens": 3646,
+     "trunc_rate": 0.0,
+     "wall_s": 231.4
+    }
+   },
+   "total_out_tokens": 643027,
+   "total_prompt_tokens": 16380,
+   "trunc_rate": 0.1,
+   "wall_s": 358.2
+  },
+  "tools": {
+   "acc": 0.8571,
+   "acc_strict": 0.8571,
+   "answer_from_reasoning": 5,
+   "ci95": [
+    0.7566,
+    0.9205
+   ],
+   "degenerate_ids": [],
+   "degenerate_rate": 0.0,
+   "error_ids": [],
+   "extra": {
+    "acc_ast_micro": 0.8667,
+    "acc_by_sub": {
+     "irrelevance": 0.8,
+     "multiple": 0.8,
+     "parallel": 0.9333,
+     "parallel_multiple": 0.8,
+     "simple": 0.9
+    },
+    "acc_irrelevance": 0.8,
+    "acc_official": 0.8583,
+    "declined_rate_ast": 0.0167,
+    "error_codes": {
+     "call_count": 1,
+     "declined": 1,
+     "missing_param": 3,
+     "no_calls": 2,
+     "spurious_call": 2,
+     "unexpected_param": 1,
+     "value_mismatch": 8,
+     "wrong_function": 4
+    },
+    "mean_score_ast": 0.8833,
+    "mode": "prompt",
+    "parse_methods": {
+     "json_list": 66,
+     "json_objects": 1,
+     "none": 3
+    },
+    "text_calls_ignored": 0,
+    "tool_calls_in_prompt_mode": 0,
+    "unparsed_rate": 0.0286
+   },
+   "failed_ids": [
+    "bfcl3-irrelevance_33",
+    "bfcl3-irrelevance_72",
+    "bfcl3-multiple_0",
+    "bfcl3-multiple_176",
+    "bfcl3-multiple_92",
+    "bfcl3-parallel_22",
+    "bfcl3-parallel_multiple_151",
+    "bfcl3-parallel_multiple_69",
+    "bfcl3-simple_127",
+    "bfcl3-simple_305"
+   ],
+   "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "sequence": "ATCG"
+       },
+       "name": "identify_species"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_33",
+     "out_tokens": 74,
+     "response_tail": "[{\"name\":\"identify_species\",\"arguments\":{\"sequence\":\"ATCG\"}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "cash_flows": [
+         -100,
+         40,
+         60,
+         80,
+         120
+        ]
+       },
+       "name": "calculate_internal_rate_of_return"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_72",
+     "out_tokens": 182,
+     "response_tail": "[{\"name\":\"calculate_internal_rate_of_return\",\"arguments\":{\"cash_flows\":[-100,40,60,80,120]}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "triangle_properties.get": {
+        "get_angles": [
+         "",
+         true
+        ],
+        "get_area": [
+         "",
+         true
+        ],
+        "get_perimeter": [
+         "",
+         true
+        ],
+        "side1": [
+         5
+        ],
+        "side2": [
+         4
+        ],
+        "side3": [
+         3
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "properties": {
+         "side1": 5,
+         "side2": 4,
+         "side3": 3
+        }
+       },
+       "name": "triangle_properties_get"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-multiple_0",
+     "out_tokens": 114,
+     "response_tail": "[{\"name\":\"triangle_properties_get\",\"arguments\":{\"properties\":{\"side1\":5,\"side2\":4,\"side3\":3}}}]",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "sports_team.get_schedule": {
+        "league": [
+         "Premier League",
+         "PL"
+        ],
+        "location": [
+         ""
+        ],
+        "num_of_games": [
+         6
+        ],
+        "team_name": [
+         "Manchester United",
+         "Man United",
+         "Man U",
+         "MUFC"
+        ]
+       }
+      }
+     ],
+     "extracted": null,
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning",
+      "no_calls"
+     ],
+     "id": "bfcl3-multiple_176",
+     "out_tokens": 122,
+     "response_tail": "",
+     "status": "unparsed",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "walmart.vegan_products": {
+        "categories": [
+         [
+          "vegan",
+          "gluten-free"
+         ],
+         [
+          "gluten-free",
+          "vegan"
+         ]
+        ],
+        "location": [
+         "Denver, CO",
+         "Denver"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_92",
+     "out_tokens": 134,
+     "response_tail": "[]\u00a0No available function can retrieve vegetarian products; the only supported categories are vegan and gluten\u2011free.",
+     "status": "wrong",
+     "sub": "multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "court_info.get_case_status": {
+        "case_number": [
+         "XY1234"
+        ],
+        "court": [
+         "Los Angeles County Court",
+         "Los Angeles",
+         "Los Angeles, CA",
+         "LA"
+        ],
+        "details": [
+         "status",
+         ""
+        ]
+       }
+      },
+      {
+       "court_info.get_case_status": {
+        "case_number": [
+         "GH5678"
+        ],
+        "court": [
+         "Orange County Court",
+         "Orange County",
+         "OC"
+        ],
+        "details": [
+         "status",
+         ""
+        ]
+       }
+      },
+      {
+       "court_info.get_case_status": {
+        "case_number": [
+         "XY1234"
+        ],
+        "court": [
+         "Los Angeles County Court",
+         "Los Angeles",
+         "Los Angeles, CA",
+         "LA"
+        ],
+        "details": [
+         "trial_date"
+        ]
+       }
+      },
+      {
+       "court_info.get_case_status": {
+        "case_number": [
+         "GH5678"
+        ],
+        "court": [
+         "Orange County Court",
+         "Orange County",
+         "OC"
+        ],
+        "details": [
+         "trial_date"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "case_number": "XY1234",
+        "court": "Los Angeles County Court",
+        "details": "status"
+       },
+       "name": "court_info_get_case_status"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning",
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_22",
+     "out_tokens": 474,
+     "response_tail": "",
+     "status": "wrong",
+     "sub": "parallel"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "book_hotel": {
+        "hotel_name": [
+         "Hotel Le Bristol Paris"
+        ],
+        "location": [
+         "Paris, France",
+         "Paris"
+        ],
+        "room_type": [
+         "suite",
+         "Suite"
+        ],
+        "start_date": [
+         "12-01-2022",
+         "2022-12-01",
+         "Dec 1, 2022"
+        ],
+        "stay_duration": [
+         10
+        ],
+        "view": [
+         "city view",
+         "city"
+        ]
+       }
+      },
+      {
+       "latest_exchange_rate": {
+        "amount": [
+         1000
+        ],
+        "source_currency": [
+         "USD",
+         "US Dollars",
+         "US Dollar"
+        ],
+        "target_currency": [
+         "EUR",
+         "Euro"
+        ]
+       }
+      },
+      {
+       "safeway.order": {
+        "items": [
+         [
+          "water",
+          "apples",
+          "bread"
+         ]
+        ],
+        "location": [
+         "Palo Alto, CA",
+         "Palo Alto",
+         "CA"
+        ],
+        "quantity": [
+         [
+          2,
+          3,
+          1
+         ]
+        ]
+       }
+      },
+      {
+       "light_travel_time": {
+        "distance_in_light_years": [
+         4.24
+        ],
+        "speed_of_light": [
+         299792458,
+         ""
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "hotel_name": "Hotel Le Bristol Paris",
+        "location": "Paris, France",
+        "room_type": "suite",
+        "start_date": "12-01-2022",
+        "stay_duration": 10,
+        "view": "city view"
+       },
+       "name": "book_hotel"
+      },
+      {
+       "arguments": {
+        "amount": 1000,
+        "source_currency": "USD",
+        "target_currency": "EUR"
+       },
+       "name": "latest_exchange_rate"
+      },
+      {
+       "arguments": {
+        "items": [
+         "bottles of water",
+         "apples",
+         "loaf of bread"
+        ],
+        "location": "Palo Alto, CA",
+        "quantity": [
+         2,
+         3,
+         1
+        ]
+       },
+       "name": "safeway_order"
+      },
+      {
+       "arguments": {
+        "distance_in_light_years": 4.24,
+        "speed_of_light": 299792458
+       },
+       "name": "light_travel_time"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_151",
+     "out_tokens": 832,
+     "response_tail": "items\": [\n        \"bottles of water\",\n        \"apples\",\n        \"loaf of bread\"\n      ],\n      \"quantity\": [\n        2,\n        3,\n        1\n      ]\n    }\n  },\n  {\n    \"name\": \"light_travel_time\",\n    \"arguments\": {\n      \"distance_in_light_years\": 4.24,\n      \"speed_of_light\": 299792458\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         ""
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.inflation_adjustment": {
+        "inflation_rate": [
+         0.03
+        ],
+        "initial_sum": [
+         200000.0
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.loan_repayment": {
+        "interest_rate": [
+         0.04
+        ],
+        "loan_amount": [
+         300000.0
+        ],
+        "loan_term": [
+         10
+        ]
+       }
+      },
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         true
+        ],
+        "years": [
+         5
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      },
+      {
+       "arguments": {
+        "inflation_rate": 3,
+        "initial_sum": 200000,
+        "years": 5
+       },
+       "name": "finance_inflation_adjustment"
+      },
+      {
+       "arguments": {
+        "interest_rate": 4,
+        "loan_amount": 300000,
+        "loan_term": 10
+       },
+       "name": "finance_loan_repayment"
+      },
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "monthly": true,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_69",
+     "out_tokens": 567,
+     "response_tail": "payment\",\n    \"arguments\": {\n      \"loan_amount\": 300000,\n      \"interest_rate\": 4,\n      \"loan_term\": 10\n    }\n  },\n  {\n    \"name\": \"finance_property_depreciation\",\n    \"arguments\": {\n      \"initial_cost\": 500000,\n      \"depreciation_rate\": 2,\n      \"years\": 5,\n      \"monthly\": true\n    }\n  }\n]\n```",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "calculate_NPV": {
+        "cash_flows": [
+         [
+          200,
+          300,
+          400,
+          500
+         ]
+        ],
+        "discount_rate": [
+         0.1
+        ],
+        "initial_investment": [
+         2000
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "cash_flows": [
+         200,
+         300,
+         400,
+         500
+        ],
+        "discount_rate": 10,
+        "initial_investment": 2000
+       },
+       "name": "calculate_NPV"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-simple_127",
+     "out_tokens": 112,
+     "response_tail": "[{\"name\":\"calculate_NPV\",\"arguments\":{\"cash_flows\":[200,300,400,500],\"discount_rate\":10,\"initial_investment\":2000}}]",
+     "status": "wrong",
+     "sub": "simple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "sports_stats.get_performance": {
+        "performance_indicator": [
+         [
+          "Goals Scored",
+          "Assists Made"
+         ]
+        ],
+        "player_name": [
+         "Messi",
+         "Lionel Messi"
+        ],
+        "season": [
+         "2020-2021"
+        ],
+        "tournament": [
+         "La Liga"
+        ]
+       }
+      }
+     ],
+     "extracted": null,
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning",
+      "no_calls"
+     ],
+     "id": "bfcl3-simple_305",
+     "out_tokens": 246,
+     "response_tail": "",
+     "status": "unparsed",
+     "sub": "simple"
+    }
+   ],
+   "gpu_minutes": 0.509,
+   "info_per_gpu_min": 16.844,
+   "max_tokens": 8192,
+   "mean_out_tokens": 292.2,
+   "mean_prompt_tokens": 570.3,
+   "mean_score": 0.8714,
+   "n_attempted": 70,
+   "n_cancelled": 0,
+   "n_correct": 60,
+   "n_error": 0,
+   "n_planned": 70,
+   "n_scored": 70,
+   "n_skipped": 0,
+   "opts": {},
+   "p50_item_s": 3.56,
+   "p50_out_tokens": 225,
+   "p90_item_s": 8.2,
+   "status_counts": {
+    "correct": 60,
+    "unparsed": 2,
+    "wrong": 8
+   },
+   "sub": {
+    "irrelevance": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 1,
+     "ci95": [
+      0.4902,
+      0.9433
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 154.3,
+     "mean_prompt_tokens": 416.2,
+     "mean_score": 0.8,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 2.38,
+     "p50_out_tokens": 96,
+     "p90_item_s": 4.34,
+     "status_counts": {
+      "correct": 8,
+      "wrong": 2
+     },
+     "total_out_tokens": 1543,
+     "total_prompt_tokens": 4162,
+     "trunc_rate": 0.0,
+     "wall_s": 86.6
+    },
+    "multiple": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 1,
+     "ci95": [
+      0.5481,
+      0.9295
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 176.9,
+     "mean_prompt_tokens": 701.5,
+     "mean_score": 0.8,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 12,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 2.4,
+     "p50_out_tokens": 137,
+     "p90_item_s": 5.15,
+     "status_counts": {
+      "correct": 12,
+      "unparsed": 1,
+      "wrong": 2
+     },
+     "total_out_tokens": 2654,
+     "total_prompt_tokens": 10522,
+     "trunc_rate": 0.0,
+     "wall_s": 125.0
+    },
+    "parallel": {
+     "acc": 0.9333,
+     "acc_strict": 0.9333,
+     "answer_from_reasoning": 1,
+     "ci95": [
+      0.7018,
+      0.9881
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 447.7,
+     "mean_prompt_tokens": 477.3,
+     "mean_score": 0.95,
+     "n_attempted": 15,
+     "n_cancelled": 0,
+     "n_correct": 14,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 5.85,
+     "p50_out_tokens": 392,
+     "p90_item_s": 13.1,
+     "status_counts": {
+      "correct": 14,
+      "wrong": 1
+     },
+     "total_out_tokens": 6716,
+     "total_prompt_tokens": 7160,
+     "trunc_rate": 0.0,
+     "wall_s": 133.7
+    },
+    "parallel_multiple": {
+     "acc": 0.8,
+     "acc_strict": 0.8,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.4902,
+      0.9433
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 574.0,
+     "mean_prompt_tokens": 879.9,
+     "mean_score": 0.875,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 8,
+     "n_error": 0,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 7.9,
+     "p50_out_tokens": 557,
+     "p90_item_s": 10.86,
+     "status_counts": {
+      "correct": 8,
+      "wrong": 2
+     },
+     "total_out_tokens": 5740,
+     "total_prompt_tokens": 8799,
+     "trunc_rate": 0.0,
+     "wall_s": 85.5
+    },
+    "simple": {
+     "acc": 0.9,
+     "acc_strict": 0.9,
+     "answer_from_reasoning": 2,
+     "ci95": [
+      0.699,
+      0.9721
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 190.0,
+     "mean_prompt_tokens": 464.0,
+     "mean_score": 0.9,
+     "n_attempted": 20,
+     "n_cancelled": 0,
+     "n_correct": 18,
+     "n_error": 0,
+     "n_planned": 20,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 2.84,
+     "p50_out_tokens": 181,
+     "p90_item_s": 4.36,
+     "status_counts": {
+      "correct": 18,
+      "unparsed": 1,
+      "wrong": 1
+     },
+     "total_out_tokens": 3800,
+     "total_prompt_tokens": 9280,
+     "trunc_rate": 0.0,
+     "wall_s": 134.3
+    }
+   },
+   "total_out_tokens": 20453,
+   "total_prompt_tokens": 39923,
+   "trunc_rate": 0.0,
+   "wall_s": 134.3
+  }
+ },
+ "invalid_reasons": [],
+ "lcb_window": {
+  "after": "2025-01-11",
+  "before": "2025-04-05",
+  "counts": {
+   "easy": 8,
+   "medium": 22
+  },
+  "difficulties": [
+   "easy",
+   "medium"
+  ],
+  "file": "test6.jsonl",
+  "hard_available": false,
+  "n_seen": {
+   "easy": 43,
+   "hard": 80,
+   "medium": 52
+  },
+  "revision": "0fe84c3912ea0c4d4a78037083943e8f0c4dd505"
+ },
+ "model": "m",
+ "notes": [
+  "tools: BFCL v3 single-turn AST categories, concentrated hard subsets (not the whole benchmark); acc_official = unweighted mean over simple/multiple/parallel/parallel_multiple (irrelevance separate)",
+  "tools: irrelevance counts any non-call response as correct (BFCL semantics), so a model that never calls tools scores 1.0 on that sub-family and 0 on the others",
+  "code: HumanEval+ items are a seeded sample of a curated 60-task hard pool (not the whole benchmark); MBPP+ items are a seeded sample of tasks with >= 3-line canonical solutions",
+  "code: HumanEval/32 (find_zero) is excluded: the HF test.jsonl assertion is malformed (unpacks a float) and even the canonical solution violates the find_zero oracle on 7/886 plus inputs, so the task is unpassable as shipped",
+  "code: LCB items are easy+medium problems of the newest release window (test6.jsonl), scored on the public tests plus a seeded sample of private tests (<= 24 per problem, first failure stops) with a 10 s wall limit per test; this is not the official LiveCodeBench scorer (which runs every private test)",
+  "code: sandbox = python3 -I -X utf8 in a temp dir with RLIMIT_AS 2 GiB / RLIMIT_CPU / RLIMIT_FSIZE 64 MB; no network isolation (the tests do not need network)",
+  "code: a candidate that ends the process before the hidden tests run (sys.exit / os._exit / SystemExit) is 'wrong' (kind early_exit), not correct: the driver writes a completion sentinel named by a per-run token it consumes before exec'ing the candidate (forgeable only by code that deliberately introspects the driver); expected integer outputs are compared exactly (float tolerance 1e-6 applies only to float answers) and stdout must match the expected line structure",
+  "math: exact-equivalence grading (canonical string, then numeric at 1e-9 rel., 1e-12 for bare decimals); decimal approximations of closed forms count as wrong",
+  "math/hmmt25: MathArena/hmmt_feb_2025 is cc-by-nc-sa-4.0 and parquet-only; rows fetched via the public datasets-server JSON endpoint",
+  "math/math500_hard: level-5 pool filtered to programmatically gradable answers, then shuffled once and cut to n (the default 20 are a prefix of the full 60)",
+  "math: two differing \\boxed{} joined only by a disjunction ('either A or B') score 'unparsed'; with any prose between them (a self-correction) the last box wins",
+  "longctx: synthetic RULER-style items; prompts are assembled at run time to a token budget calibrated against /tokenize (32k items are capped at max_model_len - 1536 - max_tokens), so pair runs only across identical tokenizers",
+  "knowledge/mmlu_pro_hard: seeded category-balanced subset (math, physics, chemistry, engineering, law), 10-option items only, STEM items prefer the non-ori_mmlu (stemez/theoremQA/scibench) sources; ~1-2% of MMLU-Pro keys are known to be noisy and are not corrected here",
+  "knowledge/simpleqa: programmatic containment scoring - the gold must appear as a CONTIGUOUS run of tokens in the extracted answer span (comma-separated gold segments each as a run, in order; dates as a tight window in any order; the span is the 'Answer:'/boxed phrase, else the last line of the response). A run that is a fragment of a longer proper name ('Carolina Panthers' for gold 'Carolina') or that comes with a second named entity ('the Denver Broncos lost to Carolina') is not credited, nor are hedged ('X or Y') and negated ('Y, not X') answers, matching the official grader's NOT_ATTEMPTED/INCORRECT; stricter than the official LLM grader on partial names, so absolute numbers are not comparable with published SimpleQA scores - use it for paired comparisons",
+  "knowledge/hle_public: skipped - cais/hle is gated (datasets-server rows API returns 401)",
+  "ifeval: strict prompt-level accuracy is the headline; loose (reference 8-variant) and instruction-level rates are in extra",
+  "ifeval: sentences are counted with a regex splitter (not nltk punkt); words are \\w+ tokens exactly as the reference's RegexpTokenizer(r'\\w+')",
+  "ifeval: language:response_language uses a Unicode-script heuristic (>=50% of letters in the target script); Latin-script targets are excluded from the pool",
+  "ifeval: keywords are matched as escaped literals (the reference passes them to re unescaped); blank paragraphs are dropped before indexing the nth paragraph",
+  "ifeval: pool excludes prompts satisfied by a content-free reply and prompts with contradictory instructions (see manifest ifeval_build)",
+  "ifeval: the content-free exclusion probes ONE reply ('I am not sure.'); 8 of the 60 default items (16 of 170 full) are still satisfied by generic filler prose - chiefly 'single' items whose only constraint is a number_words floor",
+  "ifeval: number_sentences uses a regex splitter with a protected-abbreviation pass (titles, dotted initialisms, 'Fig. 3'-style refs) instead of nltk punkt; an ellipsis splits only before a capitalised word and 'St.' only in its Saint reading; residual deviations are sentence-final 'etc.'/'Inc.'/'Jr.'/'et al.', deliberately not protected because protecting a form means never splitting after it again; 19 of the 132 instruction instances are number_sentences",
+  "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
+  "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
+ ],
+ "partial": false,
+ "schema_version": 1,
+ "skipped_ids": [],
+ "started_at": "2026-09-04T17:19:01Z",
+ "tag": "gptoss20_--flashinfer_cutlass",
+ "truncated": false,
+ "valid": true,
+ "wall_s": 358.3
+}
