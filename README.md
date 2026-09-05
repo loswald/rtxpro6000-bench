@@ -389,6 +389,25 @@ Per-family intervals at these counts are roughly ±0.10, so family-level orderin
 aggregate is where the ±0.045 applies. Rows are comparable only on the items both scored, which is why every
 paired claim below is made on the common item set rather than on the headline column.
 
+### The same suite against the API
+
+The question behind the economics is whether the endpoint a customer buys at list price scores what the weights
+score on this node. So the 403 items run against OpenRouter too — default routing, the vendor's own sampling
+recipe, the same per-family caps, from the third box beside the GPU work (`box/or_eval.sh`; the key lives on the
+box, never in the repository or this chat). One model has finished; the others follow in the order of the table.
+
+| model | on this node (best quality-safe config) | OpenRouter endpoint, same 403 items | gap | where the gap is |
+|---|---:|---:|---:|---|
+| GLM-5.3-Flash | 0.794 · NVFP4, TP4 (0.809 with MTP) | **0.824** | +0.030 (+0.015 vs MTP) | maths 0.812 vs 0.738, code 0.813 vs 0.760, knowledge 0.657 vs 0.600; ifeval and tools slightly lower |
+| DeepSeek-V4-Flash | 0.844 · native, DP4 + EP | measuring | | |
+| Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | queued | | |
+| gpt-oss-120b, gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | queued | | |
+
+The GLM gap is at the edge of the suite's 0.022 noise floor and lands exactly where the quantisation ladder said
+quantisation lands — maths, code, knowledge — while the endpoint's truncation rate (6.2%) and mean answer length
+(4,354 tokens) match ours. Z.AI serves the model at its training precision; we serve a post-training NVFP4 build.
+The native-FP8 GLM run queued on the original box is the direct test of that reading.
+
 ### Speculation is lossless — measured properly this time
 
 GLM-5.3-Flash scored 0.800 without its MTP head and 0.740 with it on the 400 W box, and the previous version
@@ -738,7 +757,8 @@ token, which flatters the API side of its ratio. Multiply any "API ÷ node" by 2
 basis ($1.77 an hour).
 
 What the chart says. **Priced on the same tokens at the same mix, the API is 4–22× the node for every model that
-fits one card, and 1.0–1.3× for the two that need all four.** The one-card ratios are smaller than the per-hour
+fits one card, 1.3× for DeepSeek-V4-Flash, and 0.5× for GLM-5.3-Flash on its fastest layout that produces
+correct output** (the 1.0× row is the broken TP2 layout, kept for the record). The one-card ratios are smaller than the per-hour
 table above because cached input is priced at the providers' cache-read rates and the prompt-optimisation shape
 is mostly cache hits; they are still an order of magnitude. Qwen3.8-27B's ratio is the largest because its API price is high
 ($3 per million output tokens), not because the node is unusually good at it. **The frontier is native

@@ -1,0 +1,9 @@
+[20:33:59] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[20:33:59] ########## qwen38fn_tp2x2m (126G, tp=2 x2) : -:marlin ##########
+[20:37:19]     x lin=- moe=marlin : RuntimeError: Failed to run autotuning code block: CUDA out of memory. Tried to allocate 47.69 GiB. GPU 0 has a total capaci
+[20:37:24]   qwen38fn_tp2x2m: NO combination served
+[20:37:25] ########## qwen38fn_tp4m (126G, tp=4 x1) : -:marlin ##########
+[20:40:50]     v lin=- moe=marlin healthy 200s | GPU KV cache size: 967,845 tokens
+      kernel: Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/qwen38fn_tp4m_--marlin_quality20.json
+  router     C1024   727.1s     676 req/min     1442 out/s     11538 in/s     12980 tot/s  TTFT  69652/  80066 ms  TPOT 134.0/ 145.9 ms  ITL 134.0  E2E  86.7/ 96.2 s

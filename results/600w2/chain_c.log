@@ -39,3 +39,20 @@
   DeepSeek DP4+EP quality: 403 items, acc 0.8437 partial False
 [20:07:14] CHAINC4 (112min left): Qwen3.8-Flash-Next: downloading the NVFP4 checkpoint
 [20:07:14] downloading RadixArk/Qwen3.8-Flash-Next-NVFP4
+[20:13:36] done Qwen3.8-Flash-Next-NVFP4 (126G)
+[20:13:36] CHAINC4 (106min left): Qwen3.8-Flash-Next throughput: DP4+EP, then 2 x TP2, two shapes each
+[20:18:12] CHAINC4 (101min left): Qwen3.8-Flash-Next: no layout served, or no time for its quality run (best: none)
+[20:18:12] CHAINC4 (101min left): MiniMax-M3 quality (budget 4860s), then two throughput shapes
+[20:22:44] CHAINC5 (97min left): chain_c4 stopped (MiniMax); Qwen3.8-Flash-Next with the FP8 PLE fix takes the slot
+  patched: /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/nvidia/ple_layer.py
+[20:22:55] CHAINC5 (97min left): Qwen3.8-Flash-Next throughput: 2 x TP2, two shapes
+[20:26:36] CHAINC5 (93min left): Qwen3.8-Flash-Next: did not serve, or no time for its quality run (best: none)
+[20:26:36] CHAINC5 (93min left): MiniMax-M3 quality (budget 4380s), then two throughput shapes
+[20:27:26] CHAINC6 (332min left): chain_c5 stopped after its Flash-Next stage; continuing as chain_c6 to 02:00 UTC
+[20:27:34] CHAINC6 (332min left): MiniMax-M3 quality (budget 10920s), then two throughput shapes
+[20:28:54] CHAINC7 (331min left): chainc6 stopped; chain_c7 runs the extended window
+[20:29:03] CHAINC7 (330min left): Qwen3.8-Flash-Next: one TP4 engine, then the W4A4 linear kernel, two shapes each
+[20:32:29] CHAINC8 (327min left): chainc7 stopped; chain_c8 runs the extended window
+/workspace/bench/chain_c8.sh: line 21: syntax error near unexpected token `('
+/workspace/bench/chain_c8.sh: line 21: `    step "$L" "Qwen3.8-Flash-Next quality: $best ($(cat $R/qfn_best.tps 2>/dev/null) out tok/s at router C1024), budget 2700s"'
+[20:33:59] CHAINC8 (326min left): Qwen3.8-Flash-Next: Marlin MoE: two TP2 replicas, one TP4 engine, TP4 with W4A4 linears
