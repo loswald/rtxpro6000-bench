@@ -68,7 +68,12 @@ arm(){ # tag seqs [extra...]
   fi
 }
 log "===== GLM-5.3-Flash at native FP8 (330 GB), TP4: throughput at the 32-sequence budget the weights leave ====="
-if launch glm53f_fp8 32 --tensor-parallel-size 4; then
+# the quality run used 32 sequences for safety; the 554k-token KV cache holds far more at these shapes, so 128 here
+if launch glm53f_fp8 128 --tensor-parallel-size 4; then
+  pt glm53f_fp8 router 1024 128 0 128
+  pt glm53f_fp8 router 1024 128 0 256
+  pt glm53f_fp8 promptopt 512 256 3072 256
+elif launch glm53f_fp8 32 --tensor-parallel-size 4; then
   pt glm53f_fp8 router 1024 128 0 128
   pt glm53f_fp8 promptopt 512 256 3072 128
 fi
