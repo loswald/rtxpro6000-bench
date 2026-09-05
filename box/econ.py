@@ -56,8 +56,9 @@ ROWS = [
     ("Muse-Glimmer-30B", "BF16, 4 replicas", "muse30_---", "router"),
     ("Qwen3.8-Flash-Next", "NVFP4, 2 x TP2", "qwen38fn_---", "router"),
     ("MiniMax-M3", "MXFP4, TP4", "minimaxm3_", "router"),
-    ("DeepSeek-V4-Flash", "MXFP4+FP8 native, TP4, b12x experts", "ds4flash_b12x-b12x", "promptopt"),
-    ("GLM-5.3-Flash", "NVFP4, TP4", "vglm_base", "promptopt"),
+    ("DeepSeek-V4-Flash", "MXFP4+FP8 native, TP1 x DP4 + EP, 512 seqs per engine", "ds4flash_dp4ep4_s512", "router"),
+    ("DeepSeek-V4-Flash", "MXFP4+FP8 native, TP4, b12x experts", "ds4flash_b12x-b12x", "router"),
+    ("GLM-5.3-Flash", "NVFP4, TP4 + EP, 512 seqs", "glm53f_tp4ep4_s512", "router"),
 ]
 
 def load_600w():

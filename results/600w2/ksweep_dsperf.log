@@ -1,16 +1,7 @@
-[18:05:36] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
-[18:05:36] ########## ds4flash_dp4ep4_s512 (156G, tp=4 x1) : b12x:- ##########
-[18:09:31]     v lin=b12x moe=- healthy 230s | GPU KV cache size: 198,124 tokens
+[18:24:24] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[18:24:24] ########## ds4flash_dp4ep4_s512 (156G, tp=4 x1) : b12x:- ##########
+[18:25:59]     v lin=b12x moe=- healthy 90s | GPU KV cache size: 198,124 tokens
       kernel: Selected B12xFp8BlockScaledMMKernel
       kernel: Using 'MARLIN' Mxfp4 MoE backend.
 quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/ds4flash_dp4ep4_s512_b12x--_quality20.json
-  router     C1024  FAILED (0 files)
-  promptopt  C1024  FAILED (0 files)
-[18:14:58] ########## ds4flash_dp4ep4_s1024 (156G, tp=4 x1) : b12x:- ##########
-[18:16:53]     v lin=b12x moe=- healthy 110s | GPU KV cache size: 70,443 tokens
-      kernel: Selected B12xFp8BlockScaledMMKernel
-      kernel: Using 'MARLIN' Mxfp4 MoE backend.
-quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/ds4flash_dp4ep4_s1024_b12x--_quality20.json
-  router     C1024  FAILED (0 files)
-  promptopt  C1024  FAILED (0 files)
-[18:22:02] ########## ds4flash_dp4ep4_b12xmoe_s512 (156G, tp=4 x1) : b12x:b12x ##########
+  router     C1024   639.2s     769 req/min     1640 out/s     13124 in/s     14764 tot/s  TTFT   9888/  59515 ms  TPOT 550.3/ 627.8 ms  ITL 550.3  E2E  79.8/131.5 s

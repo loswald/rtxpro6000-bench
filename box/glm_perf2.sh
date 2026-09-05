@@ -70,11 +70,16 @@ arm(){ # tag seqs [extra...]
 log "===== GLM-5.3-Flash: the MoE kernel, then the layouts without the per-layer all-reduce ====="
 # The vendor build's default ("auto") routes this checkpoint's experts through a TRITON FP8 MoE kernel. Every other
 # backend it lists is tried at TP4 / 512 sequences; one that this model rejects fails in a minute and the sweep moves on.
-arm glm53f_s512_moecutlass    512 --tensor-parallel-size 4 --moe-backend cutlass
-arm glm53f_s512_moeficutlass  512 --tensor-parallel-size 4 --moe-backend flashinfer_cutlass
-arm glm53f_s512_moetrtllm     512 --tensor-parallel-size 4 --moe-backend flashinfer_trtllm
-arm glm53f_s512_moemarlin     512 --tensor-parallel-size 4 --moe-backend marlin
+# DP layouts first: DeepSeek's DP4+EP arm on the other box just posted +48% over TP4 at the same shape, and
+# they are the arms the step-time ceiling analysis says can move. The MoE-kernel arms follow, each guarded so
+# that the 403-item quality run on the fastest layout keeps at least 105 minutes before the 22:00 UTC deadline.
+CUT=$(date -d "2026-09-05 20:15:00" +%s)
+guard(){ [ "$(date +%s)" -lt "$CUT" ] || { log "  skip $1: past 20:15 UTC, the quality run on the fastest layout takes priority"; return 1; }; }
 arm glm53f_dp4ep4_s192     192 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
 arm glm53f_dp2tp2ep2_s384  384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel
+guard moetrtllm   && arm glm53f_s512_moetrtllm     512 --tensor-parallel-size 4 --moe-backend flashinfer_trtllm
+guard moecutlass  && arm glm53f_s512_moecutlass    512 --tensor-parallel-size 4 --moe-backend cutlass
+guard moeficutlass && arm glm53f_s512_moeficutlass 512 --tensor-parallel-size 4 --moe-backend flashinfer_cutlass
+guard moemarlin   && arm glm53f_s512_moemarlin     512 --tensor-parallel-size 4 --moe-backend marlin
 log "GLMPERF2 DONE"
 kill_all
