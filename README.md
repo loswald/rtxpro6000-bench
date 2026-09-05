@@ -404,7 +404,7 @@ box, never in the repository or this chat). One model has finished; the others f
 | GLM-5.3-Flash | 0.794 · NVFP4, TP4 (0.809 with MTP) | **0.824** | +0.030 (+0.015 vs MTP) | maths 0.812 vs 0.738, code 0.813 vs 0.760, knowledge 0.657 vs 0.600; ifeval and tools slightly lower |
 | DeepSeek-V4-Flash | 0.844 · native, DP4 + EP | **0.784** | −0.060 | long context 0.833 vs 0.938, maths 0.875 vs 0.938, knowledge 0.571 vs 0.643, code 0.707 vs 0.747; the endpoint truncates 9.2% of answers against 4.2% here and 3.0% degenerate into repetition against 0.25% |
 | DeepSeek-V4-Flash · **DeepSeek's own endpoint**, provider pinned | 0.844 · native, DP4 + EP | **0.789** | −0.055 | code 0.640 vs 0.747, instructions 0.817 vs 0.933, tools 0.843 vs 0.900; 7.9% truncated against 4.2%, mean answer 4,717 tokens against 3,376; degenerate output 0.25%, same as ours — a 65k-cap re-run is in progress |
-| Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | queued | | |
+| Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | **0.772** | −0.034 (−0.020 vs QAT) | maths 0.775 vs 0.800, code 0.760 vs 0.813, knowledge 0.486 vs 0.500; default routing lands on FP8 and FP4 hosts — the endpoint scores like our FP8 and RedHat four-bit rows (0.779, 0.772), 7.0% truncated against none for BF16 |
 | gpt-oss-120b, gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | queued | | |
 
 OpenRouter's public endpoint list explains the DeepSeek row and changes the price it should be read against: 29

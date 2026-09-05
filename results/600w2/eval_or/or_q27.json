@@ -1,32 +1,32 @@
 {
  "aggregate": {
-  "acc_macro": 0.7958,
-  "acc_micro": 0.7844,
-  "acc_strict": 0.7844,
+  "acc_macro": 0.7838,
+  "acc_micro": 0.7717,
+  "acc_strict": 0.7717,
   "answer_from_reasoning": 3,
   "ci95": [
-   0.7406,
-   0.8226
+   0.7283,
+   0.81
   ],
   "degenerate_rate": 0.0,
-  "gpu_minutes": 100.019,
-  "mean_out_tokens": 4547.9,
-  "mean_prompt_tokens": 1932.6,
-  "mean_score": 0.7963,
-  "n_attempted": 385,
+  "gpu_minutes": 138.33,
+  "mean_out_tokens": 5464.2,
+  "mean_prompt_tokens": 1862.8,
+  "mean_score": 0.7831,
+  "n_attempted": 403,
   "n_cancelled": 0,
-  "n_correct": 302,
+  "n_correct": 311,
   "n_error": 0,
   "n_planned": 403,
-  "n_scored": 385,
-  "n_skipped": 18,
-  "out_tokens_per_s": 1167.1,
-  "p50_item_s": 18.2,
-  "p50_out_tokens": 998,
-  "p90_item_s": 256.42,
+  "n_scored": 403,
+  "n_skipped": 0,
+  "out_tokens_per_s": 1061.3,
+  "p50_item_s": 19.57,
+  "p50_out_tokens": 1167,
+  "p90_item_s": 324.15,
   "per_url": {
    "https://openrouter.ai/api": {
-    "completion_tokens": 1750938,
+    "completion_tokens": 2202087,
     "requests": 403
    }
   },
@@ -34,15 +34,15 @@
   "requests": 403,
   "retries": 0,
   "status_counts": {
-   "correct": 302,
-   "truncated": 19,
+   "correct": 311,
+   "truncated": 28,
    "unparsed": 1,
    "wrong": 63
   },
-  "total_out_tokens": 1750938,
-  "total_prompt_tokens": 744049,
-  "trunc_rate": 0.0494,
-  "wall_s": 1458.7
+  "total_out_tokens": 2202087,
+  "total_prompt_tokens": 750710,
+  "trunc_rate": 0.0695,
+  "wall_s": 2074.9
  },
  "base_urls": [
   "https://openrouter.ai/api"
@@ -87,7 +87,7 @@
   "top_p": 0.95
  },
  "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
- "ended_at": "2026-09-05T21:57:06Z",
+ "ended_at": "2026-09-05T22:06:41Z",
  "endpoint": {
   "max_model_len": null,
   "served_models": [
@@ -530,12 +530,12 @@
  "evalsuite_git_sha": null,
  "families": {
   "code": {
-   "acc": 0.7887,
-   "acc_strict": 0.7887,
+   "acc": 0.76,
+   "acc_strict": 0.76,
    "answer_from_reasoning": 1,
    "ci95": [
-    0.6803,
-    0.8676
+    0.6522,
+    0.8425
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
@@ -545,23 +545,26 @@
      "IndexError": 1,
      "TypeError": 1,
      "assertion": 7,
-     "truncated": 4,
+     "truncated": 7,
      "unparsed": 1,
      "wrong_output": 1
     },
-    "lcb_mean_test_pass_frac": 0.8519,
+    "lcb_mean_test_pass_frac": 0.8,
     "syntax_error_rate": 0.0,
     "timeout_rate": 0.0,
-    "unparsed_rate": 0.0141
+    "unparsed_rate": 0.0133
    },
    "failed_ids": [
     "heplus-076",
     "heplus-099",
+    "heplus-129",
     "heplus-141",
     "lcb-atcoder-abc388_d",
     "lcb-atcoder-abc390_d",
+    "lcb-atcoder-arc192_a",
     "lcb-leetcode-3743",
     "lcb-leetcode-3764",
+    "lcb-leetcode-3794",
     "mbppplus-074",
     "mbppplus-137",
     "mbppplus-223",
@@ -594,6 +597,18 @@
      "out_tokens": 10849,
      "response_tail": "```python\nfrom fractions import Fraction\n\ndef closest_integer(value):\n    f = Fraction(value)\n    sign = -1 if f < 0 else 1\n    f = abs(f)\n    return sign * ((2 * f.numerator + f.denominator) // (2 * f.denominator))\n```",
      "status": "wrong",
+     "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "heplus-129",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "humanevalplus"
     },
     {
@@ -634,6 +649,18 @@
     },
     {
      "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
      "expected": "pass 23 tests (functional)",
      "extracted": "178 chars via fence_unterminated",
      "finish_reason": "length",
@@ -657,6 +684,18 @@
      "out_tokens": 3437,
      "response_tail": "",
      "status": "unparsed",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-leetcode-3794",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "lcb_easy_medium"
     },
     {
@@ -756,93 +795,93 @@
      "sub": "mbppplus"
     }
    ],
-   "gpu_minutes": 16.74,
-   "info_per_gpu_min": 0.707,
+   "gpu_minutes": 23.416,
+   "info_per_gpu_min": 0.584,
    "max_tokens": 20480,
-   "mean_out_tokens": 4302.2,
-   "mean_prompt_tokens": 356.8,
-   "mean_score": 0.7887,
-   "n_attempted": 71,
+   "mean_out_tokens": 5134.8,
+   "mean_prompt_tokens": 377.9,
+   "mean_score": 0.76,
+   "n_attempted": 75,
    "n_cancelled": 0,
-   "n_correct": 56,
+   "n_correct": 57,
    "n_error": 0,
    "n_planned": 75,
-   "n_scored": 71,
-   "n_skipped": 4,
+   "n_scored": 75,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 18.29,
-   "p50_out_tokens": 1314,
-   "p90_item_s": 219.16,
+   "p50_item_s": 19.03,
+   "p50_out_tokens": 1522,
+   "p90_item_s": 370.98,
    "status_counts": {
-    "correct": 56,
-    "truncated": 5,
+    "correct": 57,
+    "truncated": 8,
     "unparsed": 1,
     "wrong": 9
    },
    "sub": {
     "humanevalplus": {
-     "acc": 0.875,
-     "acc_strict": 0.875,
+     "acc": 0.84,
+     "acc_strict": 0.84,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.69,
-      0.9566
+      0.6535,
+      0.936
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 2308.8,
-     "mean_prompt_tokens": 248.8,
-     "mean_score": 0.875,
-     "n_attempted": 24,
+     "mean_out_tokens": 3035.6,
+     "mean_prompt_tokens": 258.9,
+     "mean_score": 0.84,
+     "n_attempted": 25,
      "n_cancelled": 0,
      "n_correct": 21,
      "n_error": 0,
      "n_planned": 25,
-     "n_scored": 24,
-     "n_skipped": 1,
-     "p50_item_s": 13.35,
-     "p50_out_tokens": 693,
-     "p90_item_s": 54.5,
+     "n_scored": 25,
+     "n_skipped": 0,
+     "p50_item_s": 14.98,
+     "p50_out_tokens": 812,
+     "p90_item_s": 217.64,
      "status_counts": {
       "correct": 21,
-      "truncated": 1,
+      "truncated": 2,
       "wrong": 2
      },
-     "total_out_tokens": 55411,
-     "total_prompt_tokens": 5972,
-     "trunc_rate": 0.0417,
-     "wall_s": 1211.2
+     "total_out_tokens": 75891,
+     "total_prompt_tokens": 6472,
+     "trunc_rate": 0.08,
+     "wall_s": 1717.4
     },
     "lcb_easy_medium": {
-     "acc": 0.8519,
-     "acc_strict": 0.8519,
+     "acc": 0.8,
+     "acc_strict": 0.8,
      "answer_from_reasoning": 1,
      "ci95": [
-      0.6752,
-      0.9408
+      0.6269,
+      0.9049
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 6637.4,
-     "mean_prompt_tokens": 598.0,
-     "mean_score": 0.8519,
-     "n_attempted": 27,
+     "mean_out_tokens": 7946.1,
+     "mean_prompt_tokens": 621.8,
+     "mean_score": 0.8,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 23,
+     "n_correct": 24,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 27,
-     "n_skipped": 3,
-     "p50_item_s": 72.06,
-     "p50_out_tokens": 3599,
-     "p90_item_s": 421.35,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 72.83,
+     "p50_out_tokens": 4571,
+     "p90_item_s": 386.69,
      "status_counts": {
-      "correct": 23,
-      "truncated": 3,
+      "correct": 24,
+      "truncated": 5,
       "unparsed": 1
      },
-     "total_out_tokens": 179210,
-     "total_prompt_tokens": 16146,
-     "trunc_rate": 0.1111,
-     "wall_s": 1438.0
+     "total_out_tokens": 238382,
+     "total_prompt_tokens": 18655,
+     "trunc_rate": 0.1667,
+     "wall_s": 1689.7
     },
     "mbppplus": {
      "acc": 0.6,
@@ -877,10 +916,10 @@
      "wall_s": 1206.1
     }
    },
-   "total_out_tokens": 305459,
-   "total_prompt_tokens": 25331,
-   "trunc_rate": 0.0704,
-   "wall_s": 1438.0
+   "total_out_tokens": 385111,
+   "total_prompt_tokens": 28340,
+   "trunc_rate": 0.1067,
+   "wall_s": 1717.4
   },
   "ifeval": {
    "acc": 0.8667,
@@ -1150,8 +1189,8 @@
      "sub": "double"
     }
    ],
-   "gpu_minutes": 9.745,
-   "info_per_gpu_min": 0.711,
+   "gpu_minutes": 10.824,
+   "info_per_gpu_min": 0.64,
    "max_tokens": 16384,
    "mean_out_tokens": 2980.9,
    "mean_prompt_tokens": 106.8,
@@ -1769,8 +1808,8 @@
      "sub": "simpleqa"
     }
    ],
-   "gpu_minutes": 19.565,
-   "info_per_gpu_min": 0.894,
+   "gpu_minutes": 21.733,
+   "info_per_gpu_min": 0.805,
    "max_tokens": 20480,
    "mean_out_tokens": 5122.3,
    "mean_prompt_tokens": 245.3,
@@ -1944,8 +1983,8 @@
      "sub": "qa_multi_doc"
     }
    ],
-   "gpu_minutes": 5.402,
-   "info_per_gpu_min": 0.355,
+   "gpu_minutes": 6.0,
+   "info_per_gpu_min": 0.32,
    "max_tokens": 6144,
    "mean_out_tokens": 400.1,
    "mean_prompt_tokens": 13397.0,
@@ -2064,34 +2103,40 @@
    "wall_s": 933.4
   },
   "math": {
-   "acc": 0.8182,
-   "acc_strict": 0.8182,
+   "acc": 0.775,
+   "acc_strict": 0.775,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.7085,
-    0.8928
+    0.6721,
+    0.8527
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
     "ambiguous_boxed": 0,
-    "boxed_rate": 0.8333,
+    "boxed_rate": 0.7875,
     "match_methods": {
      "set": 1,
-     "string": 53
+     "string": 61
     },
     "unparsed_rate": 0.0
    },
    "failed_ids": [
     "aime25-I-12",
+    "aime25-I-14",
     "aime25-I-15",
     "aime25-I-2",
     "aime25-II-1",
+    "aime25-II-13",
     "aime25-II-14",
     "aime25-II-15",
+    "aime25-II-5",
     "hmmt25-feb-10",
+    "hmmt25-feb-15",
     "hmmt25-feb-17",
+    "hmmt25-feb-18",
+    "hmmt25-feb-19",
     "hmmt25-feb-20",
     "hmmt25-feb-25",
     "hmmt25-feb-30",
@@ -2105,6 +2150,18 @@
      "finish_reason": "length",
      "flags": [],
      "id": "aime25-I-12",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "60",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-I-14",
      "out_tokens": 32768,
      "response_tail": "",
      "status": "truncated",
@@ -2151,6 +2208,18 @@
     },
     {
      "error": null,
+     "expected": "248",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-II-13",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
      "expected": "104",
      "extracted": null,
      "finish_reason": "length",
@@ -2175,6 +2244,18 @@
     },
     {
      "error": null,
+     "expected": "336",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "aime25-II-5",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
      "expected": "\\frac{-1+\\sqrt{17}}{2}, \\frac{-1-\\sqrt{17}}{2}",
      "extracted": null,
      "finish_reason": "length",
@@ -2187,11 +2268,47 @@
     },
     {
      "error": null,
+     "expected": "200",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-15",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
      "expected": "2^{25} \\cdot 26!",
      "extracted": null,
      "finish_reason": "length",
      "flags": [],
      "id": "hmmt25-feb-17",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{2025}{101}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{4}{9}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-19",
      "out_tokens": 32768,
      "response_tail": "",
      "status": "truncated",
@@ -2246,91 +2363,91 @@
      "sub": "math500_hard"
     }
    ],
-   "gpu_minutes": 46.169,
-   "info_per_gpu_min": 0.213,
+   "gpu_minutes": 73.693,
+   "info_per_gpu_min": 0.189,
    "max_tokens": 32768,
-   "mean_out_tokens": 12873.2,
-   "mean_prompt_tokens": 187.2,
-   "mean_score": 0.8182,
-   "n_attempted": 66,
+   "mean_out_tokens": 15264.1,
+   "mean_prompt_tokens": 200.1,
+   "mean_score": 0.775,
+   "n_attempted": 80,
    "n_cancelled": 0,
-   "n_correct": 54,
+   "n_correct": 62,
    "n_error": 0,
    "n_planned": 80,
-   "n_scored": 66,
-   "n_skipped": 14,
+   "n_scored": 80,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 137.66,
-   "p50_out_tokens": 8481,
-   "p90_item_s": 473.35,
+   "p50_item_s": 205.99,
+   "p50_out_tokens": 12104,
+   "p90_item_s": 558.03,
    "status_counts": {
-    "correct": 54,
-    "truncated": 11,
+    "correct": 62,
+    "truncated": 17,
     "wrong": 1
    },
    "sub": {
     "aime25": {
-     "acc": 0.75,
-     "acc_strict": 0.75,
+     "acc": 0.7,
+     "acc_strict": 0.7,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.551,
-      0.88
+      0.5212,
+      0.8334
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 13152.0,
-     "mean_prompt_tokens": 222.0,
-     "mean_score": 0.75,
-     "n_attempted": 24,
+     "mean_out_tokens": 16199.4,
+     "mean_prompt_tokens": 241.4,
+     "mean_score": 0.7,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 18,
+     "n_correct": 21,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 24,
-     "n_skipped": 6,
-     "p50_item_s": 127.04,
-     "p50_out_tokens": 7842,
-     "p90_item_s": 513.77,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 174.92,
+     "p50_out_tokens": 11260,
+     "p90_item_s": 598.07,
      "status_counts": {
-      "correct": 18,
-      "truncated": 5,
+      "correct": 21,
+      "truncated": 8,
       "wrong": 1
      },
-     "total_out_tokens": 315649,
-     "total_prompt_tokens": 5328,
-     "trunc_rate": 0.2083,
-     "wall_s": 1458.7
+     "total_out_tokens": 485982,
+     "total_prompt_tokens": 7243,
+     "trunc_rate": 0.2667,
+     "wall_s": 2074.9
     },
     "hmmt25": {
-     "acc": 0.7727,
-     "acc_strict": 0.7727,
+     "acc": 0.7333,
+     "acc_strict": 0.7333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.5656,
-      0.8988
+      0.5555,
+      0.8582
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 17314.7,
-     "mean_prompt_tokens": 158.3,
-     "mean_score": 0.7727,
-     "n_attempted": 22,
+     "mean_out_tokens": 19402.9,
+     "mean_prompt_tokens": 174.0,
+     "mean_score": 0.7333,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 17,
+     "n_correct": 22,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 22,
-     "n_skipped": 8,
-     "p50_item_s": 236.27,
-     "p50_out_tokens": 15250,
-     "p90_item_s": 441.53,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 281.56,
+     "p50_out_tokens": 20519,
+     "p90_item_s": 558.03,
      "status_counts": {
-      "correct": 17,
-      "truncated": 5
+      "correct": 22,
+      "truncated": 8
      },
-     "total_out_tokens": 380923,
-     "total_prompt_tokens": 3482,
-     "trunc_rate": 0.2273,
-     "wall_s": 1442.2
+     "total_out_tokens": 582087,
+     "total_prompt_tokens": 5219,
+     "trunc_rate": 0.2667,
+     "wall_s": 2053.9
     },
     "math500_hard": {
      "acc": 0.95,
@@ -2364,10 +2481,10 @@
      "wall_s": 1264.7
     }
    },
-   "total_out_tokens": 849628,
-   "total_prompt_tokens": 12354,
-   "trunc_rate": 0.1667,
-   "wall_s": 1458.7
+   "total_out_tokens": 1221125,
+   "total_prompt_tokens": 16006,
+   "trunc_rate": 0.2125,
+   "wall_s": 2074.9
   },
   "tools": {
    "acc": 0.8571,
@@ -3052,8 +3169,8 @@
      "sub": "simple"
     }
    ],
-   "gpu_minutes": 2.398,
-   "info_per_gpu_min": 3.575,
+   "gpu_minutes": 2.663,
+   "info_per_gpu_min": 3.22,
    "max_tokens": 8192,
    "mean_out_tokens": 560.5,
    "mean_prompt_tokens": 567.5,
@@ -3283,12 +3400,12 @@
   "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
   "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
  ],
- "partial": true,
+ "partial": false,
  "schema_version": 1,
  "skipped_ids": [],
  "started_at": "2026-09-05T21:32:03Z",
  "tag": "or_q27",
  "truncated": false,
  "valid": true,
- "wall_s": 1500.3
+ "wall_s": 2074.9
 }
