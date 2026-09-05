@@ -272,7 +272,8 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | model (AA index) · configuration | items | overall | maths | code | tools | long ctx | knowledge | instructions |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLM-5.3-Flash (57)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
-| **DeepSeek-V4-Flash (52)** · native MXFP4 + FP8, TP4 | 403 | **0.801** ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
+| **DeepSeek-V4-Flash (52)** · native MXFP4 + FP8, TP4, **DSpark speculation** | 403 | **0.831** ⁴ | 0.938 | 0.720 | 0.871 | 0.958 | **0.657** | 0.883 |
+| DeepSeek-V4-Flash (52) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (57) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
 | Muse-Glimmer-30B (35) · BF16 | 389 ¹ | 0.794 | **1.000** | 0.808 | 0.814 | 0.812 | 0.486 | 0.867 |
 | Qwen3.8-27B (52) · **FP8**, 4 replicas | 388 ¹ | 0.789 | 0.939 | 0.720 | 0.843 | **0.979** | 0.471 | 0.867 |
@@ -340,6 +341,14 @@ sets** under a cap that marked truncation wrong — and the MTP arm, being faste
 the same wall-clock. The logit-level pass (above) is the other half of the answer: two identical servers
 differ on 3.8% of top-1 tokens, so no test that demands bit-exact output can attribute anything on this
 stack, and `box/specdiff.py` now refuses to.
+
+The second model says the same thing from the other side. DeepSeek-V4-Flash with NVIDIA's DSpark drafter
+(7 draft tokens a step, 37% of them accepted) scored **0.831 against 0.801 without it**, all 403 items both
+times, paired 19 to 7 in the *drafter's* favour. A drafter cannot make the model smarter — with probabilistic
+drafting and rejection sampling the target distribution is preserved by construction — so a 19-to-7 split at
+temperature 1.0 is a reading of the **suite's own run-to-run noise** at vendor sampling, not of speculation.
+That noise is now being measured directly: the same configuration evaluated twice under the same recipe and
+seed, so every paired claim in this file can be read against a floor rather than against intuition.
 
 ### How to serve a model without accidentally measuring your own harness
 

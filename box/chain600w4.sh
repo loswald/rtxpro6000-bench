@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 # 600 W box, fourth chain: after chain600w3d finishes, the questions its results raised.
-#   DeepSeek-V4-Flash with a 98k window and doubled caps: the 403-item pass truncated 17% of code and 6% of
-#   maths answers, and a truncated answer scores as wrong, so 0.801 is a floor.
+#   1. The suite's own noise floor - the same Qwen configuration evaluated twice (see lists/control600w.txt).
+#      Cheap (a quarter of an hour), and it decides how every paired claim in the README is read.
+#   2. DeepSeek-V4-Flash with a 98k window and doubled caps: the 403-item pass truncated 17% of code and 6% of
+#      maths answers, and a truncated answer scores as wrong, so 0.801 / 0.831 are floors.
 R=/workspace/results; B=/workspace/bench
 step(){ echo "[$(date +%H:%M:%S)] 600W-4: $*"; }
 for i in $(seq 1 2880); do grep -q "CHAIN600W3 DONE" $R/chain600w.log 2>/dev/null && break; sleep 60; done
+step "noise floor: Qwen3.8-27B NVFP4 evaluated a second time under the same recipe and seed"
+MODE=eval EVAL_BUDGET=3600 bash $B/ksweep.sh $B/lists/control600w.txt > $R/keval_control.log 2>&1
 step "DeepSeek-V4-Flash with room to 65k tokens (window 98k, caps doubled, 32 streams)"
 EXTRA_ENV="VLLM_DSV4_OPROJ_SM120_FALLBACK=1" MODE=eval FIRST_ONLY=1 EVAL_CONC=32 EVAL_BUDGET=10800 \
   EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288" \

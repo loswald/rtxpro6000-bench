@@ -167,7 +167,8 @@
   <thead><tr><th class="l">model (AA index) · configuration</th><th>items</th><th>overall</th><th>maths</th><th>code</th><th>tools</th><th>long ctx</th><th>knowledge</th><th>instructions</th></tr></thead>
   <tbody>
     <tr class="hi"><td class="l">GLM-5.3-Flash (57) · NVFP4, TP4, MTP speculation</td><td>403</td><td><strong>0.809</strong></td><td>0.812</td><td>0.773</td><td>0.900</td><td>0.917</td><td><strong>0.614</strong></td><td>0.883</td></tr>
-    <tr class="hi"><td class="l">DeepSeek-V4-Flash (52) · native MXFP4 + FP8, TP4</td><td>403</td><td><strong>0.801</strong> ⁴</td><td>0.912</td><td>0.680</td><td>0.886</td><td>0.938</td><td>0.586</td><td>0.850</td></tr>
+    <tr class="hi"><td class="l">DeepSeek-V4-Flash (52) · native MXFP4 + FP8, TP4, DSpark speculation</td><td>403</td><td><strong>0.831</strong> ⁴</td><td>0.938</td><td>0.720</td><td>0.871</td><td>0.958</td><td><strong>0.657</strong></td><td>0.883</td></tr>
+    <tr class="hi"><td class="l">DeepSeek-V4-Flash (52) · native MXFP4 + FP8, TP4, no speculation</td><td>403</td><td>0.801 ⁴</td><td>0.912</td><td>0.680</td><td>0.886</td><td>0.938</td><td>0.586</td><td>0.850</td></tr>
     <tr class="hi"><td class="l">GLM-5.3-Flash (57) · NVFP4, TP4, no speculation</td><td>403 ³</td><td>0.794</td><td>0.738</td><td>0.760</td><td><strong>0.914</strong></td><td>0.958</td><td>0.600</td><td>0.867</td></tr>
     <tr><td class="l">Muse-Glimmer-30B (35) · BF16</td><td>389 ¹</td><td>0.794</td><td><strong>1.000</strong></td><td>0.808</td><td>0.814</td><td>0.812</td><td>0.486</td><td>0.867</td></tr>
     <tr><td class="l">Qwen3.8-27B (52) · FP8, 4 replicas</td><td>388 ¹</td><td>0.789</td><td>0.939</td><td>0.720</td><td>0.843</td><td><strong>0.979</strong></td><td>0.471</td><td>0.867</td></tr>
@@ -186,6 +187,7 @@
 
 <h3>Speculation is lossless — measured on paired items</h3>
 <p>GLM scored 0.800 without its MTP head and 0.740 with it on the 400 W box, and the previous version of this page called that a speculator bug. It was not. Compared on the <strong>367 items both arms actually scored</strong>, same box, recipe and seed: no speculation 0.872, MTP 0.864; items only one side got right, 13 against 10 — a coin toss. The gap came from arms scored on different item sets under a cap that marked truncation wrong, and the MTP arm, being faster, was the one that finished the 36 items the base arm timed out on. Speculation did not cost GLM anything; it bought the hardest items within the same wall-clock. A greedy-sequence test could not have settled this: its own control, the same server captured twice, matched on only 4 of 12.</p>
+<p>The second model says the same thing from the other side. DeepSeek-V4-Flash with NVIDIA's DSpark drafter (7 draft tokens a step, 37% accepted) scored <strong>0.831 against 0.801 without it</strong>, all 403 items both times, paired 19 to 7 in the <em>drafter's</em> favour. A drafter cannot make the model smarter — probabilistic drafting with rejection sampling preserves the target distribution by construction — so a 19-to-7 split at temperature 1.0 is a reading of the suite's own run-to-run noise at vendor sampling. That noise is now being measured directly, the same configuration evaluated twice, so every paired claim here can be read against a floor.</p>
 
 <h3>Four quantisers of one model, on both axes</h3>
 <p>The same Qwen3.8-27B weights through four quantisers, four replicas on the 600 W box. Quality is given over every item each run scored and over the 388 items all four scored, the only column on which they are comparable.</p>
