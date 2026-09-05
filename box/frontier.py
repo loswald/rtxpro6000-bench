@@ -20,7 +20,7 @@ NODE_USD_H = 4.40   # Scan list, 70% utilisation (README, Economics)
 # label, precision class, eval tag (trees searched: 600w, 600w2, top, 5090), throughput tag, shape, C, api $/M out
 POINTS = [
     ("GLM-5.3-Flash NVFP4 · TP4",             "ptq4",   "glm53f_base",              "glm53f_tp4ep4_s512",        "router", 1024, 0.25),
-    ("GLM-5.3-Flash NVFP4 · DP4 + EP*",       "ptq4",   "glm53f_best|glm53f_base",  "glm53f_dp4ep4_s192",        "router", 1024, 0.25),
+    ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*", "ptq4",   "glm53f_best|glm53f_base",  "glm53f_dp2tp2ep2_s384",     "router", 1024, 0.25),
     ("GLM-5.3-Flash NVFP4 · TP4 + MTP",       "ptq4",   "glm53f_mtp",               "glm53f_s512_mtp",           "router", 1024, 0.25),
     ("DeepSeek-V4-Flash native · TP4",        "native", "ds4flash_b12x-b12x",       "ds4flash_b12x-b12x",        "router", 256,  0.18),
     ("DeepSeek-V4-Flash native · DP4 + EP*",  "native", "ds4flash_dp4ep4_s512_b12x--|ds4flash_b12x--", "ds4flash_dp4ep4_s512_b12x--", "router", 1024, 0.18),
@@ -37,7 +37,7 @@ POINTS = [
     ("gpt-oss-20b MXFP4 (native)",            "native", "gptoss20_--flashinfer_cutlass", "sw_gptoss_ficutlass_mxfp8", "router", 2048, 0.13),
 ]
 # shorter on-chart names for the crowded top of the plane; the table keeps the full labels
-SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP4 + EP*": "GLM-5.3-Flash · DP4+EP*",
+SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
          "GLM-5.3-Flash NVFP4 · TP4 + MTP": "GLM-5.3-Flash · TP4+MTP", "DeepSeek-V4-Flash native · TP4": "DeepSeek-V4-Flash · TP4",
          "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
          "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)"}

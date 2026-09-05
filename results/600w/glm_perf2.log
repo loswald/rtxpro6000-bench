@@ -2,3 +2,8 @@
 [18:46:41]   launch glm53f_dp4ep4_s192: --max-num-seqs 192 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
 [18:51:11]   glm53f_dp4ep4_s192 healthy in 270s | GPU KV cache size: 503,567 tokens
   router     C1024   488.6s     503 req/min     1073 out/s      8585 in/s      9658 tot/s  TTFT  96602/ 118779 ms  TPOT  92.9/ 103.9 ms  ITL  92.9  E2E 108.4/130.1 s
+  promptopt  C1024  1191.5s     206 req/min      880 out/s     12321 in/s     13201 tot/s  TTFT 231527/ 283764 ms  TPOT 134.3/ 151.0 ms  ITL 134.3  E2E 265.8/319.9 s
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/glm53f_dp4ep4_s192_quality20.json
+[19:21:24]   launch glm53f_dp2tp2ep2_s384: --max-num-seqs 384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel
+[19:25:39]   glm53f_dp2tp2ep2_s384 healthy in 255s | GPU KV cache size: 1,255,513 tokens
+  router     C1024   403.4s     609 req/min     1300 out/s     10397 in/s     11696 tot/s  TTFT  72203/  99046 ms  TPOT 151.7/ 173.6 ms  ITL 151.7  E2E  91.5/118.5 s
