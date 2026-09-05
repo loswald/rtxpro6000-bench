@@ -1,0 +1,7 @@
+# Qwen3.8-Flash-Next, third attempt. With the FP8 PLE fix the loader passes; the auto MoE backend then picks
+# FLASHINFER_CUTLASS for the NVFP4 experts and dies at TP4 ("intermediate size padding for w1 and w3 ... not
+# currently supported"), and at TP2 an autotune allocates the rank's PLE table in BF16 and runs out of memory.
+# Marlin's NVFP4 MoE kernel has neither problem: two TP2 replicas, one TP4 engine, then TP4 with W4A4 linears.
+qwen38fn_tp2x2m|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:marlin|--kv-cache-dtype|auto|--gpu-memory-utilization|0.92
+qwen38fn_tp4m|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:marlin|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92
+qwen38fn_tp4mb|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:marlin|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92

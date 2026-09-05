@@ -690,9 +690,13 @@ class ChatClient:
                 timeout = aiohttp.ClientTimeout(total=self.request_timeout, sock_connect=self.connect_timeout,
                                                 sock_read=self.request_timeout)
                 connector = aiohttp.TCPConnector(limit=self.concurrency)
-                self._sessions[u] = aiohttp.ClientSession(timeout=timeout, connector=connector,
-                                                          headers={"User-Agent": USER_AGENT,
-                                                                   "Content-Type": "application/json"})
+                hdrs = {"User-Agent": USER_AGENT, "Content-Type": "application/json"}
+                # remote OpenAI-compatible APIs (OpenRouter): bearer token from the environment, never from args or logs
+                if os.environ.get("EVAL_API_KEY"):
+                    hdrs["Authorization"] = "Bearer " + os.environ["EVAL_API_KEY"]
+                    hdrs["HTTP-Referer"] = "https://github.com/loswald/rtxpro6000-bench"
+                    hdrs["X-Title"] = "rtxpro6000-bench quality suite"
+                self._sessions[u] = aiohttp.ClientSession(timeout=timeout, connector=connector, headers=hdrs)
 
     async def close(self) -> None:
         self._closed = True

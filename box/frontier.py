@@ -6,7 +6,7 @@ x: dollars per million tokens (input + output) for the AVERAGE of the workloads 
    configuration - the router shape (1,024 in / 128 out), the prompt-optimisation shape (3,072-token shared prefix
    + 512 in / 256 out) and the judge shape (4,096 in / 512 out) where they exist. Node cost is $4.40 per node-hour
    (Scan list, 70% utilisation) divided by the requests that hour serves at each shape; the API bill prices the
-   same requests at OpenRouter list (5 Sept 2026) with input, cached input (10% of the input price) and output
+   same requests at OpenRouter list (5 Sept 2026) with input, cached input (each model's own cache-read price) and output
    priced separately. Both are averaged per request over the same two shapes (router and prompt-optimisation;
    the judge shape exists only for some configurations, so it is left out for comparability), so filled (node)
    and hollow (API) markers are the same workload at the same mix.
@@ -21,15 +21,15 @@ import csv, json, os, math
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NODE_USD_H = 4.40    # Scan list, 70% utilisation (README, Economics)
-CACHE_FRAC = 0.10    # cached input billed at this fraction of the input price (OpenAI 10%, DeepSeek ~10%, Z.AI ~20%)
 SHAPE_GEOM = {"router": (1024, 128, 0), "promptopt": (512, 256, 3072), "judge": (4096, 512, 0)}   # in, out, cached prefix
 SHAPES_USED = ("router", "promptopt")   # the two shapes every configuration has; judge exists only for some, and a
                                         # point averaged over three shapes would not be comparable with one over two
 
-# API list prices, $ per million tokens (input, output) - OpenRouter 5 Sept 2026, Qwen3.8-Flash-Next from AA
-API = {"Qwen3.8-27B": (0.42, 3.00), "GLM-5.3-Flash": (0.075, 0.25), "DeepSeek-V4-Flash": (0.065, 0.18),
-       "gpt-oss-120b": (0.037, 0.17), "gpt-oss-20b": (0.03, 0.13), "gemma-4-26B-A4B": (0.07, 0.34),
-       "Muse-Glimmer-30B": (0.30, 1.10), "Qwen3.8-Flash-Next": (0.15, 0.47), "MiniMax-M3": (0.30, 1.20)}
+# API list prices, $ per million tokens (input, output, cached input) - OpenRouter /models on 5 Sept 2026 (default
+# routing; a model with no cache-read price bills cached input at the full input price). Qwen3.8-Flash-Next from AA.
+API = {"Qwen3.8-27B": (0.42, 3.00, 0.085), "GLM-5.3-Flash": (0.075, 0.25, 0.015), "DeepSeek-V4-Flash": (0.065, 0.18, 0.016),
+       "gpt-oss-120b": (0.037, 0.17, 0.037), "gpt-oss-20b": (0.03, 0.13, 0.03), "gemma-4-26B-A4B": (0.07, 0.34, 0.07),
+       "Muse-Glimmer-30B": (0.30, 1.10, 0.04), "Qwen3.8-Flash-Next": (0.15, 0.47, 0.15), "MiniMax-M3": (0.30, 1.20, 0.06)}
 
 # label, precision class, eval tag (trees searched: 600w, 600w2, top, 5090), throughput tag, API model
 POINTS = [
@@ -106,13 +106,13 @@ def cost_avg(tag, model):
     sh = shapes_for(tag)
     if not sh:
         return None
-    p_in, p_out = API[model]
+    p_in, p_out, p_cache = API[model]
     node_req, api_req, tok_req, tin, tout = [], [], [], [], []
     for label, out_tps in sh.items():
         n_in, n_out, n_pre = SHAPE_GEOM[label]
         req_s = out_tps / n_out
         node_req.append(NODE_USD_H / 3600 / req_s)
-        api_req.append((n_in * p_in + n_pre * p_in * CACHE_FRAC + n_out * p_out) / 1e6)
+        api_req.append((n_in * p_in + n_pre * p_cache + n_out * p_out) / 1e6)
         tok_req.append(n_in + n_pre + n_out); tin.append(n_in + n_pre); tout.append(n_out)
     k = len(sh)
     node_m = sum(node_req) / k / (sum(tok_req) / k) * 1e6
@@ -188,7 +188,7 @@ def main():
         o.append(f'<text x="{ml-8}" y="{Y(a)+4:.1f}" font-size="12" fill="#898781" text-anchor="end">{a:.2f}</text>')
         a += 0.05
     o.append(f'<line x1="{ml}" y1="{H-mb}" x2="{W-mr}" y2="{H-mb}" stroke="#c3c2b7"/>')
-    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API list at the same mix, cached input at 10%</text>')
+    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API list at the same mix, cached input at its own price</text>')
     o.append(f'<text transform="translate(18,{(mt+H-mb)/2:.0f}) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>')
     L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API list price, same model, same workload mix", "#52514e", "hollow")),
          ("front", ("frontier: nothing is both cheaper and better", "#898781", "dash")),
