@@ -198,6 +198,11 @@ shapes(){ # tag dir n
     eval) evalrun "$tag" "$n" "$dir"; return;;
     both) evalrun "$tag" "$n" "$dir";;
   esac
+  if [ "${SHAPES:-}" = deep ]; then   # saturation probe: twice the streams of the standard shapes
+    pt "$tag" router    1024 128 0    $(( 2048 / n )) "$n" "$dir"
+    pt "$tag" promptopt  512 256 3072 $(( 2048 / n )) "$n" "$dir"
+    return
+  fi
   if [ "${SHAPES:-}" = fast ]; then   # two shapes only: enough to rank layouts and kernels when time is short
     pt "$tag" router    1024 128 0    $(( 1024 / n )) "$n" "$dir"
     pt "$tag" promptopt  512 256 3072 $(( 1024 / n )) "$n" "$dir"
