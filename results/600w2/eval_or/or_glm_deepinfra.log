@@ -1,0 +1,35 @@
+2026-09-05T22:34:23Z run or_glm_deepinfra: 403 items, families ['tools', 'code', 'math', 'longctx', 'knowledge', 'ifeval'], urls ['https://openrouter.ai/api'], concurrency 24, budget 2700s
+2026-09-05T22:34:25Z longctx: prepare_run ...
+2026-09-05T22:34:25Z longctx: /tokenize unavailable, fixed fallback -> {"budgets": {"16k": 16384, "32k": 25088, "8k": 8192}, "chars_per_token": {"docs": 3.7, "filler": 3.7}, "checks": {}, "fixed_tokens": {}, "max_model_len": 32768, "max_tokens": 6144, "method": "fixed (/tokenize unavailable)", "tokenize_calls": 0}
+2026-09-05T22:34:25Z ifeval: prepare_run ...
+2026-09-05T22:34:25Z ifeval: reasoning allowance on 60 items (caps now 16384..16384)
+2026-09-05T22:34:26Z == or_glm_deepinfra model=z-ai/glm-5.3-flash wall=0.5s truncated=False valid=False ['error rate 403/403 > 5%']
+2026-09-05T22:34:26Z   tools      acc=- n=0/70 ci95=[0.000,1.000] out_tok=None trunc=None err=70 
+2026-09-05T22:34:26Z     parallel_multiple acc=- n=0/10 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     parallel         acc=- n=0/15 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     multiple         acc=- n=0/15 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     simple           acc=- n=0/20 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     irrelevance      acc=- n=0/10 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z   code       acc=- n=0/75 ci95=[0.000,1.000] out_tok=None trunc=None err=75 
+2026-09-05T22:34:26Z     lcb_easy_medium  acc=- n=0/30 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     humanevalplus    acc=- n=0/25 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     mbppplus         acc=- n=0/20 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z   math       acc=- n=0/80 ci95=[0.000,1.000] out_tok=None trunc=None err=80 
+2026-09-05T22:34:26Z     aime25           acc=- n=0/30 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     hmmt25           acc=- n=0/30 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     math500_hard     acc=- n=0/20 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z   longctx    acc=- n=0/48 ci95=[0.000,1.000] out_tok=None trunc=None err=48 
+2026-09-05T22:34:26Z     niah_multikey    acc=- n=0/24 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     var_tracking     acc=- n=0/12 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     qa_multi_doc     acc=- n=0/12 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z   knowledge  acc=- n=0/70 ci95=[0.000,1.000] out_tok=None trunc=None err=70 
+2026-09-05T22:34:26Z     mmlu_pro_hard    acc=- n=0/40 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     simpleqa         acc=- n=0/30 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z   ifeval     acc=- n=0/60 ci95=[0.000,1.000] out_tok=None trunc=None err=60 
+2026-09-05T22:34:26Z     triple           acc=- n=0/24 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     double           acc=- n=0/24 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z     single           acc=- n=0/12 ci95=[0.000,1.000]
+2026-09-05T22:34:26Z   aggregate  acc_micro=- acc_macro=None n=0/403 ci95=[0.0, 1.0] requests=403 retries=0 out_tok/s=0.0
+2026-09-05T22:34:26Z wrote /workspace/results/eval_or/or_glm_deepinfra.json, /workspace/results/eval_or/or_glm_deepinfra.items.jsonl, +26 rows in /workspace/results/eval_or/eval_summary.tsv -> exit 1
+9-05T22:34:26Z   aggregate  acc_micro=- acc_macro=None n=0/403 ci95=[0.0, 1.0] requests=403 retries=0 out_tok/s=0.0
+2026-09-05T22:34:26Z wrote /workspace/results/eval_or/or_glm_deepinfra.json, /workspace/results/eval_or/or_glm_deepinfra.items.jsonl, +26 rows in /workspace/results/eval_or/eval_summary.tsv -> exit 1

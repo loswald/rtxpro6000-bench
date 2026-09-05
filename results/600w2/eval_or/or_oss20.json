@@ -1,48 +1,48 @@
 {
  "aggregate": {
-  "acc_macro": 0.7308,
-  "acc_micro": 0.7295,
-  "acc_strict": 0.7295,
+  "acc_macro": 0.7334,
+  "acc_micro": 0.7246,
+  "acc_strict": 0.7246,
   "answer_from_reasoning": 4,
   "ci95": [
    0.679,
-   0.7746
+   0.7659
   ],
   "degenerate_rate": 0.0,
-  "gpu_minutes": 24.004,
-  "mean_out_tokens": 1853.8,
-  "mean_prompt_tokens": 2119.6,
-  "mean_score": 0.749,
-  "n_attempted": 329,
+  "gpu_minutes": 61.338,
+  "mean_out_tokens": 2941.2,
+  "mean_prompt_tokens": 1790.4,
+  "mean_score": 0.7432,
+  "n_attempted": 403,
   "n_cancelled": 0,
-  "n_correct": 240,
+  "n_correct": 292,
   "n_error": 0,
   "n_planned": 403,
-  "n_scored": 329,
-  "n_skipped": 74,
-  "out_tokens_per_s": 1700.8,
-  "p50_item_s": 9.01,
-  "p50_out_tokens": 725,
-  "p90_item_s": 51.54,
+  "n_scored": 403,
+  "n_skipped": 0,
+  "out_tokens_per_s": 1288.3,
+  "p50_item_s": 10.59,
+  "p50_out_tokens": 828,
+  "p90_item_s": 83.84,
   "per_url": {
    "https://openrouter.ai/api": {
-    "completion_tokens": 612394,
-    "requests": 353
+    "completion_tokens": 1185285,
+    "requests": 403
    }
   },
   "request_errors": 0,
-  "requests": 353,
+  "requests": 403,
   "retries": 0,
   "status_counts": {
-   "correct": 240,
-   "truncated": 1,
-   "unparsed": 5,
-   "wrong": 83
+   "correct": 292,
+   "truncated": 3,
+   "unparsed": 6,
+   "wrong": 102
   },
-  "total_out_tokens": 609906,
-  "total_prompt_tokens": 697358,
-  "trunc_rate": 0.003,
-  "wall_s": 359.1
+  "total_out_tokens": 1185285,
+  "total_prompt_tokens": 721523,
+  "trunc_rate": 0.0074,
+  "wall_s": 920.1
  },
  "base_urls": [
   "https://openrouter.ai/api"
@@ -85,7 +85,7 @@
   "top_p": 0.95
  },
  "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
- "ended_at": "2026-09-05T22:24:23Z",
+ "ended_at": "2026-09-05T22:33:43Z",
  "endpoint": {
   "max_model_len": null,
   "served_models": [
@@ -528,12 +528,12 @@
  "evalsuite_git_sha": null,
  "families": {
   "code": {
-   "acc": 0.7627,
-   "acc_strict": 0.7627,
+   "acc": 0.7733,
+   "acc_strict": 0.7733,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6403,
-    0.8531
+    0.6666,
+    0.8534
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
@@ -543,11 +543,11 @@
      "TypeError": 1,
      "assertion": 11,
      "timeout": 1,
-     "wrong_output": 1
+     "wrong_output": 4
     },
-    "lcb_mean_test_pass_frac": 0.9128,
+    "lcb_mean_test_pass_frac": 0.8642,
     "syntax_error_rate": 0.0,
-    "timeout_rate": 0.0169,
+    "timeout_rate": 0.0133,
     "unparsed_rate": 0.0
    },
    "failed_ids": [
@@ -555,8 +555,11 @@
     "heplus-099",
     "heplus-109",
     "heplus-141",
+    "lcb-atcoder-arc192_a",
+    "lcb-atcoder-arc194_a",
     "lcb-leetcode-3743",
     "lcb-leetcode-3776",
+    "lcb-leetcode-3794",
     "mbppplus-074",
     "mbppplus-129",
     "mbppplus-137",
@@ -617,6 +620,30 @@
     },
     {
      "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1635 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-atcoder-arc192_a",
+     "out_tokens": 14381,
+     "response_tail": "air `(N-1, 0)` is used, so positions 0 and N-1 are already covered.\n\nFor each configuration it runs a linear DP that simulates the matching of zeros with allowed adjacent pairs. If either configuration succeeds, it outputs `Yes`; otherwise, `No`. The algorithm runs in O(N) time and O(1) extra space.",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (stdin)",
+     "extracted": "1846 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-atcoder-arc194_a",
+     "out_tokens": 19752,
+     "response_tail": "  # we delete top; otherwise we push the negative.\n                if -top > val:\n                    total -= top\n                    stack.pop()\n                else:\n                    stack.append(val)\n                    total += val\n    print(total)\n\nif __name__ == \"__main__\":\n    solve()\n```",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
      "expected": "pass 23 tests (functional)",
      "extracted": "1909 chars via fence",
      "finish_reason": "stop",
@@ -638,6 +665,18 @@
      "id": "lcb-leetcode-3776",
      "out_tokens": 14001,
      "response_tail": "t most two positions apart in the original order.  \nA depth\u2011first search with memoisation explores all admissible states efficiently \u2013 the number of states is bounded by roughly \\(O(n^2)\\) and each state evaluates only a few constant\u2011size transitions. This solves the problem within the given limits.",
+     "status": "wrong",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": "pass 24 tests (functional)",
+     "extracted": "1231 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "lcb-leetcode-3794",
+     "out_tokens": 1476,
+     "response_tail": "inish[i] if finish[i] > prev_finish else prev_finish\n                finish_time = start_time + skill[i] * mana[j]\n                finish[i] = finish_time\n                prev_finish = finish_time\n\n        # The makespan is when the last wizard finishes the last potion.\n        return finish[-1]\n```",
      "status": "wrong",
      "sub": "lcb_easy_medium"
     },
@@ -738,134 +777,134 @@
      "sub": "mbppplus"
     }
    ],
-   "gpu_minutes": 3.016,
-   "info_per_gpu_min": 3.541,
+   "gpu_minutes": 6.896,
+   "info_per_gpu_min": 1.907,
    "max_tokens": 20480,
-   "mean_out_tokens": 1441.8,
-   "mean_prompt_tokens": 342.0,
-   "mean_score": 0.7685,
-   "n_attempted": 59,
+   "mean_out_tokens": 1866.0,
+   "mean_prompt_tokens": 366.8,
+   "mean_score": 0.7857,
+   "n_attempted": 75,
    "n_cancelled": 0,
-   "n_correct": 45,
+   "n_correct": 58,
    "n_error": 0,
    "n_planned": 75,
-   "n_scored": 59,
-   "n_skipped": 16,
+   "n_scored": 75,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 8.34,
-   "p50_out_tokens": 698,
+   "p50_item_s": 8.52,
+   "p50_out_tokens": 758,
    "p90_item_s": 35.68,
    "status_counts": {
-    "correct": 45,
-    "wrong": 14
+    "correct": 58,
+    "wrong": 17
    },
    "sub": {
     "humanevalplus": {
-     "acc": 0.8095,
-     "acc_strict": 0.8095,
+     "acc": 0.84,
+     "acc_strict": 0.84,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6,
-      0.9233
+      0.6535,
+      0.936
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 809.2,
-     "mean_prompt_tokens": 266.0,
-     "mean_score": 0.8095,
-     "n_attempted": 21,
+     "mean_out_tokens": 817.6,
+     "mean_prompt_tokens": 260.1,
+     "mean_score": 0.84,
+     "n_attempted": 25,
      "n_cancelled": 0,
-     "n_correct": 17,
+     "n_correct": 21,
      "n_error": 0,
      "n_planned": 25,
-     "n_scored": 21,
-     "n_skipped": 4,
-     "p50_item_s": 8.34,
-     "p50_out_tokens": 637,
-     "p90_item_s": 19.92,
+     "n_scored": 25,
+     "n_skipped": 0,
+     "p50_item_s": 8.92,
+     "p50_out_tokens": 698,
+     "p90_item_s": 21.0,
      "status_counts": {
-      "correct": 17,
+      "correct": 21,
       "wrong": 4
      },
-     "total_out_tokens": 16993,
-     "total_prompt_tokens": 5586,
+     "total_out_tokens": 20439,
+     "total_prompt_tokens": 6502,
      "trunc_rate": 0.0,
-     "wall_s": 353.9
+     "wall_s": 405.7
     },
     "lcb_easy_medium": {
-     "acc": 0.8947,
-     "acc_strict": 0.8947,
+     "acc": 0.8333,
+     "acc_strict": 0.8333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6861,
-      0.9706
+      0.6644,
+      0.9266
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 2860.3,
-     "mean_prompt_tokens": 609.5,
-     "mean_score": 0.9128,
-     "n_attempted": 19,
+     "mean_out_tokens": 3497.5,
+     "mean_prompt_tokens": 594.1,
+     "mean_score": 0.8642,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 17,
+     "n_correct": 25,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 19,
-     "n_skipped": 11,
-     "p50_item_s": 13.9,
-     "p50_out_tokens": 1106,
-     "p90_item_s": 122.45,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 8.74,
+     "p50_out_tokens": 1108,
+     "p90_item_s": 86.08,
      "status_counts": {
-      "correct": 17,
-      "wrong": 2
+      "correct": 25,
+      "wrong": 5
      },
-     "total_out_tokens": 54346,
-     "total_prompt_tokens": 11581,
+     "total_out_tokens": 104924,
+     "total_prompt_tokens": 17822,
      "trunc_rate": 0.0,
-     "wall_s": 325.2
+     "wall_s": 658.6
     },
     "mbppplus": {
-     "acc": 0.5789,
-     "acc_strict": 0.5789,
+     "acc": 0.6,
+     "acc_strict": 0.6,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3628,
-      0.7686
+      0.3866,
+      0.7812
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 722.4,
-     "mean_prompt_tokens": 158.5,
-     "mean_score": 0.5789,
-     "n_attempted": 19,
+     "mean_out_tokens": 729.5,
+     "mean_prompt_tokens": 159.2,
+     "mean_score": 0.6,
+     "n_attempted": 20,
      "n_cancelled": 0,
-     "n_correct": 11,
+     "n_correct": 12,
      "n_error": 0,
      "n_planned": 20,
-     "n_scored": 19,
-     "n_skipped": 1,
+     "n_scored": 20,
+     "n_skipped": 0,
      "p50_item_s": 6.85,
      "p50_out_tokens": 683,
      "p90_item_s": 17.41,
      "status_counts": {
-      "correct": 11,
+      "correct": 12,
       "wrong": 8
      },
-     "total_out_tokens": 13725,
-     "total_prompt_tokens": 3011,
+     "total_out_tokens": 14590,
+     "total_prompt_tokens": 3184,
      "trunc_rate": 0.0,
-     "wall_s": 345.7
+     "wall_s": 362.3
     }
    },
-   "total_out_tokens": 85064,
-   "total_prompt_tokens": 20178,
+   "total_out_tokens": 139953,
+   "total_prompt_tokens": 27508,
    "trunc_rate": 0.0,
-   "wall_s": 353.9
+   "wall_s": 658.6
   },
   "ifeval": {
-   "acc": 0.807,
-   "acc_strict": 0.807,
+   "acc": 0.8,
+   "acc_strict": 0.8,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6866,
-    0.8887
+    0.6822,
+    0.8817
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
@@ -878,20 +917,20 @@
       "prompt_strict": 0.8333
      },
      "2": {
-      "n": 22,
-      "prompt_loose": 0.9091,
-      "prompt_strict": 0.8182
+      "n": 24,
+      "prompt_loose": 0.875,
+      "prompt_strict": 0.7917
      },
      "3": {
-      "n": 23,
-      "prompt_loose": 0.7826,
-      "prompt_strict": 0.7826
+      "n": 24,
+      "prompt_loose": 0.7917,
+      "prompt_strict": 0.7917
      }
     },
-    "instruction_loose": 0.928,
-    "instruction_strict": 0.912,
-    "loose_only_rate": 0.0351,
-    "n_instructions": 125,
+    "instruction_loose": 0.9242,
+    "instruction_strict": 0.9091,
+    "loose_only_rate": 0.0333,
+    "n_instructions": 132,
     "per_type": {
      "change_case:capital_word_frequency": {
       "loose": 0.8889,
@@ -935,7 +974,7 @@
      },
      "detectable_format:multiple_sections": {
       "loose": 1.0,
-      "n": 2,
+      "n": 3,
       "strict": 1.0
      },
      "detectable_format:number_bullet_lists": {
@@ -969,9 +1008,9 @@
       "strict": 0.9444
      },
      "keywords:letter_frequency": {
-      "loose": 0.6,
-      "n": 5,
-      "strict": 0.6
+      "loose": 0.5,
+      "n": 6,
+      "strict": 0.5
      },
      "language:response_language": {
       "loose": 1.0,
@@ -990,22 +1029,22 @@
      },
      "length_constraints:number_sentences": {
       "loose": 1.0,
-      "n": 17,
+      "n": 19,
       "strict": 1.0
      },
      "length_constraints:number_words": {
-      "loose": 0.9412,
-      "n": 17,
-      "strict": 0.9412
+      "loose": 0.9444,
+      "n": 18,
+      "strict": 0.9444
      },
      "punctuation:no_comma": {
-      "loose": 0.8125,
-      "n": 16,
-      "strict": 0.75
+      "loose": 0.8235,
+      "n": 17,
+      "strict": 0.7647
      },
      "startend:end_checker": {
       "loose": 1.0,
-      "n": 6,
+      "n": 7,
       "strict": 1.0
      },
      "startend:quotation": {
@@ -1014,14 +1053,15 @@
       "strict": 1.0
      }
     },
-    "prompt_loose": 0.8421,
-    "prompt_strict": 0.807
+    "prompt_loose": 0.8333,
+    "prompt_strict": 0.8
    },
    "failed_ids": [
     "ifeval-1000",
     "ifeval-1040",
     "ifeval-1174",
     "ifeval-1300",
+    "ifeval-1964",
     "ifeval-2192",
     "ifeval-2216",
     "ifeval-3109",
@@ -1078,6 +1118,18 @@
      "response_tail": "nors The budget will cover personnel software and storage infrastructure\n\nThe initiative invites teamwork with native speakers historians and analytical linguists This partnership will enrich data depth and interpretative insight Outcomes will be shared through open platforms and community briefings",
      "status": "wrong",
      "sub": "triple"
+    },
+    {
+     "error": null,
+     "expected": "keywords:letter_frequency+length_constraints:number_words",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-1964",
+     "out_tokens": 4308,
+     "response_tail": "n exclusive honors through consistent victories. New entrants receive free trial tickets, guiding them through seamless entry and full enjoyment. Sign up today and become a legend in an arena that celebrates daring, charm, and unending joy. Every win ignites hearts, forging a legacy of daring glory.",
+     "status": "wrong",
+     "sub": "double"
     },
     {
      "error": null,
@@ -1168,58 +1220,58 @@
      "sub": "double"
     }
    ],
-   "gpu_minutes": 3.696,
-   "info_per_gpu_min": 2.402,
+   "gpu_minutes": 5.45,
+   "info_per_gpu_min": 1.761,
    "max_tokens": 16384,
-   "mean_out_tokens": 1868.5,
-   "mean_prompt_tokens": 116.1,
-   "mean_score": 0.9006,
-   "n_attempted": 57,
+   "mean_out_tokens": 1874.3,
+   "mean_prompt_tokens": 115.4,
+   "mean_score": 0.8972,
+   "n_attempted": 60,
    "n_cancelled": 0,
-   "n_correct": 46,
+   "n_correct": 48,
    "n_error": 0,
    "n_planned": 60,
-   "n_scored": 57,
-   "n_skipped": 3,
+   "n_scored": 60,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 14.79,
+   "p50_item_s": 13.89,
    "p50_out_tokens": 1137,
    "p90_item_s": 33.46,
    "status_counts": {
-    "correct": 46,
-    "wrong": 11
+    "correct": 48,
+    "wrong": 12
    },
    "sub": {
     "double": {
-     "acc": 0.8182,
-     "acc_strict": 0.8182,
+     "acc": 0.7917,
+     "acc_strict": 0.7917,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6148,
-      0.9269
+      0.5953,
+      0.9076
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 2089.5,
-     "mean_prompt_tokens": 117.8,
-     "mean_score": 0.9091,
-     "n_attempted": 22,
+     "mean_out_tokens": 2110.0,
+     "mean_prompt_tokens": 116.0,
+     "mean_score": 0.8958,
+     "n_attempted": 24,
      "n_cancelled": 0,
-     "n_correct": 18,
+     "n_correct": 19,
      "n_error": 0,
      "n_planned": 24,
-     "n_scored": 22,
-     "n_skipped": 2,
+     "n_scored": 24,
+     "n_skipped": 0,
      "p50_item_s": 15.35,
      "p50_out_tokens": 1640,
-     "p90_item_s": 33.46,
+     "p90_item_s": 42.55,
      "status_counts": {
-      "correct": 18,
-      "wrong": 4
+      "correct": 19,
+      "wrong": 5
      },
-     "total_out_tokens": 45970,
-     "total_prompt_tokens": 2592,
+     "total_out_tokens": 50640,
+     "total_prompt_tokens": 2785,
      "trunc_rate": 0.0,
-     "wall_s": 341.3
+     "wall_s": 375.9
     },
     "single": {
      "acc": 0.8333,
@@ -1253,58 +1305,58 @@
      "wall_s": 216.5
     },
     "triple": {
-     "acc": 0.7826,
-     "acc_strict": 0.7826,
+     "acc": 0.7917,
+     "acc_strict": 0.7917,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.581,
-      0.9034
+      0.5953,
+      0.9076
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 2158.5,
-     "mean_prompt_tokens": 124.3,
-     "mean_score": 0.9275,
-     "n_attempted": 23,
+     "mean_out_tokens": 2122.0,
+     "mean_prompt_tokens": 123.8,
+     "mean_score": 0.9306,
+     "n_attempted": 24,
      "n_cancelled": 0,
-     "n_correct": 18,
+     "n_correct": 19,
      "n_error": 0,
      "n_planned": 24,
-     "n_scored": 23,
-     "n_skipped": 1,
-     "p50_item_s": 14.86,
+     "n_scored": 24,
+     "n_skipped": 0,
+     "p50_item_s": 14.79,
      "p50_out_tokens": 1106,
      "p90_item_s": 52.35,
      "status_counts": {
-      "correct": 18,
+      "correct": 19,
       "wrong": 5
      },
-     "total_out_tokens": 49645,
-     "total_prompt_tokens": 2859,
+     "total_out_tokens": 50927,
+     "total_prompt_tokens": 2971,
      "trunc_rate": 0.0,
-     "wall_s": 350.0
+     "wall_s": 367.0
     }
    },
-   "total_out_tokens": 106507,
-   "total_prompt_tokens": 6617,
+   "total_out_tokens": 112459,
+   "total_prompt_tokens": 6922,
    "trunc_rate": 0.0,
-   "wall_s": 350.0
+   "wall_s": 375.9
   },
   "knowledge": {
-   "acc": 0.375,
-   "acc_strict": 0.375,
+   "acc": 0.4286,
+   "acc_strict": 0.4286,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.2601,
-    0.5059
+    0.3194,
+    0.5452
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
     "extraction_methods": {
-     "answer_phrase": 25,
+     "answer_phrase": 38,
      "boxed": 2,
-     "phrase": 29
+     "phrase": 30
     },
     "mmlu_pro_hard_hedged": 0,
     "mmlu_pro_hard_weak_extraction": 0,
@@ -1316,12 +1368,17 @@
     "mmlupro-11407",
     "mmlupro-1147",
     "mmlupro-1157",
+    "mmlupro-11606",
+    "mmlupro-12174",
+    "mmlupro-1328",
     "mmlupro-3818",
     "mmlupro-3917",
+    "mmlupro-4055",
     "mmlupro-899",
     "simpleqa-0409",
     "simpleqa-0492",
     "simpleqa-0672",
+    "simpleqa-0673",
     "simpleqa-0762",
     "simpleqa-1012",
     "simpleqa-1166",
@@ -1388,6 +1445,42 @@
     },
     {
      "error": null,
+     "expected": "C",
+     "extracted": "D",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-11606",
+     "out_tokens": 5486,
+     "response_tail": "\n\\(960\\;\\text{rpm}\\).  \nThe required angular velocity is\n\n\\[\n\\omega=\\frac{960}{60}\\,2\\pi \\approx 100\\;\\text{rad\u202fs}^{-1}\n\\]\n\nHence the time required is\n\n\\[\nt=\\frac{\\omega}{\\alpha}\\approx\\frac{100}{9.3}\\approx 10.7\\;\\text{s}\n\\]\n\nThe nearest choice among the options is **10\u202fs**.\n\n**The answer is (D).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "C",
+     "extracted": "A",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-12174",
+     "out_tokens": 7308,
+     "response_tail": " not satisfy the required shear or bearing stresses. The combination above gives the smallest reasonable key length while meeting both stress criteria.\n\n**Therefore the appropriate key dimensions are**\n\n- Thickness = **3/8 in.**  \n- Width    = **1/2 in.**  \n- Length   = **3.32 in.**\n\n**Answer: (A)**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "A",
+     "extracted": "F",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-1328",
+     "out_tokens": 1820,
+     "response_tail": "plain view from a lawful position \u2013 the officers had to open the closet, constituting an unlawful search that was not incident to the arrest. Therefore the correct justification for suppression is that the officers lacked probable cause to believe cocaine was in the closet.  \n\n**The answer is (F).**",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
      "expected": "A",
      "extracted": "H",
      "finish_reason": "stop",
@@ -1407,6 +1500,18 @@
      "id": "mmlupro-3917",
      "out_tokens": 5837,
      "response_tail": "ed. Thus the expected order from lowest to highest boiling point is:\n\n**methane < neopentane < 2,3\u2011dimethylbutane < n\u2011hexane < n\u2011undecane**\n\nAmong the given choices, the one that best matches this trend is:\n\n**F. methane < neopentane < n\u2011hexane < 2,3\u2011dimethylbutane < n\u2011undecane**\n\nThe answer is (F).",
+     "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "D",
+     "extracted": "A",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mmlupro-4055",
+     "out_tokens": 8451,
+     "response_tail": "The correct choice is **A**.",
      "status": "wrong",
      "sub": "mmlu_pro_hard"
     },
@@ -1455,6 +1560,18 @@
      "id": "simpleqa-0672",
      "out_tokens": 368,
      "response_tail": "Answer: 1,371",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Long Island",
+     "extracted": "Fire Island",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0673",
+     "out_tokens": 2655,
+     "response_tail": "Answer: Fire Island",
      "status": "wrong",
      "sub": "simpleqa"
     },
@@ -1771,58 +1888,58 @@
      "sub": "simpleqa"
     }
    ],
-   "gpu_minutes": 3.132,
-   "info_per_gpu_min": 4.191,
+   "gpu_minutes": 6.328,
+   "info_per_gpu_min": 2.709,
    "max_tokens": 20480,
-   "mean_out_tokens": 1597.2,
-   "mean_prompt_tokens": 218.1,
-   "mean_score": 0.375,
-   "n_attempted": 56,
+   "mean_out_tokens": 1849.7,
+   "mean_prompt_tokens": 240.4,
+   "mean_score": 0.4286,
+   "n_attempted": 70,
    "n_cancelled": 0,
-   "n_correct": 21,
+   "n_correct": 30,
    "n_error": 0,
    "n_planned": 70,
-   "n_scored": 56,
-   "n_skipped": 14,
+   "n_scored": 70,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 10.02,
-   "p50_out_tokens": 1105,
-   "p90_item_s": 42.35,
+   "p50_item_s": 11.94,
+   "p50_out_tokens": 1268,
+   "p90_item_s": 56.64,
    "status_counts": {
-    "correct": 21,
-    "wrong": 35
+    "correct": 30,
+    "wrong": 40
    },
    "sub": {
     "mmlu_pro_hard": {
-     "acc": 0.7778,
-     "acc_strict": 0.7778,
+     "acc": 0.75,
+     "acc_strict": 0.75,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.5924,
-      0.8939
+      0.5981,
+      0.8581
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 1676.0,
-     "mean_prompt_tokens": 337.4,
-     "mean_score": 0.7778,
-     "n_attempted": 27,
+     "mean_out_tokens": 2065.9,
+     "mean_prompt_tokens": 340.3,
+     "mean_score": 0.75,
+     "n_attempted": 40,
      "n_cancelled": 0,
-     "n_correct": 21,
+     "n_correct": 30,
      "n_error": 0,
      "n_planned": 40,
-     "n_scored": 27,
-     "n_skipped": 13,
-     "p50_item_s": 11.08,
-     "p50_out_tokens": 1053,
-     "p90_item_s": 41.72,
+     "n_scored": 40,
+     "n_skipped": 0,
+     "p50_item_s": 13.24,
+     "p50_out_tokens": 1355,
+     "p90_item_s": 56.64,
      "status_counts": {
-      "correct": 21,
-      "wrong": 6
+      "correct": 30,
+      "wrong": 10
      },
-     "total_out_tokens": 45252,
-     "total_prompt_tokens": 9110,
+     "total_out_tokens": 82636,
+     "total_prompt_tokens": 13612,
      "trunc_rate": 0.0,
-     "wall_s": 342.7
+     "wall_s": 428.8
     },
     "simpleqa": {
      "acc": 0.0,
@@ -1830,35 +1947,35 @@
      "answer_from_reasoning": 0,
      "ci95": [
       0.0,
-      0.117
+      0.1135
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 1523.8,
-     "mean_prompt_tokens": 107.0,
+     "mean_out_tokens": 1561.5,
+     "mean_prompt_tokens": 107.3,
      "mean_score": 0.0,
-     "n_attempted": 29,
+     "n_attempted": 30,
      "n_cancelled": 0,
      "n_correct": 0,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 29,
-     "n_skipped": 1,
+     "n_scored": 30,
+     "n_skipped": 0,
      "p50_item_s": 9.72,
      "p50_out_tokens": 1142,
      "p90_item_s": 51.54,
      "status_counts": {
-      "wrong": 29
+      "wrong": 30
      },
-     "total_out_tokens": 44189,
-     "total_prompt_tokens": 3103,
+     "total_out_tokens": 46844,
+     "total_prompt_tokens": 3219,
      "trunc_rate": 0.0,
-     "wall_s": 359.1
+     "wall_s": 412.8
     }
    },
-   "total_out_tokens": 89441,
-   "total_prompt_tokens": 12213,
+   "total_out_tokens": 129480,
+   "total_prompt_tokens": 16831,
    "trunc_rate": 0.0,
-   "wall_s": 359.1
+   "wall_s": 428.8
   },
   "longctx": {
    "acc": 0.8542,
@@ -2007,8 +2124,8 @@
      "sub": "var_tracking"
     }
    ],
-   "gpu_minutes": 3.54,
-   "info_per_gpu_min": 1.689,
+   "gpu_minutes": 4.944,
+   "info_per_gpu_min": 1.209,
    "max_tokens": 6144,
    "mean_out_tokens": 542.3,
    "mean_prompt_tokens": 12796.6,
@@ -2130,35 +2247,49 @@
    "wall_s": 276.9
   },
   "math": {
-   "acc": 0.75,
-   "acc_strict": 0.75,
+   "acc": 0.6875,
+   "acc_strict": 0.6875,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6122,
-    0.8508
+    0.5793,
+    0.7785
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
     "ambiguous_boxed": 0,
-    "boxed_rate": 0.9583,
+    "boxed_rate": 0.9375,
     "match_methods": {
+     "numeric": 1,
      "set": 1,
-     "string": 35
+     "string": 53
     },
-    "unparsed_rate": 0.0417
+    "unparsed_rate": 0.0375
    },
    "failed_ids": [
     "aime25-I-13",
+    "aime25-I-14",
     "aime25-I-15",
     "aime25-I-7",
+    "aime25-II-15",
+    "aime25-II-3",
     "aime25-II-9",
     "hmmt25-feb-10",
     "hmmt25-feb-13",
+    "hmmt25-feb-14",
+    "hmmt25-feb-15",
     "hmmt25-feb-16",
+    "hmmt25-feb-17",
+    "hmmt25-feb-18",
+    "hmmt25-feb-19",
     "hmmt25-feb-20",
+    "hmmt25-feb-24",
     "hmmt25-feb-25",
+    "hmmt25-feb-27",
+    "hmmt25-feb-29",
+    "hmmt25-feb-3",
+    "hmmt25-feb-30",
     "hmmt25-feb-6",
     "math500-hard-geometry-817",
     "math500-hard-intermediate-algebra-1354"
@@ -2173,6 +2304,18 @@
      "id": "aime25-I-13",
      "out_tokens": 8651,
      "response_tail": "\\[\n\\boxed{\\dfrac{287}{3}}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "60",
+     "extracted": "51",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-I-14",
+     "out_tokens": 17927,
+     "response_tail": "\\boxed{51}",
      "status": "wrong",
      "sub": "aime25"
     },
@@ -2197,6 +2340,30 @@
      "id": "aime25-I-7",
      "out_tokens": 3777,
      "response_tail": " \\times 24 = 1800 .\n\\]\n\nThe total number of ways to partition 12 distinct letters into 6 unordered pairs is\n\\[\n\\frac{12!}{2^6\\,6!}=10395 .\n\\]\n\nThus the required probability is  \n\\[\n\\frac{1800}{10395}=\\frac{40}{231}.\n\\]\n\nTherefore, \\(m=40,\\; n=231\\) and  \n\\[\nm+n = 40+231 = 271 .\n\\]\n\n\\[\n\\boxed{271}\n\\]",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "240",
+     "extracted": "188",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-15",
+     "out_tokens": 14116,
+     "response_tail": "\\boxed{188}",
+     "status": "wrong",
+     "sub": "aime25"
+    },
+    {
+     "error": null,
+     "expected": "82",
+     "extracted": "66",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "aime25-II-3",
+     "out_tokens": 13777,
+     "response_tail": "4.  Total number of colourings\n\nThe total number of colourings is\n\n\\[\n\\#(c=0)+\\#(c=1)-\\#(\\text{both})\n=41+41-16=66 .\n\\]\n\nThus there are  \n\n\\[\n\\boxed{66}\n\\]\n\nvalid ways to colour the 12 edges of the \\(2\\times 2\\) grid with red and blue so that every unit square has exactly two red and two blue sides.",
      "status": "wrong",
      "sub": "aime25"
     },
@@ -2238,6 +2405,30 @@
     },
     {
      "error": null,
+     "expected": "2304",
+     "extracted": "444",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-14",
+     "out_tokens": 20297,
+     "response_tail": "\\[\n\\boxed{444}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "200",
+     "extracted": "22",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-15",
+     "out_tokens": 28153,
+     "response_tail": "\\[\n\\boxed{22}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
      "expected": "6300",
      "extracted": "6525",
      "finish_reason": "stop",
@@ -2245,6 +2436,42 @@
      "id": "hmmt25-feb-16",
      "out_tokens": 8763,
      "response_tail": "15\\)).  \nThus\n\n\\[\n|A\\cap B|=15\\cdot 15=225.\n\\]\n\n---\n\n#### Separated unordered pairs\n\n\\[\n|A\\cup B|=|A|+|B|-|A\\cap B|\n          =3375+3375-225\n          =6525.\n\\]\n\nThese are exactly the unordered pairs of rectangles that are disjoint, not touching at all.\n\n---\n\n### 2.  Final answer\n\n\\[\n\\boxed{6525}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2^{25} \\cdot 26!",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-17",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{2025}{101}",
+     "extracted": "\\frac{4077}{134}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-18",
+     "out_tokens": 25068,
+     "response_tail": "\\[\n\\boxed{\\frac{4077}{134}}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{4}{9}",
+     "extracted": "\\tfrac15",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-19",
+     "out_tokens": 16210,
+     "response_tail": "\\[\n\\boxed{\\tfrac15}\n\\]",
      "status": "wrong",
      "sub": "hmmt25"
     },
@@ -2262,6 +2489,21 @@
     },
     {
      "error": null,
+     "expected": "20",
+     "extracted": null,
+     "finish_reason": "stop",
+     "flags": [
+      "no_boxed",
+      "no_answer"
+     ],
+     "id": "hmmt25-feb-24",
+     "out_tokens": 25114,
+     "response_tail": "\\[\nAC\\cdot CB\\approx 65.64\n\\]",
+     "status": "unparsed",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
      "expected": "\\sqrt{23}-2\\sqrt{3}",
      "extracted": "2\\sqrt{17}",
      "finish_reason": "stop",
@@ -2270,6 +2512,54 @@
      "out_tokens": 16711,
      "response_tail": "\\boxed{2\\sqrt{17}}",
      "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{7}{18}",
+     "extracted": "\\dfrac{685}{1764}",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-27",
+     "out_tokens": 17580,
+     "response_tail": "\\[\n\\boxed{\\dfrac{685}{1764}}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "14+4\\sqrt{37}",
+     "extracted": "31.79",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-29",
+     "out_tokens": 32015,
+     "response_tail": "\\[\n\\boxed{31.79}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\frac{1}{576}",
+     "extracted": "576",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "hmmt25-feb-3",
+     "out_tokens": 15592,
+     "response_tail": "\\[\n\\boxed{576}\n\\]",
+     "status": "wrong",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "\\sqrt{\\frac{95}{24}}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-30",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "hmmt25"
     },
     {
@@ -2315,91 +2605,93 @@
      "sub": "math500_hard"
     }
    ],
-   "gpu_minutes": 9.805,
-   "info_per_gpu_min": 0.918,
+   "gpu_minutes": 36.452,
+   "info_per_gpu_min": 0.472,
    "max_tokens": 32768,
-   "mean_out_tokens": 5908.5,
-   "mean_prompt_tokens": 187.1,
-   "mean_score": 0.75,
-   "n_attempted": 48,
+   "mean_out_tokens": 9449.5,
+   "mean_prompt_tokens": 202.8,
+   "mean_score": 0.6875,
+   "n_attempted": 80,
    "n_cancelled": 0,
-   "n_correct": 36,
+   "n_correct": 55,
    "n_error": 0,
    "n_planned": 80,
-   "n_scored": 48,
-   "n_skipped": 32,
+   "n_scored": 80,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 36.88,
-   "p50_out_tokens": 2818,
-   "p90_item_s": 93.53,
+   "p50_item_s": 59.47,
+   "p50_out_tokens": 4950,
+   "p90_item_s": 382.95,
    "status_counts": {
-    "correct": 36,
-    "unparsed": 2,
-    "wrong": 10
+    "correct": 55,
+    "truncated": 2,
+    "unparsed": 3,
+    "wrong": 20
    },
    "sub": {
     "aime25": {
-     "acc": 0.7647,
-     "acc_strict": 0.7647,
+     "acc": 0.7667,
+     "acc_strict": 0.7667,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.5274,
-      0.9044
+      0.5907,
+      0.8821
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 6833.0,
-     "mean_prompt_tokens": 208.7,
-     "mean_score": 0.7647,
-     "n_attempted": 17,
+     "mean_out_tokens": 8749.4,
+     "mean_prompt_tokens": 242.7,
+     "mean_score": 0.7667,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 13,
+     "n_correct": 23,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 17,
-     "n_skipped": 13,
-     "p50_item_s": 45.4,
-     "p50_out_tokens": 3777,
-     "p90_item_s": 129.58,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 57.35,
+     "p50_out_tokens": 5706,
+     "p90_item_s": 188.94,
      "status_counts": {
-      "correct": 13,
-      "wrong": 4
+      "correct": 23,
+      "wrong": 7
      },
-     "total_out_tokens": 116161,
-     "total_prompt_tokens": 3548,
+     "total_out_tokens": 262482,
+     "total_prompt_tokens": 7281,
      "trunc_rate": 0.0,
-     "wall_s": 325.9
+     "wall_s": 841.9
     },
     "hmmt25": {
-     "acc": 0.4545,
-     "acc_strict": 0.4545,
+     "acc": 0.4667,
+     "acc_strict": 0.4667,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.2127,
-      0.7199
+      0.3023,
+      0.6386
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 9738.9,
-     "mean_prompt_tokens": 164.5,
-     "mean_score": 0.4545,
-     "n_attempted": 11,
+     "mean_out_tokens": 14438.6,
+     "mean_prompt_tokens": 177.5,
+     "mean_score": 0.4667,
+     "n_attempted": 30,
      "n_cancelled": 0,
-     "n_correct": 5,
+     "n_correct": 14,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 11,
-     "n_skipped": 19,
-     "p50_item_s": 82.51,
-     "p50_out_tokens": 8057,
-     "p90_item_s": 127.5,
+     "n_scored": 30,
+     "n_skipped": 0,
+     "p50_item_s": 93.53,
+     "p50_out_tokens": 11622,
+     "p90_item_s": 515.94,
      "status_counts": {
-      "correct": 5,
-      "unparsed": 1,
-      "wrong": 5
+      "correct": 14,
+      "truncated": 2,
+      "unparsed": 2,
+      "wrong": 12
      },
-     "total_out_tokens": 107128,
-     "total_prompt_tokens": 1809,
-     "trunc_rate": 0.0,
-     "wall_s": 352.7
+     "total_out_tokens": 433157,
+     "total_prompt_tokens": 5325,
+     "trunc_rate": 0.0667,
+     "wall_s": 920.1
     },
     "math500_hard": {
      "acc": 0.9,
@@ -2434,34 +2726,34 @@
      "wall_s": 355.9
     }
    },
-   "total_out_tokens": 283608,
-   "total_prompt_tokens": 8979,
-   "trunc_rate": 0.0,
-   "wall_s": 355.9
+   "total_out_tokens": 755958,
+   "total_prompt_tokens": 16228,
+   "trunc_rate": 0.025,
+   "wall_s": 920.1
   },
   "tools": {
-   "acc": 0.8361,
-   "acc_strict": 0.8361,
+   "acc": 0.8571,
+   "acc_strict": 0.8571,
    "answer_from_reasoning": 4,
    "ci95": [
-    0.7239,
-    0.9084
+    0.7566,
+    0.9205
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
-    "acc_ast_micro": 0.8235,
+    "acc_ast_micro": 0.85,
     "acc_by_sub": {
      "irrelevance": 0.9,
-     "multiple": 0.6429,
-     "parallel": 0.9231,
+     "multiple": 0.6667,
+     "parallel": 0.9333,
      "parallel_multiple": 0.8,
-     "simple": 0.9286
+     "simple": 0.95
     },
     "acc_irrelevance": 0.9,
-    "acc_official": 0.8236,
-    "declined_rate_ast": 0.0392,
+    "acc_official": 0.8375,
+    "declined_rate_ast": 0.0333,
     "error_codes": {
      "declined": 2,
      "missing_param": 3,
@@ -2471,15 +2763,15 @@
      "value_mismatch": 2,
      "wrong_function": 4
     },
-    "mean_score_ast": 0.8382,
+    "mean_score_ast": 0.8625,
     "mode": "prompt",
     "parse_methods": {
-     "json_list": 57,
+     "json_list": 66,
      "none": 4
     },
     "text_calls_ignored": 0,
     "tool_calls_in_prompt_mode": 0,
-    "unparsed_rate": 0.0492
+    "unparsed_rate": 0.0429
    },
    "failed_ids": [
     "bfcl3-irrelevance_33",
@@ -3077,25 +3369,25 @@
      "sub": "simple"
     }
    ],
-   "gpu_minutes": 0.814,
-   "info_per_gpu_min": 10.269,
+   "gpu_minutes": 1.269,
+   "info_per_gpu_min": 6.756,
    "max_tokens": 8192,
-   "mean_out_tokens": 315.7,
-   "mean_prompt_tokens": 576.0,
-   "mean_score": 0.8484,
-   "n_attempted": 61,
+   "mean_out_tokens": 305.8,
+   "mean_prompt_tokens": 568.5,
+   "mean_score": 0.8679,
+   "n_attempted": 70,
    "n_cancelled": 0,
-   "n_correct": 51,
+   "n_correct": 60,
    "n_error": 0,
    "n_planned": 70,
-   "n_scored": 61,
-   "n_skipped": 9,
+   "n_scored": 70,
+   "n_skipped": 0,
    "opts": {},
-   "p50_item_s": 3.4,
-   "p50_out_tokens": 237,
-   "p90_item_s": 9.54,
+   "p50_item_s": 3.52,
+   "p50_out_tokens": 229,
+   "p90_item_s": 9.32,
    "status_counts": {
-    "correct": 51,
+    "correct": 60,
     "unparsed": 3,
     "wrong": 7
    },
@@ -3132,67 +3424,67 @@
      "wall_s": 277.0
     },
     "multiple": {
-     "acc": 0.6429,
-     "acc_strict": 0.6429,
+     "acc": 0.6667,
+     "acc_strict": 0.6667,
      "answer_from_reasoning": 2,
      "ci95": [
-      0.3876,
-      0.8366
+      0.4171,
+      0.8482
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 211.6,
-     "mean_prompt_tokens": 686.1,
-     "mean_score": 0.6429,
-     "n_attempted": 14,
+     "mean_out_tokens": 206.1,
+     "mean_prompt_tokens": 699.8,
+     "mean_score": 0.6667,
+     "n_attempted": 15,
      "n_cancelled": 0,
-     "n_correct": 9,
+     "n_correct": 10,
      "n_error": 0,
      "n_planned": 15,
-     "n_scored": 14,
-     "n_skipped": 1,
-     "p50_item_s": 2.51,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 3.52,
      "p50_out_tokens": 175,
      "p90_item_s": 6.53,
      "status_counts": {
-      "correct": 9,
+      "correct": 10,
       "unparsed": 2,
       "wrong": 3
      },
-     "total_out_tokens": 2963,
-     "total_prompt_tokens": 9605,
+     "total_out_tokens": 3092,
+     "total_prompt_tokens": 10497,
      "trunc_rate": 0.0,
-     "wall_s": 353.4
+     "wall_s": 379.7
     },
     "parallel": {
-     "acc": 0.9231,
-     "acc_strict": 0.9231,
+     "acc": 0.9333,
+     "acc_strict": 0.9333,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6669,
-      0.9863
+      0.7018,
+      0.9881
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 446.3,
-     "mean_prompt_tokens": 475.2,
-     "mean_score": 0.9231,
-     "n_attempted": 13,
+     "mean_out_tokens": 441.1,
+     "mean_prompt_tokens": 474.7,
+     "mean_score": 0.9333,
+     "n_attempted": 15,
      "n_cancelled": 0,
-     "n_correct": 12,
+     "n_correct": 14,
      "n_error": 0,
      "n_planned": 15,
-     "n_scored": 13,
-     "n_skipped": 2,
-     "p50_item_s": 5.91,
+     "n_scored": 15,
+     "n_skipped": 0,
+     "p50_item_s": 6.09,
      "p50_out_tokens": 428,
      "p90_item_s": 9.56,
      "status_counts": {
-      "correct": 12,
+      "correct": 14,
       "wrong": 1
      },
-     "total_out_tokens": 5802,
-     "total_prompt_tokens": 6178,
+     "total_out_tokens": 6616,
+     "total_prompt_tokens": 7121,
      "trunc_rate": 0.0,
-     "wall_s": 348.1
+     "wall_s": 392.6
     },
     "parallel_multiple": {
      "acc": 0.8,
@@ -3226,41 +3518,41 @@
      "wall_s": 269.0
     },
     "simple": {
-     "acc": 0.9286,
-     "acc_strict": 0.9286,
+     "acc": 0.95,
+     "acc_strict": 0.95,
      "answer_from_reasoning": 1,
      "ci95": [
-      0.6853,
-      0.9873
+      0.7639,
+      0.9911
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 174.1,
-     "mean_prompt_tokens": 458.0,
-     "mean_score": 0.9286,
-     "n_attempted": 14,
+     "mean_out_tokens": 182.2,
+     "mean_prompt_tokens": 462.0,
+     "mean_score": 0.95,
+     "n_attempted": 20,
      "n_cancelled": 0,
-     "n_correct": 13,
+     "n_correct": 19,
      "n_error": 0,
      "n_planned": 20,
-     "n_scored": 14,
-     "n_skipped": 6,
-     "p50_item_s": 2.63,
-     "p50_out_tokens": 179,
+     "n_scored": 20,
+     "n_skipped": 0,
+     "p50_item_s": 2.67,
+     "p50_out_tokens": 195,
      "p90_item_s": 6.76,
      "status_counts": {
-      "correct": 13,
+      "correct": 19,
       "unparsed": 1
      },
-     "total_out_tokens": 2437,
-     "total_prompt_tokens": 6412,
+     "total_out_tokens": 3643,
+     "total_prompt_tokens": 9240,
      "trunc_rate": 0.0,
-     "wall_s": 340.8
+     "wall_s": 413.4
     }
    },
-   "total_out_tokens": 19255,
-   "total_prompt_tokens": 35135,
+   "total_out_tokens": 21404,
+   "total_prompt_tokens": 39798,
    "trunc_rate": 0.0,
-   "wall_s": 353.4
+   "wall_s": 413.4
   }
  },
  "invalid_reasons": [],
@@ -3311,12 +3603,12 @@
   "ifeval: each item carries its own max_tokens, derived from its length-implying instructions (number_words/number_sentences/number_paragraphs/multiple_sections/repeat_prompt); the family cap covers the longest item and prepare_run() adds a 2560-token thinking allowance on a --reasoning run",
   "ifeval: detectable_format:constrained_response is absent by design - all 10 source prompts carrying it are single-instruction and the checker is substring containment of one of three fixed phrases, so the item would be correct for every model and contribute nothing to the Wilson CI or to paired McNemar"
  ],
- "partial": true,
+ "partial": false,
  "schema_version": 1,
  "skipped_ids": [],
  "started_at": "2026-09-05T22:18:21Z",
  "tag": "or_oss20",
  "truncated": false,
  "valid": true,
- "wall_s": 360.1
+ "wall_s": 920.1
 }
