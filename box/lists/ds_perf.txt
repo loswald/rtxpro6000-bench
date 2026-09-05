@@ -1,8 +1,11 @@
-# DeepSeek-V4-Flash: how fast can it go? Every 600 W row so far is TP4 at 256 sequences (router 1,107 out tok/s,
-# shared-prefix 2,387). The first campaign measured DP4 with expert parallelism 54% faster on the shared-prefix
-# shape on this same GPU. Two levers: the layout (TP1 x DP4 + EP: attention replicated, experts sharded, no
-# per-layer all-reduce over PCIe) and the sequence budget (512 and 1,024 where the KV cache allows).
-# Needs VLLM_DSV4_OPROJ_SM120_FALLBACK=1 in the environment (the o_proj DeepGEMM einsum has no sm_120 path).
+# DeepSeek-V4-Flash throughput ceiling. Every 600 W row so far is TP4 at 256 sequences (router 1,107 out tok/s,
+# shared-prefix 2,387); the first campaign measured DP4 + expert parallelism 54% faster on this GPU. Levers, as
+# arms: layout (TP1 x DP4 + EP: attention replicated, experts sharded, no per-layer all-reduce over PCIe; TP4 + EP),
+# sequence budget (256 -> 512 -> 1,024 with a 16k prefill batch), and the MXFP4 MoE kernel (b12x vs trtllm).
+# Run with SHAPES=fast (router C1024 + shared-prefix C1024) and VLLM_DSV4_OPROJ_SM120_FALLBACK=1.
 ds4flash_dp4ep4|/workspace/models/DeepSeek-V4-Flash|4|b12x:-|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|256|--gpu-memory-utilization|0.92
 ds4flash_dp4ep4_s512|/workspace/models/DeepSeek-V4-Flash|4|b12x:-|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|512|--gpu-memory-utilization|0.92
-ds4flash_tp4_s512|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|512|--gpu-memory-utilization|0.92
+ds4flash_dp4ep4_s1024|/workspace/models/DeepSeek-V4-Flash|4|b12x:-|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|1024|--max-num-batched-tokens|16384|--gpu-memory-utilization|0.92
+ds4flash_dp4ep4_b12xmoe_s512|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|512|--gpu-memory-utilization|0.92
+ds4flash_tp4ep4_s512|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:-|--enable-expert-parallel|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|512|--gpu-memory-utilization|0.92
+ds4flash_tp4_s512|/workspace/models/DeepSeek-V4-Flash|4|b12x:b12x,b12x:flashinfer_trtllm|--kv-cache-dtype|fp8|--block-size|256|--attention_config.use_fp4_indexer_cache|False|--compilation-config|{"cudagraph_mode":"FULL_AND_PIECEWISE"}|--max-num-seqs|512|--gpu-memory-utilization|0.92

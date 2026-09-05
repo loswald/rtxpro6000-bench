@@ -194,6 +194,11 @@ shapes(){ # tag dir n
     eval) evalrun "$tag" "$n" "$dir"; return;;
     both) evalrun "$tag" "$n" "$dir";;
   esac
+  if [ "${SHAPES:-}" = fast ]; then   # two shapes only: enough to rank layouts and kernels when time is short
+    pt "$tag" router    1024 128 0    $(( 1024 / n )) "$n" "$dir"
+    pt "$tag" promptopt  512 256 3072 $(( 1024 / n )) "$n" "$dir"
+    return
+  fi
   pt "$tag" router    1024 128 0    $(( 256 / n ))  "$n" "$dir"
   pt "$tag" router    1024 128 0    $(( 1024 / n )) "$n" "$dir"
   pt "$tag" promptopt  512 256 3072 $(( 1024 / n )) "$n" "$dir"
