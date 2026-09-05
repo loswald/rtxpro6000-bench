@@ -217,7 +217,7 @@ sweep(){ # tag dir tp combos [extra...]
     local lin="${c%%:*}" moe="${c##*:}" atag
     atag="${tag}_$(echo "$c" | tr ':' '-' | tr -d '.')"
     case "${MODE:-bench}" in
-      eval) [ -z "${EVAL_RESUME:-}" ] && [ -f "$R/eval/$atag.json" ] && { log "  $atag already evaluated"; any=1; continue; };;
+      eval) [ -z "${EVAL_RESUME:-}" ] && [ -f "$R/eval/$atag.json" ] && { log "  $atag already evaluated"; any=1; [ "${FIRST_ONLY:-0}" = 1 ] && break; continue; };;
       *)    [ "$(ls "$P/$atag"/*__judge__*.json 2>/dev/null | wc -l)" -ge "$n" ] && { log "  $atag already measured"; any=1; continue; };;
     esac
     if serve "$atag" "$dir" "$tp" "$lin" "$moe" "$@"; then

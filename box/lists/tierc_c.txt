@@ -1,0 +1,7 @@
+# Quality for the roster models that never got a quality run: their launches died on hard-coded kernels or
+# their weights had been rotated off the box before the eval pass reached them. Recipes from the arms that
+# served in the throughput campaign; MoE backends as sweep combos, never fixed.
+hy3|/workspace/models/Hy3-NVFP4-FP8|4|b12x:flashinfer_cutlass,b12x:-,-:-
+ornith|/workspace/models/Ornith-1.5-397B-NVFP4|4|-:flashinfer_cutlass,-:-|--limit-mm-per-prompt|{"image":0}|--gpu-memory-utilization|0.90
+mimo|/workspace/models/MiMo-V2.5-NVFP4|4|b12x:-,-:-,-:marlin
+nemo3s|/workspace/models/Nemotron-3-Super-NVFP4|1|b12x:flashinfer_cutlass,b12x:-|--mamba-ssm-cache-dtype|float16|--max-num-seqs|256
