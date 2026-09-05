@@ -55,7 +55,8 @@ POINTS = [
 # shorter on-chart names for the crowded top of the plane; the table keeps the full labels
 SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
          "GLM-5.3-Flash NVFP4 · TP4 + MTP": "GLM-5.3-Flash · TP4+MTP", "DeepSeek-V4-Flash native · TP4": "DeepSeek-V4-Flash · TP4",
-         "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
+         "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · DP4 + EP": "DeepSeek-V4-Flash · DP4+EP",
+         "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP": "GLM-5.3-Flash · DP2×TP2+EP", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
          "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)",
          "Qwen3.8-Flash-Next NVFP4 · DP4 + EP": "Qwen3.8-Flash-Next · DP4+EP", "Qwen3.8-Flash-Next NVFP4 · 2 × TP2": "Qwen3.8-Flash-Next · 2×TP2"}
 CLASS = {"native": ("native precision", "#2a78d6", "circle"), "qat4": ("quantisation-aware 4-bit", "#1baf7a", "circle"),
@@ -155,6 +156,8 @@ def main():
         if acc is None or c is None:
             print(f"  skip {label}: acc={acc} shapes={None if c is None else c['shapes']}")
             continue
+        if not prov and label.endswith("*"):      # the point's own run has landed: drop the provisional mark
+            label = label[:-1].rstrip()
         pts.append(dict(label=label, cls=cls, acc=acc, n=n, cost=c["node"], api=c["api"], shapes=c["shapes"],
                         avg_in=c["avg_in"], avg_out=c["avg_out"], tput=c["tput"], prov=prov))
     front, best = [], -1

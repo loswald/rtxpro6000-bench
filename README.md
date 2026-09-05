@@ -142,7 +142,10 @@ number), so batch depth helps both layouts and the layout itself is worth **+32%
 per-engine budget to 1,024 sequences changed nothing, because 1,024 streams across four engines is 256 each. The
 W4A4 expert kernel that gave TP4 its +5% is not available in this layout: the `b12x` MXFP4 MoE backend refuses
 `dp_size=4, ep_size=4` outright ("does not support the deployment configuration"), so the DP4 + EP numbers are on
-the Marlin MXFP4 path, and a W4A4 expert kernel that shards would be the next lever. Its 403-item quality run on this layout is in progress;
+the Marlin MXFP4 path, and a W4A4 expert kernel that shards would be the next lever. **Its 403-item quality run
+on this layout scored 0.844** — the best score measured without a drafter, 0.030 above the same weights and
+expert kernel at TP4, at the edge of the suite's 0.022 repeat spread: the layout costs nothing in quality and may
+have bought a little (fewer truncations at 4.2% against 5.5%). Its 403-item quality run on this layout is in progress;
 the same weights and MoE kernel scored 0.814 at TP4.
 
 GLM-5.3-Flash is the highest-intelligence open model that fits in 384 GB at all — four points below the top
@@ -320,7 +323,9 @@ chat-template flags and sampling recipe. Accuracy does not depend on the power l
 | model (AA index) · configuration | items | overall | maths | code | tools | long ctx | knowledge | instructions |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | **GLM-5.3-Flash (46)** · NVFP4, TP4, **MTP speculation** | 403 | **0.809** | 0.812 | 0.773 | 0.900 | 0.917 | **0.614** | 0.883 |
-| **DeepSeek-V4-Flash (41)** · native MXFP4 + FP8, TP4, **DSpark speculation** | 403 | **0.831** ⁴ | 0.938 | 0.720 | 0.871 | 0.958 | **0.657** | 0.883 |
+| **DeepSeek-V4-Flash (41)** · native MXFP4 + FP8, **TP1 × DP4 + EP**, Marlin experts, no speculation | 403 | **0.844** ⁴ | 0.938 | 0.747 | 0.900 | 0.938 | 0.643 | **0.933** |
+| **DeepSeek-V4-Flash (41)** · native MXFP4 + FP8, TP4, **DSpark speculation** | 403 | 0.831 ⁴ | 0.938 | 0.720 | 0.871 | 0.958 | **0.657** | 0.883 |
+| DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, Marlin experts, no speculation | 403 | 0.814 ⁴ | 0.912 | 0.707 | 0.871 | 0.938 | 0.643 | 0.850 |
 | DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, no speculation | 403 | 0.801 ⁴ | 0.912 | 0.680 | 0.886 | 0.938 | 0.586 | 0.850 |
 | GLM-5.3-Flash (46) · NVFP4, TP4, no speculation | 403 ³ | 0.794 | 0.738 | 0.760 | **0.914** | 0.958 | 0.600 | 0.867 |
 | Qwen3.8-27B (41) · **native BF16**, 4 replicas | 403 ⁵ | 0.806 | 0.800 | **0.813** | 0.900 | **0.979** | 0.500 | **0.917** |
@@ -401,7 +406,8 @@ against 1,107. A drafter buys per-request latency when the box is lightly loaded
 when it is full; for batch and agent-harness traffic on this node, run without it.
 
 The second model says the same thing from the other side. DeepSeek-V4-Flash with NVIDIA's DSpark drafter
-(7 draft tokens a step, 37% of them accepted) scored **0.831 against 0.801 without it**, all 403 items both
+(7 draft tokens a step, 37% of them accepted) scored **0.831 against 0.801 without it** (with the W4A4 expert
+kernel; the same layout on the Marlin expert kernel scored 0.814 without a drafter), all 403 items both
 times, paired 19 to 7 in the *drafter's* favour. A drafter cannot make the model smarter — with probabilistic
 drafting and rejection sampling the target distribution is preserved by construction — so a 19-to-7 split at
 temperature 1.0 is a reading of the **suite's own run-to-run noise** at vendor sampling, not of speculation.
@@ -704,18 +710,18 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 | Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 2,304 · 192 | $0.019 | $0.386 | 20.3× | yes |
 | Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 2,304 · 192 | $0.019 | $0.386 | 20.0× | |
 | Qwen3.8-27B FP8 | 0.779 (403) | 2,304 · 192 | $0.031 | $0.386 | 12.5× | |
-| DeepSeek-V4-Flash native · DP4 + EP * | 0.814 (403, same kernels at TP4) | 2,304 · 192 | $0.033 | $0.038 | 1.1× | yes |
+| DeepSeek-V4-Flash native · DP4 + EP | **0.844** (403) | 2,304 · 192 | $0.033 | $0.038 | 1.1× | yes |
 | Qwen3.8-27B BF16 | 0.806 (403) | 2,304 · 192 | $0.042 | $0.386 | 9.2× | |
 | Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 2,304 · 192 | $0.047 | $0.386 | 8.3× | |
 | Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 2,304 · 192 | $0.047 | $0.386 | 8.3× | |
 | GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP * | 0.794 (403, same kernels at TP4) | 2,304 · 192 | $0.054 | $0.047 | 0.9× | |
 | DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 2,304 · 192 | $0.055 | $0.038 | 0.7× | |
 | GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 2,304 · 192 | $0.096 | $0.047 | 0.5× | |
-| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 2,304 · 192 | $0.128 | $0.038 | 0.3× | yes |
+| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 2,304 · 192 | $0.128 | $0.038 | 0.3× | |
 | GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 2,304 · 192 | $0.209 | $0.047 | 0.2× | |
 
-\* The expert-parallel layouts' own 403-item runs are in progress; until they land each point carries the accuracy
-measured on the same weights and kernels at TP4, and is drawn with a dashed ring. ¹ gpt-oss-20b has no
+\* GLM's expert-parallel layout's own 403-item run is in progress; until it lands the point carries the accuracy
+measured on the same weights and kernels at TP4, and is drawn with a dashed ring. DeepSeek's landed: 0.844. ¹ gpt-oss-20b has no
 prompt-optimisation measurement at 600 W, so its point is the router shape alone — the dearer of the two per
 token, which flatters the API side of its ratio. Multiply any "API ÷ node" by 2.5 for the fully-loaded cost
 basis ($1.77 an hour).
@@ -725,13 +731,14 @@ fits one card, and 0.9–1.1× for the two that need all four.** The one-card ra
 table above because cached input is now priced at a tenth and the prompt-optimisation shape is mostly cache
 hits; they are still an order of magnitude. Qwen3.8-27B's ratio is the largest because its API price is high
 ($3 per million output tokens), not because the node is unusually good at it. **The frontier is native
-precision plus one quantisation-aware four-bit build** — gpt-oss-120b, Muse, the QAT Qwen, DeepSeek on its
-expert-parallel layout, DeepSeek with DSpark — and every post-training four-bit build sits below it. **On blended
+precision plus one quantisation-aware four-bit build** — gpt-oss-120b, Muse, the QAT Qwen, and DeepSeek on its
+expert-parallel layout at the top — and every post-training four-bit build sits below it. **On blended
 tokens DeepSeek-V4-Flash's DP4 layout is cheaper than Qwen3.8-27B BF16 and scores higher**, because a sparse MoE
 prefills and reads a cached prefix far faster than a dense 27B: it takes Qwen BF16 off the frontier. **GLM-5.3-Flash
 is off the frontier on this suite's aggregate at every layout**: its best, DP2 × TP2 + EP at $0.054 per million
 tokens, is dominated by DeepSeek's DP4 at $0.033 and 0.814, and the API sells GLM for $0.047. Speculation
-(DSpark, MTP) buys the top accuracy at 3–4× the token cost of the same model without it.
+(DSpark, MTP) no longer buys anything on the frontier: DeepSeek's DP4 layout without a drafter is both cheaper
+(4×) and better (0.844 against 0.831) than the DSpark run, and GLM's MTP head costs 4× per token for +0.015.
 
 Three conclusions.
 

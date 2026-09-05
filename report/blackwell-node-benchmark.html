@@ -77,7 +77,7 @@
 
 <section class="tiles" aria-label="headline numbers">
   <div class="tile accent"><div class="k">Index-41 model, best output</div><div class="v">5,161 tok/s</div><div class="s">Qwen3.8-27B NVFP4 as 4 replicas with the sm_120 native kernel forced · +64% over FP8 · 310k output tokens a minute</div></div>
-  <div class="tile accent"><div class="k">Best task accuracy, 403 items</div><div class="v">0.831</div><div class="s">DeepSeek-V4-Flash at native precision with its DSpark drafter · GLM-5.3-Flash 0.809 with its MTP head · Qwen3.8-27B BF16 0.806 on one card, its QAT four-bit build 0.792 at 2.2× the speed</div></div>
+  <div class="tile accent"><div class="k">Best task accuracy, 403 items</div><div class="v">0.844</div><div class="s">DeepSeek-V4-Flash at native precision as four expert-parallel engines, no drafter · 0.831 with DSpark at TP4 · GLM-5.3-Flash 0.809 with its MTP head · Qwen3.8-27B BF16 0.806 on one card, its QAT four-bit build 0.792 at 2.2× the speed</div></div>
   <div class="tile accent"><div class="k">Four-card models, layout not kernel</div><div class="v">+48% · +40%</div><div class="s">Expert-parallel engines instead of one tensor-parallel group: DeepSeek-V4-Flash 1,640 vs 1,107 output tok/s on routing traffic (4,430 vs 2,387 shared-prefix) as four engines; GLM-5.3-Flash 1,300 vs 931 as two engines of two cards</div></div>
   <div class="tile warn"><div class="k">Cost of trusting auto kernel choice</div><div class="v">−47%</div><div class="s">vLLM picked a W4A16 dequant kernel for a W4A4 checkpoint. Forcing <code>b12x</code> turned a loss into a 64% gain</div></div>
   <div class="tile"><div class="k">Peak total throughput</div><div class="v">222k tok/s</div><div class="s">gpt-oss-120b, shared-prefix prompt-optimisation traffic · 13.3 million tokens a minute · index 16</div></div>
@@ -181,7 +181,8 @@
   <thead><tr><th class="l">model (AA index) · configuration</th><th>items</th><th>overall</th><th>maths</th><th>code</th><th>tools</th><th>long ctx</th><th>knowledge</th><th>instructions</th></tr></thead>
   <tbody>
     <tr class="hi"><td class="l">GLM-5.3-Flash (46) · NVFP4, TP4, MTP speculation</td><td>403</td><td><strong>0.809</strong></td><td>0.812</td><td>0.773</td><td>0.900</td><td>0.917</td><td><strong>0.614</strong></td><td>0.883</td></tr>
-    <tr class="hi"><td class="l">DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, DSpark speculation</td><td>403</td><td><strong>0.831</strong> ⁴</td><td>0.938</td><td>0.720</td><td>0.871</td><td>0.958</td><td><strong>0.657</strong></td><td>0.883</td></tr>
+    <tr class="hi"><td class="l">DeepSeek-V4-Flash (41) · native MXFP4 + FP8, <strong>TP1 × DP4 + EP</strong>, Marlin experts, no speculation</td><td>403</td><td><strong>0.844</strong> ⁴</td><td>0.938</td><td>0.747</td><td>0.900</td><td>0.938</td><td>0.643</td><td><strong>0.933</strong></td></tr>
+    <tr class="hi"><td class="l">DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, DSpark speculation</td><td>403</td><td>0.831 ⁴</td><td>0.938</td><td>0.720</td><td>0.871</td><td>0.958</td><td><strong>0.657</strong></td><td>0.883</td></tr>
     <tr class="hi"><td class="l">DeepSeek-V4-Flash (41) · native MXFP4 + FP8, TP4, no speculation</td><td>403</td><td>0.801 ⁴</td><td>0.912</td><td>0.680</td><td>0.886</td><td>0.938</td><td>0.586</td><td>0.850</td></tr>
     <tr class="hi"><td class="l">GLM-5.3-Flash (46) · NVFP4, TP4, no speculation</td><td>403 ³</td><td>0.794</td><td>0.738</td><td>0.760</td><td><strong>0.914</strong></td><td>0.958</td><td>0.600</td><td>0.867</td></tr>
     <tr><td class="l">Qwen3.8-27B (41) · native BF16, 4 replicas</td><td>403</td><td>0.806</td><td>0.800</td><td><strong>0.813</strong></td><td>0.900</td><td><strong>0.979</strong></td><td>0.500</td><td><strong>0.917</strong></td></tr>
@@ -202,7 +203,7 @@
 
 <h3>Speculation is lossless — measured on paired items</h3>
 <p>GLM scored 0.800 without its MTP head and 0.740 with it on the 400 W box, and the previous version of this page called that a speculator bug. It was not. Compared on the <strong>367 items both arms actually scored</strong>, same box, recipe and seed: no speculation 0.872, MTP 0.864; items only one side got right, 13 against 10 — a coin toss. The gap came from arms scored on different item sets under a cap that marked truncation wrong, and the MTP arm, being faster, was the one that finished the 36 items the base arm timed out on. Speculation did not cost GLM anything; it bought the hardest items within the same wall-clock. A greedy-sequence test could not have settled this: its own control, the same server captured twice, matched on only 4 of 12.</p>
-<p>The second model says the same thing from the other side. DeepSeek-V4-Flash with NVIDIA's DSpark drafter (7 draft tokens a step, 37% accepted) scored <strong>0.831 against 0.801 without it</strong>, all 403 items both times, paired 19 to 7 in the <em>drafter's</em> favour. A drafter cannot make the model smarter — probabilistic drafting with rejection sampling preserves the target distribution by construction — so a 19-to-7 split at temperature 1.0 is a reading of the suite's own run-to-run noise at vendor sampling. The noise has a measured value.</p>
+<p>The second model says the same thing from the other side. DeepSeek-V4-Flash with NVIDIA's DSpark drafter (7 draft tokens a step, 37% accepted) scored <strong>0.831 against 0.801 without it</strong> (the same layout on the Marlin expert kernel scored 0.814 without a drafter, and the DP4 + EP layout 0.844 — the headline no longer needs speculation), all 403 items both times, paired 19 to 7 in the <em>drafter's</em> favour. A drafter cannot make the model smarter — probabilistic drafting with rejection sampling preserves the target distribution by construction — so a 19-to-7 split at temperature 1.0 is a reading of the suite's own run-to-run noise at vendor sampling. The noise has a measured value.</p>
 
 <p><strong>Lossless is not free at saturation.</strong> GLM's MTP head at 1,024 concurrent streams: 592 output tokens a second against 911 without it, with only 10% of drafted tokens accepted at that batch (67% at low concurrency). DeepSeek's DSpark drafter: 665 against 1,107. A drafter buys per-request latency when the box is lightly loaded and sells aggregate throughput when it is full; for batch and agent-harness traffic on this node, run without it.</p>
 
@@ -348,7 +349,7 @@
 <text x="612" y="494" font-size="12" fill="#52514e">frontier: nothing is both cheaper and better</text>
 <circle cx="599" cy="508" r="7" fill="none" stroke="#52514e" stroke-width="1.5" stroke-dasharray="3 2"/>
 <text x="612" y="512" font-size="12" fill="#52514e">* quality from the same weights and kernels in another layout; own run in progress</text>
-<path d="M337.2,257.1 L491.9,171.2 L496.5,161.5 L577.3,118.7 L772.4,85.2" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
+<path d="M337.2,257.1 L491.9,171.2 L496.5,161.5 L577.3,61.3" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
 <line x1="730.5" y1="156.9" x2="627.1" y2="156.9" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
 <circle cx="627.1" cy="156.9" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · $0.096/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
 <circle cx="730.5" cy="156.9" r="6" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · $0.096/M tokens self-hosted · $0.047/M API · shapes router, promptopt</title></circle>
@@ -362,10 +363,9 @@
 <line x1="649.0" y1="142.5" x2="596.0" y2="142.5" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
 <circle cx="596.0" cy="142.5" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4: 0.801 on 403 items · $0.055/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
 <circle cx="649.0" cy="142.5" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4: 0.801 on 403 items · $0.055/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
-<line x1="577.3" y1="118.7" x2="596.0" y2="118.7" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
-<circle cx="596.0" cy="118.7" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP*: 0.814 on 403 items · $0.033/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
-<circle cx="577.3" cy="118.7" r="10" fill="none" stroke="#2a78d6" stroke-width="1.5" stroke-dasharray="3 2"/>
-<circle cx="577.3" cy="118.7" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP*: 0.814 on 403 items · $0.033/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<line x1="577.3" y1="61.3" x2="596.0" y2="61.3" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
+<circle cx="596.0" cy="61.3" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP: 0.844 on 403 items · $0.033/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
+<circle cx="577.3" cy="61.3" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · DP4 + EP: 0.844 on 403 items · $0.033/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
 <line x1="772.4" y1="85.2" x2="596.0" y2="85.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
 <circle cx="596.0" cy="85.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4 + DSpark: 0.831 on 403 items · $0.128/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
 <circle cx="772.4" cy="85.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>DeepSeek-V4-Flash native · TP4 + DSpark: 0.831 on 403 items · $0.128/M tokens self-hosted · $0.038/M API · shapes router, promptopt</title></circle>
@@ -399,31 +399,29 @@
 <line x1="401.5" y1="314.2" x2="608.0" y2="314.2" stroke="#2a78d6" stroke-width="1" stroke-opacity="0.45"/>
 <circle cx="608.0" cy="314.2" r="5" fill="#fcfcfb" stroke="#2a78d6" stroke-width="2"><title>gpt-oss-20b MXFP4 (native): 0.712 on 403 items · $0.010/M tokens self-hosted · $0.041/M API · shapes router</title></circle>
 <circle cx="401.5" cy="314.2" r="6" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"><title>gpt-oss-20b MXFP4 (native): 0.712 on 403 items · $0.010/M tokens self-hosted · $0.041/M API · shapes router</title></circle>
+<text x="568.3" y="55.3" font-size="11.5" fill="#0b0b0b" text-anchor="end">DeepSeek-V4-Flash · DP4+EP</text>
 <text x="781.4" y="79.2" font-size="11.5" fill="#0b0b0b" text-anchor="start">DeepSeek-V4-Flash · TP4+DSpark</text>
-<text x="568.3" y="112.7" font-size="11.5" fill="#0b0b0b" text-anchor="end">DeepSeek-V4-Flash · DP4+EP*</text>
 <text x="834.3" y="122.3" font-size="11.5" fill="#0b0b0b" text-anchor="end">GLM-5.3-Flash · TP4+MTP</text>
-<line x1="610.2" y1="132.9" x2="570.2" y2="143.6" stroke="#898781" stroke-width="0.8"/>
-<text x="570.2" y="147.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B BF16</text>
-<line x1="649.0" y1="142.5" x2="658.0" y2="181.2" stroke="#898781" stroke-width="0.8"/>
-<text x="658.0" y="185.5" font-size="11.5" fill="#0b0b0b" text-anchor="start">DeepSeek-V4-Flash · TP4</text>
+<text x="601.2" y="126.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B BF16</text>
+<line x1="649.0" y1="142.5" x2="640.0" y2="104.2" stroke="#898781" stroke-width="0.8"/>
+<text x="640.0" y="108.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">DeepSeek-V4-Flash · TP4</text>
 <text x="739.5" y="150.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · TP4</text>
-<line x1="647.1" y1="156.9" x2="656.1" y2="209.7" stroke="#898781" stroke-width="0.8"/>
-<text x="656.1" y="213.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · DP2×TP2+EP*</text>
-<line x1="496.5" y1="161.5" x2="456.5" y2="151.3" stroke="#898781" stroke-width="0.8"/>
-<text x="456.5" y="155.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B QAT NVFP4 (W4A4)</text>
+<line x1="647.1" y1="156.9" x2="656.1" y2="181.7" stroke="#898781" stroke-width="0.8"/>
+<text x="656.1" y="185.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · DP2×TP2+EP*</text>
+<text x="487.5" y="155.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B QAT NVFP4 (W4A4)</text>
 <line x1="491.9" y1="171.2" x2="482.9" y2="181.9" stroke="#898781" stroke-width="0.8"/>
 <text x="482.9" y="186.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">Muse-Glimmer-30B BF16</text>
 <line x1="566.9" y1="185.4" x2="557.9" y2="210.1" stroke="#898781" stroke-width="0.8"/>
 <text x="557.9" y="214.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B FP8</text>
-<line x1="626.3" y1="199.8" x2="635.3" y2="224.6" stroke="#898781" stroke-width="0.8"/>
-<text x="635.3" y="228.8" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B RedHat NVFP4 (W4A16)</text>
-<text x="617.3" y="231.9" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B unsloth NVFP4 (W4A16)</text>
+<line x1="626.3" y1="199.8" x2="635.3" y2="210.6" stroke="#898781" stroke-width="0.8"/>
+<text x="635.3" y="214.8" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B RedHat NVFP4 (W4A16)</text>
+<text x="635.3" y="231.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B unsloth NVFP4 (W4A16)</text>
 <text x="346.2" y="251.1" font-size="11.5" fill="#0b0b0b" text-anchor="start">gpt-oss-120b MXFP4 (native)</text>
 <text x="507.3" y="284.4" font-size="11.5" fill="#0b0b0b" text-anchor="start">Qwen3.8-27B gittensor NVFP4 (W4A4)</text>
 <text x="392.5" y="308.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">gpt-oss-20b MXFP4 (native)</text>
 <text x="370.3" y="470.5" font-size="11.5" fill="#0b0b0b" text-anchor="start">gemma-4-26B-A4B BF16 (thinking)</text>
 </svg></div>
-<p><strong>Priced on the same tokens at the same mix, the API is 4–20× the node for every model that fits one card, and 0.9–1.1× for the two that need all four</strong> (multiply by 2.5 for the fully-loaded basis). The one-card ratios are smaller than the per-hour table because cached input is now priced at a tenth and the prompt-optimisation shape is mostly cache hits; they are still an order of magnitude, and Qwen3.8-27B's is the largest because its API price is high ($3 per million output tokens), not because the node is unusually good at it. <strong>The frontier is native precision plus one quantisation-aware four-bit build</strong> — gpt-oss-120b, Muse, the QAT Qwen, DeepSeek on its expert-parallel layout, DeepSeek with DSpark — and every post-training four-bit build sits below it. <strong>On blended tokens DeepSeek-V4-Flash's DP4 layout ($0.033 per million) is cheaper than Qwen3.8-27B BF16 ($0.042) and scores higher</strong>, because a sparse MoE prefills and reads a cached prefix far faster than a dense 27B. <strong>GLM-5.3-Flash is off the frontier at every layout</strong>: its best, DP2 × TP2 + EP at $0.054, is dominated by DeepSeek's DP4, and the API sells GLM for $0.047. Speculation buys the top accuracy at 3–4× the token cost of the same model without it. The two expert-parallel points (dashed rings) carry the accuracy measured on the same weights and kernels at TP4 until their own 403-item runs land.</p>
+<p><strong>Priced on the same tokens at the same mix, the API is 4–20× the node for every model that fits one card, and 0.9–1.1× for the two that need all four</strong> (multiply by 2.5 for the fully-loaded basis). The one-card ratios are smaller than the per-hour table because cached input is now priced at a tenth and the prompt-optimisation shape is mostly cache hits; they are still an order of magnitude, and Qwen3.8-27B's is the largest because its API price is high ($3 per million output tokens), not because the node is unusually good at it. <strong>The frontier is native precision plus one quantisation-aware four-bit build</strong> — gpt-oss-120b, Muse, the QAT Qwen, and DeepSeek on its expert-parallel layout at the top (0.844 on its own 403-item run) — and every post-training four-bit build sits below it. <strong>On blended tokens DeepSeek-V4-Flash's DP4 layout ($0.033 per million) is cheaper than Qwen3.8-27B BF16 ($0.042) and scores higher</strong>, because a sparse MoE prefills and reads a cached prefix far faster than a dense 27B. <strong>GLM-5.3-Flash is off the frontier at every layout</strong>: its best, DP2 × TP2 + EP at $0.054, is dominated by DeepSeek's DP4, and the API sells GLM for $0.047. Speculation no longer buys anything on the frontier: DeepSeek's DP4 layout without a drafter is 4× cheaper and better than the DSpark run. GLM's expert-parallel point (dashed ring) carries the accuracy measured at TP4 until its own 403-item run lands.</p>
 
 <h2>7 · Selling idle capacity on Vast</h2>
 <p>Live market data from 86 RTX PRO 6000 listings, 3 September 2026: renters pay a median $1.51 per GPU-hour, hosts receive about $1.13 after commission, against a lease cost of $0.77; 74% of the fleet is rented. Subletting plausibly covers <strong>75–100% of the lease</strong>. Interruptible listings clear lower, and hosting needs Docker, root, a public IP and an inbound port range. Vast currently lists <strong>zero</strong> RTX PRO 6000 nodes for rent, which is also why every experiment above ran serialised through one box.</p>
@@ -470,7 +468,7 @@
 <h2>12 · Queued and running</h2>
 <ul>
   <li><strong>Settled on 5 September:</strong> DeepSeek-V4-Flash's throughput ceiling was a layout ceiling — four expert-parallel engines give +48% on routing traffic and +86% on shared-prefix traffic over tensor parallelism, at API parity per token at Scan list; GLM-5.3-Flash's step time was tensor parallelism — four expert-parallel engines cut the decode step from 200 ms to 93 ms (+15% at the build's 192-sequence cap per rank) and two engines of two cards, at 384 per rank, reach 1,300 output tok/s, +40% over TP4 (batch depth and expert parallelism at TP4 moved nothing; the MTP head costs 35% at saturation); speculation is lossless on paired items for both models but pays only under light load; the quantisation ladder on Qwen3.8-27B puts the QAT four-bit build on the frontier and every post-training four-bit build off it; the three timeout-flattered rows are complete; the suite's noise floor is 0.022; the economics tables and the cost/quality frontier above.</li>
-  <li><strong>Running now, both 600 W boxes destroyed at 22:00 UTC:</strong> GLM-5.3-Flash as DP4 + EP at 192 sequences per rank and DP2 × TP2 + EP at 384, then the MoE-kernel arms if time allows, then a 403-item quality run on whichever layout is fastest; DeepSeek-V4-Flash at 1,024 sequences per engine, with W4A4 experts under DP4, and TP4 at 512 sequences as the control, then a 403-item quality run on the fastest layout.</li>
+  <li><strong>Running now, both 600 W boxes destroyed at 22:00 UTC:</strong> GLM-5.3-Flash as DP4 + EP at 192 sequences per rank and DP2 × TP2 + EP at 384, then the MoE-kernel arms if time allows, then a 403-item quality run on whichever layout is fastest; DeepSeek-V4-Flash's quality run on its DP4 + EP layout is in: 0.844 on 403 items, the best score measured without a drafter; the box now serves Qwen3.8-Flash-Next (index 46, 6B active) — two layouts, two shapes, then a 403-item run on the faster — with MiniMax-M3 only if time remains.</li>
   <li><strong>Time-boxed out of this window:</strong> GLM-5.3-Flash at native FP8 (330 GB, downloaded); GLM and DeepSeek with 65k tokens of room; Qwen3.8-Flash-Next (fails on the dev332 build under every kernel — needs the newer build); MiniMax-M3; Inkling; gemma-4 pairs and gemma-31B; Ling, Laguna, Hy3, Ornith, MiMo; soak tests; unsloth under W4A4; community-build logit pairs on the 600 W host.</li>
   <li><strong>Needing engineering rather than GPU time:</strong> Solar-Open2 loads only in its vendor's forked image; dots3-note needs the same kind of sm_120 port GLM got.</li>
   <li><strong>Blocked on people:</strong> two hours on an H100 or B200 to run the same SGLang build (settles whether that route's fault is sm_120-specific), and the five Scan questions above.</li>
