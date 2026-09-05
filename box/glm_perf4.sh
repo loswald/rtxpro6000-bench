@@ -70,7 +70,13 @@ arm(){ # tag seqs [extra...]
     $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1
   fi
 }
-log "===== GLM-5.3-Flash: two TP2 replicas WITHOUT expert parallelism ====="
-arm glm53f_dp2noep_s384 384 --tensor-parallel-size 2 --data-parallel-size 2
+DP="--tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel"
+log "===== GLM-5.3-Flash, TP1 x DP4 + EP: throughput levers (DP2 x TP2 produced degenerate output - TP2 is broken in this port) ====="
+# control for the regression: two TP2 replicas WITHOUT expert parallelism - if this probe is degenerate too, TP2 is the fault
+arm glm53f_tp2x2_noep  384 --tensor-parallel-size 2 --data-parallel-size 2
+arm glm53f_dp4_s256    256 $DP
+arm glm53f_dp4_ssm16   384 $DP --mamba-ssm-cache-dtype bfloat16
+arm glm53f_dp4_mb32k   192 $DP --max-num-batched-tokens 32768
+arm glm53f_dp4_kvfp8   192 $DP --kv-cache-dtype fp8
 log "GLMPERF4 DONE"
 kill_all

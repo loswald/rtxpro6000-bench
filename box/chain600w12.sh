@@ -1,42 +1,49 @@
 #!/usr/bin/env bash
-# Original 600 W box to 02:00 UTC 6 Sept (replaces chain600w11). The DP2 x TP2 + EP layout scored 0.643 on 403 items
-# against 0.794 at TP4 (truncation 16% vs 8%, 2.7% degenerate): the fast layout is not quality-safe on this build.
-# Isolate the cause - TP4 + EP quality (expert parallelism alone), two TP2 replicas without EP (data parallelism
-# alone, throughput then quality) - then run the throughput levers and the 65k-room quality run on the fastest
-# layout that holds quality. Prints CHAIN600W7 DONE.
+# Original 600 W box to 02:00 UTC 6 Sept (replaces chain600w11). The DP2 x TP2 + EP layout that won the throughput
+# sweep produces degenerate output (8 of 20 probe items; 0.643 on 403), so TP2 is broken in this port and the
+# fast layout is TP1 x DP4 + EP (1,073 out tok/s, clean probe). Order: its 403-item quality run; its throughput
+# levers; 65k tokens of output room on it (or on TP4 if its quality fails); GLM at native FP8 if time; controls.
 R=/workspace/results; B=/workspace/bench; P=$R/probe
 DEADLINE=$(( $(date -d "2026-09-06 02:00:00" +%s) ))
 left(){ echo $(( (DEADLINE - $(date +%s)) / 60 )); }
 step(){ echo "[$(date +%H:%M:%S)] 600W-12 (${1:-}min left): ${*:2}"; }
-acc(){ python3 -c "import json; d=json.load(open('$R/eval/$1.json')); print(d['aggregate']['acc_micro'])" 2>/dev/null || echo 0; }
-tps(){ python3 $B/pick_best.py "$P/$1" router 1024 2>&1 >/dev/null | tr -d '\n'; }
-for s in q600n q600m q600k; do tmux kill-session -t =$s 2>/dev/null && step "$(left)" "$s stopped; chain600w12 isolates the GLM layout regression"; done
+for s in q600p q600n q600m q600k; do tmux kill-session -t =$s 2>/dev/null && step "$(left)" "$s stopped; chain600w12 takes over"; done
 sleep 3; source $B/hardkill.sh; kill_all >/dev/null 2>&1
-
-step "$(left)" "two TP2 replicas without expert parallelism: throughput"
-bash $B/glm_perf4.sh > $R/glm_perf4.log 2>&1
-step "$(left)" "TP4 + EP at 512 sequences: 403-item quality (isolates expert parallelism)"
-ISO_BUDGET=3300 ARMS=tp4ep bash $B/glm_eval.sh > $R/glm_eval_tp4ep.log 2>&1
-step "$(left)" "two TP2 replicas without EP: 403-item quality (isolates data parallelism)"
-ISO_BUDGET=3300 ARMS=dp2 bash $B/glm_eval.sh > $R/glm_eval_dp2.log 2>&1
-a_ep=$(acc glm53f_tp4ep); a_dp=$(acc glm53f_dp2); t_dp=$(tps "glm53f_dp2noep_s384")
-step "$(left)" "isolation: TP4+EP acc $a_ep (931 out/s) | DP2 no-EP acc $a_dp (${t_dp:-?} out/s) | TP4 base 0.794 (911)"
-# the fastest layout that holds quality (within 0.03 of the TP4 base); TP4 at 512 sequences is the fallback
-flags="--max-num-seqs 512 --max-num-batched-tokens 16384"; lay="TP4, 512 seqs"
-python3 -c "import sys; sys.exit(0 if float('$a_ep' or 0) >= 0.764 else 1)" && { flags="--enable-expert-parallel --max-num-seqs 512 --max-num-batched-tokens 16384"; lay="TP4 + EP, 512 seqs"; }
-python3 -c "import sys; sys.exit(0 if float('$a_dp' or 0) >= 0.764 and float('${t_dp:-0}' or 0) > 931 else 1)" && { flags="--tensor-parallel-size 2 --data-parallel-size 2 --max-num-seqs 384 --max-num-batched-tokens 16384"; lay="DP2 x TP2 without EP, 384 seqs"; }
-echo "$flags" > $R/glm_safe.flags
-step "$(left)" "quality-safe layout for the rest: $lay -> $flags"
+# keep the DP2 x TP2 result under its own name; glm53f_best is retired
+for e in json items.jsonl log run.json; do [ -f $R/eval/glm53f_best.$e ] && mv -f $R/eval/glm53f_best.$e $R/eval/glm53f_dp2tp2ep2.$e; done
+python3 - <<'PY' 2>/dev/null
+import json; p="/workspace/results/eval/glm53f_dp2tp2ep2.json"; d=json.load(open(p)); d["tag"]="glm53f_dp2tp2ep2"; json.dump(d,open(p,"w"))
+PY
 L=$(left)
-if [ "$L" -gt 100 ]; then
-  step "$L" "throughput levers on that layout: CUDA graphs, 512/768 sequences with 16-bit SSM state, 32k prefill chunk, FP8 KV"
-  SAFE_FLAGS="$flags" bash $B/glm_perf5.sh > $R/glm_perf5.log 2>&1
+step "$L" "GLM-5.3-Flash on TP1 x DP4 + EP: 403-item quality (budget 3600s)"
+DP4_BUDGET=3600 ARMS=dp4 bash $B/glm_eval.sh > $R/glm_eval_dp4.log 2>&1
+acc=$(python3 -c "import json; d=json.load(open('$R/eval/glm53f_dp4ep4.json')); print(round(d['aggregate']['acc_micro'],3))" 2>/dev/null)
+step "$(left)" "DP4 + EP quality: ${acc:-none}"
+L=$(left)
+if [ "$L" -gt 150 ]; then
+  step "$L" "GLM-5.3-Flash on TP1 x DP4 + EP: 256 sequences, 16-bit SSM state at 384, 32k prefill chunk, FP8 KV"
+  bash $B/glm_perf4.sh > $R/glm_perf4.log 2>&1
 fi
 L=$(left)
-if [ "$L" -gt 75 ]; then
-  b=$(( (L - 20) * 60 )); [ "$b" -gt 5400 ] && b=5400
-  step "$L" "GLM on the quality-safe layout with 65k tokens of output room, budget ${b}s"
-  BEST_FLAGS="$flags" BEST_BUDGET=$b LONG_CONC=64 ARMS=bestlong bash $B/glm_eval.sh > $R/glm_eval_bestlong.log 2>&1
+if [ "$L" -gt 90 ]; then
+  b=$(( (L - 130) * 60 )); [ "$b" -lt 3600 ] && b=3600; [ "$b" -gt 5400 ] && b=5400
+  if python3 -c "import sys; sys.exit(0 if float('${acc:-0}') >= 0.77 else 1)"; then
+    step "$L" "GLM on DP4 + EP with 65k tokens of output room, budget ${b}s"
+    BEST_BUDGET=$b LONG_CONC=64 ARMS=dp4long bash $B/glm_eval.sh > $R/glm_eval_dp4long.log 2>&1
+  else
+    step "$L" "DP4 + EP quality ${acc:-none} is not clean either: 65k tokens of output room on TP4 instead, budget ${b}s"
+    BEST_FLAGS="--max-num-seqs 512 --max-num-batched-tokens 16384" BEST_BUDGET=$b LONG_CONC=64 ARMS=bestlong bash $B/glm_eval.sh > $R/glm_eval_bestlong.log 2>&1
+  fi
+fi
+L=$(left)
+if [ "$L" -gt 110 ]; then
+  step "$L" "GLM-5.3-Flash at native FP8, 330 GB, TP4, 32 sequences: quality (budget $(( (L - 45) * 60 ))s)"
+  FP8_BUDGET=$(( (L - 45) * 60 )) ARMS=fp8 bash $B/glm_eval.sh > $R/glm_eval_fp8.log 2>&1
+fi
+L=$(left)
+if [ "$L" -gt 40 ]; then
+  step "$L" "noise floor (Qwen NVFP4 a second time) and the gittensor weights under the official chat template"
+  MODE=eval EVAL_BUDGET=$(( (L - 10) * 60 / 2 )) bash $B/ksweep.sh $B/lists/control600w.txt > $R/keval_control.log 2>&1
 fi
 step "$(left)" "CHAIN600W7 DONE"
 kill_all

@@ -34,7 +34,8 @@ API = {"Qwen3.8-27B": (0.42, 3.00, 0.085), "GLM-5.3-Flash": (0.075, 0.25, 0.015)
 # label, precision class, eval tag (trees searched: 600w, 600w2, top, 5090), throughput tag, API model
 POINTS = [
     ("GLM-5.3-Flash NVFP4 · TP4",              "ptq4",   "glm53f_base",              "glm53f_tp4ep4_s512",        "GLM-5.3-Flash"),
-    ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*",  "ptq4",   "glm53f_best|glm53f_base",  "glm53f_dp2tp2ep2_s384",     "GLM-5.3-Flash"),
+    ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output)", "ptq4", "glm53f_dp2tp2ep2", "glm53f_dp2tp2ep2_s384", "GLM-5.3-Flash"),
+    ("GLM-5.3-Flash NVFP4 · DP4 + EP*",        "ptq4",   "glm53f_dp4ep4|glm53f_base", "glm53f_dp4ep4_s192",       "GLM-5.3-Flash"),
     ("GLM-5.3-Flash NVFP4 · TP4 + MTP",        "ptq4",   "glm53f_mtp",               "glm53f_s512_mtp",           "GLM-5.3-Flash"),
     ("DeepSeek-V4-Flash native · TP4",         "native", "ds4flash_b12x-b12x",       "ds4flash_b12x-b12x",        "DeepSeek-V4-Flash"),
     ("DeepSeek-V4-Flash native · DP4 + EP*",   "native", "ds4flash_dp4ep4_s512_b12x--|ds4flash_b12x--", "ds4flash_dp4ep4_s512_b12x--", "DeepSeek-V4-Flash"),
@@ -56,7 +57,8 @@ POINTS = [
 SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
          "GLM-5.3-Flash NVFP4 · TP4 + MTP": "GLM-5.3-Flash · TP4+MTP", "DeepSeek-V4-Flash native · TP4": "DeepSeek-V4-Flash · TP4",
          "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · DP4 + EP": "DeepSeek-V4-Flash · DP4+EP",
-         "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP": "GLM-5.3-Flash · DP2×TP2+EP", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
+         "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output)": "GLM-5.3-Flash · DP2×TP2+EP (degenerate)",
+         "GLM-5.3-Flash NVFP4 · DP4 + EP*": "GLM-5.3-Flash · DP4+EP*", "GLM-5.3-Flash NVFP4 · DP4 + EP": "GLM-5.3-Flash · DP4+EP", "DeepSeek-V4-Flash native · TP4 + DSpark": "DeepSeek-V4-Flash · TP4+DSpark",
          "gemma-4-26B-A4B BF16 (thinking, T=0)": "gemma-4-26B-A4B BF16 (thinking)",
          "Qwen3.8-Flash-Next NVFP4 · TP4": "Qwen3.8-Flash-Next · TP4", "Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears": "Qwen3.8-Flash-Next · TP4 W4A4"}
 CLASS = {"native": ("native precision", "#2a78d6", "circle"), "qat4": ("quantisation-aware 4-bit", "#1baf7a", "circle"),

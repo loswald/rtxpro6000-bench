@@ -442,6 +442,14 @@ drafting and rejection sampling the target distribution is preserved by construc
 temperature 1.0 is a reading of the **suite's own run-to-run noise** at vendor sampling, not of speculation.
 The next section measures that noise.
 
+### The API endpoint, scored on the same suite
+
+The same 403 items, same sampling recipe, against OpenRouter's default routing for GLM-5.3-Flash (5 September,
+21:00 UTC): **0.824**, against 0.794 for the NVFP4 build at TP4 on this node. The gap (0.030) is just outside the
+suite's repeat spread (0.022); the provider serves the weights at a higher precision than our four-bit build,
+and the difference is the size of the quantisation cost the ladder measured on Qwen. The other seven models we
+serve are being scored the same way (`box/or_eval.sh`).
+
 ### The suite's noise floor
 
 Four configurations were evaluated on both PRO 6000 hosts under byte-identical recipes — same items, same
@@ -758,7 +766,7 @@ basis ($1.77 an hour).
 
 What the chart says. **Priced on the same tokens at the same mix, the API is 4–22× the node for every model that
 fits one card, 1.3× for DeepSeek-V4-Flash, and 0.5× for GLM-5.3-Flash on its fastest layout that produces
-correct output** (the 1.0× row is the broken TP2 layout, kept for the record). The one-card ratios are smaller than the per-hour
+correct output.** The one-card ratios are smaller than the per-hour
 table above because cached input is priced at the providers' cache-read rates and the prompt-optimisation shape
 is mostly cache hits; they are still an order of magnitude. Qwen3.8-27B's ratio is the largest because its API price is high
 ($3 per million output tokens), not because the node is unusually good at it. **The frontier is native

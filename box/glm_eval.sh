@@ -128,6 +128,12 @@ for arm in ${ARMS:-base mtp}; do
     dp2)   # isolate data parallelism: two TP2 replicas WITHOUT expert parallelism, 384 sequences each
           if EXTRA_ARGS="--tensor-parallel-size 2 --data-parallel-size 2 --max-num-seqs 384 --max-num-batched-tokens 16384" launch glm53f_dp2; then
             EVAL_BUDGET="${ISO_BUDGET:-3600}" run_eval_for glm53f_dp2; fi;;
+    dp4)  # TP1 x DP4 + EP at the build's 192-sequence cap: +15% over TP4 and, unlike DP2 x TP2, a clean 20-item probe
+          if EXTRA_ARGS="--tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel --max-num-seqs 192 --max-num-batched-tokens 16384" launch glm53f_dp4ep4; then
+            EVAL_CONC="${DP4_CONC:-96}" EVAL_BUDGET="${DP4_BUDGET:-3600}" run_eval_for glm53f_dp4ep4; fi;;
+    dp4long) # the same layout with 65k tokens of output room
+          if EXTRA_ARGS="--tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel --max-num-seqs 192 --max-num-batched-tokens 16384 --max-model-len 98304" launch glm53f_dp4long; then
+            EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288"             EVAL_CONC="${LONG_CONC:-64}" EVAL_BUDGET="${BEST_BUDGET:-7200}" run_eval_for glm53f_dp4long; fi;;
     bestlong) # the fastest layout with 65k tokens of output room: what the 32k cap cost the 29 items that hit it
           if EXTRA_ARGS="${BEST_FLAGS:-} --max-model-len 98304" launch glm53f_bestlong; then
             EVAL_MAXTOK=65536 EVAL_CAPS="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288"             EVAL_CONC="${LONG_CONC:-64}" EVAL_BUDGET="${BEST_BUDGET:-7200}" run_eval_for glm53f_bestlong; fi;;

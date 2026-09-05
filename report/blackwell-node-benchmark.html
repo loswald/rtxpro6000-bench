@@ -212,6 +212,9 @@
 
 <p><strong>Lossless is not free at saturation.</strong> GLM's MTP head at 1,024 concurrent streams: 592 output tokens a second against 911 without it, with only 10% of drafted tokens accepted at that batch (67% at low concurrency). DeepSeek's DSpark drafter: 665 against 1,107. A drafter buys per-request latency when the box is lightly loaded and sells aggregate throughput when it is full; for batch and agent-harness traffic on this node, run without it.</p>
 
+<h3>The API endpoint, scored on the same suite</h3>
+<p>The same 403 items and sampling recipe against OpenRouter's default routing for GLM-5.3-Flash (5 September, 21:00 UTC): <strong>0.824</strong>, against 0.794 for the NVFP4 build at TP4 on this node. The 0.030 gap is just outside the suite's repeat spread (0.022): the provider serves the weights at a higher precision than our four-bit build, and the difference is the size of the quantisation cost the ladder measured on Qwen. The other seven models we serve are being scored the same way.</p>
+
 <h3>The suite's noise floor</h3>
 <p>Four configurations were evaluated on both PRO 6000 hosts under byte-identical recipes — same items, seed, sampling, caps and parser — which makes each pair a same-configuration-twice control.</p>
 <div class="tblwrap"><table>
