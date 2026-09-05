@@ -104,6 +104,8 @@ Other models on the same box:
 | DeepSeek-V4-Flash (41) | TP1 × DP4 + expert parallel, 256 seqs (first box) | promptopt C512 | 3,683 | 51,562 | 6.6 s |
 | | Marlin + EP | promptopt C512 | 3,002 | 42,032 | 3.1 s |
 | **Qwen3.8-Flash-Next (46)** | TP4, Marlin MoE, FP8 n-gram tables (`patch_ple.py`), auto linear kernel | router C1024 | **1,442** | 11,538 | 70 s ⁱ |
+| | | promptopt C1024 | 1,919 | 26,871 | 104 s ⁱ |
+| | same, `b12x` W4A4 linear kernel | router C1024 | 1,443 | 11,545 | 70 s ⁱ |
 | **GLM-5.3-Flash (46)** | TP4, ported vendor vLLM, 256 seqs | promptopt C256 | 1,002 | 14,030 | 2.7 s |
 | | | router C256 | 920 | 7,362 | 2.2 s |
 | | | judge C128 | 771 | 6,165 | 2.1 s |
@@ -399,9 +401,18 @@ box, never in the repository or this chat). One model has finished; the others f
 | model | on this node (best quality-safe config) | OpenRouter endpoint, same 403 items | gap | where the gap is |
 |---|---:|---:|---:|---|
 | GLM-5.3-Flash | 0.794 · NVFP4, TP4 (0.809 with MTP) | **0.824** | +0.030 (+0.015 vs MTP) | maths 0.812 vs 0.738, code 0.813 vs 0.760, knowledge 0.657 vs 0.600; ifeval and tools slightly lower |
-| DeepSeek-V4-Flash | 0.844 · native, DP4 + EP | measuring | | |
+| DeepSeek-V4-Flash | 0.844 · native, DP4 + EP | **0.784** | −0.060 | long context 0.833 vs 0.938, maths 0.875 vs 0.938, knowledge 0.571 vs 0.643, code 0.707 vs 0.747; the endpoint truncates 9.2% of answers against 4.2% here and 3.0% degenerate into repetition against 0.25% |
 | Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | queued | | |
 | gpt-oss-120b, gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | queued | | |
+
+The two results point opposite ways, and both are about the *deployment*, not the weights. GLM's endpoint
+beats our four-bit build by the size of a quantisation cost, because Z.AI serves the model at training
+precision. DeepSeek's endpoint loses 0.060 to our native-precision run — three times the noise floor — with
+twice the truncation and twelve times the degenerate output, which is what a provider running the model too
+hot or on a lossy build looks like. OpenRouter's default routing picks whichever provider is cheapest and
+available, and the response does not say which one answered; a customer paying list price gets that provider.
+"API quality" is a property of the routed deployment, and it has to be measured per provider before it can be
+compared with a node that serves the weights as released.
 
 The GLM gap is at the edge of the suite's 0.022 noise floor and lands exactly where the quantisation ladder said
 quantisation lands — maths, code, knowledge — while the endpoint's truncation rate (6.2%) and mean answer length
