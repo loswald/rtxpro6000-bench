@@ -292,6 +292,11 @@ claim was an artefact of a broken harness, not a finding, and it is withdrawn. W
 more useful: **gpt-oss is disproportionately good at code and tool calling for its size**, which is what an
 agent harness spends most of its time doing, and index 24 buys 0.933 on code where index 57 buys 0.864.
 
+Two candidates named for this node are not on the table. **Kimi K3 is 2.78 trillion parameters** (a community
+W4A4 build exists, at ~1.4 TB); it does not fit 384 GB at any precision and belongs to the 7-GPU node or an
+API. DeepSeek-V4-Flash does fit — 156 GB, native MXFP4 experts and FP8 attention — and its quality run is in
+flight on the 600 W box after the first attempt hard-coded a MoE backend this build rejects.
+
 Per-family intervals at these counts are roughly ±0.10, so family-level ordering is indicative and the
 aggregate is where the ±0.045 applies. Rows are comparable only on the items both scored, which is why every
 paired claim below is made on the common item set rather than on the headline column.

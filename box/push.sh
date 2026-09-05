@@ -25,8 +25,8 @@ for f in "$@"; do
   if scp -q -i "$KEY" -P "$P" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$src" "root@$H:$dest/.$b.push"; then
     # report (never block on) a running reader; the rename keeps it safe either way. The bracketed first
     # character keeps this grep from matching its own command line.
-    pat="[${b:0:1}]${b:1}"
-    running=$("${SSH[@]}" "ps -eo args | grep -c -- '$pat'; mv -f '$dest/.$b.push' '$dest/$b'" 2>/dev/null | head -1)
+    pat="[b]ash $dest/$b|[p]ython3 $dest/$b"
+    running=$("${SSH[@]}" "ps -eo args | grep -Ec -- '$pat'; mv -f '$dest/.$b.push' '$dest/$b'" 2>/dev/null | head -1)
     if [ "${running:-0}" -gt 0 ]; then echo "  sent $b -> $dest/  (a process is executing the old copy; it keeps its inode, the new file is in place for the next start)"
     else echo "  sent $b -> $dest/"; fi
   else
