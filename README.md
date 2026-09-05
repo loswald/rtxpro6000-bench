@@ -566,6 +566,83 @@ Two findings from building it that generalise:
 
 ---
 
+## Economics
+
+Every number here is derived from this repository's own 600 W measurements and a handful of stated
+assumptions; `box/econ.py` regenerates both tables from `results/summary_all.tsv` and prints them.
+
+**Cost bases, GBP ex-VAT.** Scan's website price for the four-card RTX PRO 6000 box is £1,666.65 a month ex-VAT
+(£1,999.98 inc-VAT), electricity included, taken over 730 hours. "Committed" applies the 25% discount for a
+commitment term. "Fully loaded" is Sqwish's internal GPU decision model (5 September 2026): committed price,
+minus ERIS at 26.97p per qualifying pound (14.5% of 186%) on the 80% of the bill that qualifies, minus the idle
+GPU-hours resold on Vast as interruptible capacity at $0.90 per GPU-hour with 74.4% fill and a 25% platform
+take, plus £15 of stopped-template storage. FX £1 = $1.35 throughout. For reference, renting the same four
+cards on Vast on-demand today costs 4 × $1.55 per GPU-hour, the median of 36 live listings.
+
+| basis | owner utilisation | GBP / node-hour | USD / node-hour |
+|---|---:|---:|---:|
+| Scan list, nothing resold, no relief | 100% | 2.28 | 3.08 |
+| Scan list, nothing resold, no relief | 70% | 3.26 | 4.40 |
+| Scan list, nothing resold, no relief | 50% | 4.57 | 6.16 |
+| Scan committed (−25%) | 100% | 1.71 | 2.31 |
+| Scan committed (−25%) | 70% | 2.45 | 3.30 |
+| fully loaded: committed − ERIS − Vast resale of idle hours | 100% | 1.36 | 1.84 |
+| fully loaded, same | 70% | 1.31 | 1.77 |
+| fully loaded, same | 50% | 1.24 | 1.67 |
+| fully loaded, same | 20% (the model's default) | 0.87 | 1.17 |
+| renting the same box on Vast today, on-demand | — | 4.59 | 6.20 |
+
+The fully-loaded line is nearly flat above 50% because resale income falls exactly as owner use rises; the
+model's own break-even is an 86.6% fill of the idle hours at its 20% default. Both the relief and the resale
+have to actually happen for that line to be real.
+
+**The same hour of output, bought from an API.** Our measured throughput at a shape gives tokens per node-hour;
+the API bill is what OpenRouter's list price on 5 September 2026 charges for that token mix (Qwen3.8-Flash-Next
+from Artificial Analysis, which is not on OpenRouter). Node cost is $4.40 per active hour at Scan list and 70%
+utilisation, $1.77 fully loaded.
+
+| model · configuration (600 W) | shape | tokens / node-hour (in + out, M) | API $/M in · out | API bill for that hour | API ÷ node, list 70% | API ÷ node, fully loaded |
+|---|---|---:|---:|---:|---:|---:|
+| Qwen3.8-27B · NVFP4 gittensor, b12x W4A4, 4 replicas | router C1024 | 147 + 18 | 0.42 · 3.00 | $117 | **27×** | **66×** |
+| Qwen3.8-27B · FP8, b12x, 4 replicas | router C1024 | 91 + 11 | 0.42 · 3.00 | $72 | 16× | 41× |
+| gemma-4-26B-A4B · BF16, 4 replicas | promptopt C1024 | 781 + 56 | 0.07 · 0.34 | $74 ¹ | 17× | 42× |
+| gpt-oss-120b · MXFP4, 4 replicas | promptopt C2048 | 1,063 + 71 | 0.037 · 0.17 | $51 ¹ | 12× | 29× |
+| Muse-Glimmer-30B · BF16, 4 replicas | router C1024 | 87 + 11 | 0.30 · 1.10 | $38 | 9× | 22× |
+| gpt-oss-20b · MXFP4, 4 replicas | router C2048 | 446 + 50 | 0.03 · 0.13 | $20 | 4× | 11× |
+| DeepSeek-V4-Flash · native MXFP4 + FP8, TP4 | promptopt C1024 | 120 + 9 | 0.065 · 0.18 | $9 ¹ | 2× | 5× |
+| GLM-5.3-Flash · NVFP4, TP4 | promptopt C256 | 54 + 4 | 0.075 · 0.25 | $5 ¹ | 1× | 3× |
+| Qwen3.8-27B · NVFP4 QUASAR-QAT, b12x W4A4 | router | measuring | 0.42 · 3.00 | | | |
+| Qwen3.8-Flash-Next · NVFP4, 2 × TP2 | router | measuring | 0.15 · 0.47 | | | |
+| MiniMax-M3 · MXFP4, TP4 | router | measuring | 0.30 · 1.20 | | | |
+
+¹ The shared-prefix shape bills all input at full price. Providers discount cached input by 80–90%; at a 90%
+discount on the cached 86% of input, the API bill falls to about $21 for gpt-oss-120b, $31 for gemma, $3.4 for
+DeepSeek and $1.9 for GLM — the small models stay an order of magnitude cheaper self-hosted, and the two
+four-card models fall to API parity or below at list price.
+
+Three conclusions.
+
+**For anything that fits one card, self-hosting wins by an order of magnitude.** Qwen3.8-27B, gemma-4-26B,
+gpt-oss-120b and Muse cost 9–27× more from an API than from the node at Scan's list price and 70% utilisation,
+and 22–66× fully loaded. Even renting the same box on Vast on-demand ($6.20 an hour) beats the API by 6–19× for
+these. This is the class of model — "non-huge" open weights — where the node pays for itself many times over.
+
+**For the two frontier-class models that need all four cards, the API is priced at our cost.** GLM-5.3-Flash and
+DeepSeek-V4-Flash come out at 1× and 2× of the node's list-price hour, and below it once cached input is
+discounted: their providers run them on eight-way B200-class hardware at scale and price aggressively (DeepSeek's
+own API sits under everyone else). Self-hosting those two is a decision about fidelity, data and control, not
+about savings — unless the fully-loaded stack holds, where they are still 3–5× cheaper.
+
+**The node is an aggregate-throughput machine, not a latency machine.** Providers quote 70–90 output tokens a
+second per request (Artificial Analysis: Qwen3.8-Flash-Next 74, MiniMax-M3 89). At saturation our node gives
+each stream 20 tokens a second at concurrency 256 and 5 at 1,024 for Qwen3.8-27B. Interactive work should run
+well below saturation; the ratios above are for batch and agent-harness traffic, which is what the shapes model.
+
+Prices move. DeepSeek raised list prices 2.4–4.7× in one step on 16 August 2026; the OpenRouter figures above
+are a snapshot, and the node's cost is fixed for the term — that asymmetry is itself part of the case.
+
+---
+
 ## Layout
 
 ```
