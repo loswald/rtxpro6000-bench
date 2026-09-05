@@ -1,50 +1,50 @@
 {
  "aggregate": {
-  "acc_macro": 0.7823,
-  "acc_micro": 0.7516,
-  "acc_strict": 0.6534,
-  "answer_from_reasoning": 1,
+  "acc_macro": 0.7706,
+  "acc_micro": 0.7378,
+  "acc_strict": 0.636,
+  "answer_from_reasoning": 2,
   "ci95": [
-   0.6776,
-   0.8134
+   0.6767,
+   0.7909
   ],
-  "degenerate_rate": 0.0131,
-  "gpu_minutes": 88.015,
-  "mean_out_tokens": 4886.2,
-  "mean_prompt_tokens": 581.6,
-  "mean_score": 0.7663,
-  "n_attempted": 176,
+  "degenerate_rate": 0.0133,
+  "gpu_minutes": 132.023,
+  "mean_out_tokens": 5285.0,
+  "mean_prompt_tokens": 546.1,
+  "mean_score": 0.7567,
+  "n_attempted": 261,
   "n_cancelled": 0,
-  "n_correct": 115,
-  "n_error": 23,
+  "n_correct": 166,
+  "n_error": 36,
   "n_planned": 403,
-  "n_scored": 153,
-  "n_skipped": 227,
-  "out_tokens_per_s": 566.3,
-  "p50_item_s": 67.26,
-  "p50_out_tokens": 1049,
+  "n_scored": 225,
+  "n_skipped": 142,
+  "out_tokens_per_s": 600.5,
+  "p50_item_s": 65.53,
+  "p50_out_tokens": 1074,
   "p90_item_s": 488.31,
   "per_url": {
    "https://openrouter.ai/api": {
-    "completion_tokens": 747592,
-    "errors": 109,
-    "requests": 286,
-    "retries": 86
+    "completion_tokens": 1189120,
+    "errors": 162,
+    "requests": 411,
+    "retries": 126
    }
   },
-  "request_errors": 23,
-  "requests": 286,
-  "retries": 86,
+  "request_errors": 36,
+  "requests": 411,
+  "retries": 126,
   "status_counts": {
-   "correct": 115,
-   "error": 23,
-   "truncated": 12,
-   "wrong": 26
+   "correct": 166,
+   "error": 36,
+   "truncated": 19,
+   "wrong": 40
   },
-  "total_out_tokens": 747592,
-  "total_prompt_tokens": 88985,
-  "trunc_rate": 0.0784,
-  "wall_s": 1303.3
+  "total_out_tokens": 1189120,
+  "total_prompt_tokens": 122877,
+  "trunc_rate": 0.0844,
+  "wall_s": 1971.9
  },
  "base_urls": [
   "https://openrouter.ai/api"
@@ -95,7 +95,7 @@
   "top_p": 0.95
  },
  "data_manifest_sha256": "efb50b88d5b0aaae7f92d527bf05c761c0da6c9c153af5bde45e1add2ed3735b",
- "ended_at": "2026-09-05T22:13:03Z",
+ "ended_at": "2026-09-05T22:24:03Z",
  "endpoint": {
   "max_model_len": null,
   "served_models": [
@@ -538,35 +538,54 @@
  "evalsuite_git_sha": null,
  "families": {
   "code": {
-   "acc": 0.7778,
-   "acc_strict": 0.7778,
+   "acc": 0.7333,
+   "acc_strict": 0.7333,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.5924,
-    0.8939
+    0.5896,
+    0.8404
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
     "fail_kinds": {
-     "assertion": 3,
-     "truncated": 3
+     "TypeError": 1,
+     "assertion": 4,
+     "truncated": 7
     },
-    "lcb_mean_test_pass_frac": 0.6667,
+    "lcb_mean_test_pass_frac": 0.6875,
     "syntax_error_rate": 0.0,
     "timeout_rate": 0.0,
     "unparsed_rate": 0.0
    },
    "failed_ids": [
+    "heplus-099",
     "heplus-141",
+    "lcb-atcoder-abc388_d",
     "lcb-atcoder-abc390_d",
     "lcb-leetcode-3677",
+    "lcb-leetcode-3743",
     "lcb-leetcode-3776",
     "mbppplus-223",
+    "mbppplus-311",
+    "mbppplus-577",
+    "mbppplus-739",
     "mbppplus-753"
    ],
    "failures": [
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "heplus-099",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "humanevalplus"
+    },
     {
      "error": null,
      "expected": "file_name_check passes base+plus tests",
@@ -578,6 +597,18 @@
      "response_tail": "' or 'A' <= name[0] <= 'Z'):\n        return 'No'\n\n    if ext not in ['txt', 'exe', 'dll']:\n        return 'No'\n\n    digit_count = 0\n    for char in file_name:\n        if '0' <= char <= '9':\n            digit_count += 1\n            if digit_count > 3:\n                return 'No'\n\n    return 'Yes'\n```",
      "status": "wrong",
      "sub": "humanevalplus"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "lcb-atcoder-abc388_d",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
     },
     {
      "error": null,
@@ -609,6 +640,18 @@
      "extracted": null,
      "finish_reason": "length",
      "flags": [],
+     "id": "lcb-leetcode-3743",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "lcb_easy_medium"
+    },
+    {
+     "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
      "id": "lcb-leetcode-3776",
      "out_tokens": 20480,
      "response_tail": "",
@@ -629,6 +672,42 @@
     },
     {
      "error": null,
+     "expected": null,
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "mbppplus-311",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "last_Digit_Factorial passes base+plus tests",
+     "extracted": "393 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-577",
+     "out_tokens": 894,
+     "response_tail": "non-negative integer.\n\n    For n >= 5, n! always contains a factor of 10, so its last digit is 0.\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"Factorial is not defined for negative numbers.\")\n\n    if n >= 5:\n        return 0\n\n    return [1, 1, 2, 6, 4][n]\n\n\nassert last_Digit_Factorial(4) == 4\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
+     "expected": "find_Index passes base+plus tests",
+     "extracted": "880 chars via fence",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "mbppplus-739",
+     "out_tokens": 15114,
+     "response_tail": "e need the\n    smallest k such that T(k) >= 10 ** (n - 1).\n    \"\"\"\n    if n < 1:\n        return 0\n\n    lower_bound = 10 ** (n - 1)\n    two_lower_bound = 2 * lower_bound\n\n    k = isqrt(two_lower_bound)\n\n    if k * (k + 1) < two_lower_bound:\n        k += 1\n\n    return k\n\n\nassert find_Index(2) == 4\n```",
+     "status": "wrong",
+     "sub": "mbppplus"
+    },
+    {
+     "error": null,
      "expected": "min_k passes base+plus tests",
      "extracted": "341 chars via fence",
      "finish_reason": "stop",
@@ -640,183 +719,190 @@
      "sub": "mbppplus"
     }
    ],
-   "gpu_minutes": 15.64,
-   "info_per_gpu_min": 0.298,
+   "gpu_minutes": 31.317,
+   "info_per_gpu_min": 0.281,
    "max_tokens": 20480,
-   "mean_out_tokens": 4949.9,
-   "mean_prompt_tokens": 347.2,
-   "mean_score": 0.7778,
-   "n_attempted": 27,
+   "mean_out_tokens": 6304.8,
+   "mean_prompt_tokens": 355.3,
+   "mean_score": 0.7333,
+   "n_attempted": 45,
    "n_cancelled": 0,
-   "n_correct": 21,
+   "n_correct": 33,
    "n_error": 0,
    "n_planned": 75,
-   "n_scored": 27,
-   "n_skipped": 48,
+   "n_scored": 45,
+   "n_skipped": 30,
    "opts": {},
-   "p50_item_s": 29.98,
-   "p50_out_tokens": 1362,
-   "p90_item_s": 703.1,
+   "p50_item_s": 53.67,
+   "p50_out_tokens": 2696,
+   "p90_item_s": 642.8,
    "status_counts": {
-    "correct": 21,
-    "truncated": 3,
-    "wrong": 3
+    "correct": 33,
+    "truncated": 7,
+    "wrong": 5
    },
    "sub": {
     "humanevalplus": {
-     "acc": 0.8889,
-     "acc_strict": 0.8889,
+     "acc": 0.8571,
+     "acc_strict": 0.8571,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.565,
-      0.9801
+      0.6006,
+      0.9599
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 1449.8,
-     "mean_prompt_tokens": 240.8,
-     "mean_score": 0.8889,
-     "n_attempted": 9,
+     "mean_out_tokens": 3820.2,
+     "mean_prompt_tokens": 252.2,
+     "mean_score": 0.8571,
+     "n_attempted": 14,
      "n_cancelled": 0,
-     "n_correct": 8,
+     "n_correct": 12,
      "n_error": 0,
      "n_planned": 25,
-     "n_scored": 9,
-     "n_skipped": 16,
-     "p50_item_s": 19.89,
+     "n_scored": 14,
+     "n_skipped": 11,
+     "p50_item_s": 20.73,
      "p50_out_tokens": 872,
-     "p90_item_s": 176.26,
+     "p90_item_s": 486.85,
      "status_counts": {
-      "correct": 8,
+      "correct": 12,
+      "truncated": 1,
       "wrong": 1
      },
-     "total_out_tokens": 13048,
-     "total_prompt_tokens": 2167,
-     "trunc_rate": 0.0,
-     "wall_s": 1122.6
+     "total_out_tokens": 53483,
+     "total_prompt_tokens": 3531,
+     "trunc_rate": 0.0714,
+     "wall_s": 1938.4
     },
     "lcb_easy_medium": {
+     "acc": 0.6875,
+     "acc_strict": 0.6875,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.444,
+      0.8584
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 10578.2,
+     "mean_prompt_tokens": 634.8,
+     "mean_score": 0.6875,
+     "n_attempted": 16,
+     "n_cancelled": 0,
+     "n_correct": 11,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 16,
+     "n_skipped": 14,
+     "p50_item_s": 280.21,
+     "p50_out_tokens": 9905,
+     "p90_item_s": 806.43,
+     "status_counts": {
+      "correct": 11,
+      "truncated": 5
+     },
+     "total_out_tokens": 169252,
+     "total_prompt_tokens": 10156,
+     "trunc_rate": 0.3125,
+     "wall_s": 1897.5
+    },
+    "mbppplus": {
      "acc": 0.6667,
      "acc_strict": 0.6667,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3542,
-      0.8794
+      0.4171,
+      0.8482
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 11855.7,
-     "mean_prompt_tokens": 641.9,
+     "mean_out_tokens": 4065.4,
+     "mean_prompt_tokens": 153.5,
      "mean_score": 0.6667,
-     "n_attempted": 9,
+     "n_attempted": 15,
      "n_cancelled": 0,
-     "n_correct": 6,
-     "n_error": 0,
-     "n_planned": 30,
-     "n_scored": 9,
-     "n_skipped": 21,
-     "p50_item_s": 414.24,
-     "p50_out_tokens": 10839,
-     "p90_item_s": 1010.53,
-     "status_counts": {
-      "correct": 6,
-      "truncated": 3
-     },
-     "total_out_tokens": 106701,
-     "total_prompt_tokens": 5777,
-     "trunc_rate": 0.3333,
-     "wall_s": 1300.1
-    },
-    "mbppplus": {
-     "acc": 0.7778,
-     "acc_strict": 0.7778,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.4526,
-      0.9368
-     ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 1544.2,
-     "mean_prompt_tokens": 159.0,
-     "mean_score": 0.7778,
-     "n_attempted": 9,
-     "n_cancelled": 0,
-     "n_correct": 7,
+     "n_correct": 10,
      "n_error": 0,
      "n_planned": 20,
-     "n_scored": 9,
-     "n_skipped": 11,
-     "p50_item_s": 16.09,
-     "p50_out_tokens": 481,
-     "p90_item_s": 187.67,
+     "n_scored": 15,
+     "n_skipped": 5,
+     "p50_item_s": 24.71,
+     "p50_out_tokens": 894,
+     "p90_item_s": 321.52,
      "status_counts": {
-      "correct": 7,
-      "wrong": 2
+      "correct": 10,
+      "truncated": 1,
+      "wrong": 4
      },
-     "total_out_tokens": 13898,
-     "total_prompt_tokens": 1431,
-     "trunc_rate": 0.0,
-     "wall_s": 1213.5
+     "total_out_tokens": 60981,
+     "total_prompt_tokens": 2303,
+     "trunc_rate": 0.0667,
+     "wall_s": 1925.5
     }
    },
-   "total_out_tokens": 133647,
-   "total_prompt_tokens": 9375,
-   "trunc_rate": 0.1111,
-   "wall_s": 1300.1
+   "total_out_tokens": 283716,
+   "total_prompt_tokens": 15990,
+   "trunc_rate": 0.1556,
+   "wall_s": 1938.4
   },
   "ifeval": {
-   "acc": 0.8333,
-   "acc_strict": 0.8333,
+   "acc": 0.8636,
+   "acc_strict": 0.8636,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6644,
-    0.9266
+    0.7329,
+    0.936
    ],
    "degenerate_ids": [
     "ifeval-1300",
     "ifeval-1643"
    ],
-   "degenerate_rate": 0.0667,
+   "degenerate_rate": 0.0455,
    "error_ids": [],
    "extra": {
     "by_n_instructions": {
      "1": {
-      "n": 9,
-      "prompt_loose": 0.8889,
-      "prompt_strict": 0.8889
+      "n": 12,
+      "prompt_loose": 0.9167,
+      "prompt_strict": 0.9167
      },
      "2": {
-      "n": 10,
-      "prompt_loose": 0.8,
-      "prompt_strict": 0.8
+      "n": 16,
+      "prompt_loose": 0.8125,
+      "prompt_strict": 0.8125
      },
      "3": {
-      "n": 10,
-      "prompt_loose": 0.9,
-      "prompt_strict": 0.9
+      "n": 15,
+      "prompt_loose": 0.9333,
+      "prompt_strict": 0.9333
      }
     },
-    "instruction_loose": 0.9322,
-    "instruction_strict": 0.9322,
+    "instruction_loose": 0.9438,
+    "instruction_strict": 0.9438,
     "loose_only_rate": 0.0,
-    "n_instructions": 59,
+    "n_instructions": 89,
     "per_type": {
      "change_case:capital_word_frequency": {
       "loose": 1.0,
-      "n": 3,
+      "n": 6,
+      "strict": 1.0
+     },
+     "change_case:english_capital": {
+      "loose": 1.0,
+      "n": 1,
       "strict": 1.0
      },
      "change_case:english_lowercase": {
       "loose": 1.0,
-      "n": 2,
+      "n": 3,
       "strict": 1.0
      },
      "combination:repeat_prompt": {
       "loose": 1.0,
-      "n": 3,
+      "n": 5,
       "strict": 1.0
      },
      "detectable_content:number_placeholders": {
       "loose": 1.0,
-      "n": 1,
+      "n": 2,
       "strict": 1.0
      },
      "detectable_content:postscript": {
@@ -841,7 +927,7 @@
      },
      "detectable_format:title": {
       "loose": 1.0,
-      "n": 1,
+      "n": 2,
       "strict": 1.0
      },
      "keywords:existence": {
@@ -856,13 +942,13 @@
      },
      "keywords:frequency": {
       "loose": 1.0,
-      "n": 13,
+      "n": 17,
       "strict": 1.0
      },
      "keywords:letter_frequency": {
-      "loose": 0.5,
-      "n": 2,
-      "strict": 0.5
+      "loose": 0.6667,
+      "n": 3,
+      "strict": 0.6667
      },
      "length_constraints:nth_paragraph_first_word": {
       "loose": 1.0,
@@ -871,39 +957,40 @@
      },
      "length_constraints:number_sentences": {
       "loose": 1.0,
-      "n": 6,
+      "n": 14,
       "strict": 1.0
      },
      "length_constraints:number_words": {
-      "loose": 0.8571,
-      "n": 7,
-      "strict": 0.8571
+      "loose": 0.9091,
+      "n": 11,
+      "strict": 0.9091
      },
      "punctuation:no_comma": {
-      "loose": 0.875,
-      "n": 8,
-      "strict": 0.875
+      "loose": 0.7778,
+      "n": 9,
+      "strict": 0.7778
      },
      "startend:end_checker": {
-      "loose": 0.5,
-      "n": 2,
-      "strict": 0.5
+      "loose": 0.75,
+      "n": 4,
+      "strict": 0.75
      },
      "startend:quotation": {
       "loose": 1.0,
-      "n": 1,
+      "n": 2,
       "strict": 1.0
      }
     },
-    "prompt_loose": 0.8621,
-    "prompt_strict": 0.8621
+    "prompt_loose": 0.8837,
+    "prompt_strict": 0.8837
    },
    "failed_ids": [
     "ifeval-1174",
     "ifeval-1300",
     "ifeval-1643",
     "ifeval-2398",
-    "ifeval-3505"
+    "ifeval-3505",
+    "ifeval-3633"
    ],
    "failures": [
     {
@@ -969,147 +1056,161 @@
      "response_tail": "s fine and fair but it is delicate and it may not endure the hard labour of a farm or a forge\nThe AirPods are light as air but they are lost to the pocket and the sleeve and the careless hand\nThe HomePod is pleasant yet it demands a steady supply of power and it may chide the household with its cost",
      "status": "wrong",
      "sub": "double"
+    },
+    {
+     "error": null,
+     "expected": "combination:repeat_prompt+punctuation:no_comma",
+     "extracted": "1/2 strict, 1/2 loose",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "ifeval-3633",
+     "out_tokens": 2030,
+     "response_tail": "ange, then give your answer. Do not say any words or characters before repeating the entire request above.\nLaureates and twins offers professionals a rigorous portrait of paired identity and elite success. Its analysis of empathy and reward systems and selfhood is nuanced. It is well worth watching.",
+     "status": "wrong",
+     "sub": "double"
     }
    ],
-   "gpu_minutes": 14.73,
-   "info_per_gpu_min": 0.283,
+   "gpu_minutes": 18.048,
+   "info_per_gpu_min": 0.287,
    "max_tokens": 16384,
-   "mean_out_tokens": 4220.1,
-   "mean_prompt_tokens": 99.2,
-   "mean_score": 0.8722,
-   "n_attempted": 30,
+   "mean_out_tokens": 3729.8,
+   "mean_prompt_tokens": 100.1,
+   "mean_score": 0.9015,
+   "n_attempted": 44,
    "n_cancelled": 0,
-   "n_correct": 25,
+   "n_correct": 38,
    "n_error": 0,
    "n_planned": 60,
-   "n_scored": 30,
-   "n_skipped": 30,
+   "n_scored": 44,
+   "n_skipped": 16,
    "opts": {},
-   "p50_item_s": 42.89,
-   "p50_out_tokens": 1279,
-   "p90_item_s": 276.0,
+   "p50_item_s": 48.12,
+   "p50_out_tokens": 1805,
+   "p90_item_s": 275.3,
    "status_counts": {
-    "correct": 25,
+    "correct": 38,
     "truncated": 2,
-    "wrong": 3
+    "wrong": 4
    },
    "sub": {
     "double": {
-     "acc": 0.8,
-     "acc_strict": 0.8,
+     "acc": 0.8125,
+     "acc_strict": 0.8125,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.4902,
-      0.9433
+      0.5699,
+      0.9341
      ],
-     "degenerate_rate": 0.1,
-     "mean_out_tokens": 6658.2,
-     "mean_prompt_tokens": 99.7,
-     "mean_score": 0.85,
-     "n_attempted": 10,
+     "degenerate_rate": 0.0625,
+     "mean_out_tokens": 5244.8,
+     "mean_prompt_tokens": 102.9,
+     "mean_score": 0.875,
+     "n_attempted": 16,
      "n_cancelled": 0,
-     "n_correct": 8,
+     "n_correct": 13,
      "n_error": 0,
      "n_planned": 24,
-     "n_scored": 10,
-     "n_skipped": 14,
-     "p50_item_s": 140.74,
-     "p50_out_tokens": 6485,
+     "n_scored": 16,
+     "n_skipped": 8,
+     "p50_item_s": 73.49,
+     "p50_out_tokens": 3599,
      "p90_item_s": 473.06,
      "status_counts": {
-      "correct": 8,
+      "correct": 13,
       "truncated": 1,
-      "wrong": 1
+      "wrong": 2
      },
-     "total_out_tokens": 66582,
-     "total_prompt_tokens": 997,
-     "trunc_rate": 0.1,
-     "wall_s": 1259.4
+     "total_out_tokens": 83916,
+     "total_prompt_tokens": 1646,
+     "trunc_rate": 0.0625,
+     "wall_s": 1904.2
     },
     "single": {
-     "acc": 0.8889,
-     "acc_strict": 0.8889,
+     "acc": 0.9167,
+     "acc_strict": 0.9167,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.565,
-      0.9801
+      0.6461,
+      0.9851
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 974.1,
-     "mean_prompt_tokens": 85.2,
-     "mean_score": 0.8889,
-     "n_attempted": 9,
+     "mean_out_tokens": 1446.2,
+     "mean_prompt_tokens": 84.8,
+     "mean_score": 0.9167,
+     "n_attempted": 12,
      "n_cancelled": 0,
-     "n_correct": 8,
+     "n_correct": 11,
      "n_error": 0,
      "n_planned": 12,
-     "n_scored": 9,
-     "n_skipped": 3,
-     "p50_item_s": 15.67,
-     "p50_out_tokens": 433,
-     "p90_item_s": 219.21,
+     "n_scored": 12,
+     "n_skipped": 0,
+     "p50_item_s": 17.94,
+     "p50_out_tokens": 547,
+     "p90_item_s": 113.77,
      "status_counts": {
-      "correct": 8,
+      "correct": 11,
       "wrong": 1
      },
-     "total_out_tokens": 8767,
-     "total_prompt_tokens": 767,
+     "total_out_tokens": 17355,
+     "total_prompt_tokens": 1017,
      "trunc_rate": 0.0,
-     "wall_s": 1118.5
+     "wall_s": 1498.0
     },
     "triple": {
-     "acc": 0.8182,
-     "acc_strict": 0.8182,
+     "acc": 0.875,
+     "acc_strict": 0.875,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.523,
-      0.9486
+      0.6398,
+      0.965
      ],
-     "degenerate_rate": 0.0909,
-     "mean_out_tokens": 4659.5,
-     "mean_prompt_tokens": 110.2,
-     "mean_score": 0.8788,
-     "n_attempted": 11,
+     "degenerate_rate": 0.0625,
+     "mean_out_tokens": 3927.4,
+     "mean_prompt_tokens": 108.9,
+     "mean_score": 0.9167,
+     "n_attempted": 16,
      "n_cancelled": 0,
-     "n_correct": 9,
+     "n_correct": 14,
      "n_error": 0,
      "n_planned": 24,
-     "n_scored": 11,
-     "n_skipped": 13,
-     "p50_item_s": 69.06,
-     "p50_out_tokens": 2051,
+     "n_scored": 16,
+     "n_skipped": 8,
+     "p50_item_s": 50.26,
+     "p50_out_tokens": 1514,
      "p90_item_s": 276.0,
      "status_counts": {
-      "correct": 9,
+      "correct": 14,
       "truncated": 1,
       "wrong": 1
      },
-     "total_out_tokens": 51255,
-     "total_prompt_tokens": 1212,
-     "trunc_rate": 0.0909,
-     "wall_s": 1275.1
+     "total_out_tokens": 62839,
+     "total_prompt_tokens": 1743,
+     "trunc_rate": 0.0625,
+     "wall_s": 1951.3
     }
    },
-   "total_out_tokens": 126604,
-   "total_prompt_tokens": 2976,
-   "trunc_rate": 0.0667,
-   "wall_s": 1275.1
+   "total_out_tokens": 164110,
+   "total_prompt_tokens": 4406,
+   "trunc_rate": 0.0455,
+   "wall_s": 1951.3
   },
   "knowledge": {
-   "acc": 0.4,
-   "acc_strict": 0.4,
-   "answer_from_reasoning": 1,
+   "acc": 0.4048,
+   "acc_strict": 0.4048,
+   "answer_from_reasoning": 2,
    "ci95": [
-    0.2459,
-    0.5768
+    0.2704,
+    0.5551
    ],
-   "degenerate_ids": [],
-   "degenerate_rate": 0.0,
+   "degenerate_ids": [
+    "mmlupro-3917"
+   ],
+   "degenerate_rate": 0.0238,
    "error_ids": [],
    "extra": {
     "extraction_methods": {
-     "answer_phrase": 15,
-     "phrase": 13
+     "answer_phrase": 20,
+     "phrase": 19
     },
     "mmlu_pro_hard_hedged": 0,
     "mmlu_pro_hard_weak_extraction": 0,
@@ -1121,20 +1222,27 @@
     "mmlupro-11407",
     "mmlupro-1157",
     "mmlupro-3818",
+    "mmlupro-3917",
     "mmlupro-4284",
     "simpleqa-0409",
     "simpleqa-0492",
     "simpleqa-0672",
     "simpleqa-0673",
+    "simpleqa-0762",
+    "simpleqa-1295",
     "simpleqa-1312",
     "simpleqa-1314",
+    "simpleqa-1443",
     "simpleqa-2174",
+    "simpleqa-2306",
+    "simpleqa-2417",
     "simpleqa-2706",
     "simpleqa-2782",
     "simpleqa-2905",
     "simpleqa-3211",
     "simpleqa-3339",
     "simpleqa-3342",
+    "simpleqa-4255",
     "simpleqa-4322"
    ],
    "failures": [
@@ -1172,6 +1280,20 @@
      "out_tokens": 12202,
      "response_tail": "re \\(V_0-E = 2.0-1.5 = 0.5\\ \\text{eV}\\), and\n\n\\[\n\\kappa \\approx 3.6\\times 10^9\\ \\text{m}^{-1}\n\\]\n\nFor \\(L = 100\\ \\text{pm} = 1.0\\times10^{-10}\\ \\text{m}\\),\n\n\\[\n2\\kappa L \\approx 2(3.6\\times10^9)(1.0\\times10^{-10}) \\approx 0.72\n\\]\n\n\\[\nT \\approx e^{-0.72} \\approx 0.48 \\approx 0.5\n\\]\n\nThe answer is (H)",
      "status": "wrong",
+     "sub": "mmlu_pro_hard"
+    },
+    {
+     "error": null,
+     "expected": "B",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [
+      "degenerate"
+     ],
+     "id": "mmlupro-3917",
+     "out_tokens": 20480,
+     "response_tail": "",
+     "status": "truncated",
      "sub": "mmlu_pro_hard"
     },
     {
@@ -1236,6 +1358,30 @@
     },
     {
      "error": null,
+     "expected": "20 Jun 2005",
+     "extracted": "August 31, 2001",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-0762",
+     "out_tokens": 17056,
+     "response_tail": "\n\nAnswer: August 31, 2001",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "13 May 2004",
+     "extracted": "24 June 2013",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1295",
+     "out_tokens": 5737,
+     "response_tail": "\n\nAnswer: 24 June 2013",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
      "expected": "St. John's College, Annapolis",
      "extracted": "University of Chicago",
      "finish_reason": "stop",
@@ -1262,6 +1408,18 @@
     },
     {
      "error": null,
+     "expected": "1970",
+     "extracted": "1969",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-1443",
+     "out_tokens": 14219,
+     "response_tail": "\n\nAnswer: 1969",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
      "expected": "Lloyd Hopkins Field",
      "extracted": "Krause Field",
      "finish_reason": "stop",
@@ -1269,6 +1427,30 @@
      "id": "simpleqa-2174",
      "out_tokens": 9729,
      "response_tail": "\n\nAnswer: Krause Field",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "11 March 1979",
+     "extracted": "25 August 1980",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2306",
+     "out_tokens": 15240,
+     "response_tail": "\n\nAnswer: 25 August 1980",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
+     "expected": "Ghavaniska system",
+     "extracted": "Drokka",
+     "finish_reason": "stop",
+     "flags": [],
+     "id": "simpleqa-2417",
+     "out_tokens": 349,
+     "response_tail": "\n\nAnswer: Drokka",
      "status": "wrong",
      "sub": "simpleqa"
     },
@@ -1348,6 +1530,20 @@
     },
     {
      "error": null,
+     "expected": "Drepano",
+     "extracted": "Kakibt",
+     "finish_reason": "stop",
+     "flags": [
+      "answer_from_reasoning"
+     ],
+     "id": "simpleqa-4255",
+     "out_tokens": 20054,
+     "response_tail": "",
+     "status": "wrong",
+     "sub": "simpleqa"
+    },
+    {
+     "error": null,
      "expected": "Jodelle Ferland",
      "extracted": "Tara Strong",
      "finish_reason": "stop",
@@ -1359,104 +1555,104 @@
      "sub": "simpleqa"
     }
    ],
-   "gpu_minutes": 16.587,
-   "info_per_gpu_min": 0.434,
+   "gpu_minutes": 26.468,
+   "info_per_gpu_min": 0.382,
    "max_tokens": 20480,
-   "mean_out_tokens": 4736.6,
-   "mean_prompt_tokens": 237.3,
-   "mean_score": 0.4,
-   "n_attempted": 30,
+   "mean_out_tokens": 5720.9,
+   "mean_prompt_tokens": 228.5,
+   "mean_score": 0.4048,
+   "n_attempted": 42,
    "n_cancelled": 0,
-   "n_correct": 12,
+   "n_correct": 17,
    "n_error": 0,
    "n_planned": 70,
-   "n_scored": 30,
-   "n_skipped": 40,
+   "n_scored": 42,
+   "n_skipped": 28,
    "opts": {},
    "p50_item_s": 80.75,
-   "p50_out_tokens": 2016,
-   "p90_item_s": 469.06,
+   "p50_out_tokens": 2385,
+   "p90_item_s": 482.46,
    "status_counts": {
-    "correct": 12,
-    "truncated": 2,
-    "wrong": 16
+    "correct": 17,
+    "truncated": 3,
+    "wrong": 22
    },
    "sub": {
     "mmlu_pro_hard": {
-     "acc": 0.75,
-     "acc_strict": 0.75,
+     "acc": 0.7727,
+     "acc_strict": 0.7727,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.505,
-      0.8982
+      0.5656,
+      0.8988
      ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 4789.8,
-     "mean_prompt_tokens": 359.4,
-     "mean_score": 0.75,
-     "n_attempted": 16,
+     "degenerate_rate": 0.0455,
+     "mean_out_tokens": 4643.6,
+     "mean_prompt_tokens": 348.2,
+     "mean_score": 0.7727,
+     "n_attempted": 22,
      "n_cancelled": 0,
-     "n_correct": 12,
+     "n_correct": 17,
      "n_error": 0,
      "n_planned": 40,
-     "n_scored": 16,
-     "n_skipped": 24,
-     "p50_item_s": 97.83,
-     "p50_out_tokens": 2016,
-     "p90_item_s": 488.31,
+     "n_scored": 22,
+     "n_skipped": 18,
+     "p50_item_s": 38.02,
+     "p50_out_tokens": 1435,
+     "p90_item_s": 482.46,
      "status_counts": {
-      "correct": 12,
-      "truncated": 1,
+      "correct": 17,
+      "truncated": 2,
       "wrong": 3
      },
-     "total_out_tokens": 76637,
-     "total_prompt_tokens": 5750,
-     "trunc_rate": 0.0625,
-     "wall_s": 1294.0
+     "total_out_tokens": 102160,
+     "total_prompt_tokens": 7661,
+     "trunc_rate": 0.0909,
+     "wall_s": 1917.7
     },
     "simpleqa": {
      "acc": 0.0,
      "acc_strict": 0.0,
-     "answer_from_reasoning": 1,
+     "answer_from_reasoning": 2,
      "ci95": [
       0.0,
-      0.2153
+      0.1611
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 4675.8,
-     "mean_prompt_tokens": 97.9,
+     "mean_out_tokens": 6905.8,
+     "mean_prompt_tokens": 96.8,
      "mean_score": 0.0,
-     "n_attempted": 14,
+     "n_attempted": 20,
      "n_cancelled": 0,
      "n_correct": 0,
      "n_error": 0,
      "n_planned": 30,
-     "n_scored": 14,
-     "n_skipped": 16,
-     "p50_item_s": 54.96,
-     "p50_out_tokens": 1049,
+     "n_scored": 20,
+     "n_skipped": 10,
+     "p50_item_s": 97.09,
+     "p50_out_tokens": 2459,
      "p90_item_s": 469.06,
      "status_counts": {
       "truncated": 1,
-      "wrong": 13
+      "wrong": 19
      },
-     "total_out_tokens": 65461,
-     "total_prompt_tokens": 1370,
-     "trunc_rate": 0.0714,
-     "wall_s": 1241.0
+     "total_out_tokens": 138116,
+     "total_prompt_tokens": 1935,
+     "trunc_rate": 0.05,
+     "wall_s": 1971.9
     }
    },
-   "total_out_tokens": 142098,
-   "total_prompt_tokens": 7120,
-   "trunc_rate": 0.0667,
-   "wall_s": 1294.0
+   "total_out_tokens": 240276,
+   "total_prompt_tokens": 9596,
+   "trunc_rate": 0.0714,
+   "wall_s": 1971.9
   },
   "longctx": {
    "acc": 1.0,
-   "acc_strict": 0.2333,
+   "acc_strict": 0.2,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6457,
+    0.7009,
     1.0
    ],
    "degenerate_ids": [],
@@ -1464,22 +1660,35 @@
    "error_ids": [
     "longctx-niah-16k-d10-01",
     "longctx-niah-16k-d10-13",
+    "longctx-niah-16k-d35-04",
+    "longctx-niah-16k-d35-16",
+    "longctx-niah-16k-d60-19",
+    "longctx-niah-16k-d85-10",
     "longctx-niah-16k-d85-22",
+    "longctx-niah-32k-d10-02",
     "longctx-niah-32k-d10-14",
+    "longctx-niah-32k-d35-17",
     "longctx-niah-32k-d60-20",
     "longctx-niah-32k-d85-11",
+    "longctx-niah-32k-d85-23",
+    "longctx-niah-8k-d35-03",
     "longctx-niah-8k-d35-15",
     "longctx-niah-8k-d60-18",
+    "longctx-niah-8k-d85-21",
     "longctx-qa-16k-d10-04",
+    "longctx-qa-16k-d35-01",
     "longctx-qa-16k-d60-10",
     "longctx-qa-16k-d85-07",
     "longctx-qa-32k-d10-08",
+    "longctx-qa-32k-d35-05",
     "longctx-qa-32k-d60-02",
     "longctx-qa-32k-d85-11",
     "longctx-qa-8k-d85-03",
     "longctx-vt-16k-01",
+    "longctx-vt-16k-04",
     "longctx-vt-16k-07",
     "longctx-vt-16k-10",
+    "longctx-vt-32k-02",
     "longctx-vt-32k-05",
     "longctx-vt-32k-08",
     "longctx-vt-32k-11",
@@ -1509,11 +1718,12 @@
     },
     "context_length_errors": 0,
     "mean_prompt_tokens_by_len": {
-     "8k": 6542.0
+     "8k": 6547.1
     },
     "niah_acc_by_depth": {
      "0.10": 1.0,
-     "0.60": 1.0
+     "0.60": 1.0,
+     "0.85": 1.0
     },
     "unparsed_rate": 0.0
    },
@@ -1544,6 +1754,54 @@
      "sub": "niah_multikey"
     },
     {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646836-If1ZsRL2SQXzMSOuTSQp\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-16k-d35-04",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646413-AZeOGK5pStgpdk5Ghc1d\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-16k-d35-16",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646965-mAYRcVmXlVnCMYD1EJno\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-16k-d60-19",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646662-4njzK7b6tmwKOY0cgKEk\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-16k-d85-10",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
      "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788645514-4RXPxZBj7UIsutsyE71S\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
      "expected": null,
      "extracted": null,
@@ -1556,12 +1814,36 @@
      "sub": "niah_multikey"
     },
     {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646907-jKGsCtxenN6rfHyJ9PU5\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-32k-d10-02",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
      "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646202-3ZDKJn15mu21TZzr4UrR\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
      "expected": null,
      "extracted": null,
      "finish_reason": null,
      "flags": [],
      "id": "longctx-niah-32k-d10-14",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646529-4XbBEOtzRlT9aww2DpXw\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-32k-d35-17",
      "out_tokens": 0,
      "response_tail": "",
      "status": "error",
@@ -1592,6 +1874,30 @@
      "sub": "niah_multikey"
     },
     {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646763-ftD5TdpkcEZGKk5TVMqQ\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-32k-d85-23",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646768-Yahiy2BjhA5rFnbZLhdc\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-8k-d35-03",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
      "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788645890-lh2MSTvvoaFY1NjbsmLM\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
      "expected": null,
      "extracted": null,
@@ -1616,12 +1922,36 @@
      "sub": "niah_multikey"
     },
     {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646878-y3L5FgTNgzeSmPG5CUrE\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-niah-8k-d85-21",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "niah_multikey"
+    },
+    {
      "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788645661-Zk82kaU2jotDKzWg1VIz\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
      "expected": null,
      "extracted": null,
      "finish_reason": null,
      "flags": [],
      "id": "longctx-qa-16k-d10-04",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646619-2fNFBSopOAv4JXQMyced\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-qa-16k-d35-01",
      "out_tokens": 0,
      "response_tail": "",
      "status": "error",
@@ -1658,6 +1988,18 @@
      "finish_reason": null,
      "flags": [],
      "id": "longctx-qa-32k-d10-08",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "qa_multi_doc"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646473-JR3TmmOZAwc1BZAZGnXI\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-qa-32k-d35-05",
      "out_tokens": 0,
      "response_tail": "",
      "status": "error",
@@ -1712,6 +2054,18 @@
      "sub": "var_tracking"
     },
     {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646533-cy7yafkS9cfL5GYHMRr9\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-vt-16k-04",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "var_tracking"
+    },
+    {
      "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788645599-0ZigikJ3TQyIpPa0DH9d\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
      "expected": null,
      "extracted": null,
@@ -1730,6 +2084,18 @@
      "finish_reason": null,
      "flags": [],
      "id": "longctx-vt-16k-10",
+     "out_tokens": 0,
+     "response_tail": "",
+     "status": "error",
+     "sub": "var_tracking"
+    },
+    {
+     "error": "malformed body: 'choices': \n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1788646451-B47Jja0xNFIWuyFgaW2r\",\"error\":{\"message\":\"Provider returned error\",\"code\":429}}",
+     "expected": null,
+     "extracted": null,
+     "finish_reason": null,
+     "flags": [],
+     "id": "longctx-vt-32k-02",
      "out_tokens": 0,
      "response_tail": "",
      "status": "error",
@@ -1796,62 +2162,62 @@
      "sub": "var_tracking"
     }
    ],
-   "gpu_minutes": 0.862,
+   "gpu_minutes": 1.02,
    "info_per_gpu_min": 0.0,
    "max_tokens": 6144,
-   "mean_out_tokens": 243.7,
-   "mean_prompt_tokens": 6542.0,
+   "mean_out_tokens": 216.0,
+   "mean_prompt_tokens": 6547.1,
    "mean_score": 1.0,
-   "n_attempted": 30,
+   "n_attempted": 45,
    "n_cancelled": 0,
-   "n_correct": 7,
-   "n_error": 23,
+   "n_correct": 9,
+   "n_error": 36,
    "n_planned": 48,
-   "n_scored": 7,
-   "n_skipped": 18,
+   "n_scored": 9,
+   "n_skipped": 3,
    "opts": {},
-   "p50_item_s": 128.2,
-   "p50_out_tokens": 145,
-   "p90_item_s": 161.2,
+   "p50_item_s": 128.73,
+   "p50_out_tokens": 132,
+   "p90_item_s": 161.21,
    "status_counts": {
-    "correct": 7,
-    "error": 23
+    "correct": 9,
+    "error": 36
    },
    "sub": {
     "niah_multikey": {
      "acc": 1.0,
-     "acc_strict": 0.2,
+     "acc_strict": 0.1905,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3424,
+      0.5101,
       1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 169.5,
-     "mean_prompt_tokens": 6504.5,
+     "mean_out_tokens": 144.2,
+     "mean_prompt_tokens": 6534.8,
      "mean_score": 1.0,
-     "n_attempted": 10,
+     "n_attempted": 21,
      "n_cancelled": 0,
-     "n_correct": 2,
-     "n_error": 8,
+     "n_correct": 4,
+     "n_error": 17,
      "n_planned": 24,
-     "n_scored": 2,
-     "n_skipped": 14,
-     "p50_item_s": 128.69,
-     "p50_out_tokens": 132,
+     "n_scored": 4,
+     "n_skipped": 3,
+     "p50_item_s": 129.0,
+     "p50_out_tokens": 122,
      "p90_item_s": 161.2,
      "status_counts": {
-      "correct": 2,
-      "error": 8
+      "correct": 4,
+      "error": 17
      },
-     "total_out_tokens": 339,
-     "total_prompt_tokens": 13009,
+     "total_out_tokens": 577,
+     "total_prompt_tokens": 26139,
      "trunc_rate": 0.0,
-     "wall_s": 1192.8
+     "wall_s": 1926.6
     },
     "qa_multi_doc": {
      "acc": 1.0,
-     "acc_strict": 0.3,
+     "acc_strict": 0.25,
      "answer_from_reasoning": 0,
      "ci95": [
       0.4385,
@@ -1861,28 +2227,28 @@
      "mean_out_tokens": 116.3,
      "mean_prompt_tokens": 6495.3,
      "mean_score": 1.0,
-     "n_attempted": 10,
+     "n_attempted": 12,
      "n_cancelled": 0,
      "n_correct": 3,
-     "n_error": 7,
+     "n_error": 9,
      "n_planned": 12,
      "n_scored": 3,
-     "n_skipped": 2,
-     "p50_item_s": 128.07,
+     "n_skipped": 0,
+     "p50_item_s": 128.4,
      "p50_out_tokens": 129,
-     "p90_item_s": 160.91,
+     "p90_item_s": 161.17,
      "status_counts": {
       "correct": 3,
-      "error": 7
+      "error": 9
      },
      "total_out_tokens": 349,
      "total_prompt_tokens": 19486,
      "trunc_rate": 0.0,
-     "wall_s": 1246.6
+     "wall_s": 1580.2
     },
     "var_tracking": {
      "acc": 1.0,
-     "acc_strict": 0.2,
+     "acc_strict": 0.1667,
      "answer_from_reasoning": 0,
      "ci95": [
       0.3424,
@@ -1892,48 +2258,48 @@
      "mean_out_tokens": 509.0,
      "mean_prompt_tokens": 6649.5,
      "mean_score": 1.0,
-     "n_attempted": 10,
+     "n_attempted": 12,
      "n_cancelled": 0,
      "n_correct": 2,
-     "n_error": 8,
+     "n_error": 10,
      "n_planned": 12,
      "n_scored": 2,
-     "n_skipped": 2,
-     "p50_item_s": 127.71,
+     "n_skipped": 0,
+     "p50_item_s": 128.2,
      "p50_out_tokens": 446,
      "p90_item_s": 161.21,
      "status_counts": {
       "correct": 2,
-      "error": 8
+      "error": 10
      },
      "total_out_tokens": 1018,
      "total_prompt_tokens": 13299,
      "trunc_rate": 0.0,
-     "wall_s": 1233.7
+     "wall_s": 1494.6
     }
    },
-   "total_out_tokens": 1706,
-   "total_prompt_tokens": 45794,
+   "total_out_tokens": 1944,
+   "total_prompt_tokens": 58924,
    "trunc_rate": 0.0,
-   "wall_s": 1246.6
+   "wall_s": 1926.6
   },
   "math": {
-   "acc": 0.8,
-   "acc_strict": 0.8,
+   "acc": 0.8056,
+   "acc_strict": 0.8056,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.6087,
-    0.9114
+    0.6497,
+    0.9025
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
     "ambiguous_boxed": 0,
-    "boxed_rate": 0.8,
+    "boxed_rate": 0.8056,
     "match_methods": {
      "set": 1,
-     "string": 19
+     "string": 28
     },
     "unparsed_rate": 0.0
    },
@@ -1941,7 +2307,9 @@
     "aime25-I-13",
     "aime25-I-15",
     "aime25-I-2",
+    "hmmt25-feb-10",
     "hmmt25-feb-13",
+    "hmmt25-feb-17",
     "hmmt25-feb-30"
    ],
    "failures": [
@@ -1983,11 +2351,35 @@
     },
     {
      "error": null,
+     "expected": "\\frac{-1+\\sqrt{17}}{2}, \\frac{-1-\\sqrt{17}}{2}",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-10",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
      "expected": "105",
      "extracted": null,
      "finish_reason": "length",
      "flags": [],
      "id": "hmmt25-feb-13",
+     "out_tokens": 32768,
+     "response_tail": "",
+     "status": "truncated",
+     "sub": "hmmt25"
+    },
+    {
+     "error": null,
+     "expected": "2^{25} \\cdot 26!",
+     "extracted": null,
+     "finish_reason": "length",
+     "flags": [],
+     "id": "hmmt25-feb-17",
      "out_tokens": 32768,
      "response_tail": "",
      "status": "truncated",
@@ -2006,170 +2398,199 @@
      "sub": "hmmt25"
     }
    ],
-   "gpu_minutes": 38.515,
-   "info_per_gpu_min": 0.104,
+   "gpu_minutes": 52.781,
+   "info_per_gpu_min": 0.107,
    "max_tokens": 32768,
-   "mean_out_tokens": 13260.4,
-   "mean_prompt_tokens": 159.4,
-   "mean_score": 0.8,
-   "n_attempted": 25,
+   "mean_out_tokens": 13356.2,
+   "mean_prompt_tokens": 157.6,
+   "mean_score": 0.8056,
+   "n_attempted": 36,
    "n_cancelled": 0,
-   "n_correct": 20,
+   "n_correct": 29,
    "n_error": 0,
    "n_planned": 80,
-   "n_scored": 25,
-   "n_skipped": 55,
+   "n_scored": 36,
+   "n_skipped": 44,
    "opts": {},
    "p50_item_s": 167.57,
    "p50_out_tokens": 6623,
    "p90_item_s": 942.01,
    "status_counts": {
-    "correct": 20,
-    "truncated": 5
+    "correct": 29,
+    "truncated": 7
    },
    "sub": {
     "aime25": {
-     "acc": 0.6667,
-     "acc_strict": 0.6667,
+     "acc": 0.7692,
+     "acc_strict": 0.7692,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3542,
-      0.8794
+      0.4974,
+      0.9182
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 14996.4,
-     "mean_prompt_tokens": 144.4,
-     "mean_score": 0.6667,
+     "mean_out_tokens": 13782.3,
+     "mean_prompt_tokens": 148.8,
+     "mean_score": 0.7692,
+     "n_attempted": 13,
+     "n_cancelled": 0,
+     "n_correct": 10,
+     "n_error": 0,
+     "n_planned": 30,
+     "n_scored": 13,
+     "n_skipped": 17,
+     "p50_item_s": 228.26,
+     "p50_out_tokens": 6072,
+     "p90_item_s": 1188.18,
+     "status_counts": {
+      "correct": 10,
+      "truncated": 3
+     },
+     "total_out_tokens": 179170,
+     "total_prompt_tokens": 1935,
+     "trunc_rate": 0.2308,
+     "wall_s": 1798.8
+    },
+    "hmmt25": {
+     "acc": 0.5556,
+     "acc_strict": 0.5556,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.2667,
+      0.8112
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 24437.2,
+     "mean_prompt_tokens": 152.1,
+     "mean_score": 0.5556,
      "n_attempted": 9,
      "n_cancelled": 0,
-     "n_correct": 6,
+     "n_correct": 5,
      "n_error": 0,
      "n_planned": 30,
      "n_scored": 9,
      "n_skipped": 21,
-     "p50_item_s": 228.26,
-     "p50_out_tokens": 6072,
-     "p90_item_s": 1257.28,
+     "p50_item_s": 724.38,
+     "p50_out_tokens": 26367,
+     "p90_item_s": 1007.21,
      "status_counts": {
-      "correct": 6,
-      "truncated": 3
+      "correct": 5,
+      "truncated": 4
      },
-     "total_out_tokens": 134968,
-     "total_prompt_tokens": 1300,
-     "trunc_rate": 0.3333,
-     "wall_s": 1285.4
-    },
-    "hmmt25": {
-     "acc": 0.6667,
-     "acc_strict": 0.6667,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.3,
-      0.9032
-     ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 21386.5,
-     "mean_prompt_tokens": 146.0,
-     "mean_score": 0.6667,
-     "n_attempted": 6,
-     "n_cancelled": 0,
-     "n_correct": 4,
-     "n_error": 0,
-     "n_planned": 30,
-     "n_scored": 6,
-     "n_skipped": 24,
-     "p50_item_s": 525.13,
-     "p50_out_tokens": 23051,
-     "p90_item_s": 931.49,
-     "status_counts": {
-      "correct": 4,
-      "truncated": 2
-     },
-     "total_out_tokens": 128319,
-     "total_prompt_tokens": 876,
-     "trunc_rate": 0.3333,
-     "wall_s": 1118.7
+     "total_out_tokens": 219935,
+     "total_prompt_tokens": 1369,
+     "trunc_rate": 0.4444,
+     "wall_s": 1856.3
     },
     "math500_hard": {
      "acc": 1.0,
      "acc_strict": 1.0,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.7225,
+      0.7847,
       1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 6822.3,
-     "mean_prompt_tokens": 181.0,
+     "mean_out_tokens": 5837.0,
+     "mean_prompt_tokens": 169.1,
      "mean_score": 1.0,
-     "n_attempted": 10,
+     "n_attempted": 14,
      "n_cancelled": 0,
-     "n_correct": 10,
+     "n_correct": 14,
      "n_error": 0,
      "n_planned": 20,
-     "n_scored": 10,
-     "n_skipped": 10,
-     "p50_item_s": 98.23,
-     "p50_out_tokens": 5168,
+     "n_scored": 14,
+     "n_skipped": 6,
+     "p50_item_s": 95.89,
+     "p50_out_tokens": 3733,
      "p90_item_s": 282.07,
      "status_counts": {
-      "correct": 10
+      "correct": 14
      },
-     "total_out_tokens": 68223,
-     "total_prompt_tokens": 1810,
+     "total_out_tokens": 81718,
+     "total_prompt_tokens": 2368,
      "trunc_rate": 0.0,
-     "wall_s": 1278.5
+     "wall_s": 1715.2
     }
    },
-   "total_out_tokens": 331510,
-   "total_prompt_tokens": 3986,
-   "trunc_rate": 0.2,
-   "wall_s": 1285.4
+   "total_out_tokens": 480823,
+   "total_prompt_tokens": 5672,
+   "trunc_rate": 0.1944,
+   "wall_s": 1856.3
   },
   "tools": {
-   "acc": 0.8824,
-   "acc_strict": 0.8824,
+   "acc": 0.8163,
+   "acc_strict": 0.8163,
    "answer_from_reasoning": 0,
    "ci95": [
-    0.7338,
-    0.9533
+    0.6864,
+    0.9002
    ],
    "degenerate_ids": [],
    "degenerate_rate": 0.0,
    "error_ids": [],
    "extra": {
-    "acc_ast_micro": 0.9286,
+    "acc_ast_micro": 0.8462,
     "acc_by_sub": {
-     "irrelevance": 0.6667,
-     "multiple": 1.0,
+     "irrelevance": 0.7,
+     "multiple": 0.9,
      "parallel": 1.0,
-     "parallel_multiple": 0.7143,
+     "parallel_multiple": 0.5,
      "simple": 1.0
     },
-    "acc_irrelevance": 0.6667,
-    "acc_official": 0.9286,
-    "declined_rate_ast": 0.0,
+    "acc_irrelevance": 0.7,
+    "acc_official": 0.85,
+    "declined_rate_ast": 0.0256,
     "error_codes": {
-     "spurious_call": 2,
-     "value_mismatch": 2,
-     "wrong_function": 1
+     "declined": 1,
+     "spurious_call": 3,
+     "value_mismatch": 3,
+     "wrong_function": 6
     },
-    "mean_score_ast": 0.9673,
+    "mean_score_ast": 0.9124,
     "mode": "prompt",
     "parse_methods": {
-     "json_list": 34
+     "json_list": 49
     },
     "text_calls_ignored": 0,
     "tool_calls_in_prompt_mode": 0,
     "unparsed_rate": 0.0
    },
    "failed_ids": [
+    "bfcl3-irrelevance_26",
     "bfcl3-irrelevance_27",
     "bfcl3-irrelevance_33",
+    "bfcl3-multiple_92",
     "bfcl3-parallel_multiple_151",
-    "bfcl3-parallel_multiple_42"
+    "bfcl3-parallel_multiple_153",
+    "bfcl3-parallel_multiple_191",
+    "bfcl3-parallel_multiple_42",
+    "bfcl3-parallel_multiple_69"
    ],
    "failures": [
+    {
+     "error": null,
+     "expected": "no call",
+     "extracted": [
+      {
+       "arguments": {
+        "final_temperature": 100,
+        "initial_temperature": 25,
+        "volume": 2
+       },
+       "name": "thermodynamics_calc_gas_pressure"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "spurious_call"
+     ],
+     "id": "bfcl3-irrelevance_26",
+     "out_tokens": 694,
+     "response_tail": "\n\n[{\"name\": \"thermodynamics_calc_gas_pressure\", \"arguments\": {\"volume\": 2, \"initial_temperature\": 25, \"final_temperature\": 100}}]",
+     "status": "wrong",
+     "sub": "irrelevance"
+    },
     {
      "error": null,
      "expected": "no call",
@@ -2213,6 +2634,39 @@
      "response_tail": "\n\n[{\"name\": \"identify_species\", \"arguments\": {\"sequence\": \"ATCG\"}}]",
      "status": "wrong",
      "sub": "irrelevance"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "walmart.vegan_products": {
+        "categories": [
+         [
+          "vegan",
+          "gluten-free"
+         ],
+         [
+          "gluten-free",
+          "vegan"
+         ]
+        ],
+        "location": [
+         "Denver, CO",
+         "Denver"
+        ]
+       }
+      }
+     ],
+     "extracted": [],
+     "finish_reason": "stop",
+     "flags": [
+      "declined"
+     ],
+     "id": "bfcl3-multiple_92",
+     "out_tokens": 338,
+     "response_tail": "\n\n[]\nI can\u2019t fulfill that request because there is no available function for vegetarian products at Walmart.",
+     "status": "wrong",
+     "sub": "multiple"
     },
     {
      "error": null,
@@ -2353,6 +2807,236 @@
      "error": null,
      "expected": [
       {
+       "run_linear_regression": {
+        "predictors": [
+         [
+          "age",
+          "income",
+          "education level"
+         ]
+        ],
+        "standardize": [
+         true
+        ],
+        "target": [
+         "job satisfaction"
+        ]
+       }
+      },
+      {
+       "travel_itinerary_generator": {
+        "daily_budget": [
+         200
+        ],
+        "days": [
+         7
+        ],
+        "destination": [
+         "Paris",
+         "Paris, France"
+        ],
+        "exploration_type": [
+         "urban",
+         ""
+        ]
+       }
+      },
+      {
+       "find_recipe": {
+        "maxCalories": [
+         800
+        ],
+        "recipeName": [
+         "Chicken Alfredo"
+        ]
+       }
+      },
+      {
+       "cooking_conversion.convert": {
+        "from_unit": [
+         "cups",
+         "cup",
+         "c"
+        ],
+        "item": [
+         "flour"
+        ],
+        "quantity": [
+         2
+        ],
+        "to_unit": [
+         "grams",
+         "gram",
+         "g"
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "daily_budget": 200,
+        "days": 7,
+        "destination": "Paris",
+        "exploration_type": "urban"
+       },
+       "name": "travel_itinerary_generator"
+      },
+      {
+       "arguments": {
+        "maxCalories": 799,
+        "recipeName": "Chicken Alfredo"
+       },
+       "name": "find_recipe"
+      },
+      {
+       "arguments": {
+        "from_unit": "cups",
+        "item": "flour",
+        "quantity": 2,
+        "to_unit": "grams"
+       },
+       "name": "cooking_conversion_convert"
+      },
+      {
+       "arguments": {
+        "predictors": [
+         "age",
+         "income",
+         "education level"
+        ],
+        "standardize": true,
+        "target": "job satisfaction"
+       },
+       "name": "run_linear_regression"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_153",
+     "out_tokens": 1499,
+     "response_tail": "om_unit\": \"cups\",\n      \"to_unit\": \"grams\",\n      \"item\": \"flour\"\n    }\n  },\n  {\n    \"name\": \"run_linear_regression\",\n    \"arguments\": {\n      \"predictors\": [\n        \"age\",\n        \"income\",\n        \"education level\"\n      ],\n      \"target\": \"job satisfaction\",\n      \"standardize\": true\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "find_card_in_deck": {
+        "deck": [
+         ""
+        ],
+        "rank": [
+         "King"
+        ],
+        "suit": [
+         "Hearts",
+         "hearts"
+        ]
+       }
+      },
+      {
+       "currency_exchange.convert": {
+        "amount": [
+         100
+        ],
+        "base_currency": [
+         "Euros",
+         "EUR"
+        ],
+        "target_currency": [
+         "US dollars",
+         "USD"
+        ]
+       }
+      },
+      {
+       "recipe.unit_conversion": {
+        "from_unit": [
+         "cups",
+         "cup"
+        ],
+        "precision": [
+         0,
+         ""
+        ],
+        "to_unit": [
+         "tablespoons",
+         "tablespoon"
+        ],
+        "value": [
+         2
+        ]
+       }
+      },
+      {
+       "local_nursery.find": {
+        "location": [
+         "San Francisco",
+         "San Francisco, California",
+         "SF"
+        ],
+        "plant_types": [
+         [
+          "Annual",
+          "Tree"
+         ]
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "rank": "King",
+        "suit": "Hearts"
+       },
+       "name": "find_card_in_deck"
+      },
+      {
+       "arguments": {
+        "from_unit": "cup",
+        "to_unit": "tablespoon",
+        "value": 2
+       },
+       "name": "recipe_unit_conversion"
+      },
+      {
+       "arguments": {
+        "amount": 100,
+        "base_currency": "Euro",
+        "target_currency": "US Dollar"
+       },
+       "name": "currency_exchange_convert"
+      },
+      {
+       "arguments": {
+        "location": "San Francisco",
+        "plant_types": [
+         "Annual",
+         "Tree"
+        ]
+       },
+       "name": "local_nursery_find"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_191",
+     "out_tokens": 478,
+     "response_tail": "nge_convert\",\n    \"arguments\": {\n      \"base_currency\": \"Euro\",\n      \"target_currency\": \"US Dollar\",\n      \"amount\": 100\n    }\n  },\n  {\n    \"name\": \"local_nursery_find\",\n    \"arguments\": {\n      \"location\": \"San Francisco\",\n      \"plant_types\": [\n        \"Annual\",\n        \"Tree\"\n      ]\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
        "artwork.find": {
         "artist": [
          ""
@@ -2444,191 +3128,299 @@
      "response_tail": "artwork_find\",\n    \"arguments\": {\n      \"museum\": \"Louvre Museum in Paris\",\n      \"type\": \"Sculpture\",\n      \"material\": \"Stone\"\n    }\n  },\n  {\n    \"name\": \"artwork_find\",\n    \"arguments\": {\n      \"museum\": \"Metropolitan Museum of Art\",\n      \"type\": \"Painting\",\n      \"artist\": \"Picasso\"\n    }\n  }\n]",
      "status": "wrong",
      "sub": "parallel_multiple"
+    },
+    {
+     "error": null,
+     "expected": [
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         ""
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.inflation_adjustment": {
+        "inflation_rate": [
+         0.03
+        ],
+        "initial_sum": [
+         200000.0
+        ],
+        "years": [
+         5
+        ]
+       }
+      },
+      {
+       "finance.loan_repayment": {
+        "interest_rate": [
+         0.04
+        ],
+        "loan_amount": [
+         300000.0
+        ],
+        "loan_term": [
+         10
+        ]
+       }
+      },
+      {
+       "finance.property_depreciation": {
+        "depreciation_rate": [
+         0.02
+        ],
+        "initial_cost": [
+         500000.0
+        ],
+        "monthly": [
+         true
+        ],
+        "years": [
+         5
+        ]
+       }
+      }
+     ],
+     "extracted": [
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      },
+      {
+       "arguments": {
+        "inflation_rate": 3,
+        "initial_sum": 200000,
+        "years": 5
+       },
+       "name": "finance_inflation_adjustment"
+      },
+      {
+       "arguments": {
+        "interest_rate": 4,
+        "loan_amount": 300000,
+        "loan_term": 10
+       },
+       "name": "finance_loan_repayment"
+      },
+      {
+       "arguments": {
+        "depreciation_rate": 2,
+        "initial_cost": 500000,
+        "monthly": true,
+        "years": 5
+       },
+       "name": "finance_property_depreciation"
+      }
+     ],
+     "finish_reason": "stop",
+     "flags": [
+      "mismatch"
+     ],
+     "id": "bfcl3-parallel_multiple_69",
+     "out_tokens": 618,
+     "response_tail": "n_repayment\",\n    \"arguments\": {\n      \"loan_amount\": 300000,\n      \"interest_rate\": 4,\n      \"loan_term\": 10\n    }\n  },\n  {\n    \"name\": \"finance_property_depreciation\",\n    \"arguments\": {\n      \"initial_cost\": 500000,\n      \"depreciation_rate\": 2,\n      \"years\": 5,\n      \"monthly\": true\n    }\n  }\n]",
+     "status": "wrong",
+     "sub": "parallel_multiple"
     }
    ],
-   "gpu_minutes": 1.681,
-   "info_per_gpu_min": 2.099,
+   "gpu_minutes": 2.388,
+   "info_per_gpu_min": 3.077,
    "max_tokens": 8192,
-   "mean_out_tokens": 353.7,
-   "mean_prompt_tokens": 580.4,
-   "mean_score": 0.9142,
-   "n_attempted": 34,
+   "mean_out_tokens": 372.5,
+   "mean_prompt_tokens": 577.3,
+   "mean_score": 0.869,
+   "n_attempted": 49,
    "n_cancelled": 0,
-   "n_correct": 30,
+   "n_correct": 40,
    "n_error": 0,
    "n_planned": 70,
-   "n_scored": 34,
-   "n_skipped": 36,
+   "n_scored": 49,
+   "n_skipped": 21,
    "opts": {},
-   "p50_item_s": 8.22,
-   "p50_out_tokens": 279,
+   "p50_item_s": 8.28,
+   "p50_out_tokens": 296,
    "p90_item_s": 25.12,
    "status_counts": {
-    "correct": 30,
-    "wrong": 4
+    "correct": 40,
+    "wrong": 9
    },
    "sub": {
     "irrelevance": {
-     "acc": 0.6667,
-     "acc_strict": 0.6667,
+     "acc": 0.7,
+     "acc_strict": 0.7,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3,
-      0.9032
+      0.3968,
+      0.8922
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 215.0,
-     "mean_prompt_tokens": 405.8,
-     "mean_score": 0.6667,
-     "n_attempted": 6,
-     "n_cancelled": 0,
-     "n_correct": 4,
-     "n_error": 0,
-     "n_planned": 10,
-     "n_scored": 6,
-     "n_skipped": 4,
-     "p50_item_s": 6.01,
-     "p50_out_tokens": 143,
-     "p90_item_s": 12.82,
-     "status_counts": {
-      "correct": 4,
-      "wrong": 2
-     },
-     "total_out_tokens": 1290,
-     "total_prompt_tokens": 2435,
-     "trunc_rate": 0.0,
-     "wall_s": 1198.7
-    },
-    "multiple": {
-     "acc": 1.0,
-     "acc_strict": 1.0,
-     "answer_from_reasoning": 0,
-     "ci95": [
-      0.6457,
-      1.0
-     ],
-     "degenerate_rate": 0.0,
-     "mean_out_tokens": 175.0,
-     "mean_prompt_tokens": 724.7,
-     "mean_score": 1.0,
-     "n_attempted": 7,
+     "mean_out_tokens": 253.5,
+     "mean_prompt_tokens": 403.0,
+     "mean_score": 0.7,
+     "n_attempted": 10,
      "n_cancelled": 0,
      "n_correct": 7,
      "n_error": 0,
-     "n_planned": 15,
-     "n_scored": 7,
-     "n_skipped": 8,
-     "p50_item_s": 6.95,
-     "p50_out_tokens": 167,
-     "p90_item_s": 9.1,
+     "n_planned": 10,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 6.16,
+     "p50_out_tokens": 179,
+     "p90_item_s": 13.23,
      "status_counts": {
-      "correct": 7
+      "correct": 7,
+      "wrong": 3
      },
-     "total_out_tokens": 1225,
-     "total_prompt_tokens": 5073,
+     "total_out_tokens": 2535,
+     "total_prompt_tokens": 4030,
      "trunc_rate": 0.0,
-     "wall_s": 1280.7
+     "wall_s": 1951.5
+    },
+    "multiple": {
+     "acc": 0.9,
+     "acc_strict": 0.9,
+     "answer_from_reasoning": 0,
+     "ci95": [
+      0.5958,
+      0.9821
+     ],
+     "degenerate_rate": 0.0,
+     "mean_out_tokens": 231.3,
+     "mean_prompt_tokens": 694.4,
+     "mean_score": 0.9,
+     "n_attempted": 10,
+     "n_cancelled": 0,
+     "n_correct": 9,
+     "n_error": 0,
+     "n_planned": 15,
+     "n_scored": 10,
+     "n_skipped": 5,
+     "p50_item_s": 6.95,
+     "p50_out_tokens": 171,
+     "p90_item_s": 15.5,
+     "status_counts": {
+      "correct": 9,
+      "wrong": 1
+     },
+     "total_out_tokens": 2313,
+     "total_prompt_tokens": 6944,
+     "trunc_rate": 0.0,
+     "wall_s": 1919.7
     },
     "parallel": {
      "acc": 1.0,
      "acc_strict": 1.0,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6457,
+      0.7009,
       1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 432.7,
-     "mean_prompt_tokens": 472.0,
+     "mean_out_tokens": 425.4,
+     "mean_prompt_tokens": 458.1,
      "mean_score": 1.0,
-     "n_attempted": 7,
+     "n_attempted": 9,
      "n_cancelled": 0,
-     "n_correct": 7,
+     "n_correct": 9,
      "n_error": 0,
      "n_planned": 15,
-     "n_scored": 7,
-     "n_skipped": 8,
+     "n_scored": 9,
+     "n_skipped": 6,
      "p50_item_s": 8.28,
      "p50_out_tokens": 376,
      "p90_item_s": 55.6,
      "status_counts": {
-      "correct": 7
+      "correct": 9
      },
-     "total_out_tokens": 3029,
-     "total_prompt_tokens": 3304,
+     "total_out_tokens": 3829,
+     "total_prompt_tokens": 4123,
      "trunc_rate": 0.0,
-     "wall_s": 1264.7
+     "wall_s": 1698.3
     },
     "parallel_multiple": {
-     "acc": 0.7143,
-     "acc_strict": 0.7143,
+     "acc": 0.5,
+     "acc_strict": 0.5,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.3589,
-      0.9178
+      0.2366,
+      0.7634
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 521.7,
-     "mean_prompt_tokens": 848.7,
-     "mean_score": 0.869,
-     "n_attempted": 7,
+     "mean_out_tokens": 624.7,
+     "mean_prompt_tokens": 874.3,
+     "mean_score": 0.7583,
+     "n_attempted": 10,
      "n_cancelled": 0,
      "n_correct": 5,
      "n_error": 0,
      "n_planned": 10,
-     "n_scored": 7,
-     "n_skipped": 3,
-     "p50_item_s": 14.03,
-     "p50_out_tokens": 465,
-     "p90_item_s": 46.86,
+     "n_scored": 10,
+     "n_skipped": 0,
+     "p50_item_s": 13.29,
+     "p50_out_tokens": 478,
+     "p90_item_s": 43.29,
      "status_counts": {
       "correct": 5,
-      "wrong": 2
+      "wrong": 5
      },
-     "total_out_tokens": 3652,
-     "total_prompt_tokens": 5941,
+     "total_out_tokens": 6247,
+     "total_prompt_tokens": 8743,
      "trunc_rate": 0.0,
-     "wall_s": 1247.7
+     "wall_s": 1889.2
     },
     "simple": {
      "acc": 1.0,
      "acc_strict": 1.0,
      "answer_from_reasoning": 0,
      "ci95": [
-      0.6457,
+      0.7225,
       1.0
      ],
      "degenerate_rate": 0.0,
-     "mean_out_tokens": 404.4,
-     "mean_prompt_tokens": 425.9,
+     "mean_out_tokens": 332.7,
+     "mean_prompt_tokens": 444.9,
      "mean_score": 1.0,
-     "n_attempted": 7,
+     "n_attempted": 10,
      "n_cancelled": 0,
-     "n_correct": 7,
+     "n_correct": 10,
      "n_error": 0,
      "n_planned": 20,
-     "n_scored": 7,
-     "n_skipped": 13,
-     "p50_item_s": 6.23,
-     "p50_out_tokens": 119,
-     "p90_item_s": 47.51,
+     "n_scored": 10,
+     "n_skipped": 10,
+     "p50_item_s": 4.57,
+     "p50_out_tokens": 126,
+     "p90_item_s": 25.12,
      "status_counts": {
-      "correct": 7
+      "correct": 10
      },
-     "total_out_tokens": 2831,
-     "total_prompt_tokens": 2981,
+     "total_out_tokens": 3327,
+     "total_prompt_tokens": 4449,
      "trunc_rate": 0.0,
-     "wall_s": 1303.3
+     "wall_s": 1943.0
     }
    },
-   "total_out_tokens": 12027,
-   "total_prompt_tokens": 19734,
+   "total_out_tokens": 18251,
+   "total_prompt_tokens": 28289,
    "trunc_rate": 0.0,
-   "wall_s": 1303.3
+   "wall_s": 1958.5
   }
  },
  "invalid_reasons": [
-  "error rate 23/176 > 5%"
+  "error rate 36/261 > 5%"
  ],
  "lcb_window": {
   "after": "2025-01-11",
@@ -2679,10 +3471,17 @@
  ],
  "partial": true,
  "schema_version": 1,
- "skipped_ids": [],
+ "skipped_ids": [
+  "aime25-I-8",
+  "aime25-II-15",
+  "hmmt25-feb-16",
+  "hmmt25-feb-28",
+  "math500-hard-intermediate-algebra-582",
+  "math500-hard-precalculus-986"
+ ],
  "started_at": "2026-09-05T21:51:01Z",
  "tag": "or_q27_darkbloom",
- "truncated": false,
+ "truncated": true,
  "valid": false,
- "wall_s": 1320.2
+ "wall_s": 1980.3
 }

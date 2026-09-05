@@ -410,7 +410,9 @@ box, never in the repository or this chat). One model has finished; the others f
 | DeepSeek-V4-Flash · **DeepSeek's own endpoint**, provider pinned, same 32k caps | 0.844 · native, DP4 + EP | 0.789 | −0.055 | the endpoint writes 4,717 tokens an answer against our 3,376 and 7.9% of its answers hit the caps against 4.2% of ours |
 | DeepSeek-V4-Flash · **DeepSeek's own endpoint**, 65k tokens of room | 0.844 · native, DP4 + EP, 32k caps | **0.854** | +0.010 (paired 12 to 16 — a tie) | maths 1.000, knowledge 0.686, code 0.773; truncation 2.7%. The 32k gap was a cap effect, not a model gap: given room, the maker's endpoint and the node's native-precision run score the same. Our own 65k run is queued |
 | Qwen3.8-27B | 0.806 · BF16 (0.792 QAT NVFP4) | **0.772** | −0.034 (−0.020 vs QAT) | maths 0.775 vs 0.800, code 0.760 vs 0.813, knowledge 0.486 vs 0.500; default routing lands on FP8 and FP4 hosts — the endpoint scores like our FP8 and RedHat four-bit rows (0.779, 0.772), 7.0% truncated against none for BF16 |
-| gpt-oss-120b, gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | queued | | |
+| GLM-5.3-Flash · **Z.AI's own endpoint**, provider pinned | 0.794 · NVFP4, TP4 | **0.824** | +0.030 | identical to default routing (paired 17 to 17): the list tier already routes to Z.AI-class FP8 serving. Its 65k-room run is in progress |
+| gpt-oss-120b | 0.742 · native MXFP4 (124 items, the 5090 box) | **0.769** | not comparable yet | our own 403-item run is missing; the API's 0.769 (code 0.787, tools 0.900, knowledge 0.486) is the reference until it exists |
+| gpt-oss-20b, Muse, gemma, MiniMax | see leaderboard | running | | |
 
 OpenRouter's public endpoint list explains the DeepSeek row and changes the price it should be read against: 29
 providers serve DeepSeek-V4-Flash-0731, the $0.065 / $0.18 tier the economics used is FP4 (Relace, Sail
@@ -762,7 +764,7 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 
 | configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |
 |---|---:|---:|---|---:|---:|---:|---:|:-:|
-| gpt-oss-120b MXFP4 (native) | 0.742 (124) | — | router + promptopt | 2,304 · 192 | $0.006 | $0.047 | 7.5× | yes |
+| gpt-oss-120b MXFP4 (native) | 0.742 (124) | 0.769 | router + promptopt | 2,304 · 192 | $0.006 | $0.047 | 7.5× | yes |
 | gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | — | router + promptopt | 2,304 · 192 | $0.007 | $0.091 | 12.1× |  |
 | gpt-oss-20b MXFP4 (native) | 0.712 (403) | — | router | 1,024 · 128 | $0.010 | $0.041 | 4.2× |  |
 | Muse-Glimmer-30B BF16 | 0.787 (403) | — | router + promptopt | 2,304 · 192 | $0.018 | $0.202 | 10.9× | yes |
