@@ -1,0 +1,17 @@
+[01:02:34] ===== GLM-5.3-Flash at TP2: the DGX Spark recipes serve TP2 with --enforce-eager and Marlin MoE; ours degenerated with CUDA graphs and the Triton MoE. One change per arm; the 20-item probe is the verdict. =====
+[01:02:39]   launch glm53f_dp2_eagermarlin: --max-num-seqs 384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel --enforce-eager --moe-backend marlin
+[01:06:09]   glm53f_dp2_eagermarlin healthy in 210s | GPU KV cache size: 1,435,380 tokens
+[01:07:48]   quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/glm53f_dp2_eagermarlin_quality20.json
+[01:07:48]   glm53f_dp2_eagermarlin probe clean: measuring the router and prompt-optimisation shapes
+  router     C1024   465.9s     528 req/min     1125 out/s      9003 in/s     10128 tot/s  TTFT  80003/ 106616 ms  TPOT 199.0/ 221.0 ms  ITL 199.0  E2E 105.3/132.1 s
+Terminated
+  promptopt  C1024  FAILED (0 files)
+[01:16:06]   launch glm53f_dp2_marlin: --max-num-seqs 384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel --moe-backend marlin
+[01:20:06]   glm53f_dp2_marlin healthy in 240s | GPU KV cache size: 1,257,293 tokens
+[01:20:50]   quality20[chat]: ok=9 degenerate=11 wrong=0 error=0 -> /workspace/results/probe/glm53f_dp2_marlin_quality20.json
+[01:20:50]   glm53f_dp2_marlin probe degenerate: no throughput measured
+[01:20:55]   launch glm53f_dp2_eager: --max-num-seqs 384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel --enforce-eager
+[01:22:25]   glm53f_dp2_eager healthy in 90s | GPU KV cache size: 1,508,396 tokens
+[01:23:51]   quality20[chat]: ok=18 degenerate=1 wrong=1 error=0 -> /workspace/results/probe/glm53f_dp2_eager_quality20.json
+[01:23:51]   glm53f_dp2_eager probe clean: measuring the router and prompt-optimisation shapes
+  router     C1024   359.2s     684 req/min     1460 out/s     11678 in/s     13137 tot/s  TTFT  60496/  82349 ms  TPOT 165.6/ 187.9 ms  ITL 165.6  E2E  81.5/103.6 s

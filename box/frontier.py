@@ -43,6 +43,7 @@ POINTS = [
     ("GLM-5.3-Flash NVFP4 · DP4 + EP*",        "ptq4",   "glm53f_dp4ep4|glm53f_base", "glm53f_dp4ep4_s192",       "GLM-5.3-Flash"),
     ("GLM-5.3-Flash NVFP4 · TP4 + MTP",        "ptq4",   "glm53f_mtp",               "glm53f_s512_mtp",           "GLM-5.3-Flash"),
     ("GLM-5.3-Flash FP8 (native) · TP4",      "native", "glm53f_fp8",               "glm53f_fp8",                "GLM-5.3-Flash"),
+    ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP, eager, Triton MoE*", "ptq4", "glm53f_dp2_eager|glm53f_base", "glm53f_dp2_eager", "GLM-5.3-Flash"),
     ("DeepSeek-V4-Flash native · TP4",         "native", "ds4flash_b12x-b12x",       "ds4flash_b12x-b12x",        "DeepSeek-V4-Flash"),
     ("DeepSeek-V4-Flash native · DP4 + EP*",   "native", "ds4flash_dp4ep4_s512_b12x--|ds4flash_b12x--", "ds4flash_dp4ep4_s512_b12x--", "DeepSeek-V4-Flash"),
     ("DeepSeek-V4-Flash native · TP4 + DSpark", "native", "ds4flash_dspark_b12x-b12x", "ds4flash_dspark_b12x-b12x", "DeepSeek-V4-Flash"),
@@ -60,7 +61,7 @@ POINTS = [
     ("Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears", "ptq4", "qwen38fn_tp4mb_b12x-marlin|qwen38fn_tp4m_--marlin", "qwen38fn_tp4mb_b12x-marlin", "Qwen3.8-Flash-Next"),
 ]
 # shorter on-chart names for the crowded top of the plane; the table keeps the full labels
-SHORT = {"GLM-5.3-Flash FP8 (native) · TP4": "GLM-5.3-Flash FP8 · TP4", "GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
+SHORT = {"GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP, eager, Triton MoE*": "GLM-5.3-Flash · DP2×TP2+EP eager*", "GLM-5.3-Flash FP8 (native) · TP4": "GLM-5.3-Flash FP8 · TP4", "GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
          "GLM-5.3-Flash NVFP4 · TP4 + MTP": "GLM-5.3-Flash · TP4+MTP", "DeepSeek-V4-Flash native · TP4": "DeepSeek-V4-Flash · TP4",
          "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · DP4 + EP": "DeepSeek-V4-Flash · DP4+EP",
          "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output)": "GLM-5.3-Flash · DP2×TP2+EP (degenerate)",

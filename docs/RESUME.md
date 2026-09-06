@@ -1,6 +1,6 @@
 # Resume document — RTX PRO 6000 benchmark campaign
 
-State as of **2026-09-06 01:00 UTC** — one box rented for one hour (below), written by the benchmarking session (airr-a0) so that anyone — Nish, a new
+State as of **2026-09-06 01:31 UTC** — nothing is rented, written by the benchmarking session (airr-a0) so that anyone — Nish, a new
 Claude session, Codex — can pick this up cold. The rules for sharing this checkout are in [AGENTS.md](../AGENTS.md);
 the append-only log of who touched what is [HANDOFF.md](../HANDOFF.md). The deliverables are the
 [README](../README.md) (public repo) and the report (`report/blackwell-node-benchmark.html`, published as a private
@@ -12,7 +12,7 @@ refuses a publish not built on the latest version).
 | instance | what | state | action |
 |---|---|---|---|
 | 49694407 | original 600 W box, 4× RTX PRO 6000 Server Edition, `ops/inst6000a.ssh` (direct 147.185.60.9:30812) | **destroyed 00:27 UTC 6 Sept** — an hour early, by this session's hard-stop script, whose `date -d "01:27"` was read in the WSL host's local time (BST), not UTC. The FP8 quality run and its 32-stream shapes were pulled first (`results/600w/`); the 128-stream FP8 shapes and the TP2 probes never ran | nothing |
-| 50014788 | fourth box, 4× RTX PRO 6000 Server Edition 600 W (Bulgaria), `ops/inst6000d.ssh` (direct 151.237.25.16:35163), rented 00:50 UTC for Nish's last hour | running `glm_hour.sh` in tmux `hour`: vendor image + NVFP4 weights, then `glm_perf5.sh` probe-first (eager+Marlin, Marlin, eager, TP2 no-EP), cut-off 01:38 UTC | **destroy by 01:50 UTC** after `ops/pullres6000d.sh` (→ `results/600w3/`); marker `GLMHOUR DONE` in `/workspace/results/glm_hour.log` |
+| 50014788 | fourth box, 4× RTX PRO 6000 Server Edition 600 W (Bulgaria), `ops/inst6000d.ssh` (direct 151.237.25.16:35163), rented 00:50 UTC for Nish's last hour | **destroyed 01:31 UTC** after `glm_hour.sh` (vendor image + weights in 8 min, then the TP2 probes); results in `results/600w3/` | nothing |
 | 49977359 | third box (dev446 build) | **destroyed 23:48 UTC** after a Vast account event stopped it at ~23:25 | nothing; its results are in `results/600w2/` (pulled 22:52) |
 | 49995720 | `sqwish-priority3-interruptible`, 4× RTX PRO 6000 WS, the deleted second session's box | **gone** — no longer in the account's instance list at 00:12 UTC (Nish destroyed it; GPUs had been idle since 23:45) | nothing |
 
@@ -51,9 +51,8 @@ with the GLM weights.
 (1,815 at 2,048 streams), 4,430 shared-prefix, quality **0.844** (TP4 1,107 / 0.801). GLM-5.3-Flash TP1 × DP4 + EP:
 1,073 (+15%), quality 0.792 = TP4's 0.794. GLM DP2 × TP2 + EP reaches 1,300 but **TP2 is broken in the vendor
 port** (8/20 probe items degenerate, 0.643 on 403). The W4A4 expert kernel refuses expert parallelism. All DP4 GLM
-levers refused (Mamba slot cap 192 at TP1 whatever the SSM dtype; 32k prefill chunk OOM; FP8 KV for MLA Hopper-only). **The TP2
-probes (eager / Marlin MoE / both / no-EP) never ran** — the box was lost at 00:27 — and they are the first thing to run next: at the
-market-median API price the two-engine layout is 1.9× if it holds quality.
+levers refused (Mamba slot cap 192 at TP1 whatever the SSM dtype; 32k prefill chunk OOM; FP8 KV for MLA Hopper-only). **The TP2 probes ran on a fourth box in the last hour:** eager mode + Marlin MoE (the DGX Spark recipe): clean (19 ok, 1 degenerate, 0 wrong of 20); 1,125 out tok/s router C1024; Marlin MoE alone: degenerate (9 ok, 11 degenerate, 0 wrong of 20); eager mode alone: clean (18 ok, 1 degenerate, 1 wrong of 20); 1,460 out tok/s router C1024; TP2 × 2 without expert parallelism: not reached before the cut-off. Reading: the two-engine layout serves clean output with eager mode alone at 1,460 out tok/s on routing traffic — a 20-item tripwire, not a 403-item run; the layout is recoverable on this build and its full quality run is the next step. At the market-median API price the
+two-engine layout is 1.9× if it holds quality.
 
 **GLM's quality problem is the four-bit build, not the node.** With 65k tokens of room our NVFP4 GLM scored 0.777
 (no gain, still 7.9% truncated, mean 7,683 tokens) while Z.AI's endpoint with the same room scored 0.860 on the same
@@ -127,9 +126,10 @@ resale) multiply by 2.5. Nish's call (6 Sept): the promotional tier is not the r
 2. GLM at maker quality on the node: native FP8 scores 0.809 at 32k caps, within noise of Z.AI (0.824); the open test is FP8 with 65k of room (Z.AI gains +0.036 with room, NVFP4 gained nothing), and FP8's throughput at the 32–128 sequences its 330 GB allow.
 3. Re-measure the frontier's top rows with 65k tokens of room; the 32k caps bind on every reasoning model.
 4. Flash-Next multi-engine: a dequantise-on-lookup fix for the FP8 n-gram tables would plausibly unlock 2–3×.
-5. GLM throughput ceiling: the TP2 probes (`box/glm_perf5.sh`) never ran — first item for the next box; the 192-slot Mamba cap at TP1 is a
-   vendor-build limit; FlashInfer PR #4802 (merged 3 Sept, unreleased) adds a native GLM53_NOPE sparse-MLA path for SM120 with FP8 KV and
-   1.4–1.8× prefill — re-base the vendor port on it (untested here).
+5. GLM throughput ceiling: TP2 probes done (the two-engine layout serves clean output with eager mode alone at 1,460 out tok/s on routing traffic — a 20-item tripwire, not a 403-item run; the layout is recoverable on this build and its full quality run is the next step); the 192-slot Mamba cap at TP1 is a vendor-build limit; FlashInfer PR #4802 (merged 3 Sept, unreleased) adds a native GLM53_NOPE sparse-MLA path for SM120 with FP8 KV and
+   1.4–1.8× prefill — re-base the vendor port on it (untested here). The DGX Spark recipe (github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks)
+   serves TP2 with CUDA graphs via `--attention-backend FLASHINFER_MLA_SPARSE_SM120 --kv-cache-dtype fp8` (packed fp8_ds_mla) on a vLLM that has
+   the SM120 backend: build that first on the next box.
 6. The suite: 403 items, maths/code-heavy, no multi-turn agentic tasks, small knowledge family.
 7. No soak, no multi-model co-residency, no model swapping measured.
 8. Economics rest on 70% utilisation and today's provider prices; the median is the yardstick now, the promotional tier is shown beside it.

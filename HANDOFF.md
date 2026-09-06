@@ -19,3 +19,4 @@
 
 - 2026-09-06 00:55 UTC (airr-a0): box 49694407 destroyed 00:27 UTC by my hard-stop script (BST-read cut-off, an hour early); FP8 quality 0.809 + 32-stream shapes pulled to results/600w; 128-stream FP8 shapes and TP2 probes never ran. Economics re-based on market-median API prices (frontier.py API_MEDIAN). RESUME.md/README/report updated. Nothing rented.
 - 2026-09-06 00:52 UTC (airr-a0): Nish granted one more hour; rented 50014788 (600 W Server Edition, Bulgaria) for the GLM TP2 repair test via box/glm_hour.sh; destroy by 01:50 UTC.
+- 2026-09-06 01:31 UTC (airr-a0): fourth box destroyed after pull (results/600w3). TP2 diagnosis: CUDA graphs are the fault - eager+Marlin 19/20 clean 1,125 tok/s; Marlin+graphs 11/20 degenerate; eager+Triton 18/20 clean 1,460 tok/s router C1024 (DP4+EP 1,073). Provisional frontier point (TP4 accuracy borrowed) 2.0x at the median API price. No 403-item run of the recipe yet. Nothing rented.
