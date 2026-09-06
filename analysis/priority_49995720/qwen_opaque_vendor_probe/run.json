@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "purpose": "corruption_profile_tripwire_not_capability_benchmark",
+  "started_at": "2026-09-05T21:16:26+00:00",
+  "model": "qwen38flashnext",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "request_config": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192
+  },
+  "request_config_sha256": "1be2bb1287e5d1f6c941c77a80c57bb7d3aee6471aaf7a38269931f35f76edbd",
+  "prompt_source": "/workspace/priority/quality20.py",
+  "prompt_source_sha256": "fb8b38440fa685fcff23a3bff10e833cdfcaa1d5bf4c57f7592f0ec4c7ef6360",
+  "prompt_set_sha256": "7b2e6ff888cdb184315aeb1f419291533dcad9b8915693f8d018d09250bb523e",
+  "base_seed": 1234,
+  "seed_method": "sha256(base_seed:index:prompt), first 32 bits masked to 31 bits",
+  "concurrency": 10,
+  "timeout_s": 600,
+  "n_planned": 20,
+  "n_completed": 20,
+  "partial": false,
+  "pass": false,
+  "counts": {
+    "ok": 19,
+    "degenerate": 1
+  },
+  "ended_at": "2026-09-05T21:17:55+00:00",
+  "final_repetition_flags": 0,
+  "reasoning_repetition_flags": 1,
+  "empty_final_count": 1,
+  "capped_count": 1,
+  "quality_preservation_established": false
+}

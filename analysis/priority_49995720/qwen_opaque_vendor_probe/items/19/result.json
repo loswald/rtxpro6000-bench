@@ -1,0 +1,109 @@
+{
+  "index": 19,
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "expected": "\"a\"",
+  "seed": 190222519,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Return only valid JSON with keys a,b,c set to 1,2,3."
+      }
+    ],
+    "seed": 190222519,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "531a380990f4b2361f4fecba255c9c36760ad22f57e986b0c2361058a3b0076a",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:16:41+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-b3858457e8340db5",
+    "object": "chat.completion",
+    "created": 1788643001,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need to respond to user: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need final only JSON: {\"a\":1,\"b\":2,\"c\":3}\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 70,
+      "total_tokens": 131,
+      "completion_tokens": 61,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "69dd0dd6b75f0109d225bbc03ebbdfc8b3911b27ac4fcfe94069a2589dd3d663",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning": "We need to respond to user: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need final only JSON: {\"a\":1,\"b\":2,\"c\":3}\n",
+  "reasoning_chars": 125,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 1,
+    "top6gram": 0,
+    "distinct_ratio": 1.0,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 21,
+    "top6gram": 1,
+    "distinct_ratio": 0.8571428571428571,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 70,
+    "total_tokens": 131,
+    "completion_tokens": 61,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 45
+    }
+  },
+  "raw_response_file": "items/19/response.raw",
+  "elapsed_s": 0.85663,
+  "ended_at": "2026-09-05T21:16:42+00:00"
+}

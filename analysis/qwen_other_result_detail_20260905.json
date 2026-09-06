@@ -1,0 +1,304 @@
+{
+  "captured_utc": "2026-09-05T21:03:38.619722+00:00",
+  "benchmark_files": {
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/router_c1024_p8000.log": {
+      "size": 5916,
+      "sha256": "869a92aa92dacb7c90046e282741a8655ff7bdab31fa1325136e11fcfb553dac",
+      "tail": [
+        "Mean ITL (ms):                           133.95    ",
+        "Median ITL (ms):                         60.15     ",
+        "P50 ITL (ms):                            60.15     ",
+        "P90 ITL (ms):                            456.00    ",
+        "P99 ITL (ms):                            496.01    ",
+        "----------------End-to-end Latency----------------",
+        "Mean E2EL (ms):                          86664.01  ",
+        "Median E2EL (ms):                        90662.75  ",
+        "P50 E2EL (ms):                           90662.75  ",
+        "P90 E2EL (ms):                           92388.10  ",
+        "P99 E2EL (ms):                           96202.97  ",
+        "=================================================="
+      ]
+    },
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/qwen38fn_tp4m_--marlin__router__c1024__p8000.json": {
+      "size": 316171,
+      "sha256": "f461642fa3ca479467ce6de318354702ed0bdad3d9eedf58abe89b1eff95d06b",
+      "data": {
+        "date": "20260905-205404",
+        "endpoint_type": "openai",
+        "backend": "openai",
+        "label": null,
+        "model_id": "m",
+        "tokenizer_id": "/workspace/models/Qwen3.8-Flash-Next-NVFP4",
+        "num_prompts": 8192,
+        "request_rate": "inf",
+        "burstiness": 1.0,
+        "max_concurrency": 1024,
+        "duration": 727.0621188238729,
+        "completed": 8192,
+        "failed": 0,
+        "total_input_tokens": 8388608,
+        "total_output_tokens": 1048576,
+        "request_throughput": 11.267262848533125,
+        "request_goodput": null,
+        "output_throughput": 1442.20964461224,
+        "total_token_throughput": 12979.886801510162,
+        "max_output_tokens_per_s": 4992.0,
+        "max_concurrent_requests": 1052,
+        "rtfx": 0.0,
+        "mean_ttft_ms": 69652.08518124302,
+        "median_ttft_ms": 73584.72041902132,
+        "std_ttft_ms": 13594.407943417744,
+        "p50_ttft_ms": 73584.72041902132,
+        "p90_ttft_ms": 75113.19733527489,
+        "p99_ttft_ms": 80066.39514582697,
+        "mean_tpot_ms": 133.95219411445558,
+        "median_tpot_ms": 135.07739893677757,
+        "std_tpot_ms": 10.28794068560652,
+        "p50_tpot_ms": 135.07739893677757,
+        "p90_tpot_ms": 141.7616675637193,
+        "p99_tpot_ms": 145.94405943956815,
+        "mean_itl_ms": 133.95386859711147,
+        "median_itl_ms": 60.145715018734336,
+        "std_itl_ms": 145.84253961916318,
+        "p50_itl_ms": 60.145715018734336,
+        "p90_itl_ms": 456.0025678947568,
+        "p99_itl_ms": 496.01218379102653,
+        "mean_e2el_ms": 86664.01383377888,
+        "median_e2el_ms": 90662.74836100638,
+        "std_e2el_ms": 13880.586927159855,
+        "p50_e2el_ms": 90662.74836100638,
+        "p90_e2el_ms": 92388.09701791033,
+        "p99_e2el_ms": 96202.96679354738
+      }
+    },
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/summary_full.tsv": {
+      "size": 296,
+      "sha256": "ff2eace1c95158ce5e1c0ab185370281c4173d3f4f7839175650ea149b14cbfe"
+    },
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/promptopt_c1024_p8000.log": {
+      "size": 3521,
+      "sha256": "99178ff9ab4fab5883963f3113d4834ca977c812fb6d059d01d80208d2f65c2c",
+      "tail": [
+        "[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}",
+        "[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}",
+        "[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}",
+        "[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}",
+        "[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}",
+        "Namespace(subparser='bench', bench_type='serve', dispatch_function=<function BenchmarkServingSubcommand.cmd at 0x72fa44f78ae0>, trust_remote_code=True, seed=10236, num_prompts=8192, dataset_name='random', no_stream=False, dataset_path=None, no_oversample=False, skip_chat_template=False, enable_multimodal_chat=False, disable_shuffle=False, custom_output_len=256, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=512, random_output_len=256, random_range_ratio='0', random_prefix_len=3072, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset=None, hf_split=None, hf_name=None, hf_output_len=None, bfcl_categories=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai', base_url='http://127.0.0.1:8000', host='127.0.0.1', port=8000, endpoint='/v1/completions', header=None, max_concurrency=1024, model='m', input_len=None, output_len=None, tokenizer='/workspace/models/Qwen3.8-Flash-Next-NVFP4', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, probe_request_rate=0.0, disable_tqdm=True, num_warmups=0, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/workspace/results/probe/qwen38fn_tp4m_--marlin', result_filename='qwen38fn_tp4m_--marlin__promptopt__c1024__p8000.json', ignore_eos=True, self_timed=None, percentile_metrics='ttft,tpot,itl,e2el', metric_percentiles='50,90,99', goodput=None, request_id_prefix='bench-3a0afe7c-', top_p=None, top_k=None, min_p=None, temperature=None, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body=None, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False)",
+        "INFO 09-05 20:54:12 [utils.py:90] Sampling input_len from [512, 512] and output_len from [256, 256]"
+      ]
+    }
+  },
+  "quality20": {
+    "path": "/workspace/results/probe/qwen38fn_tp4m_--marlin_quality20.json",
+    "data": [
+      {
+        "prompt": "What is 17*23? Reply with just the number.",
+        "text": "\n\n391",
+        "reasoning_chars": 138,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+        "text": "\n\n80",
+        "reasoning_chars": 167,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+        "text": "\n\n```python\ndef fib(n):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nThis returns the 0-based Fibonacci number, where `fib(0) = 0` and `fib(1) = 1`.",
+        "reasoning_chars": 328,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.844,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+        "text": "\n\n```sql\nSELECT\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nFor SQL Server, replace `LIMIT 3` with:\n\n```sql\nSELECT TOP 3\n```",
+        "reasoning_chars": 698,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.85,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+        "text": "\n\n1/5 \u2014 Sydney is not the capital of Australia; the capital is Canberra.",
+        "reasoning_chars": 320,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.769,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+        "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+        "reasoning_chars": 484,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+        "text": "\n\nLarge language models are trained on massive datasets and can handle many tasks without specialized training, but they may generate false information.",
+        "reasoning_chars": 243,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "List three differences between TCP and UDP.",
+        "text": "\n\n1. **Connection type:** TCP is connection-oriented; UDP is connectionless.  \n2. **Reliability:** TCP guarantees reliable, ordered delivery; UDP does not guarantee delivery or order.  \n3. **Overhead/speed:** TCP has more overhead and is slower; UDP has less overhead and is faster.",
+        "reasoning_chars": 86,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.744,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+        "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+        "reasoning_chars": 892,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+        "text": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+        "reasoning_chars": 216,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Explain why the sky is blue in two sentences.",
+        "text": "\n\nSunlight scatters in all directions by gases in Earth\u2019s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. This scattered blue light reaches our eyes from all parts of the sky, making it appear blue.",
+        "reasoning_chars": 119,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.921,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "What is the derivative of x^3 * sin(x)?",
+        "text": "\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= 3x^2 \\sin x + x^3 \\cos x\n\\]\n\nSo the derivative is:\n\n\\[\n\\boxed{3x^2 \\sin x + x^3 \\cos x}\n\\]",
+        "reasoning_chars": 176,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.667,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Give a regex that matches a UK postcode.",
+        "text": "",
+        "reasoning_chars": 5518,
+        "finish": "length",
+        "top6gram": 31,
+        "distinct": 0.176,
+        "verdict": "degenerate"
+      },
+      {
+        "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+        "text": "\n\n0.05",
+        "reasoning_chars": 246,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Complete the proverb and explain it: A stitch in time",
+        "text": "\n\nThe proverb is:\n\n**\u201cA stitch in time saves nine.\u201d**\n\n**Meaning:**  \nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later.\n\n**Explanation:**  \nThe saying comes from sewing: if you fix a small tear with one stitch now, you may avoid needing nine stitches later. In everyday life, it encourages prompt action and prevention rather than waiting until a minor issue becomes serious.",
+        "reasoning_chars": 196,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.829,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+        "text": "\n\nAnswer A: **Paris** is correct.\n\nParis is the capital of France. Lyon is a major French city, but it is not the capital.",
+        "reasoning_chars": 270,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.826,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Write a haiku about GPUs.",
+        "text": "\n\nSilicon hearts hum  \ncores count light in silent rows  \nfans whisper through night",
+        "reasoning_chars": 973,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 1.0,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+        "text": "\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nFor \\(F = 98.6\\):\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9} = 37\n\\]\n\n**98.6\u00b0F = 37\u00b0C**",
+        "reasoning_chars": 249,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.514,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Name the process by which plants make food and give its chemical equation.",
+        "text": "\n\nThe process is **photosynthesis**.\n\nChemical equation:\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nCarbon dioxide + water \u2192 glucose + oxygen",
+        "reasoning_chars": 273,
+        "finish": "stop",
+        "top6gram": 1,
+        "distinct": 0.875,
+        "verdict": "ok"
+      },
+      {
+        "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+        "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+        "reasoning_chars": 162,
+        "finish": "stop",
+        "top6gram": 0,
+        "distinct": 1.0,
+        "verdict": "ok"
+      }
+    ],
+    "sha256": "ec3aa783baf3855a95a31c448b93dc25b6c3121e1b5e503399a3caa4f72c3798"
+  },
+  "launch": {
+    "path": "/workspace/results/smoke/qwen38fn_tp4m_--marlin_p8000.log",
+    "lines": [
+      "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:286] non-default args: {'model_tag': '/workspace/models/Qwen3.8-Flash-Next-NVFP4', 'enable_auto_tool_choice': True, 'tool_call_parser': 'qwen3_coder', 'host': '0.0.0.0', 'disable_uvicorn_access_log': True, 'model': '/workspace/models/Qwen3.8-Flash-Next-NVFP4', 'trust_remote_code': True, 'max_model_len': 40960, 'served_model_name': ['m'], 'reasoning_parser': 'qwen3', 'tensor_parallel_size': 4, 'disable_custom_all_reduce': True, 'enable_prefix_caching': True, 'max_num_batched_tokens': 8192, 'max_num_seqs': 512, 'enable_flashinfer_autotune': False, 'moe_backend': 'marlin'}",
+      "(EngineCore pid=142358) INFO 09-05 20:37:51 [core.py:123] Initializing a V1 LLM engine (v0.28.1rc1.dev446+g798544433) with config: model='/workspace/models/Qwen3.8-Flash-Next-NVFP4', speculative_config=None, tokenizer='/workspace/models/Qwen3.8-Flash-Next-NVFP4', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=40960, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=modelopt_fp4, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='qwen3', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=m, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_compute_ple_ngram_ids', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='marlin', linear_backend='auto')",
+      "(Worker_TP0 pid=142726) INFO 09-05 20:38:00 [qwen_gdn_linear_attn.py:167] Using Triton/FLA GDN prefill kernel (requested=auto, head_k_dim=128).",
+      "(Worker_TP0 pid=142726) INFO 09-05 20:38:00 [nvfp4.py:261] Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM', 'FLASHINFER_CUTEDSL', 'FLASHINFER_CUTEDSL_BATCHED', 'FLASHINFER_CUTLASS', 'VLLM_CUTLASS', 'MARLIN', 'HUMMING', 'EMULATION'].",
+      "(Worker_TP0 pid=142726) INFO 09-05 20:38:50 [nvfp4.py:613] Using MoEPrepareAndFinalizeNoDPEPModular",
+      "(Worker_TP2 pid=142728) INFO 09-05 20:38:54 [model_runner.py:422] Model loading took 35.55 GiB memory and 55.012765 seconds",
+      "(Worker_TP0 pid=142726) INFO 09-05 20:38:57 [model_runner.py:422] Model loading took 35.55 GiB memory and 57.657469 seconds",
+      "(Worker_TP3 pid=142729) INFO 09-05 20:38:57 [model_runner.py:422] Model loading took 35.55 GiB memory and 58.028942 seconds",
+      "(Worker_TP1 pid=142727) INFO 09-05 20:39:01 [model_runner.py:422] Model loading took 35.55 GiB memory and 62.017249 seconds",
+      "(Worker_TP0 pid=142726) INFO 09-05 20:40:18 [gpu_worker.py:632] Available KV cache memory: 13.97 GiB",
+      "(EngineCore pid=142358) INFO 09-05 20:40:18 [kv_cache_utils.py:2312] GPU KV cache size: 967,845 tokens, Maximum concurrency for 40,960 tokens per request: 23.63x"
+    ]
+  },
+  "quality_search": [
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/router_c1024_p8000.log",
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/qwen38fn_tp4m_--marlin__router__c1024__p8000.json",
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/summary_full.tsv",
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin/promptopt_c1024_p8000.log"
+  ],
+  "list_file": {
+    "path": "/workspace/bench/lists/qwen38fn_c6.txt",
+    "text": "# Qwen3.8-Flash-Next, third attempt. With the FP8 PLE fix the loader passes; the auto MoE backend then picks\n# FLASHINFER_CUTLASS for the NVFP4 experts and dies at TP4 (\"intermediate size padding for w1 and w3 ... not\n# currently supported\"), and at TP2 an autotune allocates the rank's PLE table in BF16 and runs out of memory.\n# Marlin's NVFP4 MoE kernel has neither problem: two TP2 replicas, one TP4 engine, then TP4 with W4A4 linears.\nqwen38fn_tp2x2m|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:marlin|--kv-cache-dtype|auto|--gpu-memory-utilization|0.92\nqwen38fn_tp4m|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:marlin|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92\nqwen38fn_tp4mb|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:marlin|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92\n"
+  }
+}

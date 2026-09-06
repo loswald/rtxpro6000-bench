@@ -116,10 +116,12 @@ DeepSeek-V4); DP rank -> GPU slice order; `Qwen4ExpForConditionalGeneration` and
 
 UNVERIFIED (2026-09-02), marked in the cells:
 
-* `VLLM_PLE_CPU_OFFLOAD` — recipe env for Qwen3.8-Flash-Next; absent from vLLM main's
-  `envs.py` and the `vllm/models/qwen4_exp/` package (the PLE table is TP-replicated). If the
-  main build ignores it, `qwen38flashnext_fp8_tp2x2` cannot fit (114 GB/GPU) and the tp4
-  cell is KV-starved; record the first launch's log.
+* `VLLM_PLE_CPU_OFFLOAD` — recipe env for Qwen3.8-Flash-Next; absent from the inspected
+  g798544433 PLE implementation. **2026-09-05 correction:** GPU embedding weights are
+  TP row-sharded. Native FP8 TP4+EP4 loaded at 44.35 GiB per GPU without PLE offload;
+  the earlier 114 GB/GPU TP2 and replicated-table estimates were wrong. TP2 memory
+  also depends on whether experts remain distributed across all four GPUs. See the
+  [source and memory audit](../analysis/qwen_native_fp8_audit_20260905.md).
 * Which MXFP4 MoE backend `auto` picks on sm_120 (`TRITON` vs `MARLIN`; the gpt-oss cells pin
   their backend explicitly, the DeepSeek cells use `auto` like the recipe) and whether
   `flashinfer_cutlass` / `b12x` pass their `is_supported_config()` on compute capability 12.0.

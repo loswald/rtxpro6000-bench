@@ -1,0 +1,22 @@
+{
+  "/usr/local/lib/python3.12/dist-packages/torch/_inductor/select_algorithm.py": {
+    "sha256": "2e6d3297a9ee51c2d33a7becd3e656a5641ce0effae4c53ae58a87946e5b66db",
+    "excerpts": [
+      {
+        "function": "generate_example_value",
+        "first_line": 5751,
+        "text": "    def generate_example_value(\n        size, stride, device, dtype, extra_size, allocation_size=None\n    ):\n        # preserve rng states to avoid the rand_strided call below changes\n        # the rng states for the real model code.\n        with preserve_rng_state():\n            if allocation_size is None or allocation_size == size:\n                return rand_strided(\n                    size,\n                    stride,\n                    device=device,\n                    dtype=dtype,\n                    extra_size=extra_size,\n                )\n            else:\n                return rand_strided(\n                    allocation_size,\n                    stride,\n                    device=device,\n                    dtype=dtype,\n                    extra_size=extra_size,\n                ).as_strided(size, stride)"
+      }
+    ]
+  },
+  "/usr/local/lib/python3.12/dist-packages/torch/_dynamo/testing.py": {
+    "sha256": "e4af1d3727f19256a170b985938b79a9951bda6d693613b03df74f379ff6cdcd",
+    "excerpts": [
+      {
+        "function": "rand_strided",
+        "first_line": 440,
+        "text": "def rand_strided(\n    size: Sequence[int],\n    stride: Sequence[int],\n    dtype: torch.dtype = torch.float32,\n    device: str | torch.device = \"cpu\",\n    extra_size: int = 0,\n) -> torch.Tensor:\n    needed_size = extra_size\n    if all(s > 0 for s in size):\n        # only need to allocate if all sizes are non-zero\n        needed_size += (\n            sum((shape - 1) * stride for shape, stride in zip(size, stride)) + 1\n        )\n    if dtype.is_floating_point:\n        if dtype == torch.float4_e2m1fn_x2:\n            buffer = torch.randint(\n                0, 256, (needed_size,), dtype=torch.uint8, device=device\n            ).view(torch.float4_e2m1fn_x2)\n        elif dtype.itemsize == 1:\n            \"\"\"\n            normal distribution kernel is not implemented for fp8..\n            Workaround that by creating a fp16 tensor and then cast.\n            \"\"\"\n            buffer = torch.randn(needed_size, dtype=torch.float16, device=device).to(\n                dtype=dtype\n            )\n        else:\n            buffer = torch.randn(needed_size, dtype=dtype, device=device)\n    else:\n        buffer = torch.zeros(size=[needed_size], dtype=dtype, device=device)\n    return torch.as_strided(buffer, size, stride)"
+      }
+    ]
+  }
+}

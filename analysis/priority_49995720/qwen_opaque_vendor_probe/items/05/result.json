@@ -1,0 +1,109 @@
+{
+  "index": 5,
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "expected": "jeudi",
+  "seed": 782225691,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Translate to French: The meeting has been moved to Thursday afternoon."
+      }
+    ],
+    "seed": 782225691,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "e540d7c5a2d5512ea4ca9059479742c79843e9f3832b718c635fd68c6f32edc6",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:16:26+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-9c11e156da7b3c85",
+    "object": "chat.completion",
+    "created": 1788642986,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\nLa réunion a été reportée à jeudi après-midi.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need to translate English sentence to French: \"The meeting has been moved to Thursday afternoon.\"\n\nNeed answer only translation likely. Need ensure accurate: \"La réunion a été reportée à jeudi après-midi.\" Or \"a été déplacée à jeudi après-midi.\" In French, meeting moved to another time: \"reportée à jeudi après-midi\" common. Could also say \"a été reportée au jeudi après-midi\" less natural? \"reportée à jeudi après-midi\" is idiomatic. \"The meeting\" = La réunion. Has been moved = a été reportée / déplacée. If time change, reportée. Thursday afternoon = jeudi après-midi. Final concise.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 65,
+      "total_tokens": 224,
+      "completion_tokens": 159,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "03903850c2ea2f2e79db50818516e8986c541644d4b6c916fdfdbbee86ed1d23",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\nLa réunion a été reportée à jeudi après-midi.",
+  "reasoning": "We need to translate English sentence to French: \"The meeting has been moved to Thursday afternoon.\"\n\nNeed answer only translation likely. Need ensure accurate: \"La réunion a été reportée à jeudi après-midi.\" Or \"a été déplacée à jeudi après-midi.\" In French, meeting moved to another time: \"reportée à jeudi après-midi\" common. Could also say \"a été reportée au jeudi après-midi\" less natural? \"reportée à jeudi après-midi\" is idiomatic. \"The meeting\" = La réunion. Has been moved = a été reportée / déplacée. If time change, reportée. Thursday afternoon = jeudi après-midi. Final concise.\n",
+  "reasoning_chars": 591,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 8,
+    "top6gram": 1,
+    "distinct_ratio": 1.0,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 93,
+    "top6gram": 1,
+    "distinct_ratio": 0.6666666666666666,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 65,
+    "total_tokens": 224,
+    "completion_tokens": 159,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 144
+    }
+  },
+  "raw_response_file": "items/05/response.raw",
+  "elapsed_s": 14.388239,
+  "ended_at": "2026-09-05T21:16:41+00:00"
+}

@@ -1,0 +1,109 @@
+{
+  "index": 9,
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "expected": "Lisbon",
+  "seed": 937045970,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON."
+      }
+    ],
+    "seed": 937045970,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "aee065167425e68c6fafb407544801f6c8952ee4032a4f2682e2a2ad61eef80b",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:16:26+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-8b720e4081f1e98c",
+    "object": "chat.completion",
+    "created": 1788642986,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need answer user's request: Extract JSON fields name, age, city from: \"Maria Lopez, 34, lives in Lisbon. Return only JSON.\" Need final only JSON. Ensure no extra text. Could be {\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 78,
+      "total_tokens": 176,
+      "completion_tokens": 98,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "561de0fd57f525e23ee361bb9cd5afa78a745d689e6385404ffd4e3e742c168f",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+  "reasoning": "We need answer user's request: Extract JSON fields name, age, city from: \"Maria Lopez, 34, lives in Lisbon. Return only JSON.\" Need final only JSON. Ensure no extra text. Could be {\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}.\n",
+  "reasoning_chars": 229,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 9,
+    "top6gram": 1,
+    "distinct_ratio": 1.0,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 33,
+    "top6gram": 1,
+    "distinct_ratio": 0.9696969696969697,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 78,
+    "total_tokens": 176,
+    "completion_tokens": 98,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 64
+    }
+  },
+  "raw_response_file": "items/09/response.raw",
+  "elapsed_s": 13.464534,
+  "ended_at": "2026-09-05T21:16:40+00:00"
+}

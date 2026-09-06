@@ -27,9 +27,9 @@
 #   unless a cell or the command line sets it).
 # --dry-run prints the resolved server command(s) and exits: no tmux, nothing under results/.
 # Host RAM (decision 8): WARN only, never die.  VLLM_PLE_CPU_OFFLOAD (Qwen3.8-Flash-Next recipe env)
-#   is NOT in vLLM main's envs.py -- UNVERIFIED (2026-09-02); the PLE (N-gram) cache is TP-replicated
-#   (vllm/models/qwen4_exp/nvidia/ple_layer.py), so the estimate is PLE_TABLE_GB x TP x DP x replicas,
-#   max'ed with the cell's HOST_RAM_NEEDED_GB hint.
+#   is absent from the inspected g798544433 PLE implementation (2026-09-05), whose GPU
+#   embedding weights are TP row-sharded. The old per-worker host-RAM estimate remains a
+#   legacy recipe warning only; it is not measured residency or proof of working offload.
 # acs_suspected / pessimistic_tp are null in launch.json when results/hw/decisions.env is missing.
 # All `vllm serve` flags verified against vllm main 2026-09-02 (see bench/env.sh).
 # =============================================================================
@@ -88,11 +88,11 @@ fi
 RAM_NEED_GB=0; RAM_WHY=""; RAM_AVAIL_GB=""; RAM_WARNING=""
 ram_check() {
   if [ "${VLLM_PLE_CPU_OFFLOAD:-0}" = 1 ]; then
-    # The PLE cache is TP-replicated (vllm/models/qwen4_exp/nvidia/ple_layer.py): if the recipe env is
-    # honoured, EVERY worker (TP x DP x replicas) parks its own ~PLE_TABLE_GB copy in host RAM.
-    # VLLM_PLE_CPU_OFFLOAD itself is absent from vLLM main's envs.py -- UNVERIFIED (2026-09-02).
+    # Preserve the old recipe's conservative host-RAM warning for historical cells.
+    # This is not the g798544433 GPU layout: PLEVocabParallelEmbedding shards rows by TP,
+    # and the inspected implementation does not implement VLLM_PLE_CPU_OFFLOAD.
     RAM_NEED_GB=$(( PLE_TABLE_GB * TP * DP * REPLICAS ))
-    RAM_WHY="VLLM_PLE_CPU_OFFLOAD=1: ~${PLE_TABLE_GB} GB N-gram table per TP rank x TP=${TP} x DP=${DP} x replicas=${REPLICAS}"
+    RAM_WHY="legacy unverified PLE-offload warning: ${PLE_TABLE_GB} GB x TP=${TP} x DP=${DP} x replicas=${REPLICAS}; not actual GPU residency"
   fi
   if [ "${HOST_RAM_NEEDED_GB:-0}" -gt "$RAM_NEED_GB" ]; then
     RAM_NEED_GB=$HOST_RAM_NEEDED_GB; RAM_WHY="cell HOST_RAM_NEEDED_GB=$HOST_RAM_NEEDED_GB"
@@ -131,7 +131,12 @@ build_server_cmd() {  # $1 = port  -> SERVER_CMD array
     if [ "$ENABLE_EP" = 1 ]; then SERVER_CMD+=( --ep-size "$TP" ); fi
     SERVER_CMD+=( ${SGLANG_EXTRA_ARGS[@]+"${SGLANG_EXTRA_ARGS[@]}"} )
   else
-    SERVER_CMD=( vllm serve "$MODEL_PATH"
+    if [ "${SERVER_ENTRYPOINT:-vllm_serve}" = api_server ]; then
+      SERVER_CMD=( python3 -m vllm.entrypoints.openai.api_server --model "$MODEL_PATH" )
+    else
+      SERVER_CMD=( vllm serve "$MODEL_PATH" )
+    fi
+    SERVER_CMD+=(
       --port "$port" --served-model-name "$SERVED_MODEL_NAME"
       --tensor-parallel-size "$TP" --data-parallel-size "$DP"
       --kv-cache-dtype "$KV_CACHE_DTYPE"
@@ -196,7 +201,7 @@ echo "$ENGINE_VERSION" > "$RESULTS_DIR/engine_version.txt"
 # Resolved environment handed to every server (shell-quoted KEY=VALUE; sourced by _run_server.sh).
 # CUDA_VISIBLE_DEVICES is deliberately excluded: it is set per replica on the command line.
 : > "$RESULTS_DIR/server.env"
-for name in $(compgen -e | grep -E '^(VLLM_|NCCL_|FLASHINFER_|TORCH_CUDA|HF_|TOKENIZERS|PYTORCH_|TRITON_|SGLANG_|SGL_|OMP_|CUDA_)' | grep -v '^CUDA_VISIBLE_DEVICES$' || true); do
+for name in $(compgen -e | grep -E '^(VLLM_|NCCL_|FLASHINFER_|TORCH_CUDA|TORCHINDUCTOR_|HF_|TOKENIZERS|PYTORCH_|TRITON_|SGLANG_|SGL_|OMP_|CUDA_|PYTHONPATH$|GLM_FA2_|MAX_JOBS$|NVCC_THREADS$)' | grep -v '^CUDA_VISIBLE_DEVICES$' || true); do
   printf '%s=%q\n' "$name" "${!name}" >> "$RESULTS_DIR/server.env"
 done
 log "engine version $ENGINE_VERSION; results=$RESULTS_DIR"

@@ -1,0 +1,109 @@
+{
+  "index": 10,
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "expected": "scatter",
+  "seed": 37089468,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain why the sky is blue in two sentences."
+      }
+    ],
+    "seed": 37089468,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "468a98a44ea1dc5acd94888660368ac83af0d9a71e78633b1919ab13a30aea69",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:16:39+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-8daa844920c358d9",
+    "object": "chat.completion",
+    "created": 1788642999,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\nSunlight is scattered by air molecules in Earth’s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. As a result, the scattered blue light reaches our eyes from many directions, making the sky appear blue.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need to respond to user: \"Explain why the sky is blue in two sentences. We need final only two sentences. Ensure exactly two sentences. Need explain Rayleigh scattering. Maybe \"Sunlight is scattered by air molecules, and shorter blue wavelengths scatter more than longer red wavelengths. As a result, when you look away from the sun, the scattered blue light fills the sky.\" Count two sentences.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 63,
+      "total_tokens": 194,
+      "completion_tokens": 131,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "05d860605ff1e2c05fec754d1e2d7741ef990f9be5240d5e67f9696237daaa13",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\nSunlight is scattered by air molecules in Earth’s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. As a result, the scattered blue light reaches our eyes from many directions, making the sky appear blue.",
+  "reasoning": "We need to respond to user: \"Explain why the sky is blue in two sentences. We need final only two sentences. Ensure exactly two sentences. Need explain Rayleigh scattering. Maybe \"Sunlight is scattered by air molecules, and shorter blue wavelengths scatter more than longer red wavelengths. As a result, when you look away from the sun, the scattered blue light fills the sky.\" Count two sentences.\n",
+  "reasoning_chars": 399,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 38,
+    "top6gram": 1,
+    "distinct_ratio": 0.9210526315789473,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 66,
+    "top6gram": 1,
+    "distinct_ratio": 0.7575757575757576,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 63,
+    "total_tokens": 194,
+    "completion_tokens": 131,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 83
+    }
+  },
+  "raw_response_file": "items/10/response.raw",
+  "elapsed_s": 2.29553,
+  "ended_at": "2026-09-05T21:16:41+00:00"
+}

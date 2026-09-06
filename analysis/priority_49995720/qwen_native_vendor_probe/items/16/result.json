@@ -1,0 +1,109 @@
+{
+  "index": 16,
+  "prompt": "Write a haiku about GPUs.",
+  "expected": null,
+  "seed": 1476149434,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Write a haiku about GPUs."
+      }
+    ],
+    "seed": 1476149434,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "c286cfee581dbec2577848be9bf75c66bae080e74a23318abfe3015a8d3fd86f",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:05:53+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-90a6f639b5a33566",
+    "object": "chat.completion",
+    "created": 1788642353,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\nSilicon dreams spin  \ncores ignite in parallel  \nlight floods matrix math",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need to respond to user: \"Write a haiku about GPUs. Simple. Need final haiku only likely. Ensure 5-7-5. Let's craft: \"Silicon dreams spin\" 5? Sil-i-con dreams spin = 5? Silicon 3? Sil-i-con (3) dreams (1) spin (1)=5. \"cores ignite in parallel\" cores(1) ig(2)-nite(3?) in(4) par(5)-al(6)-le(7) maybe parallel 3? cores ignite in parallel = 1+2+1+3=7. \"light floods matrix math\" light(1) floods(1) matrix(2?) math(1)=5. Good.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 59,
+      "total_tokens": 232,
+      "completion_tokens": 173,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 156
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "d1f88315e8ccaa7b074be2c05247777de2629be5e847267794ca5d4cfbb501f4",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\nSilicon dreams spin  \ncores ignite in parallel  \nlight floods matrix math",
+  "reasoning": "We need to respond to user: \"Write a haiku about GPUs. Simple. Need final haiku only likely. Ensure 5-7-5. Let's craft: \"Silicon dreams spin\" 5? Sil-i-con dreams spin = 5? Silicon 3? Sil-i-con (3) dreams (1) spin (1)=5. \"cores ignite in parallel\" cores(1) ig(2)-nite(3?) in(4) par(5)-al(6)-le(7) maybe parallel 3? cores ignite in parallel = 1+2+1+3=7. \"light floods matrix math\" light(1) floods(1) matrix(2?) math(1)=5. Good.\n",
+  "reasoning_chars": 426,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": false,
+  "final_repetition": {
+    "word_count": 11,
+    "top6gram": 1,
+    "distinct_ratio": 1.0,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 64,
+    "top6gram": 1,
+    "distinct_ratio": 0.8125,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 59,
+    "total_tokens": 232,
+    "completion_tokens": 173,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 156
+    }
+  },
+  "raw_response_file": "items/16/response.raw",
+  "elapsed_s": 2.286763,
+  "ended_at": "2026-09-05T21:05:56+00:00"
+}

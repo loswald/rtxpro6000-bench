@@ -1,0 +1,109 @@
+{
+  "index": 13,
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "expected": "0.05",
+  "seed": 748832000,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number."
+      }
+    ],
+    "seed": 748832000,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "b038af59f31a9e8af3f384faffad94db0e30915446c41ea3192a96af8a83317e",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:05:52+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-bacac84d2cf550c3",
+    "object": "chat.completion",
+    "created": 1788642352,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n0.05",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need answer user: \"A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.\" Classic bat and ball. Ball = 0.05. Need reply with just number. Could be 0.05 or 0.05? just number. Ensure no extra text. final: 0.05.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 92,
+      "total_tokens": 195,
+      "completion_tokens": 103,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "4408632ef0ae902e8c444ba7e4fbe645deaab2926eeb9449571e02634ec69aa7",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\n0.05",
+  "reasoning": "We need answer user: \"A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.\" Classic bat and ball. Ball = 0.05. Need reply with just number. Could be 0.05 or 0.05? just number. Ensure no extra text. final: 0.05.\n",
+  "reasoning_chars": 291,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 1,
+    "top6gram": 0,
+    "distinct_ratio": 1.0,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 57,
+    "top6gram": 1,
+    "distinct_ratio": 0.7894736842105263,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 92,
+    "total_tokens": 195,
+    "completion_tokens": 103,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 96
+    }
+  },
+  "raw_response_file": "items/13/response.raw",
+  "elapsed_s": 1.593053,
+  "ended_at": "2026-09-05T21:05:54+00:00"
+}

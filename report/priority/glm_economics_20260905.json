@@ -1,0 +1,308 @@
+{
+  "date": "2026-09-05",
+  "scope": "GLM-5.3-Flash; historical NVFP4 throughput as a provisional engineering reference",
+  "sources": {
+    "scan": "https://www.scan.co.uk/products/3xs-sc-pb4-32t-1-month-4x-96gb-nvidia-rtx-pro-6000-512gb-ddr5-ecc-amd-epyc-9354p",
+    "zai_prices": "https://docs.z.ai/guides/overview/pricing",
+    "provider_endpoints": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints"
+  },
+  "node_cost": {
+    "verified_inc_vat_gbp": 1999.98,
+    "verified_subscription_hours": 720,
+    "assumed_vat_rate": 0.2,
+    "assumed_vat_recovery_fraction": 1,
+    "ex_vat_gbp": 1666.65,
+    "assumed_usd_per_gbp": 1.35,
+    "usd_per_calendar_hour": 3.1249687500000003,
+    "usd_per_active_hour_at_70_percent_demand": 4.464241071428572,
+    "commitment_discount": 0,
+    "tax_relief": 0,
+    "resale_credit": 0
+  },
+  "prices_usd_per_million": {
+    "promotion": {
+      "input_rate": 0.075,
+      "cached_input_rate": 0.015,
+      "output_rate": 0.25
+    },
+    "list": {
+      "input_rate": 0.15,
+      "cached_input_rate": 0.03,
+      "output_rate": 0.5
+    }
+  },
+  "promotion_end_utc": "2026-09-09T16:00:00Z",
+  "observations": {
+    "router": {
+      "output_tps": 1073.0807452230895,
+      "input_tokens": 1024.0,
+      "output_tokens": 128.0,
+      "benchmark_path": "C:\\Users\\ushni\\Downloads\\AIRR\\results\\600w\\probe\\glm53f_dp4ep4_s192\\glm53f_dp4ep4_s192__router__c1024__p8000.json",
+      "model": "m",
+      "completed": 4096.0,
+      "duration_seconds": 488.5820590239018,
+      "source_sha256": "dd58a1b75c0261491cde84106f1f8863b8f60ac65513fe217d0c61881286a673",
+      "median_ttft_seconds": 104.3357943110168,
+      "p99_ttft_seconds": 118.77913525896147,
+      "request_goodput": null
+    },
+    "promptopt": {
+      "output_tps": 880.0454016627299,
+      "input_tokens": 3584.0,
+      "output_tokens": 256.0,
+      "benchmark_path": "C:\\Users\\ushni\\Downloads\\AIRR\\results\\600w\\probe\\glm53f_dp4ep4_s192\\glm53f_dp4ep4_s192__promptopt__c1024__p8000.json",
+      "model": "m",
+      "completed": 4096.0,
+      "duration_seconds": 1191.5021634325385,
+      "source_sha256": "9bdb079cb2f76c6f1849a19551de7a9f1881fa6e49e604e713f7e3cf758afe6a",
+      "median_ttft_seconds": 253.11397707089782,
+      "p99_ttft_seconds": 283.763815305755,
+      "request_goodput": null
+    }
+  },
+  "scenarios": [
+    {
+      "shape": "router",
+      "price_band": "promotion",
+      "cached_prefix": false,
+      "inputs": {
+        "node_hourly_cost": 3.1249687500000003,
+        "utilization": 0.7,
+        "goodput_fraction": 1,
+        "output_tps": 1073.0807452230895,
+        "input_tokens": 1024.0,
+        "output_tokens": 128.0,
+        "cache_hit_fraction": 0,
+        "input_rate": 0.075,
+        "cached_input_rate": 0.015,
+        "output_rate": 0.25
+      },
+      "comparison": {
+        "input_output_ratio": 8.0,
+        "provider_blended_input_rate_per_million": 0.075,
+        "effective_useful_output_tps": 751.1565216561626,
+        "local_cost_per_million_useful_output_tokens": 1.155613843418567,
+        "provider_cost_per_million_useful_output_tokens_including_input": 0.85,
+        "local_cost_per_request": 0.00014791857195757657,
+        "provider_cost_per_request": 0.0001088,
+        "savings_per_million_useful_output_tokens": -0.305613843418567,
+        "savings_fraction": -0.3595456981394906,
+        "break_even_output_tps_at_given_utilization": 1458.9023109243699,
+        "required_throughput_multiplier": 1.3595456981394904,
+        "break_even_utilization_at_measured_output_tps": 0.9516819886976433,
+        "break_even_possible_at_measured_output_tps": true,
+        "maximum_competitive_node_hourly_cost": 2.2985389562678575,
+        "arithmetic_result": "provider_cheaper"
+      },
+      "quality_gate": "unverified",
+      "slo_gate": "unverified",
+      "eligible_for_selection": false
+    },
+    {
+      "shape": "router",
+      "price_band": "list",
+      "cached_prefix": false,
+      "inputs": {
+        "node_hourly_cost": 3.1249687500000003,
+        "utilization": 0.7,
+        "goodput_fraction": 1,
+        "output_tps": 1073.0807452230895,
+        "input_tokens": 1024.0,
+        "output_tokens": 128.0,
+        "cache_hit_fraction": 0,
+        "input_rate": 0.15,
+        "cached_input_rate": 0.03,
+        "output_rate": 0.5
+      },
+      "comparison": {
+        "input_output_ratio": 8.0,
+        "provider_blended_input_rate_per_million": 0.15,
+        "effective_useful_output_tps": 751.1565216561626,
+        "local_cost_per_million_useful_output_tokens": 1.155613843418567,
+        "provider_cost_per_million_useful_output_tokens_including_input": 1.7,
+        "local_cost_per_request": 0.00014791857195757657,
+        "provider_cost_per_request": 0.0002176,
+        "savings_per_million_useful_output_tokens": 0.544386156581433,
+        "savings_fraction": 0.3202271509302547,
+        "break_even_output_tps_at_given_utilization": 729.4511554621849,
+        "required_throughput_multiplier": 0.6797728490697452,
+        "break_even_utilization_at_measured_output_tps": 0.47584099434882166,
+        "break_even_possible_at_measured_output_tps": true,
+        "maximum_competitive_node_hourly_cost": 4.597077912535715,
+        "arithmetic_result": "local_cheaper"
+      },
+      "quality_gate": "unverified",
+      "slo_gate": "unverified",
+      "eligible_for_selection": false
+    },
+    {
+      "shape": "promptopt",
+      "price_band": "promotion",
+      "cached_prefix": true,
+      "inputs": {
+        "node_hourly_cost": 3.1249687500000003,
+        "utilization": 0.7,
+        "goodput_fraction": 1,
+        "output_tps": 880.0454016627299,
+        "input_tokens": 3584.0,
+        "output_tokens": 256.0,
+        "cache_hit_fraction": 0.8571428571428571,
+        "input_rate": 0.075,
+        "cached_input_rate": 0.015,
+        "output_rate": 0.25
+      },
+      "comparison": {
+        "input_output_ratio": 14.0,
+        "provider_blended_input_rate_per_million": 0.023571428571428573,
+        "effective_useful_output_tps": 616.0317811639109,
+        "local_cost_per_million_useful_output_tokens": 1.4090943057514662,
+        "provider_cost_per_million_useful_output_tokens_including_input": 0.5800000000000001,
+        "local_cost_per_request": 0.00036072814227237535,
+        "provider_cost_per_request": 0.00014848000000000001,
+        "savings_per_million_useful_output_tokens": -0.8290943057514661,
+        "savings_fraction": -1.4294729409508036,
+        "break_even_output_tps_at_given_utilization": 2138.0464901477835,
+        "required_throughput_multiplier": 2.4294729409508036,
+        "break_even_utilization_at_measured_output_tps": 1.7006310586655624,
+        "break_even_possible_at_measured_output_tps": false,
+        "maximum_competitive_node_hourly_cost": 1.286274359070246,
+        "arithmetic_result": "provider_cheaper"
+      },
+      "quality_gate": "unverified",
+      "slo_gate": "unverified",
+      "eligible_for_selection": false
+    },
+    {
+      "shape": "promptopt",
+      "price_band": "list",
+      "cached_prefix": true,
+      "inputs": {
+        "node_hourly_cost": 3.1249687500000003,
+        "utilization": 0.7,
+        "goodput_fraction": 1,
+        "output_tps": 880.0454016627299,
+        "input_tokens": 3584.0,
+        "output_tokens": 256.0,
+        "cache_hit_fraction": 0.8571428571428571,
+        "input_rate": 0.15,
+        "cached_input_rate": 0.03,
+        "output_rate": 0.5
+      },
+      "comparison": {
+        "input_output_ratio": 14.0,
+        "provider_blended_input_rate_per_million": 0.047142857142857146,
+        "effective_useful_output_tps": 616.0317811639109,
+        "local_cost_per_million_useful_output_tokens": 1.4090943057514662,
+        "provider_cost_per_million_useful_output_tokens_including_input": 1.1600000000000001,
+        "local_cost_per_request": 0.00036072814227237535,
+        "provider_cost_per_request": 0.00029696000000000003,
+        "savings_per_million_useful_output_tokens": -0.24909430575146607,
+        "savings_fraction": -0.21473647047540176,
+        "break_even_output_tps_at_given_utilization": 1069.0232450738918,
+        "required_throughput_multiplier": 1.2147364704754018,
+        "break_even_utilization_at_measured_output_tps": 0.8503155293327812,
+        "break_even_possible_at_measured_output_tps": true,
+        "maximum_competitive_node_hourly_cost": 2.572548718140492,
+        "arithmetic_result": "provider_cheaper"
+      },
+      "quality_gate": "unverified",
+      "slo_gate": "unverified",
+      "eligible_for_selection": false
+    },
+    {
+      "shape": "promptopt",
+      "price_band": "promotion",
+      "cached_prefix": false,
+      "inputs": {
+        "node_hourly_cost": 3.1249687500000003,
+        "utilization": 0.7,
+        "goodput_fraction": 1,
+        "output_tps": 880.0454016627299,
+        "input_tokens": 3584.0,
+        "output_tokens": 256.0,
+        "cache_hit_fraction": 0,
+        "input_rate": 0.075,
+        "cached_input_rate": 0.015,
+        "output_rate": 0.25
+      },
+      "comparison": {
+        "input_output_ratio": 14.0,
+        "provider_blended_input_rate_per_million": 0.075,
+        "effective_useful_output_tps": 616.0317811639109,
+        "local_cost_per_million_useful_output_tokens": 1.4090943057514662,
+        "provider_cost_per_million_useful_output_tokens_including_input": 1.3,
+        "local_cost_per_request": 0.00036072814227237535,
+        "provider_cost_per_request": 0.0003328,
+        "savings_per_million_useful_output_tokens": -0.10909430575146617,
+        "savings_fraction": -0.08391869673189704,
+        "break_even_output_tps_at_given_utilization": 953.897664835165,
+        "required_throughput_multiplier": 1.083918696731897,
+        "break_even_utilization_at_measured_output_tps": 0.7587430877123279,
+        "break_even_possible_at_measured_output_tps": true,
+        "maximum_competitive_node_hourly_cost": 2.8830287358471027,
+        "arithmetic_result": "provider_cheaper"
+      },
+      "quality_gate": "unverified",
+      "slo_gate": "unverified",
+      "eligible_for_selection": false
+    },
+    {
+      "shape": "promptopt",
+      "price_band": "list",
+      "cached_prefix": false,
+      "inputs": {
+        "node_hourly_cost": 3.1249687500000003,
+        "utilization": 0.7,
+        "goodput_fraction": 1,
+        "output_tps": 880.0454016627299,
+        "input_tokens": 3584.0,
+        "output_tokens": 256.0,
+        "cache_hit_fraction": 0,
+        "input_rate": 0.15,
+        "cached_input_rate": 0.03,
+        "output_rate": 0.5
+      },
+      "comparison": {
+        "input_output_ratio": 14.0,
+        "provider_blended_input_rate_per_million": 0.15,
+        "effective_useful_output_tps": 616.0317811639109,
+        "local_cost_per_million_useful_output_tokens": 1.4090943057514662,
+        "provider_cost_per_million_useful_output_tokens_including_input": 2.6,
+        "local_cost_per_request": 0.00036072814227237535,
+        "provider_cost_per_request": 0.0006656,
+        "savings_per_million_useful_output_tokens": 1.1909056942485339,
+        "savings_fraction": 0.4580406516340515,
+        "break_even_output_tps_at_given_utilization": 476.9488324175825,
+        "required_throughput_multiplier": 0.5419593483659485,
+        "break_even_utilization_at_measured_output_tps": 0.37937154385616395,
+        "break_even_possible_at_measured_output_tps": true,
+        "maximum_competitive_node_hourly_cost": 5.7660574716942055,
+        "arithmetic_result": "local_cheaper"
+      },
+      "quality_gate": "unverified",
+      "slo_gate": "unverified",
+      "eligible_for_selection": false
+    }
+  ],
+  "equal_request_mix": {
+    "promotion": {
+      "assumption": "Equal numbers of router and promptopt requests, all shared prefix tokens billed as cache hits",
+      "local_cost_per_request": 0.000254323357114976,
+      "api_cost_per_request": 0.00012864000000000002,
+      "local_divided_by_api": 1.977016146727114,
+      "uniform_throughput_multiplier_for_break_even": 1.977016146727114
+    },
+    "list": {
+      "assumption": "Equal numbers of router and promptopt requests, all shared prefix tokens billed as cache hits",
+      "local_cost_per_request": 0.000254323357114976,
+      "api_cost_per_request": 0.00025728000000000003,
+      "local_divided_by_api": 0.988508073363557,
+      "uniform_throughput_multiplier_for_break_even": 0.988508073363557
+    }
+  },
+  "excluded": {
+    "glm53f_dp2tp2ep2_s384": "Corruption tripwire failed: 8 degenerate and 1 wrong of 20",
+    "glm53f_tp4ep4_s512": "Each router/promptopt raw result has 976 completed and 3120 failed of 4096 requested"
+  },
+  "quality_precision_caveat": "OpenRouter reports FP8 for several cheapest providers and FP4 for DeepInfra. Exact local/provider checkpoint bytes and task-quality equivalence are unverified. No eligible serving recommendation follows from this arithmetic."
+}

@@ -1,0 +1,2187 @@
+[
+  {
+    "index": 0,
+    "prompt": "What is 17*23? Reply with just the number.",
+    "expected": "391",
+    "seed": 178495817,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is 17*23? Reply with just the number."
+        }
+      ],
+      "seed": 178495817,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "a8980b2fab8cd8cb22593cd7861479ff7bf65259342aa6023d186f6abfb2e5ee",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-838f8bd7fabb41ab",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n391",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user's request: \"What is 17*23? Reply with just the number.\" Need final just number. Calculate 17*23 = 391. Ensure no extra.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 67,
+        "total_tokens": 119,
+        "completion_tokens": 52,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 46
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "abd2f735f57270c624be02994f0f797fd36fdc65ec737ac7feff03c1c22e093c",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n391",
+    "reasoning": "We need answer user's request: \"What is 17*23? Reply with just the number.\" Need final just number. Calculate 17*23 = 391. Ensure no extra.\n",
+    "reasoning_chars": 140,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 1,
+      "top6gram": 0,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 24,
+      "top6gram": 1,
+      "distinct_ratio": 0.9583333333333334,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 67,
+      "total_tokens": 119,
+      "completion_tokens": 52,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      }
+    },
+    "raw_response_file": "items/00/response.raw",
+    "elapsed_s": 12.543569,
+    "ended_at": "2026-09-05T21:16:39+00:00"
+  },
+  {
+    "index": 1,
+    "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+    "expected": "80",
+    "seed": 894153966,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number."
+        }
+      ],
+      "seed": 894153966,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "e1b32d5e4ff035dd5386018acce9713080aaebf574831f6c5b1ebb3b97037bc9",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-9e0454b842a32309",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n80",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer just number. Compute speed: 60 km in 45 min = 0.75 h, speed = 80 km/h. Final only number.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 80,
+        "total_tokens": 124,
+        "completion_tokens": 44,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 39
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "91902dd1dd853fe444c411b5d88dcb420dbab82a65571bae930b6acf58ce0819",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n80",
+    "reasoning": "We need answer just number. Compute speed: 60 km in 45 min = 0.75 h, speed = 80 km/h. Final only number.\n",
+    "reasoning_chars": 105,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 1,
+      "top6gram": 0,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 22,
+      "top6gram": 1,
+      "distinct_ratio": 0.9090909090909091,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 80,
+      "total_tokens": 124,
+      "completion_tokens": 44,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 39
+      }
+    },
+    "raw_response_file": "items/01/response.raw",
+    "elapsed_s": 12.398441,
+    "ended_at": "2026-09-05T21:16:39+00:00"
+  },
+  {
+    "index": 2,
+    "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+    "expected": "def fib",
+    "seed": 601458005,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively."
+        }
+      ],
+      "seed": 601458005,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "087f29d3e33b2e5189f36243aae4313cc71b0e9c07573e1725da8f91106547fb",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-a5b09ea464a74a19",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n```python\ndef fib(n):\n    \"\"\"\n    Return the n-th Fibonacci number iteratively.\n\n    Convention:\n    fib(0) = 0\n    fib(1) = 1\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n\n    for _ in range(n):\n        a, b = b, a + b\n\n    return a\n```\n\nExample:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(10)) # 55\n```",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user: \"Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.\" Need produce final answer likely code. Need decide indexing: n-th could mean fib(0)=0, fib(1)=1 or fib(1)=1, fib(2)=1. Usually iterative Fibonacci function with n starting at 0. Mention convention. Could include validation. Keep concise. Final with code block.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 69,
+        "total_tokens": 306,
+        "completion_tokens": 237,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 89
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "1165ba8d4be3598412d16ab549db45fe397b1339f31ea56671c9e5f4f7fa9696",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n```python\ndef fib(n):\n    \"\"\"\n    Return the n-th Fibonacci number iteratively.\n\n    Convention:\n    fib(0) = 0\n    fib(1) = 1\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n\n    a, b = 0, 1\n\n    for _ in range(n):\n        a, b = b, a + b\n\n    return a\n```\n\nExample:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(10)) # 55\n```",
+    "reasoning": "We need answer user: \"Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.\" Need produce final answer likely code. Need decide indexing: n-th could mean fib(0)=0, fib(1)=1 or fib(1)=1, fib(2)=1. Usually iterative Fibonacci function with n starting at 0. Mention convention. Could include validation. Keep concise. Final with code block.\n",
+    "reasoning_chars": 367,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": false,
+    "final_repetition": {
+      "word_count": 60,
+      "top6gram": 1,
+      "distinct_ratio": 0.7333333333333333,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 53,
+      "top6gram": 1,
+      "distinct_ratio": 0.8867924528301887,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 69,
+      "total_tokens": 306,
+      "completion_tokens": 237,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 89
+      }
+    },
+    "raw_response_file": "items/02/response.raw",
+    "elapsed_s": 15.578325,
+    "ended_at": "2026-09-05T21:16:42+00:00"
+  },
+  {
+    "index": 3,
+    "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+    "expected": "ORDER BY",
+    "seed": 185092125,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount)."
+        }
+      ],
+      "seed": 185092125,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "175989d64223ed8f78caff3b7764f61b98ba1afc90500ca5689e19cfcd15e254",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-848e40250e0558fc",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n```sql\nSELECT\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON o.customer_id = c.id\nGROUP BY\n  c.id,\n  c.name\nORDER BY\n  total_order_value DESC\nLIMIT 3;\n```\n\nFor SQL Server, replace `LIMIT 3` with:\n\n```sql\nSELECT TOP 3 ...\nORDER BY total_order_value DESC;\n```",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user's request: \"Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\"\n\nNeed provide SQL query. Simple. Could include standard ANSI using LIMIT for PostgreSQL/MySQL, or TOP for SQL Server. Need maybe mention portability. Need final concise. Need ensure query returns top 3 customers by total order value. Query:\n\nSELECT c.id, c.name, SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n\nCould include WITH RANK/ROW_NUMBER to handle ties? \"top 3\" usually limit 3. Maybe if ties desired: use rank <=3. But simple answer enough. Could mention if SQL Server: SELECT TOP 3. Need maybe no final analysis.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 82,
+        "total_tokens": 381,
+        "completion_tokens": 299,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 195
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "286e35e841faa35fde75a0333cfc8a547be118b428da4dac46f8ac097fe4e26d",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n```sql\nSELECT\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON o.customer_id = c.id\nGROUP BY\n  c.id,\n  c.name\nORDER BY\n  total_order_value DESC\nLIMIT 3;\n```\n\nFor SQL Server, replace `LIMIT 3` with:\n\n```sql\nSELECT TOP 3 ...\nORDER BY total_order_value DESC;\n```",
+    "reasoning": "We need answer user's request: \"Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\"\n\nNeed provide SQL query. Simple. Could include standard ANSI using LIMIT for PostgreSQL/MySQL, or TOP for SQL Server. Need maybe mention portability. Need final concise. Need ensure query returns top 3 customers by total order value. Query:\n\nSELECT c.id, c.name, SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n\nCould include WITH RANK/ROW_NUMBER to handle ties? \"top 3\" usually limit 3. Maybe if ties desired: use rank <=3. But simple answer enough. Could mention if SQL Server: SELECT TOP 3. Need maybe no final analysis.\n",
+    "reasoning_chars": 800,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 45,
+      "top6gram": 1,
+      "distinct_ratio": 0.8,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 123,
+      "top6gram": 2,
+      "distinct_ratio": 0.7398373983739838,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 82,
+      "total_tokens": 381,
+      "completion_tokens": 299,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 195
+      }
+    },
+    "raw_response_file": "items/03/response.raw",
+    "elapsed_s": 16.318824,
+    "ended_at": "2026-09-05T21:16:42+00:00"
+  },
+  {
+    "index": 4,
+    "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+    "expected": "Canberra",
+    "seed": 1517837371,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney."
+        }
+      ],
+      "seed": 1517837371,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "2dc0f3cd5851fa14f36cfb954aebcbfe6109183d59c472da0c8863666c4b73d3",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-a932b2d17e8d7a0e",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n**Rating: 1/5**  \nIncorrect. The capital of Australia is **Canberra**, not Sydney.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to answer user: \"Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.\"\nNeed likely output rating 1 and brief explanation: capital is Canberra, Sydney is not capital. Need final concise.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 84,
+        "total_tokens": 174,
+        "completion_tokens": 90,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 64
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "f6798f8e4738c39845731dcd82ecbf4ad8086244c74ec794f4a24f2c911d3489",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n**Rating: 1/5**  \nIncorrect. The capital of Australia is **Canberra**, not Sydney.",
+    "reasoning": "We need to answer user: \"Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.\"\nNeed likely output rating 1 and brief explanation: capital is Canberra, Sydney is not capital. Need final concise.\n",
+    "reasoning_chars": 279,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 11,
+      "top6gram": 1,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 45,
+      "top6gram": 1,
+      "distinct_ratio": 0.8444444444444444,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 84,
+      "total_tokens": 174,
+      "completion_tokens": 90,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      }
+    },
+    "raw_response_file": "items/04/response.raw",
+    "elapsed_s": 13.325983,
+    "ended_at": "2026-09-05T21:16:39+00:00"
+  },
+  {
+    "index": 5,
+    "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+    "expected": "jeudi",
+    "seed": 782225691,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Translate to French: The meeting has been moved to Thursday afternoon."
+        }
+      ],
+      "seed": 782225691,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "e540d7c5a2d5512ea4ca9059479742c79843e9f3832b718c635fd68c6f32edc6",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-9c11e156da7b3c85",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nLa réunion a été reportée à jeudi après-midi.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to translate English sentence to French: \"The meeting has been moved to Thursday afternoon.\"\n\nNeed answer only translation likely. Need ensure accurate: \"La réunion a été reportée à jeudi après-midi.\" Or \"a été déplacée à jeudi après-midi.\" In French, meeting moved to another time: \"reportée à jeudi après-midi\" common. Could also say \"a été reportée au jeudi après-midi\" less natural? \"reportée à jeudi après-midi\" is idiomatic. \"The meeting\" = La réunion. Has been moved = a été reportée / déplacée. If time change, reportée. Thursday afternoon = jeudi après-midi. Final concise.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 65,
+        "total_tokens": 224,
+        "completion_tokens": 159,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 144
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "03903850c2ea2f2e79db50818516e8986c541644d4b6c916fdfdbbee86ed1d23",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nLa réunion a été reportée à jeudi après-midi.",
+    "reasoning": "We need to translate English sentence to French: \"The meeting has been moved to Thursday afternoon.\"\n\nNeed answer only translation likely. Need ensure accurate: \"La réunion a été reportée à jeudi après-midi.\" Or \"a été déplacée à jeudi après-midi.\" In French, meeting moved to another time: \"reportée à jeudi après-midi\" common. Could also say \"a été reportée au jeudi après-midi\" less natural? \"reportée à jeudi après-midi\" is idiomatic. \"The meeting\" = La réunion. Has been moved = a été reportée / déplacée. If time change, reportée. Thursday afternoon = jeudi après-midi. Final concise.\n",
+    "reasoning_chars": 591,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 8,
+      "top6gram": 1,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 93,
+      "top6gram": 1,
+      "distinct_ratio": 0.6666666666666666,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 65,
+      "total_tokens": 224,
+      "completion_tokens": 159,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 144
+      }
+    },
+    "raw_response_file": "items/05/response.raw",
+    "elapsed_s": 14.388239,
+    "ended_at": "2026-09-05T21:16:41+00:00"
+  },
+  {
+    "index": 6,
+    "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+    "expected": null,
+    "seed": 730168382,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts."
+        }
+      ],
+      "seed": 730168382,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "725017b86e883a54d65b90d85ef113a0bf78770cae4eac1c6e598822fdac977b",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-a298106e621152dc",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nLarge language models, trained on vast data, handle many tasks without special training but may fabricate facts.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to respond to user: \"Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\"\n\nNeed produce one-sentence summary. Simple. Final only one sentence.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 85,
+        "total_tokens": 166,
+        "completion_tokens": 81,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 57
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "06af3b228d8bf00e1a2513b3229ce0e510f779968896df1ff7e3ebc014a64a7f",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nLarge language models, trained on vast data, handle many tasks without special training but may fabricate facts.",
+    "reasoning": "We need to respond to user: \"Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\"\n\nNeed produce one-sentence summary. Simple. Final only one sentence.\n",
+    "reasoning_chars": 273,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": false,
+    "final_repetition": {
+      "word_count": 17,
+      "top6gram": 1,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 40,
+      "top6gram": 1,
+      "distinct_ratio": 0.95,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 85,
+      "total_tokens": 166,
+      "completion_tokens": 81,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 57
+      }
+    },
+    "raw_response_file": "items/06/response.raw",
+    "elapsed_s": 13.170445,
+    "ended_at": "2026-09-05T21:16:39+00:00"
+  },
+  {
+    "index": 7,
+    "prompt": "List three differences between TCP and UDP.",
+    "expected": "UDP",
+    "seed": 1053659467,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "List three differences between TCP and UDP."
+        }
+      ],
+      "seed": 1053659467,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "c872e327e11a26e5548a3c149351551c13b8dc2cab1123ff15ed1558137ed82e",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-8bc1572c0cdf2472",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n1. **Connection type**: TCP is connection-oriented and establishes a connection before sending data; UDP is connectionless and sends packets directly.  \n2. **Reliability**: TCP guarantees reliable, ordered delivery with acknowledgments and retransmissions; UDP does not guarantee delivery or ordering.  \n3. **Speed and overhead**: TCP is slower due to its reliability features; UDP is faster and has lower overhead.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "User asks: \"List three differences between TCP and UDP.\" Need to provide concise answer. Done. Need final with three differences.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 60,
+        "total_tokens": 171,
+        "completion_tokens": 111,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 27
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "fa165e8b7980d97106715f0b59bc801492b7ca4815676af184aa7a50fd6f7f29",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n1. **Connection type**: TCP is connection-oriented and establishes a connection before sending data; UDP is connectionless and sends packets directly.  \n2. **Reliability**: TCP guarantees reliable, ordered delivery with acknowledgments and retransmissions; UDP does not guarantee delivery or ordering.  \n3. **Speed and overhead**: TCP is slower due to its reliability features; UDP is faster and has lower overhead.",
+    "reasoning": "User asks: \"List three differences between TCP and UDP.\" Need to provide concise answer. Done. Need final with three differences.\n",
+    "reasoning_chars": 130,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 57,
+      "top6gram": 1,
+      "distinct_ratio": 0.7894736842105263,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 20,
+      "top6gram": 1,
+      "distinct_ratio": 0.9,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 60,
+      "total_tokens": 171,
+      "completion_tokens": 111,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      }
+    },
+    "raw_response_file": "items/07/response.raw",
+    "elapsed_s": 13.677038,
+    "ended_at": "2026-09-05T21:16:40+00:00"
+  },
+  {
+    "index": 8,
+    "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+    "expected": "slower",
+    "seed": 1176399631,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster."
+        }
+      ],
+      "seed": 1176399631,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "ca85af280a96849cc9105c28bbf144e4fa969b1a98805ac21ea0ceec6275a4e6",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-806411877373d1e3",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to respond to user: \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\"\n\nNeed provide rewrite opposite outcome. Likely: Because the experiment used a larger batch size, training converged slower. Or maybe counterfactual change cause? User says outcome opposite, so keep cause? Original: larger batch size -> faster. Opposite outcome: training converged slower. So sentence: Because the experiment used a larger batch size, training converged slower. Could also \"Because the experiment used a smaller batch size, training converged faster\" if changing cause? But says outcome opposite. The outcome is converged faster -> converged slower. So output concise.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 82,
+        "total_tokens": 246,
+        "completion_tokens": 164,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 148
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "d5f144429dcd0bea9c9f86b16fe1cb40600748f7dc371f005bf7c470797ebc6f",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+    "reasoning": "We need to respond to user: \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\"\n\nNeed provide rewrite opposite outcome. Likely: Because the experiment used a larger batch size, training converged slower. Or maybe counterfactual change cause? User says outcome opposite, so keep cause? Original: larger batch size -> faster. Opposite outcome: training converged slower. So sentence: Because the experiment used a larger batch size, training converged slower. Could also \"Because the experiment used a smaller batch size, training converged faster\" if changing cause? But says outcome opposite. The outcome is converged faster -> converged slower. So output concise.\n",
+    "reasoning_chars": 775,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 11,
+      "top6gram": 1,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 113,
+      "top6gram": 3,
+      "distinct_ratio": 0.5221238938053098,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 82,
+      "total_tokens": 246,
+      "completion_tokens": 164,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 148
+      }
+    },
+    "raw_response_file": "items/08/response.raw",
+    "elapsed_s": 14.451497,
+    "ended_at": "2026-09-05T21:16:41+00:00"
+  },
+  {
+    "index": 9,
+    "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+    "expected": "Lisbon",
+    "seed": 937045970,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON."
+        }
+      ],
+      "seed": 937045970,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "aee065167425e68c6fafb407544801f6c8952ee4032a4f2682e2a2ad61eef80b",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:26+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-8b720e4081f1e98c",
+      "object": "chat.completion",
+      "created": 1788642986,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user's request: Extract JSON fields name, age, city from: \"Maria Lopez, 34, lives in Lisbon. Return only JSON.\" Need final only JSON. Ensure no extra text. Could be {\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 78,
+        "total_tokens": 176,
+        "completion_tokens": 98,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 64
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "561de0fd57f525e23ee361bb9cd5afa78a745d689e6385404ffd4e3e742c168f",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+    "reasoning": "We need answer user's request: Extract JSON fields name, age, city from: \"Maria Lopez, 34, lives in Lisbon. Return only JSON.\" Need final only JSON. Ensure no extra text. Could be {\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}.\n",
+    "reasoning_chars": 229,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 9,
+      "top6gram": 1,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 33,
+      "top6gram": 1,
+      "distinct_ratio": 0.9696969696969697,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 78,
+      "total_tokens": 176,
+      "completion_tokens": 98,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 64
+      }
+    },
+    "raw_response_file": "items/09/response.raw",
+    "elapsed_s": 13.464534,
+    "ended_at": "2026-09-05T21:16:40+00:00"
+  },
+  {
+    "index": 10,
+    "prompt": "Explain why the sky is blue in two sentences.",
+    "expected": "scatter",
+    "seed": 37089468,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Explain why the sky is blue in two sentences."
+        }
+      ],
+      "seed": 37089468,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "468a98a44ea1dc5acd94888660368ac83af0d9a71e78633b1919ab13a30aea69",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:39+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-8daa844920c358d9",
+      "object": "chat.completion",
+      "created": 1788642999,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nSunlight is scattered by air molecules in Earth’s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. As a result, the scattered blue light reaches our eyes from many directions, making the sky appear blue.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to respond to user: \"Explain why the sky is blue in two sentences. We need final only two sentences. Ensure exactly two sentences. Need explain Rayleigh scattering. Maybe \"Sunlight is scattered by air molecules, and shorter blue wavelengths scatter more than longer red wavelengths. As a result, when you look away from the sun, the scattered blue light fills the sky.\" Count two sentences.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 63,
+        "total_tokens": 194,
+        "completion_tokens": 131,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 83
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "05d860605ff1e2c05fec754d1e2d7741ef990f9be5240d5e67f9696237daaa13",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nSunlight is scattered by air molecules in Earth’s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. As a result, the scattered blue light reaches our eyes from many directions, making the sky appear blue.",
+    "reasoning": "We need to respond to user: \"Explain why the sky is blue in two sentences. We need final only two sentences. Ensure exactly two sentences. Need explain Rayleigh scattering. Maybe \"Sunlight is scattered by air molecules, and shorter blue wavelengths scatter more than longer red wavelengths. As a result, when you look away from the sun, the scattered blue light fills the sky.\" Count two sentences.\n",
+    "reasoning_chars": 399,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 38,
+      "top6gram": 1,
+      "distinct_ratio": 0.9210526315789473,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 66,
+      "top6gram": 1,
+      "distinct_ratio": 0.7575757575757576,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 63,
+      "total_tokens": 194,
+      "completion_tokens": 131,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 83
+      }
+    },
+    "raw_response_file": "items/10/response.raw",
+    "elapsed_s": 2.29553,
+    "ended_at": "2026-09-05T21:16:41+00:00"
+  },
+  {
+    "index": 11,
+    "prompt": "What is the derivative of x^3 * sin(x)?",
+    "expected": "cos",
+    "seed": 645082743,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is the derivative of x^3 * sin(x)?"
+        }
+      ],
+      "seed": 645082743,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "f6cde46b4c4aa452f0f51576ff95b1d59aefbc8a4f9aa037d9d802c6c9a762f4",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:39+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-9e26bd2b24bb8849",
+      "object": "chat.completion",
+      "created": 1788642999,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= \\frac{d}{dx}(x^3)\\sin x + x^3\\frac{d}{dx}(\\sin x)\n\\]\n\n\\[\n= 3x^2\\sin x + x^3\\cos x\n\\]\n\nSo the derivative is:\n\n\\[\n\\boxed{3x^2\\sin x + x^3\\cos x}\n\\]",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer derivative of x^3 * sin(x). Straightforward. Need final concise with product rule. Compute d/dx x^3 sin x = 3x^2 sin x + x^3 cos x. Maybe factor x^2(3 sin x + x cos x).\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 64,
+        "total_tokens": 238,
+        "completion_tokens": 174,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 61
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "b9d00b28273789dc0254c4b2a8b1930b6e44471f74946d3fe7552c0333c0dc0f",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= \\frac{d}{dx}(x^3)\\sin x + x^3\\frac{d}{dx}(\\sin x)\n\\]\n\n\\[\n= 3x^2\\sin x + x^3\\cos x\n\\]\n\nSo the derivative is:\n\n\\[\n\\boxed{3x^2\\sin x + x^3\\cos x}\n\\]",
+    "reasoning": "We need answer derivative of x^3 * sin(x). Straightforward. Need final concise with product rule. Compute d/dx x^3 sin x = 3x^2 sin x + x^3 cos x. Maybe factor x^2(3 sin x + x cos x).\n",
+    "reasoning_chars": 184,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 34,
+      "top6gram": 1,
+      "distinct_ratio": 0.6470588235294118,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 37,
+      "top6gram": 1,
+      "distinct_ratio": 0.7567567567567568,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 64,
+      "total_tokens": 238,
+      "completion_tokens": 174,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 61
+      }
+    },
+    "raw_response_file": "items/11/response.raw",
+    "elapsed_s": 2.921193,
+    "ended_at": "2026-09-05T21:16:42+00:00"
+  },
+  {
+    "index": 12,
+    "prompt": "Give a regex that matches a UK postcode.",
+    "expected": "[",
+    "seed": 1060699985,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Give a regex that matches a UK postcode."
+        }
+      ],
+      "seed": 1060699985,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "a07914e4e4b4bea6ee1e187ce4a99abd7c3660db4a5749d2d62eb5f0415304a3",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:39+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-9e077605b3203e73",
+      "object": "chat.completion",
+      "created": 1788642999,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": null,
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user's request: \"Give a regex that matches a UK postcode.\" Need produce final with regex. Need be accurate enough. UK postcode regex can be complex. Need likely provide common regex. Need maybe explain. Need think carefully.\n\nWe need give regex matching UK postcode. Formats: outward code 1-2 letters + 1-2 digits or digit letter (and maybe 1-2 letters?) Actually UK postcode system: Outward: Area code 1-2 letters (no Q/V/X? maybe not QVX?), District 1-2 digits or digit followed by letter (not I/J/Z?); Inward: digit followed by two letters (no C I K M O V? maybe? CIKMOV? Actually letters excluded: Q,V,X in area? District letters exclude I,J,Z; inward letters exclude C,I,K,M,O,V? Let's recall.\n\nOfficial? Postcode area letters: A-E, F-G, H-P, R-U, W-Z? I/J/K/M/O/V/X? Maybe not necessary. General accepted regex: \n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$? That's from government? Another common: ^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$ with space optional.\n\nLet's find robust regex. UK postcodes: outward code: [A-Z]{1,2}[0-9]{1,2}|[A-Z]{1,2}[0-9][ABD-HJLNP-UW-Z]? maybe? Inward code: [0-9][A-Z]{2}. Space optional, case-insensitive. Need avoid GIR 0AA? There is special GIR 0AA. The GIR 0AA postcode is valid but not following pattern. Many regex exclude it unless included. User asks give a regex. Could provide pragmatic. \n\nLet's design:\n^(?:GIR ?0AA|[A-PR-UWYZ](?:[0-9]|(?:[0-9][0-9A-HJKPSUW])|(?:(?:AB|BD|E|F|G|L|M|N|S|W)?[0-9][A-HJKPSUW])) ?[0-9][ABD-HJLNP-UW-Z]{2})$ case-insensitive, with optional space? But need ensure format.\n\nMaybe simpler:\n`^(?:[Gg][Ii][Rr] 0[Aa]{2}|[A-Z]{1,2}[0-9]{1,2}[A-Z]?) [0-9][A-Z]{2}$` case insensitive? This allows invalid like ZZ9 9ZZ? But maybe okay. If want strict official? Need likely answer: `^[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}$` case insensitive. But user says matches a UK postcode, likely wants regex string. Could include note not fully validate all invalid combinations. We can provide more accurate official regex.\n\nLet's recall exact official pattern? From UK Government? There's a regex used in gov.uk: \n^(([A-PR-UWYZ][0-9]{1,2})|([A-PR-UWYZ][A-HK-Y][0-9]{1,2})|([A-PR-UWYZ][0-9][ABEHMNPRVWXY])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])|GIR ?0AA) ?[0-9][ABD-HJLNP-UW-Z]{2}$\nMaybe. Let's verify. Outward: area: A-PR-UWYZ (excludes I,J,O,V,X? maybe also Z? includes Z? Actually Z? for NI? maybe BT etc. X excluded?). District: first part: [0-9]{1,2}; or area with second letter [A-HK-Y] and digits; or area plus digit plus inward-like letters? The outward second part can be digit plus letter for certain codes (like W1A, EC1A etc) letters allowed: ABEHMNPRVWXY? Need recall.\n\nCommon regex from StackOverflow:\n^(([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\\s?[0-9][A-Za-z]{2}))$\nAnother:\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\n\nOfficial? The UK postcode structure includes outward area: one or two letters, excluding I,Q,V,X? Actually area letters no Q V X? Maybe no QVX and no I/J? Let's check. Postcode areas: AB, AL, B, BA, BB, BD, BH, BL, BN, BR, BS, BT, B, CA, CB, CF, CH, CM, CO, CR, CT, CV, CW, DA, DE, DG, DH, DL, DN, DT, DY, E, EC, EH, EN, EX, G, GL, GU, GU, HA, HD, HG, HP, HR, HS, HU, IG, IP, KA, KT, KW, KY, L, LA, LD, LE, LG? (no?), LN, LS, LU, M, ME, MK, NA, NE, NG, NN, NR, NW, OL, OX, PA, PE, PH, PL, PO, PR, RG, RH, RM, S, SE, SG, SK, SL, SM, SN, SO, SP, SR, SS, ST, SW, SY, TA, TD, TF, TN, TQ, TR, TS, TW, UB, W, WA, WC, WD, WF, WN, WR, WS, WV, YO, ZE. Missing Q,V,X, I/J/K/M/O? Area letters can include K? KA, KT, KW yes K. M yes. O yes OX. V no. X no. Q no. J no. I no? IG includes I? I think postcode area IG is London? IG? Actually IG is Ilford? I think I excluded? Maybe area letters include I? I recall area codes: AN? Not used? I think area code excludes Q, V, X, maybe also I? IG uses I, so I allowed? Wait UK postcode area \"IG\" is Ilford, yes I is allowed? But some lists say postcode areas exclude Q, V, X, I, Z? But there is ZE (Shetland). So not Z. Need official constraints.\n\nFor outward district: The first character after area may be digit; if two-character area, district may include letters. Some rules:\n- Outward code: [A-Z]{1,2}[0-9]{1,2}|[A-Z]{1,2}[0-9][A-Z]\n- Inward code: [0-9][A-Z]{2}\nBut letters restricted: in second part inward: no C, I, K, M, O, V? Actually inward letters can include many but exclude CIKMOV? Let's verify: inward part letters: no C, I, K, M, O, V? Maybe yes. Example AB10 1AA includes A/B okay. AB10 1C? no.\nOutward last letter allowed: ABEHMNPRVWXY? For outward with district letter? Let's find official: Outward format can be:\n- A9 1AA\n- A99 1AA\n- A9A 1AA\n- A99A 1AA? Maybe e.g. W1A 1HQ? Actually W1A 1HQ outward W1A (area W, district 1A). For two-letter area: e.g. EC1A 1BB? outward EC1A (area EC, district 1A), or SW1A 1AA. For outward second part: digit, or two digits, or digit plus letter, or two digits plus letter? Some outward codes have three? Actually outward is max 4 chars: area (1 or 2 letters) + district (1 or 2 digits, optionally with a final letter). For SW1A: area SW, district 1A. For B33: area B, district 33. For B33 2...? For M1 1BE? For W1A 1HQ? For N1? The outward with two-digit district and letter? Example? maybe BS99 6QZ? outward BS99 no letter. But some are like AB10? no.\n\nA regex that's widely accepted from UK government: \n^(([A-PR-UWYZ][0-9]{1,2})|([A-PR-UWYZ][A-HK-Y][0-9]{1,2})|([A-PR-UWYZ][0-9][ABEHMNPRVWXY])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])|GIR ?0AA) ?[0-9][ABD-HJLNP-UW-Z]{2}$\nLet's test: first alt outward: [A-PR-UWYZ][0-9]{1,2}: e.g. M1, B33. second alt: [A-PR-UWYZ][A-HK-Y][0-9]{1,2}: e.g. SW1, SE1, WC2, EC2, N1? Wait N1 area one letter? first alt. second for two-letter area: SW1, AB10. third: [A-PR-UWYZ][0-9][ABEHMNPRVWXY]: one-letter area, digit, letter e.g. W1A, N1A? fourth: [A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]: two-letter area, digit, letter e.g. EC1A, SW1A, WC1A. Need [0-9]? for district maybe second digit? What about two-letter area with two-digit district and letter: BS10 2AD? outward BS10 no letter. Are there outward codes with two-letter area + two-digit district + letter? Maybe e.g. LS1 1? no. Some are like AB10? no. But format [A-Z]{1,2}[0-9]{1,2}[A-Z]? could allow BS10A? I think official outward can be area (1-2 letters), district 1-2 digits, sector optional? Wait outward code includes district only not sector? The postcode full outward (A9 9AA, A99 9AA, A9A 9AA, A99A 9AA?) Actually postcode sectors: first part outward is area+district, second inward is unit? The outward code consists of Area (1-2 chars) + District (1-2 digits or digit + letter). There is no optional letter after two-digit district? Let's research from memory: Formats:\nArea + District + Inward\nAA9 9AA\nA9 9AA\nA99 9AA\nAA9A 9AA\nA9A 9AA? Hmm.\n\nWikipedia: Postcode format: Outward code: 1 or 2 letters (area), then 1 or 2 digits or digit followed by letter (district). Inward code: digit then 2 letters. So outward length 3 to 4? If area 2 letters and district digit+letter -> 4; if area 2 letters and 2 digits -> 4; if area 1 letter and digit+letter -> 3; if area 1 letter and 2 digits ->3? Actually area 1 letter + 2 digits =3; area 2 letters + 2 digits=4; area 1 letter + digit+letter=3. Thus outward length 2? GIR? No.\n\nExample \"N1 9GT\": area N, district 1. \"N16 0RR\": area N, district 16. \"N1A 0AA\": area N, district 1A? Is N1A valid? maybe. \"SW1A 1AA\": area SW, district 1A. \"EC1A 1BB\": area EC, district 1A. \"WC1A 9HD\". \"M1 1BE\". \"BS99 6QZ\". \"AB10 1...\". \"AB10\" no district letter. \"AB10\" 2-letter area + two digits. \"AB1A\"? maybe no. But \"AB10\" no letter after two digits. So if district has letter, district must be one digit + letter, not two-digit + letter? Maybe some like \"DE75 5\"? not outward letter. Are there outward codes with district two digits + letter? I think not. So third/fourth alts only [0-9] before letter.\n\nWhat about outward with one-letter area + two-digit + letter? Maybe e.g. W19? no. W1A yes. But maybe no 1A? Actually many are \"W1A\" (BBC), \"EC1A\", \"WC1A\". For two-letter area + two-digit + letter? Not sure. Official regex often restricts as above.\n\nAnother widely cited official: \n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\nHere includes [0-9]?[A-Za-z] for two-letter area? allows EC1A? second letter [A-Za-z]? after 0-9? maybe allows BS10? yes alt 2. It allows invalid because [A-Za-z] for district letter and inward letters unrestricted.\n\nFor practical answer, could give concise regex: `^(?:GIR ?0AA|[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2})$` with flags `i` or uppercase. But if user just asks, maybe enough. But desired oververbosity 9 means likely thorough. Need maybe give multiple: simple pragmatic and stricter. Need ensure regex matches valid UK postcode. Maybe answer in JS? \"Give a regex\" no language. Need provide pattern and note flags. Could include a regex string with optional case-insensitive.\n\nNeed ensure no mistakes in regex syntax. If using [A-Z] need `i`. Or include case-insensitive flag `/i`. Need avoid catastrophic backtracking? Simple. Need maybe allow optional space and maybe no space? UK postcode normally space between outward and inward; can allow optional whitespace. Could normalize? Pattern:\n`^(?:GIR\\s?0[A-Z]{2}|[A-Z]{1,2}\\d(?:\\d|[A-Z])?\\s?\\d[A-Z]{2})$` with `i`. But this allows `A99A 9AA`? `[A-Z]{1,2}\\d(?:\\d|[A-Z])?` => area 2 letters + digit + digit or letter, e.g. AB99 or AB9A; area 2 letters + digit (no optional) ok; area 1 + digit/digit ok; area 1+ digit+letter ok. It doesn't allow area 1+ two-digit+letter (like? maybe not valid). It allows outward like AB12? yes; AB1A? maybe valid? Some 2-letter area with district 1A e.g. EC1A yes; AB1A maybe maybe invalid but not caught. Inward `[0-9][A-Z]{2}` but inward letters can exclude CIKMOV? Not enforce. This simple matches all valid but too permissive. If want strict official letters restrictions:\n`^(?:GIR ?0AA|[A-PR-UWYZ](?:\\d{1,2}|[A-HK-Y]\\d{1,2}|\\d[ABEHMNPRVWXY]|[A-HK-Y]\\d[ABEHMNPRVWXY]) ?\\d[ABD-HJLNP-UW-Z]{2})$` with `i`. Need test.\n\nLet's break official pattern:\nOutward alternatives:\n1. `[A-PR-UWYZ]\\d{1,2}`: one-letter area + district digits. But includes area Z? [UWYZ] includes Z, yes ZE? Maybe area ZE is allowed? area letters maybe A-Z excluding I,J,O,V,X? But [A-PR-UWYZ] means A-P (except O? Wait A-P includes O? Character class [A-PR-UWYZ] is union [A-P], [R-U], [W], [Y], [Z]. It excludes Q, V, X, also O? [A-P] includes O? yes O included. But official area may exclude O? Actually OX allowed? If OX includes O? area OX has O. So okay. It excludes I? [A-P] includes I? Wait [A-P] is A B C D E F G H I J K L M N O P? Yes includes I and J. But I/J should be excluded? In char class [A-PR-UWYZ] includes I,J. That seems wrong if area exclude I/J. However official may allow IG? Yes I. J? JE? Jersey postcode area JE. So J allowed. OK. Excludes Q, V, X? Also maybe X not used, Q not. So [A-PR-UWYZ] = A-Z except Q, V, X? Let's see A-P includes A-P; R-U includes R-U; W; Y-Z. Missing Q,V,X. Good.\n\nDistrict letters [A-HK-Y]: A-H, K-Y. This excludes I and J? but area second letters may include K? For outward two-letter area? [A-HK-Y] includes K? Yes. Excludes I,J,O? Wait A-H includes A-H; K-Y includes K-Y. Missing I,J, and? includes Z? K-Y stops Y, so excludes Z? But some area second letter Z? Maybe not except ZE? ZE is area two-letter? If area ZE, second letter Z but district maybe E? Actually ZE1? Area ZE is two letters: Z + E. Pattern second alt: [A-PR-UWYZ][A-HK-Y]\\d{1,2}; For ZE1: first Z (allowed), second E (allowed) -> ok. So first letter can be Z, second letter in area can be E. Excluding Z second because no area? Maybe. But if area Z? Not used. Good. It excludes I/J? [A-HK-Y] excludes I,J. Are there two-letter areas with second letter I? WI? maybe no. J? NJ? no. O? MO? maybe not. So okay.\n\nThird alt: `[A-PR-UWYZ]\\d[ABEHMNPRVWXY]`: one-letter area digit + district letter. Allowed letters: A B E H M N P R V W X Y? That excludes C,D,F,G,I,J,K,L,O,Q,S,T,U,Z? Maybe some outward letters include? e.g. B? yes. W1A. M? M1? district letter? M1? no letter. But M? maybe? Need official list. Could be correct? Wait allowed district letters maybe ABEHMNPRVWXY? This from official. It includes X? Are there outward district letter X? Maybe X? Not likely. It includes W, Y. Maybe for W1A, N1A, etc. But official may use [ABEHMNPRVWXY].\n\nFourth: `[A-PR-UWYZ][A-HK-Y]\\d[ABEHMNPRVWXY]`: two-letter area, digit, letter. e.g. EC1A? E then C? [A-HK-Y] allows C; then digit 1; letter A. Good. SW1A: S W? [A-HK-Y] allows W; digit; letter A. SE1W? etc.\n\nInward letters `[ABD-HJLNP-UW-Z]{2}`: allowed letters A,B,D-H,J,L,N,P-U,W-Z. Excludes C,I,K,M,O,V? It includes? A B, D-H (D,E,F,G,H), J, L, N (no M), P-U (P,Q,R,S,T,U), W-Z (W,X,Y,Z). Excludes C,I,K,M,O,V. Yes official inward letters exclude CIKMOV. It allows Q, X? maybe. Inward letters: no C,I,K,M,O,V, but may allow Q? I think yes? Some postcodes? Maybe.\n\nSpace: official pattern uses ` ` literal. We can allow optional whitespace `[\\s]*`? If use ` ?` only one optional space. In regex, for GIR ?0AA, space optional. Need if user enters lowercase: add `i`. Could write `^(?:GIR ?0[A-Z]{2}|...) $` with `i`. Note if `GIR` special, use case-insens? If not flag? If pattern uppercase and `i` flag, okay. Need maybe `GIR\\s?0[A-Z]{2}`. If flag i, letters case insensitive. Need anchor with multiline? Use ^$ and no multiline if testing whole string.\n\nBut maybe official regex needs allow space optional and no space? Usually postcode has space; many form patterns allow optional. Could use `\\s?` but `\\s` matches newline; use `[ ]?` for single space. Maybe ` *`? To allow no or one space, `\\s?`. For strict single optional space ` ?`. If no flag i, include uppercase/lowercase ranges. Could present:\nJavaScript / regex literal:\n`/^(?:GIR ?0[A-Z]{2}|[A-PR-UWYZ](?:\\d{1,2}|[A-HK-Y]\\d{1,2}|\\d[ABEHMNPRVWXY]|[A-HK-Y]\\d[ABEHMNPRVWXY]) ?\\d[ABD-HJLNP-UW-Z]{2})$/i`\n\nNeed test examples: SW1A 1AA: after optional space? pattern starts area: `GIR` no, then `[A-PR-UWYZ]` matches S? Wait area two letters? Fourth alt `[A-PR-UWYZ][A-HK-Y]\\d[ABEHMNPRVWXY]`: S allowed? [A-PR-UWYZ] includes S (R-U). W allowed in second [A-HK-Y]? W in K-Y yes. digit 1, letter A allowed. Then ` ?\\d[ABD-HJLNP-UW-Z]{2}` matches space 1AA. Good.\nN1 9GT: third alt? first one-letter area N, digit 1, then? Wait third alt requires digit + letter. N1 has no letter, so first alt `[A-PR-UWYZ]\\d{1,2}` matches N1. Good.\nN16 0RR: first alt matches N16.\nW1A 1HQ: third alt `[A-PR-UWYZ]\\d[ABEHMNPRVWXY]` matches W1A; then space 1H? inward 1HQ: 1, H allowed? [ABD-HJLNP-UW-Z]: H included. Q allowed. Good.\nEC1A 1BB: fourth alt E C? E allowed first? [A-PR-UWYZ] includes E. C allowed second [A-HK-Y]. digit 1, letter A allowed. Inward 1BB: B,B allowed.\nM1 1BE: first alt M1; inward B,E. Good.\nBS99 6QZ: fourth? [A-PR-UWYZ][A-HK-Y]\\d{1,2} => B S 99. inward 6 Q Z: Q and Z allowed. Good.\nGIR 0AA: special: GIR ?0[A-Z]{2} matches GIR 0AA with i? GIR uppercase; 0AA with [A-Z] uppercase; if input lowercase \"gir 0aa\" with i matches 0? [A-Z] case-insens? yes. But `[A-Z]{2}` under i matches lowercase. Good. But if no space? `GIR ?0AA` matches GIR0AA. Is GIR0AA valid? Probably official includes optional? The special postcode GIR 0AA has space, but pattern may accept no space. Fine.\n\nPotential issue: `[A-PR-UWYZ]` includes I,J,O? Does official area exclude maybe I, J, O? But IG uses I, JE uses J, OX uses O. So okay. Excludes Q,V,X. Good.\n\nPotential issue: Inward letter set includes Z? I think inward excludes Z? Maybe official? Let's verify. UK postcode outward/inward letters restrictions: Outward: area code first letters A-Z except I,J,K,M,O,V,X? Hmm. Inward second part letters exclude C,I,K,M,O,V. I think includes Z? Many postcodes end with AB... maybe. Official inward letters are A-Z excluding C,I,K,M,O,V? If so Z is allowed. The regex `[ABD-HJLNP-UW-Z]` includes Z, includes Q, includes X. Are Q/X allowed in inward? I recall outward code first letter excludes I,J,K,M,O,V,X? Inward code last two letters exclude C,I,K,M,O,V. Q maybe allowed? Are there any Q/X? Maybe inward can include Q? I think no Q? Actually government regex uses `[ABD-HJLNP-UW-Z]{2}`. Yes includes Q and Z, X? includes X. Good.\n\nPotential issue: outward district letter set `[ABEHMNPRVWXY]` includes V and X? Are V/X allowed? Maybe district letter may be A-E,H,M,N,P,R,V,W,X,Y? Some patterns include A-H,K-Y? Let's find authoritative. The official regex from GOV.UK? I recall:\n```\nvar postcodeRegexp = /^(?:GIR ?0AA|(?:AB|BD|BS|CF|CH|CV|DE|DH|DN|DT|DY|EC|EH|EN|EX|GU|HA|HD|HG|HP|HR|HS|HU|IG|IP|KT|KW|KY|LE|LN|LS|LU|M|ME|MK|NA|NE|NG|NN|NR|NW|OL|OX|PA|PE|PH|PL|PO|RG|RH|RM|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|WC|WD|WF|WR|WS|WV|YO)?[0-9]{1,2}?) ?[0-9][A-Z]{2}$/i;\n```\nNo.\n\nLet's search memory: UK government recommended: \n```\n^(([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2}))$\n```\nThis has a typo maybe missing group. More precise from `postcode-validator`? Another official (Royal Mail?) \n```\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\n```\nThis is too permissive but official? It allows `ZZ9 9ZZ`, invalid. It also allows no strict letters.\n\nAnother exact regex from \"UK Postcode Regex\" widely:\n```\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\n```\nThe last `[A-Ha-hJ-Yj-y][0-9]?[A-Za-z]` maybe for two-letter area with optional second digit before final letter? It might allow `AB12C`? invalid? The format could be AA99A? Is that valid? Hmm. Let's verify: outward length can be 4. If area 2 letters and district 2 digits + letter would be 5 chars, invalid (except GIR). But `([A-Ha-hJ-Yj-y][0-9]?[A-Za-z])` after area? Full: `[A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]` => first area letter, second area letter, optional digit, district letter? For `EC1A`: E C 1 A; `0-9?` digit optional, then letter. For `AB?` maybe `AB`? Hmm maybe it means area 2 letters then district 1 or 2 digits? Wait the regex nested: `(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))`. So for 2-letter area: first letter, second letter, optional digit, final letter. That's only digit + final letter if digit present, not two digits + final letter. Optional digit maybe means if no digit? weird: e.g. AB? invalid. Maybe due to grouping? It may be flawed.\n\nLet's derive from Royal Mail? Postcode format: Outward code 1-2 letters, 1-2 digits, or 1 digit plus 1 letter. The outward code is 3 or 4 characters: \n- [A-Z]{1,2} [0-9]{1,2} [A-Z]?  (But if area length 1, district can be 2 digits? then optional letter? maybe no? e.g. M1? A9? A99? A9A? What about A99A? Is that valid? Maybe area length 1 + district 2 digits + letter? Could there be \"W19A\"? I think no. But simple regex `[A-Z]{1,2}\\d[A-Z\\d]?` handles optional either digit or letter, not both. Good.\n\nLet's see official postcode structure from \"Postcode Address File\" maybe:\n- Outward code: area: 1-2 letters, district: 1-2 digits or 1 digit + 1 letter. Inward: 1 digit + 2 letters.\nThis means patterns:\n`[A-Z]{1,2}\\d{1,2} [0-9][A-Z]{2}` OR `[A-Z]{1,2}\\d[A-Z] [0-9][A-Z]{2}`. Combining: `^[A-Z]{1,2}\\d(?:\\d|[A-Z])? [0-9][A-Z]{2}$`. This is simplest structural. Add GIR special. This doesn't enforce excluded letters. Maybe user wants \"matches a UK postcode\" not full validation. Could offer this. But maybe if they expect exact from regex101? Many ask \"Give a regex that matches a UK postcode.\" Could answer with known regex. We need be helpful.\n\nNeed choose final: likely give strict regex. Maybe also include \"if you just need format, simpler\". The final should be direct. Could say:\n\nA common practical regex (case-insensitive, optional single space) is:\n```js\n/^(?:GIR ?0[A-Z]{2}|[A-PR-UWYZ](?:\\d{1,2}|[A-HK-Y]\\d{1,2}|\\d[ABEHMNPRVWXY]|[A-HK-Y]\\d[ABEHMNPRVWXY]) ?\\d[ABD-HJLNP-UW-Z]{2})$/i\n```\n\nMatches valid formats and includes GIR 0AA. If optional space required? Use ` ?` optional; if require space replace with ` `. It won't validate every allocation rule (e.g., real postcodes not just pattern) but good. If just need simple shape: `^(?:GIR ?0AA|[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2})$` with `i`.\n\nNeed ensure regex doesn't accept `AB12C 9AA`? Our strict pattern: fourth alt requires `[A-PR-UWYZ][A-HK-Y]\\d[ABEHMNPRVWXY]`; for AB12C? area AB, then first alt? `[A-PR-UWYZ]\\d{1,2}` only one-letter area, can't match. fourth alt needs digit then letter immediately: AB1? but then extra 2? no. Good. Simple pattern accepts. Strict better.\n\nLet's verify strict pattern with all area/district forms:\n- one-letter area + 1 digit: first alt.\n- one-letter area + 2 digits: first alt.\n- two-letter area + 1 digit: second alt.\n- two-letter area + 2 digits: second alt.\n- one-letter area + digit + letter: third alt.\n- two-letter area + digit + letter: fourth alt.\nWhat about one-letter area + digit + optional letter? yes third requires letter, so if no letter first alt. Good.\nWhat about one-letter area + 2 digits + letter? not allowed. Is that ever valid? Need confirm. I think no because outward code max 4, area 1 + district 2 digits + letter =4? Wait area 1 + district 2 digits + letter =4? No area 1 + district 3 chars = 4, outward length 4. Format? Could area \"W\", district \"19A\"? Is W19A valid? I don't think outward can be 1 letter + 2 digits + letter? But Wikipedia says district: 1-2 digits or 1 digit followed by a letter, not 2 digits followed by letter. So correct.\n\nPotential issue: second alt `[A-PR-UWYZ][A-HK-Y]\\d{1,2}` allows area letters second char K? e.g. AB? K? Some area second letters include H? yes. It excludes I/J? Are there areas: IG? area one-letter I? Actually IG is two-letter area: I + G. Does pattern allow? First `GIR` no. Fourth? first I? [A-PR-UWYZ] includes I? [A-P] includes I? yes. Second G allowed [A-HK-Y]? G in A-H yes. Then digit. So IG1? allowed. But is IG area? yes. It allows J second if? [A-HK-Y] excludes I? Wait for area JE: second E allowed. What about second letter J? maybe not. What about area second letter Z? ZE? second E allowed. Good.\n\nBut `[A-PR-UWYZ]` includes O? yes for OX. Good.\n\nThird alt district letters `[ABEHMNPRVWXY]`. Does it include D? no. Are there valid one-letter area digit D outward? Maybe \"M1D\"? no. \"N1E\"? maybe? Let's check known outward codes with final letter. Examples:\n- E1? no letter. E? There are inward? \"E1 "
+          },
+          "logprobs": null,
+          "finish_reason": "length",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 61,
+        "total_tokens": 8253,
+        "completion_tokens": 8192,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 8192
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "9524d589bb14f12375797024861364b26b6ef126a89397bc24c821f43e6cd993",
+    "response_content_type": "application/json",
+    "verdict": "degenerate",
+    "reasons": [
+      "completion reached the token budget",
+      "final answer is empty",
+      "reasoning repetition tripwire fired",
+      "expected substring absent from final answer"
+    ],
+    "text": "",
+    "reasoning": "We need answer user's request: \"Give a regex that matches a UK postcode.\" Need produce final with regex. Need be accurate enough. UK postcode regex can be complex. Need likely provide common regex. Need maybe explain. Need think carefully.\n\nWe need give regex matching UK postcode. Formats: outward code 1-2 letters + 1-2 digits or digit letter (and maybe 1-2 letters?) Actually UK postcode system: Outward: Area code 1-2 letters (no Q/V/X? maybe not QVX?), District 1-2 digits or digit followed by letter (not I/J/Z?); Inward: digit followed by two letters (no C I K M O V? maybe? CIKMOV? Actually letters excluded: Q,V,X in area? District letters exclude I,J,Z; inward letters exclude C,I,K,M,O,V? Let's recall.\n\nOfficial? Postcode area letters: A-E, F-G, H-P, R-U, W-Z? I/J/K/M/O/V/X? Maybe not necessary. General accepted regex: \n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$? That's from government? Another common: ^[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][ABD-HJLNP-UW-Z]{2}$ with space optional.\n\nLet's find robust regex. UK postcodes: outward code: [A-Z]{1,2}[0-9]{1,2}|[A-Z]{1,2}[0-9][ABD-HJLNP-UW-Z]? maybe? Inward code: [0-9][A-Z]{2}. Space optional, case-insensitive. Need avoid GIR 0AA? There is special GIR 0AA. The GIR 0AA postcode is valid but not following pattern. Many regex exclude it unless included. User asks give a regex. Could provide pragmatic. \n\nLet's design:\n^(?:GIR ?0AA|[A-PR-UWYZ](?:[0-9]|(?:[0-9][0-9A-HJKPSUW])|(?:(?:AB|BD|E|F|G|L|M|N|S|W)?[0-9][A-HJKPSUW])) ?[0-9][ABD-HJLNP-UW-Z]{2})$ case-insensitive, with optional space? But need ensure format.\n\nMaybe simpler:\n`^(?:[Gg][Ii][Rr] 0[Aa]{2}|[A-Z]{1,2}[0-9]{1,2}[A-Z]?) [0-9][A-Z]{2}$` case insensitive? This allows invalid like ZZ9 9ZZ? But maybe okay. If want strict official? Need likely answer: `^[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}$` case insensitive. But user says matches a UK postcode, likely wants regex string. Could include note not fully validate all invalid combinations. We can provide more accurate official regex.\n\nLet's recall exact official pattern? From UK Government? There's a regex used in gov.uk: \n^(([A-PR-UWYZ][0-9]{1,2})|([A-PR-UWYZ][A-HK-Y][0-9]{1,2})|([A-PR-UWYZ][0-9][ABEHMNPRVWXY])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])|GIR ?0AA) ?[0-9][ABD-HJLNP-UW-Z]{2}$\nMaybe. Let's verify. Outward: area: A-PR-UWYZ (excludes I,J,O,V,X? maybe also Z? includes Z? Actually Z? for NI? maybe BT etc. X excluded?). District: first part: [0-9]{1,2}; or area with second letter [A-HK-Y] and digits; or area plus digit plus inward-like letters? The outward second part can be digit plus letter for certain codes (like W1A, EC1A etc) letters allowed: ABEHMNPRVWXY? Need recall.\n\nCommon regex from StackOverflow:\n^(([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\\s?[0-9][A-Za-z]{2}))$\nAnother:\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\n\nOfficial? The UK postcode structure includes outward area: one or two letters, excluding I,Q,V,X? Actually area letters no Q V X? Maybe no QVX and no I/J? Let's check. Postcode areas: AB, AL, B, BA, BB, BD, BH, BL, BN, BR, BS, BT, B, CA, CB, CF, CH, CM, CO, CR, CT, CV, CW, DA, DE, DG, DH, DL, DN, DT, DY, E, EC, EH, EN, EX, G, GL, GU, GU, HA, HD, HG, HP, HR, HS, HU, IG, IP, KA, KT, KW, KY, L, LA, LD, LE, LG? (no?), LN, LS, LU, M, ME, MK, NA, NE, NG, NN, NR, NW, OL, OX, PA, PE, PH, PL, PO, PR, RG, RH, RM, S, SE, SG, SK, SL, SM, SN, SO, SP, SR, SS, ST, SW, SY, TA, TD, TF, TN, TQ, TR, TS, TW, UB, W, WA, WC, WD, WF, WN, WR, WS, WV, YO, ZE. Missing Q,V,X, I/J/K/M/O? Area letters can include K? KA, KT, KW yes K. M yes. O yes OX. V no. X no. Q no. J no. I no? IG includes I? I think postcode area IG is London? IG? Actually IG is Ilford? I think I excluded? Maybe area letters include I? I recall area codes: AN? Not used? I think area code excludes Q, V, X, maybe also I? IG uses I, so I allowed? Wait UK postcode area \"IG\" is Ilford, yes I is allowed? But some lists say postcode areas exclude Q, V, X, I, Z? But there is ZE (Shetland). So not Z. Need official constraints.\n\nFor outward district: The first character after area may be digit; if two-character area, district may include letters. Some rules:\n- Outward code: [A-Z]{1,2}[0-9]{1,2}|[A-Z]{1,2}[0-9][A-Z]\n- Inward code: [0-9][A-Z]{2}\nBut letters restricted: in second part inward: no C, I, K, M, O, V? Actually inward letters can include many but exclude CIKMOV? Let's verify: inward part letters: no C, I, K, M, O, V? Maybe yes. Example AB10 1AA includes A/B okay. AB10 1C? no.\nOutward last letter allowed: ABEHMNPRVWXY? For outward with district letter? Let's find official: Outward format can be:\n- A9 1AA\n- A99 1AA\n- A9A 1AA\n- A99A 1AA? Maybe e.g. W1A 1HQ? Actually W1A 1HQ outward W1A (area W, district 1A). For two-letter area: e.g. EC1A 1BB? outward EC1A (area EC, district 1A), or SW1A 1AA. For outward second part: digit, or two digits, or digit plus letter, or two digits plus letter? Some outward codes have three? Actually outward is max 4 chars: area (1 or 2 letters) + district (1 or 2 digits, optionally with a final letter). For SW1A: area SW, district 1A. For B33: area B, district 33. For B33 2...? For M1 1BE? For W1A 1HQ? For N1? The outward with two-digit district and letter? Example? maybe BS99 6QZ? outward BS99 no letter. But some are like AB10? no.\n\nA regex that's widely accepted from UK government: \n^(([A-PR-UWYZ][0-9]{1,2})|([A-PR-UWYZ][A-HK-Y][0-9]{1,2})|([A-PR-UWYZ][0-9][ABEHMNPRVWXY])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])|GIR ?0AA) ?[0-9][ABD-HJLNP-UW-Z]{2}$\nLet's test: first alt outward: [A-PR-UWYZ][0-9]{1,2}: e.g. M1, B33. second alt: [A-PR-UWYZ][A-HK-Y][0-9]{1,2}: e.g. SW1, SE1, WC2, EC2, N1? Wait N1 area one letter? first alt. second for two-letter area: SW1, AB10. third: [A-PR-UWYZ][0-9][ABEHMNPRVWXY]: one-letter area, digit, letter e.g. W1A, N1A? fourth: [A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]: two-letter area, digit, letter e.g. EC1A, SW1A, WC1A. Need [0-9]? for district maybe second digit? What about two-letter area with two-digit district and letter: BS10 2AD? outward BS10 no letter. Are there outward codes with two-letter area + two-digit district + letter? Maybe e.g. LS1 1? no. Some are like AB10? no. But format [A-Z]{1,2}[0-9]{1,2}[A-Z]? could allow BS10A? I think official outward can be area (1-2 letters), district 1-2 digits, sector optional? Wait outward code includes district only not sector? The postcode full outward (A9 9AA, A99 9AA, A9A 9AA, A99A 9AA?) Actually postcode sectors: first part outward is area+district, second inward is unit? The outward code consists of Area (1-2 chars) + District (1-2 digits or digit + letter). There is no optional letter after two-digit district? Let's research from memory: Formats:\nArea + District + Inward\nAA9 9AA\nA9 9AA\nA99 9AA\nAA9A 9AA\nA9A 9AA? Hmm.\n\nWikipedia: Postcode format: Outward code: 1 or 2 letters (area), then 1 or 2 digits or digit followed by letter (district). Inward code: digit then 2 letters. So outward length 3 to 4? If area 2 letters and district digit+letter -> 4; if area 2 letters and 2 digits -> 4; if area 1 letter and digit+letter -> 3; if area 1 letter and 2 digits ->3? Actually area 1 letter + 2 digits =3; area 2 letters + 2 digits=4; area 1 letter + digit+letter=3. Thus outward length 2? GIR? No.\n\nExample \"N1 9GT\": area N, district 1. \"N16 0RR\": area N, district 16. \"N1A 0AA\": area N, district 1A? Is N1A valid? maybe. \"SW1A 1AA\": area SW, district 1A. \"EC1A 1BB\": area EC, district 1A. \"WC1A 9HD\". \"M1 1BE\". \"BS99 6QZ\". \"AB10 1...\". \"AB10\" no district letter. \"AB10\" 2-letter area + two digits. \"AB1A\"? maybe no. But \"AB10\" no letter after two digits. So if district has letter, district must be one digit + letter, not two-digit + letter? Maybe some like \"DE75 5\"? not outward letter. Are there outward codes with district two digits + letter? I think not. So third/fourth alts only [0-9] before letter.\n\nWhat about outward with one-letter area + two-digit + letter? Maybe e.g. W19? no. W1A yes. But maybe no 1A? Actually many are \"W1A\" (BBC), \"EC1A\", \"WC1A\". For two-letter area + two-digit + letter? Not sure. Official regex often restricts as above.\n\nAnother widely cited official: \n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\nHere includes [0-9]?[A-Za-z] for two-letter area? allows EC1A? second letter [A-Za-z]? after 0-9? maybe allows BS10? yes alt 2. It allows invalid because [A-Za-z] for district letter and inward letters unrestricted.\n\nFor practical answer, could give concise regex: `^(?:GIR ?0AA|[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2})$` with flags `i` or uppercase. But if user just asks, maybe enough. But desired oververbosity 9 means likely thorough. Need maybe give multiple: simple pragmatic and stricter. Need ensure regex matches valid UK postcode. Maybe answer in JS? \"Give a regex\" no language. Need provide pattern and note flags. Could include a regex string with optional case-insensitive.\n\nNeed ensure no mistakes in regex syntax. If using [A-Z] need `i`. Or include case-insensitive flag `/i`. Need avoid catastrophic backtracking? Simple. Need maybe allow optional space and maybe no space? UK postcode normally space between outward and inward; can allow optional whitespace. Could normalize? Pattern:\n`^(?:GIR\\s?0[A-Z]{2}|[A-Z]{1,2}\\d(?:\\d|[A-Z])?\\s?\\d[A-Z]{2})$` with `i`. But this allows `A99A 9AA`? `[A-Z]{1,2}\\d(?:\\d|[A-Z])?` => area 2 letters + digit + digit or letter, e.g. AB99 or AB9A; area 2 letters + digit (no optional) ok; area 1 + digit/digit ok; area 1+ digit+letter ok. It doesn't allow area 1+ two-digit+letter (like? maybe not valid). It allows outward like AB12? yes; AB1A? maybe valid? Some 2-letter area with district 1A e.g. EC1A yes; AB1A maybe maybe invalid but not caught. Inward `[0-9][A-Z]{2}` but inward letters can exclude CIKMOV? Not enforce. This simple matches all valid but too permissive. If want strict official letters restrictions:\n`^(?:GIR ?0AA|[A-PR-UWYZ](?:\\d{1,2}|[A-HK-Y]\\d{1,2}|\\d[ABEHMNPRVWXY]|[A-HK-Y]\\d[ABEHMNPRVWXY]) ?\\d[ABD-HJLNP-UW-Z]{2})$` with `i`. Need test.\n\nLet's break official pattern:\nOutward alternatives:\n1. `[A-PR-UWYZ]\\d{1,2}`: one-letter area + district digits. But includes area Z? [UWYZ] includes Z, yes ZE? Maybe area ZE is allowed? area letters maybe A-Z excluding I,J,O,V,X? But [A-PR-UWYZ] means A-P (except O? Wait A-P includes O? Character class [A-PR-UWYZ] is union [A-P], [R-U], [W], [Y], [Z]. It excludes Q, V, X, also O? [A-P] includes O? yes O included. But official area may exclude O? Actually OX allowed? If OX includes O? area OX has O. So okay. It excludes I? [A-P] includes I? Wait [A-P] is A B C D E F G H I J K L M N O P? Yes includes I and J. But I/J should be excluded? In char class [A-PR-UWYZ] includes I,J. That seems wrong if area exclude I/J. However official may allow IG? Yes I. J? JE? Jersey postcode area JE. So J allowed. OK. Excludes Q, V, X? Also maybe X not used, Q not. So [A-PR-UWYZ] = A-Z except Q, V, X? Let's see A-P includes A-P; R-U includes R-U; W; Y-Z. Missing Q,V,X. Good.\n\nDistrict letters [A-HK-Y]: A-H, K-Y. This excludes I and J? but area second letters may include K? For outward two-letter area? [A-HK-Y] includes K? Yes. Excludes I,J,O? Wait A-H includes A-H; K-Y includes K-Y. Missing I,J, and? includes Z? K-Y stops Y, so excludes Z? But some area second letter Z? Maybe not except ZE? ZE is area two-letter? If area ZE, second letter Z but district maybe E? Actually ZE1? Area ZE is two letters: Z + E. Pattern second alt: [A-PR-UWYZ][A-HK-Y]\\d{1,2}; For ZE1: first Z (allowed), second E (allowed) -> ok. So first letter can be Z, second letter in area can be E. Excluding Z second because no area? Maybe. But if area Z? Not used. Good. It excludes I/J? [A-HK-Y] excludes I,J. Are there two-letter areas with second letter I? WI? maybe no. J? NJ? no. O? MO? maybe not. So okay.\n\nThird alt: `[A-PR-UWYZ]\\d[ABEHMNPRVWXY]`: one-letter area digit + district letter. Allowed letters: A B E H M N P R V W X Y? That excludes C,D,F,G,I,J,K,L,O,Q,S,T,U,Z? Maybe some outward letters include? e.g. B? yes. W1A. M? M1? district letter? M1? no letter. But M? maybe? Need official list. Could be correct? Wait allowed district letters maybe ABEHMNPRVWXY? This from official. It includes X? Are there outward district letter X? Maybe X? Not likely. It includes W, Y. Maybe for W1A, N1A, etc. But official may use [ABEHMNPRVWXY].\n\nFourth: `[A-PR-UWYZ][A-HK-Y]\\d[ABEHMNPRVWXY]`: two-letter area, digit, letter. e.g. EC1A? E then C? [A-HK-Y] allows C; then digit 1; letter A. Good. SW1A: S W? [A-HK-Y] allows W; digit; letter A. SE1W? etc.\n\nInward letters `[ABD-HJLNP-UW-Z]{2}`: allowed letters A,B,D-H,J,L,N,P-U,W-Z. Excludes C,I,K,M,O,V? It includes? A B, D-H (D,E,F,G,H), J, L, N (no M), P-U (P,Q,R,S,T,U), W-Z (W,X,Y,Z). Excludes C,I,K,M,O,V. Yes official inward letters exclude CIKMOV. It allows Q, X? maybe. Inward letters: no C,I,K,M,O,V, but may allow Q? I think yes? Some postcodes? Maybe.\n\nSpace: official pattern uses ` ` literal. We can allow optional whitespace `[\\s]*`? If use ` ?` only one optional space. In regex, for GIR ?0AA, space optional. Need if user enters lowercase: add `i`. Could write `^(?:GIR ?0[A-Z]{2}|...) $` with `i`. Note if `GIR` special, use case-insens? If not flag? If pattern uppercase and `i` flag, okay. Need maybe `GIR\\s?0[A-Z]{2}`. If flag i, letters case insensitive. Need anchor with multiline? Use ^$ and no multiline if testing whole string.\n\nBut maybe official regex needs allow space optional and no space? Usually postcode has space; many form patterns allow optional. Could use `\\s?` but `\\s` matches newline; use `[ ]?` for single space. Maybe ` *`? To allow no or one space, `\\s?`. For strict single optional space ` ?`. If no flag i, include uppercase/lowercase ranges. Could present:\nJavaScript / regex literal:\n`/^(?:GIR ?0[A-Z]{2}|[A-PR-UWYZ](?:\\d{1,2}|[A-HK-Y]\\d{1,2}|\\d[ABEHMNPRVWXY]|[A-HK-Y]\\d[ABEHMNPRVWXY]) ?\\d[ABD-HJLNP-UW-Z]{2})$/i`\n\nNeed test examples: SW1A 1AA: after optional space? pattern starts area: `GIR` no, then `[A-PR-UWYZ]` matches S? Wait area two letters? Fourth alt `[A-PR-UWYZ][A-HK-Y]\\d[ABEHMNPRVWXY]`: S allowed? [A-PR-UWYZ] includes S (R-U). W allowed in second [A-HK-Y]? W in K-Y yes. digit 1, letter A allowed. Then ` ?\\d[ABD-HJLNP-UW-Z]{2}` matches space 1AA. Good.\nN1 9GT: third alt? first one-letter area N, digit 1, then? Wait third alt requires digit + letter. N1 has no letter, so first alt `[A-PR-UWYZ]\\d{1,2}` matches N1. Good.\nN16 0RR: first alt matches N16.\nW1A 1HQ: third alt `[A-PR-UWYZ]\\d[ABEHMNPRVWXY]` matches W1A; then space 1H? inward 1HQ: 1, H allowed? [ABD-HJLNP-UW-Z]: H included. Q allowed. Good.\nEC1A 1BB: fourth alt E C? E allowed first? [A-PR-UWYZ] includes E. C allowed second [A-HK-Y]. digit 1, letter A allowed. Inward 1BB: B,B allowed.\nM1 1BE: first alt M1; inward B,E. Good.\nBS99 6QZ: fourth? [A-PR-UWYZ][A-HK-Y]\\d{1,2} => B S 99. inward 6 Q Z: Q and Z allowed. Good.\nGIR 0AA: special: GIR ?0[A-Z]{2} matches GIR 0AA with i? GIR uppercase; 0AA with [A-Z] uppercase; if input lowercase \"gir 0aa\" with i matches 0? [A-Z] case-insens? yes. But `[A-Z]{2}` under i matches lowercase. Good. But if no space? `GIR ?0AA` matches GIR0AA. Is GIR0AA valid? Probably official includes optional? The special postcode GIR 0AA has space, but pattern may accept no space. Fine.\n\nPotential issue: `[A-PR-UWYZ]` includes I,J,O? Does official area exclude maybe I, J, O? But IG uses I, JE uses J, OX uses O. So okay. Excludes Q,V,X. Good.\n\nPotential issue: Inward letter set includes Z? I think inward excludes Z? Maybe official? Let's verify. UK postcode outward/inward letters restrictions: Outward: area code first letters A-Z except I,J,K,M,O,V,X? Hmm. Inward second part letters exclude C,I,K,M,O,V. I think includes Z? Many postcodes end with AB... maybe. Official inward letters are A-Z excluding C,I,K,M,O,V? If so Z is allowed. The regex `[ABD-HJLNP-UW-Z]` includes Z, includes Q, includes X. Are Q/X allowed in inward? I recall outward code first letter excludes I,J,K,M,O,V,X? Inward code last two letters exclude C,I,K,M,O,V. Q maybe allowed? Are there any Q/X? Maybe inward can include Q? I think no Q? Actually government regex uses `[ABD-HJLNP-UW-Z]{2}`. Yes includes Q and Z, X? includes X. Good.\n\nPotential issue: outward district letter set `[ABEHMNPRVWXY]` includes V and X? Are V/X allowed? Maybe district letter may be A-E,H,M,N,P,R,V,W,X,Y? Some patterns include A-H,K-Y? Let's find authoritative. The official regex from GOV.UK? I recall:\n```\nvar postcodeRegexp = /^(?:GIR ?0AA|(?:AB|BD|BS|CF|CH|CV|DE|DH|DN|DT|DY|EC|EH|EN|EX|GU|HA|HD|HG|HP|HR|HS|HU|IG|IP|KT|KW|KY|LE|LN|LS|LU|M|ME|MK|NA|NE|NG|NN|NR|NW|OL|OX|PA|PE|PH|PL|PO|RG|RH|RM|SE|SG|SK|SL|SM|SN|SO|SP|SR|SS|ST|SW|WC|WD|WF|WR|WS|WV|YO)?[0-9]{1,2}?) ?[0-9][A-Z]{2}$/i;\n```\nNo.\n\nLet's search memory: UK government recommended: \n```\n^(([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2}))$\n```\nThis has a typo maybe missing group. More precise from `postcode-validator`? Another official (Royal Mail?) \n```\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\n```\nThis is too permissive but official? It allows `ZZ9 9ZZ`, invalid. It also allows no strict letters.\n\nAnother exact regex from \"UK Postcode Regex\" widely:\n```\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$\n```\nThe last `[A-Ha-hJ-Yj-y][0-9]?[A-Za-z]` maybe for two-letter area with optional second digit before final letter? It might allow `AB12C`? invalid? The format could be AA99A? Is that valid? Hmm. Let's verify: outward length can be 4. If area 2 letters and district 2 digits + letter would be 5 chars, invalid (except GIR). But `([A-Ha-hJ-Yj-y][0-9]?[A-Za-z])` after area? Full: `[A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]` => first area letter, second area letter, optional digit, district letter? For `EC1A`: E C 1 A; `0-9?` digit optional, then letter. For `AB?` maybe `AB`? Hmm maybe it means area 2 letters then district 1 or 2 digits? Wait the regex nested: `(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))`. So for 2-letter area: first letter, second letter, optional digit, final letter. That's only digit + final letter if digit present, not two digits + final letter. Optional digit maybe means if no digit? weird: e.g. AB? invalid. Maybe due to grouping? It may be flawed.\n\nLet's derive from Royal Mail? Postcode format: Outward code 1-2 letters, 1-2 digits, or 1 digit plus 1 letter. The outward code is 3 or 4 characters: \n- [A-Z]{1,2} [0-9]{1,2} [A-Z]?  (But if area length 1, district can be 2 digits? then optional letter? maybe no? e.g. M1? A9? A99? A9A? What about A99A? Is that valid? Maybe area length 1 + district 2 digits + letter? Could there be \"W19A\"? I think no. But simple regex `[A-Z]{1,2}\\d[A-Z\\d]?` handles optional either digit or letter, not both. Good.\n\nLet's see official postcode structure from \"Postcode Address File\" maybe:\n- Outward code: area: 1-2 letters, district: 1-2 digits or 1 digit + 1 letter. Inward: 1 digit + 2 letters.\nThis means patterns:\n`[A-Z]{1,2}\\d{1,2} [0-9][A-Z]{2}` OR `[A-Z]{1,2}\\d[A-Z] [0-9][A-Z]{2}`. Combining: `^[A-Z]{1,2}\\d(?:\\d|[A-Z])? [0-9][A-Z]{2}$`. This is simplest structural. Add GIR special. This doesn't enforce excluded letters. Maybe user wants \"matches a UK postcode\" not full validation. Could offer this. But maybe if they expect exact from regex101? Many ask \"Give a regex that matches a UK postcode.\" Could answer with known regex. We need be helpful.\n\nNeed choose final: likely give strict regex. Maybe also include \"if you just need format, simpler\". The final should be direct. Could say:\n\nA common practical regex (case-insensitive, optional single space) is:\n```js\n/^(?:GIR ?0[A-Z]{2}|[A-PR-UWYZ](?:\\d{1,2}|[A-HK-Y]\\d{1,2}|\\d[ABEHMNPRVWXY]|[A-HK-Y]\\d[ABEHMNPRVWXY]) ?\\d[ABD-HJLNP-UW-Z]{2})$/i\n```\n\nMatches valid formats and includes GIR 0AA. If optional space required? Use ` ?` optional; if require space replace with ` `. It won't validate every allocation rule (e.g., real postcodes not just pattern) but good. If just need simple shape: `^(?:GIR ?0AA|[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2})$` with `i`.\n\nNeed ensure regex doesn't accept `AB12C 9AA`? Our strict pattern: fourth alt requires `[A-PR-UWYZ][A-HK-Y]\\d[ABEHMNPRVWXY]`; for AB12C? area AB, then first alt? `[A-PR-UWYZ]\\d{1,2}` only one-letter area, can't match. fourth alt needs digit then letter immediately: AB1? but then extra 2? no. Good. Simple pattern accepts. Strict better.\n\nLet's verify strict pattern with all area/district forms:\n- one-letter area + 1 digit: first alt.\n- one-letter area + 2 digits: first alt.\n- two-letter area + 1 digit: second alt.\n- two-letter area + 2 digits: second alt.\n- one-letter area + digit + letter: third alt.\n- two-letter area + digit + letter: fourth alt.\nWhat about one-letter area + digit + optional letter? yes third requires letter, so if no letter first alt. Good.\nWhat about one-letter area + 2 digits + letter? not allowed. Is that ever valid? Need confirm. I think no because outward code max 4, area 1 + district 2 digits + letter =4? Wait area 1 + district 2 digits + letter =4? No area 1 + district 3 chars = 4, outward length 4. Format? Could area \"W\", district \"19A\"? Is W19A valid? I don't think outward can be 1 letter + 2 digits + letter? But Wikipedia says district: 1-2 digits or 1 digit followed by a letter, not 2 digits followed by letter. So correct.\n\nPotential issue: second alt `[A-PR-UWYZ][A-HK-Y]\\d{1,2}` allows area letters second char K? e.g. AB? K? Some area second letters include H? yes. It excludes I/J? Are there areas: IG? area one-letter I? Actually IG is two-letter area: I + G. Does pattern allow? First `GIR` no. Fourth? first I? [A-PR-UWYZ] includes I? [A-P] includes I? yes. Second G allowed [A-HK-Y]? G in A-H yes. Then digit. So IG1? allowed. But is IG area? yes. It allows J second if? [A-HK-Y] excludes I? Wait for area JE: second E allowed. What about second letter J? maybe not. What about area second letter Z? ZE? second E allowed. Good.\n\nBut `[A-PR-UWYZ]` includes O? yes for OX. Good.\n\nThird alt district letters `[ABEHMNPRVWXY]`. Does it include D? no. Are there valid one-letter area digit D outward? Maybe \"M1D\"? no. \"N1E\"? maybe? Let's check known outward codes with final letter. Examples:\n- E1? no letter. E? There are inward? \"E1 ",
+    "reasoning_chars": 23022,
+    "finish": "length",
+    "empty_final": true,
+    "capped": true,
+    "expected_found_in_final": false,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 0,
+      "top6gram": 0,
+      "distinct_ratio": null,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 3428,
+      "top6gram": 3,
+      "distinct_ratio": 0.34159859976662776,
+      "flag": true
+    },
+    "usage": {
+      "prompt_tokens": 61,
+      "total_tokens": 8253,
+      "completion_tokens": 8192,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 8192
+      }
+    },
+    "raw_response_file": "items/12/response.raw",
+    "elapsed_s": 75.793914,
+    "ended_at": "2026-09-05T21:17:55+00:00"
+  },
+  {
+    "index": 13,
+    "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+    "expected": "0.05",
+    "seed": 748832000,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number."
+        }
+      ],
+      "seed": 748832000,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "b038af59f31a9e8af3f384faffad94db0e30915446c41ea3192a96af8a83317e",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:39+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-983f251631ddf567",
+      "object": "chat.completion",
+      "created": 1788642999,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n0.05",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user: \"A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.\" Classic bat and ball. Ball = 0.05. Need reply with just number. Could be 0.05 or 0.05? just number. Ensure no extra text. final: 0.05.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 92,
+        "total_tokens": 195,
+        "completion_tokens": 103,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 96
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "8474876c62b637e427be67ab538f8207d73c163e36f1811d2723b831caaaea64",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n0.05",
+    "reasoning": "We need answer user: \"A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.\" Classic bat and ball. Ball = 0.05. Need reply with just number. Could be 0.05 or 0.05? just number. Ensure no extra text. final: 0.05.\n",
+    "reasoning_chars": 291,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 1,
+      "top6gram": 0,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 57,
+      "top6gram": 1,
+      "distinct_ratio": 0.7894736842105263,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 92,
+      "total_tokens": 195,
+      "completion_tokens": 103,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 96
+      }
+    },
+    "raw_response_file": "items/13/response.raw",
+    "elapsed_s": 1.650991,
+    "ended_at": "2026-09-05T21:16:41+00:00"
+  },
+  {
+    "index": 14,
+    "prompt": "Complete the proverb and explain it: A stitch in time",
+    "expected": "nine",
+    "seed": 702738386,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Complete the proverb and explain it: A stitch in time"
+        }
+      ],
+      "seed": 702738386,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "0dd9e2b4f5a0f0fd4b259bf3e19eddb60a56af2e8e5d6c488b4e75d04d6bf7a2",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:40+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-a20e66c359bf6c92",
+      "object": "chat.completion",
+      "created": 1788643000,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n“A stitch in time **saves nine**.”\n\n**Meaning:** If you deal with a small problem early, you can prevent it from becoming much bigger and harder to fix later. It’s like repairing a small tear in fabric immediately so it doesn’t spread and require more work.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user: \"Complete the proverb and explain it: A stitch in time\". Simple. Final should complete proverb \"saves nine\" and explain: dealing with small problem promptly prevents bigger problem later. Maybe concise.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 63,
+        "total_tokens": 170,
+        "completion_tokens": 107,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 46
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "c84dc2586453e1237ee6d1353947661176bdcef6ca930ec91b406c530b1749f6",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n“A stitch in time **saves nine**.”\n\n**Meaning:** If you deal with a small problem early, you can prevent it from becoming much bigger and harder to fix later. It’s like repairing a small tear in fabric immediately so it doesn’t spread and require more work.",
+    "reasoning": "We need answer user: \"Complete the proverb and explain it: A stitch in time\". Simple. Final should complete proverb \"saves nine\" and explain: dealing with small problem promptly prevents bigger problem later. Maybe concise.\n",
+    "reasoning_chars": 224,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 45,
+      "top6gram": 1,
+      "distinct_ratio": 0.8666666666666667,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 34,
+      "top6gram": 1,
+      "distinct_ratio": 0.9117647058823529,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 63,
+      "total_tokens": 170,
+      "completion_tokens": 107,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      }
+    },
+    "raw_response_file": "items/14/response.raw",
+    "elapsed_s": 1.70488,
+    "ended_at": "2026-09-05T21:16:41+00:00"
+  },
+  {
+    "index": 15,
+    "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+    "expected": "Paris",
+    "seed": 1312866543,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?"
+        }
+      ],
+      "seed": 1312866543,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "e940aeb48c39c16a82e18a5fc0f6b876f0ee9dab8c9854a91eccc441c1c14355",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:40+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-9157dad88ff35779",
+      "object": "chat.completion",
+      "created": 1788643000,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nAnswer A: Paris is correct.\n\nThe capital of France is Paris. Lyon is a major city in France, but it is not the country’s capital.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to respond to user: \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?\" Need final concise. Answer: A Paris correct because capital of France is Paris; Lyon is a major city but not capital. Ensure language same? User English. Final likely English.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 85,
+        "total_tokens": 198,
+        "completion_tokens": 113,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 78
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "b356885e248b459c62a8817c333c41e6e76cac05659589369528438c241a2445",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nAnswer A: Paris is correct.\n\nThe capital of France is Paris. Lyon is a major city in France, but it is not the country’s capital.",
+    "reasoning": "We need to respond to user: \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?\" Need final concise. Answer: A Paris correct because capital of France is Paris; Lyon is a major city but not capital. Ensure language same? User English. Final likely English.\n",
+    "reasoning_chars": 343,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 25,
+      "top6gram": 1,
+      "distinct_ratio": 0.88,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 61,
+      "top6gram": 1,
+      "distinct_ratio": 0.7704918032786885,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 85,
+      "total_tokens": 198,
+      "completion_tokens": 113,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 78
+      }
+    },
+    "raw_response_file": "items/15/response.raw",
+    "elapsed_s": 1.756872,
+    "ended_at": "2026-09-05T21:16:42+00:00"
+  },
+  {
+    "index": 16,
+    "prompt": "Write a haiku about GPUs.",
+    "expected": null,
+    "seed": 1476149434,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a haiku about GPUs."
+        }
+      ],
+      "seed": 1476149434,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "c286cfee581dbec2577848be9bf75c66bae080e74a23318abfe3015a8d3fd86f",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:41+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-8a987edcfa2e8082",
+      "object": "chat.completion",
+      "created": 1788643001,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nSilicon brains hum  \nparallel streams race to solve  \npixels bloom to life",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "User request: \"Write a haiku about GPUs.\" Need produce final with haiku. Ensure haiku 5-7-5 maybe. \"Silicon brains hum / parallel streams race to solve / pixels bloom to life\" Count: Sil-i-con brains hum = 5? Silicon often 3 (sil-i-con), brains 1, hum 1 =>5. parallel streams race to solve: parallel 3? par-al-lel (3) streams 1 race 1 to 1 solve 1 =7? total 7. pixels bloom to life: pix-els 2, bloom1, to1, life1 =5. Good.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 59,
+        "total_tokens": 214,
+        "completion_tokens": 155,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 137
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "4f3e1aec3ffac038d9fa3af48f4daa99ee9d5335960e5c2d2d7aee633fcd0a06",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nSilicon brains hum  \nparallel streams race to solve  \npixels bloom to life",
+    "reasoning": "User request: \"Write a haiku about GPUs.\" Need produce final with haiku. Ensure haiku 5-7-5 maybe. \"Silicon brains hum / parallel streams race to solve / pixels bloom to life\" Count: Sil-i-con brains hum = 5? Silicon often 3 (sil-i-con), brains 1, hum 1 =>5. parallel streams race to solve: parallel 3? par-al-lel (3) streams 1 race 1 to 1 solve 1 =7? total 7. pixels bloom to life: pix-els 2, bloom1, to1, life1 =5. Good.\n",
+    "reasoning_chars": 423,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": false,
+    "final_repetition": {
+      "word_count": 12,
+      "top6gram": 1,
+      "distinct_ratio": 0.9166666666666666,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 76,
+      "top6gram": 1,
+      "distinct_ratio": 0.6973684210526315,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 59,
+      "total_tokens": 214,
+      "completion_tokens": 155,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      }
+    },
+    "raw_response_file": "items/16/response.raw",
+    "elapsed_s": 2.117736,
+    "ended_at": "2026-09-05T21:16:43+00:00"
+  },
+  {
+    "index": 17,
+    "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+    "expected": "37",
+    "seed": 85107287,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Convert 98.6 Fahrenheit to Celsius, show the formula."
+        }
+      ],
+      "seed": 85107287,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "22d1f943501a9789028203ac7da6c06aa0c58a45990158aa7b22f4fc7eb576d2",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:41+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-b092cccfd95fe46d",
+      "object": "chat.completion",
+      "created": 1788643001,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nThe formula is:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nFor 98.6°F:\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9} = 66.6 \\times \\frac{5}{9} = 37\n\\]\n\nSo:\n\n\\[\n98.6^\\circ F = 37^\\circ C\n\\]",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user: Convert 98.6 Fahrenheit to Celsius, show formula. Now produce final. Need simple calculation: C = (F - 32) * 5/9. (98.6-32)=66.6; *5/9=333/9? 66.6*5=333.0; /9=37.0. So 37°C. Show formula.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 66,
+        "total_tokens": 273,
+        "completion_tokens": 207,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 98
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "e877e1583c389ef5b649351aa744bd1bfebb6628e492974bc59bbee4f33bfd04",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nThe formula is:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nFor 98.6°F:\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9} = 66.6 \\times \\frac{5}{9} = 37\n\\]\n\nSo:\n\n\\[\n98.6^\\circ F = 37^\\circ C\n\\]",
+    "reasoning": "We need answer user: Convert 98.6 Fahrenheit to Celsius, show formula. Now produce final. Need simple calculation: C = (F - 32) * 5/9. (98.6-32)=66.6; *5/9=333/9? 66.6*5=333.0; /9=37.0. So 37°C. Show formula.\n",
+    "reasoning_chars": 209,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 37,
+      "top6gram": 1,
+      "distinct_ratio": 0.5675675675675675,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 32,
+      "top6gram": 1,
+      "distinct_ratio": 0.96875,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 66,
+      "total_tokens": 273,
+      "completion_tokens": 207,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 98
+      }
+    },
+    "raw_response_file": "items/17/response.raw",
+    "elapsed_s": 2.631479,
+    "ended_at": "2026-09-05T21:16:43+00:00"
+  },
+  {
+    "index": 18,
+    "prompt": "Name the process by which plants make food and give its chemical equation.",
+    "expected": "hotosynthesis",
+    "seed": 1135016386,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Name the process by which plants make food and give its chemical equation."
+        }
+      ],
+      "seed": 1135016386,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "c75dc6223903d03bdb552d2a6b9a0893056cfcec5be15262788a1fdd2a79b8a5",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:41+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-9a587511073dfc4a",
+      "object": "chat.completion",
+      "created": 1788643001,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\nThe process by which plants make food is **photosynthesis**.\n\n**Chemical equation:**\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nThat is, carbon dioxide and water, in the presence of sunlight and chlorophyll, form glucose and oxygen.",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need answer user: \"Name the process by which plants make food and give its chemical equation.\" Simple biology. Need final concise. Process photosynthesis. Equation: 6CO2 + 6H2O ->(sunlight, chlorophyll) C6H12O6 + 6O2. Could include glucose. Ensure correct.\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 66,
+        "total_tokens": 231,
+        "completion_tokens": 165,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 73
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "25ae944f487fda48f820978b914dcec41aed59dd463f563980cd43734625bdfc",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\nThe process by which plants make food is **photosynthesis**.\n\n**Chemical equation:**\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nThat is, carbon dioxide and water, in the presence of sunlight and chlorophyll, form glucose and oxygen.",
+    "reasoning": "We need answer user: \"Name the process by which plants make food and give its chemical equation.\" Simple biology. Need final concise. Process photosynthesis. Equation: 6CO2 + 6H2O ->(sunlight, chlorophyll) C6H12O6 + 6O2. Could include glucose. Ensure correct.\n",
+    "reasoning_chars": 260,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 38,
+      "top6gram": 1,
+      "distinct_ratio": 0.9210526315789473,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 38,
+      "top6gram": 1,
+      "distinct_ratio": 0.9736842105263158,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 66,
+      "total_tokens": 231,
+      "completion_tokens": 165,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 73
+      }
+    },
+    "raw_response_file": "items/18/response.raw",
+    "elapsed_s": 2.111816,
+    "ended_at": "2026-09-05T21:16:43+00:00"
+  },
+  {
+    "index": 19,
+    "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+    "expected": "\"a\"",
+    "seed": 190222519,
+    "request": {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0,
+      "chat_template_kwargs": {
+        "enable_thinking": true
+      },
+      "max_tokens": 8192,
+      "model": "qwen38flashnext",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Return only valid JSON with keys a,b,c set to 1,2,3."
+        }
+      ],
+      "seed": 190222519,
+      "stream": false,
+      "n": 1
+    },
+    "request_sha256": "531a380990f4b2361f4fecba255c9c36760ad22f57e986b0c2361058a3b0076a",
+    "url": "http://127.0.0.1:8000/v1/chat/completions",
+    "started_at": "2026-09-05T21:16:41+00:00",
+    "http_status": 200,
+    "response": {
+      "id": "chatcmpl-b3858457e8340db5",
+      "object": "chat.completion",
+      "created": 1788643001,
+      "model": "qwen38flashnext",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+            "refusal": null,
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "reasoning": "We need to respond to user: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need final only JSON: {\"a\":1,\"b\":2,\"c\":3}\n"
+          },
+          "logprobs": null,
+          "finish_reason": "stop",
+          "stop_reason": null,
+          "token_ids": null,
+          "routed_experts": null
+        }
+      ],
+      "service_tier": null,
+      "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+      "usage": {
+        "prompt_tokens": 70,
+        "total_tokens": 131,
+        "completion_tokens": 61,
+        "prompt_tokens_details": null,
+        "completion_tokens_details": {
+          "reasoning_tokens": 45
+        }
+      },
+      "prompt_logprobs": null,
+      "prompt_token_ids": null,
+      "prompt_text": null,
+      "kv_transfer_params": null,
+      "ec_transfer_params": null,
+      "metrics": null
+    },
+    "response_sha256": "69dd0dd6b75f0109d225bbc03ebbdfc8b3911b27ac4fcfe94069a2589dd3d663",
+    "response_content_type": "application/json",
+    "verdict": "ok",
+    "reasons": [],
+    "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+    "reasoning": "We need to respond to user: \"Return only valid JSON with keys a,b,c set to 1,2,3.\" Need final only JSON: {\"a\":1,\"b\":2,\"c\":3}\n",
+    "reasoning_chars": 125,
+    "finish": "stop",
+    "empty_final": false,
+    "capped": false,
+    "expected_found_in_final": true,
+    "expected_found_in_reasoning": true,
+    "final_repetition": {
+      "word_count": 1,
+      "top6gram": 0,
+      "distinct_ratio": 1.0,
+      "flag": false
+    },
+    "reasoning_repetition": {
+      "word_count": 21,
+      "top6gram": 1,
+      "distinct_ratio": 0.8571428571428571,
+      "flag": false
+    },
+    "usage": {
+      "prompt_tokens": 70,
+      "total_tokens": 131,
+      "completion_tokens": 61,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 45
+      }
+    },
+    "raw_response_file": "items/19/response.raw",
+    "elapsed_s": 0.85663,
+    "ended_at": "2026-09-05T21:16:42+00:00"
+  }
+]

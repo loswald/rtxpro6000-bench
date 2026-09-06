@@ -1,0 +1,154 @@
+{
+  "captured_utc": "2026-09-05T21:02:56.234704+00:00",
+  "scope": "read-only host2 result inspection; no requests or job changes",
+  "files": {
+    "/workspace/results/ksweep_qfn3.log": {
+      "size": 410,
+      "tail": [
+        "[20:29:03] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512",
+        "[20:29:03] ########## qwen38fn_tp4 (126G, tp=4 x1) : -:- ##########",
+        "[20:30:53]     x lin=- moe=- : RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {}",
+        "[20:30:58]   qwen38fn_tp4: NO combination served",
+        "[20:30:58] ########## qwen38fn_tp4b12x (126G, tp=4 x1) : b12x:- ##########"
+      ]
+    },
+    "/workspace/results/ksweep_qfn4.log": {
+      "size": 917,
+      "tail": [
+        "[20:33:59] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512",
+        "[20:33:59] ########## qwen38fn_tp2x2m (126G, tp=2 x2) : -:marlin ##########",
+        "[20:37:19]     x lin=- moe=marlin : RuntimeError: Failed to run autotuning code block: CUDA out of memory. Tried to allocate 47.69 GiB. GPU 0 has a total capaci",
+        "[20:37:24]   qwen38fn_tp2x2m: NO combination served",
+        "[20:37:25] ########## qwen38fn_tp4m (126G, tp=4 x1) : -:marlin ##########",
+        "[20:40:50]     v lin=- moe=marlin healthy 200s | GPU KV cache size: 967,845 tokens",
+        "      kernel: Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'",
+        "quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/qwen38fn_tp4m_--marlin_quality20.json",
+        "  router     C1024   727.1s     676 req/min     1442 out/s     11538 in/s     12980 tot/s  TTFT  69652/  80066 ms  TPOT 134.0/ 145.9 ms  ITL 134.0  E2E  86.7/ 96.2 s"
+      ]
+    },
+    "/workspace/results/qfn_best.tps": {
+      "size": 0,
+      "tail": []
+    },
+    "/workspace/bench/lists/qwen38fn_c2.txt": {
+      "text": "# Qwen3.8-Flash-Next (180B total, 6B active, index 46 - level with GLM-5.3-Flash at a thirtieth of the active\n# parameters). On the dev332 build it died under every kernel (\"no parameter named ngram_embedding.weight_scale\n# in Qwen4ExpNGramEmbedding\"); this box's dev446 build is the first chance. QSA needs a BF16 KV cache. Layout\n# first, as the day taught: four expert-parallel engines, then two TP2 replicas. Auto kernels only - the W4A4\n# linear kernel is what tripped the loader.\nqwen38fn_dp4ep4|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.90\nqwen38fn_tp2x2|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:-|--kv-cache-dtype|auto|--gpu-memory-utilization|0.90\n"
+    },
+    "/workspace/bench/lists/qwen38fn_c3.txt": {
+      "text": "# Qwen3.8-Flash-Next, second attempt: the PLE tables are FP8 in this checkpoint and need VLLM_QWEN4EXP_PLE_FP8=1\n# (box/patch_ple.py). DP4+EP loads the whole 95 GB per rank and OOMs, so two TP2 replicas.\nqwen38fn_tp2x2|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:-|--kv-cache-dtype|auto|--gpu-memory-utilization|0.90\n"
+    },
+    "/workspace/bench/lists/qwen38fn_c4.txt": {
+      "text": "# Qwen3.8-Flash-Next, further arms once 2 x TP2 serves with the FP8 PLE fix: the W4A4 linear kernel that the loader\n# bug had blocked, two engines of two cards with expert parallelism (the GLM lesson), and one TP4 engine.\nqwen38fn_tp2x2b12x|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|b12x:-|--kv-cache-dtype|auto|--gpu-memory-utilization|0.90\nqwen38fn_dp2tp2ep2|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--data-parallel-size|2|--tensor-parallel-size|2|--enable-expert-parallel|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.90\nqwen38fn_tp4|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.90\n"
+    },
+    "/workspace/bench/lists/qwen38fn_c5.txt": {
+      "text": "# Qwen3.8-Flash-Next after the FP8 PLE fix: the loader now passes, but at TP2 an autotuning step materialises the\n# rank's PLE table in BF16 (47.7 GiB) on top of 63 GB of weights and dies. One TP4 engine halves both: try it,\n# then the W4A4 linear kernel on the same layout.\nqwen38fn_tp4|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92\nqwen38fn_tp4b12x|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:-|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92\n"
+    },
+    "/workspace/bench/lists/qwen38fn_c6.txt": {
+      "text": "# Qwen3.8-Flash-Next, third attempt. With the FP8 PLE fix the loader passes; the auto MoE backend then picks\n# FLASHINFER_CUTLASS for the NVFP4 experts and dies at TP4 (\"intermediate size padding for w1 and w3 ... not\n# currently supported\"), and at TP2 an autotune allocates the rank's PLE table in BF16 and runs out of memory.\n# Marlin's NVFP4 MoE kernel has neither problem: two TP2 replicas, one TP4 engine, then TP4 with W4A4 linears.\nqwen38fn_tp2x2m|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:marlin|--kv-cache-dtype|auto|--gpu-memory-utilization|0.92\nqwen38fn_tp4m|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:marlin|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92\nqwen38fn_tp4mb|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|b12x:marlin|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.92\n"
+    },
+    "/workspace/results/probe/qwen38fn_tp4m_--marlin_quality20.json": {
+      "text": "[\n {\n  \"prompt\": \"What is 17*23? Reply with just the number.\",\n  \"text\": \"\\n\\n391\",\n  \"reasoning_chars\": 138,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.\",\n  \"text\": \"\\n\\n80\",\n  \"reasoning_chars\": 167,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.\",\n  \"text\": \"\\n\\n```python\\ndef fib(n):\\n    if n < 0:\\n        raise ValueError(\\\"n must be non-negative\\\")\\n\\n    a, b = 0, 1\\n    for _ in range(n):\\n        a, b = b, a + b\\n    return a\\n```\\n\\nThis returns the 0-based Fibonacci number, where `fib(0) = 0` and `fib(1) = 1`.\",\n  \"reasoning_chars\": 328,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.844,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).\",\n  \"text\": \"\\n\\n```sql\\nSELECT\\n  c.id,\\n  c.name,\\n  SUM(o.amount) AS total_order_value\\nFROM customers c\\nJOIN orders o ON o.customer_id = c.id\\nGROUP BY c.id, c.name\\nORDER BY total_order_value DESC\\nLIMIT 3;\\n```\\n\\nFor SQL Server, replace `LIMIT 3` with:\\n\\n```sql\\nSELECT TOP 3\\n```\",\n  \"reasoning_chars\": 698,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.85,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Rate the following answer for correctness on a 1-5 scale and explain briefly.\\nQuestion: What is the capital of Australia?\\nAnswer: Sydney.\",\n  \"text\": \"\\n\\n1/5 \\u2014 Sydney is not the capital of Australia; the capital is Canberra.\",\n  \"reasoning_chars\": 320,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.769,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Translate to French: The meeting has been moved to Thursday afternoon.\",\n  \"text\": \"\\n\\nLa r\\u00e9union a \\u00e9t\\u00e9 report\\u00e9e \\u00e0 jeudi apr\\u00e8s-midi.\",\n  \"reasoning_chars\": 484,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.\",\n  \"text\": \"\\n\\nLarge language models are trained on massive datasets and can handle many tasks without specialized training, but they may generate false information.\",\n  \"reasoning_chars\": 243,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"List three differences between TCP and UDP.\",\n  \"text\": \"\\n\\n1. **Connection type:** TCP is connection-oriented; UDP is connectionless.  \\n2. **Reliability:** TCP guarantees reliable, ordered delivery; UDP does not guarantee delivery or order.  \\n3. **Overhead/speed:** TCP has more overhead and is slower; UDP has less overhead and is faster.\",\n  \"reasoning_chars\": 86,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.744,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.\",\n  \"text\": \"\\n\\nBecause the experiment used a larger batch size, training converged slower.\",\n  \"reasoning_chars\": 892,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.\",\n  \"text\": \"\\n\\n{\\n  \\\"name\\\": \\\"Maria Lopez\\\",\\n  \\\"age\\\": 34,\\n  \\\"city\\\": \\\"Lisbon\\\"\\n}\",\n  \"reasoning_chars\": 216,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Explain why the sky is blue in two sentences.\",\n  \"text\": \"\\n\\nSunlight scatters in all directions by gases in Earth\\u2019s atmosphere, and shorter blue wavelengths scatter more strongly than longer red wavelengths. This scattered blue light reaches our eyes from all parts of the sky, making it appear blue.\",\n  \"reasoning_chars\": 119,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.921,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"What is the derivative of x^3 * sin(x)?\",\n  \"text\": \"\\n\\nUsing the product rule:\\n\\n\\\\[\\n\\\\frac{d}{dx}\\\\left(x^3 \\\\sin x\\\\right)\\n= 3x^2 \\\\sin x + x^3 \\\\cos x\\n\\\\]\\n\\nSo the derivative is:\\n\\n\\\\[\\n\\\\boxed{3x^2 \\\\sin x + x^3 \\\\cos x}\\n\\\\]\",\n  \"reasoning_chars\": 176,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.667,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Give a regex that matches a UK postcode.\",\n  \"text\": \"\",\n  \"reasoning_chars\": 5518,\n  \"finish\": \"length\",\n  \"top6gram\": 31,\n  \"distinct\": 0.176,\n  \"verdict\": \"degenerate\"\n },\n {\n  \"prompt\": \"A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.\",\n  \"text\": \"\\n\\n0.05\",\n  \"reasoning_chars\": 246,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Complete the proverb and explain it: A stitch in time\",\n  \"text\": \"\\n\\nThe proverb is:\\n\\n**\\u201cA stitch in time saves nine.\\u201d**\\n\\n**Meaning:**  \\nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later.\\n\\n**Explanation:**  \\nThe saying comes from sewing: if you fix a small tear with one stitch now, you may avoid needing nine stitches later. In everyday life, it encourages prompt action and prevention rather than waiting until a minor issue becomes serious.\",\n  \"reasoning_chars\": 196,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.829,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?\",\n  \"text\": \"\\n\\nAnswer A: **Paris** is correct.\\n\\nParis is the capital of France. Lyon is a major French city, but it is not the capital.\",\n  \"reasoning_chars\": 270,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.826,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Write a haiku about GPUs.\",\n  \"text\": \"\\n\\nSilicon hearts hum  \\ncores count light in silent rows  \\nfans whisper through night\",\n  \"reasoning_chars\": 973,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Convert 98.6 Fahrenheit to Celsius, show the formula.\",\n  \"text\": \"\\n\\nFormula:\\n\\n\\\\[\\nC = (F - 32) \\\\times \\\\frac{5}{9}\\n\\\\]\\n\\nFor \\\\(F = 98.6\\\\):\\n\\n\\\\[\\nC = (98.6 - 32) \\\\times \\\\frac{5}{9}\\n\\\\]\\n\\n\\\\[\\nC = 66.6 \\\\times \\\\frac{5}{9} = 37\\n\\\\]\\n\\n**98.6\\u00b0F = 37\\u00b0C**\",\n  \"reasoning_chars\": 249,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.514,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Name the process by which plants make food and give its chemical equation.\",\n  \"text\": \"\\n\\nThe process is **photosynthesis**.\\n\\nChemical equation:\\n\\n\\\\[\\n6CO_2 + 6H_2O \\\\xrightarrow{\\\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\\n\\\\]\\n\\nCarbon dioxide + water \\u2192 glucose + oxygen\",\n  \"reasoning_chars\": 273,\n  \"finish\": \"stop\",\n  \"top6gram\": 1,\n  \"distinct\": 0.875,\n  \"verdict\": \"ok\"\n },\n {\n  \"prompt\": \"Return only valid JSON with keys a,b,c set to 1,2,3.\",\n  \"text\": \"\\n\\n{\\\"a\\\":1,\\\"b\\\":2,\\\"c\\\":3}\",\n  \"reasoning_chars\": 162,\n  \"finish\": \"stop\",\n  \"top6gram\": 0,\n  \"distinct\": 1.0,\n  \"verdict\": \"ok\"\n }\n]"
+    },
+    "/workspace/results/smoke/qwen38fn_tp4m_--marlin_p8000.log": {
+      "size": 112702,
+      "head": [
+        "WARNING 09-05 20:37:37 [argparse_utils.py:441] Found duplicate keys --max-num-seqs, --gpu-memory-utilization, --kv-cache-dtype",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:347] ",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:347]        \u2588     \u2588     \u2588\u2584   \u2584\u2588",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:347]  \u2584\u2584 \u2584\u2588 \u2588     \u2588     \u2588 \u2580\u2584\u2580 \u2588  version 0.28.1rc1.dev446+g798544433",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:347]   \u2588\u2584\u2588\u2580 \u2588     \u2588     \u2588     \u2588  model   /workspace/models/Qwen3.8-Flash-Next-NVFP4",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:347]    \u2580\u2580  \u2580\u2580\u2580\u2580\u2580 \u2580\u2580\u2580\u2580\u2580 \u2580     \u2580",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:347] ",
+        "(APIServer pid=141870) INFO 09-05 20:37:37 [api_utils.py:286] non-default args: {'model_tag': '/workspace/models/Qwen3.8-Flash-Next-NVFP4', 'enable_auto_tool_choice': True, 'tool_call_parser': 'qwen3_coder', 'host': '0.0.0.0', 'disable_uvicorn_access_log': True, 'model': '/workspace/models/Qwen3.8-Flash-Next-NVFP4', 'trust_remote_code': True, 'max_model_len': 40960, 'served_model_name': ['m'], 'reasoning_parser': 'qwen3', 'tensor_parallel_size': 4, 'disable_custom_all_reduce': True, 'enable_prefix_caching': True, 'max_num_batched_tokens': 8192, 'max_num_seqs': 512, 'enable_flashinfer_autotune': False, 'moe_backend': 'marlin'}",
+        "(APIServer pid=141870) WARNING 09-05 20:37:37 [envs.py:2282] Unknown vLLM environment variable detected: VLLM_QWEN4EXP_PLE_FP8",
+        "(APIServer pid=141870) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}"
+      ],
+      "selected": [
+        "(EngineCore pid=142358) INFO 09-05 20:37:51 [core.py:123] Initializing a V1 LLM engine (v0.28.1rc1.dev446+g798544433) with config: model='/workspace/models/Qwen3.8-Flash-Next-NVFP4', speculative_config=None, tokenizer='/workspace/models/Qwen3.8-Flash-Next-NVFP4', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=40960, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=modelopt_fp4, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='qwen3', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=m, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_compute_ple_ngram_ids', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_m",
+        "(Worker_TP0 pid=142726) INFO 09-05 20:38:00 [nvfp4.py:261] Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM', 'FLASHINFER_CUTEDSL', 'FLASHINFER_CUTEDSL_BATCHED', 'FLASHINFER_CUTLASS', 'VLLM_CUTLASS', 'MARLIN', 'HUMMING', 'EMULATION'].",
+        "(Worker_TP0 pid=142726) WARNING 09-05 20:38:50 [marlin_utils_fp4.py:354] Your GPU does not have native support for FP4 computation but FP4 quantization is being used. Weight-only FP4 compression will be used leveraging the Marlin kernel. This may degrade performance for compute-heavy workloads.",
+        "(Worker_TP0 pid=142726) INFO 09-05 20:38:50 [nvfp4.py:613] Using MoEPrepareAndFinalizeNoDPEPModular",
+        "(Worker_TP2 pid=142728) INFO 09-05 20:38:54 [model_runner.py:422] Model loading took 35.55 GiB memory and 55.012765 seconds",
+        "(Worker_TP0 pid=142726) INFO 09-05 20:38:57 [model_runner.py:422] Model loading took 35.55 GiB memory and 57.657469 seconds",
+        "(Worker_TP3 pid=142729) INFO 09-05 20:38:57 [model_runner.py:422] Model loading took 35.55 GiB memory and 58.028942 seconds",
+        "(Worker_TP1 pid=142727) INFO 09-05 20:39:01 [model_runner.py:422] Model loading took 35.55 GiB memory and 62.017249 seconds",
+        "(Worker_TP0 pid=142726) INFO 09-05 20:40:18 [gpu_worker.py:632] Available KV cache memory: 13.97 GiB",
+        "(EngineCore pid=142358) INFO 09-05 20:40:18 [kv_cache_utils.py:2312] GPU KV cache size: 967,845 tokens, Maximum concurrency for 40,960 tokens per request: 23.63x",
+        "(Worker_TP0 pid=142726) INFO 09-05 20:40:38 [gpu_worker.py:871] Free memory on device (94.02/94.97 GiB) on startup. Desired GPU memory utilization is (0.92, 87.37 GiB). Actual usage is 37.08 GiB for consumed memory (weights + non-torch), 36.33 GiB for peak activation, and 0.54 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=14263187600` (13.28 GiB) to fit into requested memory, or `--kv-cache-memory=21393323520` (19.92 GiB) to fully utilize gpu memory. Current kv cache memory in use is 13.97 GiB.",
+        "(Worker_TP1 pid=142727) INFO 09-05 20:40:38 [gpu_worker.py:871] Free memory on device (94.02/94.97 GiB) on startup. Desired GPU memory utilization is (0.92, 87.37 GiB). Actual usage is 37.08 GiB for consumed memory (weights + non-torch), 36.33 GiB for peak activation, and 0.54 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=14263187600` (13.28 GiB) to fit into requested memory, or `--kv-cache-memory=21393323520` (19.92 GiB) to fully utilize gpu memory. Current kv cache memory in use is 13.97 GiB.",
+        "(Worker_TP2 pid=142728) INFO 09-05 20:40:38 [gpu_worker.py:871] Free memory on device (94.02/94.97 GiB) on startup. Desired GPU memory utilization is (0.92, 87.37 GiB). Actual usage is 37.08 GiB for consumed memory (weights + non-torch), 36.33 GiB for peak activation, and 0.54 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=14263187600` (13.28 GiB) to fit into requested memory, or `--kv-cache-memory=21393323520` (19.92 GiB) to fully utilize gpu memory. Current kv cache memory in use is 13.97 GiB.",
+        "(Worker_TP3 pid=142729) INFO 09-05 20:40:38 [gpu_worker.py:871] Free memory on device (94.02/94.97 GiB) on startup. Desired GPU memory utilization is (0.92, 87.37 GiB). Actual usage is 37.08 GiB for consumed memory (weights + non-torch), 36.33 GiB for peak activation, and 0.54 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=14263187600` (13.28 GiB) to fit into requested memory, or `--kv-cache-memory=21393323520` (19.92 GiB) to fully utilize gpu memory. Current kv cache memory in use is 13.97 GiB."
+      ],
+      "tail": [
+        "(APIServer pid=141870) INFO 09-05 21:01:05 [loggers.py:310] Engine 000: Avg prompt throughput: 15523.1 tokens/s, Avg generation throughput: 434.1 tokens/s, Running: 196 reqs, Waiting: 818 reqs, GPU KV cache usage: 97.8%, Prefix cache hit rate: 65.1%",
+        "(APIServer pid=141870) INFO 09-05 21:01:15 [loggers.py:310] Engine 000: Avg prompt throughput: 8243.0 tokens/s, Avg generation throughput: 2547.6 tokens/s, Running: 207 reqs, Waiting: 817 reqs, GPU KV cache usage: 99.6%, Prefix cache hit rate: 65.1%",
+        "(APIServer pid=141870) INFO 09-05 21:01:25 [loggers.py:310] Engine 000: Avg prompt throughput: 6507.4 tokens/s, Avg generation throughput: 2463.4 tokens/s, Running: 193 reqs, Waiting: 820 reqs, GPU KV cache usage: 95.6%, Prefix cache hit rate: 65.0%",
+        "(APIServer pid=141870) INFO 09-05 21:01:35 [loggers.py:310] Engine 000: Avg prompt throughput: 15153.4 tokens/s, Avg generation throughput: 456.9 tokens/s, Running: 201 reqs, Waiting: 814 reqs, GPU KV cache usage: 99.5%, Prefix cache hit rate: 65.0%",
+        "(APIServer pid=141870) INFO 09-05 21:01:45 [loggers.py:310] Engine 000: Avg prompt throughput: 4546.6 tokens/s, Avg generation throughput: 3714.9 tokens/s, Running: 207 reqs, Waiting: 817 reqs, GPU KV cache usage: 99.6%, Prefix cache hit rate: 65.0%",
+        "(APIServer pid=141870) INFO 09-05 21:01:55 [loggers.py:310] Engine 000: Avg prompt throughput: 10326.1 tokens/s, Avg generation throughput: 1210.1 tokens/s, Running: 193 reqs, Waiting: 819 reqs, GPU KV cache usage: 96.2%, Prefix cache hit rate: 64.8%",
+        "(APIServer pid=141870) INFO 09-05 21:02:05 [loggers.py:310] Engine 000: Avg prompt throughput: 14536.8 tokens/s, Avg generation throughput: 582.1 tokens/s, Running: 207 reqs, Waiting: 817 reqs, GPU KV cache usage: 99.9%, Prefix cache hit rate: 65.0%",
+        "(APIServer pid=141870) INFO 09-05 21:02:15 [loggers.py:310] Engine 000: Avg prompt throughput: 1825.6 tokens/s, Avg generation throughput: 4302.2 tokens/s, Running: 202 reqs, Waiting: 817 reqs, GPU KV cache usage: 98.2%, Prefix cache hit rate: 64.9%",
+        "(APIServer pid=141870) INFO 09-05 21:02:25 [loggers.py:310] Engine 000: Avg prompt throughput: 13181.9 tokens/s, Avg generation throughput: 481.1 tokens/s, Running: 195 reqs, Waiting: 816 reqs, GPU KV cache usage: 96.4%, Prefix cache hit rate: 64.9%",
+        "(APIServer pid=141870) INFO 09-05 21:02:35 [loggers.py:310] Engine 000: Avg prompt throughput: 11948.9 tokens/s, Avg generation throughput: 1335.2 tokens/s, Running: 207 reqs, Waiting: 817 reqs, GPU KV cache usage: 99.6%, Prefix cache hit rate: 64.9%",
+        "(APIServer pid=141870) INFO 09-05 21:02:45 [loggers.py:310] Engine 000: Avg prompt throughput: 2811.2 tokens/s, Avg generation throughput: 3654.0 tokens/s, Running: 200 reqs, Waiting: 813 reqs, GPU KV cache usage: 99.5%, Prefix cache hit rate: 64.8%",
+        "(APIServer pid=141870) INFO 09-05 21:02:55 [loggers.py:310] Engine 000: Avg prompt throughput: 15322.0 tokens/s, Avg generation throughput: 436.3 tokens/s, Running: 200 reqs, Waiting: 814 reqs, GPU KV cache usage: 96.9%, Prefix cache hit rate: 64.9%"
+      ]
+    }
+  },
+  "listing": {
+    "/workspace/results/probe": [
+      {
+        "path": "/workspace/results/probe/qwen38fn_tp4m_--marlin_quality20.json",
+        "size": 7317,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/probe/qwen38fn_tp4m_--marlin",
+        "size": 170,
+        "is_dir": true
+      }
+    ],
+    "/workspace/results/eval": [],
+    "/workspace/results/smoke": [
+      {
+        "path": "/workspace/results/smoke/qwen38fn_dp4ep4_---_p8000.log",
+        "size": 108014,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp2x2_---_p8000.log",
+        "size": 137145,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp2x2_---_p8001.log",
+        "size": 136931,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp4_---_p8000.log",
+        "size": 67014,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp4b12x_b12x--_p8000.log",
+        "size": 72150,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp2x2m_--marlin_p8000.log",
+        "size": 97642,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp2x2m_--marlin_p8001.log",
+        "size": 97656,
+        "is_dir": false
+      },
+      {
+        "path": "/workspace/results/smoke/qwen38fn_tp4m_--marlin_p8000.log",
+        "size": 112702,
+        "is_dir": false
+      }
+    ]
+  }
+}

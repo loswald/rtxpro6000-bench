@@ -1,0 +1,109 @@
+{
+  "index": 17,
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "expected": "37",
+  "seed": 85107287,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Convert 98.6 Fahrenheit to Celsius, show the formula."
+      }
+    ],
+    "seed": 85107287,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "22d1f943501a9789028203ac7da6c06aa0c58a45990158aa7b22f4fc7eb576d2",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:05:54+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-8398e6a97c732194",
+    "object": "chat.completion",
+    "created": 1788642354,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n**Formula:**\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\n**Convert 98.6°F to °C:**\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\nC \\approx 37^\\circ C\n\\]\n\n**Answer: 98.6°F ≈ 37°C**",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need answer user: Convert 98.6 Fahrenheit to Celsius, show formula. Now produce final. Formula C=(F-32)*5/9. Compute: 98.6-32=66.6; *5/9 = 33.333... = 37 C approximately. Need show formula concise.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 66,
+      "total_tokens": 265,
+      "completion_tokens": 199,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 76
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "699095b53957de737abadf5d0403a9cceee523f1e6ee0eb09b1b768547d3a5d2",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\n**Formula:**\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\n**Convert 98.6°F to °C:**\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\nC \\approx 37^\\circ C\n\\]\n\n**Answer: 98.6°F ≈ 37°C**",
+  "reasoning": "We need answer user: Convert 98.6 Fahrenheit to Celsius, show formula. Now produce final. Formula C=(F-32)*5/9. Compute: 98.6-32=66.6; *5/9 = 33.333... = 37 C approximately. Need show formula concise.\n",
+  "reasoning_chars": 201,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 40,
+    "top6gram": 1,
+    "distinct_ratio": 0.525,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 29,
+    "top6gram": 1,
+    "distinct_ratio": 0.9310344827586207,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 66,
+    "total_tokens": 265,
+    "completion_tokens": 199,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 76
+    }
+  },
+  "raw_response_file": "items/17/response.raw",
+  "elapsed_s": 2.478067,
+  "ended_at": "2026-09-05T21:05:56+00:00"
+}

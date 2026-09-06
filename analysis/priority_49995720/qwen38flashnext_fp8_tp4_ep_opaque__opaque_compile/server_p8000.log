@@ -1,0 +1,388 @@
+file descriptor limit: 65536
+[2026-09-05T21:10:08+00:00] HOST=3482427aea0a PWD=/workspace/priority BENCH_CELL=qwen38flashnext_fp8_tp4_ep_opaque CUDA_VISIBLE_DEVICES(cmd)=CUDA_VISIBLE_DEVICES=0,1,2,3
+[2026-09-05T21:10:08+00:00] CMD: env CUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve /workspace/models/Qwen3.8-Flash-Next-FP8 --port 8000 --served-model-name qwen38flashnext --tensor-parallel-size 4 --data-parallel-size 1 --kv-cache-dtype bfloat16 --max-model-len 40960 --max-num-seqs 256 --max-num-batched-tokens 8192 --gpu-memory-utilization 0.90 --compilation-config {} --host 0.0.0.0 --enable-prefix-caching --enable-chunked-prefill --no-enable-flashinfer-autotune --trust-remote-code --disable-uvicorn-access-log --disable-custom-all-reduce --enable-expert-parallel --dtype bfloat16 --mamba-cache-dtype bfloat16 --mamba-ssm-cache-dtype float32 --language-model-only --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:347] 
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.28.1rc1.dev446+g798544433
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:347]   █▄█▀ █     █     █     █  model   /workspace/models/Qwen3.8-Flash-Next-FP8
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:347] 
+(APIServer pid=13133) INFO 09-05 21:10:19 [api_utils.py:286] non-default args: {'model_tag': '/workspace/models/Qwen3.8-Flash-Next-FP8', 'enable_auto_tool_choice': True, 'tool_call_parser': 'qwen3_coder', 'host': '0.0.0.0', 'disable_uvicorn_access_log': True, 'model': '/workspace/models/Qwen3.8-Flash-Next-FP8', 'trust_remote_code': True, 'dtype': 'bfloat16', 'max_model_len': 40960, 'served_model_name': ['qwen38flashnext'], 'reasoning_parser': 'qwen3', 'tensor_parallel_size': 4, 'enable_expert_parallel': True, 'disable_custom_all_reduce': True, 'gpu_memory_utilization': 0.9, 'kv_cache_dtype': 'bfloat16', 'enable_prefix_caching': True, 'mamba_cache_dtype': 'bfloat16', 'mamba_ssm_cache_dtype': 'float32', 'language_model_only': True, 'max_num_batched_tokens': 8192, 'max_num_seqs': 256, 'enable_chunked_prefill': True, 'enable_flashinfer_autotune': False}
+(APIServer pid=13133) WARNING 09-05 21:10:19 [envs.py:2282] Unknown vLLM environment variable detected: VLLM_QWEN4EXP_PLE_FP8
+(APIServer pid=13133) WARNING 09-05 21:10:19 [envs.py:2282] Unknown vLLM environment variable detected: VLLM_QWEN4EXP_PLE_OPAQUE_LOOKUP
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) INFO 09-05 21:10:30 [model.py:691] Resolved architecture: Qwen4ExpForConditionalGeneration
+(APIServer pid=13133) INFO 09-05 21:10:30 [model.py:2031] Using max model len 40960
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [ERROR] `min_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+(APIServer pid=13133) [ERROR] `max_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+(APIServer pid=13133) INFO 09-05 21:10:31 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(APIServer pid=13133) INFO 09-05 21:10:31 [model.py:897] Disabled mm_prefix attention mode because multimodal inputs are configuration-disabled. Attention backends without mm_prefix support may now be selected.
+(APIServer pid=13133) INFO 09-05 21:10:31 [scheduler.py:277] Chunked prefill is enabled with max_num_batched_tokens=8192.
+(APIServer pid=13133) INFO 09-05 21:10:31 [config.py:625] Mamba cache mode is set to 'align' for Qwen4ExpForConditionalGeneration by default when prefix caching is enabled
+(APIServer pid=13133) INFO 09-05 21:10:31 [kernel.py:372] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(APIServer pid=13133) INFO 09-05 21:10:31 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(EngineCore pid=13862) INFO 09-05 21:10:43 [core.py:123] Initializing a V1 LLM engine (v0.28.1rc1.dev446+g798544433) with config: model='/workspace/models/Qwen3.8-Flash-Next-FP8', speculative_config=None, tokenizer='/workspace/models/Qwen3.8-Flash-Next-FP8', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=40960, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=True, quantization=fp8, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=bfloat16, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='qwen3', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, per_request_spec_decode_metrics='none', kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=qwen38flashnext, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['+quant_fp8', 'none', '+quant_fp8'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::qwen4_exp_compute_ple_ngram_ids', 'vllm::qwen4_exp_ple_short_conv', 'vllm::qwen4_exp_qsa_with_output', 'vllm::linear_attention', 'vllm::qwen_gdn_attention_core', 'vllm::qwen_gdn_attention_core_fused_norm_packed', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=13862) INFO 09-05 21:10:43 [multiproc_executor.py:153] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.17.0.3 (local), world_size=4, local_world_size=4
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[ERROR] `min_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+[ERROR] `max_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+INFO 09-05 21:10:53 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(Worker pid=14124) INFO 09-05 21:10:53 [parallel_state.py:1798] world_size=4 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_b38f4fcf60eb4a5a90e7eb311ef08c69 backend=nccl
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[ERROR] `min_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+[ERROR] `max_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+INFO 09-05 21:11:00 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(Worker pid=14361) INFO 09-05 21:11:00 [parallel_state.py:1798] world_size=4 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_b38f4fcf60eb4a5a90e7eb311ef08c69 backend=nccl
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_interleaved', 'mrope_section'}
+[ERROR] `min_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+[ERROR] `max_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+INFO 09-05 21:11:07 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(Worker pid=14575) INFO 09-05 21:11:07 [parallel_state.py:1798] world_size=4 rank=2 local_rank=2 distributed_init_method=file:///tmp/vllm_dist_b38f4fcf60eb4a5a90e7eb311ef08c69 backend=nccl
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+[ERROR] `min_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+[ERROR] `max_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+INFO 09-05 21:11:14 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(Worker pid=14794) INFO 09-05 21:11:14 [parallel_state.py:1798] world_size=4 rank=3 local_rank=3 distributed_init_method=file:///tmp/vllm_dist_b38f4fcf60eb4a5a90e7eb311ef08c69 backend=nccl
+(Worker pid=14124) INFO 09-05 21:11:14 [pynccl.py:120] vLLM is using nccl==2.30.7
+(Worker pid=14124) WARNING 09-05 21:11:15 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.0 not supported, communicator is not available.
+(Worker pid=14575) WARNING 09-05 21:11:15 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.0 not supported, communicator is not available.
+(Worker pid=14794) WARNING 09-05 21:11:15 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.0 not supported, communicator is not available.
+(Worker pid=14361) WARNING 09-05 21:11:15 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.0 not supported, communicator is not available.
+(Worker pid=14575) WARNING 09-05 21:11:15 [flashinfer_all_reduce.py:383] FlashInfer All Reduce is disabled because it is not supported for world_size=4.
+(Worker pid=14794) WARNING 09-05 21:11:15 [flashinfer_all_reduce.py:383] FlashInfer All Reduce is disabled because it is not supported for world_size=4.
+(Worker pid=14124) WARNING 09-05 21:11:15 [flashinfer_all_reduce.py:383] FlashInfer All Reduce is disabled because it is not supported for world_size=4.
+(Worker pid=14124) INFO 09-05 21:11:15 [cuda_communicator.py:296] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=14361) WARNING 09-05 21:11:15 [flashinfer_all_reduce.py:383] FlashInfer All Reduce is disabled because it is not supported for world_size=4.
+(Worker pid=14124) INFO 09-05 21:11:15 [cuda_communicator.py:296] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['FLASHINFER_PCIE_IPC', 'FLASHINFER', 'NCCL_SYMM_MEM', 'QUICK_REDUCE', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=14124) INFO 09-05 21:11:15 [parallel_state.py:2142] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=14124) INFO 09-05 21:11:15 [gpu_worker.py:436] Using V2 Model Runner
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [model_runner.py:390] Loading model from scratch...
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [qwen_gdn_linear_attn.py:167] Using Triton/FLA GDN prefill kernel (requested=auto, head_k_dim=128).
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [qwen_gdn_linear_attn.py:519] GDN decode kernel: cuda
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [expert_map_manager.py:245] [EP Rank 0/4] Expert parallelism is enabled. Expert placement strategy: linear. Local/global number of experts: 128/512. Experts local to global index map: 0->0, 1->1, 2->2, 3->3, 4->4, 5->5, 6->6, 7->7, 8->8, 9->9, 10->10, 11->11, 12->12, 13->13, 14->14, 15->15, 16->16, 17->17, 18->18, 19->19, 20->20, 21->21, 22->22, 23->23, 24->24, 25->25, 26->26, 27->27, 28->28, 29->29, 30->30, 31->31, 32->32, 33->33, 34->34, 35->35, 36->36, 37->37, 38->38, 39->39, 40->40, 41->41, 42->42, 43->43, 44->44, 45->45, 46->46, 47->47, 48->48, 49->49, 50->50, 51->51, 52->52, 53->53, 54->54, 55->55, 56->56, 57->57, 58->58, 59->59, 60->60, 61->61, 62->62, 63->63, 64->64, 65->65, 66->66, 67->67, 68->68, 69->69, 70->70, 71->71, 72->72, 73->73, 74->74, 75->75, 76->76, 77->77, 78->78, 79->79, 80->80, 81->81, 82->82, 83->83, 84->84, 85->85, 86->86, 87->87, 88->88, 89->89, 90->90, 91->91, 92->92, 93->93, 94->94, 95->95, 96->96, 97->97, 98->98, 99->99, 100->100, 101->101, 102->102, 103->103, 104->104, 105->105, 106->106, 107->107, 108->108, 109->109, 110->110, 111->111, 112->112, 113->113, 114->114, 115->115, 116->116, 117->117, 118->118, 119->119, 120->120, 121->121, 122->122, 123->123, 124->124, 125->125, 126->126, 127->127.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [fp8.py:438] Using TRITON Fp8 MoE backend out of potential backends: ['AITER', 'FLASHINFER_TRTLLM', 'FLASHINFER_CUTLASS', 'TRITON', 'MARLIN', 'HUMMING', 'BATCHED_TRITON', 'XPU', 'CPU', 'HPC'].
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [flash_attn.py:897] Using FlashAttention version 2
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:11:16 [compilation.py:1354] Op 'quant_fp8' not present in model, enabling with '+quant_fp8' has no effect
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [weight_utils.py:895] Filesystem type for checkpoints: OVERLAY. Checkpoint size: 172.78 GiB. Available RAM: 229.98 GiB.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:11:16 [weight_utils.py:918] Auto-prefetch is disabled because the filesystem (OVERLAY) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   0% Completed | 0/131 [00:00<?, ?it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   2% Completed | 2/131 [00:00<00:29,  4.41it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   2% Completed | 3/131 [00:00<00:29,  4.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   3% Completed | 4/131 [00:01<00:39,  3.19it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   4% Completed | 5/131 [00:01<00:40,  3.08it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   5% Completed | 6/131 [00:01<00:34,  3.60it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   5% Completed | 7/131 [00:02<00:46,  2.68it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   6% Completed | 8/131 [00:02<00:42,  2.87it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   7% Completed | 9/131 [00:02<00:43,  2.81it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   8% Completed | 10/131 [00:03<00:39,  3.03it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   8% Completed | 11/131 [00:03<00:43,  2.77it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:   9% Completed | 12/131 [00:03<00:41,  2.87it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  10% Completed | 13/131 [00:04<00:37,  3.14it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  26% Completed | 34/131 [00:04<00:03, 27.87it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  31% Completed | 41/131 [00:05<00:07, 11.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  35% Completed | 46/131 [00:07<00:13,  6.45it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  38% Completed | 50/131 [00:09<00:15,  5.11it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  40% Completed | 53/131 [00:10<00:17,  4.54it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  42% Completed | 55/131 [00:10<00:18,  4.10it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  44% Completed | 57/131 [00:11<00:19,  3.78it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  45% Completed | 59/131 [00:12<00:22,  3.13it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  47% Completed | 61/131 [00:13<00:25,  2.77it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  47% Completed | 62/131 [00:14<00:26,  2.63it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  48% Completed | 63/131 [00:14<00:29,  2.33it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  49% Completed | 64/131 [00:15<00:26,  2.49it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  50% Completed | 65/131 [00:15<00:28,  2.35it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  50% Completed | 66/131 [00:15<00:26,  2.47it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  51% Completed | 67/131 [00:16<00:29,  2.20it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  52% Completed | 68/131 [00:16<00:25,  2.49it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  53% Completed | 69/131 [00:17<00:27,  2.24it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  53% Completed | 70/131 [00:17<00:25,  2.40it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  54% Completed | 71/131 [00:18<00:25,  2.35it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  55% Completed | 72/131 [00:18<00:22,  2.63it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  56% Completed | 73/131 [00:18<00:23,  2.48it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  56% Completed | 74/131 [00:19<00:21,  2.64it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  57% Completed | 75/131 [00:19<00:22,  2.50it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  58% Completed | 76/131 [00:19<00:20,  2.65it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  59% Completed | 77/131 [00:20<00:23,  2.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  60% Completed | 78/131 [00:20<00:21,  2.45it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  60% Completed | 79/131 [00:21<00:24,  2.13it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  61% Completed | 80/131 [00:21<00:20,  2.50it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  62% Completed | 81/131 [00:22<00:23,  2.15it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  63% Completed | 82/131 [00:22<00:19,  2.50it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  63% Completed | 83/131 [00:23<00:20,  2.38it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  64% Completed | 84/131 [00:23<00:18,  2.53it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  65% Completed | 85/131 [00:23<00:18,  2.43it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  66% Completed | 86/131 [00:24<00:17,  2.53it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  66% Completed | 87/131 [00:24<00:18,  2.40it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  67% Completed | 88/131 [00:24<00:16,  2.57it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  68% Completed | 89/131 [00:25<00:19,  2.19it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  69% Completed | 90/131 [00:25<00:17,  2.41it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  69% Completed | 91/131 [00:26<00:18,  2.11it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  70% Completed | 92/131 [00:26<00:16,  2.39it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  71% Completed | 93/131 [00:27<00:17,  2.12it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  72% Completed | 94/131 [00:27<00:15,  2.46it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  73% Completed | 95/131 [00:28<00:15,  2.34it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  73% Completed | 96/131 [00:28<00:13,  2.62it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  74% Completed | 97/131 [00:28<00:15,  2.24it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  75% Completed | 98/131 [00:29<00:13,  2.43it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  76% Completed | 99/131 [00:29<00:15,  2.09it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  76% Completed | 100/131 [00:30<00:13,  2.34it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  77% Completed | 101/131 [00:30<00:14,  2.08it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  78% Completed | 102/131 [00:31<00:12,  2.28it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  79% Completed | 103/131 [00:31<00:13,  2.06it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  79% Completed | 104/131 [00:32<00:11,  2.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  80% Completed | 105/131 [00:32<00:12,  2.06it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  81% Completed | 106/131 [00:33<00:10,  2.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  82% Completed | 107/131 [00:33<00:11,  2.08it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  82% Completed | 108/131 [00:33<00:09,  2.30it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  83% Completed | 109/131 [00:34<00:10,  2.07it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  84% Completed | 110/131 [00:34<00:09,  2.31it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  85% Completed | 111/131 [00:35<00:09,  2.08it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  85% Completed | 112/131 [00:35<00:08,  2.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  86% Completed | 113/131 [00:36<00:08,  2.06it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  87% Completed | 114/131 [00:36<00:07,  2.26it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  88% Completed | 115/131 [00:37<00:07,  2.04it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  89% Completed | 116/131 [00:37<00:06,  2.26it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  89% Completed | 117/131 [00:38<00:06,  2.05it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  90% Completed | 118/131 [00:38<00:05,  2.28it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  91% Completed | 119/131 [00:39<00:05,  2.07it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  92% Completed | 120/131 [00:39<00:04,  2.26it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  92% Completed | 121/131 [00:40<00:04,  2.06it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  93% Completed | 122/131 [00:40<00:03,  2.26it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  94% Completed | 123/131 [00:41<00:03,  2.06it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  95% Completed | 124/131 [00:41<00:03,  2.29it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  95% Completed | 125/131 [00:41<00:02,  2.08it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  96% Completed | 126/131 [00:42<00:02,  2.27it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  97% Completed | 127/131 [00:42<00:01,  2.05it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  98% Completed | 128/131 [00:43<00:01,  2.26it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  98% Completed | 129/131 [00:43<00:00,  2.06it/s]
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:12:00 [model_runner.py:422] Model loading took 44.35 GiB memory and 44.821584 seconds
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:12:00 [interface.py:933] Setting attention block size to 784 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:12:00 [interface.py:957] Padding mamba page size by 0.13% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards:  99% Completed | 130/131 [00:44<00:00,  2.11it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:44<00:00,  2.61it/s]
+(Worker_TP0_EP0 pid=14124) Loading safetensors checkpoint shards: 100% Completed | 131/131 [00:44<00:00,  2.95it/s]
+(Worker_TP0_EP0 pid=14124) 
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:01 [default_loader.py:430] Loading weights took 44.44 seconds
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:01 [fp8.py:740] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:02 [model_runner.py:422] Model loading took 44.35 GiB memory and 46.164719 seconds
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:02 [topk_topp_sampler.py:62] Using FlashInfer for top-p & top-k sampling.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:02 [interface.py:933] Setting attention block size to 784 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:02 [interface.py:957] Padding mamba page size by 0.13% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:12:02 [model_runner.py:422] Model loading took 44.35 GiB memory and 46.413994 seconds
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:12:02 [interface.py:933] Setting attention block size to 784 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:12:02 [interface.py:957] Padding mamba page size by 0.13% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:12:02 [model_runner.py:422] Model loading took 44.35 GiB memory and 46.848094 seconds
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:12:02 [interface.py:933] Setting attention block size to 784 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:12:02 [interface.py:957] Padding mamba page size by 0.13% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=13862) INFO 09-05 21:12:02 [torch_utils.py:280] Reducing Torch threads from 48 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=13862) INFO 09-05 21:12:02 [utils.py:306] Using BLNHC KV cache layout.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:10 [backends.py:1094] Using cache directory: /workspace/priority/cache/qwen_ple_opaque_20260905T211004_12918/torch_compile_cache/8729fdd8ec/rank_0_0/backbone for vLLM's torch.compile
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:10 [backends.py:1155] Dynamo bytecode transform time: 7.01 s
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:21 [backends.py:393] Compiling a graph for compile range (1, 8192) takes 9.93 s
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:25 [backends.py:920] collected artifacts: 51 entries, 19 artifacts, 6227418 bytes total
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:25 [decorators.py:719] saved AOT compiled function to /workspace/priority/cache/qwen_ple_opaque_20260905T211004_12918/torch_compile_cache/torch_aot_compile/ae3f79b93a808efded5050366026a1e5501840076590da8dd150132d2f03f885/rank_0_0/model
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:12:25 [monitor.py:53] torch.compile took 21.58 s in total
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:12:25 [backends.py:920] collected artifacts: 51 entries, 19 artifacts, 6205780 bytes total
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:12:25 [backends.py:920] collected artifacts: 51 entries, 19 artifacts, 6205764 bytes total
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:12:26 [backends.py:920] collected artifacts: 51 entries, 19 artifacts, 6143394 bytes total
+(Worker_TP0_EP0 pid=14124) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP0_EP0 pid=14124)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(Worker_TP2_EP2 pid=14575) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP2_EP2 pid=14575)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(Worker_TP3_EP3 pid=14794) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP3_EP3 pid=14794)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(Worker_TP1_EP1 pid=14361) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP1_EP1 pid=14361)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(EngineCore pid=13862) INFO 09-05 21:13:04 [shm_broadcast.py:801] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:13:14 [fused_moe.py:1167] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=128,N=640,device_name=NVIDIA_RTX_PRO_6000_Blackwell_Workstation_Edition,dtype=fp8_w8a8,block_shape=[128,128].json
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:17 [monitor.py:81] Initial profiling/warmup run took 51.69 s
+(Worker_TP0_EP0 pid=14124) Capturing CUDA graphs (PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   2%|▏         | 1/51 [00:03<03:15,  3.91s/it]Capturing CUDA graphs (PIECEWISE):   4%|▍         | 2/51 [00:04<01:49,  2.23s/it]Capturing CUDA graphs (PIECEWISE):   6%|▌         | 3/51 [00:05<01:06,  1.40s/it]Capturing CUDA graphs (PIECEWISE):   8%|▊         | 4/51 [00:05<00:46,  1.00it/s]Capturing CUDA graphs (PIECEWISE):  10%|▉         | 5/51 [00:06<00:35,  1.29it/s]Capturing CUDA graphs (PIECEWISE):  12%|█▏        | 6/51 [00:06<00:28,  1.56it/s]Capturing CUDA graphs (PIECEWISE):  14%|█▎        | 7/51 [00:07<00:29,  1.51it/s]Capturing CUDA graphs (PIECEWISE):  16%|█▌        | 8/51 [00:07<00:25,  1.69it/s]Capturing CUDA graphs (PIECEWISE):  18%|█▊        | 9/51 [00:08<00:22,  1.85it/s]Capturing CUDA graphs (PIECEWISE):  20%|█▉        | 10/51 [00:08<00:20,  2.00it/s]Capturing CUDA graphs (PIECEWISE):  22%|██▏       | 11/51 [00:08<00:18,  2.12it/s]Capturing CUDA graphs (PIECEWISE):  24%|██▎       | 12/51 [00:09<00:17,  2.25it/s]Capturing CUDA graphs (PIECEWISE):  25%|██▌       | 13/51 [00:09<00:19,  1.98it/s]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 14/51 [00:10<00:17,  2.17it/s]Capturing CUDA graphs (PIECEWISE):  29%|██▉       | 15/51 [00:10<00:15,  2.37it/s]Capturing CUDA graphs (PIECEWISE):  31%|███▏      | 16/51 [00:10<00:13,  2.58it/s]Capturing CUDA graphs (PIECEWISE):  33%|███▎      | 17/51 [00:12<00:26,  1.30it/s]Capturing CUDA graphs (PIECEWISE):  35%|███▌      | 18/51 [00:12<00:21,  1.56it/s]Capturing CUDA graphs (PIECEWISE):  37%|███▋      | 19/51 [00:13<00:16,  1.95it/s]Capturing CUDA graphs (PIECEWISE):  39%|███▉      | 20/51 [00:13<00:13,  2.38it/s]Capturing CUDA graphs (PIECEWISE):  41%|████      | 21/51 [00:13<00:10,  2.78it/s]Capturing CUDA graphs (PIECEWISE):  43%|████▎     | 22/51 [00:13<00:09,  3.15it/s]Capturing CUDA graphs (PIECEWISE):  45%|████▌     | 23/51 [00:13<00:07,  3.51it/s]Capturing CUDA graphs (PIECEWISE):  47%|████▋     | 24/51 [00:14<00:07,  3.82it/s]Capturing CUDA graphs (PIECEWISE):  49%|████▉     | 25/51 [00:14<00:06,  3.93it/s]Capturing CUDA graphs (PIECEWISE):  51%|█████     | 26/51 [00:14<00:06,  4.14it/s]Capturing CUDA graphs (PIECEWISE):  53%|█████▎    | 27/51 [00:14<00:05,  4.31it/s]Capturing CUDA graphs (PIECEWISE):  55%|█████▍    | 28/51 [00:15<00:05,  4.42it/s]Capturing CUDA graphs (PIECEWISE):  57%|█████▋    | 29/51 [00:15<00:04,  4.50it/s]Capturing CUDA graphs (PIECEWISE):  59%|█████▉    | 30/51 [00:15<00:04,  4.54it/s]Capturing CUDA graphs (PIECEWISE):  61%|██████    | 31/51 [00:15<00:04,  4.53it/s]Capturing CUDA graphs (PIECEWISE):  63%|██████▎   | 32/51 [00:15<00:04,  4.57it/s]Capturing CUDA graphs (PIECEWISE):  65%|██████▍   | 33/51 [00:16<00:07,  2.39it/s]Capturing CUDA graphs (PIECEWISE):  67%|██████▋   | 34/51 [00:17<00:06,  2.79it/s]Capturing CUDA graphs (PIECEWISE):  69%|██████▊   | 35/51 [00:17<00:05,  3.16it/s]Capturing CUDA graphs (PIECEWISE):  71%|███████   | 36/51 [00:17<00:04,  3.49it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 37/51 [00:17<00:03,  3.77it/s]Capturing CUDA graphs (PIECEWISE):  75%|███████▍  | 38/51 [00:17<00:03,  3.97it/s]Capturing CUDA graphs (PIECEWISE):  76%|███████▋  | 39/51 [00:18<00:02,  4.14it/s]Capturing CUDA graphs (PIECEWISE):  78%|███████▊  | 40/51 [00:18<00:02,  4.25it/s]Capturing CUDA graphs (PIECEWISE):  80%|████████  | 41/51 [00:19<00:03,  2.62it/s]Capturing CUDA graphs (PIECEWISE):  82%|████████▏ | 42/51 [00:19<00:03,  2.71it/s]Capturing CUDA graphs (PIECEWISE):  84%|████████▍ | 43/51 [00:19<00:02,  3.08it/s]Capturing CUDA graphs (PIECEWISE):  86%|████████▋ | 44/51 [00:19<00:02,  3.40it/s]Capturing CUDA graphs (PIECEWISE):  88%|████████▊ | 45/51 [00:20<00:03,  1.95it/s]Capturing CUDA graphs (PIECEWISE):  90%|█████████ | 46/51 [00:21<00:03,  1.45it/s]Capturing CUDA graphs (PIECEWISE):  92%|█████████▏| 47/51 [00:22<00:02,  1.44it/s]Capturing CUDA graphs (PIECEWISE):  94%|█████████▍| 48/51 [00:23<00:02,  1.47it/s]Capturing CUDA graphs (PIECEWISE):  96%|█████████▌| 49/51 [00:24<00:01,  1.48it/s]Capturing CUDA graphs (PIECEWISE):  98%|█████████▊| 50/51 [00:24<00:00,  1.76it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:25<00:00,  1.17it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:25<00:00,  1.97it/s]
+(Worker_TP0_EP0 pid=14124) Capturing CUDA graphs (FULL):   0%|          | 0/2 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):  50%|█████     | 1/2 [00:00<00:00,  4.63it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00,  4.68it/s]Capturing CUDA graphs (FULL): 100%|██████████| 2/2 [00:00<00:00,  4.67it/s]
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:13:46 [model_runner.py:1001] Graph capturing finished in 27 secs, took 1.76 GiB
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:46 [model_runner.py:1001] Graph capturing finished in 27 secs, took 1.76 GiB
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:13:46 [model_runner.py:1001] Graph capturing finished in 27 secs, took 1.76 GiB
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:13:46 [model_runner.py:1001] Graph capturing finished in 27 secs, took 1.76 GiB
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:46 [gpu_worker.py:632] Available KV cache memory: 37.27 GiB
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:46 [gpu_worker.py:647] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8810 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9190. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:13:46 [gpu_worker.py:647] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8810 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9190. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:13:47 [gpu_worker.py:647] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8810 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9190. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:13:47 [gpu_worker.py:647] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8810 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9190. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=13862) INFO 09-05 21:13:47 [kv_cache_utils.py:2312] GPU KV cache size: 2,582,461 tokens, Maximum concurrency for 40,960 tokens per request: 63.05x
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:13:47 [kernel_warmup.py:136] JIT kernel warmup starting.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:47 [kernel_warmup.py:136] JIT kernel warmup starting.
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:13:47 [kernel_warmup.py:136] JIT kernel warmup starting.
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:13:47 [kernel_warmup.py:146] JIT kernel warmup finished in 0.00s.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:47 [kernel_warmup.py:146] JIT kernel warmup finished in 0.00s.
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:13:47 [kernel_warmup.py:146] JIT kernel warmup finished in 0.00s.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:13:47 [kernel_warmup.py:136] JIT kernel warmup starting.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:13:47 [kernel_warmup.py:146] JIT kernel warmup finished in 0.00s.
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:13:47 [qwen4_exp_qsa_warmup.py:72] Warmed up Qwen4Exp QSA decode kernels: ((1, 1), (1, 96), (1, 191)).
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:47 [qwen4_exp_qsa_warmup.py:72] Warmed up Qwen4Exp QSA decode kernels: ((1, 1), (1, 96), (1, 191)).
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:13:47 [qwen4_exp_qsa_warmup.py:72] Warmed up Qwen4Exp QSA decode kernels: ((1, 1), (1, 96), (1, 191)).
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:13:47 [qwen4_exp_qsa_warmup.py:72] Warmed up Qwen4Exp QSA decode kernels: ((1, 1), (1, 96), (1, 191)).
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:13:52 [qwen4_exp_qsa_warmup.py:86] Warmed up Qwen4Exp QSA sparse attention kernels: ((32, 1, 1), (32, 4, 1), (32, 8, 1), (32, 16, 1), (32, 64, 4), (64, 1, 2), (64, 4, 2)).
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:13:52 [qwen4_exp_qsa_warmup.py:86] Warmed up Qwen4Exp QSA sparse attention kernels: ((32, 1, 1), (32, 4, 1), (32, 8, 1), (32, 16, 1), (32, 64, 4), (64, 1, 2), (64, 4, 2)).
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:13:52 [qwen4_exp_qsa_warmup.py:86] Warmed up Qwen4Exp QSA sparse attention kernels: ((32, 1, 1), (32, 4, 1), (32, 8, 1), (32, 16, 1), (32, 64, 4), (64, 1, 2), (64, 4, 2)).
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:52 [qwen4_exp_qsa_warmup.py:86] Warmed up Qwen4Exp QSA sparse attention kernels: ((32, 1, 1), (32, 4, 1), (32, 8, 1), (32, 16, 1), (32, 64, 4), (64, 1, 2), (64, 4, 2)).
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:13:52 [kernel_warmup.py:218] Skipping FlashInfer autotune because it is disabled.
+(Worker_TP0_EP0 pid=14124) Capturing CUDA graphs (PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (PIECEWISE):   2%|▏         | 1/51 [00:00<00:26,  1.89it/s]Capturing CUDA graphs (PIECEWISE):   4%|▍         | 2/51 [00:00<00:20,  2.36it/s]Capturing CUDA graphs (PIECEWISE):   6%|▌         | 3/51 [00:01<00:19,  2.48it/s]Capturing CUDA graphs (PIECEWISE):   8%|▊         | 4/51 [00:01<00:18,  2.56it/s]Capturing CUDA graphs (PIECEWISE):  10%|▉         | 5/51 [00:01<00:17,  2.62it/s]Capturing CUDA graphs (PIECEWISE):  12%|█▏        | 6/51 [00:02<00:16,  2.67it/s]Capturing CUDA graphs (PIECEWISE):  14%|█▎        | 7/51 [00:02<00:17,  2.54it/s]Capturing CUDA graphs (PIECEWISE):  16%|█▌        | 8/51 [00:03<00:17,  2.46it/s]Capturing CUDA graphs (PIECEWISE):  18%|█▊        | 9/51 [00:03<00:17,  2.43it/s]Capturing CUDA graphs (PIECEWISE):  20%|█▉        | 10/51 [00:04<00:16,  2.49it/s]Capturing CUDA graphs (PIECEWISE):  22%|██▏       | 11/51 [00:04<00:15,  2.52it/s]Capturing CUDA graphs (PIECEWISE):  24%|██▎       | 12/51 [00:04<00:15,  2.54it/s]Capturing CUDA graphs (PIECEWISE):  25%|██▌       | 13/51 [00:05<00:14,  2.57it/s]Capturing CUDA graphs (PIECEWISE):  27%|██▋       | 14/51 [00:05<00:13,  2.65it/s]Capturing CUDA graphs (PIECEWISE):  29%|██▉       | 15/51 [00:05<00:12,  2.77it/s]Capturing CUDA graphs (PIECEWISE):  31%|███▏      | 16/51 [00:06<00:11,  2.93it/s]Capturing CUDA graphs (PIECEWISE):  33%|███▎      | 17/51 [00:06<00:10,  3.32it/s]Capturing CUDA graphs (PIECEWISE):  35%|███▌      | 18/51 [00:06<00:09,  3.66it/s]Capturing CUDA graphs (PIECEWISE):  37%|███▋      | 19/51 [00:06<00:08,  3.94it/s]Capturing CUDA graphs (PIECEWISE):  39%|███▉      | 20/51 [00:06<00:07,  4.18it/s]Capturing CUDA graphs (PIECEWISE):  41%|████      | 21/51 [00:07<00:06,  4.38it/s]Capturing CUDA graphs (PIECEWISE):  43%|████▎     | 22/51 [00:07<00:06,  4.52it/s]Capturing CUDA graphs (PIECEWISE):  45%|████▌     | 23/51 [00:07<00:06,  4.62it/s]Capturing CUDA graphs (PIECEWISE):  47%|████▋     | 24/51 [00:07<00:05,  4.69it/s]Capturing CUDA graphs (PIECEWISE):  49%|████▉     | 25/51 [00:08<00:05,  4.73it/s]Capturing CUDA graphs (PIECEWISE):  51%|█████     | 26/51 [00:08<00:05,  4.74it/s]Capturing CUDA graphs (PIECEWISE):  53%|█████▎    | 27/51 [00:08<00:05,  4.72it/s]Capturing CUDA graphs (PIECEWISE):  55%|█████▍    | 28/51 [00:08<00:04,  4.68it/s]Capturing CUDA graphs (PIECEWISE):  57%|█████▋    | 29/51 [00:08<00:04,  4.64it/s]Capturing CUDA graphs (PIECEWISE):  59%|█████▉    | 30/51 [00:09<00:04,  4.63it/s]Capturing CUDA graphs (PIECEWISE):  61%|██████    | 31/51 [00:09<00:04,  4.63it/s]Capturing CUDA graphs (PIECEWISE):  63%|██████▎   | 32/51 [00:09<00:04,  4.63it/s]Capturing CUDA graphs (PIECEWISE):  65%|██████▍   | 33/51 [00:09<00:03,  4.61it/s]Capturing CUDA graphs (PIECEWISE):  67%|██████▋   | 34/51 [00:09<00:03,  4.60it/s]Capturing CUDA graphs (PIECEWISE):  69%|██████▊   | 35/51 [00:10<00:03,  4.60it/s]Capturing CUDA graphs (PIECEWISE):  71%|███████   | 36/51 [00:10<00:03,  4.61it/s]Capturing CUDA graphs (PIECEWISE):  73%|███████▎  | 37/51 [00:10<00:03,  4.57it/s]Capturing CUDA graphs (PIECEWISE):  75%|███████▍  | 38/51 [00:10<00:02,  4.59it/s]Capturing CUDA graphs (PIECEWISE):  76%|███████▋  | 39/51 [00:11<00:02,  4.58it/s]Capturing CUDA graphs (PIECEWISE):  78%|███████▊  | 40/51 [00:11<00:02,  4.57it/s]Capturing CUDA graphs (PIECEWISE):  80%|████████  | 41/51 [00:11<00:02,  4.55it/s]Capturing CUDA graphs (PIECEWISE):  82%|████████▏ | 42/51 [00:11<00:01,  4.53it/s]Capturing CUDA graphs (PIECEWISE):  84%|████████▍ | 43/51 [00:11<00:01,  4.51it/s]Capturing CUDA graphs (PIECEWISE):  86%|████████▋ | 44/51 [00:12<00:01,  4.48it/s]Capturing CUDA graphs (PIECEWISE):  88%|████████▊ | 45/51 [00:12<00:01,  4.44it/s]Capturing CUDA graphs (PIECEWISE):  90%|█████████ | 46/51 [00:12<00:01,  4.40it/s]Capturing CUDA graphs (PIECEWISE):  92%|█████████▏| 47/51 [00:12<00:00,  4.31it/s]Capturing CUDA graphs (PIECEWISE):  94%|█████████▍| 48/51 [00:13<00:00,  4.31it/s]Capturing CUDA graphs (PIECEWISE):  96%|█████████▌| 49/51 [00:13<00:00,  4.32it/s]Capturing CUDA graphs (PIECEWISE):  98%|█████████▊| 50/51 [00:13<00:00,  4.30it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:13<00:00,  4.24it/s]Capturing CUDA graphs (PIECEWISE): 100%|██████████| 51/51 [00:13<00:00,  3.69it/s]
+(Worker_TP0_EP0 pid=14124) Capturing CUDA graphs (FULL):   0%|          | 0/35 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):   3%|▎         | 1/35 [00:00<00:06,  4.89it/s]Capturing CUDA graphs (FULL):   6%|▌         | 2/35 [00:00<00:07,  4.69it/s]Capturing CUDA graphs (FULL):   9%|▊         | 3/35 [00:00<00:06,  4.66it/s]Capturing CUDA graphs (FULL):  11%|█▏        | 4/35 [00:00<00:06,  4.81it/s]Capturing CUDA graphs (FULL):  14%|█▍        | 5/35 [00:01<00:06,  4.88it/s]Capturing CUDA graphs (FULL):  17%|█▋        | 6/35 [00:01<00:06,  4.75it/s]Capturing CUDA graphs (FULL):  20%|██        | 7/35 [00:01<00:05,  4.84it/s]Capturing CUDA graphs (FULL):  23%|██▎       | 8/35 [00:01<00:05,  4.91it/s]Capturing CUDA graphs (FULL):  26%|██▌       | 9/35 [00:01<00:05,  4.94it/s]Capturing CUDA graphs (FULL):  29%|██▊       | 10/35 [00:02<00:05,  4.96it/s]Capturing CUDA graphs (FULL):  31%|███▏      | 11/35 [00:02<00:05,  4.65it/s]Capturing CUDA graphs (FULL):  34%|███▍      | 12/35 [00:02<00:04,  4.66it/s]Capturing CUDA graphs (FULL):  37%|███▋      | 13/35 [00:02<00:04,  4.71it/s]Capturing CUDA graphs (FULL):  40%|████      | 14/35 [00:02<00:04,  4.51it/s]Capturing CUDA graphs (FULL):  43%|████▎     | 15/35 [00:03<00:04,  4.63it/s]Capturing CUDA graphs (FULL):  46%|████▌     | 16/35 [00:03<00:04,  4.70it/s]Capturing CUDA graphs (FULL):  49%|████▊     | 17/35 [00:03<00:03,  4.79it/s]Capturing CUDA graphs (FULL):  51%|█████▏    | 18/35 [00:03<00:03,  4.83it/s]Capturing CUDA graphs (FULL):  54%|█████▍    | 19/35 [00:03<00:03,  4.85it/s]Capturing CUDA graphs (FULL):  57%|█████▋    | 20/35 [00:04<00:03,  4.90it/s]Capturing CUDA graphs (FULL):  60%|██████    | 21/35 [00:04<00:02,  4.92it/s]Capturing CUDA graphs (FULL):  63%|██████▎   | 22/35 [00:04<00:02,  4.96it/s]Capturing CUDA graphs (FULL):  66%|██████▌   | 23/35 [00:04<00:02,  4.98it/s]Capturing CUDA graphs (FULL):  69%|██████▊   | 24/35 [00:04<00:02,  4.97it/s]Capturing CUDA graphs (FULL):  71%|███████▏  | 25/35 [00:05<00:01,  5.01it/s]Capturing CUDA graphs (FULL):  74%|███████▍  | 26/35 [00:05<00:01,  4.96it/s]Capturing CUDA graphs (FULL):  77%|███████▋  | 27/35 [00:05<00:01,  4.93it/s]Capturing CUDA graphs (FULL):  80%|████████  | 28/35 [00:05<00:01,  4.95it/s]Capturing CUDA graphs (FULL):  83%|████████▎ | 29/35 [00:05<00:01,  4.97it/s]Capturing CUDA graphs (FULL):  86%|████████▌ | 30/35 [00:06<00:01,  4.96it/s]Capturing CUDA graphs (FULL):  89%|████████▊ | 31/35 [00:06<00:00,  5.01it/s]Capturing CUDA graphs (FULL):  91%|█████████▏| 32/35 [00:06<00:00,  5.00it/s]Capturing CUDA graphs (FULL):  94%|█████████▍| 33/35 [00:06<00:00,  5.02it/s]Capturing CUDA graphs (FULL):  97%|█████████▋| 34/35 [00:06<00:00,  5.00it/s]Capturing CUDA graphs (FULL): 100%|██████████| 35/35 [00:07<00:00,  5.08it/s]Capturing CUDA graphs (FULL): 100%|██████████| 35/35 [00:07<00:00,  4.88it/s]
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:14:17 [model_runner.py:1001] Graph capturing finished in 22 secs, took 1.10 GiB
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:14:17 [gpu_worker.py:808] CUDA graph pool memory: 1.1 GiB (actual), 1.8 GiB (estimated), difference: 0.7 GiB (63.8%).
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:14:17 [gpu_worker.py:871] Free memory on device (93.97/94.97 GiB) on startup. Desired GPU memory utilization is (0.9, 85.47 GiB). Actual usage is 45.57 GiB for consumed memory (weights + non-torch), 2.63 GiB for peak activation, and 1.1 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=38674499687` (36.02 GiB) to fit into requested memory, or `--kv-cache-memory=47798624768` (44.52 GiB) to fully utilize gpu memory. Current kv cache memory in use is 37.27 GiB.
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:14:17 [model_runner.py:1001] Graph capturing finished in 22 secs, took 1.10 GiB
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:14:17 [gpu_worker.py:808] CUDA graph pool memory: 1.1 GiB (actual), 1.8 GiB (estimated), difference: 0.7 GiB (63.8%).
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:14:17 [gpu_worker.py:871] Free memory on device (93.97/94.97 GiB) on startup. Desired GPU memory utilization is (0.9, 85.47 GiB). Actual usage is 45.57 GiB for consumed memory (weights + non-torch), 2.63 GiB for peak activation, and 1.1 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=38674499687` (36.02 GiB) to fit into requested memory, or `--kv-cache-memory=47798624768` (44.52 GiB) to fully utilize gpu memory. Current kv cache memory in use is 37.27 GiB.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:14:17 [model_runner.py:1001] Graph capturing finished in 22 secs, took 1.10 GiB
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:14:17 [gpu_worker.py:808] CUDA graph pool memory: 1.1 GiB (actual), 1.8 GiB (estimated), difference: 0.7 GiB (63.8%).
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:14:17 [gpu_worker.py:871] Free memory on device (93.97/94.97 GiB) on startup. Desired GPU memory utilization is (0.9, 85.47 GiB). Actual usage is 45.57 GiB for consumed memory (weights + non-torch), 2.63 GiB for peak activation, and 1.1 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=38674499687` (36.02 GiB) to fit into requested memory, or `--kv-cache-memory=47798624768` (44.52 GiB) to fully utilize gpu memory. Current kv cache memory in use is 37.27 GiB.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:14:17 [model_runner.py:1001] Graph capturing finished in 22 secs, took 1.10 GiB
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:14:17 [gpu_worker.py:808] CUDA graph pool memory: 1.1 GiB (actual), 1.8 GiB (estimated), difference: 0.7 GiB (63.5%).
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:14:17 [gpu_worker.py:871] Free memory on device (93.97/94.97 GiB) on startup. Desired GPU memory utilization is (0.9, 85.47 GiB). Actual usage is 45.57 GiB for consumed memory (weights + non-torch), 2.63 GiB for peak activation, and 1.1 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=38672402535` (36.02 GiB) to fit into requested memory, or `--kv-cache-memory=47796527616` (44.51 GiB) to fully utilize gpu memory. Current kv cache memory in use is 37.27 GiB.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:14:18 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP3_EP3 pid=14794) INFO 09-05 21:14:18 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP2_EP2 pid=14575) INFO 09-05 21:14:18 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP1_EP1 pid=14361) INFO 09-05 21:14:18 [jit_monitor.py:85] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:14:18 [torch_utils.py:280] Reducing Torch threads from 48 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=13862) INFO 09-05 21:14:19 [core.py:372] init engine (profile, create kv cache, warmup model) took 136.04 s (compilation: 22.11 s)
+(EngineCore pid=13862) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(EngineCore pid=13862) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(EngineCore pid=13862) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(EngineCore pid=13862) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(EngineCore pid=13862) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(EngineCore pid=13862) [ERROR] `min_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+(EngineCore pid=13862) [ERROR] `max_frames` is part of Qwen3VLVideoProcessorInitKwargs, but not documented. Make sure to add it to the docstring of the function in /usr/local/lib/python3.12/dist-packages/transformers/models/qwen3_vl/video_processing_qwen3_vl.py.
+(EngineCore pid=13862) INFO 09-05 21:14:20 [registry.py:141] All limits of multimodal modalities supported by the model are set to 0, running in text-only mode.
+(EngineCore pid=13862) INFO 09-05 21:14:20 [kernel.py:372] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(EngineCore pid=13862) INFO 09-05 21:14:20 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=13133) INFO 09-05 21:14:20 [entry.py:135] Supported tasks: ['generate']
+(APIServer pid=13133) WARNING 09-05 21:14:20 [__init__.py:44] SECURITY WARNING: Development endpoints are enabled! This should NOT be used in production!
+(APIServer pid=13133) INFO 09-05 21:14:20 [factories.py:82] Scale-out endpoints are disabled. Set VLLM_ENABLE_SCALE_OUT_ENDPOINTS=1 to enable them.
+(APIServer pid=13133) INFO 09-05 21:14:20 [parser_manager.py:36] "auto" tool choice has been enabled.
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) [transformers] Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section', 'mrope_interleaved'}
+(APIServer pid=13133) INFO 09-05 21:14:21 [hf.py:589] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=13133) WARNING 09-05 21:14:21 [model.py:1769] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 1.0, 'top_k': 20, 'top_p': 0.95}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=13133) INFO 09-05 21:14:21 [entry.py:139] Starting vLLM server on http://0.0.0.0:8000
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:61] Available routes are:
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /openapi.json, Methods: GET, HEAD
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /docs, Methods: GET, HEAD
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /docs/oauth2-redirect, Methods: GET, HEAD
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /redoc, Methods: GET, HEAD
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /load, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /version, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /health, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /metrics, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /tokenize, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /detokenize, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/models, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /ping, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /ping, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /invocations, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /reset_prefix_cache, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /reset_mm_cache, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /reset_encoder_cache, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /pause, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /resume, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /abort_requests, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /is_paused, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /init_weight_transfer_engine, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /start_weight_update, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /start_draft_weight_update, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /update_weights, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /finish_weight_update, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /update_weight_version, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /weight_info, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /get_world_size, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /collective_rpc, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /server_info, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /sleep, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /wake_up, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /is_sleeping, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/responses, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/completions, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/messages, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /generative_scoring, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=13133) INFO 09-05 21:14:21 [launcher.py:70] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=13133) INFO:     Started server process [13133]
+(APIServer pid=13133) INFO:     Waiting for application startup.
+(APIServer pid=13133) INFO:     Application startup complete.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:27 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _fused_post_conv_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:27 [jit_monitor.py:141] Triton kernel JIT compilation during inference: layer_norm_fwd_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:29 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _topk_topp_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:29 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _topp_sb_stats_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:30 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _topp_sb_step_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:31 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _topp_sb_mask_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:31 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _gumbel_sample_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:32 [jit_monitor.py:141] Triton kernel JIT compilation during inference: fused_moe_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _ple_conv_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _ple_conv_writeback_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=14124) WARNING 09-05 21:16:33 [jit_monitor.py:141] Triton kernel JIT compilation during inference: _qsa_mqa_paged_prefill_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=13133) INFO 09-05 21:16:41 [loggers.py:310] Engine 000: Avg prompt throughput: 137.1 tokens/s, Avg generation throughput: 188.4 tokens/s, Running: 10 reqs, Waiting: 0 reqs, GPU KV cache usage: 1.5%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:16:51 [loggers.py:310] Engine 000: Avg prompt throughput: 7.0 tokens/s, Avg generation throughput: 182.3 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:17:01 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 110.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.2%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:17:11 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 109.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:17:21 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 109.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:17:31 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 109.9 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.3%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:17:41 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 109.8 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:17:51 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 109.6 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.4%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:18:01 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 44.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:18:11 [loggers.py:310] Engine 000: Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s, Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
+(APIServer pid=13133) INFO 09-05 21:21:00 [launcher.py:129] [shutdown] API server: shutdown triggered
+(APIServer pid=13133) INFO 09-05 21:21:00 [launcher.py:145] [shutdown] API server: stopping engine client mode=abort timeout=0s
+(APIServer pid=13133) INFO 09-05 21:21:00 [core_client.py:744] [shutdown] MPClient: start timeout=0s
+(APIServer pid=13133) INFO 09-05 21:21:00 [core_client.py:746] [shutdown] MPClient: stopping engine manager
+(APIServer pid=13133) INFO 09-05 21:21:00 [utils.py:620] [shutdown] Process manager: send sigterm to process EngineCore
+(APIServer pid=13133) WARNING 09-05 21:21:00 [utils.py:640] [shutdown] Process manager: force killing remaining processes count=1
+(APIServer pid=13133) WARNING 09-05 21:21:00 [utils.py:645] [shutdown] Process manager: force killing remaining process EngineCore pid 13862
+(EngineCore pid=13862) INFO 09-05 21:21:00 [core.py:1361] [shutdown] EngineCore: trigger received signal=SIGTERM
+(EngineCore pid=13862) INFO 09-05 21:21:00 [core.py:1512] [shutdown] EngineCore: start mode=abort timeout=0s
+(EngineCore pid=13862) INFO 09-05 21:21:00 [core.py:1543] [shutdown] EngineCore: request processing complete; starting resource teardown
+(EngineCore pid=13862) INFO 09-05 21:21:00 [core.py:1374] [shutdown] EngineCore: exiting busy loop
+(EngineCore pid=13862) INFO 09-05 21:21:00 [multiproc_executor.py:472] [shutdown] Executor: waiting for worker exit count=4
+(Worker_TP0_EP0 pid=14124) INFO 09-05 21:21:00 [multiproc_executor.py:836] Parent process exited, terminating worker queues
+(APIServer pid=13133) INFO 09-05 21:21:00 [core_client.py:748] [shutdown] MPClient: engine manager stopped
+(APIServer pid=13133) INFO 09-05 21:21:00 [core_client.py:749] [shutdown] MPClient: cleaning up background resources
+(APIServer pid=13133) INFO 09-05 21:21:00 [core_client.py:751] [shutdown] MPClient: complete
+(APIServer pid=13133) INFO 09-05 21:21:00 [launcher.py:154] [shutdown] API server: engine client stopped
+(APIServer pid=13133) INFO 09-05 21:21:00 [launcher.py:157] [shutdown] API server: signalling HTTP server shutdown
+(APIServer pid=13133) INFO 09-05 21:21:00 [launcher.py:179] [shutdown] API server: shutting down FastAPI HTTP server
+(APIServer pid=13133) INFO:     Shutting down
+(APIServer pid=13133) INFO:     Waiting for application shutdown.
+(APIServer pid=13133) INFO:     Application shutdown complete.
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 4 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 6 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+[2026-09-05T21:21:01+00:00] EXIT 0

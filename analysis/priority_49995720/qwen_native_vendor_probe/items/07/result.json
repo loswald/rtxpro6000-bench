@@ -1,0 +1,109 @@
+{
+  "index": 7,
+  "prompt": "List three differences between TCP and UDP.",
+  "expected": "UDP",
+  "seed": 1053659467,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "List three differences between TCP and UDP."
+      }
+    ],
+    "seed": 1053659467,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "c872e327e11a26e5548a3c149351551c13b8dc2cab1123ff15ed1558137ed82e",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:05:46+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-84d3179e194fe6f5",
+    "object": "chat.completion",
+    "created": 1788642346,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\n1. **Connection type**: TCP is connection-oriented and establishes a connection before sending data; UDP is connectionless and sends packets directly.  \n2. **Reliability**: TCP guarantees reliable, ordered delivery with acknowledgments and retransmissions; UDP does not guarantee delivery or ordering.  \n3. **Speed and overhead**: TCP has more overhead and is generally slower due to reliability features; UDP has lower overhead and is faster, making it suitable for real-time applications like video streaming or gaming.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "User asks: \"List three differences between TCP and UDP.\" Need to provide concise answer. Done. Need final with three differences.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 60,
+      "total_tokens": 188,
+      "completion_tokens": 128,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 27
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "a3e098c0f6d36549fc6d4c7d349a6470315e9fedc6d850cf6c9b1d534cf3fab7",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\n1. **Connection type**: TCP is connection-oriented and establishes a connection before sending data; UDP is connectionless and sends packets directly.  \n2. **Reliability**: TCP guarantees reliable, ordered delivery with acknowledgments and retransmissions; UDP does not guarantee delivery or ordering.  \n3. **Speed and overhead**: TCP has more overhead and is generally slower due to reliability features; UDP has lower overhead and is faster, making it suitable for real-time applications like video streaming or gaming.",
+  "reasoning": "User asks: \"List three differences between TCP and UDP.\" Need to provide concise answer. Done. Need final with three differences.\n",
+  "reasoning_chars": 130,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 72,
+    "top6gram": 1,
+    "distinct_ratio": 0.7777777777777778,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 20,
+    "top6gram": 1,
+    "distinct_ratio": 0.9,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 60,
+    "total_tokens": 188,
+    "completion_tokens": 128,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 27
+    }
+  },
+  "raw_response_file": "items/07/response.raw",
+  "elapsed_s": 6.651895,
+  "ended_at": "2026-09-05T21:05:53+00:00"
+}

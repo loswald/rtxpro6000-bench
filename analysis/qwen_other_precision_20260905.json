@@ -1,0 +1,123 @@
+{
+  "sources": {
+    "models/qwen4_exp/nvidia/model.py": {
+      "sha256": "9cf6b2bc7c822c3f08900d0bb02c200ea4436bdfd63e21338b17ae73bacd2376",
+      "excerpts": [
+        {
+          "name": "get_ple_mamba_state_dtype_from_config",
+          "line": 689,
+          "text": "    def get_ple_mamba_state_dtype_from_config(\n        cls,\n        vllm_config: VllmConfig,\n    ) -> tuple[torch.dtype, ...]:\n        return MambaStateDtypeCalculator.short_conv_state_dtype(\n            vllm_config.model_config.dtype,\n            vllm_config.cache_config.mamba_cache_dtype,\n        )"
+        },
+        {
+          "name": "get_gdn_mamba_state_dtype_from_config",
+          "line": 721,
+          "text": "    def get_gdn_mamba_state_dtype_from_config(\n        cls, vllm_config: VllmConfig\n    ) -> tuple[torch.dtype, torch.dtype]:\n        return MambaStateDtypeCalculator.gated_delta_net_state_dtype(\n            vllm_config.model_config.dtype,\n            vllm_config.cache_config.mamba_cache_dtype,\n            vllm_config.cache_config.mamba_ssm_cache_dtype,\n        )"
+        },
+        {
+          "name": "get_mamba_state_dtype_from_config",
+          "line": 753,
+          "text": "    def get_mamba_state_dtype_from_config(\n        cls,\n        vllm_config: VllmConfig,\n    ) -> tuple[torch.dtype, torch.dtype]:\n        return cls.get_gdn_mamba_state_dtype_from_config(vllm_config)"
+        },
+        {
+          "name": "get_mamba_state_dtype_from_config",
+          "line": 1031,
+          "text": "    def get_mamba_state_dtype_from_config(\n        cls,\n        vllm_config: VllmConfig,\n    ) -> tuple[torch.dtype, torch.dtype]:\n        return Qwen4ExpForCausalLM.get_mamba_state_dtype_from_config(vllm_config)"
+        }
+      ]
+    },
+    "model_executor/layers/mamba/mamba_utils.py": {
+      "sha256": "dbc42a65e7c2e0f00e7273d26d0af66848f89035cd7576cd8d54499fa72f3e2c",
+      "excerpts": [
+        {
+          "name": "linear_attention_state_dtype",
+          "line": 55,
+          "text": "    def linear_attention_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n    ) -> tuple[torch.dtype, ...]:\n        state_dtype = get_kv_cache_torch_dtype(mamba_cache_dtype, model_dtype)\n        return (state_dtype,)"
+        },
+        {
+          "name": "mamba1_state_dtype",
+          "line": 64,
+          "text": "    def mamba1_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n        mamba_ssm_cache_dtype: MambaDType,\n    ) -> tuple[torch.dtype, ...]:\n        return cls._mamba_state_dtype(\n            model_dtype, mamba_cache_dtype, mamba_ssm_cache_dtype\n        )"
+        },
+        {
+          "name": "mamba2_state_dtype",
+          "line": 75,
+          "text": "    def mamba2_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n        mamba_ssm_cache_dtype: MambaDType,\n    ) -> tuple[torch.dtype, ...]:\n        return cls._mamba_state_dtype(\n            model_dtype, mamba_cache_dtype, mamba_ssm_cache_dtype\n        )"
+        },
+        {
+          "name": "_mamba_state_dtype",
+          "line": 98,
+          "text": "    def _mamba_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n        mamba_ssm_cache_dtype: MambaDType,\n    ) -> tuple[torch.dtype, ...]:\n        conv_state_dtype = get_kv_cache_torch_dtype(mamba_cache_dtype, model_dtype)\n        if mamba_ssm_cache_dtype == \"auto\":\n            temporal_state_dtype = conv_state_dtype\n        else:\n            temporal_state_dtype = STR_DTYPE_TO_TORCH_DTYPE[mamba_ssm_cache_dtype]\n\n        return (conv_state_dtype, temporal_state_dtype)"
+        },
+        {
+          "name": "short_conv_state_dtype",
+          "line": 113,
+          "text": "    def short_conv_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n    ) -> tuple[torch.dtype, ...]:\n        conv_state_dtype = get_kv_cache_torch_dtype(mamba_cache_dtype, model_dtype)\n        return (conv_state_dtype,)"
+        },
+        {
+          "name": "gated_delta_net_state_dtype",
+          "line": 122,
+          "text": "    def gated_delta_net_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n        mamba_ssm_cache_dtype: MambaDType = \"auto\",\n    ) -> tuple[torch.dtype, torch.dtype]:\n        return cls._mamba_state_dtype(\n            model_dtype, mamba_cache_dtype, mamba_ssm_cache_dtype\n        )"
+        },
+        {
+          "name": "kda_state_dtype",
+          "line": 133,
+          "text": "    def kda_state_dtype(\n        cls,\n        model_dtype: ModelDType | torch.dtype,\n        mamba_cache_dtype: MambaDType,\n    ) -> tuple[torch.dtype, torch.dtype]:\n        state_dtype = get_kv_cache_torch_dtype(mamba_cache_dtype, model_dtype)\n        return (state_dtype, torch.float32)"
+        }
+      ]
+    },
+    "config/cache.py": {
+      "sha256": "86549b6cd0db94402ef3af6eedc556f63769289a0ae72f74e2b1a1538c343582",
+      "excerpts": [
+        {
+          "line": 181,
+          "text": "    Can be set only when prefix caching is enabled.\n    Value must be a multiple of 8 to align with causal_conv1d kernel.\"\"\"\n    mamba_cache_dtype: MambaDType = \"auto\"\n    \"\"\"The data type to use for the Mamba cache (both the conv as well as the\n    ssm state). If set to 'auto', the data type will be inferred from the model\n    config.\"\"\"\n    mamba_ssm_cache_dtype: MambaDType = \"auto\"\n    \"\"\"The data type to use for the Mamba cache (ssm state only, conv state will\n    still be controlled by mamba_cache_dtype). If set to 'auto', the data type\n    for the ssm state will be determined by mamba_cache_dtype.\"\"\"\n    mamba_cache_mode: MambaCacheMode = \"none\"\n    \"\"\"The cache strategy for Mamba layers:\n\n    - \"none\": set when prefix caching is disabled."
+        },
+        {
+          "line": 185,
+          "text": "    ssm state). If set to 'auto', the data type will be inferred from the model\n    config.\"\"\"\n    mamba_ssm_cache_dtype: MambaDType = \"auto\"\n    \"\"\"The data type to use for the Mamba cache (ssm state only, conv state will\n    still be controlled by mamba_cache_dtype). If set to 'auto', the data type\n    for the ssm state will be determined by mamba_cache_dtype.\"\"\"\n    mamba_cache_mode: MambaCacheMode = \"none\"\n    \"\"\"The cache strategy for Mamba layers:\n\n    - \"none\": set when prefix caching is disabled.\n    - \"all\": cache the mamba state of all tokens at position i * block_size.\n    - \"align\": only cache the mamba state of the last token of each scheduler step and\n      when the token is at position i * block_size. This is the default when prefix\n      caching is enabled."
+        }
+      ]
+    },
+    "models/qwen4_exp/nvidia/ple_layer.py": {
+      "sha256": "78969d27e1feead35e2c9207d44c383c440b80e1bf563ab3dce50320409c195a",
+      "excerpts": [
+        {
+          "name": "_get_ple_embedding_quant_method",
+          "line": 133,
+          "text": "def _get_ple_embedding_quant_method(\n    quant_config: QuantizationConfig | None,\n    prefix: str,\n) -> QuantizeMethodBase | None:\n    \"\"\"Select global-scale FP8 only for quantized PLE checkpoint shards.\"\"\"\n\n    # sm_120 campaign: RadixArk's NVFP4 checkpoint ships FP8 PLE shards under a modelopt NVFP4 config that ignores\n    # \"*.ple.*\"; force the FP8 PLE method when asked, whatever the quantization config says.\n    import os as _os\n    if _os.environ.get(\"VLLM_QWEN4EXP_PLE_FP8\") == \"1\":\n        return Qwen4ExpPLEFp8EmbeddingMethod()\n\n    if isinstance(quant_config, ModelOptMixedPrecisionConfig):\n        if quant_config._resolve_quant_algo(prefix) == \"FP8\":\n            return Qwen4ExpPLEFp8EmbeddingMethod()\n        return None\n\n    if not isinstance(quant_config, Fp8Config):\n        return None\n    if not quant_config.is_checkpoint_fp8_serialized:\n        return None\n\n    ignored_layers = quant_config.ignored_layers\n    if is_layer_skipped(\n        prefix,\n        ignored_layers,\n        quant_config.packed_modules_mapping,\n        match_mode=quant_config.ignored_layers_match_mode,\n    ):\n        return None\n    # PLE checkpoint shards form one runtime embedding parameter.\n    shard_prefix = f\"{prefix}.shard_\"\n    if any(name.startswith(shard_prefix) for name in ignored_layers):\n        return None\n    return Qwen4ExpPLEFp8EmbeddingMethod()"
+        },
+        {
+          "name": "get_state_dtype",
+          "line": 644,
+          "text": "    def get_state_dtype(self) -> tuple[torch.dtype, ...]:\n        return MambaStateDtypeCalculator.short_conv_state_dtype(\n            self.model_config.dtype, self.cache_config.mamba_cache_dtype\n        )"
+        }
+      ]
+    }
+  },
+  "checkpoint": {
+    "path": "/workspace/models/Qwen3.8-Flash-Next-NVFP4/config.json",
+    "sha256": "e765305daba0951974308f4d32c075b52a6a45974730d273f2216718a994d624",
+    "model": {
+      "dtype": "bfloat16",
+      "torch_dtype": null,
+      "mamba_ssm_dtype": "float32",
+      "hidden_size": 2560,
+      "moe_intermediate_size": 640,
+      "num_experts": 512,
+      "num_experts_per_tok": 10,
+      "ple_embed_dim": 2560,
+      "ngram_vocab_size_base": 20000000
+    },
+    "quantization": {
+      "quant_method": "modelopt",
+      "quant_algo": "NVFP4",
+      "kv_cache_quant_algo": null,
+      "exclude_modules": null
+    }
+  },
+  "launch_script": {
+    "path": "/workspace/bench/l_ks.sh",
+    "text": "#!/usr/bin/env bash\nexport VLLM_USE_DEEP_GEMM=0 VLLM_MOE_USE_DEEP_GEMM=0 HF_HUB_OFFLINE=1\nexport FLASHINFER_CUDA_ARCH_LIST=12.0f TORCH_CUDA_ARCH_LIST=12.0 CUTE_DSL_ARCH=sm_120a\nexport VLLM_ENGINE_READY_TIMEOUT_S=3600 MAX_JOBS=4 NVCC_THREADS=2\nexport VLLM_QWEN4EXP_PLE_FP8=1\nulimit -n 65536 2>/dev/null || ulimit -n 8192 2>/dev/null\nCUDA_VISIBLE_DEVICES=0,1,2,3 vllm serve /workspace/models/Qwen3.8-Flash-Next-NVFP4 --served-model-name m --host 0.0.0.0 --port 8000 --tensor-parallel-size 4 --kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 512 --max-num-batched-tokens 8192 --gpu-memory-utilization 0.94 --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce --no-enable-flashinfer-autotune --disable-uvicorn-access-log --moe-backend marlin --kv-cache-dtype auto --max-num-seqs 512 --gpu-memory-utilization 0.92 --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice > /workspace/results/smoke/qwen38fn_tp4m_--marlin_p8000.log 2>&1 &\nsleep 2\nwait\n"
+  },
+  "profile_lines": []
+}

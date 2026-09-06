@@ -1,0 +1,73 @@
+{
+  "entrypoints/llm.py": {
+    "sha256": "52de4ac99489e004ef6c61d0bedc84aa96020dd58b8bd1ae500814b548b2b83e",
+    "functions": [
+      {
+        "line": 796,
+        "text": "    def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        return self.llm_engine.reset_prefix_cache(\n            reset_running_requests, reset_connector\n        )"
+      }
+    ]
+  },
+  "entrypoints/serve/dev/cache/api_router.py": {
+    "sha256": "ba0e9be90c4fe8f42526c163d073ee5889492e4cdd8231599901d0b3aab669ce",
+    "functions": [
+      {
+        "line": 21,
+        "text": "async def reset_prefix_cache(\n    raw_request: Request,\n    reset_running_requests: bool = Query(default=False),\n    reset_external: bool = Query(default=False),\n):\n    \"\"\"\n    Reset the local prefix cache.\n\n    Optionally, if the query parameter `reset_external=true`\n    also resets the external (connector-managed) prefix cache.\n\n    Returns `{\"success\": bool}`. The reset fails (`success=false`) while\n    blocks are still held, e.g. by running requests or in-flight async KV\n    offload transfers; callers may retry.\n\n    Example:\n       POST /reset_prefix_cache?reset_external=true\n    \"\"\"\n    logger.info(\"Resetting prefix cache...\")\n\n    success = await engine_client(raw_request).reset_prefix_cache(\n        reset_running_requests, reset_external\n    )\n    return JSONResponse(content={\"success\": bool(success)})"
+      }
+    ]
+  },
+  "v1/engine/async_llm.py": {
+    "sha256": "2395dcf299cc015e0e69476fe8d986ccc8b96a69a83b9fc51a9a8bc62d9a8b26",
+    "functions": [
+      {
+        "line": 1048,
+        "text": "    async def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        return await self.engine_core.reset_prefix_cache_async(\n            reset_running_requests, reset_connector\n        )"
+      }
+    ]
+  },
+  "v1/engine/core.py": {
+    "sha256": "ef709a037077f48db65d381305a0427c25749bd5dc7997f3dec5b5539f1f0dc4",
+    "functions": [
+      {
+        "line": 811,
+        "text": "    def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        return self.scheduler.reset_prefix_cache(\n            reset_running_requests, reset_connector\n        )"
+      }
+    ]
+  },
+  "v1/engine/core_client.py": {
+    "sha256": "f9a721c21088ea2f38d74139c78bab2eb6b535b561724ea2cd06ba30497f283a",
+    "functions": [
+      {
+        "line": 186,
+        "text": "    def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        raise NotImplementedError"
+      },
+      {
+        "line": 386,
+        "text": "    def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        return self.engine_core.reset_prefix_cache(\n            reset_running_requests, reset_connector\n        )"
+      },
+      {
+        "line": 991,
+        "text": "    def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        return self.call_utility(\n            \"reset_prefix_cache\", reset_running_requests, reset_connector\n        )"
+      }
+    ]
+  },
+  "v1/engine/llm_engine.py": {
+    "sha256": "d4d5fba309db4d3f271ac7479e3ddaa623045499e4c6cfac41c0c7710012413c",
+    "functions": [
+      {
+        "line": 357,
+        "text": "    def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        return self.engine_core.reset_prefix_cache(\n            reset_running_requests, reset_connector\n        )"
+      }
+    ]
+  },
+  "engine/protocol.py": {
+    "sha256": "9be92767b2a92bc5522c14b00750c0636950c7b99f82b99ed2bc2780bd3eae7b",
+    "functions": [
+      {
+        "line": 176,
+        "text": "    async def reset_prefix_cache(\n        self, reset_running_requests: bool = False, reset_connector: bool = False\n    ) -> bool:\n        \"\"\"Reset the prefix cache and optionally any configured connector cache\"\"\"\n        ..."
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "index": 16,
+  "prompt": "Write a haiku about GPUs.",
+  "expected": null,
+  "seed": 1476149434,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Write a haiku about GPUs."
+      }
+    ],
+    "seed": 1476149434,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "c286cfee581dbec2577848be9bf75c66bae080e74a23318abfe3015a8d3fd86f",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:16:41+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-8a987edcfa2e8082",
+    "object": "chat.completion",
+    "created": 1788643001,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\nSilicon brains hum  \nparallel streams race to solve  \npixels bloom to life",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "User request: \"Write a haiku about GPUs.\" Need produce final with haiku. Ensure haiku 5-7-5 maybe. \"Silicon brains hum / parallel streams race to solve / pixels bloom to life\" Count: Sil-i-con brains hum = 5? Silicon often 3 (sil-i-con), brains 1, hum 1 =>5. parallel streams race to solve: parallel 3? par-al-lel (3) streams 1 race 1 to 1 solve 1 =7? total 7. pixels bloom to life: pix-els 2, bloom1, to1, life1 =5. Good.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 59,
+      "total_tokens": 214,
+      "completion_tokens": 155,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 137
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "4f3e1aec3ffac038d9fa3af48f4daa99ee9d5335960e5c2d2d7aee633fcd0a06",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\nSilicon brains hum  \nparallel streams race to solve  \npixels bloom to life",
+  "reasoning": "User request: \"Write a haiku about GPUs.\" Need produce final with haiku. Ensure haiku 5-7-5 maybe. \"Silicon brains hum / parallel streams race to solve / pixels bloom to life\" Count: Sil-i-con brains hum = 5? Silicon often 3 (sil-i-con), brains 1, hum 1 =>5. parallel streams race to solve: parallel 3? par-al-lel (3) streams 1 race 1 to 1 solve 1 =7? total 7. pixels bloom to life: pix-els 2, bloom1, to1, life1 =5. Good.\n",
+  "reasoning_chars": 423,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": false,
+  "final_repetition": {
+    "word_count": 12,
+    "top6gram": 1,
+    "distinct_ratio": 0.9166666666666666,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 76,
+    "top6gram": 1,
+    "distinct_ratio": 0.6973684210526315,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 59,
+    "total_tokens": 214,
+    "completion_tokens": 155,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 137
+    }
+  },
+  "raw_response_file": "items/16/response.raw",
+  "elapsed_s": 2.117736,
+  "ended_at": "2026-09-05T21:16:43+00:00"
+}

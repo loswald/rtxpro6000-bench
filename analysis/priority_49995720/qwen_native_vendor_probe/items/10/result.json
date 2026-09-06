@@ -1,0 +1,109 @@
+{
+  "index": 10,
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "expected": "scatter",
+  "seed": 37089468,
+  "request": {
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true
+    },
+    "max_tokens": 8192,
+    "model": "qwen38flashnext",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain why the sky is blue in two sentences."
+      }
+    ],
+    "seed": 37089468,
+    "stream": false,
+    "n": 1
+  },
+  "request_sha256": "468a98a44ea1dc5acd94888660368ac83af0d9a71e78633b1919ab13a30aea69",
+  "url": "http://127.0.0.1:8000/v1/chat/completions",
+  "started_at": "2026-09-05T21:05:51+00:00",
+  "http_status": 200,
+  "response": {
+    "id": "chatcmpl-8ebe0cf06836d8da",
+    "object": "chat.completion",
+    "created": 1788642351,
+    "model": "qwen38flashnext",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "\n\nSunlight enters Earth’s atmosphere and is scattered by air molecules. Shorter blue wavelengths scatter more strongly than longer red wavelengths, so the sky appears blue.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": "We need to respond to user: \"Explain why the sky is blue in two sentences. Just answer in two sentences. Need likely final two sentences. Need ensure two sentences exactly. Content: sunlight scattered by atmosphere; Rayleigh scattering scatters short blue wavelengths more, making sky appear blue. Also mention sunsets? But two sentences. Need perhaps: \"Sunlight enters Earth's atmosphere and is scattered by air molecules. Shorter blue wavelengths scatter more strongly than longer red wavelengths, so the sky appears blue.\" That's two sentences. Count sentences: 1 Sunlight...molecules. 2 Shorter...blue. Fine.\n"
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.1rc1.dev446+g798544433-tp4-ep-72ccc4a5",
+    "usage": {
+      "prompt_tokens": 63,
+      "total_tokens": 226,
+      "completion_tokens": 163,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": {
+        "reasoning_tokens": 129
+      }
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  },
+  "response_sha256": "0149f1ae6972db3906e558fce46aa7e9693af895df42650215aadb2fe4737079",
+  "response_content_type": "application/json",
+  "verdict": "ok",
+  "reasons": [],
+  "text": "\n\nSunlight enters Earth’s atmosphere and is scattered by air molecules. Shorter blue wavelengths scatter more strongly than longer red wavelengths, so the sky appears blue.",
+  "reasoning": "We need to respond to user: \"Explain why the sky is blue in two sentences. Just answer in two sentences. Need likely final two sentences. Need ensure two sentences exactly. Content: sunlight scattered by atmosphere; Rayleigh scattering scatters short blue wavelengths more, making sky appear blue. Also mention sunsets? But two sentences. Need perhaps: \"Sunlight enters Earth's atmosphere and is scattered by air molecules. Shorter blue wavelengths scatter more strongly than longer red wavelengths, so the sky appears blue.\" That's two sentences. Count sentences: 1 Sunlight...molecules. 2 Shorter...blue. Fine.\n",
+  "reasoning_chars": 613,
+  "finish": "stop",
+  "empty_final": false,
+  "capped": false,
+  "expected_found_in_final": true,
+  "expected_found_in_reasoning": true,
+  "final_repetition": {
+    "word_count": 25,
+    "top6gram": 1,
+    "distinct_ratio": 1.0,
+    "flag": false
+  },
+  "reasoning_repetition": {
+    "word_count": 89,
+    "top6gram": 1,
+    "distinct_ratio": 0.7528089887640449,
+    "flag": false
+  },
+  "usage": {
+    "prompt_tokens": 63,
+    "total_tokens": 226,
+    "completion_tokens": 163,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": {
+      "reasoning_tokens": 129
+    }
+  },
+  "raw_response_file": "items/10/response.raw",
+  "elapsed_s": 2.546689,
+  "ended_at": "2026-09-05T21:05:54+00:00"
+}

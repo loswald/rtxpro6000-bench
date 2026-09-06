@@ -232,7 +232,7 @@ DEFAULT_MAX_NUM_BATCHED_TOKENS=8192  # sweep 8192 / 16384 via MAX_NUM_BATCHED_TO
 DEFAULT_GPU_MEM_UTIL=0.92
 DEFAULT_HEALTH_TIMEOUT=7200          # s; applied in load_cell so a cell's ${HEALTH_TIMEOUT:-N} can differ
 PROXY_PORT="${PROXY_PORT:-8080}"             # rr_proxy.py for the x4 replica cells
-PLE_TABLE_GB="${PLE_TABLE_GB:-51}"           # Qwen3.8-Flash-Next N-gram (PLE) table; TP-replicated -> one copy per worker (TP x DP) when VLLM_PLE_CPU_OFFLOAD=1 is honoured
+PLE_TABLE_GB="${PLE_TABLE_GB:-51}"           # Legacy offload-warning estimate only; g798544433 GPU PLE is TP row-sharded and has no implemented PLE_CPU_OFFLOAD path.
 
 # ---- sweep defaults (throughput-first, time-budgeted) ------------------------------------
 # Per-shape concurrency lists and prompt counts.  The agent shape (32768 in / 2048 out)
@@ -242,11 +242,13 @@ PLE_TABLE_GB="${PLE_TABLE_GB:-51}"           # Qwen3.8-Flash-Next N-gram (PLE) t
 DEFAULT_SHAPES="router judge agent"
 DEFAULT_CONCURRENCIES="${DEFAULT_CONCURRENCIES:-}"   # legacy single list for all shapes (empty = per-shape lists)
 ROUTER_CONCS="${ROUTER_CONCS:-1 4 8 16 32 64 128 256}"
+PROMPTOPT_CONCS="${PROMPTOPT_CONCS:-64 256 512 1024}"
 JUDGE_CONCS="${JUDGE_CONCS:-1 4 16 64 128 256}"
 AGENT_CONCS="${AGENT_CONCS:-1 4 16 64}"
 CUSTOM_CONCS="${CUSTOM_CONCS:-$ROUTER_CONCS}"        # --dataset-path runs
 # prompts per run = max(MULT * C, MIN), then capped by NUM_PROMPTS_CAP (0 = no cap)
 ROUTER_NP_MULT="${ROUTER_NP_MULT:-4}"; ROUTER_NP_MIN="${ROUTER_NP_MIN:-64}"
+PROMPTOPT_NP_MULT="${PROMPTOPT_NP_MULT:-8}"; PROMPTOPT_NP_MIN="${PROMPTOPT_NP_MIN:-64}"
 JUDGE_NP_MULT="${JUDGE_NP_MULT:-4}";   JUDGE_NP_MIN="${JUDGE_NP_MIN:-64}"
 AGENT_NP_MULT="${AGENT_NP_MULT:-2}";   AGENT_NP_MIN="${AGENT_NP_MIN:-16}"
 CUSTOM_NP_MULT="${CUSTOM_NP_MULT:-4}"; CUSTOM_NP_MIN="${CUSTOM_NP_MIN:-64}"
@@ -261,6 +263,7 @@ export COST_PER_HOUR
 shape_dims() {
   case "$1" in
     router) echo "1024 128" ;;
+    promptopt) echo "3584 256" ;; # 3072 shared prefix + 512 unique suffix
     judge)  echo "4096 512" ;;
     agent)  echo "32768 2048" ;;
     *) return 1 ;;
@@ -271,6 +274,7 @@ shape_concs() {
   if [ -n "$DEFAULT_CONCURRENCIES" ]; then echo "$DEFAULT_CONCURRENCIES"; return 0; fi
   case "$1" in
     router) echo "$ROUTER_CONCS" ;;
+    promptopt) echo "$PROMPTOPT_CONCS" ;;
     judge)  echo "$JUDGE_CONCS" ;;
     agent)  echo "$AGENT_CONCS" ;;
     *)      echo "$CUSTOM_CONCS" ;;
@@ -281,6 +285,7 @@ shape_num_prompts() {
   local shape="$1" C="$2" mult min n
   case "$shape" in
     router) mult=$ROUTER_NP_MULT; min=$ROUTER_NP_MIN ;;
+    promptopt) mult=$PROMPTOPT_NP_MULT; min=$PROMPTOPT_NP_MIN ;;
     judge)  mult=$JUDGE_NP_MULT;  min=$JUDGE_NP_MIN ;;
     agent)  mult=$AGENT_NP_MULT;  min=$AGENT_NP_MIN ;;
     *)      mult=$CUSTOM_NP_MULT; min=$CUSTOM_NP_MIN ;;
