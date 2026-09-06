@@ -1,6 +1,6 @@
 # Resume document — RTX PRO 6000 benchmark campaign
 
-State as of **2026-09-06 00:50 UTC** — nothing is rented, written by the benchmarking session (airr-a0) so that anyone — Nish, a new
+State as of **2026-09-06 01:00 UTC** — one box rented for one hour (below), written by the benchmarking session (airr-a0) so that anyone — Nish, a new
 Claude session, Codex — can pick this up cold. The rules for sharing this checkout are in [AGENTS.md](../AGENTS.md);
 the append-only log of who touched what is [HANDOFF.md](../HANDOFF.md). The deliverables are the
 [README](../README.md) (public repo) and the report (`report/blackwell-node-benchmark.html`, published as a private
@@ -12,6 +12,7 @@ refuses a publish not built on the latest version).
 | instance | what | state | action |
 |---|---|---|---|
 | 49694407 | original 600 W box, 4× RTX PRO 6000 Server Edition, `ops/inst6000a.ssh` (direct 147.185.60.9:30812) | **destroyed 00:27 UTC 6 Sept** — an hour early, by this session's hard-stop script, whose `date -d "01:27"` was read in the WSL host's local time (BST), not UTC. The FP8 quality run and its 32-stream shapes were pulled first (`results/600w/`); the 128-stream FP8 shapes and the TP2 probes never ran | nothing |
+| 50014788 | fourth box, 4× RTX PRO 6000 Server Edition 600 W (Bulgaria), `ops/inst6000d.ssh` (direct 151.237.25.16:35163), rented 00:50 UTC for Nish's last hour | running `glm_hour.sh` in tmux `hour`: vendor image + NVFP4 weights, then `glm_perf5.sh` probe-first (eager+Marlin, Marlin, eager, TP2 no-EP), cut-off 01:38 UTC | **destroy by 01:50 UTC** after `ops/pullres6000d.sh` (→ `results/600w3/`); marker `GLMHOUR DONE` in `/workspace/results/glm_hour.log` |
 | 49977359 | third box (dev446 build) | **destroyed 23:48 UTC** after a Vast account event stopped it at ~23:25 | nothing; its results are in `results/600w2/` (pulled 22:52) |
 | 49995720 | `sqwish-priority3-interruptible`, 4× RTX PRO 6000 WS, the deleted second session's box | **gone** — no longer in the account's instance list at 00:12 UTC (Nish destroyed it; GPUs had been idle since 23:45) | nothing |
 
