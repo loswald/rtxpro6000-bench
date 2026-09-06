@@ -30,6 +30,11 @@ SHAPES_USED = ("router", "promptopt")   # the two shapes every configuration has
 API = {"Qwen3.8-27B": (0.42, 3.00, 0.085), "GLM-5.3-Flash": (0.075, 0.25, 0.015), "DeepSeek-V4-Flash": (0.065, 0.18, 0.016),
        "gpt-oss-120b": (0.037, 0.17, 0.037), "gpt-oss-20b": (0.03, 0.13, 0.03), "gemma-4-26B-A4B": (0.07, 0.34, 0.07),
        "Muse-Glimmer-30B": (0.30, 1.10, 0.04), "Qwen3.8-Flash-Next": (0.15, 0.47, 0.15), "MiniMax-M3": (0.30, 1.20, 0.06)}
+# The market price: median over every OpenRouter provider of the model (/api/v1/models/<slug>/endpoints, 6 Sept 2026
+# 00:30 UTC). GLM-5.3-Flash: 23 providers, 4 at $0.075/$0.25 (Z.AI, Novita, GMICloud, DeepInfra FP4), 17 at
+# $0.15/$0.50 - the list tier is a promotion. DeepSeek-V4-Flash: 15 providers from $0.068/$0.168 (DigitalOcean) to
+# $0.21/$0.56 (Azure), DeepSeek itself $0.22/$0.66; median $0.138/$0.28. Models with one known price keep it.
+API_MEDIAN = {"GLM-5.3-Flash": (0.15, 0.50, 0.03), "DeepSeek-V4-Flash": (0.138, 0.28, 0.028)}
 
 # label, precision class, eval tag (trees searched: 600w, 600w2, top, 5090), throughput tag, API model
 POINTS = [
@@ -124,17 +129,20 @@ def cost_avg(tag, model):
     if not sh:
         return None
     p_in, p_out, p_cache = API[model]
-    node_req, api_req, tok_req, tin, tout = [], [], [], [], []
+    m_in, m_out, m_cache = API_MEDIAN.get(model, API[model])
+    node_req, api_req, med_req, tok_req, tin, tout = [], [], [], [], [], []
     for label, out_tps in sh.items():
         n_in, n_out, n_pre = SHAPE_GEOM[label]
         req_s = out_tps / n_out
         node_req.append(NODE_USD_H / 3600 / req_s)
         api_req.append((n_in * p_in + n_pre * p_cache + n_out * p_out) / 1e6)
+        med_req.append((n_in * m_in + n_pre * m_cache + n_out * m_out) / 1e6)
         tok_req.append(n_in + n_pre + n_out); tin.append(n_in + n_pre); tout.append(n_out)
     k = len(sh)
     node_m = sum(node_req) / k / (sum(tok_req) / k) * 1e6
     api_m = sum(api_req) / k / (sum(tok_req) / k) * 1e6
-    return dict(node=node_m, api=api_m, shapes=sorted(sh, key=lambda l: list(SHAPE_GEOM).index(l)),
+    med_m = sum(med_req) / k / (sum(tok_req) / k) * 1e6
+    return dict(node=node_m, api=api_m, api_med=med_m, shapes=sorted(sh, key=lambda l: list(SHAPE_GEOM).index(l)),
                 avg_in=sum(tin) / k, avg_out=sum(tout) / k, tput=sh.get("router"))
 
 def place_labels(pts, X, Y, W, H, ml, mr, mt, mb, keep):
@@ -176,7 +184,7 @@ def main():
             continue
         if not prov and label.endswith("*"):      # the point's own run has landed: drop the provisional mark
             label = label[:-1].rstrip()
-        pts.append(dict(label=label, cls=cls, acc=acc, n=n, cost=c["node"], api=c["api"], shapes=c["shapes"], api_acc=api_acc_for(model),
+        pts.append(dict(label=label, cls=cls, acc=acc, n=n, cost=c["node"], api=c["api"], api_med=c["api_med"], shapes=c["shapes"], api_acc=api_acc_for(model),
                         avg_in=c["avg_in"], avg_out=c["avg_out"], tput=c["tput"], prov=prov))
     front, best = [], -1
     for p in sorted(pts, key=lambda q: q["cost"]):
@@ -184,7 +192,7 @@ def main():
             front.append(p); best = p["acc"]
     # ---- SVG ----
     W, H, ml, mr, mt, mb = 1100, 600, 70, 30, 30, 70
-    xs = [p["cost"] for p in pts] + [p["api"] for p in pts]
+    xs = [p["cost"] for p in pts] + [p["api"] for p in pts] + [p["api_med"] for p in pts]
     xmin, xmax = 10 ** math.floor(math.log10(min(xs)) - 0.15), 10 ** math.ceil(math.log10(max(xs)) + 0.05)
     ymin = 0.60; ymax = max(0.86, math.ceil((max(p["acc"] for p in pts) + 0.005) * 50) / 50)
     X = lambda c: ml + (math.log10(c) - math.log10(xmin)) / (math.log10(xmax) - math.log10(xmin)) * (W - ml - mr)
@@ -206,9 +214,10 @@ def main():
         o.append(f'<text x="{ml-8}" y="{Y(a)+4:.1f}" font-size="12" fill="#898781" text-anchor="end">{a:.2f}</text>')
         a += 0.05
     o.append(f'<line x1="{ml}" y1="{H-mb}" x2="{W-mr}" y2="{H-mb}" stroke="#c3c2b7"/>')
-    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API list at the same mix, cached input at its own price</text>')
+    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API at the market-median provider price, same mix, cached input at its own price · small dashed = the cheapest (promotional) tier</text>')
     o.append(f'<text transform="translate(18,{(mt+H-mb)/2:.0f}) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>')
-    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API list price, same model, same mix; at the API's own measured accuracy where the suite has run against it", "#52514e", "hollow")),
+    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API at the market-median provider price, same model, same mix; at the API's own measured accuracy where the suite has run against it", "#52514e", "hollow")),
+         ("cheap", ("API at the cheapest tier (a promotion: 4 of 23 GLM providers; the FP4 resellers for DeepSeek)", "#52514e", "smallhollow")),
          ("front", ("frontier: nothing is both cheaper and better", "#898781", "dash")),
          ("prov", ("* quality from the same weights and kernels in another layout; own run in progress", "#52514e", "ring"))]
     lw, lh = 560, 18 * len(L) + 12
@@ -218,6 +227,7 @@ def main():
         yy = ly0 + 14 + i * 18; lx = lx0 + 10
         if shp == "square": o.append(f'<rect x="{lx}" y="{yy-5}" width="10" height="10" fill="{col}"/>')
         elif shp == "hollow": o.append(f'<circle cx="{lx+5}" cy="{yy}" r="5" fill="#fcfcfb" stroke="{col}" stroke-width="2"/>')
+        elif shp == "smallhollow": o.append(f'<circle cx="{lx+5}" cy="{yy}" r="3.5" fill="#fcfcfb" stroke="{col}" stroke-width="1.5" stroke-dasharray="2 2"/>')
         elif shp == "dash": o.append(f'<line x1="{lx}" y1="{yy}" x2="{lx+10}" y2="{yy}" stroke="{col}" stroke-width="2" stroke-dasharray="6 4"/>')
         elif shp == "ring": o.append(f'<circle cx="{lx+5}" cy="{yy}" r="7" fill="none" stroke="{col}" stroke-width="1.5" stroke-dasharray="3 2"/>')
         else: o.append(f'<circle cx="{lx+5}" cy="{yy}" r="5" fill="{col}"/>')
@@ -227,11 +237,13 @@ def main():
         o.append(f'<path d="{d}" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>')
     for p in pts:
         name, col, shp = CLASS[p["cls"]]
-        x, y, xa = X(p["cost"]), Y(p["acc"]), X(p["api"])
+        x, y, xa, xc = X(p["cost"]), Y(p["acc"]), X(p["api_med"]), X(p["api"])
         ya = Y(p["api_acc"]) if p.get("api_acc") is not None else y
-        tip = f'{p["label"]}: {p["acc"]:.3f} on {p["n"]} items · ${p["cost"]:.3f}/M tokens self-hosted · ${p["api"]:.3f}/M API' + (f' · API scored {p["api_acc"]:.3f} on the same items' if p.get("api_acc") is not None else '') + f' · shapes {", ".join(p["shapes"])}'
+        tip = f'{p["label"]}: {p["acc"]:.3f} on {p["n"]} items · ${p["cost"]:.3f}/M tokens self-hosted · ${p["api_med"]:.3f}/M API at the market median (${p["api"]:.3f}/M at the cheapest tier)' + (f' · API scored {p["api_acc"]:.3f} on the same items' if p.get("api_acc") is not None else '') + f' · shapes {", ".join(p["shapes"])}'
         o.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{xa:.1f}" y2="{ya:.1f}" stroke="{col}" stroke-width="1" stroke-opacity="0.45"/>')
         o.append(f'<circle cx="{xa:.1f}" cy="{ya:.1f}" r="5" fill="#fcfcfb" stroke="{col}" stroke-width="2"><title>{tip}</title></circle>')
+        if abs(p["api"] - p["api_med"]) / p["api_med"] > 0.02:
+            o.append(f'<circle cx="{xc:.1f}" cy="{ya:.1f}" r="3.5" fill="#fcfcfb" stroke="{col}" stroke-width="1.5" stroke-dasharray="2 2"><title>{tip}</title></circle>')
         if p["prov"]:
             o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="10" fill="none" stroke="{col}" stroke-width="1.5" stroke-dasharray="3 2"/>')
         if shp == "square":
@@ -248,13 +260,13 @@ def main():
     out = os.path.join(ROOT, "report", "frontier.svg")
     open(out, "w", encoding="utf-8").write("\n".join(o))
     print(f"wrote {out} with {len(pts)} points; frontier: " + " → ".join(p["label"] for p in front))
-    print("\n| configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |")
-    print("|---|---:|---:|---|---:|---:|---:|---:|:-:|")
+    print("\n| configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M, market median | API $/M, cheapest tier | median ÷ node | cheapest ÷ node | on the frontier |")
+    print("|---|---:|---:|---|---:|---:|---:|---:|---:|---:|:-:|")
     for p in sorted(pts, key=lambda q: q["cost"]):
         note = ", same kernels in another layout" if p["prov"] else ""
         sh = " + ".join(p["shapes"])
         aa = f"{p['api_acc']:.3f}" if p.get("api_acc") is not None else "—"
-        print(f"| {p['label']} | {p['acc']:.3f} ({p['n']}{note}) | {aa} | {sh} | {p['avg_in']:,.0f} · {p['avg_out']:.0f} | ${p['cost']:.3f} | ${p['api']:.3f} | {p['api']/p['cost']:.1f}× | {'yes' if p in front else ''} |")
+        print(f"| {p['label']} | {p['acc']:.3f} ({p['n']}{note}) | {aa} | {sh} | {p['avg_in']:,.0f} · {p['avg_out']:.0f} | ${p['cost']:.3f} | ${p['api_med']:.3f} | ${p['api']:.3f} | **{p['api_med']/p['cost']:.1f}×** | {p['api']/p['cost']:.1f}× | {'yes' if p in front else ''} |")
 
 if __name__ == "__main__":
     main()

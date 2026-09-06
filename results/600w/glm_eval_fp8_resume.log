@@ -1,0 +1,23 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[23:41:10] ===== GLM-5.3-Flash (AA 57): quality =====
+[23:41:15]   launch glm53f_fp8
+[23:44:15]   glm53f_fp8 healthy in 180s | GPU KV cache size: 553,666 tokens
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/glm53f_fp8_quality20.json
+    eval: 2026-09-06T00:20:26Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+    eval: 2026-09-06T00:20:26Z     var_tracking     acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-06T00:20:26Z     qa_multi_doc     acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-06T00:20:26Z   knowledge  acc=0.643 n=70/70 ci95=[0.526,0.745] out_tok=2287.8 trunc=0.0286 err=0 
+    eval: 2026-09-06T00:20:26Z     mmlu_pro_hard    acc=0.900 n=40/40 ci95=[0.769,0.960]
+    eval: 2026-09-06T00:20:26Z     simpleqa         acc=0.300 n=30/30 ci95=[0.167,0.479]
+    eval: 2026-09-06T00:20:26Z   ifeval     acc=0.883 n=60/60 ci95=[0.778,0.942] out_tok=3171.3 trunc=0.0167 err=0 
+    eval: 2026-09-06T00:20:26Z     triple           acc=0.917 n=24/24 ci95=[0.742,0.977]
+    eval: 2026-09-06T00:20:26Z     double           acc=0.833 n=24/24 ci95=[0.641,0.933]
+    eval: 2026-09-06T00:20:26Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-06T00:20:26Z   aggregate  acc_micro=0.809 acc_macro=0.8205 n=403/403 ci95=[0.7677, 0.8443] requests=133 retries=0 out_tok/s=540.5
+    eval: 2026-09-06T00:20:26Z wrote /workspace/results/eval/glm53f_fp8.json, /workspace/results/eval/glm53f_fp8.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+  router     C32      49.2s     234 req/min      500 out/s      4000 in/s      4500 tot/s  TTFT   1635/   3369 ms  TPOT  51.5/  62.4 ms  ITL  51.5  E2E   8.2/  9.5 s
+  promptopt  C32      93.2s     124 req/min      527 out/s      7383 in/s      7911 tot/s  TTFT   2571/   5710 ms  TPOT  50.8/  59.0 ms  ITL  50.8  E2E  15.5/ 17.8 s
+  judge      C32     208.6s      55 req/min      471 out/s      3770 in/s      4241 tot/s  TTFT   3107/  14011 ms  TPOT  61.9/  66.7 ms  ITL  61.9  E2E  34.7/ 45.9 s
+[00:27:00] GLMEVAL DONE

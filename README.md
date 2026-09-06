@@ -115,6 +115,9 @@ Other models on the same box:
 | | | promptopt C1024 | 1,008 | 14,108 | 120 s ⁱ |
 | | TP4, 512 seqs, **MTP speculation** (3 draft tokens, 10% accepted at this batch) | router C1024 | 592 | 4,738 | 101 s ⁱ |
 | | **TP1 × DP4 + expert parallel, 192 seqs per rank** (the build's cap at TP1; quality 0.792, identical to TP4) | router C1024 | **1,073** | 8,585 | 97 s ⁱ |
+| | **native FP8** (zai-org's release, 330 GB), TP4, 32 seqs — the budget the weights leave; quality 0.809 | router C32 | 500 | 4,000 | 1.7 s |
+| |  | promptopt C32 | 527 | 7,383 | 2.6 s |
+| |  | judge C32 | 471 | 3,770 | 2.3 s |
 | | DP2 × TP2 + expert parallel, 384 seqs per rank — **rejected by quality tripwire** | router C1024 | 1,300 (diagnostic only) | 10,397 | 72 s ⁱ |
 
 ⁱ Time-to-first-token here is queueing: the server admits 256 or 512 sequences and the shape offers 1,024.
@@ -135,7 +138,7 @@ The MTP head makes it *worse* at saturation — 592 against 911, because only 10
 1,024 streams and every rejected draft is a wasted slot in a batch that was already full. The 403-item quality
 run must apply to the exact accepted layout. The baseline uses NVFP4 expert weights and BF16 KV; the proposed
 BF16 SSM-state and FP8 KV arms in `box/glm_perf3.sh` change precision and require their own paired quality gate.
-The reversible FA2 planned-length diagnostic is documented in [patches/glm_fa2_plan_audit.md](patches/glm_fa2_plan_audit.md). Its 403-item run has since landed: **0.792, paired against TP4 16 to 15 — identical** — so DP4 + EP at 1,073 tokens a second is the qualified fast layout.
+The reversible FA2 planned-length diagnostic is documented in [patches/glm_fa2_plan_audit.md](patches/glm_fa2_plan_audit.md). Its 403-item run has since landed: **0.792, paired against TP4 16 to 15 — identical** — so DP4 + EP at 1,073 tokens a second is the qualified fast layout. Every lever tried on it refused (192 slots at TP1 whatever the SSM dtype, a 32k prefill chunk out of memory, FP8 KV for MLA Hopper-only). The TP2 diagnosis probes (eager mode, Marlin MoE, both, TP2 without expert parallelism; `box/glm_perf5.sh`, one change per arm, a 20-item probe as the verdict) were queued behind the native-FP8 run and **did not execute**: the box was destroyed at 00:27 UTC — an hour before the agreed stop — by the operator's own hard-stop script, which read its 01:27 cut-off in the host's local time (BST) rather than UTC; the results were pulled first and nothing already measured was lost. They are the first thing to run on the next box, because at the market-median API price the two-engine layout would be 1.9× if it held quality (see Economics). A merged FlashInfer change ([PR #4802](https://github.com/flashinfer-ai/flashinfer/pull/4802), 3 Sept 2026, not yet in a numbered release) adds a native `GLM53_NOPE` sparse-MLA path for SM120 with FP8 KV cache support, −24% decode latency at T=1 and 1.4–1.8× prefill over the path this port uses; our pinned FlashInfer 0.6.18 predates it. Re-basing the vendor port on it is the next kernel-level lever for GLM and would lift the FP8-KV refusal too. It is untested here.
 
 **DeepSeek's ceiling was a layout ceiling, and it moved.** Tensor-parallel across four cards gave 1,107 output
 tokens a second. Four independent engines with the experts sharded across them (TP1 × DP4 + EP), each admitting
@@ -376,7 +379,7 @@ is queued for it too. Statistically it ties GLM — the two are inside each othe
 ⁶ The fast expert-parallel layout's outputs are degraded on this vendor build: truncation 16% against 8% at TP4,
 2.7% degenerate answers, mean answer 6,320 tokens against 4,138. Every family fell, instruction-following most
 (0.567 against 0.867). Same weights, same kernels, different parallel layout — the layout is the variable, and
-two isolation runs (TP4 + EP alone; DP2 × TP2 without EP) are measuring which half of it breaks the model.
+the isolation probes that would say which half breaks it (TP2 without EP; TP2 with eager mode or the Marlin MoE kernel) never ran — the box was lost before them — so that question is open.
 
 **The published intelligence index does predict this.** GLM-5.3-Flash at index 46 leads, and it leads on the
 families that separate models rather than saturate: maths, knowledge and long context. An earlier version of
@@ -448,7 +451,7 @@ compared with a node that serves the weights as released.
 The GLM gap is at the edge of the suite's 0.022 noise floor and lands exactly where the quantisation ladder said
 quantisation lands — maths, code, knowledge — while the endpoint's truncation rate (6.2%) and mean answer length
 (4,354 tokens) match ours. Z.AI serves the model at its training precision; we serve a post-training NVFP4 build.
-**The native-FP8 GLM run has landed: 0.809 on 403 items** — paired against our NVFP4 TP4 run 17 to 11 (+0.015), against Z.AI's pinned endpoint at the same caps 10 to 16 (-0.015), both inside the 0.022 noise floor. It truncates 7.2% of its answers against the four-bit build's 7.9% and writes 4,327 tokens an answer against 4,138: at 32k caps the maker's precision on our box behaves like our four-bit build, not like Z.AI's serving. So the precision cost at 32k is at most 0.015, and most of the 0.066 gap to Z.AI at 65k is room — room the four-bit build could not use (0.777, still 7.9% truncated at 65k) and the FP8 build never got to try before the box's time ran out. The 32 sequences that 330 GB of weights leave are FP8's price, measured next.
+**The native-FP8 GLM run has landed: 0.809 on 403 items** — paired against our NVFP4 TP4 run 17 to 11 (+0.015), against Z.AI's pinned endpoint at the same caps 10 to 16 (-0.015), both inside the 0.022 noise floor. It truncates 7.2% of its answers against the four-bit build's 7.9% and writes 4,327 tokens an answer against 4,138: at 32k caps the maker's precision on our box behaves like our four-bit build, not like Z.AI's serving. So the precision cost at 32k is at most 0.015, and most of the 0.066 gap to Z.AI at 65k is room — room the four-bit build could not use (0.777, still 7.9% truncated at 65k) and the FP8 build never got to try before the box's time ran out. The 32 sequences that 330 GB of weights leave are FP8's price: 500 out tok/s on routing traffic, 527 on prompt optimisation and 471 on judging at 32 streams (TPOT 51 ms, TTFT 1.7–2.6 s) — $0.18 per million tokens on the node against $0.10 at the market-median API price, 0.6×. The 128-stream shapes that would have shown how much of the 554k-token KV cache is usable never ran (box lost early, see below).
 
 ### Speculation is lossless — measured properly this time
 
@@ -773,27 +776,28 @@ and better than a point on it. `box/frontier.py` regenerates the chart and the t
 
 ![Cost against quality for every configuration measured at 600 W](report/frontier.svg)
 
-| configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M tokens, same mix | API ÷ node | on the frontier |
-|---|---:|---:|---|---:|---:|---:|---:|:-:|
-| gpt-oss-120b MXFP4 (native) | 0.742 (124) | 0.769 | router + promptopt | 2,304 · 192 | $0.006 | $0.047 | 7.5× | yes |
-| gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | — | router + promptopt | 2,304 · 192 | $0.007 | $0.091 | 12.1× |  |
-| gpt-oss-20b MXFP4 (native) | 0.712 (403) | 0.725 | router | 1,024 · 128 | $0.010 | $0.041 | 4.2× |  |
-| Muse-Glimmer-30B BF16 | 0.787 (403) | — | router + promptopt | 2,304 · 192 | $0.018 | $0.202 | 10.9× | yes |
-| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.7× | yes |
-| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | 21.4× |  |
-| Qwen3.8-27B FP8 | 0.779 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.031 | $0.412 | 13.3× |  |
-| DeepSeek-V4-Flash native · DP4 + EP | 0.844 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.033 | $0.044 | 1.3× | yes |
-| Qwen3.8-27B BF16 | 0.806 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.042 | $0.412 | 9.9× |  |
-| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
-| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | 8.8× |  |
-| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output) | 0.643 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.054 | $0.052 | 1.0× |  |
-| Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears | 0.801 (403) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× |  |
-| Qwen3.8-Flash-Next NVFP4 · TP4, auto linears | 0.801 (403, same kernels in another layout) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | 3.2× |  |
-| DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.055 | $0.044 | 0.8× |  |
-| GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.096 | $0.052 | 0.5× |  |
-| GLM-5.3-Flash NVFP4 · DP4 + EP | 0.792 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.100 | $0.052 | 0.5× |  |
-| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.128 | $0.044 | 0.3× |  |
-| GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.209 | $0.052 | 0.2× |  |
+| configuration | accuracy (items) | API accuracy, same items | workloads averaged | avg tokens / request (in · out) | node $/M tokens | API $/M, market median | API $/M, cheapest tier | median ÷ node | cheapest ÷ node | on the frontier |
+|---|---:|---:|---|---:|---:|---:|---:|---:|---:|:-:|
+| gpt-oss-120b MXFP4 (native) | 0.742 (124) | 0.769 | router + promptopt | 2,304 · 192 | $0.006 | $0.047 | $0.047 | **7.5×** | 7.5× | yes |
+| gemma-4-26B-A4B BF16 (thinking, T=0) | 0.628 (403) | — | router + promptopt | 2,304 · 192 | $0.007 | $0.091 | $0.091 | **12.1×** | 12.1× |  |
+| gpt-oss-20b MXFP4 (native) | 0.712 (403) | 0.725 | router | 1,024 · 128 | $0.010 | $0.041 | $0.041 | **4.2×** | 4.2× |  |
+| Muse-Glimmer-30B BF16 | 0.787 (403) | — | router + promptopt | 2,304 · 192 | $0.018 | $0.202 | $0.202 | **10.9×** | 10.9× | yes |
+| Qwen3.8-27B QAT NVFP4 (W4A4) | 0.792 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | $0.412 | **21.7×** | 21.7× | yes |
+| Qwen3.8-27B gittensor NVFP4 (W4A4) | 0.725 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.019 | $0.412 | $0.412 | **21.4×** | 21.4× |  |
+| Qwen3.8-27B FP8 | 0.779 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.031 | $0.412 | $0.412 | **13.3×** | 13.3× |  |
+| DeepSeek-V4-Flash native · DP4 + EP | 0.844 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.033 | $0.081 | $0.044 | **2.4×** | 1.3× | yes |
+| Qwen3.8-27B BF16 | 0.806 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.042 | $0.412 | $0.412 | **9.9×** | 9.9× |  |
+| Qwen3.8-27B unsloth NVFP4 (W4A16) | 0.752 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | $0.412 | **8.8×** | 8.8× |  |
+| Qwen3.8-27B RedHat NVFP4 (W4A16) | 0.772 (403) | 0.772 | router + promptopt | 2,304 · 192 | $0.047 | $0.412 | $0.412 | **8.8×** | 8.8× |  |
+| GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output) | 0.643 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.054 | $0.103 | $0.052 | **1.9×** | 1.0× |  |
+| Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears | 0.801 (403) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | $0.175 | **3.2×** | 3.2× |  |
+| Qwen3.8-Flash-Next NVFP4 · TP4, auto linears | 0.801 (403, same kernels in another layout) | — | router + promptopt | 2,304 · 192 | $0.054 | $0.175 | $0.175 | **3.2×** | 3.2× |  |
+| DeepSeek-V4-Flash native · TP4 | 0.801 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.055 | $0.081 | $0.044 | **1.5×** | 0.8× |  |
+| GLM-5.3-Flash NVFP4 · TP4 | 0.794 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.096 | $0.103 | $0.052 | **1.1×** | 0.5× |  |
+| GLM-5.3-Flash NVFP4 · DP4 + EP | 0.792 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.100 | $0.103 | $0.052 | **1.0×** | 0.5× |  |
+| DeepSeek-V4-Flash native · TP4 + DSpark | 0.831 (403) | 0.784 | router + promptopt | 2,304 · 192 | $0.128 | $0.081 | $0.044 | **0.6×** | 0.3× |  |
+| GLM-5.3-Flash FP8 (native) · TP4 | 0.809 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.182 | $0.103 | $0.052 | **0.6×** | 0.3× |  |
+| GLM-5.3-Flash NVFP4 · TP4 + MTP | 0.809 (403) | 0.824 | router + promptopt | 2,304 · 192 | $0.209 | $0.103 | $0.052 | **0.5×** | 0.2× |  |
 
 \* GLM's DP2 × TP2 layout failed its own corruption tripwire. Its historical dashed-ring point borrows TP4
 accuracy and must be excluded from the quality/cost frontier; the chart has not yet been regenerated. DeepSeek's landed: 0.844. ¹ gpt-oss-20b has no
@@ -801,18 +805,26 @@ prompt-optimisation measurement at 600 W, so its point is the router shape alone
 token, which flatters the API side of its ratio. Multiply any "API ÷ node" by 2.5 for the fully-loaded cost
 basis ($1.77 an hour). The DP4 + EP layout's own run has since landed at 0.792 (paired against TP4, 16 to 15), and DeepSeek's at 0.844; neither point is provisional any more.
 
-What the chart says. **Priced on the same tokens at the same mix, the API is 4–22× the node for every model that
-fits one card, 1.3× for DeepSeek-V4-Flash, and 0.5× for GLM-5.3-Flash on its fastest layout that produces
-correct output.** The one-card ratios are smaller than the per-hour
+What the chart says. **Priced on the same tokens at the same mix against the market-median provider price, the API is 4–22× the
+node for every model that fits one card, 2.4× for DeepSeek-V4-Flash on its expert-parallel layout, and 1.0–1.1× for GLM-5.3-Flash
+on the layouts that hold quality** (1.3× and 0.5× against the cheapest tier, which the table also carries). The yardstick matters more
+than any kernel: OpenRouter's endpoint lists (6 Sept, 00:30 UTC) show GLM-5.3-Flash served by 23 providers, 4 of them at $0.075 / $0.25
+(Z.AI, Novita, GMICloud, DeepInfra's FP4) and 17 at $0.15 / $0.50 — the list tier is a promotion, the market is at twice it — and
+DeepSeek-V4-Flash by 15 providers from $0.068 / $0.168 to $0.21 / $0.56 with DeepSeek itself at $0.22 / $0.66, median $0.138 / $0.28.
+Default routing bills the cheapest, so a customer who pays list today gets the promotion; a customer who needs a named provider, a
+quality tier or a contract pays the median. Against the median, GLM's two-engine layout (1,300 / 2,105 tok/s) would be 1.9× *if it held
+quality*, which is why its TP2 fault is the first item on the next box; GLM at its released FP8 precision is 0.6× at the 32 streams its
+weights allow. The one-card ratios are smaller than the per-hour
 table above because cached input is priced at the providers' cache-read rates and the prompt-optimisation shape
 is mostly cache hits; they are still an order of magnitude. Qwen3.8-27B's ratio is the largest because its API price is high
 ($3 per million output tokens), not because the node is unusually good at it. **The frontier is native
 precision plus one quantisation-aware four-bit build** — gpt-oss-120b, Muse, the QAT Qwen, and DeepSeek on its
 expert-parallel layout at the top — and every post-training four-bit build sits below it. **On blended
 tokens DeepSeek-V4-Flash's DP4 layout is cheaper than Qwen3.8-27B BF16 and scores higher**, because a sparse MoE
-prefills and reads a cached prefix far faster than a dense 27B: it takes Qwen BF16 off the frontier. **GLM-5.3-Flash
-is not yet qualified on its faster expert-parallel layouts**: the DP2 × TP2 point is excluded by its tripwire
-failure, and DP4 needs its own complete paired quality result before entering the frontier. Speculation
+prefills and reads a cached prefix far faster than a dense 27B: it takes Qwen BF16 off the frontier. **GLM-5.3-Flash's
+qualified layouts sit just below the frontier**: DP4 + EP (0.792, $0.100) and TP4 (0.794, $0.096) are dominated by DeepSeek's DP4
+layout and by the QAT Qwen; the DP2 × TP2 point (0.643) is excluded by its tripwire failure; native FP8 (0.809 at $0.182, 32 streams) is
+the highest GLM point and the dearest. Speculation
 (DSpark, MTP) no longer buys anything on the frontier: DeepSeek's DP4 layout without a drafter is both cheaper
 (4×) and better (0.844 against 0.831) than the DSpark run, and GLM's MTP head costs 4× per token for +0.015.
 
@@ -824,11 +836,11 @@ at Scan's list price and 70% utilisation, and 10–54× fully loaded; on the unc
 ratios are 9–27× and 22–67×. Even renting the same box on Vast on-demand ($6.20 an hour) beats the API by 3–15×
 for these. This is the class of model — "non-huge" open weights — where the node pays for itself many times over.
 
-**For the two frontier-class models that need all four cards, the API is priced at our cost.** On the averaged
-workload at Scan list and 70% utilisation, DeepSeek-V4-Flash on its fastest layout is 1.3× — the API costs 30%
-more than the node. GLM-5.3-Flash's former parity claim used a layout that failed its quality tripwire and is
-withdrawn pending a valid paired result. Its remaining levers include CUDA graphs, batch depth, prefill chunk,
-and FP8 KV; precision-changing arms require independent quality checks. Their providers run them on eight-way B200-class hardware at
+**For the two frontier-class models that need all four cards, the answer depends on which API price is real.** On the averaged
+workload at Scan list and 70% utilisation, DeepSeek-V4-Flash on its fastest layout is 2.4× against the market-median provider
+price and 1.3× against the cheapest FP4-reseller tier (which scores 0.784 to the node's 0.844); GLM-5.3-Flash is 1.0–1.1× against
+the median on the layouts that hold quality and 0.5× against the promotional tier. GLM's two-engine layout would reach 1.9× against the median if its TP2 fault were fixed; the diagnosis probes never ran,
+and the FlashInfer sparse-MLA path merged on 3 Sept (PR #4802) is the other untested lever. Their providers run them on eight-way B200-class hardware at
 scale and price aggressively (DeepSeek's own API sits under everyone else). Self-hosting those two is a decision
 about fidelity, data and control, not about savings — unless the fully-loaded stack holds, where they are
 2.5–3.2× cheaper than the API, or the API prices move (DeepSeek's rose 2.4–4.7× in one step in August).

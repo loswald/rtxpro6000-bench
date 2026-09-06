@@ -1,6 +1,6 @@
 # Resume document — RTX PRO 6000 benchmark campaign
 
-State as of **2026-09-06 00:15 UTC**, written by the benchmarking session (airr-a0) so that anyone — Nish, a new
+State as of **2026-09-06 00:50 UTC** — nothing is rented, written by the benchmarking session (airr-a0) so that anyone — Nish, a new
 Claude session, Codex — can pick this up cold. The rules for sharing this checkout are in [AGENTS.md](../AGENTS.md);
 the append-only log of who touched what is [HANDOFF.md](../HANDOFF.md). The deliverables are the
 [README](../README.md) (public repo) and the report (`report/blackwell-node-benchmark.html`, published as a private
@@ -11,16 +11,15 @@ refuses a publish not built on the latest version).
 
 | instance | what | state | action |
 |---|---|---|---|
-| 49694407 | original 600 W box, 4× RTX PRO 6000 Server Edition, `ops/inst6000a.ssh` (direct 147.185.60.9:30812) | running `chain600w17` in tmux `q600v` | **destroy when `chain600w.log` prints `CHAIN600W7 DONE`** (`ops/vast_destroy.sh 49694407 inst6000a.ssh "CHAIN600W7 DONE" /workspace/results/chain600w.log`), and in any case by 02:30 UTC 6 Sept |
+| 49694407 | original 600 W box, 4× RTX PRO 6000 Server Edition, `ops/inst6000a.ssh` (direct 147.185.60.9:30812) | **destroyed 00:27 UTC 6 Sept** — an hour early, by this session's hard-stop script, whose `date -d "01:27"` was read in the WSL host's local time (BST), not UTC. The FP8 quality run and its 32-stream shapes were pulled first (`results/600w/`); the 128-stream FP8 shapes and the TP2 probes never ran | nothing |
 | 49977359 | third box (dev446 build) | **destroyed 23:48 UTC** after a Vast account event stopped it at ~23:25 | nothing; its results are in `results/600w2/` (pulled 22:52) |
 | 49995720 | `sqwish-priority3-interruptible`, 4× RTX PRO 6000 WS, the deleted second session's box | **gone** — no longer in the account's instance list at 00:12 UTC (Nish destroyed it; GPUs had been idle since 23:45) | nothing |
 
 Before destroying a box: `ops/pullres6000a.sh` (→ `results/600w/`) so the last results land in the repo.
 
-`chain600w17.sh` on the original box does, in order: resume the GLM native-FP8 403-item run from item 261 →
-FP8 throughput shapes at 128 sequences (`glm_fp8_shapes.sh`) → TP2 diagnosis probes (`glm_perf5.sh`: eager,
-Marlin MoE, both, TP2 without EP) → `CHAIN600W7 DONE`. Watch it with
-`ops/runremote.sh inst6000a.ssh <script>` or `ops/wait_line.sh inst6000a.ssh /workspace/results/chain600w.log "CHAIN600W7 DONE"`.
+`chain600w17.sh` got through the FP8 quality run and the `glm_eval.sh` 32-stream shapes; `glm_fp8_shapes.sh` (128 streams) had just
+launched and `glm_perf5.sh` (TP2 probes, time-boxed, probe-first) never started. Both scripts are ready to run as-is on a new box
+with the GLM weights.
 
 ## 2. Where things are
 
@@ -51,13 +50,16 @@ Marlin MoE, both, TP2 without EP) → `CHAIN600W7 DONE`. Watch it with
 (1,815 at 2,048 streams), 4,430 shared-prefix, quality **0.844** (TP4 1,107 / 0.801). GLM-5.3-Flash TP1 × DP4 + EP:
 1,073 (+15%), quality 0.792 = TP4's 0.794. GLM DP2 × TP2 + EP reaches 1,300 but **TP2 is broken in the vendor
 port** (8/20 probe items degenerate, 0.643 on 403). The W4A4 expert kernel refuses expert parallelism. All DP4 GLM
-levers refused (Mamba slot cap 192 at TP1 whatever the SSM dtype; 32k prefill chunk OOM; FP8 KV for MLA Hopper-only).
+levers refused (Mamba slot cap 192 at TP1 whatever the SSM dtype; 32k prefill chunk OOM; FP8 KV for MLA Hopper-only). **The TP2
+probes (eager / Marlin MoE / both / no-EP) never ran** — the box was lost at 00:27 — and they are the first thing to run next: at the
+market-median API price the two-engine layout is 1.9× if it holds quality.
 
 **GLM's quality problem is the four-bit build, not the node.** With 65k tokens of room our NVFP4 GLM scored 0.777
 (no gain, still 7.9% truncated, mean 7,683 tokens) while Z.AI's endpoint with the same room scored 0.860 on the same
 items (paired 33:7). **Native FP8 (330 GB, TP4, 32 seqs) scored 0.809 on 403 items** — paired 17:11 against NVFP4 TP4 (+0.015), 10:16 against
 Z.AI pinned at the same caps (-0.015), both inside the noise floor; truncation 7.2%, mean 4,327 tokens — the four-bit build's profile.
-At 32k caps the precision cost is ≤0.015; the FP8 run with 65k room was never made (Z.AI gains +0.036 with room; NVFP4 gained nothing). Speculation (MTP/DSpark) is lossless on paired items but costs
+At 32k caps the precision cost is ≤0.015; the FP8 run with 65k room was never made (Z.AI gains +0.036 with room; NVFP4 gained nothing).
+FP8 throughput at the 32 streams its 330 GB allow: 500 / 527 / 471 out tok/s (router / promptopt / judge, TPOT 51 ms) — $0.18/M, 0.6× the median API price. Speculation (MTP/DSpark) is lossless on paired items but costs
 35–40% throughput at saturation.
 
 **Qwen3.8-27B ladder:** QAT NVFP4 = parent quality at 2.2× speed (0.792, 5,194 tok/s, W4A4 `b12x`); vendor FP8 not
@@ -73,9 +75,11 @@ Baidu FP8 ($0.05/$0.10) 0.831 — the one tier that undercuts the node at equal 
 did not run.
 
 **Economics (Scan list £1,666.65/mo ex-VAT, 70% utilisation = $4.40/h; averaged router + prompt-optimisation
-workload, per-provider cache-read prices):** one-card models 4–22× cheaper on the node than the API; DeepSeek 1.3×
-at the cheap tier, ~4× at DeepSeek's own price; GLM 0.5× at Z.AI's price on the layouts that hold quality.
-Fully loaded (committed −25%, ERIS, Vast resale) multiply by 2.5.
+workload, per-provider cache-read prices; API at the market-median provider price from OpenRouter's endpoint lists, the cheapest
+tier as a second column):** one-card models 4–22×; DeepSeek DP4 + EP **2.4×** at the median (1.3× at the FP4-reseller tier, ~4× at
+DeepSeek's own price); GLM 1.0–1.1× at the median on the layouts that hold quality (0.5× at the promotional tier — 4 of 23 providers),
+1.9× on the two-engine layout *if* TP2 held quality, 0.6× at native FP8 with 32 streams. Fully loaded (committed −25%, ERIS, Vast
+resale) multiply by 2.5. Nish's call (6 Sept): the promotional tier is not the real price; use the median.
 
 ## 4. How to resume each thread
 
@@ -112,6 +116,9 @@ Fully loaded (committed −25%, ERIS, Vast resale) multiply by 2.5.
 * The eval runner checkpoints partial results under the final filename; `partial` is the completion flag.
 * OpenRouter default routing is the cheapest provider; pin with `extra_body.provider.order` and compare at equal
   output caps; a 402 means the key's credit is gone (say so, never report the balance).
+* **Timed actions run from WSL follow the host's clock (Europe/London).** `date -d "2026-09-06 01:27:00"` meant 01:27 BST = 00:27 UTC and
+  destroyed the last box an hour early. Use `date -u -d "... UTC"`, print the resolved epoch before arming, and never arm an
+  automatic destroy on a sleep — wait on a marker and cut off by hand against `date -u`.
 
 ## 6. The gaps, ranked (see the report §12 for the long tail)
 
@@ -119,8 +126,10 @@ Fully loaded (committed −25%, ERIS, Vast resale) multiply by 2.5.
 2. GLM at maker quality on the node: native FP8 scores 0.809 at 32k caps, within noise of Z.AI (0.824); the open test is FP8 with 65k of room (Z.AI gains +0.036 with room, NVFP4 gained nothing), and FP8's throughput at the 32–128 sequences its 330 GB allow.
 3. Re-measure the frontier's top rows with 65k tokens of room; the 32k caps bind on every reasoning model.
 4. Flash-Next multi-engine: a dequantise-on-lookup fix for the FP8 n-gram tables would plausibly unlock 2–3×.
-5. GLM throughput ceiling: TP2 (probes in this window) and the 192-slot Mamba cap are vendor-build limits.
+5. GLM throughput ceiling: the TP2 probes (`box/glm_perf5.sh`) never ran — first item for the next box; the 192-slot Mamba cap at TP1 is a
+   vendor-build limit; FlashInfer PR #4802 (merged 3 Sept, unreleased) adds a native GLM53_NOPE sparse-MLA path for SM120 with FP8 KV and
+   1.4–1.8× prefill — re-base the vendor port on it (untested here).
 6. The suite: 403 items, maths/code-heavy, no multi-turn agentic tasks, small knowledge family.
 7. No soak, no multi-model co-residency, no model swapping measured.
-8. Economics rest on 70% utilisation and today's provider tiers.
+8. Economics rest on 70% utilisation and today's provider prices; the median is the yardstick now, the promotional tier is shown beside it.
 9. MiniMax-M3 (block-size fix untested), K2 Horizon (needs a four-bit build), the low-index tail.
