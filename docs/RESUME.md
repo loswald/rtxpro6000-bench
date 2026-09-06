@@ -55,8 +55,9 @@ levers refused (Mamba slot cap 192 at TP1 whatever the SSM dtype; 32k prefill ch
 
 **GLM's quality problem is the four-bit build, not the node.** With 65k tokens of room our NVFP4 GLM scored 0.777
 (no gain, still 7.9% truncated, mean 7,683 tokens) while Z.AI's endpoint with the same room scored 0.860 on the same
-items (paired 33:7). Native FP8 (330 GB, TP4, 32 seqs) was at 0.831 on 260 items with 5 truncations when the box
-restarted; the resumed run finishes in this window. Speculation (MTP/DSpark) is lossless on paired items but costs
+items (paired 33:7). **Native FP8 (330 GB, TP4, 32 seqs) scored 0.809 on 403 items** — paired 17:11 against NVFP4 TP4 (+0.015), 10:16 against
+Z.AI pinned at the same caps (-0.015), both inside the noise floor; truncation 7.2%, mean 4,327 tokens — the four-bit build's profile.
+At 32k caps the precision cost is ≤0.015; the FP8 run with 65k room was never made (Z.AI gains +0.036 with room; NVFP4 gained nothing). Speculation (MTP/DSpark) is lossless on paired items but costs
 35–40% throughput at saturation.
 
 **Qwen3.8-27B ladder:** QAT NVFP4 = parent quality at 2.2× speed (0.792, 5,194 tok/s, W4A4 `b12x`); vendor FP8 not
@@ -65,7 +66,8 @@ sm_120 (TP4, Marlin MoE, `patch_ple.py`): 1,443 tok/s, 0.801 (ties GLM TP4 23:20
 48 GB BF16 n-gram table per rank.
 
 **The API is a market.** Same suite via OpenRouter: GLM 0.824 (= Z.AI pinned); DeepSeek default routing (FP4
-resellers at the "list" price) 0.784; DeepSeek's own endpoint 0.789 at 32k caps, **0.854 at 65k** (ties the node);
+resellers at the "list" price) 0.784; DeepSeek's own endpoint 0.789 at 32k caps, **0.854 at 65k** (ties the node; the node's own
+65k run reached 378/403 at 0.865 with 0% truncation before the third box stopped — paired 10:10 with the endpoint);
 Baidu FP8 ($0.05/$0.10) 0.831 — the one tier that undercuts the node at equal quality; Qwen3.8-27B 0.772 (below BF16
 0.806 and QAT 0.792). The key hit its credit limit at 22:33 UTC; Muse, gemma, MiniMax and the remaining host pins
 did not run.
@@ -114,7 +116,7 @@ Fully loaded (committed −25%, ERIS, Vast resale) multiply by 2.5.
 ## 6. The gaps, ranked (see the report §12 for the long tail)
 
 1. Scan's access model (bare metal + root vs vGPU), edition and power limit — decisive and external.
-2. GLM at maker quality on the node: the native-FP8 result (this window) and its throughput.
+2. GLM at maker quality on the node: native FP8 scores 0.809 at 32k caps, within noise of Z.AI (0.824); the open test is FP8 with 65k of room (Z.AI gains +0.036 with room, NVFP4 gained nothing), and FP8's throughput at the 32–128 sequences its 330 GB allow.
 3. Re-measure the frontier's top rows with 65k tokens of room; the 32k caps bind on every reasoning model.
 4. Flash-Next multi-engine: a dequantise-on-lookup fix for the FP8 n-gram tables would plausibly unlock 2–3×.
 5. GLM throughput ceiling: TP2 (probes in this window) and the 192-slot Mamba cap are vendor-build limits.
