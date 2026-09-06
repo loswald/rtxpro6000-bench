@@ -10,6 +10,7 @@ the comparison they were run for.
 Three trees, three hosts:
   results/600w/probe   the 4x RTX PRO 6000 Server Edition, 600 W (the original box)
   results/600w2/probe  the second Server Edition box, 600 W (rented 5 Sept when the 400 W box could not restart)
+  results/600w3/probe  the fourth box, Server Edition 600 W, rented 6 Sept 00:50 UTC for the GLM TP2 repair hour
   results/5090/probe   the 8x RTX 5090 box                                 (destroyed; results kept)
   results/probe        pulled from whichever PRO 6000 box was current, so it holds BOTH the original 600 W
                        runs (before the outage) and the 400 W replacement's runs (after). Split by tag.
@@ -40,14 +41,14 @@ def host_for(path: str, tag: str) -> str:
     p = path.replace(os.sep, "/")
     if "/5090/" in p:
         return "5090x8"
-    if "/600w/" in p or "/600w2/" in p:
+    if "/600w/" in p or "/600w2/" in p or "/600w3/" in p:
         return "pro6000-s600w"
     return "pro6000-s600w" if tag.startswith(SERVER_600W_PREFIXES) else "pro6000-ws400w"
 
 
 def main() -> None:
     files = []
-    for sub in ("600w/probe", "600w2/probe", "5090/probe", "probe"):
+    for sub in ("600w/probe", "600w2/probe", "600w3/probe", "5090/probe", "probe"):
         files += sorted(glob.glob(os.path.join(ROOT, sub, "*", "summary*.tsv")))
 
     columns: list[str] = ["tag"]
