@@ -318,7 +318,7 @@
 
 <h3>Every configuration on one chart, priced on the workloads we measured</h3>
 <p>Each quantisation of a model is its own point, because it is its own product. The x-axis is dollars per million tokens, input and output together, for the <em>average</em> of the two workloads every configuration was measured on: the router shape (1,024 in / 128 out) and the prompt-optimisation shape (a 3,072-token shared prefix + 512 in / 256 out). Node cost is $4.40 an hour (Scan list, 70% utilisation) divided by the requests that hour serves at each shape; the API bill prices the same requests at OpenRouter list on 5 September with input, cached input (each model's own cache-read price) and output priced separately. Filled marker: node. Hollow marker: API, same work, same mix. The dashed step is the frontier. <code>box/frontier.py</code> regenerates it.</p>
-<div style="background:#fcfcfb;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin:12px 0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 600" width="100%" style="max-width:1100px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#fcfcfb" role="img" aria-label="Cost against quality for every configuration measured at 600 W">
+<div style="background:#fcfcfb;border:1px solid var(--line);border-radius:6px;padding:8px 10px;margin:12px 0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 676" width="100%" style="max-width:1100px;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#fcfcfb" role="img" aria-label="Cost against quality for every configuration measured at 600 W">
 <title>Cost against quality, 4x RTX PRO 6000 at 600 W</title>
 <line x1="70.0" y1="30" x2="70.0" y2="530" stroke="#e1e0d9" stroke-width="1"/>
 <text x="70.0" y="548" font-size="12" fill="#898781" text-anchor="middle">$0.001</text>
@@ -353,25 +353,24 @@
 <line x1="70" y1="49.2" x2="1070" y2="49.2" stroke="#e1e0d9" stroke-width="1"/>
 <text x="62" y="53.2" font-size="12" fill="#898781" text-anchor="end">0.85</text>
 <line x1="70" y1="530" x2="1070" y2="530" stroke="#c3c2b7"/>
-<text x="570" y="572" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API at the market-median provider price, same mix, cached input at its own price · small dashed = the cheapest (promotional) tier</text>
+<text x="570" y="572" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads (routing, prompt optimisation) · filled = node at Scan list price, 70% utilisation</text>
 <text transform="translate(18,280) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>
-<rect x="504" y="368" width="560" height="156" fill="#fcfcfb" fill-opacity="0.92" stroke="#e1e0d9"/>
-<circle cx="519" cy="382" r="5" fill="#2a78d6"/>
-<text x="532" y="386" font-size="12" fill="#52514e">native precision</text>
-<circle cx="519" cy="400" r="5" fill="#1baf7a"/>
-<text x="532" y="404" font-size="12" fill="#52514e">quantisation-aware 4-bit</text>
-<circle cx="519" cy="418" r="5" fill="#eb6834"/>
-<text x="532" y="422" font-size="12" fill="#52514e">post-training 4-bit</text>
-<rect x="514" y="431" width="10" height="10" fill="#eb6834"/>
-<text x="532" y="440" font-size="12" fill="#52514e">post-training 8-bit (FP8)</text>
-<circle cx="519" cy="454" r="5" fill="#fcfcfb" stroke="#52514e" stroke-width="2"/>
-<text x="532" y="458" font-size="12" fill="#52514e">API at the market-median provider price, same model, same mix; at the API's own measured accuracy where the suite has run against it</text>
-<circle cx="519" cy="472" r="3.5" fill="#fcfcfb" stroke="#52514e" stroke-width="1.5" stroke-dasharray="2 2"/>
-<text x="532" y="476" font-size="12" fill="#52514e">API at the cheapest tier (a promotion: 4 of 23 GLM providers; the FP4 resellers for DeepSeek)</text>
-<line x1="514" y1="490" x2="524" y2="490" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
-<text x="532" y="494" font-size="12" fill="#52514e">frontier: nothing is both cheaper and better</text>
-<circle cx="519" cy="508" r="7" fill="none" stroke="#52514e" stroke-width="1.5" stroke-dasharray="3 2"/>
-<text x="532" y="512" font-size="12" fill="#52514e">* quality from the same weights and kernels in another layout; own run in progress</text>
+<circle cx="75.0" cy="594" r="5" fill="#2a78d6"/>
+<text x="88.0" y="598" font-size="11.5" fill="#52514e">native precision</text>
+<circle cx="75.0" cy="612" r="5" fill="#1baf7a"/>
+<text x="88.0" y="616" font-size="11.5" fill="#52514e">quantisation-aware 4-bit</text>
+<circle cx="75.0" cy="630" r="5" fill="#eb6834"/>
+<text x="88.0" y="634" font-size="11.5" fill="#52514e">post-training 4-bit</text>
+<rect x="70.0" y="643" width="10" height="10" fill="#eb6834"/>
+<text x="88.0" y="652" font-size="11.5" fill="#52514e">post-training 8-bit (FP8)</text>
+<circle cx="575.0" cy="594" r="5" fill="#fcfcfb" stroke="#52514e" stroke-width="2"/>
+<text x="588.0" y="598" font-size="11.5" fill="#52514e">API, market-median provider price, same mix, cached input at its own price; at its measured accuracy where run</text>
+<circle cx="575.0" cy="612" r="3.5" fill="#fcfcfb" stroke="#52514e" stroke-width="1.5" stroke-dasharray="2 2"/>
+<text x="588.0" y="616" font-size="11.5" fill="#52514e">API, cheapest tier: a promotion (4 of 23 GLM providers) or FP4 resellers (DeepSeek)</text>
+<line x1="570.0" y1="630" x2="580.0" y2="630" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="588.0" y="634" font-size="11.5" fill="#52514e">frontier: nothing is both cheaper and better</text>
+<circle cx="575.0" cy="648" r="7" fill="none" stroke="#52514e" stroke-width="1.5" stroke-dasharray="3 2"/>
+<text x="588.0" y="652" font-size="11.5" fill="#52514e">* quality from the same weights and kernels in another layout; own run not made</text>
 <path d="M337.2,257.1 L491.9,171.2 L496.5,161.5 L577.3,61.3" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>
 <line x1="730.5" y1="156.9" x2="741.1" y2="99.6" stroke="#eb6834" stroke-width="1" stroke-opacity="0.45"/>
 <circle cx="741.1" cy="99.6" r="5" fill="#fcfcfb" stroke="#eb6834" stroke-width="2"><title>GLM-5.3-Flash NVFP4 · TP4: 0.794 on 403 items · $0.096/M tokens self-hosted · $0.103/M API at the market median ($0.052/M at the cheapest tier) · API scored 0.824 on the same items · shapes router, promptopt</title></circle>
@@ -470,7 +469,7 @@
 <text x="489.3" y="284.4" font-size="11.5" fill="#0b0b0b" text-anchor="end">Qwen3.8-27B gittensor NVFP4 (W4A4)</text>
 <text x="392.5" y="308.2" font-size="11.5" fill="#0b0b0b" text-anchor="end">gpt-oss-20b MXFP4 (native)</text>
 <text x="656.1" y="441.9" font-size="11.5" fill="#0b0b0b" text-anchor="start">GLM-5.3-Flash · DP2×TP2+EP (degenerate)</text>
-<text x="352.3" y="470.5" font-size="11.5" fill="#0b0b0b" text-anchor="end">gemma-4-26B-A4B BF16 (thinking)</text>
+<text x="370.3" y="470.5" font-size="11.5" fill="#0b0b0b" text-anchor="start">gemma-4-26B-A4B BF16 (thinking)</text>
 </svg></div>
 <p><strong>Priced on the same tokens at the same mix, the API is 4–22× the node for every model that fits one card, 2.4× for DeepSeek-V4-Flash on its expert-parallel layout and 1.0–1.1× for GLM-5.3-Flash on the layouts that hold quality, all against the market-median provider price</strong> (1.3× and 0.5× against the cheapest tier, which is a promotion: 4 of GLM's 23 OpenRouter providers are at $0.075 / $0.25 and 17 at $0.15 / $0.50; DeepSeek's cheapest tier is its FP4 resellers, its median $0.138 / $0.28, its own endpoint $0.22 / $0.66. Multiply by 2.5 for the fully-loaded basis). Against the median, GLM's two-engine layout would be 1.9× if it held quality — its TP2 fault is the first item for the next box — and GLM at its released FP8 precision is 0.6× at the 32 streams its weights allow. The one-card ratios are smaller than the per-hour table because cached input is priced at the providers' cache-read rates and the prompt-optimisation shape is mostly cache hits; they are still an order of magnitude, and Qwen3.8-27B's is the largest because its API price is high ($3 per million output tokens), not because the node is unusually good at it. <strong>The frontier is native precision plus one quantisation-aware four-bit build</strong> — gpt-oss-120b, Muse, the QAT Qwen, and DeepSeek on its expert-parallel layout at the top (0.844 on its own 403-item run) — and every post-training four-bit build sits below it. <strong>On blended tokens DeepSeek-V4-Flash's DP4 layout ($0.033 per million) is cheaper than Qwen3.8-27B BF16 ($0.042) and scores higher</strong>, because a sparse MoE prefills and reads a cached prefix far faster than a dense 27B. <strong>GLM-5.3-Flash is off the frontier at every layout</strong>: the quality-safe TP4 point ($0.096, 0.794) is dominated by Qwen BF16 and by DeepSeek, and the 40%-cheaper DP2 × TP2 + EP point scores 0.643 because its output is degraded on this vendor build. </p>
 

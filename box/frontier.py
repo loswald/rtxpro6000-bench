@@ -197,7 +197,7 @@ def main():
     ymin = 0.60; ymax = max(0.86, math.ceil((max(p["acc"] for p in pts) + 0.005) * 50) / 50)
     X = lambda c: ml + (math.log10(c) - math.log10(xmin)) / (math.log10(xmax) - math.log10(xmin)) * (W - ml - mr)
     Y = lambda a: mt + (ymax - a) / (ymax - ymin) * (H - mt - mb)
-    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px;font-family:system-ui,-apple-system,\'Segoe UI\',sans-serif;background:#fcfcfb" role="img" aria-label="Cost against quality for every configuration measured at 600 W">',
+    o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H+76}" width="100%" style="max-width:{W}px;font-family:system-ui,-apple-system,\'Segoe UI\',sans-serif;background:#fcfcfb" role="img" aria-label="Cost against quality for every configuration measured at 600 W">',
          f'<title>Cost against quality, 4x RTX PRO 6000 at 600 W</title>']
     t = xmin
     while t <= xmax * 1.0001:
@@ -214,24 +214,24 @@ def main():
         o.append(f'<text x="{ml-8}" y="{Y(a)+4:.1f}" font-size="12" fill="#898781" text-anchor="end">{a:.2f}</text>')
         a += 0.05
     o.append(f'<line x1="{ml}" y1="{H-mb}" x2="{W-mr}" y2="{H-mb}" stroke="#c3c2b7"/>')
-    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads · filled = node at Scan list, 70% utilisation · hollow = API at the market-median provider price, same mix, cached input at its own price · small dashed = the cheapest (promotional) tier</text>')
+    o.append(f'<text x="{(ml+W-mr)/2:.0f}" y="{H-mb+42}" font-size="13" fill="#52514e" text-anchor="middle">$ per million tokens, input + output, averaged over the measured workloads (routing, prompt optimisation) · filled = node at Scan list price, 70% utilisation</text>')
     o.append(f'<text transform="translate(18,{(mt+H-mb)/2:.0f}) rotate(-90)" font-size="13" fill="#52514e" text-anchor="middle">task accuracy, 403 items</text>')
-    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API at the market-median provider price, same model, same mix; at the API's own measured accuracy where the suite has run against it", "#52514e", "hollow")),
-         ("cheap", ("API at the cheapest tier (a promotion: 4 of 23 GLM providers; the FP4 resellers for DeepSeek)", "#52514e", "smallhollow")),
+    L = [(k, CLASS[k]) for k in CLASS] + [("api", ("API, market-median provider price, same mix, cached input at its own price; at its measured accuracy where run", "#52514e", "hollow")),
+         ("cheap", ("API, cheapest tier: a promotion (4 of 23 GLM providers) or FP4 resellers (DeepSeek)", "#52514e", "smallhollow")),
          ("front", ("frontier: nothing is both cheaper and better", "#898781", "dash")),
-         ("prov", ("* quality from the same weights and kernels in another layout; own run in progress", "#52514e", "ring"))]
-    lw, lh = 560, 18 * len(L) + 12
-    lx0, ly0 = W - mr - lw - 6, H - mb - lh - 6
-    o.append(f'<rect x="{lx0}" y="{ly0}" width="{lw}" height="{lh}" fill="#fcfcfb" fill-opacity="0.92" stroke="#e1e0d9"/>')
+         ("prov", ("* quality from the same weights and kernels in another layout; own run not made", "#52514e", "ring"))]
+    # two columns under the axis caption, outside the plot
+    cols = 2; per = (len(L) + cols - 1) // cols; colw = (W - ml - mr) / cols
     for i, (k, (name, col, shp)) in enumerate(L):
-        yy = ly0 + 14 + i * 18; lx = lx0 + 10
+        c_, r_ = divmod(i, per)
+        lx = ml + c_ * colw; yy = H - mb + 64 + r_ * 18
         if shp == "square": o.append(f'<rect x="{lx}" y="{yy-5}" width="10" height="10" fill="{col}"/>')
         elif shp == "hollow": o.append(f'<circle cx="{lx+5}" cy="{yy}" r="5" fill="#fcfcfb" stroke="{col}" stroke-width="2"/>')
         elif shp == "smallhollow": o.append(f'<circle cx="{lx+5}" cy="{yy}" r="3.5" fill="#fcfcfb" stroke="{col}" stroke-width="1.5" stroke-dasharray="2 2"/>')
         elif shp == "dash": o.append(f'<line x1="{lx}" y1="{yy}" x2="{lx+10}" y2="{yy}" stroke="{col}" stroke-width="2" stroke-dasharray="6 4"/>')
         elif shp == "ring": o.append(f'<circle cx="{lx+5}" cy="{yy}" r="7" fill="none" stroke="{col}" stroke-width="1.5" stroke-dasharray="3 2"/>')
         else: o.append(f'<circle cx="{lx+5}" cy="{yy}" r="5" fill="{col}"/>')
-        o.append(f'<text x="{lx+18}" y="{yy+4}" font-size="12" fill="#52514e">{name}</text>')
+        o.append(f'<text x="{lx+18}" y="{yy+4}" font-size="11.5" fill="#52514e">{name}</text>')
     if len(front) > 1:
         d = " ".join(f'{"M" if i==0 else "L"}{X(p["cost"]):.1f},{Y(p["acc"]):.1f}' for i, p in enumerate(front))
         o.append(f'<path d="{d}" fill="none" stroke="#898781" stroke-width="2" stroke-dasharray="6 4"/>')
@@ -250,7 +250,7 @@ def main():
             o.append(f'<rect x="{x-5.5:.1f}" y="{y-5.5:.1f}" width="11" height="11" fill="{col}" stroke="#fcfcfb" stroke-width="2"><title>{tip}</title></rect>')
         else:
             o.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{col}" stroke="#fcfcfb" stroke-width="2"><title>{tip}</title></circle>')
-    for p, (tx, ty, anchor, b) in place_labels(pts, X, Y, W, H, ml, mr, mt, mb, [(lx0, ly0, lx0 + lw, ly0 + lh)]):
+    for p, (tx, ty, anchor, b) in place_labels(pts, X, Y, W, H, ml, mr, mt, mb, []):
         x, y = X(p["cost"]), Y(p["acc"])
         lx_ = b[0] if anchor == "start" else b[2]
         if abs(ty - y) > 12 or abs(lx_ - x) > 14:
