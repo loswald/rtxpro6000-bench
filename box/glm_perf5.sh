@@ -62,19 +62,27 @@ pt(){ # tag label in out prefix conc
     > "$P/$tag/${label}_c${c}.log" 2>&1
   $CLEAN python3 "$B/agg.py" "$P/$tag" "${tag}__${label}__c${c}__p" "$label" "$c" "$tag" 2>&1 | tail -1
 }
+# Hard stop 01:35 UTC (Nish, 00:15): probe first, router shape only when the probe is clean, no arm starts after STOP_AT.
+STOP_AT=$(date -d "2026-09-06 01:24:00" +%s)
 arm(){ # tag seqs [extra...]
   local tag="$1" seqs="$2"; shift 2
+  if [ "$(date +%s)" -gt "$STOP_AT" ]; then log "  skip $tag: past the 01:24 UTC cut-off"; return; fi
   if launch "$tag" "$seqs" "$@"; then
-    pt "$tag" router 1024 128 0 1024
-    pt "$tag" promptopt 512 256 3072 1024
-    $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1
+    local verdict; verdict=$($CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1)
+    log "  $verdict"
+    if echo "$verdict" | grep -qE "degenerate=[01] "; then
+      log "  $tag probe clean: measuring the router shape"
+      pt "$tag" router 1024 128 0 1024
+    else
+      log "  $tag probe degenerate: no throughput measured"
+    fi
   fi
 }
 DP="--tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel"
 log "===== GLM-5.3-Flash at TP2: the DGX Spark recipes serve TP2 with --enforce-eager and Marlin MoE; ours degenerated with CUDA graphs and the Triton MoE. One change per arm; the 20-item probe is the verdict. ====="
-arm glm53f_dp2_eager     384 $DP --enforce-eager
-arm glm53f_dp2_marlin    384 $DP --moe-backend marlin
 arm glm53f_dp2_eagermarlin 384 $DP --enforce-eager --moe-backend marlin
+arm glm53f_dp2_marlin    384 $DP --moe-backend marlin
+arm glm53f_dp2_eager     384 $DP --enforce-eager
 arm glm53f_tp2x2_noep    384 --tensor-parallel-size 2 --data-parallel-size 2
 log "GLMPERF5 DONE"
 kill_all

@@ -1,6 +1,6 @@
 # Resume document — RTX PRO 6000 benchmark campaign
 
-State as of **2026-09-06 00:05 UTC**, written by the benchmarking session (airr-a0) so that anyone — Nish, a new
+State as of **2026-09-06 00:15 UTC**, written by the benchmarking session (airr-a0) so that anyone — Nish, a new
 Claude session, Codex — can pick this up cold. The rules for sharing this checkout are in [AGENTS.md](../AGENTS.md);
 the append-only log of who touched what is [HANDOFF.md](../HANDOFF.md). The deliverables are the
 [README](../README.md) (public repo) and the report (`report/blackwell-node-benchmark.html`, published as a private
@@ -13,7 +13,7 @@ refuses a publish not built on the latest version).
 |---|---|---|---|
 | 49694407 | original 600 W box, 4× RTX PRO 6000 Server Edition, `ops/inst6000a.ssh` (direct 147.185.60.9:30812) | running `chain600w17` in tmux `q600v` | **destroy when `chain600w.log` prints `CHAIN600W7 DONE`** (`ops/vast_destroy.sh 49694407 inst6000a.ssh "CHAIN600W7 DONE" /workspace/results/chain600w.log`), and in any case by 02:30 UTC 6 Sept |
 | 49977359 | third box (dev446 build) | **destroyed 23:48 UTC** after a Vast account event stopped it at ~23:25 | nothing; its results are in `results/600w2/` (pulled 22:52) |
-| 49995720 | `sqwish-priority3-interruptible`, 4× RTX PRO 6000 WS, ~$7/h | running; belongs to the deleted second session's priority-harness work; GPUs idle at 23:45 | **Nish decides** — not touched by this session |
+| 49995720 | `sqwish-priority3-interruptible`, 4× RTX PRO 6000 WS, the deleted second session's box | **gone** — no longer in the account's instance list at 00:12 UTC (Nish destroyed it; GPUs had been idle since 23:45) | nothing |
 
 Before destroying a box: `ops/pullres6000a.sh` (→ `results/600w/`) so the last results land in the repo.
 

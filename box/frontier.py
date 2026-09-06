@@ -37,6 +37,7 @@ POINTS = [
     ("GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output)", "ptq4", "glm53f_dp2tp2ep2", "glm53f_dp2tp2ep2_s384", "GLM-5.3-Flash"),
     ("GLM-5.3-Flash NVFP4 · DP4 + EP*",        "ptq4",   "glm53f_dp4ep4|glm53f_base", "glm53f_dp4ep4_s192",       "GLM-5.3-Flash"),
     ("GLM-5.3-Flash NVFP4 · TP4 + MTP",        "ptq4",   "glm53f_mtp",               "glm53f_s512_mtp",           "GLM-5.3-Flash"),
+    ("GLM-5.3-Flash FP8 (native) · TP4",      "native", "glm53f_fp8",               "glm53f_fp8",                "GLM-5.3-Flash"),
     ("DeepSeek-V4-Flash native · TP4",         "native", "ds4flash_b12x-b12x",       "ds4flash_b12x-b12x",        "DeepSeek-V4-Flash"),
     ("DeepSeek-V4-Flash native · DP4 + EP*",   "native", "ds4flash_dp4ep4_s512_b12x--|ds4flash_b12x--", "ds4flash_dp4ep4_s512_b12x--", "DeepSeek-V4-Flash"),
     ("DeepSeek-V4-Flash native · TP4 + DSpark", "native", "ds4flash_dspark_b12x-b12x", "ds4flash_dspark_b12x-b12x", "DeepSeek-V4-Flash"),
@@ -54,7 +55,7 @@ POINTS = [
     ("Qwen3.8-Flash-Next NVFP4 · TP4, W4A4 linears", "ptq4", "qwen38fn_tp4mb_b12x-marlin|qwen38fn_tp4m_--marlin", "qwen38fn_tp4mb_b12x-marlin", "Qwen3.8-Flash-Next"),
 ]
 # shorter on-chart names for the crowded top of the plane; the table keeps the full labels
-SHORT = {"GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
+SHORT = {"GLM-5.3-Flash FP8 (native) · TP4": "GLM-5.3-Flash FP8 · TP4", "GLM-5.3-Flash NVFP4 · TP4": "GLM-5.3-Flash · TP4", "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP*": "GLM-5.3-Flash · DP2×TP2+EP*",
          "GLM-5.3-Flash NVFP4 · TP4 + MTP": "GLM-5.3-Flash · TP4+MTP", "DeepSeek-V4-Flash native · TP4": "DeepSeek-V4-Flash · TP4",
          "DeepSeek-V4-Flash native · DP4 + EP*": "DeepSeek-V4-Flash · DP4+EP*", "DeepSeek-V4-Flash native · DP4 + EP": "DeepSeek-V4-Flash · DP4+EP",
          "GLM-5.3-Flash NVFP4 · DP2 × TP2 + EP (degenerate output)": "GLM-5.3-Flash · DP2×TP2+EP (degenerate)",
@@ -185,7 +186,7 @@ def main():
     W, H, ml, mr, mt, mb = 1100, 600, 70, 30, 30, 70
     xs = [p["cost"] for p in pts] + [p["api"] for p in pts]
     xmin, xmax = 10 ** math.floor(math.log10(min(xs)) - 0.15), 10 ** math.ceil(math.log10(max(xs)) + 0.05)
-    ymin, ymax = 0.60, 0.86
+    ymin = 0.60; ymax = max(0.86, math.ceil((max(p["acc"] for p in pts) + 0.005) * 50) / 50)
     X = lambda c: ml + (math.log10(c) - math.log10(xmin)) / (math.log10(xmax) - math.log10(xmin)) * (W - ml - mr)
     Y = lambda a: mt + (ymax - a) / (ymax - ymin) * (H - mt - mb)
     o = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px;font-family:system-ui,-apple-system,\'Segoe UI\',sans-serif;background:#fcfcfb" role="img" aria-label="Cost against quality for every configuration measured at 600 W">',
