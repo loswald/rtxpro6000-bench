@@ -71,8 +71,9 @@ arm(){ # tag seqs [extra...]
     local verdict; verdict=$($CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1)
     log "  $verdict"
     if echo "$verdict" | grep -qE "degenerate=[01] "; then
-      log "  $tag probe clean: measuring the router shape"
+      log "  $tag probe clean: measuring the router and prompt-optimisation shapes"
       pt "$tag" router 1024 128 0 1024
+      pt "$tag" promptopt 512 256 3072 1024
     else
       log "  $tag probe degenerate: no throughput measured"
     fi
