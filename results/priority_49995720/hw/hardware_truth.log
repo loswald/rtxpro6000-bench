@@ -1,0 +1,231 @@
+
+==== hardware_truth start  (2026-09-05T20:42:25Z) ====
+OUT=/workspace/priority/results/hw  REPO_ROOT=/workspace/priority  TOOLS=/workspace/tools  host=3482427aea0a  container_id=?  PARSE_ONLY=0
+
+==== nvidia-smi  (2026-09-05T20:42:25Z) ====
+Sat Sep  5 20:42:25 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.178.04             Driver Version: 580.178.04     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA RTX PRO 6000 Blac...    On  |   00000000:01:00.0 Off |                  Off |
+| 30%   27C    P8             36W /  600W |       1MiB /  97887MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA RTX PRO 6000 Blac...    On  |   00000000:21:00.0 Off |                  Off |
+| 30%   25C    P8              5W /  600W |       1MiB /  97887MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA RTX PRO 6000 Blac...    On  |   00000000:41:00.0 Off |                  Off |
+| 30%   26C    P8              7W /  600W |       1MiB /  97887MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA RTX PRO 6000 Blac...    On  |   00000000:61:00.0 Off |                  Off |
+| 30%   24C    P8             23W /  600W |       1MiB /  97887MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+index, name, uuid, pci.bus_id, vbios_version, driver_version, compute_cap, memory.total [MiB], power.limit [W], power.default_limit [W], power.max_limit [W], power.min_limit [W], clocks.max.sm [MHz], clocks.max.memory [MHz], pcie.link.gen.max, pcie.link.gen.current, pcie.link.width.max, pcie.link.width.current, ecc.mode.current, persistence_mode, temperature.gpu
+0, NVIDIA RTX PRO 6000 Blackwell Workstation Edition, GPU-8d95512a-a6f8-e9be-002c-44e88b0ef957, 00000000:01:00.0, 98.02.81.00.07, 580.178.04, 12.0, 97887, 600.00, 600.00, 600.00, 150.00, 3090, 14001, 5, 1, 16, 16, Disabled, Enabled, 27
+1, NVIDIA RTX PRO 6000 Blackwell Workstation Edition, GPU-78112035-11df-6c01-8058-989797396766, 00000000:21:00.0, 98.02.81.00.07, 580.178.04, 12.0, 97887, 600.00, 600.00, 600.00, 150.00, 3090, 14001, 5, 1, 16, 16, Disabled, Enabled, 25
+2, NVIDIA RTX PRO 6000 Blackwell Workstation Edition, GPU-7bf3f29c-f0af-d7e7-eb28-d7aa04f12ac9, 00000000:41:00.0, 98.02.81.00.07, 580.178.04, 12.0, 97887, 600.00, 600.00, 600.00, 150.00, 3090, 14001, 5, 1, 16, 16, Disabled, Enabled, 26
+3, NVIDIA RTX PRO 6000 Blackwell Workstation Edition, GPU-d00c73c8-11fd-f0e2-2793-c1a93b2aaca5, 00000000:61:00.0, 98.02.81.00.07, 580.178.04, 12.0, 97887, 600.00, 600.00, 600.00, 150.00, 3090, 14001, 5, 1, 16, 16, Disabled, Enabled, 24
+
+==== nvidia-smi topo  (2026-09-05T20:42:27Z) ====
+	[4mGPU0	GPU1	GPU2	GPU3	CPU Affinity	NUMA Affinity	GPU NUMA ID[0m
+GPU0	 X 	SYS	SYS	SYS	72-95	3		N/A
+GPU1	SYS	 X 	SYS	SYS	48-71	2		N/A
+GPU2	SYS	SYS	 X 	SYS	0-23	0		N/A
+GPU3	SYS	SYS	SYS	 X 	24-47	1		N/A
+
+Legend:
+
+  X    = Self
+  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)
+  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node
+  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)
+  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)
+  PIX  = Connection traversing at most a single PCIe bridge
+  NV#  = Connection traversing a bonded set of # NVLinks
+ 	[4mGPU0	GPU1	GPU2	GPU3	[0m
+ GPU0	X	OK	OK	OK	
+ GPU1	OK	X	OK	OK	
+ GPU2	OK	OK	X	OK	
+ GPU3	OK	OK	OK	X	
+
+Legend:
+
+  X    = Self
+  OK   = Status Ok
+  CNS  = Chipset not supported
+  GNS  = GPU not supported
+  TNS  = Topology not supported
+  NS   = Not supported
+  U    = Unknown
+
+==== PCIe link width/speed per GPU  (2026-09-05T20:42:27Z) ====
+GPU 00000000:01:00.0 cur_speed=2.5 GT/s PCIe cur_width=16 max_speed=32.0 GT/s PCIe max_width=16 numa_node=3
+GPU 00000000:21:00.0 cur_speed=2.5 GT/s PCIe cur_width=16 max_speed=32.0 GT/s PCIe max_width=16 numa_node=2
+GPU 00000000:41:00.0 cur_speed=2.5 GT/s PCIe cur_width=16 max_speed=32.0 GT/s PCIe max_width=16 numa_node=0
+GPU 00000000:61:00.0 cur_speed=2.5 GT/s PCIe cur_width=16 max_speed=32.0 GT/s PCIe max_width=16 numa_node=1
+--- lspci -vv -s 00000000:01:00.0
+	Subsystem: NVIDIA Corporation Device 204b
+	NUMA node: 3
+	Region 1: Memory at 189e60000000 (64-bit, prefetchable) [size=256M]
+--- lspci -vv -s 00000000:21:00.0
+	Subsystem: NVIDIA Corporation Device 204b
+	NUMA node: 2
+	Region 1: Memory at 207de0000000 (64-bit, prefetchable) [size=256M]
+--- lspci -vv -s 00000000:41:00.0
+	Subsystem: NVIDIA Corporation Device 204b
+	NUMA node: 0
+	Region 1: Memory at 10bee0000000 (64-bit, prefetchable) [size=256M]
+--- lspci -vv -s 00000000:61:00.0
+	Subsystem: NVIDIA Corporation Device 204b
+	NUMA node: 1
+	Region 1: Memory at 8df60000000 (64-bit, prefetchable) [size=256M]
+NOTE: current_link_speed drops to 2.5 GT/s when the GPU is idle (ASPM); max_link_speed/LnkCap is the truth for Gen5.
+lspci ACS capability lines: 0
+0 (0 = extended config space not readable from the container; the NCCL pair test decides instead)
+uvm_disable_hmm=N  (N = HMM enabled)
+
+==== CPU / RAM / disk  (2026-09-05T20:42:27Z) ====
+nproc=192
+model name	: AMD EPYC 9B14 96-Core Processor
+Model name:                              AMD EPYC 9B14 96-Core Processor
+Thread(s) per core:                      1
+Core(s) per socket:                      96
+Socket(s):                               2
+NUMA node(s):                            8
+NUMA node0 CPU(s):                       0-23
+NUMA node1 CPU(s):                       24-47
+NUMA node2 CPU(s):                       48-71
+NUMA node3 CPU(s):                       72-95
+NUMA node4 CPU(s):                       96-119
+NUMA node5 CPU(s):                       120-143
+NUMA node6 CPU(s):                       144-167
+NUMA node7 CPU(s):                       168-191
+               total        used        free      shared  buff/cache   available
+Mem:             755          29         360           0         370         725
+Swap:              0           0           0
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         1.2T   11G  1.2T   1% /
+overlay         1.2T   11G  1.2T   1% /
+
+==== engine versions  (2026-09-05T20:42:35Z) ====
+{
+  "vllm": "0.28.1rc1.dev446+g798544433",
+  "sglang": null,
+  "torch": "2.13.0+cu130",
+  "flashinfer": null,
+  "transformers": "5.15.1",
+  "b12x": "present",
+  "triton": "3.7.1",
+  "torch_cuda": "13.0",
+  "torch_cudnn": 92000,
+  "torch_nccl": "2.29.7",
+  "cuda_device_count": 4,
+  "cuda_capability": [
+    [
+      12,
+      0
+    ],
+    [
+      12,
+      0
+    ],
+    [
+      12,
+      0
+    ],
+    [
+      12,
+      0
+    ]
+  ]
+}
+
+==== torch peer access / P2P copy matrix  (2026-09-05T20:42:46Z) ====
+{"device_count": 4, "all_pairs_peer_access": true, "unidir_copy_gbps_min": 52.3, "unidir_copy_gbps_max": 53.27, "copy_latency_us_max": 14.68}
+
+==== p2pBandwidthLatencyTest  (2026-09-05T20:42:51Z) ====
+p2pBandwidthLatencyTest not found under /workspace/tools (optional; the torch matrix above covers peer access + bandwidth).
+
+==== NCCL all_reduce busbw  (2026-09-05T20:42:51Z) ====
+(no PIX/PXB pair in topo -> pair_same uses 0,1 as a stand-in)
+(no PHB/NODE/SYS pair in topo -> pair_cross uses 0,2 as a stand-in)
+same-switch pair: 0,1   cross-switch pair: 0,2   gpus: 4
+all_reduce_perf not found under /workspace/tools -> torch.distributed all_reduce microbench (same busbw convention)
+--- ring4_baseline (NCCL_P2P_LEVEL=PHB)
+  8B:0.0 GB/s  1048576B:20.8 GB/s  8388608B:31.0 GB/s  134217728B:33.2 GB/s  1073741824B:34.9 GB/s
+--- ring4_default_level ()
+  8B:0.0 GB/s  1048576B:20.9 GB/s  8388608B:31.0 GB/s  134217728B:33.3 GB/s  1073741824B:34.9 GB/s
+--- pair_same (NCCL_P2P_LEVEL=PHB CUDA_VISIBLE_DEVICES=0,1)
+  8B:0.0 GB/s  1048576B:20.4 GB/s  8388608B:28.9 GB/s  134217728B:31.1 GB/s  1073741824B:32.9 GB/s
+--- pair_cross (NCCL_P2P_LEVEL=PHB CUDA_VISIBLE_DEVICES=0,2)
+  8B:0.0 GB/s  1048576B:20.3 GB/s  8388608B:29.2 GB/s  134217728B:30.3 GB/s  1073741824B:33.2 GB/s
+--- comparison only (never a decision input): host-staged path
+--- ring4_p2p_disabled (NCCL_P2P_DISABLE=1)
+  8B:0.0 GB/s  1048576B:20.9 GB/s  8388608B:31.2 GB/s  134217728B:33.3 GB/s  1073741824B:35.0 GB/s
+
+==== nvidia-smi dmon idle baseline  (2026-09-05T20:43:24Z) ====
+    1      6     27      -      0      0      0      0      0      0    405    180      1      2      0 
+    2      7     28      -      0      0      0      0      0      0    405    180      1      2      0 
+    3     24     26      -      0      0      0      0      0      0    405    180      1      2      0 
+
+==== parse -> hardware.json / decisions.env / machine.env  (2026-09-05T20:43:33Z) ====
+{
+  "gpu_count": 4,
+  "decisions": {
+    "P2P_OK": 1,
+    "CUSTOM_ALLREDUCE": 0,
+    "NCCL_P2P_DISABLE": 0,
+    "ACS_SUSPECTED": 0,
+    "PESSIMISTIC_TP": 0,
+    "HOST_RAM_GB": 755,
+    "NOTES": "4x NVIDIA RTX PRO 6000 Blackwell Workstation Edition (Workstation Edition), cc 12.0, 95 GB each, PCIe gen5 x16, NVLink pairs: 0 | same-switch pairs none; cross-switch pairs none | peer access supported on all 4 GPUs pairwise (torch.cuda.can_device_access_peer) | unidirectional P2P copy 52-53 GB/s (recorded, not a gate) | max P2P copy latency 14.7 us (recorded, not a gate) | same-switch pair ? all_reduce busbw 31.1 GB/s vs cross-switch pair ? 30.3 GB/s (ratio 1.03, threshold 0.8) | 4-GPU ring all_reduce busbw 33.2 GB/s | NCCL_P2P_DISABLE is never set automatically; CUSTOM_ALLREDUCE=1 only as an explicit A/B"
+  },
+  "same_switch_pairs": [],
+  "cross_switch_pairs": [],
+  "tp2_cross_switch_gpu_ids": "0,1,2,3",
+  "p2p_source": "torch.cuda.can_device_access_peer"
+}
+GPU0: {"name": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition", "edition_guess": "Workstation Edition", "vbios": "98.02.81.00.07", "driver": "580.178.04", "power_limit_w": 600.0, "memory_total_mib": 97887.0, "pcie_gen_max": "5", "pcie_width_max": "16", "bar1_total_mib": 256, "sysfs_link": {"cur_speed_idle": "2.5 GT/s PCIe", "cur_width": "16", "max_speed": "32.0 GT/s PCIe", "max_width": "16", "numa_node": "3"}}
+torch p2p: {"all_pairs_peer_access": true, "unidir_copy_gbps_min": 52.3, "unidir_copy_gbps_max": 53.27, "copy_latency_us_max": 14.68}
+nccl ring4_baseline       {"source": "torch.distributed all_reduce", "busbw_gbps_128MB": 33.247, "busbw_gbps_1GB": 34.909, "latency_us_8B": 21.4, "any_wrong": false, "transports_seen": []}
+nccl ring4_default_level  {"source": "torch.distributed all_reduce", "busbw_gbps_128MB": 33.258, "busbw_gbps_1GB": 34.91, "latency_us_8B": 20.89, "any_wrong": false, "transports_seen": []}
+nccl pair_same            {"source": "torch.distributed all_reduce", "busbw_gbps_128MB": 31.111, "busbw_gbps_1GB": 32.886, "latency_us_8B": 19.41, "any_wrong": false, "transports_seen": []}
+nccl pair_cross           {"source": "torch.distributed all_reduce", "busbw_gbps_128MB": 30.342, "busbw_gbps_1GB": 33.164, "latency_us_8B": 19.8, "any_wrong": false, "transports_seen": []}
+nccl ring4_p2p_disabled   {"source": "torch.distributed all_reduce", "busbw_gbps_128MB": 33.254, "busbw_gbps_1GB": 34.977, "latency_us_8B": 20.46, "any_wrong": false, "transports_seen": []}
+
+wrote: /workspace/priority/results/hw/decisions.env  /workspace/priority/results/hw/hardware.json  /workspace/priority/results/hw/machine.env  (parse rc=0)
+--- decisions.env
+# decisions.env -- written by vast/hardware_truth.sh 2026-09-05T20:43:33Z. Plain KEY=VALUE; bench/env.sh sources it (HW_DIR=/workspace/priority/results/hw).
+# Rules: P2P_OK = peer access on all pairs. NCCL_P2P_DISABLE is NEVER set to 1 by the script -- P2P works and beats host
+# staging. CUSTOM_ALLREDUCE=0 by default (A/B with CUSTOM_ALLREDUCE=1 at launch). PESSIMISTIC_TP marks TP2/TP4 rows (dagger).
+# To keep a hand edit across re-runs add the line HUMAN_DECISION=1 (only NCCL_P2P_DISABLE and CUSTOM_ALLREDUCE are preserved).
+P2P_OK=1
+CUSTOM_ALLREDUCE=0
+NCCL_P2P_DISABLE=0
+ACS_SUSPECTED=0
+PESSIMISTIC_TP=0
+HOST_RAM_GB=755
+NOTES="4x NVIDIA RTX PRO 6000 Blackwell Workstation Edition (Workstation Edition), cc 12.0, 95 GB each, PCIe gen5 x16, NVLink pairs: 0 | same-switch pairs none; cross-switch pairs none | peer access supported on all 4 GPUs pairwise (torch.cuda.can_device_access_peer) | unidirectional P2P copy 52-53 GB/s (recorded, not a gate) | max P2P copy latency 14.7 us (recorded, not a gate) | same-switch pair ? all_reduce busbw 31.1 GB/s vs cross-switch pair ? 30.3 GB/s (ratio 1.03, threshold 0.8) | 4-GPU ring all_reduce busbw 33.2 GB/s | NCCL_P2P_DISABLE is never set automatically; CUSTOM_ALLREDUCE=1 only as an explicit A/B"
+# --- informational (not part of the contract) ---
+GENERATED_UTC=2026-09-05T20:43:33Z
+HW_JSON=/workspace/priority/results/hw/hardware.json
+SAME_SWITCH_PAIRS=
+TP2_CROSS_SWITCH_GPU_IDS=0,1,2,3
+HUMAN_DECISION=0
+
+==== hardware_truth done  (2026-09-05T20:43:33Z) ====

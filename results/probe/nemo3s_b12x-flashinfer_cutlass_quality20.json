@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "\n\n391",
+  "reasoning_chars": 167,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "\n80",
+  "reasoning_chars": 139,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "\n\nHere\u2019s a clean, iterative implementation of the Fibonacci sequence in Python. It runs in\u202fO(n) time and O(1) extra space.\n\n```python\ndef fib(n: int) -> int:\n    \"\"\"\n    Return the n\u2011th Fibonacci number using an iterative approach.\n\n    Parameters\n    ----------\n    n : int\n        Index of the desired Fibonacci number (0\u2011based).\n        Must be non\u2011negative.\n\n    Returns\n    -------\n    int\n        The n\u2011th Fibonacci number.\n\n    Raises\n    ------\n    ValueError\n        If n is negative.\n\n    Examples\n    --------\n    >>> fib(0)\n    0\n    >>> fib(1)\n    1\n    >>> fib(10)\n    55\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non\u2011negative integer\")\n\n    # Base cases\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    # Iteratively build up from F(0) and F(1)\n    a, b = 0, 1          # a = F(i-2), b = F(i-1)\n    for _ in range(2, n + 1):\n        a, b = b, a + b  # b becomes F(i)\n    return b\n```\n\n**How it works**\n\n1. Handle the trivial cases `n = 0` and `n = 1` directly.\n2. Keep two variables, `a` and `b`, representing the two most recent Fibonacci numbers.\n3. For each step from 2 up to `n`, update them so that `b` always holds `F(i)`.\n4. After the loop, `b` is `F(n)`, which we return.\n\nThis avoids the exponential blow\u2011up of the na\u00efve recursive definition and uses only constant extra memory. Feel free to drop the function into any script or module and call `fib(k)` for the desired index.",
+  "reasoning_chars": 209,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.689,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "\n\n```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM\n    customers c\nJOIN\n    orders o ON o.customer_id = c.id\nGROUP BY\n    c.id,\n    c.name\nORDER BY\n    total_order_value DESC\nLIMIT 3;\n```",
+  "reasoning_chars": 181,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.893,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "\n\n**Rating: 1/5**\n\nThe answer is incorrect. The capital of Australia is Canberra, not Sydney. Sydney is the largest city, but the seat of government is located in Canberra.",
+  "reasoning_chars": 184,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.786,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s\u2011midi.",
+  "reasoning_chars": 287,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "\n\nLarge language models, trained on massive text corpora, can handle diverse tasks without further fine\u2011tuning but may still generate inaccurate or fabricated information.",
+  "reasoning_chars": 299,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "\n\nHere are three key differences between TCP (Transmission Control Protocol) and UDP (User Datagram Protocol), focusing on their core design philosophies and practical implications:\n\n1. **Reliability & Delivery Guarantee**  \n   - **TCP**: Provides *reliable, ordered, and error-checked* delivery of data. It uses acknowledgments (ACKs), sequence numbers, retransmission timers, and checksums to ensure all data arrives correctly and in sequence. If packets are lost, corrupted, or arrive out of order, TCP automatically recovers (e.g., by retransmitting missing packets).  \n   - ** UDP**: Offers *best-effort delivery* with **no guarantees**. It does not acknowledge receipt, retransmit lost packets, or reorder data. Packets may be lost, duplicated, or arrive out of order without any recovery mechanism.  \n   *Why it matters*: TCP is ideal for applications where data integrity is critical (e.g., web browsing, file transfers, email). UDP suits real-time applications where speed outweighs occasional loss (e.g., video streaming, online gaming, VoIP).\n\n2. **Connection Orientation**  \n   - **TCP**: Is **connection-oriented**. Before data transfer, it establishes a virtual connection via a three-way handshake (SYN \u2192 SYN-ACK \u2192 ACK). This connection maintains state (e.g., sequence numbers, window size) throughout the session and is torn down explicitly (via FIN packets) after use.  \n   - ** UDP**: Is **connectionless**. It sends data (datagrams) immediately without prior handshake or connection setup. No state is maintained between sender and receiver; each packet is independent.  \n   *Why it matters*: TCP\u2019s connection setup adds latency (typically 1-RTT overhead) but enables features like flow control and congestion avoidance. UDP\u2019s lack of connection overhead minimizes latency, making it faster for simple, transactional requests (e.g., DNS queries).\n\n3. **Header Overhead & Complexity**  \n   - **TCP**: Has a **larger header** (minimum 20 bytes, up to 60 bytes with options) containing fields for sequence numbers, acknowledgment numbers, window size, urgent pointer, and multiple control flags (SYN, ACK, FIN, RST, etc.). This supports its reliability mechanisms but consumes more bandwidth.  \n   - ** UDP**: Has a **minimal header** (fixed 8 bytes) with only source/destination ports, length, and checksum. No sequence/acknowledgment fields, flow control, or congestion control fields exist.  \n   *Why it matters*: TCP\u2019s overhead reduces usable bandwidth for payload data but enables robust error recovery. UDP\u2019s low overhead maximizes efficiency for small, frequent transmissions where reliability is handled by the application layer (e.g., via custom retransmission logic in QUIC or application-specific protocols).\n\n### Summary Table for Clarity\n| Feature                | TCP                            | UDP                              |\n|------------------------|--------------------------------|----------------------------------|\n| **Reliability**        | Guaranteed (ACKs, retransmits) | None (best-effort)               |\n| **Connection Type**    | Connection-oriented (handshake)| Connectionless (no setup)        |\n| **Header Size**        | 20\u201360 bytes                    | 8 bytes                          |\n| **Typical Use Cases**  | HTTP, FTP, SSH, SMTP           | DNS, VoIP, Streaming, Online Gaming |\n\nThese differences stem from TCP\u2019s focus on *accuracy* (for critical data) versus UDP\u2019s focus on *speed and simplicity* (for time-sensitive data). Choosing between them depends on whether the application prioritizes guaranteed delivery or minimal latency.",
+  "reasoning_chars": 2498,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.673,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 479,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+  "reasoning_chars": 246,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "\n\nThe sky appears blue because molecules in Earth's atmosphere scatter short\u2011wavelength (blue) light more efficiently than longer wavelengths, a phenomenon known as Rayleigh scattering. This scattered blue light reaches our eyes from all directions, making the whole sky look blue.",
+  "reasoning_chars": 122,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.925,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "\n\nTo differentiate \\(f(x)=x^{3}\\sin x\\), apply the product rule:\n\n\\[\n\\frac{d}{dx}\\big[u(x)v(x)\\big]=u'(x)v(x)+u(x)v'(x).\n\\]\n\nLet  \n\\(u(x)=x^{3}\\)\u2003\u2192\u2003\\(u'(x)=3x^{2}\\)  \n\\(v(x)=\\sin x\\)\u2003\u2192\u2003\\(v'(x)=\\cos x\\).\n\nThen\n\n\\[\n\\begin{aligned}\nf'(x) &= u'(x)v(x) + u(x)v'(x) \\\\\n      &= (3x^{2})(\\sin x) + (x^{3})(\\cos x) \\\\\n      &= 3x^{2}\\sin x + x^{3}\\cos x.\n\\end{aligned}\n\\]\n\nYou can also factor out \\(x^{2}\\) if desired:\n\n\\[\nf'(x)=x^{2}\\big(3\\sin x + x\\cos x\\big).\n\\]\n\nSo the derivative of \\(x^{3}\\sin x\\) is  \n\n\\[\n\\boxed{3x^{2}\\sin x + x^{3}\\cos x}.\n\\]",
+  "reasoning_chars": 209,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.726,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "\n\n**Regex (PCRE / JavaScript / Python\u2011compatible)**  \n\n```regex\n^(?:GIR\\s?0AA|([A-PR-UWYZ][0-9][0-9A-HJKPS-UW]?|[A-PR-UWYZ][A-HK-Y][0-9][0-9ABEHMNPRV-Y]?)\\s?[0-9][ABD-HJLNP-UW-Z]{2})$\n```\n\n### How it works  \n\n| Part | Meaning |\n|------|---------|\n| `^` / `$` | Anchor the match to the start and end of the string (so the whole input must be a postcode). |\n| `GIR\\s?0AA` | Special case for the **GIR\u202f0AA** postcode (used by the Girobank). |\n| `(?: \u2026 )` | Non\u2011capturing group that contains the two alternatives for the \u201cnormal\u201d outward code. |\n| **First alternative** \u2013 `[A-PR-UWYZ][0-9][0-9A-HJKPS-UW]?` | <ul><li>First letter: any letter **except** Q, V, X (`A\u2011P R\u2011U W\u2011Y Z`).</li><li>Second character: a digit (`0\u20119`).</li><li>Optional third character: a digit or a letter **except** C, I, K, M, O, V (`0\u20119 A\u2011H J K P S\u2011U W`).</li></ul> |\n| **Second alternative** \u2013 `[A-PR-UWYZ][A-HK-Y][0-9][0-9ABEHMNPRV-Y]?` | <ul><li>First letter: same restriction as above.</li><li>Second letter: any letter **except** I, J, Z (`A\u2011H K\u2011Y`).</li><li>Third character: a digit (`0\u20119`).</li><li>Optional fourth character: a digit or a letter **except** C, I, K, M, O, V (`0\u20119 A\u2011B E\u2011H J L M N P R V\u2011Y`).</li></ul> |\n| `\\s?` | Allows an optional single space between the outward and inward parts (the space is conventional but not strictly required for validation). |\n| `[0-9][ABD-HJLNP-UW-Z]{2}` | Inward code: a digit followed by two letters **excluding** C, I, K, M, O, V (the letters that never appear in the inward part). |\n\n### Quick test\n\n| Postcode | Matches? |\n|----------|----------|\n| `EC1A 1BB` | \u2705 |\n| `M1 1AE`   | \u2705 |\n| `B33 8TH`  | \u2705 |\n| `CR2 6XH`  | \u2705 |\n| `DN55 1PT` | \u2705 |\n| `W1A 0AX`  | \u2705 |\n| `GIR 0AA`  | \u2705 |\n| `Q1A 0AA`  | \u274c (first letter Q not allowed) |\n| `EC1A 1B`  | \u274c (inward code too short) |\n| `EC1A 1BBB`| \u274c (inward code too long) |\n\nFeel free to drop the `\\s?` if you require the space to be mandatory, or replace it with a literal space if you want to enforce the conventional formatting. The pattern above follows the official UK postcode specification (BS\u202f7666) and will reject the vast majority of malformed strings while accepting all valid postcodes.",
+  "reasoning_chars": 1024,
+  "finish": "stop",
+  "top6gram": 3,
+  "distinct": 0.557,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "\n0.05",
+  "reasoning_chars": 195,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "\n\nThe complete proverb is: **\"A stitch in time saves nine.\"**\n\n### Explanation:\nThis proverb means that **addressing a small problem promptly prevents it from becoming a much larger, more difficult, and more costly problem later.** \n\n*   **Origin of the metaphor:** It comes from sewing. If you notice a small tear in a piece of fabric and fix it with *one stitch* right away (\"a stitch in time\"), you prevent the tear from widening. If you ignore it, the tear will likely grow, requiring *many more stitches* (hypothetically \"nine\") to repair later. The number \"nine\" is not literal; it emphasizes that the effort saved by acting early is disproportionately large compared to the small effort needed now.\n*   **Core Meaning:** Procrastination on small issues leads to bigger headaches. Taking quick, preventive action saves significant time, effort, money, or stress in the long run.\n*   **Modern Examples:**\n    *   Fixing a small leak under the sink immediately (one stitch) vs. waiting until it causes water damage, mold, and structural repairs (nine stitches).\n    *   Addressing a minor misunderstanding with a colleague quickly (one stitch) vs. letting it fester into a major conflict requiring mediation (nine stitches).\n    *   Studying a little each day for an exam (one stitch) vs. cramming the night before and risking poor performance or failure (nine stitches).\n    *   Getting a small dental cavity filled promptly (one stitch) vs. waiting until it needs a root canal or extraction (nine stitches).\n\n**In essence:** The proverb advocates for proactive, timely intervention as a wise and efficient strategy to avoid unnecessary future trouble. It\u2019s a reminder that a little effort *now* often prevents a lot of effort *later*.",
+  "reasoning_chars": 1798,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.648,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "\n\n**Judgment:**  \n**Answer A (\"Paris\") is correct.**  \n**Answer B (\"Lyon\") is incorrect.**  \n\n### Why?  \n- **Paris** has been the **undisputed capital of France** since the 10th century (formally established under Hugh Capet in 987 CE). It serves as the political, cultural, and economic center of the nation, housing key institutions like the \u00c9lys\u00e9e Palace (presidential residence), the National Assembly, and the Senate.  \n- **Lyon**, while France\u2019s third-largest city and a historic hub (notably as the Roman capital of Gaul, *Lugdunum*), has **never been the national capital**. It remains a major regional city but lacks the constitutional or administrative status of Paris.  \n\n### Key Clarification:  \nNo historical period, political regime, or exceptional circumstance (e.g., wartime relocation) has ever designated Lyon as France\u2019s capital. Even during the Vichy regime (1940\u20131944), the *de facto* government operated from Vichy\u2014not Lyon\u2014while Paris retained its status as the *de jure* capital.  \n\n**Conclusion:** Answer A is factually accurate; Answer B is incorrect. The capital of France is **Paris**.",
+  "reasoning_chars": 1330,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.725,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "\n\nSilicon hearts race  \nRendering worlds in soft light  \nDreams compute in fire",
+  "reasoning_chars": 1257,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.917,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "\n\nTo convert Fahrenheit (\u00b0F) to Celsius (\u00b0C), use the following formula:\n\n**\u00b0C = (\u00b0F \u2212 32) \u00d7 5/9**\n\n**Step-by-step calculation for 98.6\u00b0F:**\n1. Subtract 32 from the Fahrenheit temperature:  \n   \\( 98.6 - 32 = 66.6 \\)\n2. Multiply the result by 5/9:  \n   \\( 66.6 \\times \\frac{5}{9} = \\frac{66.6 \\times 5}{9} = \\frac{333}{9} = 37.0 \\)\n\n**Result:**  \n98.6\u00b0F = **37.0\u00b0C** (commonly stated as 37\u00b0C, as this is the standard reference for normal human body temperature).\n\n**Note:** The value 98.6\u00b0F is defined as exactly 37\u00b0C in medical contexts, so the conversion yields a precise whole number.",
+  "reasoning_chars": 1539,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.787,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "\n\nThe process by which plants make their own food is **photosynthesis**.\n\n**Chemical Equation (balanced):**  \n\\[\n6\\text{CO}_2 + 6\\text{H}_2\\text{O} \\xrightarrow{\\text{light energy/chlorophyll}} \\text{C}_6\\text{H}_{12}\\text{O}_6 + 6\\text{O}_2\n\\]\n\n**In words:**  \nCarbon dioxide + Water \u2192 Glucose + Oxygen  \n*(using light energy absorbed by chlorophyll)*\n\n### Key Notes:\n- **Reactants**: Carbon dioxide (CO\u2082) from the air and water (H\u2082O) absorbed by roots.\n- **Products**: Glucose (C\u2086H\u2081\u2082O\u2086), which plants use as food for energy and growth, and oxygen (O\u2082), released as a byproduct.\n- **Energy Source**: Light energy (typically sunlight) is essential, captured by the pigment chlorophyll in chloroplasts.\n- **Location**: Occurs primarily in the leaves of plants, within chloroplasts.\n\nThis equation represents the overall process; the actual biochemical pathway involves multiple light-dependent and light-independent (Calvin cycle) steps. Glucose is often stored as starch or used to build other carbohydrates (e.g., cellulose, sucrose).",
+  "reasoning_chars": 1651,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.766,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 146,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

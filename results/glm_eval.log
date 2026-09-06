@@ -1,0 +1,37 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[11:23:22] ===== GLM-5.3-Flash (AA 57): quality =====
+[11:23:27]   launch glm53f_base
+[11:30:28]   glm53f_base healthy in 420s | GPU KV cache size: 2,139,806 tokens
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/glm53f_base_quality20.json
+    eval: 2026-09-04T11:49:41Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+    eval: 2026-09-04T11:49:41Z     var_tracking     acc=0.750 n=12/12 ci95=[0.468,0.911]
+    eval: 2026-09-04T11:49:41Z     qa_multi_doc     acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-04T11:49:41Z   knowledge  acc=0.543 n=70/70 ci95=[0.427,0.654] out_tok=1338.5 trunc=0.1714 err=0 
+    eval: 2026-09-04T11:49:41Z     mmlu_pro_hard    acc=0.800 n=40/40 ci95=[0.652,0.895]
+    eval: 2026-09-04T11:49:41Z     simpleqa         acc=0.200 n=30/30 ci95=[0.095,0.373]
+    eval: 2026-09-04T11:49:41Z   ifeval     acc=0.650 n=60/60 ci95=[0.524,0.758] out_tok=2478.8 trunc=0.25 err=0 
+    eval: 2026-09-04T11:49:41Z     triple           acc=0.667 n=24/24 ci95=[0.467,0.820]
+    eval: 2026-09-04T11:49:41Z     double           acc=0.542 n=24/24 ci95=[0.351,0.721]
+    eval: 2026-09-04T11:49:41Z     single           acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-04T11:49:41Z   aggregate  acc_micro=0.677 acc_macro=0.6928 n=403/403 ci95=[0.6303, 0.7212] requests=403 retries=0 out_tok/s=827.3
+    eval: 2026-09-04T11:49:41Z wrote /workspace/results/eval/glm53f_base.json, /workspace/results/eval/glm53f_base.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[11:49:47]   launch glm53f_mtp
+[11:55:32]   glm53f_mtp healthy in 345s | GPU KV cache size: 1,474,560 tokens
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/glm53f_mtp_quality20.json
+    eval: 2026-09-04T12:08:13Z     niah_multikey    acc=1.000 n=24/24 ci95=[0.862,1.000]
+    eval: 2026-09-04T12:08:13Z     var_tracking     acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-04T12:08:13Z     qa_multi_doc     acc=0.833 n=12/12 ci95=[0.552,0.953]
+    eval: 2026-09-04T12:08:13Z   knowledge  acc=0.514 n=70/70 ci95=[0.400,0.627] out_tok=1395.9 trunc=0.1857 err=0 
+    eval: 2026-09-04T12:08:13Z     mmlu_pro_hard    acc=0.775 n=40/40 ci95=[0.625,0.877]
+    eval: 2026-09-04T12:08:13Z     simpleqa         acc=0.167 n=30/30 ci95=[0.073,0.336]
+    eval: 2026-09-04T12:08:13Z   ifeval     acc=0.633 n=60/60 ci95=[0.507,0.744] out_tok=2459.1 trunc=0.2667 err=0 
+    eval: 2026-09-04T12:08:13Z     triple           acc=0.625 n=24/24 ci95=[0.427,0.788]
+    eval: 2026-09-04T12:08:13Z     double           acc=0.500 n=24/24 ci95=[0.314,0.686]
+    eval: 2026-09-04T12:08:13Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T12:08:13Z   aggregate  acc_micro=0.692 acc_macro=0.7089 n=403/403 ci95=[0.6456, 0.7354] requests=403 retries=0 out_tok/s=1231.4
+    eval: 2026-09-04T12:08:13Z wrote /workspace/results/eval/glm53f_mtp.json, /workspace/results/eval/glm53f_mtp.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+/workspace/bench/glm_eval.sh: line 86: eval_for: command not found
+/workspace/bench/glm_eval.sh: line 87: syntax error near unexpected token `fi'
+/workspace/bench/glm_eval.sh: line 87: `          fi;;'

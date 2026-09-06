@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 73,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 73,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "",
+  "reasoning_chars": 7336,
+  "finish": "length",
+  "top6gram": 3,
+  "distinct": 0.477,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n**How it works:**\n- Joins each order to its customer via `customer_id`\n- `SUM(o.amount)` computes total spend per customer\n- `GROUP BY c.id, c.name` aggregates at the customer level\n- `ORDER BY ... DESC LIMIT 3` keeps only the top 3\n\n**Dialect notes:**\n- **SQL Server:** replace `LIMIT 3` with `SELECT TOP 3 ...`\n- **Oracle / standard SQL:** use `FETCH FIRST 3 ROWS ONLY`\n\n**Handling ties:** `LIMIT 3` arbitrarily cuts off customers tied at the cutoff. If you want to include ties, use a window function:\n\n```sql\nSELECT id, name, total_order_value\nFROM (\n    SELECT\n        c.id,\n        c.name,\n        SUM(o.amount) AS total_order_value,\n        DENSE_RANK() OVER (ORDER BY SUM(o.amount) DESC) AS rnk\n    FROM customers c\n    JOIN orders o ON o.customer_id = c.id\n    GROUP BY c.id, c.name\n) ranked\nWHERE rnk <= 3;\n```",
+  "reasoning_chars": 1780,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.65,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1/5**\n\nThe answer is factually incorrect. The capital of Australia is **Canberra**, not Sydney. Sydney is Australia's largest and most famous city, which makes this a very common misconception, but it is only the capital of the state of New South Wales. Canberra was purpose-built as the national capital in the early 20th century, partly as a compromise between rivals Sydney and Melbourne.",
+  "reasoning_chars": 1932,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.766,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "**La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n\nNote: If the meeting was specifically postponed (delayed), you could also say \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\"",
+  "reasoning_chars": 1280,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.821,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on massive text datasets, can handle diverse tasks without task-specific training but occasionally generate false or fabricated information.",
+  "reasoning_chars": 1093,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "Here are three key differences between TCP and UDP:\n\n1. **Connection-oriented vs. connectionless** \u2014 TCP establishes a connection before sending data using a three-way handshake (SYN, SYN-ACK, ACK). UDP sends datagrams immediately with no prior connection setup.\n\n2. **Reliability** \u2014 TCP guarantees delivery through acknowledgments, retransmission of lost packets, and sequence numbers that ensure data arrives complete and in order. UDP provides no such guarantees \u2014 packets may be lost, duplicated, or arrive out of order, with no mechanism to detect or fix it.\n\n3. **Overhead and speed** \u2014 TCP has more overhead: larger headers (20+ bytes vs. UDP's 8 bytes), handshakes, acknowledgments, and flow/congestion control. UDP is lightweight and faster, which is why it's preferred for latency-sensitive applications like video streaming, VoIP, online gaming, and DNS.\n\nIn short: TCP trades speed for reliability, while UDP trades reliability for speed.",
+  "reasoning_chars": 4683,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.779,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "**Rewritten:** Because the experiment used a larger batch size, training converged more slowly.\n\nIf you'd also like the cause flipped (a fuller counterfactual): *Because the experiment used a smaller batch size, training converged more slowly.*",
+  "reasoning_chars": 4849,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.714,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "```json\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}\n```",
+  "reasoning_chars": 277,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "Sunlight contains all colors of visible light, and when it enters Earth's atmosphere, it collides with tiny gas molecules that scatter shorter wavelengths like blue much more strongly than longer wavelengths like red\u2014a phenomenon called Rayleigh scattering. This scattered blue light bounces around in every direction across the sky, so no matter where you look, blue light reaches your eyes.",
+  "reasoning_chars": 1485,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.9,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "Using the product rule: (uv)' = u'v + uv'\n\n- u = x\u00b3, so u' = 3x\u00b2\n- v = sin(x), so v' = cos(x)\n\n**d/dx [x\u00b3 sin(x)] = 3x\u00b2 sin(x) + x\u00b3 cos(x)**",
+  "reasoning_chars": 854,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.735,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "Here's a commonly used regex for UK postcodes:\n\n```regex\n^[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}$\n```\n\n**How it breaks down:**\n\n| Part | Meaning |\n|------|---------|\n| `[A-Z]{1,2}` | Area: 1\u20132 letters (e.g. `M`, `EC`) |\n| `\\d` | District: 1 digit |\n| `[A-Z\\d]?` | Optional letter or digit (e.g. the `A` in `EC1A`) |\n| ` ?` | Optional space |\n| `\\d` | Sector: 1 digit |\n| `[A-Z]{2}` | Unit: 2 letters |\n\n**Matches:** `M1 1AE`, `M60 1NW`, `CR2 6XH`, `EC1A 1BB`, `B33 8TH`, `DN55 1PT`\n\n**A stricter version** (from the UK government's bulk data transfer spec) also excludes `I` as the second letter and handles the special `GIR 0AA` case:\n\n```regex\n^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Ya-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Ya-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})$\n```\n\n**Practical tips:**\n- Use the case-insensitive flag (`i`) so users can type `m1 1ae`.\n- Consider allowing `\\s+` instead of ` ?` for flexible whitespace, or normalising input by stripping spaces before validating.\n- Regex only validates the *format* \u2014 it can't confirm a postcode actually exists. For that, use a lookup service like Royal Mail's Postcode Address File or getthedata/ideal-postcodes APIs.",
+  "reasoning_chars": 2966,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.74,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 395,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**\"A stitch in time saves nine.\"**\n\nThe proverb comes from sewing: if you mend a small tear right away with a single stitch, you prevent it from growing into a much larger hole that would need nine stitches\u2014or far more work\u2014to repair.\n\nFiguratively, it means that dealing with a problem promptly, while it's still small, saves you much greater effort, cost, or trouble later. Delaying action rarely makes a problem go away; it usually makes it worse and harder to fix.\n\nSome everyday examples:\n- Patching a small roof leak before it damages the whole ceiling\n- Getting an odd noise in your car checked before it becomes a major breakdown\n- Clearing up a misunderstanding with a friend before it hardens into a real rift\n- Paying a bill on time to avoid late fees and penalties\n\nIt expresses the same wisdom as the related saying, \"An ounce of prevention is worth a pound of cure\"\u2014a little timely effort is worth far more than a lot of corrective work down the road.",
+  "reasoning_chars": 4293,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.723,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Verdict: Answer A (Paris) is correct.**\n\n**Why Paris is correct:**\nParis has been the capital of France for over a thousand years, dating back to the Capetian dynasty in the late 10th century. It is the seat of the French government \u2014 the \u00c9lys\u00e9e Palace (President), the National Assembly, the Senate, and the Prime Minister's office are all located there. It is also France's largest city and its political, economic, and cultural center.\n\n**Why Lyon is incorrect:**\nLyon is a major French city \u2014 the third-largest in the country and the capital of the Auvergne-Rh\u00f4ne-Alpes region \u2014 but it has never been the national capital. It's sometimes called the \"gastronomic capital of France,\" which may cause confusion, but that title is culinary, not political. (Historically, Lyon was an important administrative center of Roman Gaul as Lugdunum, but that was nearly two millennia ago.)\n\n**Conclusion:** Answer A correctly identifies Paris as the capital of France; Answer B is factually wrong.",
+  "reasoning_chars": 1806,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.654,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Fans whir in the dark\u2014\nthousands of cores weave moonlight\ninto pixel streams",
+  "reasoning_chars": 3017,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "## Formula\n\n$$\u00b0C = (\u00b0F - 32) \\times \\frac{5}{9}$$\n\n## Calculation\n\n$$\u00b0C = (98.6 - 32) \\times \\frac{5}{9}$$\n\n$$\u00b0C = 66.6 \\times \\frac{5}{9}$$\n\n$$\u00b0C = \\frac{333}{9}$$\n\n$$\u00b0C = 37$$\n\n## Answer\n\n**98.6\u00b0F = 37\u00b0C**\n\nFun fact: this is normal human body temperature!",
+  "reasoning_chars": 396,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.595,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "## Photosynthesis\n\nThe process by which green plants make their own food is called **photosynthesis**. In this process, plants use sunlight, water, and carbon dioxide to produce glucose (food) and oxygen.\n\n**Chemical Equation:**\n\n$$6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2$$\n\n**In words:**\n\nCarbon dioxide + Water \u2014(in the presence of sunlight and chlorophyll)\u2192 Glucose + Oxygen\n\n**Key points:**\n- **Raw materials:** Carbon dioxide (from air) and water (from soil)\n- **Requirements:** Sunlight and chlorophyll (the green pigment in leaves)\n- **Products:** Glucose (food for the plant) and oxygen (released into the air)",
+  "reasoning_chars": 1340,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.785,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\": 1, \"b\": 2, \"c\": 3}",
+  "reasoning_chars": 118,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

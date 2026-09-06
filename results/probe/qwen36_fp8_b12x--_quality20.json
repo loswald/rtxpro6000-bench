@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "\n\n391",
+  "reasoning_chars": 610,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "\n\n80",
+  "reasoning_chars": 825,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "\n\nHere's a clean, efficient iterative implementation:\n\n```python\ndef fib(n: int) -> int:\n    \"\"\"Return the n-th Fibonacci number iteratively (0-indexed).\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\n### How it works:\n- **Base cases handled naturally**: When `n=0`, the loop doesn't run and returns `a=0`. When `n=1`, it runs once and returns `a=1`.\n- **Tuple unpacking**: `a, b = b, a + b` updates both values simultaneously without needing a temporary variable.\n- **0-indexed**: Follows the standard mathematical/CS convention where `F(0)=0`, `F(1)=1`, `F(2)=1`, `F(3)=2`, etc.\n\n### Complexity:\n- **Time**: `O(n)` \u2192 single pass through the loop\n- **Space**: `O(1)` \u2192 only two variables are stored regardless of `n`\n\n### Example usage:\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(5))  # ",
+  "reasoning_chars": 5174,
+  "finish": "length",
+  "top6gram": 1,
+  "distinct": 0.775,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "\n\nHere's a standard SQL query that works in MySQL, PostgreSQL, and SQLite:\n\n```sql\nSELECT \n    c.id, \n    c.name, \n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON c.id = o.customer_id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n### \ud83d\udd0d How it works:\n- `JOIN`: Links each customer to their orders\n- `GROUP BY c.id, c.name`: Aggregates data per customer\n- `SUM(o.amount)`: Calculates the total order value for each customer\n- `ORDER BY ... DESC`: Sorts from highest to lowest total\n- `LIMIT 3`: Returns only the top 3 rows\n\n### \u26a0\ufe0f Dialect Notes:\n- **SQL Server**: Replace `LIMIT 3` with `SELECT TOP 3` at the beginning\n- **Oracle 12c+**: Replace `LIMIT 3` with `FETCH FIRST 3 ROWS ONLY` at the end\n- If you need to handle **ties** (e.g., multiple customers with the same total), consider using `DENSE_RANK()` window function instead of `LIMIT`.\n\nLet me know if you're using a specific SQL dialect or need tie-handling!",
+  "reasoning_chars": 3554,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.755,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "\n\n**Rating: 1/5**\n\n**Explanation:** The answer is completely incorrect. The capital of Australia is **Canberra**, not Sydney. Sydney is Australia's largest and most internationally recognized city, but Canberra was specifically chosen and built as the capital in 1908 to resolve a long-standing rivalry between Sydney and Melbourne.",
+  "reasoning_chars": 1451,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.848,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi. \n\n*(Note: In French, it's also very common and natural to use the present tense for recent schedule changes: \"La r\u00e9union est report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\")*",
+  "reasoning_chars": 6188,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.879,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "\n\nDespite their extensive training and ability to handle diverse tasks without specialized tuning, large language models occasionally generate false information.",
+  "reasoning_chars": 7631,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "\n\nHere are three fundamental differences between TCP and UDP:\n\n1. **Connection Model**  \n   TCP is **connection-oriented**: it establishes a reliable connection using a three-way handshake before any data is sent, and tears it down afterward. UDP is **connectionless**: it sends datagrams immediately without any prior setup or connection state.\n\n2. **Reliability & Delivery Guarantees**  \n   TCP guarantees **reliable, in-order delivery** by using sequence numbers, acknowledgments (ACKs), and automatic retransmissions for lost or corrupted packets. UDP provides **no delivery guarantees**: it doesn't track packets, reorder them, or retransmit lost data, making it faster but less reliable.\n\n3. **Flow & Congestion Control**  \n   TCP includes built-in **flow and congestion control** mechanisms (like sliding windows and slow start) to prevent overwhelming the receiver or congesting the network. UDP has **none of these controls**, which reduces overhead and latency but means it can contribute to network congestion or overwhelm applications if not managed at a higher layer.",
+  "reasoning_chars": 3121,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.787,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "\n\nIf the experiment had used a smaller batch size, training would have converged slower.",
+  "reasoning_chars": 8929,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "\n\n{\"name\": \"Maria Lopez\", \"age\": 34, \"city\": \"Lisbon\"}",
+  "reasoning_chars": 969,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "\n\nSunlight scatters when it enters Earth's atmosphere, with shorter blue wavelengths bouncing off gas molecules more efficiently than longer red wavelengths. This scattered blue light reaches our eyes from every direction, making the sky appear blue to us.",
+  "reasoning_chars": 2958,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.947,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "\n\nTo find the derivative of \\(x^3 \\sin(x)\\), use the **product rule**:\n\\[\n\\frac{d}{dx}[u \\cdot v] = u'v + uv'\n\\]\n\nLet:\n- \\(u = x^3 \\quad \\Rightarrow \\quad u' = 3x^2\\)\n- \\(v = \\sin(x) \\quad \\Rightarrow \\quad v' = \\cos(x)\\)\n\nApply the rule:\n\\[\n\\frac{d}{dx}[x^3 \\sin(x)] = (3x^2)(\\sin(x)) + (x^3)(\\cos(x))\n\\]\n\n**Final answer:**\n\\[\n\\boxed{3x^2 \\sin(x) + x^3 \\cos(x)}\n\\]\n*(This can also be factored as \\(x^2(3\\sin(x) + x\\cos(x))\\) if desired.)*",
+  "reasoning_chars": 1876,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.708,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "",
+  "reasoning_chars": 5380,
+  "finish": "length",
+  "top6gram": 3,
+  "distinct": 0.436,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "\n\n0.05",
+  "reasoning_chars": 1128,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "\n\nThe completed proverb is: **\"A stitch in time saves nine.\"**\n\n**Explanation:**\nLiterally, this saying comes from sewing and tailoring. If you notice a small tear or loose thread in fabric and mend it immediately with just one stitch, you prevent the damage from spreading. If you ignore it, the tear will grow, eventually requiring nine stitches to repair.\n\nFiguratively, the proverb means that **addressing a small problem promptly prevents it from becoming a much larger, more difficult, or more costly issue later.** It's a timeless reminder of the value of proactivity, prevention, and timely action. \n\n**Example in practice:** \n- Fixing a minor car maintenance issue now can prevent a major engine failure later.\n- Addressing a misunderstanding in a relationship early can stop it from escalating into a serious conflict.\n- Paying a small bill on time avoids late fees, credit damage, and collection stress.\n\nAt its core, the proverb encourages us not to procrastinate or downplay small problems. Early intervention is almost always more efficient, less stressful, and more cost-effective than dealing with the consequences of neglect.",
+  "reasoning_chars": 2819,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.719,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "\n\n**Ruling:** Answer A (\"Paris\") is correct.\n\n**Reasoning:** The capital of France is unequivocally Paris, as established by constitutional, historical, and administrative fact. Paris has served as the political and administrative center of France for centuries and houses the seat of the national government, including the \u00c9lys\u00e9e Palace, the National Assembly, and the Supreme Court. Lyon, while a major economic, cultural, and historical hub in eastern France, has never held the status of national capital. \n\nTherefore, Answer A is factually accurate, and Answer B is incorrect.",
+  "reasoning_chars": 1388,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.706,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "\n\nThousands of cores hum,\nPainting worlds with light and code,\nHeat and fan song loud.",
+  "reasoning_chars": 4070,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.933,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "\n\n**Formula:**  \n\\( C = \\frac{5}{9} \\times (F - 32) \\)\n\n**Step-by-step calculation:**  \n\\( C = \\frac{5}{9} \\times (98.6 - 32) \\)  \n\\( C = \\frac{5}{9} \\times 66.6 \\)  \n\\( C = 37.0 \\)\n\n**Result:**  \n98.6\u00b0F = **37.0\u00b0C**",
+  "reasoning_chars": 1602,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.486,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "",
+  "reasoning_chars": 6251,
+  "finish": "length",
+  "top6gram": 6,
+  "distinct": 0.466,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "\n\n{\"a\": 1, \"b\": 2, \"c\": 3}",
+  "reasoning_chars": 900,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

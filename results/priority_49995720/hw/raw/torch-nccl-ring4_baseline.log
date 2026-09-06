@@ -1,0 +1,467 @@
+3482427aea0a:2492:2492 [1] NCCL INFO ncclOsDlopen(libnccl-env.so) failed: libnccl-env.so: cannot open shared object file: No such file or directory
+3482427aea0a:2492:2492 [1] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+3482427aea0a:2492:2492 [1] NCCL INFO cudaDriverVersion 13000
+3482427aea0a:2492:2492 [1] NCCL INFO NCCL version 2.30.7+cuda13.3
+3482427aea0a:2492:2492 [1] NCCL INFO NCCL git version HEAD a5187fa2e
+3482427aea0a:2492:2492 [1] NCCL INFO ncclOsDlopen(libnccl-net.so) failed: libnccl-net.so: cannot open shared object file: No such file or directory
+3482427aea0a:2492:2492 [1] NCCL INFO NET/Plugin: Could not find: libnccl-net.so
+3482427aea0a:2492:2492 [1] NCCL INFO transport/net_ib/init.cc:526 (ncclIbInit) -> 3
+3482427aea0a:2492:2492 [1] NCCL INFO Failed to initialize NET plugin IB
+3482427aea0a:2492:2492 [1] NCCL INFO NET/Socket : Using [0]eth0:172.17.0.3<0>
+3482427aea0a:2492:2492 [1] NCCL INFO Initialized NET plugin Socket
+3482427aea0a:2492:2492 [1] NCCL INFO Assigned NET plugin Socket to comm
+3482427aea0a:2492:2492 [1] NCCL INFO ncclOsDlopen(libnccl-rma.so) failed: libnccl-rma.so: cannot open shared object file: No such file or directory
+3482427aea0a:2492:2492 [1] NCCL INFO RMA/Plugin: Could not find: libnccl-rma.so
+3482427aea0a:2492:2492 [1] NCCL INFO RMA/Plugin: Failed to load external plugin libnccl-rma.so, dlHandle: (nil), ncclRma: (nil)
+
+[2026-09-05 20:42:56] 3482427aea0a:2492:2492 [1] misc/ibvwrap.cc:185 (wrap_ibv_alloc_pd) NCCL WARN lib wrapper not initialized.
+3482427aea0a:2492:2492 [1] NCCL INFO transport/net_ib/gdr.cc:55 (ibDmaBufSupportInitOnce) -> 3
+3482427aea0a:2492:2492 [1] NCCL INFO RMA/Plugin: Failed to initialize any plugin
+3482427aea0a:2492:2492 [1] NCCL INFO ncclOsDlopen(libnccl-gin.so) failed: libnccl-gin.so: cannot open shared object file: No such file or directory
+3482427aea0a:2492:2492 [1] NCCL INFO GIN/Plugin: Could not find: libnccl-gin.so
+3482427aea0a:2492:2492 [1] NCCL INFO GIN/Plugin: Failed to load external plugin libnccl-gin.so, dlHandle: (nil), ncclGin: (nil)
+3482427aea0a:2492:2492 [1] NCCL INFO GIN/Plugin: Failed to initialize any GIN plugin
+3482427aea0a:2492:2492 [1] NCCL INFO Using network Socket
+3482427aea0a:2492:2492 [1] NCCL INFO Loaded NVML from libnvidia-ml.so.1
+3482427aea0a:2492:2492 [1] NCCL INFO [Rank 1] ncclCommInitRankConfig comm 0x2a81a320 rank 1 nranks 4 cudaDev 1 nvmlDev 1 busId 21000 commId 0x38b5b197d8b1d4f4 - Init START
+3482427aea0a:2492:2492 [1] NCCL INFO RAS client listening socket at ::1<28028>
+3482427aea0a:2492:2492 [1] NCCL INFO NCCL_P2P_LEVEL set by environment to PHB
+3482427aea0a:2492:2492 [1] NCCL INFO TOPO/NET : Importing network plugins to topology
+3482427aea0a:2492:2492 [1] NCCL INFO ncclTopoPopulateNics : Filled eth0 in topo with pciPath=(null) net=1 gin=(null) rma=(null) keep=1 coll=(null) rail=-1 plane=-1
+3482427aea0a:2492:2492 [1] NCCL INFO === System : maxBw 16.0 totalBw 48.0 ===
+3482427aea0a:2492:2492 [1] NCCL INFO CPU/0-3 (1/2/-1)
+3482427aea0a:2492:2492 [1] NCCL INFO + PCI[5000.0] - NIC/0-0
+3482427aea0a:2492:2492 [1] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2492:2492 [1] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2492:2492 [1] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2492:2492 [1] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2492:2492 [1] NCCL INFO + PCI[48.0] - DEV/0-1000 (10de2bb110de204b)
+3482427aea0a:2492:2492 [1] NCCL INFO               + LOC[5000.0] - GPU/0-1000
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2492:2492 [1] NCCL INFO CPU/0-2 (1/2/-1)
+3482427aea0a:2492:2492 [1] NCCL INFO + PCI[48.0] - DEV/0-21000 (10de2bb110de204b)
+3482427aea0a:2492:2492 [1] NCCL INFO               + LOC[5000.0] - GPU/0-21000
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2492:2492 [1] NCCL INFO CPU/0-0 (1/2/-1)
+3482427aea0a:2492:2492 [1] NCCL INFO + PCI[48.0] - DEV/0-41000 (10de2bb110de204b)
+3482427aea0a:2492:2492 [1] NCCL INFO               + LOC[5000.0] - GPU/0-41000
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2492:2492 [1] NCCL INFO CPU/0-1 (1/2/-1)
+3482427aea0a:2492:2492 [1] NCCL INFO + PCI[48.0] - DEV/0-61000 (10de2bb110de204b)
+3482427aea0a:2492:2492 [1] NCCL INFO               + LOC[5000.0] - GPU/0-61000
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2492:2492 [1] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2492:2492 [1] NCCL INFO ==========================================
+3482427aea0a:2492:2492 [1] NCCL INFO GPU/0-1000 :GPU/0-1000 (0/5000.0/LOC) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (2/48.0/PHB) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (4/1.2/PHB) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (1/5000.0/LOC) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO GPU/0-21000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (0/5000.0/LOC) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (2/48.0/PHB) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (1/5000.0/LOC) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO GPU/0-41000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (0/5000.0/LOC) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (2/48.0/PHB) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (1/5000.0/LOC) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO GPU/0-61000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (0/5000.0/LOC) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (2/48.0/PHB) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (1/5000.0/LOC) 
+3482427aea0a:2492:2492 [1] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (3482427aea0a:2494:2494 [3] NCCL INFO ncclOsDlopen(libnccl-env.so) failed: libnccl-env.so: cannot open shared object file: No such file or directory
+3482427aea0a:2494:2494 [3] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+3482427aea0a:2494:2494 [3] NCCL INFO cudaDriverVersion 13000
+3482427aea0a:2494:2494 [3] NCCL INFO NCCL version 2.30.7+cuda13.3
+3482427aea0a:2494:2494 [3] NCCL INFO NCCL git version HEAD a5187fa2e
+3482427aea0a:2494:2494 [3] NCCL INFO ncclOsDlopen(libnccl-net.so) failed: libnccl-net.so: cannot open shared object file: No such file or directory
+3482427aea0a:2494:2494 [3] NCCL INFO NET/Plugin: Could not find: libnccl-net.so
+3482427aea0a:2494:2494 [3] NCCL INFO transport/net_ib/init.cc:526 (ncclIbInit) -> 3
+3482427aea0a:2494:2494 [3] NCCL INFO Failed to initialize NET plugin IB
+3482427aea0a:2494:2494 [3] NCCL INFO NET/Socket : Using [0]eth0:172.17.0.3<0>
+3482427aea0a:2494:2494 [3] NCCL INFO Initialized NET plugin Socket
+3482427aea0a:2494:2494 [3] NCCL INFO Assigned NET plugin Socket to comm
+3482427aea0a:2494:2494 [3] NCCL INFO ncclOsDlopen(libnccl-rma.so) failed: libnccl-rma.so: cannot open shared object file: No such file or directory
+3482427aea0a:2494:2494 [3] NCCL INFO RMA/Plugin: Could not find: libnccl-rma.so
+3482427aea0a:2494:2494 [3] NCCL INFO RMA/Plugin: Failed to load external plugin libnccl-rma.so, dlHandle: (nil), ncclRma: (nil)
+
+[2026-09-05 20:42:56] 3482427aea0a:2494:2494 [3] misc/ibvwrap.cc:185 (wrap_ibv_alloc_pd) NCCL WARN lib wrapper not initialized.
+3482427aea0a:2494:2494 [3] NCCL INFO transport/net_ib/gdr.cc:55 (ibDmaBufSupportInitOnce) -> 3
+3482427aea0a:2494:2494 [3] NCCL INFO RMA/Plugin: Failed to initialize any plugin
+3482427aea0a:2494:2494 [3] NCCL INFO ncclOsDlopen(libnccl-gin.so) failed: libnccl-gin.so: cannot open shared object file: No such file or directory
+3482427aea0a:2494:2494 [3] NCCL INFO GIN/Plugin: Could not find: libnccl-gin.so
+3482427aea0a:2494:2494 [3] NCCL INFO GIN/Plugin: Failed to load external plugin libnccl-gin.so, dlHandle: (nil), ncclGin: (nil)
+3482427aea0a:2494:2494 [3] NCCL INFO GIN/Plugin: Failed to initialize any GIN plugin
+3482427aea0a:2494:2494 [3] NCCL INFO Using network Socket
+3482427aea0a:2494:2494 [3] NCCL INFO Loaded NVML from libnvidia-ml.so.1
+3482427aea0a:2494:2494 [3] NCCL INFO [Rank 3] ncclCommInitRankConfig comm 0x2fb65130 rank 3 nranks 4 cudaDev 3 nvmlDev 3 busId 61000 commId 0x38b5b197d8b1d4f4 - Init START
+3482427aea0a:2494:2494 [3] NCCL INFO RAS client listening socket at ::1<28028>
+3482427aea0a:2494:2494 [3] NCCL INFO NCCL_P2P_LEVEL set by environment to PHB
+3482427aea0a:2494:2494 [3] NCCL INFO TOPO/NET : Importing network plugins to topology
+3482427aea0a:2494:2494 [3] NCCL INFO ncclTopoPopulateNics : Filled eth0 in topo with pciPath=(null) net=1 gin=(null) rma=(null) keep=1 coll=(null) rail=-1 plane=-1
+3482427aea0a:2494:2494 [3] NCCL INFO === System : maxBw 16.0 totalBw 48.0 ===
+3482427aea0a:2494:2494 [3] NCCL INFO CPU/0-3 (1/2/-1)
+3482427aea0a:2494:2494 [3] NCCL INFO + PCI[5000.0] - NIC/0-0
+3482427aea0a:2494:2494 [3] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2494:2494 [3] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2494:2494 [3] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2494:2494 [3] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2494:2494 [3] NCCL INFO + PCI[48.0] - DEV/0-1000 (10de2bb110de204b)
+3482427aea0a:2494:2494 [3] NCCL INFO               + LOC[5000.0] - GPU/0-1000
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2494:2494 [3] NCCL INFO CPU/0-2 (1/2/-1)
+3482427aea0a:2494:2494 [3] NCCL INFO + PCI[48.0] - DEV/0-21000 (10de2bb110de204b)
+3482427aea0a:2494:2494 [3] NCCL INFO               + LOC[5000.0] - GPU/0-21000
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2494:2494 [3] NCCL INFO CPU/0-0 (1/2/-1)
+3482427aea0a:2494:2494 [3] NCCL INFO + PCI[48.0] - DEV/0-41000 (10de2bb110de204b)
+3482427aea0a:2494:2494 [3] NCCL INFO               + LOC[5000.0] - GPU/0-41000
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2494:2494 [3] NCCL INFO CPU/0-1 (1/2/-1)
+3482427aea0a:2494:2494 [3] NCCL INFO + PCI[48.0] - DEV/0-61000 (10de2bb110de204b)
+3482427aea0a:2494:2494 [3] NCCL INFO               + LOC[5000.0] - GPU/0-61000
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2494:2494 [3] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2494:2494 [3] NCCL INFO ==========================================
+3482427aea0a:2494:2494 [3] NCCL INFO GPU/0-1000 :GPU/0-1000 (0/5000.0/LOC) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (2/48.0/PHB) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (4/1.2/PHB) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (1/5000.0/LOC) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO GPU/0-21000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (0/5000.0/LOC) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (2/48.0/PHB) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (1/5000.0/LOC) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO GPU/0-41000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (0/5000.0/LOC) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (2/48.0/PHB) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (1/5000.0/LOC) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO GPU/0-61000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (0/5000.0/LOC) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (2/48.0/PHB) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (1/5000.0/LOC) 
+3482427aea0a:2494:2494 [3] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (3482427aea0a:2491:2491 [0] NCCL INFO ncclOsDlopen(libnccl-env.so) failed: libnccl-env.so: cannot open shared object file: No such file or directory
+3482427aea0a:2491:2491 [0] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+3482427aea0a:2491:2491 [0] NCCL INFO cudaDriverVersion 13000
+3482427aea0a:2491:2491 [0] NCCL INFO NCCL version 2.30.7+cuda13.3
+3482427aea0a:2491:2491 [0] NCCL INFO NCCL git version HEAD a5187fa2e
+3482427aea0a:2491:2491 [0] NCCL INFO ncclOsDlopen(libnccl-net.so) failed: libnccl-net.so: cannot open shared object file: No such file or directory
+3482427aea0a:2491:2491 [0] NCCL INFO NET/Plugin: Could not find: libnccl-net.so
+3482427aea0a:2491:2491 [0] NCCL INFO transport/net_ib/init.cc:526 (ncclIbInit) -> 3
+3482427aea0a:2491:2491 [0] NCCL INFO Failed to initialize NET plugin IB
+3482427aea0a:2491:2491 [0] NCCL INFO NET/Socket : Using [0]eth0:172.17.0.3<0>
+3482427aea0a:2491:2491 [0] NCCL INFO Initialized NET plugin Socket
+3482427aea0a:2491:2491 [0] NCCL INFO Assigned NET plugin Socket to comm
+3482427aea0a:2491:2491 [0] NCCL INFO ncclOsDlopen(libnccl-rma.so) failed: libnccl-rma.so: cannot open shared object file: No such file or directory
+3482427aea0a:2491:2491 [0] NCCL INFO RMA/Plugin: Could not find: libnccl-rma.so
+3482427aea0a:2491:2491 [0] NCCL INFO RMA/Plugin: Failed to load external plugin libnccl-rma.so, dlHandle: (nil), ncclRma: (nil)
+
+[2026-09-05 20:42:56] 3482427aea0a:2491:2491 [0] misc/ibvwrap.cc:185 (wrap_ibv_alloc_pd) NCCL WARN lib wrapper not initialized.
+3482427aea0a:2491:2491 [0] NCCL INFO transport/net_ib/gdr.cc:55 (ibDmaBufSupportInitOnce) -> 3
+3482427aea0a:2491:2491 [0] NCCL INFO RMA/Plugin: Failed to initialize any plugin
+3482427aea0a:2491:2491 [0] NCCL INFO ncclOsDlopen(libnccl-gin.so) failed: libnccl-gin.so: cannot open shared object file: No such file or directory
+3482427aea0a:2491:2491 [0] NCCL INFO GIN/Plugin: Could not find: libnccl-gin.so
+3482427aea0a:2491:2491 [0] NCCL INFO GIN/Plugin: Failed to load external plugin libnccl-gin.so, dlHandle: (nil), ncclGin: (nil)
+3482427aea0a:2491:2491 [0] NCCL INFO GIN/Plugin: Failed to initialize any GIN plugin
+3482427aea0a:2491:2491 [0] NCCL INFO Using network Socket
+3482427aea0a:2491:2491 [0] NCCL INFO Loaded NVML from libnvidia-ml.so.1
+3482427aea0a:2491:2491 [0] NCCL INFO [Rank 0] ncclCommInitRankConfig comm 0x1e6cb4a0 rank 0 nranks 4 cudaDev 0 nvmlDev 0 busId 1000 commId 0x38b5b197d8b1d4f4 - Init START
+3482427aea0a:2491:2491 [0] NCCL INFO RAS client listening socket at ::1<28028>
+3482427aea0a:2491:2491 [0] NCCL INFO NCCL_P2P_LEVEL set by environment to PHB
+3482427aea0a:2491:2491 [0] NCCL INFO TOPO/NET : Importing network plugins to topology
+3482427aea0a:2491:2491 [0] NCCL INFO ncclTopoPopulateNics : Filled eth0 in topo with pciPath=(null) net=1 gin=(null) rma=(null) keep=1 coll=(null) rail=-1 plane=-1
+3482427aea0a:2491:2491 [0] NCCL INFO === System : maxBw 16.0 totalBw 48.0 ===
+3482427aea0a:2491:2491 [0] NCCL INFO CPU/0-3 (1/2/-1)
+3482427aea0a:2491:2491 [0] NCCL INFO + PCI[5000.0] - NIC/0-0
+3482427aea0a:2491:2491 [0] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2491:2491 [0] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2491:2491 [0] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2491:2491 [0] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2491:2491 [0] NCCL INFO + PCI[48.0] - DEV/0-1000 (10de2bb110de204b)
+3482427aea0a:2491:2491 [0] NCCL INFO               + LOC[5000.0] - GPU/0-1000
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2491:2491 [0] NCCL INFO CPU/0-2 (1/2/-1)
+3482427aea0a:2491:2491 [0] NCCL INFO + PCI[48.0] - DEV/0-21000 (10de2bb110de204b)
+3482427aea0a:2491:2491 [0] NCCL INFO               + LOC[5000.0] - GPU/0-21000
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2491:2491 [0] NCCL INFO CPU/0-0 (1/2/-1)
+3482427aea0a:2491:2491 [0] NCCL INFO + PCI[48.0] - DEV/0-41000 (10de2bb110de204b)
+3482427aea0a:2491:2491 [0] NCCL INFO               + LOC[5000.0] - GPU/0-41000
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2491:2491 [0] NCCL INFO CPU/0-1 (1/2/-1)
+3482427aea0a:2491:2491 [0] NCCL INFO + PCI[48.0] - DEV/0-61000 (10de2bb110de204b)
+3482427aea0a:2491:2491 [0] NCCL INFO               + LOC[5000.0] - GPU/0-61000
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2491:2491 [0] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2491:2491 [0] NCCL INFO ==========================================
+3482427aea0a:2491:2491 [0] NCCL INFO GPU/0-1000 :GPU/0-1000 (0/5000.0/LOC) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (2/48.0/PHB) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (4/1.2/PHB) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (1/5000.0/LOC) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO GPU/0-21000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (0/5000.0/LOC) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (2/48.0/PHB) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (1/5000.0/LOC) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO GPU/0-41000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (0/5000.0/LOC) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (2/48.0/PHB) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (1/5000.0/LOC) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO GPU/0-61000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (0/5000.0/LOC) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (2/48.0/PHB) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (1/5000.0/LOC) 
+3482427aea0a:2491:2491 [0] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (43482427aea0a:2493:2493 [2] NCCL INFO ncclOsDlopen(libnccl-env.so) failed: libnccl-env.so: cannot open shared object file: No such file or directory
+3482427aea0a:2493:2493 [2] NCCL INFO ENV/Plugin: Could not find: libnccl-env.so
+3482427aea0a:2493:2493 [2] NCCL INFO cudaDriverVersion 13000
+3482427aea0a:2493:2493 [2] NCCL INFO NCCL version 2.30.7+cuda13.3
+3482427aea0a:2493:2493 [2] NCCL INFO NCCL git version HEAD a5187fa2e
+3482427aea0a:2493:2493 [2] NCCL INFO ncclOsDlopen(libnccl-net.so) failed: libnccl-net.so: cannot open shared object file: No such file or directory
+3482427aea0a:2493:2493 [2] NCCL INFO NET/Plugin: Could not find: libnccl-net.so
+3482427aea0a:2493:2493 [2] NCCL INFO transport/net_ib/init.cc:526 (ncclIbInit) -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Failed to initialize NET plugin IB
+3482427aea0a:2493:2493 [2] NCCL INFO NET/Socket : Using [0]eth0:172.17.0.3<0>
+3482427aea0a:2493:2493 [2] NCCL INFO Initialized NET plugin Socket
+3482427aea0a:2493:2493 [2] NCCL INFO Assigned NET plugin Socket to comm
+3482427aea0a:2493:2493 [2] NCCL INFO ncclOsDlopen(libnccl-rma.so) failed: libnccl-rma.so: cannot open shared object file: No such file or directory
+3482427aea0a:2493:2493 [2] NCCL INFO RMA/Plugin: Could not find: libnccl-rma.so
+3482427aea0a:2493:2493 [2] NCCL INFO RMA/Plugin: Failed to load external plugin libnccl-rma.so, dlHandle: (nil), ncclRma: (nil)
+
+[2026-09-05 20:42:56] 3482427aea0a:2493:2493 [2] misc/ibvwrap.cc:185 (wrap_ibv_alloc_pd) NCCL WARN lib wrapper not initialized.
+3482427aea0a:2493:2493 [2] NCCL INFO transport/net_ib/gdr.cc:55 (ibDmaBufSupportInitOnce) -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO RMA/Plugin: Failed to initialize any plugin
+3482427aea0a:2493:2493 [2] NCCL INFO ncclOsDlopen(libnccl-gin.so) failed: libnccl-gin.so: cannot open shared object file: No such file or directory
+3482427aea0a:2493:2493 [2] NCCL INFO GIN/Plugin: Could not find: libnccl-gin.so
+3482427aea0a:2493:2493 [2] NCCL INFO GIN/Plugin: Failed to load external plugin libnccl-gin.so, dlHandle: (nil), ncclGin: (nil)
+3482427aea0a:2493:2493 [2] NCCL INFO GIN/Plugin: Failed to initialize any GIN plugin
+3482427aea0a:2493:2493 [2] NCCL INFO Using network Socket
+3482427aea0a:2493:2493 [2] NCCL INFO Loaded NVML from libnvidia-ml.so.1
+3482427aea0a:2493:2493 [2] NCCL INFO [Rank 2] ncclCommInitRankConfig comm 0x2ac6fa00 rank 2 nranks 4 cudaDev 2 nvmlDev 2 busId 41000 commId 0x38b5b197d8b1d4f4 - Init START
+3482427aea0a:2493:2493 [2] NCCL INFO RAS client listening socket at ::1<28028>
+3482427aea0a:2493:2493 [2] NCCL INFO NCCL_P2P_LEVEL set by environment to PHB
+3482427aea0a:2493:2493 [2] NCCL INFO TOPO/NET : Importing network plugins to topology
+3482427aea0a:2493:2493 [2] NCCL INFO ncclTopoPopulateNics : Filled eth0 in topo with pciPath=(null) net=1 gin=(null) rma=(null) keep=1 coll=(null) rail=-1 plane=-1
+3482427aea0a:2493:2493 [2] NCCL INFO === System : maxBw 16.0 totalBw 48.0 ===
+3482427aea0a:2493:2493 [2] NCCL INFO CPU/0-3 (1/2/-1)
+3482427aea0a:2493:2493 [2] NCCL INFO + PCI[5000.0] - NIC/0-0
+3482427aea0a:2493:2493 [2] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2493:2493 [2] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2493:2493 [2] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2493:2493 [2] NCCL INFO                 + NET[1.2] - NET/0-0 (0/0/0/1.250000)
+3482427aea0a:2493:2493 [2] NCCL INFO + PCI[48.0] - DEV/0-1000 (10de2bb110de204b)
+3482427aea0a:2493:2493 [2] NCCL INFO               + LOC[5000.0] - GPU/0-1000
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2493:2493 [2] NCCL INFO CPU/0-2 (1/2/-1)
+3482427aea0a:2493:2493 [2] NCCL INFO + PCI[48.0] - DEV/0-21000 (10de2bb110de204b)
+3482427aea0a:2493:2493 [2] NCCL INFO               + LOC[5000.0] - GPU/0-21000
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2493:2493 [2] NCCL INFO CPU/0-0 (1/2/-1)
+3482427aea0a:2493:2493 [2] NCCL INFO + PCI[48.0] - DEV/0-41000 (10de2bb110de204b)
+3482427aea0a:2493:2493 [2] NCCL INFO               + LOC[5000.0] - GPU/0-41000
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-1
+3482427aea0a:2493:2493 [2] NCCL INFO CPU/0-1 (1/2/-1)
+3482427aea0a:2493:2493 [2] NCCL INFO + PCI[48.0] - DEV/0-61000 (10de2bb110de204b)
+3482427aea0a:2493:2493 [2] NCCL INFO               + LOC[5000.0] - GPU/0-61000
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-3
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-2
+3482427aea0a:2493:2493 [2] NCCL INFO + SYS[16.0] - CPU/0-0
+3482427aea0a:2493:2493 [2] NCCL INFO ==========================================
+3482427aea0a:2493:2493 [2] NCCL INFO GPU/0-1000 :GPU/0-1000 (0/5000.0/LOC) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (2/48.0/PHB) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (4/1.2/PHB) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (1/5000.0/LOC) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO GPU/0-21000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (0/5000.0/LOC) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (2/48.0/PHB) CPU/0-0 (3/16.0/SYS) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (1/5000.0/LOC) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO GPU/0-41000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (0/5000.0/LOC) GPU/0-61000 (5/16.0/SYS) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (2/48.0/PHB) CPU/0-1 (3/16.0/SYS) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (1/5000.0/LOC) DEV/0-61000 (4/16.0/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO GPU/0-61000 :GPU/0-1000 (5/16.0/SYS) GPU/0-21000 (5/16.0/SYS) GPU/0-41000 (5/16.0/SYS) GPU/0-61000 (0/5000.0/LOC) CPU/0-3 (3/16.0/SYS) CPU/0-2 (3/16.0/SYS) CPU/0-0 (3/16.0/SYS) CPU/0-1 (2/48.0/PHB) NET/0-0 (5/1.2/SYS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (4/16.0/SYS) DEV/0-21000 (4/16.0/SYS) DEV/0-41000 (4/16.0/SYS) DEV/0-61000 (1/5000.0/LOC) 
+3482427aea0a:2493:2493 [2] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO NET/0-0 :GPU/0-1000 (4/1.2/PHB) GPU/0-21000 (5/1.2/SYS) GPU/0-41000 (5/1.2/SYS) GPU/0-61000 (5/1.2/SYS) CPU/0-3 (2/1.2/PHB) CPU/0-2 (3/1.2/SYS) CPU/0-0 (3/1.2/SYS) CPU/0-1 (3/1.2/SYS) NET/0-0 (0/5000.0/LOC) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) NET/0-0 (0/0.0/DIS) DEV/0-1000 (3/1.2/PHB) DEV/0-21000 (/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2491:2491 [0] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 0 is 72-95. (GPU affinity = 72-95 ; CPU affinity = 0-191).
+3482427aea0a:2491:2491 [0] NCCL INFO NVLS multicast support is not available on dev 0
+3482427aea0a:2491:2491 [0] NCCL INFO Could not find a path for pattern 4, falling back to simple order
+3482427aea0a:2491:2491 [0] NCCL INFO Pattern 4, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2491:2491 [0] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2491:2491 [0] NCCL INFO Could not find a path for pattern 1, falling back to simple order
+3482427aea0a:2491:2491 [0] NCCL INFO Pattern 1, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2491:2491 [0] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2491:2491 [0] NCCL INFO Rank 0: 1 Net devices
+3482427aea0a:2491:2491 [0] NCCL INFO Rank 0: 0 CollNet devices
+3482427aea0a:2491:2491 [0] NCCL INFO Local Net device counts across ranks: min 1 max 1
+3482427aea0a:2491:2491 [0] NCCL INFO Local CollNet device counts across ranks: min 0 max 0
+3482427aea0a:2491:2491 [0] NCCL INFO comm 0x1e6cb4a0 rank 0 nRanks 4 nNodes 1 localRanks 4 localRank 0 MNNVL 0
+3482427aea0a:2491:2491 [0] NCCL INFO Tree 0 : -1 -> 0 -> 1/-1/-1
+3482427aea0a:2491:2491 [0] NCCL INFO Tree 1 : -1 -> 0 -> 1/-1/-1
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 00/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 01/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 02/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 03/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 04/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 05/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 06/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 07/08 : 0 1 2 3
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 00 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 01 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 02 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 03 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 04 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 05 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 06 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Ring 07 : 3 -> 0 -> 1
+3482427aea0a:2491:2491 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1 [1] 1/-1/-1->0->-1 [2] 1/-1/-1->0->-1 [3] 1/-1/-1->0->-1 [4] 1/-1/-1->0->-1 [5] 1/-1/-1->0->-1 [6] 1/-1/-1->0->-1 [7] 1/-1/-1->0->-1
+3482427aea0a:2491:2491 [0] NCCL INFO P2P Chunksize set to 131072
+3482427aea0a:2491:2491 [0] NCCL INFO ncclOsDlopen(libnccl-profiler.so) failed: libnccl-profiler.so: cannot open shared object file: No such file or directory
+3482427aea0a:2491:2491 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+3482427aea0a:2491:2491 [0] NCCL INFO Check P2P Type isAllDirectP2p 0 directMode 0 isAllCudaP2p 1
+3482427aea0a:2491:2491 [0] NCCL INFO ncclP2pSchedule: group size used is 4
+3482427aea0a:2491:2794 [0] NCCL INFO [Proxy Service] Device 0 CPU core 91
+3482427aea0a:2491:2797 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 82
+3482427aea0a:2491:2794 [0] NCCL INFO proxy listening socket at 172.17.0.3<49707>
+3482427aea0a:2491:2491 [0] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+3482427aea0a:2491:2491 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+3482427aea0a:2491:2491 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+3482427aea0a:2491:2491 [0] NCCL INFO 8 coll channels, 8 collnet channels, 0 nvls channels, 8 p2p channels, 2 p2p channels per peer
+3482427aea0a:2491:2491 [0] NCCL INFO CC Off, workFifoBytes 1048576
+3482427aea0a:2491:2491 [0] NCCL INFO ncclCommInitRankConfig comm 0x1e6cb4a0 rank 0 nranks 4 cudaDev 0 nvmlDev 0 busId 1000 commId 0x38b5b197d8b1d4f4 - Init COMPLETE
+3482427aea0a:2491:2491 [0] NCCL INFO Init timings - ncclCommInitRankConfig: rank 0 nra4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2492:2492 [1] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 1 is 48-71. (GPU affinity = 48-71 ; CPU affinity = 0-191).
+3482427aea0a:2492:2492 [1] NCCL INFO NVLS multicast support is not available on dev 1
+3482427aea0a:2492:2492 [1] NCCL INFO Could not find a path for pattern 4, falling back to simple order
+3482427aea0a:2492:2492 [1] NCCL INFO Pattern 4, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2492:2492 [1] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2492:2492 [1] NCCL INFO Could not find a path for pattern 1, falling back to simple order
+3482427aea0a:2492:2492 [1] NCCL INFO Pattern 1, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2492:2492 [1] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2492:2492 [1] NCCL INFO Rank 1: 1 Net devices
+3482427aea0a:2492:2492 [1] NCCL INFO Rank 1: 0 CollNet devices
+3482427aea0a:2492:2492 [1] NCCL INFO comm 0x2a81a320 rank 1 nRanks 4 nNodes 1 localRanks 4 localRank 1 MNNVL 0
+3482427aea0a:2492:2492 [1] NCCL INFO Tree 0 : 0 -> 1 -> 2/-1/-1
+3482427aea0a:2492:2492 [1] NCCL INFO Tree 1 : 0 -> 1 -> 2/-1/-1
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 00 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 01 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 02 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 03 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 04 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 05 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 06 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Ring 07 : 0 -> 1 -> 2
+3482427aea0a:2492:2492 [1] NCCL INFO Trees [0] 2/-1/-1->1->0 [1] 2/-1/-1->1->0 [2] 2/-1/-1->1->0 [3] 2/-1/-1->1->0 [4] 2/-1/-1->1->0 [5] 2/-1/-1->1->0 [6] 2/-1/-1->1->0 [7] 2/-1/-1->1->0
+3482427aea0a:2492:2492 [1] NCCL INFO P2P Chunksize set to 131072
+3482427aea0a:2492:2492 [1] NCCL INFO ncclOsDlopen(libnccl-profiler.so) failed: libnccl-profiler.so: cannot open shared object file: No such file or directory
+3482427aea0a:2492:2492 [1] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+3482427aea0a:2492:2492 [1] NCCL INFO Check P2P Type isAllDirectP2p 0 directMode 0 isAllCudaP2p 1
+3482427aea0a:2492:2492 [1] NCCL INFO ncclP2pSchedule: group size used is 4
+3482427aea0a:2492:2793 [0] NCCL INFO [Proxy Service] Device 1 CPU core 64
+3482427aea0a:2492:2796 [0] NCCL INFO [Proxy Service UDS] Device 1 CPU core 58
+3482427aea0a:2492:2793 [1] NCCL INFO proxy listening socket at 172.17.0.3<54629>
+3482427aea0a:2492:2492 [1] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+3482427aea0a:2492:2492 [1] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+3482427aea0a:2492:2492 [1] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+3482427aea0a:2492:2492 [1] NCCL INFO 8 coll channels, 8 collnet channels, 0 nvls channels, 8 p2p channels, 2 p2p channels per peer
+3482427aea0a:2492:2492 [1] NCCL INFO ncclCommInitRankConfig comm 0x2a81a320 rank 1 nranks 4 cudaDev 1 nvmlDev 1 busId 21000 commId 0x38b5b197d8b1d4f4 - Init COMPLETE
+3482427aea0a:2492:2492 [1] NCCL INFO Init timings - ncclCommInitRankConfig: rank 1 nranks 4 total 0.44 (kernels 0.24, alloc 0.09, bootstrap 0.05, allgathers 0.00, topo 0.03, graphs 0.00, connections 0.01, rest 0.00)
+3482427aea0a:2492:2492 [1] NCCL INFO Symmetric VA size=96GB
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 00 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 01 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 02 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 03 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 04 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 05 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Channel 06 : 1[1] -> 2[2] via SHM/direct
+348244/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2494:2494 [3] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 3 is 24-47. (GPU affinity = 24-47 ; CPU affinity = 0-191).
+3482427aea0a:2494:2494 [3] NCCL INFO NVLS multicast support is not available on dev 3
+3482427aea0a:2494:2494 [3] NCCL INFO Could not find a path for pattern 4, falling back to simple order
+3482427aea0a:2494:2494 [3] NCCL INFO Pattern 4, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2494:2494 [3] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2494:2494 [3] NCCL INFO Could not find a path for pattern 1, falling back to simple order
+3482427aea0a:2494:2494 [3] NCCL INFO Pattern 1, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2494:2494 [3] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2494:2494 [3] NCCL INFO Rank 3: 1 Net devices
+3482427aea0a:2494:2494 [3] NCCL INFO Rank 3: 0 CollNet devices
+3482427aea0a:2494:2494 [3] NCCL INFO comm 0x2fb65130 rank 3 nRanks 4 nNodes 1 localRanks 4 localRank 3 MNNVL 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 00 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 01 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 02 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 03 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 04 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 05 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 06 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Ring 07 : 2 -> 3 -> 0
+3482427aea0a:2494:2494 [3] NCCL INFO Trees [0] -1/-1/-1->3->2 [1] -1/-1/-1->3->2 [2] -1/-1/-1->3->2 [3] -1/-1/-1->3->2 [4] -1/-1/-1->3->2 [5] -1/-1/-1->3->2 [6] -1/-1/-1->3->2 [7] -1/-1/-1->3->2
+3482427aea0a:2494:2494 [3] NCCL INFO P2P Chunksize set to 131072
+3482427aea0a:2494:2494 [3] NCCL INFO ncclOsDlopen(libnccl-profiler.so) failed: libnccl-profiler.so: cannot open shared object file: No such file or directory
+3482427aea0a:2494:2494 [3] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+3482427aea0a:2494:2494 [3] NCCL INFO Check P2P Type isAllDirectP2p 0 directMode 0 isAllCudaP2p 1
+3482427aea0a:2494:2494 [3] NCCL INFO ncclP2pSchedule: group size used is 4
+3482427aea0a:2494:2791 [0] NCCL INFO [Proxy Service] Device 3 CPU core 39
+3482427aea0a:2494:2792 [0] NCCL INFO [Proxy Service UDS] Device 3 CPU core 45
+3482427aea0a:2494:2791 [3] NCCL INFO proxy listening socket at 172.17.0.3<33575>
+3482427aea0a:2494:2494 [3] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+3482427aea0a:2494:2494 [3] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+3482427aea0a:2494:2494 [3] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+3482427aea0a:2494:2494 [3] NCCL INFO 8 coll channels, 8 collnet channels, 0 nvls channels, 8 p2p channels, 2 p2p channels per peer
+3482427aea0a:2494:2494 [3] NCCL INFO ncclCommInitRankConfig comm 0x2fb65130 rank 3 nranks 4 cudaDev 3 nvmlDev 3 busId 61000 commId 0x38b5b197d8b1d4f4 - Init COMPLETE
+3482427aea0a:2494:2494 [3] NCCL INFO Init timings - ncclCommInitRankConfig: rank 3 nranks 4 total 0.44 (kernels 0.26, alloc 0.12, bootstrap 0.00, allgathers 0.00, topo 0.03, graphs 0.00, connections 0.01, rest 0.00)
+3482427aea0a:2494:2494 [3] NCCL INFO Symmetric VA size=96GB
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 00 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 01 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 02 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 03 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 04 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 05 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 06 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Channel 07 : 3[3] -> 0[0] via SHM/direct
+3482427aea0a:2494:2494 [3] NCCL INFO Connected 4/1.2/SYS) DEV/0-41000 (4/1.2/SYS) DEV/0-61000 (4/1.2/SYS) 
+3482427aea0a:2493:2493 [2] NCCL INFO ncclTopoGetCpuAffinity: Affinity for GPU 2 is 0-23. (GPU affinity = 0-23 ; CPU affinity = 0-191).
+3482427aea0a:2493:2493 [2] NCCL INFO NVLS multicast support is not available on dev 2
+3482427aea0a:2493:2493 [2] NCCL INFO Could not find a path for pattern 4, falling back to simple order
+3482427aea0a:2493:2493 [2] NCCL INFO Pattern 4, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2493:2493 [2] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2493:2493 [2] NCCL INFO Could not find a path for pattern 1, falling back to simple order
+3482427aea0a:2493:2493 [2] NCCL INFO Pattern 1, crossNic 0, nChannels 1, bw 0.100000/0.100000, type SYS/SYS, sameChannels 1
+3482427aea0a:2493:2493 [2] NCCL INFO  0 : GPU/0-1000 GPU/0-21000 GPU/0-41000 GPU/0-61000
+3482427aea0a:2493:2493 [2] NCCL INFO Rank 2: 1 Net devices
+3482427aea0a:2493:2493 [2] NCCL INFO Rank 2: 0 CollNet devices
+3482427aea0a:2493:2493 [2] NCCL INFO comm 0x2ac6fa00 rank 2 nRanks 4 nNodes 1 localRanks 4 localRank 2 MNNVL 0
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 00 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 01 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 02 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 03 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 04 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 05 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 06 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Ring 07 : 1 -> 2 -> 3
+3482427aea0a:2493:2493 [2] NCCL INFO Trees [0] 3/-1/-1->2->1 [1] 3/-1/-1->2->1 [2] 3/-1/-1->2->1 [3] 3/-1/-1->2->1 [4] 3/-1/-1->2->1 [5] 3/-1/-1->2->1 [6] 3/-1/-1->2->1 [7] 3/-1/-1->2->1
+3482427aea0a:2493:2493 [2] NCCL INFO P2P Chunksize set to 131072
+3482427aea0a:2493:2493 [2] NCCL INFO ncclOsDlopen(libnccl-profiler.so) failed: libnccl-profiler.so: cannot open shared object file: No such file or directory
+3482427aea0a:2493:2493 [2] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so
+3482427aea0a:2493:2493 [2] NCCL INFO Check P2P Type isAllDirectP2p 0 directMode 0 isAllCudaP2p 1
+3482427aea0a:2493:2493 [2] NCCL INFO ncclP2pSchedule: group size used is 4
+3482427aea0a:2493:2795 [0] NCCL INFO [Proxy Service] Device 2 CPU core 22
+3482427aea0a:2493:2798 [0] NCCL INFO [Proxy Service UDS] Device 2 CPU core 10
+3482427aea0a:2493:2795 [2] NCCL INFO proxy listening socket at 172.17.0.3<50175>
+3482427aea0a:2493:2493 [2] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+3482427aea0a:2493:2493 [2] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+3482427aea0a:2493:2493 [2] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+3482427aea0a:2493:2493 [2] NCCL INFO 8 coll channels, 8 collnet channels, 0 nvls channels, 8 p2p channels, 2 p2p channels per peer
+3482427aea0a:2493:2493 [2] NCCL INFO ncclCommInitRankConfig comm 0x2ac6fa00 rank 2 nranks 4 cudaDev 2 nvmlDev 2 busId 41000 commId 0x38b5b197d8b1d4f4 - Init COMPLETE
+3482427aea0a:2493:2493 [2] NCCL INFO Init timings - ncclCommInitRankConfig: rank 2 nranks 4 total 0.44 (kernels 0.24, alloc 0.10, bootstrap 0.04, allgathers 0.00, topo 0.04, graphs 0.00, connections 0.01, rest 0.00)
+3482427aea0a:2493:2493 [2] NCCL INFO Symmetric VA size=96GB
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 00 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 01 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 02 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 03 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 04 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 05 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 06 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Channel 07 : 2[2] -> 3[3] via SHM/direct
+3482427aea0a:2493:2493 [2] NCCL INFO Connected all rings,nks 4 total 0.44 (kernels 0.27, alloc 0.05, bootstrap 0.06, allgathers 0.00, topo 0.04, graphs 0.00, connections 0.01, rest 0.00)
+3482427aea0a:2491:2491 [0] NCCL INFO Symmetric VA size=96GB
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 00 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 01 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 02 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 03 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 04 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 05 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 06 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Channel 07 : 0[0] -> 1[1] via SHM/direct
+3482427aea0a:2491:2491 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+ use ring PXN 0 GDR 1
+all rings, use ring PXN 0 GDR 1
+27aea0a:2492:2492 [1] NCCL INFO Channel 07 : 1[1] -> 2[2] via SHM/direct
+3482427aea0a:2492:2492 [1] NCCL INFO Connected all rings, use ring PXN 0 GDR 1

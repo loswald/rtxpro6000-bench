@@ -70,13 +70,11 @@ arm(){ # tag seqs [extra...]
     $CLEAN python3 "$B/quality20.py" m http://127.0.0.1:8000 "$P/${tag}_quality20.json" --mode chat --max-tokens 1024 2>&1 | tail -1
   fi
 }
-SAFE="${SAFE_FLAGS:---max-num-seqs 512 --max-num-batched-tokens 16384}"
-S=$(echo "$SAFE" | grep -oE "max-num-seqs [0-9]+" | grep -oE "[0-9]+"); S=${S:-512}
-BASE=$(echo "$SAFE" | sed -E "s/--max-num-seqs [0-9]+//")
-log "===== GLM-5.3-Flash throughput levers on the quality-safe layout: $SAFE ====="
-arm glm53f_safe_cg     "$S" $BASE --compilation-config '{"cudagraph_mode":"FULL_AND_PIECEWISE"}'
-arm glm53f_safe_ssm16  $(( S * 2 )) $BASE --mamba-ssm-cache-dtype bfloat16
-arm glm53f_safe_mb32k  "$S" $BASE --max-num-batched-tokens 32768
-arm glm53f_safe_kvfp8  "$S" $BASE --kv-cache-dtype fp8
+DP="--tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel"
+log "===== GLM-5.3-Flash at TP2: the DGX Spark recipes serve TP2 with --enforce-eager and Marlin MoE; ours degenerated with CUDA graphs and the Triton MoE. One change per arm; the 20-item probe is the verdict. ====="
+arm glm53f_dp2_eager     384 $DP --enforce-eager
+arm glm53f_dp2_marlin    384 $DP --moe-backend marlin
+arm glm53f_dp2_eagermarlin 384 $DP --enforce-eager --moe-backend marlin
+arm glm53f_tp2x2_noep    384 --tensor-parallel-size 2 --data-parallel-size 2
 log "GLMPERF5 DONE"
 kill_all

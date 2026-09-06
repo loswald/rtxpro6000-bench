@@ -17,7 +17,9 @@ or_glm_zai|z-ai/glm-5.3-flash|Z.AI|--temperature 0.95 --top-p 0.95 --extra-body 
 or_glm_deepinfra|z-ai/glm-5.3-flash|DeepInfra|--temperature 0.95 --top-p 0.95 --extra-body {\"min_p\":0.0}
 or_q27_darkbloom|qwen/qwen3.8-27b|Darkbloom|--temperature 1.0 --top-p 0.95 --extra-body {\"top_k\":20,\"min_p\":0.0,\"presence_penalty\":0.0}
 or_q27_parasail|qwen/qwen3.8-27b|Parasail|--temperature 1.0 --top-p 0.95 --extra-body {\"top_k\":20,\"min_p\":0.0,\"presence_penalty\":0.0}
-or_ds_deepinfra|deepseek/deepseek-v4-flash-0731|DeepInfra|--temperature 1.0 --top-p 0.95"
+or_ds_deepinfra|deepseek/deepseek-v4-flash-0731|DeepInfra|--temperature 1.0 --top-p 0.95
+or_ds_deepseek_long|deepseek/deepseek-v4-flash-0731|DeepSeek|--temperature 1.0 --top-p 0.95
+or_glm_zai_long|z-ai/glm-5.3-flash|Z.AI|--temperature 0.95 --top-p 0.95 --extra-body {\"min_p\":0.0}"
 want="${*:-or_ds_deepseek or_glm_zai or_ds_baidu or_ds_relace or_glm_deepinfra}"
 for w in $want; do
   line=$(printf '%s\n' "$RUNS" | grep "^$w|") || { log "unknown $w"; continue; }
@@ -27,11 +29,13 @@ for w in $want; do
   base=$(printf '%s' "$samp" | sed -n 's/.*--extra-body \({[^}]*}\).*/\1/p'); [ -z "$base" ] && base='{}'
   samp_nobody=$(printf '%s' "$samp" | sed 's/--extra-body {[^}]*}//')
   body=$(python3 -c "import json,sys; d=json.loads(sys.argv[1]); d['provider']={'order':[sys.argv[2]],'allow_fallbacks':False}; print(json.dumps(d,separators=(',',':')))" "$base" "$prov")
-  log "$tag: $slug pinned to $prov"
+  caps="$CAPS"; maxtok=32768
+  case "$tag" in *_long) caps="math=65536,code=40960,knowledge=40960,ifeval=32768,tools=16384,longctx=12288"; maxtok=65536;; esac
+  log "$tag: $slug pinned to $prov (max tokens $maxtok)"
   # shellcheck disable=SC2086
   env -u PYTHONHOME -u PYTHONPATH python3 "$B/evalsuite/run_eval.py" --tag "$tag" --base-urls https://openrouter.ai/api --model "$slug" \
     --out "$OUT" --concurrency "${OR_CONC:-24}" --time-budget "${OR_BUDGET:-2700}" --reasoning --request-timeout 3600 \
-    --max-tokens 32768 --max-tokens-family "$CAPS" $samp_nobody --extra-body "$body" > "$OUT/$tag.log" 2>&1
+    --max-tokens "$maxtok" --max-tokens-family "$caps" $samp_nobody --extra-body "$body" > "$OUT/$tag.log" 2>&1
   python3 -c "import json; d=json.load(open('$OUT/$tag.json')); a=d['aggregate']; print('  ', '$tag', 'n', a.get('n_scored'), 'acc', a.get('acc_micro'), 'errors', a.get('n_error'), 'partial', d.get('partial'))" 2>/dev/null || log "  $tag: no result file"
 done
 log "ORPIN DONE"

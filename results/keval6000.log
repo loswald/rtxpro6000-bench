@@ -1,0 +1,192 @@
+[13:47:38] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[13:47:38] ########## q27_nvfp4 (17G, tp=1 x4) : b12x:- ##########
+[13:51:44]     v lin=b12x moe=- healthy 240s | GPU KV cache size: 1,768,727 tokens
+      kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_b12x--_quality20.json
+    eval: 2026-09-04T14:06:41Z     mmlu_pro_hard    acc=0.800 n=40/40 ci95=[0.652,0.895]
+    eval: 2026-09-04T14:06:41Z     simpleqa         acc=0.067 n=30/30 ci95=[0.018,0.213]
+    eval: 2026-09-04T14:06:41Z   ifeval     acc=0.867 n=60/60 ci95=[0.758,0.931] out_tok=3207.7 trunc=0.0667 err=0 
+    eval: 2026-09-04T14:06:41Z     triple           acc=0.875 n=24/24 ci95=[0.690,0.957]
+    eval: 2026-09-04T14:06:41Z     double           acc=0.792 n=24/24 ci95=[0.595,0.908]
+    eval: 2026-09-04T14:06:41Z     single           acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-04T14:06:41Z   aggregate  acc_micro=0.747 acc_macro=0.763 n=403/403 ci95=[0.7023, 0.7869] requests=403 retries=0 out_tok/s=2293.7
+    eval: 2026-09-04T14:06:41Z wrote /workspace/results/eval/q27_nvfp4_b12x--.json, /workspace/results/eval/q27_nvfp4_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[14:06:47] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[14:11:04]     v lin=b12x moe=- healthy 250s | GPU KV cache size: 1,474,560 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_fp8_b12x--_quality20.json
+    eval: 2026-09-04T14:33:48Z     mmlu_pro_hard    acc=0.800 n=40/40 ci95=[0.652,0.895]
+    eval: 2026-09-04T14:33:48Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+    eval: 2026-09-04T14:33:48Z   ifeval     acc=0.917 n=60/60 ci95=[0.819,0.964] out_tok=2897.3 trunc=0.0 err=0 
+    eval: 2026-09-04T14:33:48Z     triple           acc=0.917 n=24/24 ci95=[0.742,0.977]
+    eval: 2026-09-04T14:33:48Z     double           acc=0.875 n=24/24 ci95=[0.690,0.957]
+    eval: 2026-09-04T14:33:48Z     single           acc=1.000 n=12/12 ci95=[0.757,1.000]
+    eval: 2026-09-04T14:33:48Z   aggregate  acc_micro=0.787 acc_macro=0.8026 n=385/403 ci95=[0.7434, 0.825] requests=429 retries=27 out_tok/s=1112.5
+    eval: 2026-09-04T14:33:48Z wrote /workspace/results/eval/q27_fp8_b12x--.json, /workspace/results/eval/q27_fp8_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 1
+[14:33:54] SKIP hy3 (weights absent or incomplete)
+[14:33:54] ########## nemo3s (75G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[14:37:31]     v lin=b12x moe=flashinfer_cutlass healthy 210s | GPU KV cache size: 1,832,960 tokens
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+      kernel: Selected B12xTensorFP8ScaledMMLinearKernel
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/nemo3s_b12x-flashinfer_cutlass_quality20.json
+    eval: 2026-09-04T15:00:00Z     mmlu_pro_hard    acc=0.825 n=40/40 ci95=[0.680,0.912]
+    eval: 2026-09-04T15:00:00Z     simpleqa         acc=0.067 n=30/30 ci95=[0.018,0.213]
+    eval: 2026-09-04T15:00:00Z   ifeval     acc=0.800 n=60/60 ci95=[0.682,0.882] out_tok=2544.6 trunc=0.0333 err=0 
+    eval: 2026-09-04T15:00:00Z     triple           acc=0.792 n=24/24 ci95=[0.595,0.908]
+    eval: 2026-09-04T15:00:00Z     double           acc=0.750 n=24/24 ci95=[0.551,0.880]
+    eval: 2026-09-04T15:00:00Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T15:00:00Z   aggregate  acc_micro=0.776 acc_macro=0.7793 n=379/403 ci95=[0.7311, 0.8148] requests=449 retries=46 out_tok/s=738.7
+    eval: 2026-09-04T15:00:00Z wrote /workspace/results/eval/nemo3s_b12x-flashinfer_cutlass.json, /workspace/results/eval/nemo3s_b12x-flashinfer_cutlass.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 1
+[15:00:05] ########## laguna (33G, tp=2 x2) : -:flashinfer_cutlass ##########
+[15:03:22]     v lin=- moe=flashinfer_cutlass healthy 190s | GPU KV cache size: 1,883,301 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+      kernel: Using FlashInfer CUTLASS Unquantized MoE backend out of potential backends: ['FlashInfer TRTLLM'
+quality20[chat]: ok=2 degenerate=0 wrong=18 error=0 -> /workspace/results/probe/laguna_--flashinfer_cutlass_quality20.json
+    eval: 2026-09-04T15:23:50Z     mmlu_pro_hard    acc=0.000 n=19/40 ci95=[0.000,0.168]
+    eval: 2026-09-04T15:23:50Z     simpleqa         acc=0.000 n=18/30 ci95=[0.000,0.176]
+    eval: 2026-09-04T15:23:50Z   ifeval     acc=0.000 n=41/60 ci95=[0.000,0.086] out_tok=12288.0 trunc=1.0 err=0 skipped=19
+    eval: 2026-09-04T15:23:50Z     triple           acc=0.000 n=14/24 ci95=[0.000,0.215]
+    eval: 2026-09-04T15:23:50Z     double           acc=0.000 n=15/24 ci95=[0.000,0.204]
+    eval: 2026-09-04T15:23:50Z     single           acc=0.000 n=12/12 ci95=[0.000,0.242]
+    eval: 2026-09-04T15:23:50Z   aggregate  acc_micro=0.000 acc_macro=0.0 n=244/403 ci95=[0.0, 0.0155] requests=244 retries=0 out_tok/s=2546.0
+    eval: 2026-09-04T15:23:50Z wrote /workspace/results/eval/laguna_--flashinfer_cutlass.json, /workspace/results/eval/laguna_--flashinfer_cutlass.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 1
+[15:23:56] ########## nemo35 (21G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[15:24:46]     x lin=b12x moe=flashinfer_cutlass : ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not sup
+[15:24:52]   nemo35: NO combination served
+[15:24:52] ########## muse30 (56G, tp=1 x4) : -:- ##########
+[15:27:48]     v lin=- moe=- healthy 170s | GPU KV cache size: 2,056,050 tokens
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/muse30_---_quality20.json
+[17:15:33] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[17:15:33] ########## q27_nvfp4 (17G, tp=1 x4) : b12x:- ##########
+[17:15:33]   q27_nvfp4_b12x-- already evaluated
+[17:15:38] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[17:15:38]   q27_fp8_b12x-- already evaluated
+[17:15:44] SKIP hy3 (weights absent or incomplete)
+[17:15:44] ########## nemo3s (75G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[17:15:44]   nemo3s_b12x-flashinfer_cutlass already evaluated
+[17:15:49] ########## laguna (33G, tp=2 x2) : -:flashinfer_cutlass ##########
+[17:15:49]   laguna_--flashinfer_cutlass already evaluated
+[17:15:54] ########## nemo35 (21G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[17:16:45]     x lin=b12x moe=flashinfer_cutlass : ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not sup
+[17:16:50]   nemo35: NO combination served
+[17:16:50] ########## muse30 (56G, tp=1 x4) : -:- ##########
+[17:16:50]   muse30_--- already evaluated
+[17:16:56] ########## gptoss20 (39G, tp=1 x4) : -:flashinfer_cutlass ##########
+[17:18:52]     v lin=- moe=flashinfer_cutlass healthy 110s | GPU KV cache size: 4,473,531 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS_MXFP4_MXFP8' Mxfp4 MoE backend.
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/gptoss20_--flashinfer_cutlass_quality20.json
+    eval: 2026-09-04T17:25:00Z     mmlu_pro_hard    acc=0.725 n=40/40 ci95=[0.572,0.839]
+    eval: 2026-09-04T17:25:00Z     simpleqa         acc=0.033 n=30/30 ci95=[0.006,0.167]
+    eval: 2026-09-04T17:25:00Z   ifeval     acc=0.717 n=60/60 ci95=[0.592,0.815] out_tok=1766.0 trunc=0.0 err=0 
+    eval: 2026-09-04T17:25:00Z     triple           acc=0.708 n=24/24 ci95=[0.508,0.851]
+    eval: 2026-09-04T17:25:00Z     double           acc=0.625 n=24/24 ci95=[0.427,0.788]
+    eval: 2026-09-04T17:25:00Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T17:25:00Z   aggregate  acc_micro=0.712 acc_macro=0.7182 n=403/403 ci95=[0.6661, 0.7542] requests=403 retries=0 out_tok/s=2986.8
+    eval: 2026-09-04T17:25:00Z wrote /workspace/results/eval/gptoss20_--flashinfer_cutlass.json, /workspace/results/eval/gptoss20_--flashinfer_cutlass.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[17:25:05] ########## gemma26 (49G, tp=1 x4) : -:- ##########
+[17:29:32]     v lin=- moe=- healthy 260s | GPU KV cache size: 762,337 tokens
+      kernel: Using FlashInfer CUTLASS Unquantized MoE backend out of potential backends: ['FlashInfer TRTLLM'
+      kernel: Using FlashInferExperts MoE backend
+quality20[chat]: ok=19 degenerate=0 wrong=1 error=0 -> /workspace/results/probe/gemma26_---_quality20.json
+[17:51:50] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[17:51:50] ########## q27_nvfp4 (17G, tp=1 x4) : b12x:- ##########
+[17:51:50]   q27_nvfp4_b12x-- already evaluated
+[17:51:55] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[17:51:55]   q27_fp8_b12x-- already evaluated
+[17:52:01] SKIP hy3 (weights absent or incomplete)
+[17:52:01] ########## nemo3s (75G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[17:52:01]   nemo3s_b12x-flashinfer_cutlass already evaluated
+[17:52:06] ########## laguna (33G, tp=2 x2) : -:flashinfer_cutlass ##########
+[17:52:06]   laguna_--flashinfer_cutlass already evaluated
+[17:52:11] ########## nemo35 (21G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[18:04:15] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[18:04:15] ########## q27_nvfp4 (17G, tp=1 x4) : b12x:- ##########
+[18:04:15]   q27_nvfp4_b12x-- already evaluated
+[18:04:21] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[18:04:21]   q27_fp8_b12x-- already evaluated
+[18:04:26] SKIP hy3 (weights absent or incomplete)
+[18:04:26] ########## nemo3s (75G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[18:04:26]   nemo3s_b12x-flashinfer_cutlass already evaluated
+[18:04:31] ########## laguna (33G, tp=2 x2) : -:flashinfer_cutlass ##########
+[18:04:32]   laguna_--flashinfer_cutlass already evaluated
+[18:04:37] ########## nemo35 (21G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[18:05:27]     x lin=b12x moe=flashinfer_cutlass : ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not sup
+[18:05:33]   nemo35: NO combination served
+[18:05:33] ########## muse30 (56G, tp=1 x4) : -:- ##########
+[18:05:33]   muse30_--- already evaluated
+[18:05:38] ########## gptoss20 (39G, tp=1 x4) : -:flashinfer_cutlass ##########
+[18:05:38]   gptoss20_--flashinfer_cutlass already evaluated
+[18:05:43] ########## gemma26 (49G, tp=1 x4) : -:- ##########
+[18:05:43]   gemma26_--- already evaluated
+[18:05:49] ########## qwen36_fp8 (35G, tp=1 x4) : b12x:- ##########
+[18:10:06]     v lin=b12x moe=- healthy 250s | GPU KV cache size: 4,040,861 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using TRITON Fp8 MoE backend out of potential backends: ['AITER'
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=18 degenerate=2 wrong=0 error=0 -> /workspace/results/probe/qwen36_fp8_b12x--_quality20.json
+    eval: 2026-09-04T18:26:50Z     mmlu_pro_hard    acc=0.825 n=40/40 ci95=[0.680,0.912]
+    eval: 2026-09-04T18:26:50Z     simpleqa         acc=0.167 n=30/30 ci95=[0.073,0.336]
+    eval: 2026-09-04T18:26:50Z   ifeval     acc=0.800 n=60/60 ci95=[0.682,0.882] out_tok=3957.0 trunc=0.0333 err=0 
+    eval: 2026-09-04T18:26:50Z     triple           acc=0.917 n=24/24 ci95=[0.742,0.977]
+    eval: 2026-09-04T18:26:50Z     double           acc=0.625 n=24/24 ci95=[0.427,0.788]
+    eval: 2026-09-04T18:26:50Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T18:26:50Z   aggregate  acc_micro=0.702 acc_macro=0.7228 n=403/403 ci95=[0.6558, 0.7448] requests=403 retries=0 out_tok/s=3571.1
+    eval: 2026-09-04T18:26:50Z wrote /workspace/results/eval/qwen36_fp8_b12x--.json, /workspace/results/eval/qwen36_fp8_b12x--.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[18:26:55] ########## inkling (160G, tp=4 x1) : b12x:- ##########
+[18:30:46]     x lin=b12x moe=- : RuntimeError: Worker failed with error 'inputs must be float16, bfloat16, fp8 e4m3fn, or fp8 e5m2', please check the stack t
+[18:30:52]   inkling: NO combination served
+[18:30:52] ########## qwen38fn (126G, tp=4 x1) : b12x:- ##########
+[18:49:50] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[18:49:50] ########## q27_nvfp4 (17G, tp=1 x4) : b12x:- ##########
+[18:49:50]   q27_nvfp4_b12x-- already evaluated
+[18:49:55] ########## q27_fp8 (29G, tp=1 x4) : b12x:- ##########
+[18:49:55]   q27_fp8_b12x-- already evaluated
+[18:50:01] SKIP hy3 (weights absent or incomplete)
+[18:50:01] ########## nemo3s (75G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[18:50:01]   nemo3s_b12x-flashinfer_cutlass already evaluated
+[18:50:06] ########## laguna (33G, tp=2 x2) : -:flashinfer_cutlass ##########
+[18:50:06]   laguna_--flashinfer_cutlass already evaluated
+[18:50:11] ########## nemo35 (21G, tp=1 x4) : b12x:flashinfer_cutlass ##########
+[18:51:02]     x lin=b12x moe=flashinfer_cutlass : ValueError: NvFp4 MoE backend 'FLASHINFER_CUTLASS' does not support the deployment configuration since kernel does not sup
+[18:51:07]   nemo35: NO combination served
+[18:51:07] ########## muse30 (56G, tp=1 x4) : -:- ##########
+[18:51:07]   muse30_--- already evaluated
+[18:51:13] ########## gptoss20 (39G, tp=1 x4) : -:flashinfer_cutlass ##########
+[18:51:13]   gptoss20_--flashinfer_cutlass already evaluated
+[18:51:18] ########## gemma26 (49G, tp=1 x4) : -:- ##########
+[18:51:18]   gemma26_--- already evaluated
+[18:51:23] ########## qwen36_fp8 (35G, tp=1 x4) : b12x:- ##########
+[18:51:23]   qwen36_fp8_b12x-- already evaluated
+[18:51:29] ########## inkling (160G, tp=4 x1) : b12x:- ##########
+[18:53:39]     x lin=b12x moe=- : RuntimeError: Worker failed with error 'inputs must be float16, bfloat16, fp8 e4m3fn, or fp8 e5m2', please check the stack t
+[18:53:45]   inkling: NO combination served
+[18:53:45] ########## qwen38fn (126G, tp=4 x1) : b12x:- ##########
+[19:00:17]     x lin=b12x moe=- : ValueError: There is no module or parameter named 'ngram_embedding.weight_scale' in Qwen4ExpNGramEmbedding. The available 
+[19:00:23]   qwen38fn: NO combination served
+[19:00:23] ########## minimaxm3 (221G, tp=4 x1) : -:flashinfer_cutlass ##########
+[19:05:24]     x lin=- moe=flashinfer_cutlass : ValueError: No common block size for 128. 
+[19:05:29]   minimaxm3: NO combination served
+[19:05:29] ########## step37 (121G, tp=4 x1) : -:- ##########
+[19:07:55]     v lin=- moe=- healthy 140s | GPU KV cache size: 4,260,711 tokens
+      kernel: Using FLASHINFER attention backend
+      kernel: Using 'FLASHINFER_CUTLASS' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+      kernel: Using 'MARLIN' NvFp4 MoE backend out of potential backends: ['FLASHINFER_TRTLLM'
+quality20[chat]: ok=17 degenerate=3 wrong=0 error=0 -> /workspace/results/probe/step37_---_quality20.json
+    eval: 2026-09-04T19:31:52Z     mmlu_pro_hard    acc=0.875 n=40/40 ci95=[0.739,0.945]
+    eval: 2026-09-04T19:31:52Z     simpleqa         acc=0.067 n=30/30 ci95=[0.018,0.213]
+    eval: 2026-09-04T19:31:52Z   ifeval     acc=0.883 n=60/60 ci95=[0.778,0.942] out_tok=2533.5 trunc=0.0 err=0 
+    eval: 2026-09-04T19:31:52Z     triple           acc=0.917 n=24/24 ci95=[0.742,0.977]
+    eval: 2026-09-04T19:31:52Z     double           acc=0.833 n=24/24 ci95=[0.641,0.933]
+    eval: 2026-09-04T19:31:52Z     single           acc=0.917 n=12/12 ci95=[0.646,0.985]
+    eval: 2026-09-04T19:31:52Z   aggregate  acc_micro=0.767 acc_macro=0.7815 n=403/403 ci95=[0.7231, 0.8054] requests=403 retries=0 out_tok/s=846.0
+    eval: 2026-09-04T19:31:52Z wrote /workspace/results/eval/step37_---.json, /workspace/results/eval/step37_---.items.jsonl, +26 rows in /workspace/results/eval/eval_summary.tsv -> exit 0
+[19:31:57] SKIP ornith (weights absent or incomplete)
+/workspace/bench/ksweep.sh: line 245: ne: command not found
+/workspace/bench/ksweep.sh: line 246: syntax error near unexpected token `fi'
+/workspace/bench/ksweep.sh: line 246: `fi'

@@ -1,0 +1,28 @@
+[19:32:19] ===== logit-level quality, Qwen3.8-27B =====
+[19:32:24] ########## kl_control ##########
+[19:32:24]   A: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:32:24]   B: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:35:55]   both healthy in 210s
+    LOGIT-DIFF {"positions": 104, "top1_agreement": 0.9615, "top5_overlap": 0.975, "mean_kl": 0.018395, "p95_kl": 0.11535, "max_kl": 0.24955, "mean_top1_prob_delta": 0.012683, "errors": 0}
+[19:36:21] ########## kl_nvfp4_vs_fp8 ##########
+[19:36:22]   A: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:36:22]   B: Qwen3.8-27B-FP8 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:39:42]   both healthy in 200s
+    LOGIT-DIFF {"positions": 105, "top1_agreement": 0.819, "top5_overlap": 0.859, "mean_kl": 0.145146, "p95_kl": 0.489714, "max_kl": 1.633363, "mean_top1_prob_delta": 0.05524, "errors": 0}
+[19:40:11] ########## kl_kv_fp8_vs_auto ##########
+[19:40:11]   A: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:40:11]   B: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype auto
+[19:43:12]   both healthy in 180s
+    LOGIT-DIFF {"positions": 103, "top1_agreement": 0.9417, "top5_overlap": 0.9767, "mean_kl": 0.025552, "p95_kl": 0.119411, "max_kl": 0.876128, "mean_top1_prob_delta": 0.017029, "errors": 0}
+[19:43:38] ########## kl_b12x_vs_fib12x ##########
+[19:43:38]   A: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:43:38]   B: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend flashinfer_b12x --kv-cache-dtype fp8
+[19:46:39]   both healthy in 180s
+    LOGIT-DIFF {"positions": 104, "top1_agreement": 0.9904, "top5_overlap": 0.9885, "mean_kl": 0.001578, "p95_kl": 0.003001, "max_kl": 0.108429, "mean_top1_prob_delta": 0.003772, "errors": 0}
+[19:47:05] ########## kl_spec_vs_base ##########
+[19:47:05]   A: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8
+[19:47:05]   B: Qwen27B-NVFP4-RTX5090 --kernel-config.linear_backend b12x --kv-cache-dtype fp8 --speculative-draft-model-quantization modelopt_fp4 --speculative-config {"method":"draft_model","model":"/workspace/models/Qwen27B-DSpark-NVFP4","num_speculative_tokens":5,"draft_tensor_parallel_size":1}
+[20:12:10]   kl_spec_vs_base FAILED after 1500s: 
+[20:12:15] KLDIFF DONE
+[20:12:21] SKIP the BF16 ladder (native parent not downloaded yet)
+[20:12:21] KLDIFF-BF16 DONE

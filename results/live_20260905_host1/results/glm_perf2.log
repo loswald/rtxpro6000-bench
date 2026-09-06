@@ -1,0 +1,21 @@
+[18:46:36] ===== GLM-5.3-Flash: the MoE kernel, then the layouts without the per-layer all-reduce =====
+[18:46:41]   launch glm53f_dp4ep4_s192: --max-num-seqs 192 --tensor-parallel-size 1 --data-parallel-size 4 --enable-expert-parallel
+[18:51:11]   glm53f_dp4ep4_s192 healthy in 270s | GPU KV cache size: 503,567 tokens
+  router     C1024   488.6s     503 req/min     1073 out/s      8585 in/s      9658 tot/s  TTFT  96602/ 118779 ms  TPOT  92.9/ 103.9 ms  ITL  92.9  E2E 108.4/130.1 s
+  promptopt  C1024  1191.5s     206 req/min      880 out/s     12321 in/s     13201 tot/s  TTFT 231527/ 283764 ms  TPOT 134.3/ 151.0 ms  ITL 134.3  E2E 265.8/319.9 s
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/glm53f_dp4ep4_s192_quality20.json
+[19:21:24]   launch glm53f_dp2tp2ep2_s384: --max-num-seqs 384 --tensor-parallel-size 2 --data-parallel-size 2 --enable-expert-parallel
+[19:25:39]   glm53f_dp2tp2ep2_s384 healthy in 255s | GPU KV cache size: 1,255,513 tokens
+  router     C1024   403.4s     609 req/min     1300 out/s     10397 in/s     11696 tot/s  TTFT  72203/  99046 ms  TPOT 151.7/ 173.6 ms  ITL 151.7  E2E  91.5/118.5 s
+  promptopt  C1024   498.2s     493 req/min     2105 out/s     29468 in/s     31573 tot/s  TTFT  87281/ 117574 ms  TPOT  95.4/ 109.8 ms  ITL  95.9  E2E 111.6/142.8 s
+quality20[chat]: ok=11 degenerate=8 wrong=1 error=0 -> /workspace/results/probe/glm53f_dp2tp2ep2_s384_quality20.json
+[19:42:57]   launch glm53f_s512_moetrtllm: --max-num-seqs 512 --tensor-parallel-size 4 --moe-backend flashinfer_trtllm
+[19:44:12]   glm53f_s512_moetrtllm FAILED after 75s: ValueError: NvFp4 MoE backend 'FLASHINFER_TRTLLM' does not support the deployment configuration since kernel does not support current device cuda.
+[19:44:22]   launch glm53f_s512_moecutlass: --max-num-seqs 512 --tensor-parallel-size 4 --moe-backend cutlass
+[19:47:53]   glm53f_s512_moecutlass healthy in 210s | GPU KV cache size: 1,755,630 tokens
+  router     C1024   631.5s     389 req/min      830 out/s      6642 in/s      7472 tot/s  TTFT 115507/ 146312 ms  TPOT 221.4/ 236.9 ms  ITL 221.4  E2E 143.6/174.8 s
+  promptopt  C1024  1145.1s     215 req/min      916 out/s     12820 in/s     13735 tot/s  TTFT 207727/ 261786 ms  TPOT 207.8/ 221.3 ms  ITL 207.8  E2E 260.7/315.5 s
+quality20[chat]: ok=20 degenerate=0 wrong=0 error=0 -> /workspace/results/probe/glm53f_s512_moecutlass_quality20.json
+[20:19:26]   skip moeficutlass: past 20:15 UTC, the quality run on the fastest layout takes priority
+[20:19:26]   skip moemarlin: past 20:15 UTC, the quality run on the fastest layout takes priority
+[20:19:26] GLMPERF2 DONE

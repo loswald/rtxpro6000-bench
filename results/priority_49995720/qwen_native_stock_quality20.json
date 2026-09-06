@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "\n\n391",
+  "reasoning_chars": 138,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "\n\n80",
+  "reasoning_chars": 154,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "\n\n```python\ndef fib(n):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nThis returns the Fibonacci sequence with `fib(0) = 0`, `fib(1) = 1`, `fib(2) = 1`, etc.",
+  "reasoning_chars": 333,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.809,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "\n\n```sql\nSELECT\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON o.customer_id = c.id\nGROUP BY\n  c.id,\n  c.name\nORDER BY\n  total_order_value DESC\nLIMIT 3;\n```\n\nFor SQL Server, use:\n\n```sql\nSELECT TOP 3\n  c.id,\n  c.name,\n  SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o\n  ON o.customer_id = c.id\nGROUP BY\n  c.id,\n  c.name\nORDER BY\n  total_order_value DESC;\n```",
+  "reasoning_chars": 931,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.533,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "\n\n1/5 \u2014 Sydney is not the capital of Australia; the capital is Canberra.",
+  "reasoning_chars": 320,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.769,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 455,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "\n\nLarge language models are trained on massive datasets and can handle many tasks without task-specific training, but they may sometimes generate false information.",
+  "reasoning_chars": 243,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "\n\n1. **Connection type:** TCP is connection-oriented, while UDP is connectionless.  \n2. **Reliability:** TCP guarantees reliable, ordered delivery; UDP does not guarantee delivery or order.  \n3. **Speed/overhead:** TCP has more overhead and is generally slower; UDP is lighter and faster.",
+  "reasoning_chars": 206,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.795,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 491,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "\n\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}",
+  "reasoning_chars": 216,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "\n\nSunlight contains all colors, and when it enters Earth\u2019s atmosphere, shorter blue wavelengths scatter more than longer red wavelengths. This scattered blue light reaches our eyes from all directions, making the sky appear blue.",
+  "reasoning_chars": 407,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.941,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "\n\nUsing the product rule:\n\n\\[\n\\frac{d}{dx}\\left(x^3 \\sin x\\right)\n= \\frac{d}{dx}(x^3)\\sin x + x^3\\frac{d}{dx}(\\sin x)\n\\]\n\n\\[\n= 3x^2\\sin x + x^3\\cos x\n\\]\n\nSo the derivative is:\n\n\\[\n\\boxed{3x^2\\sin x + x^3\\cos x}\n\\]",
+  "reasoning_chars": 201,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.647,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "",
+  "reasoning_chars": 20942,
+  "finish": "length",
+  "top6gram": 729,
+  "distinct": 0.083,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "\n\n0.05",
+  "reasoning_chars": 387,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "\n\n**\u201cA stitch in time saves nine.\u201d**\n\nIt means that dealing with a small problem early can prevent it from becoming a much bigger problem later.",
+  "reasoning_chars": 250,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.92,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "\n\nAnswer A: Paris is correct.\n\nParis is the capital of France. Lyon is a major French city, but it is not the capital.",
+  "reasoning_chars": 270,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.783,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "\n\nSilicon hearts blaze  \nParallel rivers of math  \nLearning wakes in light",
+  "reasoning_chars": 409,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nCalculation:\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9} = 37\n\\]\n\n**98.6\u00b0F = 37\u00b0C**",
+  "reasoning_chars": 202,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.5,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "\n\nThe process is **photosynthesis**.\n\n**Chemical equation:**\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2\n\\]\n\nCarbon dioxide + water \u2192 glucose + oxygen.",
+  "reasoning_chars": 273,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.875,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 148,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

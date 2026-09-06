@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 73,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 155,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "",
+  "reasoning_chars": 6941,
+  "finish": "length",
+  "top6gram": 4,
+  "distinct": 0.478,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n**How it works:**\n- `JOIN` links each order to its customer via `customer_id`\n- `GROUP BY` collapses all orders per customer into one row\n- `SUM(o.amount)` computes each customer's total order value\n- `ORDER BY ... DESC LIMIT 3` keeps only the 3 highest totals\n\n**A few notes:**\n\n- **SQL Server** doesn't support `LIMIT`; use `SELECT TOP 3 ...` instead. Oracle uses `FETCH FIRST 3 ROWS ONLY`.\n- Customers with **no orders** are excluded by the inner join. If you want them included with a total of 0, use a `LEFT JOIN` and wrap the sum: `COALESCE(SUM(o.amount), 0)`.\n- If two customers tie for 3rd place, `LIMIT 3` picks one arbitrarily. To include all ties, use a window function:\n\n```sql\nSELECT id, name, total_order_value\nFROM (\n    SELECT\n        c.id,\n        c.name,\n        SUM(o.amount) AS total_order_value,\n        DENSE_RANK() OVER (ORDER BY SUM(o.amount) DESC) AS rnk\n    FROM customers c\n    JOIN orders o ON o.customer_id = c.id\n    GROUP BY c.id, c.name\n) ranked\nWHERE rnk <= 3;\n```",
+  "reasoning_chars": 2433,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.683,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1/5**\n\nThe answer is incorrect. The capital of Australia is **Canberra**, not Sydney. Sydney is Australia's largest and most famous city, which is why it's a common misconception, but it's only the capital of the state of New South Wales. Canberra was purpose-built as the national capital in the early 20th century, partly as a compromise between rivals Sydney and Melbourne.",
+  "reasoning_chars": 1650,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.742,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "**La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n\nNote: If the meeting was specifically *postponed* (delayed to a later time), you could also use \"La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.\"",
+  "reasoning_chars": 1451,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.812,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on massive text corpora, can handle diverse tasks without task-specific training but are prone to occasionally generating false information (hallucinations).",
+  "reasoning_chars": 1355,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "Here are three key differences between TCP and UDP:\n\n1. **Connection-oriented vs. connectionless** \u2014 TCP establishes a connection via a three-way handshake before any data is sent, while UDP transmits datagrams immediately with no connection setup.\n\n2. **Reliability** \u2014 TCP guarantees delivery by using acknowledgments and retransmitting lost packets. UDP provides no delivery guarantee; packets may be lost or duplicated with no mechanism to detect or recover them.\n\n3. **Ordering** \u2014 TCP delivers data in the exact order it was sent, using sequence numbers to reorder packets. UDP makes no ordering guarantee, so packets can arrive out of sequence.\n\nAs a result of these trade-offs, TCP is preferred for applications like web browsing, email, and file transfers, while UDP is favored for latency-sensitive uses like video streaming, VoIP, and online gaming.",
+  "reasoning_chars": 5227,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.74,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "**Rewritten:** Because the experiment used a larger batch size, training converged more slowly.\n\nAlternatively, if you'd like the cause flipped as well (for a more logically coherent counterfactual):\n\nBecause the experiment used a smaller batch size, training converged more slowly.",
+  "reasoning_chars": 4328,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.65,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "```json\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}\n```",
+  "reasoning_chars": 204,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "Sunlight contains all colors, but when it enters Earth's atmosphere, the shorter blue wavelengths are scattered in all directions by gas molecules far more than longer wavelengths like red\u2014a process called Rayleigh scattering. This scattered blue light reaches our eyes from every direction, so the entire sky appears blue.",
+  "reasoning_chars": 2260,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.898,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "Using the product rule, where u = x\u00b3 and v = sin(x):\n\n**d/dx [x\u00b3 \u00b7 sin(x)] = 3x\u00b2 \u00b7 sin(x) + x\u00b3 \u00b7 cos(x)**\n\nThe product rule states (uv)' = u'v + uv', so:\n- u' = 3x\u00b2 (power rule)\n- v' = cos(x) (derivative of sine)\n\nCombining: 3x\u00b2 sin(x) + x\u00b3 cos(x)",
+  "reasoning_chars": 762,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.679,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "",
+  "reasoning_chars": 5722,
+  "finish": "length",
+  "top6gram": 1,
+  "distinct": 0.525,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 307,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**\"A stitch in time saves nine.\"**\n\n**Literal meaning:** The proverb comes from sewing. If you notice a small tear in a piece of clothing and mend it right away with a single stitch, you prevent it from growing larger. If you ignore it, the tear will spread, and you'll eventually need nine stitches (or far more work) to repair it.\n\n**Figurative meaning:** Dealing with a problem promptly, while it's still small, saves you much greater effort, cost, or trouble later. Small issues rarely stay small\u2014neglect allows them to grow into bigger, harder-to-fix problems.\n\n**Examples in everyday life:**\n- Fixing a small roof leak now prevents costly water damage later\n- Getting a minor health symptom checked early can prevent a serious illness\n- Addressing a small misunderstanding in a relationship before resentment builds\n- Paying a bill on time to avoid late fees and penalties\n\nIn short: a little timely effort is far cheaper than a lot of delayed repair.",
+  "reasoning_chars": 1864,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.769,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Verdict: Answer A (Paris) is correct.**\n\n**Why Paris is correct:**\nParis is the capital of France. It is the seat of the French government \u2014 the President resides at the \u00c9lys\u00e9e Palace, and both the National Assembly and Senate meet there. Paris has served as France's capital for centuries and is universally recognized as such.\n\n**Why Lyon is incorrect:**\nLyon is a major French city \u2014 it's the third-largest in the country and is famous for its cuisine and historical significance \u2014 but it is not the national capital. The likely source of confusion is that Lyon is the capital of the *Auvergne-Rh\u00f4ne-Alpes region*, a regional administrative center, not the capital of France itself.\n\n**Summary:** Answer A correctly identifies the capital; Answer B confuses a regional capital with the national capital.",
+  "reasoning_chars": 1471,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.588,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Silicon humming\u2014\nten thousand cores dream in light,\nworlds born from pure math.",
+  "reasoning_chars": 2252,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "## Formula\n\n$$\u00b0C = (\u00b0F - 32) \\times \\frac{5}{9}$$\n\n## Calculation\n\n$$\u00b0C = (98.6 - 32) \\times \\frac{5}{9}$$\n\n$$\u00b0C = 66.6 \\times \\frac{5}{9}$$\n\n$$\u00b0C = 37$$\n\n**Answer: 98.6\u00b0F = 37\u00b0C**\n\nFun fact: this is normal human body temperature!",
+  "reasoning_chars": 442,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.632,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "# Photosynthesis\n\nThe process by which plants make their own food is called **photosynthesis**.\n\n## Chemical Equation\n\n$$6CO_2 + 6H_2O \\xrightarrow{\\text{Sunlight, Chlorophyll}} C_6H_{12}O_6 + 6O_2$$\n\n**In words:**\n\nCarbon dioxide + Water \u2192 Glucose + Oxygen\n*(in the presence of sunlight and chlorophyll)*\n\n**Key points:**\n- **Reactants:** Carbon dioxide (from air) and water (from soil)\n- **Products:** Glucose (food for the plant) and oxygen (released into air)\n- **Conditions required:** Sunlight and chlorophyll (the green pigment in leaves)",
+  "reasoning_chars": 949,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.818,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 185,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 73,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 73,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "",
+  "reasoning_chars": 7450,
+  "finish": "length",
+  "top6gram": 5,
+  "distinct": 0.426,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "```sql\nSELECT\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n**How it works:**\n- Joins each order to its customer\n- Sums `amount` per customer to get total order value\n- Sorts descending and keeps only the top 3\n\n**Dialect notes:**\n- **SQL Server:** replace `LIMIT 3` with `SELECT TOP 3 ...`\n- **Oracle / standard SQL:** use `FETCH FIRST 3 ROWS ONLY` at the end\n\n**Optional \u2014 handle ties:** `LIMIT 3` arbitrarily cuts off customers tied at the cutoff. If you want to include ties, use a window function:\n\n```sql\nSELECT id, name, total_order_value\nFROM (\n    SELECT\n        c.id,\n        c.name,\n        SUM(o.amount) AS total_order_value,\n        DENSE_RANK() OVER (ORDER BY SUM(o.amount) DESC) AS rnk\n    FROM customers c\n    JOIN orders o ON o.customer_id = c.id\n    GROUP BY c.id, c.name\n) ranked\nWHERE rnk <= 3;\n```\n\nAlso note: the `INNER JOIN` excludes customers with no orders, which is usually what you want here since they'd have a total of 0 anyway.",
+  "reasoning_chars": 1804,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.68,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "**Rating: 1/5**\n\nThe answer is incorrect. The capital of Australia is **Canberra**, not Sydney. Sydney is Australia's largest and most famous city, which is why it's a common misconception, but it has never been the capital. Canberra was purpose-built as the capital in the early 20th century, partly as a compromise between rivals Sydney and Melbourne.\n\nWhile Sydney is at least an Australian city (rather than a completely off-base answer), the question asks specifically for the capital, so the response is factually wrong.",
+  "reasoning_chars": 1388,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.783,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "**La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.**\n\nNote: You could also say \u00ab La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi \u00bb if the meeting was specifically postponed (delayed), since *reporter* implies pushing something back, while *d\u00e9placer* is more neutral about simply moving it.",
+  "reasoning_chars": 1727,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.889,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models, trained on massive text corpora, can handle diverse tasks without task-specific training but are prone to occasionally generating false information.",
+  "reasoning_chars": 1216,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "# Three Key Differences Between TCP and UDP\n\n1. **Connection-oriented vs. connectionless** \u2014 TCP establishes a connection before transmitting data using a three-way handshake (SYN, SYN-ACK, ACK), while UDP sends data immediately without any prior connection setup.\n\n2. **Reliability** \u2014 TCP guarantees data delivery through acknowledgments, retransmissions of lost packets, and error checking. UDP is \"best-effort\": packets can be lost, duplicated, or corrupted with no recovery mechanism.\n\n3. **Ordering and overhead** \u2014 TCP ensures packets arrive in the order they were sent and includes flow/congestion control, which adds overhead (20\u201360 byte headers). UDP has no ordering guarantee and minimal overhead (8-byte header), making it faster and lower-latency.\n\n**In practice:** TCP is used where accuracy matters (web browsing, email, file transfers), while UDP is preferred where speed matters and some loss is acceptable (video streaming, online gaming, VoIP, DNS lookups).",
+  "reasoning_chars": 3612,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.791,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "**Rewritten:** Because the experiment used a larger batch size, training converged more slowly.\n\nThe cause (larger batch size) stays the same, but the outcome is flipped from \"faster\" to \"more slowly.\"\n\n*Note:* If you instead wanted a true counterfactual (flipping the cause), it would be: \"Had the experiment used a smaller batch size, training would have converged more slowly.\"",
+  "reasoning_chars": 3509,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.729,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "```json\n{\n  \"name\": \"Maria Lopez\",\n  \"age\": 34,\n  \"city\": \"Lisbon\"\n}\n```",
+  "reasoning_chars": 211,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "Sunlight contains all colors of visible light, and when it enters Earth's atmosphere, it collides with tiny gas molecules that scatter shorter wavelengths like blue much more strongly than longer wavelengths like red\u2014a phenomenon called Rayleigh scattering. Because this scattered blue light bounces around in every direction across the sky, blue reaches our eyes from wherever we look up, making the sky appear blue.",
+  "reasoning_chars": 1797,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.906,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "# Derivative of x\u00b3 \u00b7 sin(x)\n\nUsing the **product rule**: (uv)' = u'v + uv'\n\n**Setup:**\n- u = x\u00b3 \u2192 u' = 3x\u00b2\n- v = sin(x) \u2192 v' = cos(x)\n\n**Applying the rule:**\n\n$$\\frac{d}{dx}\\left[x^3 \\sin(x)\\right] = 3x^2 \\sin(x) + x^3 \\cos(x)$$\n\n**Answer:** 3x\u00b2 sin(x) + x\u00b3 cos(x)",
+  "reasoning_chars": 628,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.673,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "",
+  "reasoning_chars": 6267,
+  "finish": "length",
+  "top6gram": 4,
+  "distinct": 0.361,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 352,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**\"A stitch in time saves nine.\"**\n\n**Meaning:** The proverb comes from sewing\u2014if you mend a small tear in fabric right away with a single stitch, you prevent it from growing into a larger hole that would need nine stitches (or more) to repair later.\n\n**The lesson:** Addressing problems promptly, while they're still small, saves enormous time, effort, and resources compared to ignoring them and dealing with the consequences after they've grown. Procrastination rarely makes problems easier\u2014it usually makes them worse.\n\n**Examples in everyday life:**\n- Fixing a small roof leak immediately, before it causes water damage to walls and floors\n- Seeing a doctor about a minor symptom before it develops into a serious condition\n- Clearing up a small misunderstanding with a friend before resentment builds\n- Correcting a small error in a project early, rather than after it's been submitted\n\nThe proverb captures a simple truth: a little timely effort now is almost always cheaper and easier than a lot of effort later. It's closely related to another saying: *\"An ounce of prevention is worth a pound of cure.\"*",
+  "reasoning_chars": 3036,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.718,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "**Verdict: Answer A (Paris) is correct.**\n\n**Why Paris is correct:**\nParis is the capital of France. It is the seat of the French government, housing the President (\u00c9lys\u00e9e Palace), the Prime Minister (H\u00f4tel Matignon), the National Assembly, and the Senate. It has served as France's capital for centuries.\n\n**Why Lyon is incorrect:**\nLyon is a major French city \u2014 France's third-largest \u2014 located in east-central France at the confluence of the Rh\u00f4ne and Sa\u00f4ne rivers. It's renowned for its cuisine and historical significance (it was the capital of Roman Gaul as Lugdunum), but it holds no capital status in modern France. It may be a plausible-sounding distractor precisely because it is a prominent and historically important French city, but prominence is not the criterion \u2014 the political capital is unambiguously Paris.",
+  "reasoning_chars": 1258,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.641,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Silicon hearts burn\u2014\nthousands of cores paint the light,\nmachines learn to dream.",
+  "reasoning_chars": 2313,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "## Formula\n\n$$\u00b0C = (\u00b0F - 32) \\times \\frac{5}{9}$$\n\n## Calculation\n\n**Step 1:** Subtract 32 from the Fahrenheit value:\n$$98.6 - 32 = 66.6$$\n\n**Step 2:** Multiply by 5/9:\n$$66.6 \\times \\frac{5}{9} = \\frac{333}{9} = 37$$\n\n## Answer\n\n**98.6\u00b0F = 37\u00b0C**\n\n(Fun fact: this is the classic value for normal human body temperature.)",
+  "reasoning_chars": 440,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.792,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "# Photosynthesis\n\nThe process by which plants make their own food is called **photosynthesis**. In this process, green plants use sunlight, water, and carbon dioxide (in the presence of chlorophyll) to produce glucose (food) and oxygen.\n\n## Chemical Equation\n\n$$6CO_2 + 6H_2O \\xrightarrow{\\text{sunlight, chlorophyll}} C_6H_{12}O_6 + 6O_2$$\n\n**Where:**\n- **CO\u2082** = Carbon dioxide (6 molecules)\n- **H\u2082O** = Water (6 molecules)\n- **C\u2086H\u2081\u2082O\u2086** = Glucose (the food made by the plant)\n- **O\u2082** = Oxygen (released as a by-product)\n\nThe reaction requires **sunlight** as the energy source and **chlorophyll** (the green pigment in leaves) to trap that light.",
+  "reasoning_chars": 1571,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.776,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\": 1, \"b\": 2, \"c\": 3}",
+  "reasoning_chars": 318,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

@@ -1,0 +1,26 @@
+[18:24:24] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[18:24:24] ########## ds4flash_dp4ep4_s512 (156G, tp=4 x1) : b12x:- ##########
+[18:25:59]     v lin=b12x moe=- healthy 90s | GPU KV cache size: 198,124 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using 'MARLIN' Mxfp4 MoE backend.
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/ds4flash_dp4ep4_s512_b12x--_quality20.json
+  router     C1024   639.2s     769 req/min     1640 out/s     13124 in/s     14764 tot/s  TTFT   9888/  59515 ms  TPOT 550.3/ 627.8 ms  ITL 550.3  E2E  79.8/131.5 s
+  promptopt  C1024   473.4s    1038 req/min     4430 out/s     62024 in/s     66454 tot/s  TTFT   7943/  33371 ms  TPOT 200.6/ 229.2 ms  ITL 200.6  E2E  59.1/ 89.5 s
+[18:47:34] ########## ds4flash_dp4ep4_s1024 (156G, tp=4 x1) : b12x:- ##########
+[18:49:09]     v lin=b12x moe=- healthy 90s | GPU KV cache size: 70,443 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using 'MARLIN' Mxfp4 MoE backend.
+quality20[chat]: ok=18 degenerate=1 wrong=1 error=0 -> /workspace/results/probe/ds4flash_dp4ep4_s1024_b12x--_quality20.json
+  router     C1024   661.9s     743 req/min     1584 out/s     12674 in/s     14258 tot/s  TTFT  15135/  58541 ms  TPOT 531.7/ 646.8 ms  ITL 531.7  E2E  82.7/121.7 s
+  promptopt  C1024   488.5s    1006 req/min     4293 out/s     60106 in/s     64399 tot/s  TTFT  12969/  36502 ms  TPOT 188.4/ 237.5 ms  ITL 188.4  E2E  61.0/ 83.2 s
+[19:11:25] ########## ds4flash_dp4ep4_b12xmoe_s512 (156G, tp=4 x1) : b12x:b12x ##########
+[19:12:25]     x lin=b12x moe=b12x : ValueError: Mxfp4 MoE backend 'B12X_MXFP4_BF16' does not support the deployment configuration since kernel does not suppor
+[19:12:30]   ds4flash_dp4ep4_b12xmoe_s512: NO combination served
+[19:12:30] ########## ds4flash_tp4_s512 (156G, tp=4 x1) : b12x:b12x ##########
+[19:14:36]     v lin=b12x moe=b12x healthy 120s | GPU KV cache size: 284,624 tokens
+      kernel: Selected B12xFp8BlockScaledMMKernel
+      kernel: Using 'B12X_MXFP4_MXFP8' Mxfp4 MoE backend.
+quality20[chat]: ok=18 degenerate=1 wrong=1 error=0 -> /workspace/results/probe/ds4flash_tp4_s512_b12x-b12x_quality20.json
+  router     C1024   842.1s     584 req/min     1245 out/s      9962 in/s     11207 tot/s  TTFT  53411/  91920 ms  TPOT 390.9/ 407.0 ms  ITL 390.9  E2E 103.1/142.7 s
+  promptopt  C1024   691.8s     710 req/min     3031 out/s     42441 in/s     45472 tot/s  TTFT  43361/  64901 ms  TPOT 160.6/ 165.7 ms  ITL 160.6  E2E  84.3/106.5 s
+[19:43:01] KSWEEP DONE

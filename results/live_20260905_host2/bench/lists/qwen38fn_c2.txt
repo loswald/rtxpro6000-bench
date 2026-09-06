@@ -1,0 +1,7 @@
+# Qwen3.8-Flash-Next (180B total, 6B active, index 46 - level with GLM-5.3-Flash at a thirtieth of the active
+# parameters). On the dev332 build it died under every kernel ("no parameter named ngram_embedding.weight_scale
+# in Qwen4ExpNGramEmbedding"); this box's dev446 build is the first chance. QSA needs a BF16 KV cache. Layout
+# first, as the day taught: four expert-parallel engines, then two TP2 replicas. Auto kernels only - the W4A4
+# linear kernel is what tripped the loader.
+qwen38fn_dp4ep4|/workspace/models/Qwen3.8-Flash-Next-NVFP4|4|-:-|--data-parallel-size|4|--tensor-parallel-size|1|--enable-expert-parallel|--kv-cache-dtype|auto|--max-num-seqs|512|--gpu-memory-utilization|0.90
+qwen38fn_tp2x2|/workspace/models/Qwen3.8-Flash-Next-NVFP4|2|-:-|--kv-cache-dtype|auto|--gpu-memory-utilization|0.90

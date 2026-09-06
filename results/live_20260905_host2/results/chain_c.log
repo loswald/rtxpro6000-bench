@@ -1,0 +1,48 @@
+[16:19:11] CHAINC: downloads, ladder first
+[16:19:11] downloading Qwen/Qwen3.8-27B
+[16:21:16] done Qwen3.8-27B (52G)
+[16:21:16] downloading Qwen/Qwen3.8-27B-FP8
+[16:22:56] done Qwen3.8-27B-FP8 (29G)
+[16:22:56] downloading gittensor-model-hub/Qwen3.8-27B-NVFP4-RTX5090
+[16:23:59] done Qwen27B-NVFP4-RTX5090 (17G)
+[16:23:59] downloading QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4
+[16:25:06] done Qwen27B-QUASAR-NVFP4 (20G)
+[16:25:06] downloading sakamakismile/Qwen3.8-27B-MTP-NVFP4
+[16:25:53] CHAINC: restarted with the trimmed programme (one soak; nothing measured twice across the two 600 W boxes)
+[16:25:57] CHAINC: downloads, ladder first
+[16:25:57] have Qwen3.8-27B
+[16:25:57] have Qwen3.8-27B-FP8
+[16:25:57] have Qwen27B-NVFP4-RTX5090
+[16:25:57] have Qwen27B-QUASAR-NVFP4
+[16:25:57] downloading sakamakismile/Qwen3.8-27B-MTP-NVFP4
+[16:27:19] retrying Qwen27B-MTP-NVFP4 without hf_transfer
+[16:27:20] FAILED Qwen27B-MTP-NVFP4 (  path: /workspace/models/Qwen27B-MTP-NVFP4)
+[16:27:20] downloading incoai/Qwen3.8-27B-DFlash2
+[16:27:45] done Qwen3.8-27B-DFlash2 (3.6G)
+[16:27:45] CHAINC: quantisation ladder at 600 W: throughput, then quality
+[16:39:36] CHAINC: replaced by chain_c2 - the five-hour programme (Nish, 16:40 UTC)
+[16:39:50] CHAINC2 (279min left): ladder anchors at 600 W: native BF16 and QAT under W4A4, throughput
+[17:50:03] CHAINC2 (209min left): logit ladder against the BF16 parent, and the DFlash2 drafter
+[18:05:19] CHAINC3 (234min left): chain_c2 stopped after its logit ladder; continuing as chain_c3
+[18:05:27] CHAINC3 (234min left): DeepSeek-V4-Flash: waiting for the download, applying the sm_120 o_proj fallback
+    fallback flag currently: False
+    vllm version: 0.28.1rc1.dev446+g798544433
+[18:05:36] CHAINC3 (234min left): DeepSeek-V4-Flash throughput: four layout/kernel/budget arms, two shapes each
+[18:23:59] CHAINC3: DeepSeek arms restarted with the file-descriptor limit raised (C1024 benches died with EMFILE)
+[18:24:15] CHAINC3 (215min left): DeepSeek-V4-Flash: waiting for the download, applying the sm_120 o_proj fallback
+    fallback flag currently: False
+    vllm version: 0.28.1rc1.dev446+g798544433
+[18:24:24] CHAINC3 (215min left): DeepSeek-V4-Flash throughput: four layout/kernel/budget arms, two shapes each
+[19:43:06] CHAINC3 (136min left): DeepSeek quality on the fastest layout: ds4flash_dp4ep4_s512_b12x-- (1640 out tok/s at router C1024), budget 7260s
+[20:07:02] CHAINC3 (112min left): MiniMax-M3 quality (budget 5520s), then two throughput shapes
+[20:07:06] CHAINC4 (112min left): chain_c3 stopped after the DeepSeek quality run; continuing as chain_c4
+  DeepSeek DP4+EP quality: 403 items, acc 0.8437 partial False
+[20:07:14] CHAINC4 (112min left): Qwen3.8-Flash-Next: downloading the NVFP4 checkpoint
+[20:07:14] downloading RadixArk/Qwen3.8-Flash-Next-NVFP4
+[20:13:36] done Qwen3.8-Flash-Next-NVFP4 (126G)
+[20:13:36] CHAINC4 (106min left): Qwen3.8-Flash-Next throughput: DP4+EP, then 2 x TP2, two shapes each
+[20:18:12] CHAINC4 (101min left): Qwen3.8-Flash-Next: no layout served, or no time for its quality run (best: none)
+[20:18:12] CHAINC4 (101min left): MiniMax-M3 quality (budget 4860s), then two throughput shapes
+[20:22:44] CHAINC5 (97min left): chain_c4 stopped (MiniMax); Qwen3.8-Flash-Next with the FP8 PLE fix takes the slot
+  patched: /usr/local/lib/python3.12/dist-packages/vllm/models/qwen4_exp/nvidia/ple_layer.py
+[20:22:55] CHAINC5 (97min left): Qwen3.8-Flash-Next throughput: 2 x TP2, two shapes

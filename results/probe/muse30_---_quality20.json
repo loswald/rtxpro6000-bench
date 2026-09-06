@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "391",
+  "reasoning_chars": 251,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "80",
+  "reasoning_chars": 441,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "```python\ndef fib(n: int) -> int:\n    \"\"\"\n    Return the n-th Fibonacci number iteratively.\n    fib(0) = 0, fib(1) = 1\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    \n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```\n\nUsage:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(2))  # 1\nprint(fib(10)) # 55\n```\n\nThe loop keeps only the two previous values, so it runs in O(n) time and O(1) space.",
+  "reasoning_chars": 1852,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.762,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "```sql\nSELECT \n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\n* `JOIN` links each order to its customer\n* `SUM(o.amount)` gives the total order value per customer\n* `GROUP BY c.id, c.name` aggregates per customer\n* `ORDER BY total_order_value DESC LIMIT 3` returns the top 3\n\nFor SQL Server use `TOP 3` instead of `LIMIT`:\n\n```sql\nSELECT TOP 3\n    c.id,\n    c.name,\n    SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC;\n```",
+  "reasoning_chars": 2097,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.564,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "Rating: **1/5**\n\nThe answer is incorrect. The capital of Australia is Canberra. Sydney is Australia's most populous city, which is a common confusion, but it is not the capital.",
+  "reasoning_chars": 974,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.828,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "La r\u00e9union a \u00e9t\u00e9 d\u00e9plac\u00e9e \u00e0 jeudi apr\u00e8s-midi.\n\n*Variante :* La r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 l'apr\u00e8s-midi de jeudi.",
+  "reasoning_chars": 886,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.737,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "Large language models trained on vast corpora can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "reasoning_chars": 1346,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "Here are three key differences between TCP and UDP:\n\n1. **Connection-Oriented vs. Connectionless**\n   * **TCP** is connection-oriented. A three-way handshake (SYN, SYN-ACK, ACK) is used to establish a connection before data transfer, and a connection termination sequence is used to close it.\n   * **UDP** is connectionless. There is no handshake or setup before sending data. Messages are sent independently with no prior connection.\n\n2. **Reliability vs. Speed**\n   * **TCP** is reliable. It provides error checking, acknowledgments, retransmission of lost packets, and in-order delivery of data.\n   * **UDP** is unreliable. It sends data as-is with no error recovery or retransmission. If a packet is lost or arrives out of order, UDP does not handle it.\n\n3. **Speed and Overhead**\n   * **TCP** has higher overhead due to connection management, error checking, and flow control mechanisms. This makes it slower but safer.\n   * **UDP** has minimal overhead with a small 8-byte header. This makes it faster and more efficient for real-time applications.\n\n**Use cases:** TCP is used for web browsing (HTTP/HTTPS), email (SMTP), file transfer (FTP). UDP is used for video streaming, VoIP calls, online gaming, and DNS queries.",
+  "reasoning_chars": 0,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.661,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "The causal antecedent is kept and the consequent is negated:\n\n*Because the experiment used a larger batch size, training converged slower / took longer to converge.*\n\nIf you want a strict counterfactual antecedent as well, the opposite causal claim is:\n\n*Because the experiment used a smaller batch size, training converged faster.*",
+  "reasoning_chars": 2590,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.706,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 696,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "Sunlight contains all colors, but air molecules scatter shorter blue wavelengths much more strongly than red due to Rayleigh scattering. The scattered blue light reaches our eyes from every direction, making the sky look blue.",
+  "reasoning_chars": 1773,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.971,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "By the product rule $(uv)'=u'v+uv'$ with $u=x^{3}$ and $v=\\sin x$,\n\n$$\nu' = 3x^{2},\\qquad v'=\\cos x\n$$\n\nso that\n\n$$\n\\frac{d}{dx}\\!\\left[x^{3}\\sin x\\right]=u'v+uv'\n      =3x^{2}\\sin x+x^{3}\\cos x\n$$\n\ni.e. $x^{2}\\!\\left[\\,3\\sin x+x\\cos x\\,\\right]$, up to an additive constant.",
+  "reasoning_chars": 908,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.886,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "A UK postcode is `Outward Code + [space] + Inward Code`\n\n* Outward: 1-2 letters, 1 digit, optional digit/letter\n* Inward: 1 digit + 2 letters\n\nCase-insensitive, space is optional.\n\nSimple, good enough for most use cases:\n\n```regex\n(?i)^[A-Z]{1,2}[0-9][0-9A-Z]? ?[0-9][A-Z]{2}$\n```\n\n* `(?i)` = case-insensitive\n* `[A-Z]{1,2}` = area, e.g. W, EC, SW\n* `[0-9]` = district number\n* `[0-9A-Z]?` = optional district letter/number\n* ` ?` = optional space\n* `[0-9][A-Z]{2}` = inward code\n\nExample matches: `SW1A 1AA`, `M1 1AE`, `B33 8TH`, `EC1A 1BB`\n\nStrict version that also handles the special `GIR 0AA` and excludes invalid letter combos:\n\n```regex\n(?i)^(?:GIR 0AA|(?:[A-Z]{1,2}[0-9][A-Z0-9]?)\\s?[0-9][A-Z]{2})$\n```\n\nThe fully official PCRE version used by gov.uk is:\n\n```regex\n(?i)^(?:GIR 0AA|(?:[A-Z][A-HJ-Y][0-9]|[A-Z][0-9]{1,2}|[A-Z][A-HJ-Y][0-9]?[A-Z]|[A-Z][0-9][A-Z])\\s?[0-9][A-Z]{2})$\n```\n\nUse `re.IGNORECASE` / `(?i)` in Python and strip the postcode before testing.",
+  "reasoning_chars": 2366,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.766,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "0.05",
+  "reasoning_chars": 772,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "**A stitch in time saves nine.**\n\nIt means a small action taken at the right time prevents a much bigger problem later.\n\nA stitch is a single small sew. If you mend a small tear in a garment as soon as you notice it, it stays a one-stitch job. If you leave it, the tear will grow and eventually need nine stitches, or the whole garment will be ruined.\n\nThe proverb is about prevention and timely maintenance. Doing the little, inconvenient thing now saves you a lot of time, effort and cost later.\n\n* Fix a leaking tap today instead of dealing with water damage tomorrow.\n* Study a little every day instead of cramming for an exam.\n* Address a small conflict early instead of letting it escalate.\n\nIn short: act promptly on small problems before they become big ones.",
+  "reasoning_chars": 1238,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.709,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "Answer A is correct.\n\nParis is the capital and seat of government of France. Lyon is France's third-largest city and an important economic and cultural centre, but it has never been the national capital.",
+  "reasoning_chars": 1019,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.824,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "Silicon rivers\nParallel dreams render worlds\nHeat sings in the dark",
+  "reasoning_chars": 3316,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "The Fahrenheit to Celsius conversion is\n\n**C = (F \u2212 32) \u00d7 5/9**\n\nFor 98.6 \u00b0F:\n\nC = (98.6 \u2212 32) \u00d7 5/9\nC = 66.6 \u00d7 5/9\nC = 66.6 \u00d7 0.555...\nC = 37 \u00b0C\n\n\u2248 37 \u00b0C, the normal human body temperature.",
+  "reasoning_chars": 530,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.667,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "The process is **Photosynthesis**.\n\nIt is the light dependent synthesis of organic food, glucose, from inorganic raw materials CO2 and H2O in the chloroplasts of green plants with chlorophyll as the photosynthetic pigment.\n\nIn the balanced form\n\n6 CO2 + 6 H2O + light energy \u2192 C6H12O6 + 6 O2\n\nor with the catalyst shown\n\n6 CO2 + 6 H2O --chlorophyll / sunlight--> C6H12O6 + 6 O2\n\nC6H12O6 is glucose, the food made, and O2 is liberated as a by-product.",
+  "reasoning_chars": 1324,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.613,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 484,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

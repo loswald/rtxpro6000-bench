@@ -25,3 +25,30 @@ Terminated
 [03:02:41] FAILED Hy3-NVFP4-FP8
 [03:02:41] chain3: ksweep retry6000 (throughput)
 [10:02:10] chain3b: retry sweep (restarted with the disk guard and the launcher-death check)
+[11:23:22] GLM-5.3-Flash quality (base, then MTP) - ahead of the queue
+[12:08:13] resuming: retry sweep
+[13:47:37] quality pass over everything measured on this box
+[15:42:03] GLM-5.3-Flash quality, corrected: parser glm45, Z.AI sampling, no token cap
+[17:15:33] resuming the quality pass (resumable: scored configs are skipped)
+[17:51:44] GLM speculation: is the MTP head lossless? greedy, bit-for-bit
+[17:51:50] SPECDIFF DONE
+[17:51:50] resuming the quality pass
+[17:52:21] GLM speculation: is the MTP head lossless? greedy, bit-for-bit
+[18:04:15] SPECDIFF DONE
+[18:04:15] resuming the quality pass
+[18:36:14] speculation: base-vs-base control, then base-vs-MTP
+[18:49:50] SPECDIFF2 DONE
+[18:49:50] resuming the quality pass
+[19:31:57] CHAIN6000C DONE
+[19:32:19] MASTER: logit-level divergence (control, NVFP4 vs FP8, KV dtype, kernel equivalence, speculation)
+[20:12:26] MASTER: quantisation ladder: fetch the rungs
+[20:12:26] downloading Qwen/Qwen3.8-27B
+[20:14:35] done Qwen3.8-27B (52G)
+[20:14:35] downloading QUASAR-QAT/Qwen3.8-27B-QUASAR-NVFP4
+[20:15:30] done Qwen27B-QUASAR-NVFP4 (20G)
+[20:15:30] downloading sakamakismile/Qwen3.8-27B-MTP-NVFP4
+[20:16:38] done Qwen27B-MTP-NVFP4 (20G)
+[20:16:38] MASTER: quantisation ladder: throughput then quality
+[00:00:10] MASTER STOPPED BY HAND: re-ordered so the BF16 parent survives until the logit ladder has run; resumes as chain_master2.sh
+[00:01:23] MASTER2: quantisation ladder: throughput (resumed; arms already measured are skipped)
+[01:29:37] MASTER2: quantisation ladder: quality, an hour per request so no item is lost to the timeout

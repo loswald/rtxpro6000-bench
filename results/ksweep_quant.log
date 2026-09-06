@@ -1,0 +1,53 @@
+[20:16:38] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[20:16:38] ########## q27_bf16 (52G, tp=1 x4) : -:- ##########
+[20:21:05]     v lin=- moe=- healthy 260s | GPU KV cache size: 889,949 tokens
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_bf16_---_quality20.json
+  router     C256    181.5s     695 req/min     1483 out/s     11865 in/s     13348 tot/s  TTFT   5256/  15938 ms  TPOT 132.4/ 167.8 ms  ITL 132.4  E2E  22.1/ 34.0 s
+  router     C1024   682.7s     731 req/min     1560 out/s     12482 in/s     14042 tot/s  TTFT  29883/  74704 ms  TPOT 417.5/ 453.1 ms  ITL 417.5  E2E  82.9/130.3 s
+  promptopt  C1024  1450.4s     344 req/min     1470 out/s     20574 in/s     22043 tot/s  TTFT  85633/ 150157 ms  TPOT 348.8/ 387.9 ms  ITL 348.8  E2E 174.6/241.6 s
+  judge      C512   1423.2s     175 req/min     1496 out/s     11969 in/s     13465 tot/s  TTFT  26185/ 122866 ms  TPOT 288.3/ 318.3 ms  ITL 288.3  E2E 173.5/281.5 s
+[21:26:43] ########## q27_nvfp4_quasar_qat (20G, tp=1 x4) : b12x:-,-:- ##########
+[21:30:50]     v lin=b12x moe=- healthy 240s | GPU KV cache size: 1,726,526 tokens
+      kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_quasar_qat_b12x--_quality20.json
+  router     C256     74.1s    1691 req/min     3608 out/s     28867 in/s     32475 tot/s  TTFT   2043/   6379 ms  TPOT  55.3/  67.6 ms  ITL  55.3  E2E   9.1/ 13.9 s
+  router     C1024   273.1s    1825 req/min     3893 out/s     31142 in/s     35034 tot/s  TTFT   3385/  23384 ms  TPOT 237.8/ 260.1 ms  ITL 237.8  E2E  33.6/ 55.0 s
+  promptopt  C1024   586.3s     849 req/min     3623 out/s     50727 in/s     54350 tot/s  TTFT   6404/  48180 ms  TPOT 257.9/ 280.4 ms  ITL 257.9  E2E  72.2/113.5 s
+  judge      C512    607.1s     410 req/min     3496 out/s     27965 in/s     31460 tot/s  TTFT   5970/  45719 ms  TPOT 134.8/ 144.7 ms  ITL 134.8  E2E  74.9/117.9 s
+[22:02:25]     v lin=- moe=- healthy 200s | GPU KV cache size: 1,724,043 tokens
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_quasar_qat_---_quality20.json
+  router     C256    232.4s     541 req/min     1154 out/s      9229 in/s     10383 tot/s  TTFT   7728/  23148 ms  TPOT 162.7/ 214.3 ms  ITL 162.7  E2E  28.4/ 45.3 s
+  router     C1024   916.6s     544 req/min     1160 out/s      9278 in/s     10438 tot/s  TTFT  13119/  91577 ms  TPOT 785.5/ 868.3 ms  ITL 785.5  E2E 112.9/197.6 s
+  promptopt  C1024  1860.1s     268 req/min     1144 out/s     16017 in/s     17161 tot/s  TTFT  22925/ 184698 ms  TPOT 807.6/ 881.6 ms  ITL 807.6  E2E 228.9/394.7 s
+  judge      C512   1896.6s     131 req/min     1122 out/s      8975 in/s     10097 tot/s  TTFT  22222/ 181360 ms  TPOT 413.4/ 450.6 ms  ITL 413.4  E2E 233.5/407.0 s
+[23:26:45] ########## q27_nvfp4_ptq2 (20G, tp=1 x4) : b12x:-,-:- ##########
+[23:30:52]     v lin=b12x moe=- healthy 240s | GPU KV cache size: 1,726,526 tokens
+      kernel: Using B12xNvFp4LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_ptq2_b12x--_quality20.json
+  router     C256     73.7s    1700 req/min     3627 out/s     29016 in/s     32643 tot/s  TTFT   2069/   5915 ms  TPOT  54.8/  67.6 ms  ITL  54.8  E2E   9.0/ 13.4 s
+  router     C1024   273.5s    1822 req/min     3888 out/s     31101 in/s     34988 tot/s  TTFT   3389/  23455 ms  TPOT 238.1/ 259.4 ms  ITL 238.1  E2E  33.6/ 55.1 s
+  promptopt  C1024   587.0s     848 req/min     3618 out/s     50654 in/s     54272 tot/s  TTFT   6282/  48151 ms  TPOT 258.8/ 281.3 ms  ITL 258.8  E2E  72.3/113.5 s
+  judge      C512    612.3s     406 req/min     3464 out/s     27709 in/s     31172 tot/s  TTFT   5998/  46170 ms  TPOT 136.1/ 145.8 ms  ITL 136.1  E2E  75.6/119.2 s
+[00:01:23] host: 4x GPU, 97887 MiB each -> util 0.94, max-model-len 40960, max-num-seqs 512
+[00:01:23] ########## q27_bf16 (52G, tp=1 x4) : -:- ##########
+[00:01:23]   q27_bf16_--- already measured
+[00:01:28] ########## q27_nvfp4_quasar_qat (20G, tp=1 x4) : b12x:-,-:- ##########
+[00:01:28]   q27_nvfp4_quasar_qat_b12x-- already measured
+[00:01:28]   q27_nvfp4_quasar_qat_--- already measured
+[00:01:34] ########## q27_nvfp4_ptq2 (20G, tp=1 x4) : b12x:-,-:- ##########
+[00:01:34]   q27_nvfp4_ptq2_b12x-- already measured
+[00:05:10]     v lin=- moe=- healthy 210s | GPU KV cache size: 1,724,043 tokens
+      kernel: Using FlashInferCuteDslNvFp4W4A16LinearKernel for NVFP4 GEMM
+      kernel: Using FLASHINFER attention backend
+quality20[chat]: ok=19 degenerate=1 wrong=0 error=0 -> /workspace/results/probe/q27_nvfp4_ptq2_---_quality20.json
+  router     C256    232.2s     541 req/min     1154 out/s      9234 in/s     10388 tot/s  TTFT   7838/  22934 ms  TPOT 161.8/ 213.9 ms  ITL 161.8  E2E  28.4/ 45.0 s
+  router     C1024   917.5s     543 req/min     1158 out/s      9262 in/s     10420 tot/s  TTFT  13137/  91583 ms  TPOT 786.9/ 869.2 ms  ITL 786.9  E2E 113.1/197.8 s
+  promptopt  C1024  1857.2s     268 req/min     1145 out/s     16025 in/s     17170 tot/s  TTFT  22943/ 184783 ms  TPOT 807.0/ 882.1 ms  ITL 807.0  E2E 228.7/394.2 s
+  judge      C512   1898.5s     131 req/min     1120 out/s      8964 in/s     10084 tot/s  TTFT  21847/ 181476 ms  TPOT 414.8/ 450.9 ms  ITL 414.8  E2E 233.8/407.6 s
+[01:29:32] SKIP gemma26_nvfp4 (weights absent or incomplete)
+[01:29:32] KSWEEP DONE

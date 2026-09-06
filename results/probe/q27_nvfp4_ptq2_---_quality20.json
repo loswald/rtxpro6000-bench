@@ -1,0 +1,182 @@
+[
+ {
+  "prompt": "What is 17*23? Reply with just the number.",
+  "text": "\n\n391",
+  "reasoning_chars": 126,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "If a train travels 60 km in 45 minutes, what is its speed in km/h? Reply with just the number.",
+  "text": "\n\n80",
+  "reasoning_chars": 146,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a Python function fib(n) that returns the n-th Fibonacci number iteratively.",
+  "text": "\n\n```python\ndef fib(n):\n    \"\"\"\n    Return the n-th Fibonacci number iteratively.\n\n    Convention:\n        fib(0) = 0\n        fib(1) = 1\n        fib(n) = fib(n-1) + fib(n-2)\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n\n    return b\n```\n\nExample:\n\n```python\nprint(fib(0))  # 0\nprint(fib(1))  # 1\nprint(fib(10)) # 55\n```",
+  "reasoning_chars": 407,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.628,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a SQL query that returns the top 3 customers by total order value from tables customers(id,name) and orders(id,customer_id,amount).",
+  "text": "\n\n```sql\nSELECT c.id,\n       c.name,\n       SUM(o.amount) AS total_order_value\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```\n\nIf you want to include customers with no orders (showing `0`), use:\n\n```sql\nSELECT c.id,\n       c.name,\n       COALESCE(SUM(o.amount), 0) AS total_order_value\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_order_value DESC\nLIMIT 3;\n```",
+  "reasoning_chars": 2414,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.543,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Rate the following answer for correctness on a 1-5 scale and explain briefly.\nQuestion: What is the capital of Australia?\nAnswer: Sydney.",
+  "text": "\n\n1/5.\n\nThe capital of Australia is Canberra, not Sydney. Sydney is a major city but not the capital.",
+  "reasoning_chars": 254,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.889,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Translate to French: The meeting has been moved to Thursday afternoon.",
+  "text": "\n\nLa r\u00e9union a \u00e9t\u00e9 report\u00e9e \u00e0 jeudi apr\u00e8s-midi.",
+  "reasoning_chars": 564,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Summarize in one sentence: Large language models are trained on vast corpora and can perform many tasks without task-specific training, but they sometimes hallucinate facts.",
+  "text": "\n\nLarge language models, trained on massive text corpora, can handle many tasks without task-specific training, yet they may occasionally generate false or fabricated facts.",
+  "reasoning_chars": 473,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "List three differences between TCP and UDP.",
+  "text": "\n\n1. **Connection handling**: TCP is connection-oriented (uses a three-way handshake), while UDP is connectionless.\n\n2. **Reliability**: TCP provides reliable, ordered delivery with acknowledgments and retransmission; UDP provides best-effort delivery with no guaranteed delivery or ordering.\n\n3. **Flow/congestion control**: TCP includes flow control and congestion control; UDP does not.",
+  "reasoning_chars": 259,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.792,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Counterfactual: rewrite the sentence so that the outcome is the opposite. Original: Because the experiment used a larger batch size, training converged faster.",
+  "text": "\n\nBecause the experiment used a larger batch size, training converged slower.",
+  "reasoning_chars": 662,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Extract the JSON fields name, age, city from: Maria Lopez, 34, lives in Lisbon. Return only JSON.",
+  "text": "\n\n{\"name\":\"Maria Lopez\",\"age\":34,\"city\":\"Lisbon\"}",
+  "reasoning_chars": 227,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Explain why the sky is blue in two sentences.",
+  "text": "\n\nSunlight contains all colors, and when it enters Earth's atmosphere, shorter blue wavelengths scatter more strongly than longer red wavelengths. This scattered blue light reaches our eyes from all directions, making the sky appear blue.",
+  "reasoning_chars": 482,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.943,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "What is the derivative of x^3 * sin(x)?",
+  "text": "\n\nThe derivative of \\(x^3 \\sin(x)\\) is:\n\n\\[\n\\frac{d}{dx}\\left[x^3 \\sin(x)\\right] = 3x^2 \\sin(x) + x^3 \\cos(x)\n\\]\n\nThis uses the product rule: \\((uv)' = u'v + uv'\\), with \\(u=x^3\\) and \\(v=\\sin(x)\\).",
+  "reasoning_chars": 202,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.933,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Give a regex that matches a UK postcode.",
+  "text": "",
+  "reasoning_chars": 4207,
+  "finish": "length",
+  "top6gram": 4,
+  "distinct": 0.351,
+  "verdict": "degenerate"
+ },
+ {
+  "prompt": "A bat and a ball cost 1.10 in total. The bat costs 1.00 more than the ball. How much does the ball cost? Reply with just the number.",
+  "text": "\n\n0.05",
+  "reasoning_chars": 264,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Complete the proverb and explain it: A stitch in time",
+  "text": "\n\n**Completed proverb:**  \n**\u201cA stitch in time saves nine.\u201d**\n\n**Explanation:**  \nThis proverb means that a small, timely effort can prevent a much bigger problem later. Just as a small repair to a garment early on can stop it from tearing badly, addressing issues early saves time, effort, and trouble in the future.",
+  "reasoning_chars": 237,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.863,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "You are a judge. Compare answer A: Paris and answer B: Lyon for the question 'What is the capital of France?'. Which is correct and why?",
+  "text": "\n\nAnswer A: **Paris** is correct.\n\n**Why:** Paris is the official capital of France. It is the seat of the French government, the President, the National Assembly, and other major state institutions.\n\nAnswer B: **Lyon** is incorrect. Lyon is a major French city and an important economic and cultural center, but it is not the capital.",
+  "reasoning_chars": 334,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.709,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Write a haiku about GPUs.",
+  "text": "\n\nSilicon forests  \nthousands of cores in lockstep  \nheat rises softly",
+  "reasoning_chars": 1371,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Convert 98.6 Fahrenheit to Celsius, show the formula.",
+  "text": "\n\nFormula:\n\n\\[\nC = (F - 32) \\times \\frac{5}{9}\n\\]\n\nSubstitute \\(F = 98.6\\):\n\n\\[\nC = (98.6 - 32) \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 66.6 \\times \\frac{5}{9}\n\\]\n\n\\[\nC = 37.0\n\\]\n\nSo, **98.6\u00b0F = 37.0\u00b0C**.",
+  "reasoning_chars": 277,
+  "finish": "stop",
+  "top6gram": 2,
+  "distinct": 0.487,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Name the process by which plants make food and give its chemical equation.",
+  "text": "\n\nThe process is **photosynthesis**.\n\nChemical equation:\n\n\\[\n6CO_2 + 6H_2O \\xrightarrow[\\text{chlorophyll}]{\\text{light energy}} C_6H_{12}O_6 + 6O_2\n\\]",
+  "reasoning_chars": 391,
+  "finish": "stop",
+  "top6gram": 1,
+  "distinct": 0.938,
+  "verdict": "ok"
+ },
+ {
+  "prompt": "Return only valid JSON with keys a,b,c set to 1,2,3.",
+  "text": "\n\n{\"a\":1,\"b\":2,\"c\":3}",
+  "reasoning_chars": 204,
+  "finish": "stop",
+  "top6gram": 0,
+  "distinct": 1.0,
+  "verdict": "ok"
+ }
+]

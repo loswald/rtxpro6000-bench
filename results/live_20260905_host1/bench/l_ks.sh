@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+export VLLM_USE_DEEP_GEMM=0 VLLM_MOE_USE_DEEP_GEMM=0 HF_HUB_OFFLINE=1
+export FLASHINFER_CUDA_ARCH_LIST=12.0f TORCH_CUDA_ARCH_LIST=12.0 CUTE_DSL_ARCH=sm_120a
+export VLLM_ENGINE_READY_TIMEOUT_S=3600 MAX_JOBS=4 NVCC_THREADS=2
+CUDA_VISIBLE_DEVICES=0 vllm serve /workspace/models/Qwen27B-NVFP4-RTX5090 --served-model-name m --host 0.0.0.0 --port 8000 --tensor-parallel-size 1 --kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 512 --max-num-batched-tokens 8192 --gpu-memory-utilization 0.94 --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce --no-enable-flashinfer-autotune --disable-uvicorn-access-log --kernel-config.linear_backend b12x --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice > /workspace/results/smoke/q27_nvfp4_rep_b12x--_p8000.log 2>&1 &
+sleep 2
+CUDA_VISIBLE_DEVICES=1 vllm serve /workspace/models/Qwen27B-NVFP4-RTX5090 --served-model-name m --host 0.0.0.0 --port 8001 --tensor-parallel-size 1 --kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 512 --max-num-batched-tokens 8192 --gpu-memory-utilization 0.94 --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce --no-enable-flashinfer-autotune --disable-uvicorn-access-log --kernel-config.linear_backend b12x --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice > /workspace/results/smoke/q27_nvfp4_rep_b12x--_p8001.log 2>&1 &
+sleep 2
+CUDA_VISIBLE_DEVICES=2 vllm serve /workspace/models/Qwen27B-NVFP4-RTX5090 --served-model-name m --host 0.0.0.0 --port 8002 --tensor-parallel-size 1 --kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 512 --max-num-batched-tokens 8192 --gpu-memory-utilization 0.94 --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce --no-enable-flashinfer-autotune --disable-uvicorn-access-log --kernel-config.linear_backend b12x --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice > /workspace/results/smoke/q27_nvfp4_rep_b12x--_p8002.log 2>&1 &
+sleep 2
+CUDA_VISIBLE_DEVICES=3 vllm serve /workspace/models/Qwen27B-NVFP4-RTX5090 --served-model-name m --host 0.0.0.0 --port 8003 --tensor-parallel-size 1 --kv-cache-dtype fp8 --max-model-len 40960 --max-num-seqs 512 --max-num-batched-tokens 8192 --gpu-memory-utilization 0.94 --enable-prefix-caching --trust-remote-code --disable-custom-all-reduce --no-enable-flashinfer-autotune --disable-uvicorn-access-log --kernel-config.linear_backend b12x --reasoning-parser qwen3 --tool-call-parser qwen3_coder --enable-auto-tool-choice > /workspace/results/smoke/q27_nvfp4_rep_b12x--_p8003.log 2>&1 &
+sleep 2
+wait

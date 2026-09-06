@@ -1,0 +1,74 @@
+    v1/attention/backends/mla/flashinfer_mla_sparse_sm90.py: already patched
+    platforms/cuda.py: already patched
+  vllm sm_120 NoPE port applied
+[18:36:14] ===== GLM-5.3-Flash (AA 57): quality =====
+[18:36:19]   launch glm53f_specbase
+[18:40:20]   glm53f_specbase healthy in 240s | GPU KV cache size: 2,139,806 tokens
+    base:   [ 0] stop      44 tok  391
+    base:   [ 1] stop      55 tok  131072
+    base:   [ 2] stop     233 tok  # Average Speed Calculation  ## Step 1: Convert time to hour
+    base:   [ 3] stop     544 tok  ## Working  **Method 1: Pairing (Gauss's trick)**  Pair the 
+    base:   [ 4] stop    3292 tok  Here's a clean iterative implementation:  ```python def fibo
+    base:   [ 5] stop     703 tok  Because attention is deterministic, any requests sharing the
+    base:   [ 6] stop     172 tok  2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37
+    base:   [ 7] stop     336 tok  # Solving 3x + 7 = 25  **Step 1: Subtract 7 from both sides*
+    base:   [ 8] stop     476 tok  # Derivative of x³ · sin(x)  **Product Rule:** If h(x) = f(x
+    base:   [ 9] stop    1134 tok  Assuming a `customers` table and an `orders` table with an `
+    base:   [10] stop     893 tok  # Factoring 2x² + 7x + 3  **Step 1: Identify a, b, and c.** 
+    base:   [11] stop    1716 tok  Tensor parallelism's defining cost is communication that sit
+    base:   wrote /workspace/results/probe/specdiff_glm_base.json
+    base2:   [10] stop    1077 tok  # Factoring 2x² + 7x + 3  **Step 1: Identify the coefficient
+    base2:   [11] stop    1929 tok  Tensor parallelism costs per-layer, on-the-critical-path com
+    base2:   wrote /workspace/results/probe/specdiff_glm_base2.json
+[18:43:42]   CONTROL: the same server, twice, greedy
+    control:        b: ...'tion is only gradient all-reduce, which happens once per step and can be overlapped with computation'
+    control:   4/12 completions identical
+    control:   VERDICT: speculation CHANGES the output at greedy sampling - the speculator is wrong, not the model
+[18:43:47]   launch glm53f_specmtp
+[18:48:48]   glm53f_specmtp healthy in 300s | GPU KV cache size: 1,474,560 tokens
+    mtp:    [ 0] stop      44 tok  391
+    mtp:    [ 1] stop      53 tok  131072
+    mtp:    [ 2] stop     261 tok  # Finding the Average Speed  ## Step 1: Convert the time to 
+    mtp:    [ 3] stop     433 tok  ## Working  **Method: Pairing (Gauss's trick)**  Pair the nu
+    mtp:    [ 4] length  4096 tok  
+    mtp:    [ 5] stop     859 tok  Prefix caching stores the key-value (KV) states of a prompt'
+    mtp:    [ 6] stop     172 tok  2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37
+    mtp:    [ 7] stop     281 tok  # Solving 3x + 7 = 25  **Step 1: Subtract 7 from both sides*
+    mtp:    [ 8] stop     414 tok  # Derivative of x³ · sin(x)  ## The Product Rule  $$\frac{d}
+    mtp:    [ 9] stop     871 tok  Assuming a typical schema with `customers(customer_id, custo
+    mtp:    [10] stop     856 tok  # Factoring 2x² + 7x + 3  **Method: Factoring by grouping (t
+    mtp:    [11] stop    1912 tok  Tensor parallelism's defining cost is communication on the c
+    mtp:    wrote /workspace/results/probe/specdiff_glm_mtp.json
+      [ 1] DIVERGES at char 84 of 100/91  (55 tok vs 53 tok)
+           a: ...'^7 = 128, so 2^17 = 1024 × 128 = 131072. Correct.\x00131072'
+           b: ...'^7 = 128, so 2^17 = 1024 × 128 = 131072.\x00131072'
+      [ 2] DIVERGES at char 39 of 687/740  (233 tok vs 261 tok)
+           a: ...'The train travels 120 km in 90 minutes.\n\nConvert 90 minutes to hours: 90 minutes = 90/60 = 1.5 hour'
+           b: ...'The train travels 120 km in 90 minutes. I need to find the average speed in km/h.\n\n90 minutes = 90/'
+      [ 3] DIVERGES at char 115 of 1665/1388  (544 tok vs 433 tok)
+           a: ...'king, then give the total.\n\nThe classic formula for the sum of the first n positive integers is:\nS ='
+           b: ..."king, then give the total.\n\nThe classic approach is Gauss's formula: sum from 1 to n = n(n+1)/2.\n\nFo"
+      [ 4] DIVERGES at char 97 of 10869/12928  (3292 tok vs 4096 tok)
+           a: ...'onacci number iteratively. Let me think carefully about what makes a good, correct, well-documented '
+           b: ...'onacci number iteratively. Let me think through this carefully to provide a good, well-explained ans'
+      [ 5] DIVERGES at char 328 of 3487/4454  (703 tok vs 859 tok)
+           a: ...' it helps:\n\nPrefix caching (also called prompt caching or KV cache reuse) stores the key-value (KV) '
+           b: ...' it helps:\n\nPrefix caching (also called automatic prefix caching) is a technique in LLM inference wh'
+      [ 7] DIVERGES at char 182 of 1008/880  (336 tok vs 281 tok)
+           a: ...' 3x = 18\nDivide both sides by 3: x = 6\n\nCheck: 3(6) + 7 = 18 + 7 = 25 ✓\n\nThis is a simple math probl'
+           b: ...' 3x = 18\nDivide both sides by 3: x = 6\n\nI should show each step clearly. This is a simple math probl'
+      [ 8] DIVERGES at char 193 of 1442/1198  (476 tok vs 414 tok)
+           a: ..."et g(x) = sin(x), so g'(x) = cos(x)\n\nThen:\nd/dx [x³ sin(x)] = 3x² · sin(x) + x³ · cos(x)\n\nI should s"
+           b: ..."et g(x) = sin(x), so g'(x) = cos(x)\n\nTherefore:\nd/dx [x³ sin(x)] = 3x² sin(x) + x³ cos(x)\n\nI should "
+      [ 9] DIVERGES at char 92 of 4523/3510  (1134 tok vs 871 tok)
+           a: ...'stomers by total order value. This is a fairly common SQL task. Let me think about what a good answe'
+           b: ...'stomers by total order value. This is a common SQL task. Let me think about what a reasonable schema'
+      [10] DIVERGES at char 99 of 2349/2242  (893 tok vs 856 tok)
+           a: ...'g the steps.\n\nLet me work through this. The quadratic is 2x² + 7x + 3.\n\nMethod 1: AC method (factori'
+           b: ...'g the steps.\n\nLet me work through this. We need to factor 2x² + 7x + 3.\n\nMethod 1: AC method (factor'
+      [11] DIVERGES at char 69 of 8806/9503  (1716 tok vs 1912 tok)
+           a: ...'or parallelism vs. replica parallelism (data parallelism) in distributed deep learning. They want on'
+           b: ...'or parallelism vs. replica parallelism (also called data parallelism) in distributed deep learning. '
+      2/12 completions identical
+      VERDICT: speculation CHANGES the output at greedy sampling - the speculator is wrong, not the model
+[18:49:44] GLMEVAL DONE
