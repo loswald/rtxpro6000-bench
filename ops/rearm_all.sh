@@ -7,7 +7,7 @@
 #   rearm_all.sh arm       re-create the tmux chains on both boxes
 export PATH="$HOME/.local/bin:$PATH"
 KEY="$HOME/.ssh/id_ed25519"
-SP="${SP:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"; _p(){ case "$1" in /*) echo "$1";; *) for d in "$SP" "${SCRATCH:-}" "/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad"; do [ -n "$d" ] && [ -f "$d/$1" ] && { echo "$d/$1"; return; }; done; echo "$(_p "$1")";; esac; }
+SP="${SP:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"; _p(){ case "$1" in /*) echo "$1";; *) for d in "$SP" "${SCRATCH:-}" "/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad"; do [ -n "$d" ] && [ -f "$d/$1" ] && { echo "$d/$1"; return; }; done; echo "$SP/$1";; esac; }
 A=(49694407 inst6000a.ssh)   # 600 W Server Edition
 B=(49774868 inst6000b.ssh)   # 400 W Workstation Edition (stopped, cards re-rented)
 C=(49977359 inst6000c.ssh)   # 600 W Server Edition, the third box (Bulgaria)
