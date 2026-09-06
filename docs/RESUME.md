@@ -24,6 +24,11 @@ Marlin MoE, both, TP2 without EP) → `CHAIN600W7 DONE`. Watch it with
 
 ## 2. Where things are
 
+* **Branch `priority-harness-work`** (f2228e5): the second session's harness work as it was left in the working tree on
+  5 Sept — `bench/` changes, `cells/`, `gates/`, `patches/` (GLM FA2 plan audit, Qwen PLE opaque lookup), `analysis/`,
+  `tests/`, `vast/`, `report/priority/`, its `box/pick_best.py` — consolidated unreviewed so nothing is lost; merge
+  selectively. `main` holds only the benchmarking session's work.
+
 * `box/` — everything that runs on a box: `ksweep.sh` (the kernel/layout sweep + eval harness; `SHAPES=fast|deep`,
   `MODE=eval`, `EVAL_RESUME=1`, `EVAL_MAXTOK`/`EVAL_CAPS` for 65k room, `EXTRA_ENV` for per-model env), `glm_eval.sh`
   (GLM arms: base, mtp, dp4, dp4long, bestlong, fp8, best), `glm_perf2..5.sh`, `chain*.sh` (every chain that ran,
