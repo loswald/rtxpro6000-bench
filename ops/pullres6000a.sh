@@ -4,8 +4,8 @@
 # was on a 400 W-capped Workstation box.
 set -u
 KEY="$HOME/.ssh/id_ed25519"
-SP=/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad
-read -r _ H P _ < "$SP/inst6000a.ssh"
+SP="${SP:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"; _p(){ case "$1" in /*) echo "$1";; *) for d in "$SP" "${SCRATCH:-}" "/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad"; do [ -n "$d" ] && [ -f "$d/$1" ] && { echo "$d/$1"; return; }; done; echo "$(_p "$1")";; esac; }
+read -r _ H P _ < "$(_p "inst6000a.ssh")"
 SSH="ssh -i $KEY -p $P -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=25 -o ServerAliveInterval=30 -o LogLevel=ERROR root@$H"
 SCP="scp -q -i $KEY -P $P -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 L=/mnt/c/Users/ushni/Downloads/AIRR

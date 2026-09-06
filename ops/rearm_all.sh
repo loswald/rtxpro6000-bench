@@ -7,12 +7,12 @@
 #   rearm_all.sh arm       re-create the tmux chains on both boxes
 export PATH="$HOME/.local/bin:$PATH"
 KEY="$HOME/.ssh/id_ed25519"
-SP=/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad
+SP="${SP:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"; _p(){ case "$1" in /*) echo "$1";; *) for d in "$SP" "${SCRATCH:-}" "/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad"; do [ -n "$d" ] && [ -f "$d/$1" ] && { echo "$d/$1"; return; }; done; echo "$(_p "$1")";; esac; }
 A=(49694407 inst6000a.ssh)   # 600 W Server Edition
 B=(49774868 inst6000b.ssh)   # 400 W Workstation Edition (stopped, cards re-rented)
 C=(49977359 inst6000c.ssh)   # 600 W Server Edition, the third box (Bulgaria)
 sshto(){ # hostfile cmd
-  read -r _ H P _ < "$SP/$1"; shift
+  read -r _ H P _ < "$(_p "$1")"; shift
   ssh -q -i "$KEY" -p "$P" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 "root@$H" "$@"
 }
 refresh_endpoints(){ # a restarted instance gets new ports; rewrite the host files from Vast's records
@@ -23,8 +23,8 @@ import json,sys
 i=json.load(sys.stdin); ports=i.get("ports") or {}
 p22=(ports.get("22/tcp") or [{}])[0].get("HostPort")
 if p22 and i.get("public_ipaddr"): print("direct %s %s"%(i["public_ipaddr"],p22))
-else: print("proxy %s %s"%(i.get("ssh_host"),i.get("ssh_port")))' > "$SP/$2.new" && mv "$SP/$2.new" "$SP/$2"
-    echo "  $2 -> $(cat "$SP/$2")"
+else: print("proxy %s %s"%(i.get("ssh_host"),i.get("ssh_port")))' > "$(_p "$2.new")" && mv "$(_p "$2.new")" "$(_p "$2")"
+    echo "  $2 -> $(cat "$(_p "$2")")"
   done
 }
 case "${1:-status}" in
@@ -55,5 +55,5 @@ case "${1:-status}" in
       tmux new-session -d -s post3 "bash $B/chain_post3.sh >> $R/chain6000.log 2>&1"
       tmux ls | cut -d: -f1 | paste -sd" " | sed "s/^/  sessions: /"';;
   status)
-    bash "$SP/vast_status.sh";;
+    bash "$(_p "vast_status.sh")";;
 esac

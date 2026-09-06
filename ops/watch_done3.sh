@@ -3,10 +3,10 @@
 # stops answering for three polls in a row (a stop or crash), one line when a chain has no tmux session left
 # without having finished. Polls every five minutes; silent otherwise.
 KEY="$HOME/.ssh/id_ed25519"
-SP=/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad
+SP="${SP:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"; _p(){ case "$1" in /*) echo "$1";; *) for d in "$SP" "${SCRATCH:-}" "/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad"; do [ -n "$d" ] && [ -f "$d/$1" ] && { echo "$d/$1"; return; }; done; echo "$(_p "$1")";; esac; }
 declare -A MISS=( [a]=0 [c]=0 ) FIRED=( [a]=0 [c]=0 )
 probe(){ # hostfile marker log -> prints "DONE"/"NOSESSION"/"RUNNING" or nothing on failure
-  read -r _ H P _ < "$SP/$1"
+  read -r _ H P _ < "$(_p "$1")"
   timeout 40 ssh -q -i "$KEY" -p "$P" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 "root@$H" \
     "if grep -q '$2' $3 2>/dev/null; then echo DONE; elif [ \$(tmux ls 2>/dev/null | wc -l) -eq 0 ]; then echo NOSESSION; else echo RUNNING; fi" 2>/dev/null
 }

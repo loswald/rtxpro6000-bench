@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Copy the user's key file to the third box without opening it, lock it down, start the OpenRouter comparison.
 set -u
-KEY="$HOME/.ssh/id_ed25519"; SP=/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad
-read -r _ H P _ < "$SP/inst6000c.ssh"
+KEY="$HOME/.ssh/id_ed25519"; SP="${SP:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"; _p(){ case "$1" in /*) echo "$1";; *) for d in "$SP" "${SCRATCH:-}" "/mnt/c/Users/ushni/AppData/Local/Temp/claude/C--Users-ushni-Downloads-AIRR/ba0185bd-2c4e-4173-bafa-b54fc63ae431/scratchpad"; do [ -n "$d" ] && [ -f "$d/$1" ] && { echo "$d/$1"; return; }; done; echo "$(_p "$1")";; esac; }
+read -r _ H P _ < "$(_p "inst6000c.ssh")"
 SRC=/mnt/c/Users/ushni/Downloads/rtxpro6000-bench/openrouter.txt
 [ -f "$SRC" ] || { echo "source file missing"; exit 1; }
 scp -q -i "$KEY" -P "$P" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$SRC" "root@$H:/workspace/.openrouter_key" || { echo "scp failed"; exit 1; }
